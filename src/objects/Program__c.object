@@ -700,6 +700,20 @@ One Application Per Term Per Program (Only one application for the selected term
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>Program_Integration_External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <defaultValue>&quot;Program__c&quot; &amp; TEXT(NOW()) &amp; MID($User.Id,6,5)</defaultValue>
+        <description>Used for integration</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Used for integration</inlineHelpText>
+        <label>Program Integration External Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Program_Major_Concentration__c</fullName>
         <description>Banner_Program_Code__c &amp; &quot;|&quot;&amp; Major_Code__c &amp; &quot;|&quot; &amp;  Concentration_Code__c</description>
         <externalId>false</externalId>

@@ -205,6 +205,20 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Application_Control_External_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <defaultValue>&quot;Application_Control__c&quot; &amp; TEXT(NOW()) &amp; MID($User.Id,6,5)</defaultValue>
+        <description>Used for external systems to identify this record as unique.  Format:  &quot;AC_&quot; &amp; URL_Parameter__c. Example: AC_UGFR</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Used for external systems to identify this record as unique.  Format:  &quot;AC_&quot; &amp; URL_Parameter__c. Example: AC_UGFR</inlineHelpText>
+        <label>Application Control External ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Application_Start_Status__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Application status that new applications are set to.</inlineHelpText>

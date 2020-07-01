@@ -554,6 +554,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Question_Integration_External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <defaultValue>&quot;Question__c&quot; &amp; TEXT(NOW()) &amp; MID($User.Id,6,5)</defaultValue>
+        <description>Used for integration</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Used for integration</inlineHelpText>
+        <label>Question Integration External Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>RI_UID__c</fullName>
         <description>EASY Setup Field</description>
         <externalId>false</externalId>

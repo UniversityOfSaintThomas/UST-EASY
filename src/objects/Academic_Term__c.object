@@ -154,6 +154,20 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
+        <fullName>Academic_Term_Integration_External_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <defaultValue>&quot;Academic_Term__c_&quot; &amp; TEXT(NOW()) &amp; MID($User.Id, 6,5)</defaultValue>
+        <description>Used for Integration</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Used for Integration</inlineHelpText>
+        <label>Academic Term Integration External ID</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Activate_Application_Date__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Date in which applications for this term open.</inlineHelpText>
@@ -259,8 +273,10 @@ Term_Start_Date__c &lt;= TODAY() &amp;&amp; Term_End_Date__c &gt;= TODAY(), &quo
         <columns>Term_Start_Date__c</columns>
         <columns>Term_End_Date__c</columns>
         <columns>Term_Status__c</columns>
+        <columns>Academic_Term_Integration_External_ID__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Academic Term Name</label>

@@ -317,6 +317,20 @@ Activate_Application_Date__c  &lt;=  TODAY() &amp;&amp; End_Application_Date__c 
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Intended_Program_Term_Integration_Ext_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <defaultValue>&quot;Intended_Program_Term__c&quot; &amp; TEXT(NOW()) &amp; MID($User.Id,6,5)</defaultValue>
+        <description>Used for Integration</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Used for Integration</inlineHelpText>
+        <label>Intended Program Term Integration Ext Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Intended_Program__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>

@@ -661,6 +661,20 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Requirement_Item_Integration_Ext_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <defaultValue>&quot;Requirement_Item__c&quot; &amp; TEXT(NOW()) &amp; MID($User.Id,6,5)</defaultValue>
+        <description>Used for integration</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Used for integration</inlineHelpText>
+        <label>Requirement Item Integration Ext Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Requirement__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Requirement that this item is a part of</inlineHelpText>

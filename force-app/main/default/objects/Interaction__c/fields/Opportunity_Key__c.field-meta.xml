@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Key__c</fullName>
+    <description>The Interaction Processor adds the Contact ID to the beginning of this key to match on Opportunities. If this field is blank, no Opportunity will be created. Contact ID + this key should equal the Opportunity Key also updated through workflow.</description>
+    <externalId>false</externalId>
+    <formula>/*The below formula allows for a centralized and decentralized recruitment model.*/
+
+/*If the Academic Program Career = Undergraduate, or Academic Program is blank and the Recruitment Program Career = Undergraduate, this formula uses the centralized model (one Opportunity per Term)*/
+
+IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Undergraduate&quot;), AND(ISBLANK(Academic_Program__c), ISPICKVAL(Recruitment_Program__r.Career__c, &quot;Undergraduate&quot;))), &quot;.Undergraduate&quot;,
+
+/*If the Academic Program Career = Graduate, or Academic Program is blank and the Recruitment Program Career = Graduate, this formula uses the decentralized model (one Opportunity per Academic Program or Recruitment Program and Term)*/
+
+IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Graduate&quot;), AND(ISBLANK(Academic_Program__c), ISPICKVAL(Recruitment_Program__r.Career__c, &quot;Graduate&quot;))), &quot;.Graduate.&quot;+IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id,Academic_Program__r.Id), 
+
+/*Otherwise, this formula is blank and no Opportunity will be created or updated.*/
+
+&quot;&quot;))</formula>
+    <label>Opportunity Key</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

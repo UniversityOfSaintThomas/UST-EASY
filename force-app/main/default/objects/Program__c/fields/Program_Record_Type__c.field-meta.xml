@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Program_Record_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Program Record Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Recruitment Program</fullName>
+                <default>false</default>
+                <label>Recruitment Program</label>
+            </value>
+            <value>
+                <fullName>Academic Program</fullName>
+                <default>false</default>
+                <label>Academic Program</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

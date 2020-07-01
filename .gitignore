@@ -9,7 +9,7 @@
 __pycache__
 
 # Robot Framework results
-robot/SummitEventsDX/results/
+robot/EASY-Open-Source-Solution/results/
 
 # Editors
 *.sublime-project

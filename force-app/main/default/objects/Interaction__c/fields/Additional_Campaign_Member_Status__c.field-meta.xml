@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Additional_Campaign_Member_Status__c</fullName>
+    <description>The status that should be set on the Campaign Member created for the Additional Campaign. It must match an available status from the Additional Campaign, and it cannot be blank.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Set the status for the Campaign Member created from the Additional Campaign.</inlineHelpText>
+    <label>Additional Campaign Member Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Attended</fullName>
+                <default>false</default>
+                <label>Attended</label>
+            </value>
+            <value>
+                <fullName>Invited</fullName>
+                <default>false</default>
+                <label>Invited</label>
+            </value>
+            <value>
+                <fullName>No Show</fullName>
+                <default>false</default>
+                <label>No Show</label>
+            </value>
+            <value>
+                <fullName>Registered</fullName>
+                <default>false</default>
+                <label>Registered</label>
+            </value>
+            <value>
+                <fullName>Responded</fullName>
+                <default>false</default>
+                <label>Responded</label>
+            </value>
+            <value>
+                <fullName>Sent</fullName>
+                <default>false</default>
+                <label>Sent</label>
+            </value>
+            <value>
+                <fullName>Walk-In</fullName>
+                <default>false</default>
+                <label>Walk-In</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

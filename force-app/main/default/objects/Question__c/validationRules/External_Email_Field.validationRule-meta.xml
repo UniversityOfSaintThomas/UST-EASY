@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>External_Email_Field</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT(RecordType.DeveloperName == &apos;Email&apos;) &amp;&amp; External_Email_Field__c</errorConditionFormula>
+    <errorMessage>You can only have an external email field on an email question.</errorMessage>
+</ValidationRule>

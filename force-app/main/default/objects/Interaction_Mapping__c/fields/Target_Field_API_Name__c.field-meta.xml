@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Target_Field_API_Name__c</fullName>
+    <description>The field on the Target Object you would like to map an Interaction field value to. The value in this field must be in API format and match an existing field on the Target Object.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The field on the Target Object you would like to map to. Ensure this is in API format and matches the existing field on the Target Object.</inlineHelpText>
+    <label>Target Field API Name</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

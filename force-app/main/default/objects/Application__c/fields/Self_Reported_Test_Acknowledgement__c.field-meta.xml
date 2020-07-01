@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Self_Reported_Test_Acknowledgement__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>By providing the information below, I understand that my self-reported test scores will be used for admission and merit scholarship processes.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>By providing the information below, I understand that my self-reported test scores will be used for admission and merit scholarship processes.</inlineHelpText>
+    <label>Self Reported Test Acknowledgement</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

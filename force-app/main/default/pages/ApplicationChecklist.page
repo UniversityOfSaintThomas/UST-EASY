@@ -1,0 +1,63 @@
+<apex:page controller="ApplicationChecklist" showHeader="false" standardStylesheets="false" docType="html-5.0" action="{!init}">
+    <c:ApplicationHead />
+    <c:ApplicationBody title="Application Checklist" subtitle="{!IF(appControl.Hide_Term_Program__c, '', IF(ISBLANK(app.Intended_Program__r.Program_Name_on_Application__c), app.Intended_Program__r.Name, app.Intended_Program__r.Program_Name_on_Application__c) + ' - ' + app.Intended_Term_of_Entry__r.Name)}" appControl="{!appControl}">
+        <apex:form id="theForm" >
+            <apex:pageMessages />
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <apex:repeat value="{!reqs}" var="r" >
+                        <apex:outputPanel rendered="{!r.display}" >
+                            <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
+                                <div class="col-lg-7 col-lg-offset-2 col-xs-9 col-xs-offset-1" >
+                                    <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!app.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}" style="color:#{!appControl.Link_Color__c};" >{!IF(r.req.Label__c != null && r.req.Label__c != '', r.req.Label__c, r.req.Name)}</a>
+                                </div>
+                                <div class="col-xs-1" >
+                                    <apex:outputPanel rendered="{!!r.reqStatus}" >
+                                        <span class="glyphicon glyphicon-remove" style="color:red;float:right;" ></span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!r.reqStatus}" >
+                                        <span class="glyphicon glyphicon-ok" style="color:green;float:right;" ></span>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                            <apex:repeat value="{!r.reqItems}" var="ri" >
+                                <apex:outputPanel rendered="{!ri.display}" >
+                                    <div class="row" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;" >
+                                        <div class="col-lg-6 col-lg-offset-3 col-xs-8 col-xs-offset-2" >
+                                            <apex:outputText style="color:#{!appControl.Text_Color__c};" >{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
+                                        </div>
+                                        <div class="col-xs-1" >
+                                            <apex:outputPanel rendered="{!!ri.reqItemStatus}" >
+                                                <span class="glyphicon glyphicon-remove" style="color:red;float:right;" ></span>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!ri.reqItemStatus}" >
+                                                <span class="glyphicon glyphicon-ok" style="color:green;float:right;" ></span>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:repeat>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
+                    <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-lg-3 col-lg-offset-2 col-md-4 col-md-offset-1 col-xs-6" >
+                    <a class="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" href="{!$Site.BaseUrl}/apex/ApplicationPortal?contactId={!contactId}&at={!$CurrentPage.parameters.at}" >Back to Portal</a>
+                </div>
+                <div class="col-lg-5 col-md-6 col-xs-6" >
+                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};float:right;margin-left:10px;margin-bottom:10px;" value="Cancel Application" action="{!cancelApp}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner()" rendered="{!allowCancel}"/>
+                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};float:right;margin-left:10px;margin-bottom:10px;" value="Withdraw Application" action="{!withdrawApp}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner()" rendered="{!allowWithdraw}"/>
+                    <apex:commandButton styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};float:right;margin-left:10px;margin-bottom:10px;" value="Submit Application" action="{!submit}" onclick="appShowLoadingSpinner();" disabled="{!!allowSubmit}"/>
+                    
+                </div>
+            </div>
+        </apex:form>
+    </c:ApplicationBody>
+
+</apex:page>

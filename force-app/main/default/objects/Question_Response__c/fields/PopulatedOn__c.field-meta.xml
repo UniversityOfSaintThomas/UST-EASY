@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PopulatedOn__c</fullName>
+    <description>The date/time that IsPopulated was set to true</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The date/time that IsPopulated was set to true</inlineHelpText>
+    <label>PopulatedOn</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

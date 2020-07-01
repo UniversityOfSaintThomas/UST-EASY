@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Stage__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Required to create or update an Opportunity.</inlineHelpText>
+    <label>Opportunity Stage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Inquired</fullName>
+                <default>true</default>
+                <label>Inquired</label>
+            </value>
+            <value>
+                <fullName>Confirmed Interest</fullName>
+                <default>false</default>
+                <label>Confirmed Interest</label>
+            </value>
+            <value>
+                <fullName>Applied</fullName>
+                <default>false</default>
+                <label>Applied</label>
+            </value>
+            <value>
+                <fullName>Evaluated</fullName>
+                <default>false</default>
+                <label>Evaluated</label>
+            </value>
+            <value>
+                <fullName>Admitted</fullName>
+                <default>false</default>
+                <label>Admitted</label>
+            </value>
+            <value>
+                <fullName>Deposit Received</fullName>
+                <default>false</default>
+                <label>Deposit Received</label>
+            </value>
+            <value>
+                <fullName>Enrolled</fullName>
+                <default>false</default>
+                <label>Enrolled</label>
+            </value>
+            <value>
+                <fullName>No Longer Interested</fullName>
+                <default>false</default>
+                <label>No Longer Interested</label>
+            </value>
+            <value>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+                <label>Withdrawn</label>
+            </value>
+            <value>
+                <fullName>Denied</fullName>
+                <default>false</default>
+                <label>Denied</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Campaign_Reference_ID__c</fullName>
+    <description>An external ID to match to the Campaign. It must either match an existing campaign&apos;s Campaign Reference ID, or a campaign&apos;s Salesforce ID. If filled out, it populates the Interaction &quot;Campaign Key&quot; formula field.</description>
+    <externalId>false</externalId>
+    <label>Campaign Reference ID</label>
+    <length>30</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Affiliation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates the Affiliation created from Affiliated Account should be set to Primary.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check this box to indicate the Affiliated Account is the Contact&apos;s main affiliation for that Account type.</inlineHelpText>
+    <label>Primary Affiliation</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

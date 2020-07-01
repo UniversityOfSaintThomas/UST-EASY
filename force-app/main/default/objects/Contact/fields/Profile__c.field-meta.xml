@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Profile__c</fullName>
+    <description>Place to upload pictures</description>
+    <externalId>false</externalId>
+    <inlineHelpText>picture</inlineHelpText>
+    <label>Profile</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
+</CustomField>

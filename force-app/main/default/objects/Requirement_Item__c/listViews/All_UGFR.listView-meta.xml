@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_UGFR</fullName>
+    <columns>Requirement__c</columns>
+    <columns>NAME</columns>
+    <columns>OBJECT_ID</columns>
+    <columns>RECORDTYPE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>contains</operation>
+        <value>UGFR</value>
+    </filters>
+    <label>All - UGFR</label>
+    <language>en_US</language>
+</ListView>

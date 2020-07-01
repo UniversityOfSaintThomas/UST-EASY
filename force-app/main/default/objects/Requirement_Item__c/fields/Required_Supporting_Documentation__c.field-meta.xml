@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_Supporting_Documentation__c</fullName>
+    <description>Status(es) when this Related Object Requirement Item also requires supporting documentation for each record.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Status(es) when this Related Object Requirement Item also requires supporting documentation for each record.</inlineHelpText>
+    <label>Required Supporting Documentation</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Application_Status</valueSetName>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

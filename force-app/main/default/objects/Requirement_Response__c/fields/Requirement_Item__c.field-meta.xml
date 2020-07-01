@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Requirement_Item__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Item this response is for.</description>
+    <externalId>false</externalId>
+    <label>Requirement Item</label>
+    <referenceTo>Requirement_Item__c</referenceTo>
+    <relationshipLabel>Requirement Responses</relationshipLabel>
+    <relationshipName>Requirement_Responses</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

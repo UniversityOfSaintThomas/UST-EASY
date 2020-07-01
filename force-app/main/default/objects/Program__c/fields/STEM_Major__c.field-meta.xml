@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>STEM_Major__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used primarily for undergraduate records to indicate this degree is considered a STEM major.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used primarily for undergraduate records to indicate this degree is considered a STEM major.</inlineHelpText>
+    <label>STEM Major</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

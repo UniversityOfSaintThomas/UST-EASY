@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Incomplete_Questions__c</fullName>
+    <externalId>false</externalId>
+    <label>Incomplete Questions</label>
+    <summaryFilterItems>
+        <field>Question_Response__c.IsComplete__c</field>
+        <operation>equals</operation>
+        <value>False</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Question_Response__c.Requirement_Response__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

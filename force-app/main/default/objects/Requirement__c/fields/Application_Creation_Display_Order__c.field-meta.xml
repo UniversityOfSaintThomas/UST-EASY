@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Creation_Display_Order__c</fullName>
+    <description>Controls whether this requirement shows before or after the Term/Program questions on application creation. If blank, shows before.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Controls whether this requirement shows before or after the Term/Program questions on application creation. If blank, shows before.</inlineHelpText>
+    <label>Application Creation Display Order</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Before Term/Program Questions</fullName>
+                <default>false</default>
+                <label>Before Term/Program Questions</label>
+            </value>
+            <value>
+                <fullName>After Term/Program Questions</fullName>
+                <default>false</default>
+                <label>After Term/Program Questions</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

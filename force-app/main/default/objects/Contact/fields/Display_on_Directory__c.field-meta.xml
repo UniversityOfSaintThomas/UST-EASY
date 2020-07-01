@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Display_on_Directory__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Calculates whether the contact should be visible in the directory</description>
+    <externalId>false</externalId>
+    <label>Display on Directory</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

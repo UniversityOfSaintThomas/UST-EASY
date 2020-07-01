@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_Number_of_Children__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>The minimum number of records that need to be populated to satisfy this requirement item (e.g. at least one high school is required for freshman)</inlineHelpText>
+    <label>Required Number of Children</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

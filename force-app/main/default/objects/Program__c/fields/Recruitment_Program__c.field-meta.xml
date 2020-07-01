@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recruitment_Program__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>An internal lookup filtered by Record Type = Recruitment Program to connect Academic Program record(s) to a Recruitment Program. This field only appears in the Academic Program page layout.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the Recruitment Program related to the Academic Program.</inlineHelpText>
+    <label>Recruitment Program</label>
+    <referenceTo>Program__c</referenceTo>
+    <relationshipLabel>Academic Programs</relationshipLabel>
+    <relationshipName>Academic_Programs</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

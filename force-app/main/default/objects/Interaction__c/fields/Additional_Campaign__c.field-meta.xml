@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Additional_Campaign__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The secondary campaign (event, marketing effort, etc.) connected to this Interaction. When the Additional Campaign Member Status field is also set, a Campaign Member will be created for the individual.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Set the secondary campaign (event, marketing effort, etc.) connected to this Interaction to create another Campaign Member.</inlineHelpText>
+    <label>Additional Campaign</label>
+    <referenceTo>Campaign</referenceTo>
+    <relationshipName>Additional_Campaigns</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

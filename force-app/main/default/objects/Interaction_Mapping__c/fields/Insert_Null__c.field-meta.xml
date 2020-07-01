@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insert_Null__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used for checkboxes to prevent unmapped checkboxes from being written over to false.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used for checkboxes to prevent unmapped checkboxes from being written over to false.</inlineHelpText>
+    <label>Insert Null</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

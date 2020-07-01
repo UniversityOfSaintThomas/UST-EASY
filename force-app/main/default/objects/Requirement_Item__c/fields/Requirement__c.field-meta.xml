@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Requirement__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Requirement that this item is a part of</inlineHelpText>
+    <label>Requirement</label>
+    <referenceTo>Requirement__c</referenceTo>
+    <relationshipLabel>Requirement Items</relationshipLabel>
+    <relationshipName>Requirement_Items</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

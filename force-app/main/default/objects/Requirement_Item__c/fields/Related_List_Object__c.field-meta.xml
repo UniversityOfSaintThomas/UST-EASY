@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Related_List_Object__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Object that this related object requirement item is populating</inlineHelpText>
+    <label>Related List Object</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Education_History__c</fullName>
+                <default>false</default>
+                <label>Education_History__c</label>
+            </value>
+            <value>
+                <fullName>Employment_History__c</fullName>
+                <default>false</default>
+                <label>Employment_History__c</label>
+            </value>
+            <value>
+                <fullName>hed__Contact_Language__c</fullName>
+                <default>false</default>
+                <label>hed__Contact_Language__c</label>
+            </value>
+            <value>
+                <fullName>hed__Attribute__c</fullName>
+                <default>false</default>
+                <label>hed__Attribute__c</label>
+            </value>
+            <value>
+                <fullName>hed__Test__c</fullName>
+                <default>false</default>
+                <label>hed__Test__c</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

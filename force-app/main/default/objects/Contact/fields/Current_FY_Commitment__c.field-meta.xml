@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_FY_Commitment__c</fullName>
+    <description>Fed from Banner</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Current Fiscal Year Commitments fed over from Banner</inlineHelpText>
+    <label>Current FY Commitment</label>
+    <precision>17</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Currency</type>
+</CustomField>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hardcoded_Values_Related_Requirements</fullName>
+    <active>false</active>
+    <errorConditionFormula>Requirement_Item__r.RecordType.DeveloperName != &apos;Related_Object&apos; &amp;&amp; NOT(ISBLANK(Hardcoded_Value__c))</errorConditionFormula>
+    <errorMessage>Hardcoded values can only be used with &quot;Related Object&quot; requirement items.</errorMessage>
+</ValidationRule>

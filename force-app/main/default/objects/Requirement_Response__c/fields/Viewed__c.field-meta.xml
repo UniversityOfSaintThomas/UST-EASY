@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Viewed__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates whether the applicant has viewed the requirement and related questions yet. Enables application architect to prevent submission until all requirements have been viewed.</description>
+    <externalId>false</externalId>
+    <label>Viewed</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

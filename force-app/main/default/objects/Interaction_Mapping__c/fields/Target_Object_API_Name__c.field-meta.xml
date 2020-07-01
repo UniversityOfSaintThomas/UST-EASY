@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Target_Object_API_Name__c</fullName>
+    <description>The API name of the Target Object to map Interaction data to. When adding new values, ensure that you use the API name of the object.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select the Target Object to map Interaction data to.</inlineHelpText>
+    <label>Target Object API Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CampaignMember</fullName>
+                <default>false</default>
+                <label>CampaignMember</label>
+            </value>
+            <value>
+                <fullName>Contact</fullName>
+                <default>false</default>
+                <label>Contact</label>
+            </value>
+            <value>
+                <fullName>hed__Affiliation__c</fullName>
+                <default>false</default>
+                <label>hed__Affiliation__c</label>
+            </value>
+            <value>
+                <fullName>Lead</fullName>
+                <default>false</default>
+                <label>Lead</label>
+            </value>
+            <value>
+                <fullName>Opportunity</fullName>
+                <default>false</default>
+                <label>Opportunity</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Additional_Campaign_Key__c</fullName>
+    <description>Specifies the Additional Campaign that should be connected to the additional Campaign Member created by this Interaction. If available, it uses the Interaction &quot;Campaign Reference ID&quot; field, otherwise it uses the &quot;Campaign Reference ID&quot; from the associated Additional Campaign.</description>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(Additional_Campaign_Reference_ID__c),CASESAFEID(Additional_Campaign__r.Campaign_Key__c),Additional_Campaign_Reference_ID__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Additional Campaign Key</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

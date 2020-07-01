@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>St_Thomas_Connection__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>All known connections to St Thomas</inlineHelpText>
+    <label>St. Thomas Connection</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Alumni-UG</fullName>
+                <default>false</default>
+                <label>Alumni-UG</label>
+            </value>
+            <value>
+                <fullName>Alumni-Grad</fullName>
+                <default>false</default>
+                <label>Alumni-Grad</label>
+            </value>
+            <value>
+                <fullName>Parent</fullName>
+                <default>false</default>
+                <label>Parent</label>
+            </value>
+            <value>
+                <fullName>Staff</fullName>
+                <default>false</default>
+                <label>Staff</label>
+            </value>
+            <value>
+                <fullName>Trustee</fullName>
+                <default>false</default>
+                <label>Trustee</label>
+            </value>
+            <value>
+                <fullName>Donor</fullName>
+                <default>false</default>
+                <label>Donor</label>
+            </value>
+            <value>
+                <fullName>Student</fullName>
+                <default>false</default>
+                <label>Student</label>
+            </value>
+            <value>
+                <fullName>Alumna/us</fullName>
+                <default>false</default>
+                <label>Alumna/us</label>
+            </value>
+            <value>
+                <fullName>Association</fullName>
+                <default>false</default>
+                <label>Association</label>
+            </value>
+            <value>
+                <fullName>Corporate Foundation</fullName>
+                <default>false</default>
+                <label>Corporate Foundation</label>
+            </value>
+            <value>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+                <label>Corporation</label>
+            </value>
+            <value>
+                <fullName>Donor Advised Fund</fullName>
+                <default>false</default>
+                <label>Donor Advised Fund</label>
+            </value>
+            <value>
+                <fullName>Estate</fullName>
+                <default>false</default>
+                <label>Estate</label>
+            </value>
+            <value>
+                <fullName>Faculty</fullName>
+                <default>false</default>
+                <label>Faculty</label>
+            </value>
+            <value>
+                <fullName>Former Employee</fullName>
+                <default>false</default>
+                <label>Former Employee</label>
+            </value>
+            <value>
+                <fullName>Former Trustee</fullName>
+                <default>false</default>
+                <label>Former Trustee</label>
+            </value>
+            <value>
+                <fullName>Foundation</fullName>
+                <default>false</default>
+                <label>Foundation</label>
+            </value>
+            <value>
+                <fullName>Fund-Raising Consortium</fullName>
+                <default>false</default>
+                <label>Fund-Raising Consortium</label>
+            </value>
+            <value>
+                <fullName>Government</fullName>
+                <default>false</default>
+                <label>Government</label>
+            </value>
+            <value>
+                <fullName>Government Foundation</fullName>
+                <default>false</default>
+                <label>Government Foundation</label>
+            </value>
+            <value>
+                <fullName>Graduate Student</fullName>
+                <default>false</default>
+                <label>Graduate Student</label>
+            </value>
+            <value>
+                <fullName>Inactive Non-Person</fullName>
+                <default>false</default>
+                <label>Inactive Non-Person</label>
+            </value>
+            <value>
+                <fullName>Inactive Person</fullName>
+                <default>false</default>
+                <label>Inactive Person</label>
+            </value>
+            <value>
+                <fullName>Institution Foundation</fullName>
+                <default>false</default>
+                <label>Institution Foundation</label>
+            </value>
+            <value>
+                <fullName>Non Degreed Alumna/us</fullName>
+                <default>false</default>
+                <label>Non Degreed Alumna/us</label>
+            </value>
+            <value>
+                <fullName>Non-Constituent Person</fullName>
+                <default>false</default>
+                <label>Non-Constituent Person</label>
+            </value>
+            <value>
+                <fullName>Non-Revocable Trust</fullName>
+                <default>false</default>
+                <label>Non-Revocable Trust</label>
+            </value>
+            <value>
+                <fullName>Other Organization</fullName>
+                <default>false</default>
+                <label>Other Organization</label>
+            </value>
+            <value>
+                <fullName>Other Person</fullName>
+                <default>false</default>
+                <label>Other Person</label>
+            </value>
+            <value>
+                <fullName>Personal/ Family Foundation</fullName>
+                <default>false</default>
+                <label>Personal/ Family Foundation</label>
+            </value>
+            <value>
+                <fullName>Prospective Student</fullName>
+                <default>false</default>
+                <label>Prospective Student</label>
+            </value>
+            <value>
+                <fullName>Religious Organization</fullName>
+                <default>false</default>
+                <label>Religious Organization</label>
+            </value>
+            <value>
+                <fullName>Revocable Trust</fullName>
+                <default>false</default>
+                <label>Revocable Trust</label>
+            </value>
+            <value>
+                <fullName>Trustee Emeritus</fullName>
+                <default>false</default>
+                <label>Trustee Emeritus</label>
+            </value>
+            <value>
+                <fullName>Withdrawn Student</fullName>
+                <default>false</default>
+                <label>Withdrawn Student</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

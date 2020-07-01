@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admin_View</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Admin View</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/apex/ApplicationAdminView?contactId={!Application__c.ContactId__c}&amp;applicationId={!Application__c.Id}</url>
+</WebLink>

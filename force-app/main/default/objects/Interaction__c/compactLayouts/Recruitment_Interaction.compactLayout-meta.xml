@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recruitment_Interaction</fullName>
+    <fields>Contact__c</fields>
+    <fields>Interaction_Status__c</fields>
+    <fields>Email__c</fields>
+    <fields>Lead_Source__c</fields>
+    <fields>Lead__c</fields>
+    <label>Recruitment Interaction</label>
+</CompactLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Banner_Program_Code__c</fullName>
+    <description>Banner Program Code</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Banner Program Code</inlineHelpText>
+    <label>Banner Program Code</label>
+    <length>10</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

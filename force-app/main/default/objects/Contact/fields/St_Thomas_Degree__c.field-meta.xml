@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>St_Thomas_Degree__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>St Thomas Degree</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>hed__Affiliation__c.hed__Affiliation_Type__c</field>
+            <operation>equals</operation>
+            <value>Educational Institution</value>
+        </filterItems>
+        <filterItems>
+            <field>hed__Affiliation__c.hed__Primary__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <filterItems>
+            <field>hed__Affiliation__c.Major__c</field>
+            <operation>equals</operation>
+            <value/>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>hed__Affiliation__c</referenceTo>
+    <relationshipLabel>Contacts</relationshipLabel>
+    <relationshipName>Contacts</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

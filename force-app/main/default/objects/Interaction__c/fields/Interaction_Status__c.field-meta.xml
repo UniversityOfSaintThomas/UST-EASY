@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Interaction_Status__c</fullName>
+    <description>When set to &quot;New,&quot; the Interaction Processor runs, then updates the Status based on the result to &quot;Imported&quot; or &quot;Audit Needed.&quot;</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Set the Status to &quot;New&quot; and save to kick off the Interaction process.</inlineHelpText>
+    <label>Interaction Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>New</fullName>
+                <default>true</default>
+                <label>New</label>
+            </value>
+            <value>
+                <fullName>Audit Required</fullName>
+                <default>false</default>
+                <label>Audit Required</label>
+            </value>
+            <value>
+                <fullName>Imported</fullName>
+                <default>false</default>
+                <label>Imported</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

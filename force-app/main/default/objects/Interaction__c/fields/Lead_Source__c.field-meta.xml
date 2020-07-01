@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Source__c</fullName>
+    <description>The way in which the Lead or Contact&apos;s information was first received.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Indicate the initial source of this data.</inlineHelpText>
+    <label>Lead Source</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Purchase List</fullName>
+                <default>false</default>
+                <label>Purchase List</label>
+            </value>
+            <value>
+                <fullName>College Fair</fullName>
+                <default>false</default>
+                <label>College Fair</label>
+            </value>
+            <value>
+                <fullName>Office Visit</fullName>
+                <default>false</default>
+                <label>Office Visit</label>
+            </value>
+            <value>
+                <fullName>Webform</fullName>
+                <default>false</default>
+                <label>Webform</label>
+            </value>
+            <value>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+                <label>Phone Call</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

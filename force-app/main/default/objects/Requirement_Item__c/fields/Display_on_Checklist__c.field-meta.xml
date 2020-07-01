@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Display_on_Checklist__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>If checked, this Requirement Item will display on the Application Checklist.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If checked, this Requirement Item will display on the Application Checklist.</inlineHelpText>
+    <label>Display on Checklist</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

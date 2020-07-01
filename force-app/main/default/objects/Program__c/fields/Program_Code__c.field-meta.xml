@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Program_Code__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>A checkbox to mark whether or not a Program is active.</description>
+    <externalId>true</externalId>
+    <inlineHelpText>External code for the program (e.g. SIS ID). This is used for integration with external systems.</inlineHelpText>
+    <label>Program Code</label>
+    <length>15</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Audit_Reason__c</fullName>
+    <description>Lists the errors returned when the Interaction Processor fails and the Interaction Status is set to Audit Needed.</description>
+    <externalId>false</externalId>
+    <label>Audit Reason</label>
+    <length>1000</length>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

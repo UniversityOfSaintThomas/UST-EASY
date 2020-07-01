@@ -1,0 +1,25 @@
+minimum_cumulusci_version: '3.15.0.dev2'
+project:
+    name: EASY-Open-Source-Solution
+    package:
+        name:  EASY-Open-Source-Solution
+        api_version: '48.0'
+    dependencies:
+        - github: 'https://github.com/SalesforceFoundation/EDA'
+    source_format: sfdx
+
+tasks:
+    robot:
+        options:
+            suites: robot/EASY-Open-Source-Solution/tests
+            options:
+                outputdir: robot/EASY-Open-Source-Solution/results
+
+    robot_testdoc:
+        options:
+            path: robot/EASY-Open-Source-Solution/tests
+            output: robot/EASY-Open-Source-Solution/doc/EASY-Open-Source-Solution_tests.html
+
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 75

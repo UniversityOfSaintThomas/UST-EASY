@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TextEncrypted</fullName>
+    <active>true</active>
+    <description>Encrypted text field</description>
+    <label>Text (Encrypted)</label>
+    <picklistValues>
+        <picklist>Applicant_Type__c</picklist>
+        <values>
+            <fullName>DFC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>First-Year</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer DFC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Application_Status__c</picklist>
+        <values>
+            <fullName>Complete-Decision Made</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete-Pending Additional Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete-Pending Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposit Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposit Waived</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incomplete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Withdrawn</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Citizenship__c</picklist>
+        <values>
+            <fullName>Asylee%2FRefugee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>U%2ES%2E Citizen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>U%2ES%2E Dual Citizen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>U%2ES%2E Permanent Resident</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Degree_Type__c</picklist>
+        <values>
+            <fullName>Associate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor%27s</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctoral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Juris Doctor %28JD%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Licensure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master%27s</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post-Masters Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-Professional Program</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Delivery_Type__c</picklist>
+        <values>
+            <fullName>Evenings and Weekends</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On-Campus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Dependency_Behavior__c</picklist>
+        <values>
+            <fullName>Hide</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Show</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Dependency_Logic__c</picklist>
+        <values>
+            <fullName>AND</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Editable_Application_Status__c</picklist>
+        <values>
+            <fullName>Complete-Decision Made</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete-Pending Additional Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete-Pending Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposit Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposit Waived</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incomplete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Withdrawn</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Generic_Filter_1__c</picklist>
+        <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Test%7CTest%7CTest</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Generic_Filter_2__c</picklist>
+        <values>
+            <fullName>Applicant 25 or over</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Applicant under 25</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Generic_Filter_3__c</picklist>
+        <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Generic_Filter_4__c</picklist>
+        <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Required__c</picklist>
+        <values>
+            <fullName>Complete-Decision Made</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete-Pending Additional Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete-Pending Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposit Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposit Waived</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incomplete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Withdrawn</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Residency__c</picklist>
+        <values>
+            <fullName>Non-Resident</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resident</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>School_College__c</picklist>
+        <values>
+            <fullName>College of Arts and Sciences</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College of Education%2C Leadership and Counseling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College of Health Professions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate School of Professional Psychology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opus College of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Social Work</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>The Murray Institute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>The Saint Paul Seminary School of Divinity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Undergraduate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Student_Type__c</picklist>
+        <values>
+            <fullName>Adult</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traditional</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Age__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( (ISBLANK(Deceased_Date__c) &amp;&amp; NOT(hed__Deceased__c = TRUE)),
+
+
+(YEAR(TODAY()) - YEAR(Birthdate) -
+( IF( ( ( MONTH(TODAY()) &lt; MONTH(Birthdate) ) ||
+( (MONTH(TODAY()) == MONTH(Birthdate)) &amp;&amp; ( DAY(TODAY()) &lt; DAY(Birthdate) ))
+),1,0
+)
+)),Null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Calculated field based on birthdate. Please do not edit directly</inlineHelpText>
+    <label>Age</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

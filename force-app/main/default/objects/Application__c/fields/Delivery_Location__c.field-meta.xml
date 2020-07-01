@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Delivery_Location__c</fullName>
+    <externalId>false</externalId>
+    <label>Delivery Location</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>On-Campus</fullName>
+                <default>false</default>
+                <label>On-Campus</label>
+            </value>
+            <value>
+                <fullName>Online</fullName>
+                <default>false</default>
+                <label>Online</label>
+            </value>
+            <value>
+                <fullName>Blended</fullName>
+                <default>false</default>
+                <label>Blended</label>
+            </value>
+            <value>
+                <fullName>Scott Air force Base</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Scott Air force Base</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

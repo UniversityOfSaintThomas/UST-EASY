@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Viewing_Requirement__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Determines whether applicants need to view all items within a requirement before submission</description>
+    <externalId>false</externalId>
+    <label>Viewing Requirement</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

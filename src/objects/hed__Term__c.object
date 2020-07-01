@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Term_Integration_External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <defaultValue>&quot;hed__Term__c&quot; &amp; TEXT(NOW()) &amp; MID($User.Id,6,5)</defaultValue>
+        <description>Used for integration</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Used for integration</inlineHelpText>
+        <label>Term Integration External Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+</CustomObject>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Label__c</fullName>
+    <description>The label of this requirement item. If left blank, the name is used.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The label of this requirement item. If left blank, the name is used.</inlineHelpText>
+    <label>Label</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

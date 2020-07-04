@@ -1,6 +1,10 @@
 {
   "orgName": "EASY-Open-Source-Solution - Beta Test Org",
   "edition": "Developer",
+  "features": [
+    "Communities",
+    "Sites"
+  ],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
@@ -16,5 +20,12 @@
       "sessionSettings": {
         "forceRelogin": false
       }
-    }  }
+    },
+    "languageSettings": {
+      "enableTranslationWorkbench": true
+    },
+    "orgPreferenceSettings": {
+      "networksEnabled": true
+    }
+  }
 }

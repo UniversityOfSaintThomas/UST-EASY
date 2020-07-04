@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Department__c</fullName>
+    <description>Returns the Department from the Academic Program if there is one, otherwise it returns the Department from the Recruitment Program if there is one.</description>
+    <externalId>false</externalId>
+    <formula>/*If an Academic Program exists for the Opportunity, retrieve the associated School/College from the Academic Program Account*/
+IF(NOT(ISBLANK(Academic_Program__c)),(  Academic_Program__r.Department__r.Name  ),
+
+/*IF not, retrieve the associated School/College from the Recruitment Program Account on the Opportunity*/
+(  Recruitment_Program__r.Department__r.Name  ))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Department</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

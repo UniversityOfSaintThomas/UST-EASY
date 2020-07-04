@@ -268,14 +268,6 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>AlumniView</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -332,16 +324,7 @@
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <searchLayouts>
         <customTabListAdditionalFields>FULL_NAME</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Preferred_Class_Year__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Previous_Last_Name__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Primary_University_Relationship__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>University_Banner_ID__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Donor_Status__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Gift_Officer__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Preferred_Class_Year__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Trustee__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>University_Banner_ID__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
@@ -352,16 +335,7 @@
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE6</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>hed__WorkPhone__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.PHONE1</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>Preferred_Class_Year__c</searchFilterFields>
-        <searchFilterFields>St_Thomas_Connection__c</searchFilterFields>
         <searchResultsAdditionalFields>FULL_NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Donor_Status__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Gift_Officer__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Gift_Officer_Contact__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Preferred_Class_Year__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Preferred_First_Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Primary_University_Relationship__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>University_Banner_ID__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>

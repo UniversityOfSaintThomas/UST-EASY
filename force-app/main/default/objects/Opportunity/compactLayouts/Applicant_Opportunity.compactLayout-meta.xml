@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Applicant_Opportunity</fullName>
+    <fields>Name</fields>
+    <fields>Academic_Program__c</fields>
+    <fields>OwnerId</fields>
+    <label>Applicant Opportunity</label>
+</CompactLayout>

@@ -1,6 +1,7 @@
 {
   "orgName": "EASY-Open-Source-Solution - Dev Org",
   "edition": "Developer",
+  "features": ["Communities", "Sites"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
@@ -19,6 +20,9 @@
     },
     "languageSettings": {
       "enableTranslationWorkbench": true
+    },
+    "orgPreferenceSettings": {
+      "networksEnabled": true
     }
   }
 }

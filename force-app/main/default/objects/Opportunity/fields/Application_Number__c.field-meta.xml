@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Number__c</fullName>
+    <description>The external ID used by the application collection tool or database for matching to Applicant Opportunities. Only displays on the Applicant Opportunity page layout.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The external ID used by the application collection tool or database for matching to Applicant Opportunities.</inlineHelpText>
+    <label>Application Number</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

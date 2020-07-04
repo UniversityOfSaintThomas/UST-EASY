@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Affiliated_Account__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The organizational account (Ex: business, high school, college, etc.) a student is affiliated with. Filtered to exclude the Administrative Account Record Type.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The organizational account (Ex: business, high school, college, etc.) a student is affiliated with.</inlineHelpText>
+    <label>Affiliated Account</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Opportunities (Affiliated Account)</relationshipLabel>
+    <relationshipName>Affiliated_Opportunities</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

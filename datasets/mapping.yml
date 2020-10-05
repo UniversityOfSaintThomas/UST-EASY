@@ -1,45 +1,668 @@
-Insert Accounts:
+Insert Academic_Term__c:
+  sf_object: Academic_Term__c
+  fields:
+  - Academic_Term_Integration_External_ID__c
+  - Activate_Application_Date__c
+  - Banner_Term_Code__c
+  - End_Application_Date__c
+  - Housing_End_Date__c
+  - Housing_Start_Date__c
+  - Name
+  - Term_End_Date__c
+  - Term_Start_Date__c
+Insert Application_Control__c:
+  sf_object: Application_Control__c
+  fields:
+  - Active__c
+  - Allow_Cancel_From__c
+  - Allow_Submit_From__c
+  - Allow_Withdraw_From__c
+  - Application_Control_External_ID__c
+  - Application_Start_Status__c
+  - Arrow_Color__c
+  - Button_Color__c
+  - Button_Text_Color__c
+  - Cancel_Status__c
+  - Default__c
+  - Hide_Term_Program__c
+  - Line_Color__c
+  - Link_Color__c
+  - Logo_Static_Resource_Path__c
+  - Logo_Static_Resource__c
+  - Name
+  - Submit_Status__c
+  - Text_Color__c
+  - URL_Parameter__c
+  - Withdraw_Status__c
+Insert Campaign:
+  sf_object: Campaign
+  fields:
+  - Campaign_Key__c
+  - IsActive
+  - Name
+Insert Interaction_Mapping__c:
+  sf_object: Interaction_Mapping__c
+  fields:
+  - Active__c
+  - Insert_Null__c
+  - Interaction_Source_Field_API_Name__c
+  - Skip_Mapping__c
+  - Target_Field_API_Name__c
+  - Target_Object_API_Name__c
+Insert hed__Language__c:
+  sf_object: hed__Language__c
+  fields:
+  - Name
+Insert Account:
   sf_object: Account
-  table: Account
   fields:
-    Name: Name
-    Description: Description
-    BillingStreet: BillingStreet
-    BillingCity: BillingCity
-    BillingState: BillingState
-    BillingPostalCode: BillingPostalCode
-    BillingCountry: BillingCountry
-    ShippingStreet: ShippingStreet
-    ShippingCity: ShippingCity
-    ShippingState: ShippingState
-    ShippingPostalCode: ShippingPostalCode
-    ShippingCountry: ShippingCountry
-    Phone: Phone
-    Fax: Fax
-    Website: Website
-    NumberOfEmployees: NumberOfEmployees
-    AccountNumber: AccountNumber
-    Site: Site
-    Type: Type
-Insert Contacts:
+  - Account_Integration_External_ID__c
+  - Name
+  - RecordTypeId
+  - hed__Billing_County__c
+  - hed__School_Code__c
+  - hed__Shipping_County__c
+  lookups:
+    ParentId:
+      table: Account
+      after: Insert Account
+    hed__Current_Address__c:
+      table: hed__Address__c
+      after: Insert hed__Address__c
+    hed__Primary_Contact__c:
+      table: Contact
+      after: Insert Contact
+Insert Program__c:
+  sf_object: Program__c
+  fields:
+  - Academic_Level__c
+  - Active__c
+  - Applicant_Type__c
+  - Application_Fee_Amount__c
+  - Banner_Program_Code__c
+  - CIP_Code__c
+  - Career__c
+  - Citizenship__c
+  - Concentration_Code__c
+  - Degree_Type__c
+  - Degree__c
+  - Delivery_Type__c
+  - Description__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Hide_Applicant_Type__c
+  - Hide_Citizenship__c
+  - Hide_Student_Type__c
+  - Hide_from_Application__c
+  - Major_Code__c
+  - Name
+  - Number_of_Applications_Limit__c
+  - Pre_Professional_Program__c
+  - Program_Code__c
+  - Program_Integration_External_Id__c
+  - Program_Name_on_Application__c
+  - Program_Offered_Name__c
+  - Program_Record_Type__c
+  - Program_Type__c
+  - RecordTypeId
+  - Residency__c
+  - STEM_Major__c
+  - STVMAJR_CIPC_CODE__c
+  - STVMAJR_VALID_CONCENTRATN_IND__c
+  - STVMAJR_VALID_MAJOR_IND__c
+  - STVMAJR_VALID_MINOR_IND__c
+  - School_College__c
+  - Student_Type__c
+  - UG_Integration_Program_Code__c
+  lookups:
+    Application_Control__c:
+      table: Application_Control__c
+    Department__c:
+      table: Account
+    Recruitment_Program__c:
+      table: Program__c
+      after: Insert Program__c
+Insert hed__Facility__c:
+  sf_object: hed__Facility__c
+  fields:
+  - Name
+  - hed__Capacity__c
+  - hed__Description__c
+  - hed__Facility_Type__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Parent_Facility__c:
+      table: hed__Facility__c
+      after: Insert hed__Facility__c
+Insert hed__Term__c:
+  sf_object: hed__Term__c
+  fields:
+  - Name
+  - Term_Integration_External_Id__c
+  - hed__End_Date__c
+  - hed__Grading_Period_Sequence__c
+  - hed__Instructional_Days__c
+  - hed__Start_Date__c
+  - hed__Type__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Parent_Term__c:
+      table: hed__Term__c
+      after: Insert hed__Term__c
+Insert Intended_Program_Term__c:
+  sf_object: Intended_Program_Term__c
+  fields:
+  - Activate_Application_Date__c
+  - Applicant_Type__c
+  - Citizenship__c
+  - Degree_Type__c
+  - Delivery_Type__c
+  - End_Application_Date__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Intended_Program_Term_Integration_Ext_Id__c
+  - Name
+  - Period_Id__c
+  - Residency__c
+  - School_College__c
+  - Student_Type__c
+  lookups:
+    Academic_Term__c:
+      table: Academic_Term__c
+    Intended_Program__c:
+      table: Program__c
+Insert Lead:
+  sf_object: Lead
+  fields:
+  - Admit_Type__c
+  - Affiliation_Role__c
+  - Birthdate__c
+  - Company
+  - Constituent_ID__c
+  - DoNotCall
+  - Ethnicity__c
+  - FirstName
+  - Gender__c
+  - HasOptedOutOfEmail
+  - HasOptedOutOfFax
+  - IsConverted
+  - IsUnreadByOwner
+  - LastName
+  - Primary_Affiliation__c
+  - Race__c
+  - Status
+  lookups:
+    Affiliated_Account__c:
+      table: Account
+    Recruitment_Program__c:
+      table: Program__c
+Insert Requirement__c:
+  sf_object: Requirement__c
+  fields:
+  - Active__c
+  - Applicant_Type__c
+  - Application_Creation_Display_Order__c
+  - Application_Status__c
+  - Citizenship__c
+  - Degree_Type__c
+  - Delivery_Type__c
+  - Display_Order__c
+  - Display_on_Admin_Review_Pages__c
+  - Display_on_Checklist__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Internal_Only_Show_on_Checklist__c
+  - Internal_Only__c
+  - Label__c
+  - Name
+  - R_IUD__c
+  - Requirement_Integration_External_Id__c
+  - Residency__c
+  - School_College__c
+  - Show_on_Application_Creation__c
+  - Student_Type__c
+  - Viewing_Requirement__c
+  lookups:
+    Application_Control__c:
+      table: Application_Control__c
+    Intended_Program__c:
+      table: Program__c
+Insert Requirement_Item__c:
+  sf_object: Requirement_Item__c
+  fields:
+  - Active__c
+  - Allow_Supporting_Documentation_Upload__c
+  - Allow_Text_Entry__c
+  - Applicant_Type__c
+  - Application_Status__c
+  - Citizenship__c
+  - Degree_Type__c
+  - Delivery_Type__c
+  - Display_Order__c
+  - Display_on_Admin_Review_Pages__c
+  - Display_on_Checklist__c
+  - Editable_Application_Status__c
+  - File_Types__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Holding_Record_Id__c
+  - Instructions__c
+  - Internal_Only_Applicant_Instructions__c
+  - Internal_Only_Show_on_Checklist__c
+  - Internal_Only__c
+  - Label__c
+  - Maximum_Number_of_Children__c
+  - Name
+  - RI_UID__c
+  - R_UID__c
+  - RecordTypeId
+  - Related_List_Object_Master_Field__c
+  - Related_List_Object_Master__c
+  - Related_List_Object__c
+  - Related_List_Where_Clause__c
+  - Required_Number_of_Children__c
+  - Required_Supporting_Documentation__c
+  - Required__c
+  - Requirement_Item_Integration_Ext_Id__c
+  - Residency__c
+  - School_College__c
+  - Student_Type__c
+  - Viewing_Requirement__c
+  lookups:
+    Intended_Program__c:
+      table: Program__c
+    Internal_Requirement_Item__c:
+      table: Requirement_Item__c
+      after: Insert Requirement_Item__c
+    Requirement__c:
+      table: Requirement__c
+Insert Question__c:
+  sf_object: Question__c
+  fields:
+  - Active__c
+  - Applicant_Type__c
+  - Application_Field__c
+  - Application_Status__c
+  - Citizenship__c
+  - Contact_Field__c
+  - Degree_Type__c
+  - Delivery_Type__c
+  - Dependency_Behavior__c
+  - Dependency_Logic__c
+  - Display_Order__c
+  - Display_as_Picklist__c
+  - Display_on_Admin_Review_Pages__c
+  - Editable_Application_Status__c
+  - External_Email_Field__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Hardcoded_Value__c
+  - Help_Text__c
+  - Label__c
+  - Length__c
+  - Lookup_Object__c
+  - Lookup_Where_Clause__c
+  - Name
+  - Name_Field_API_Name__c
+  - New_Reference_Field__c
+  - Picklist_Values__c
+  - Placeholder__c
+  - Q_UID__c
+  - Question_Integration_External_Id__c
+  - RI_UID__c
+  - RecordTypeId
+  - Related_Object_Field__c
+  - Required__c
+  - Residency__c
+  - School_College__c
+  - Static_Text__c
+  - Student_Type__c
+  - URL_Parameter__c
+  lookups:
+    Intended_Program__c:
+      table: Program__c
+    Requirement_Item__c:
+      table: Requirement_Item__c
+Insert Question_Dependency__c:
+  sf_object: Question_Dependency__c
+  fields:
+  - Question_Dependency_Integration_Ext_Id__c
+  - RecordTypeId
+  - ValueCheckbox__c
+  - Value__c
+  lookups:
+    Controlling_Question__c:
+      table: Question__c
+    Question__c:
+      table: Question__c
+Insert Application_Review__c:
+  sf_object: Application_Review__c
+  fields:
+  - Completed__c
+  - Date_Completed__c
+  - Decision_Recommendation__c
+  - Due_Date__c
+  - Start_Date__c
+  - Terminated__c
+  lookups:
+    Application__c:
+      table: Application__c
+      after: Insert Application__c
+Insert Application__c:
+  sf_object: Application__c
+  fields:
+  - Admission_Decision__c
+  - Applicant_Type__c
+  - Application_Status__c
+  - Citizenship__c
+  - Degree_Type__c
+  - Delivery_Location__c
+  - Delivery_Type__c
+  - Educational_Background__c
+  - Future_ACT_SAT_Times__c
+  - Future_Test_Date__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Holding_Name__c
+  - Related_Object_JSON__c
+  - Residency__c
+  - School_College__c
+  - Self_Reported_Test_Acknowledgement_Date__c
+  - Self_Reported_Test_Acknowledgement__c
+  - Self_Reported_Test_Score__c
+  - Self_Reported_Test_Scores_Times_Taken__c
+  - Student_Type__c
+  - Take_ACT_SAT__c
+  - User_Created__c
+  lookups:
+    Application_Control__c:
+      table: Application_Control__c
+    Contact__c:
+      table: Contact
+      after: Insert Contact
+    Intended_Program__c:
+      table: Program__c
+    Intended_Term_of_Entry__c:
+      table: Academic_Term__c
+Insert Requirement_Response__c:
+  sf_object: Requirement_Response__c
+  fields:
+  - Archive_Payload__c
+  - Child_Requirement_Fulfilled_On__c
+  - Document_Requirement_Fulfilled_On__c
+  - External_Email__c
+  - HasDocument__c
+  - Has_Child_Requirement__c
+  - Hashcode__c
+  - Send_Reminder__c
+  - ValueTextEntry__c
+  - Viewed__c
+  - Waive_Requirement__c
+  lookups:
+    Application__c:
+      table: Application__c
+    Requirement_Item__c:
+      table: Requirement_Item__c
+Insert Question_Response__c:
+  sf_object: Question_Response__c
+  fields:
+  - City__c
+  - Country__c
+  - IsPopulated__c
+  - IsRequired__c
+  - IsShown__c
+  - PopulatedOn__c
+  - PostalCode__c
+  - State__c
+  - Street__c
+  - ValueCheckbox__c
+  - ValueCurrency__c
+  - ValueDateTime__c
+  - ValueDate__c
+  - ValueEmail__c
+  - ValueLongTextArea__c
+  - ValueNumber__c
+  - ValuePercent__c
+  - ValuePhone__c
+  - ValueTextArea__c
+  - ValueTextEncrypted__c
+  - ValueText__c
+  - ValueURL__c
+  lookups:
+    Question__c:
+      table: Question__c
+    Requirement_Response__c:
+      table: Requirement_Response__c
+Insert CampaignMember:
+  sf_object: CampaignMember
+  fields:
+  - Campaign_Member_Key__c
+  lookups:
+    CampaignId:
+      table: Campaign
+    ContactId:
+      table: Contact
+      after: Insert Contact
+    LeadId:
+      table: Lead
+Insert Contact:
   sf_object: Contact
-  table: Contact
   fields:
-    Salutation: Salutation
-    FirstName: FirstName
-    LastName: LastName
-    Email: Email
-    Phone: Phone
-    MobilePhone: MobilePhone
-    OtherPhone: OtherPhone
-    HomePhone: HomePhone
-    Title: Title
-    Birthdate: Birthdate
-    MailingStreet: MailingStreet
-    MailingCity: MailingCity
-    MailingState: MailingState
-    MailingPostalCode: MailingPostalCode
-    MailingCountry: MailingCountry
+  - Admissions_Mobile_Opt_In__c
+  - Constituent_ID__c
+  - Contact_Banner_Key__c
+  - Contact_Constituent_ID__c
+  - Deceased_Date__c
+  - DoNotCall
+  - FirstName
+  - Grad_Level__c
+  - HasOptedOutOfEmail
+  - HasOptedOutOfFax
+  - LastName
+  - University_Banner_ID__c
+  - University_Banner_PIDM__c
+  - hed__AlternateEmail__c
+  - hed__Chosen_Full_Name__c
+  - hed__Citizenship_Status__c
+  - hed__Citizenship__c
+  - hed__Contact_JSON__c
+  - hed__Country_of_Origin__c
+  - hed__Date_Deceased__c
+  - hed__Deceased__c
+  - hed__Do_Not_Contact__c
+  - hed__Dual_Citizenship__c
+  - hed__Ethnicity__c
+  - hed__Exclude_from_Household_Formal_Greeting__c
+  - hed__Exclude_from_Household_Informal_Greeting__c
+  - hed__Exclude_from_Household_Name__c
+  - hed__FERPA__c
+  - hed__Financial_Aid_Applicant__c
+  - hed__Former_First_Name__c
+  - hed__Former_Last_Name__c
+  - hed__Former_Middle_Name__c
+  - hed__Gender__c
+  - hed__HIPAA_Detail__c
+  - hed__HIPAA__c
+  - hed__Mailing_County__c
+  - hed__Military_Background__c
+  - hed__Military_Service__c
+  - hed__Naming_Exclusions__c
+  - hed__Other_County__c
+  - hed__PreferredPhone__c
+  - hed__Preferred_Email__c
+  - hed__Primary_Address_Type__c
+  - hed__Race__c
+  - hed__Religion__c
+  - hed__Secondary_Address_Type__c
+  - hed__Social_Security_Number__c
+  - hed__UniversityEmail__c
+  - hed__WorkEmail__c
+  - hed__WorkPhone__c
+  - hed__is_Address_Override__c
   lookups:
     AccountId:
-      table: accounts
+      table: Account
+    Primary_Academic_Program__c:
+      table: Account
+    Primary_Department__c:
+      table: Account
+    Primary_Educational_Institution__c:
+      table: Account
+    Primary_Sports_Organization__c:
+      table: Account
+    ReportsToId:
+      table: Contact
+      after: Insert Contact
+    hed__Current_Address__c:
+      table: hed__Address__c
+      after: Insert hed__Address__c
+    hed__Primary_Household__c:
+      table: Account
+    hed__Primary_Language__c:
+      table: hed__Language__c
+    hed__Primary_Organization__c:
+      table: Account
+Insert Education_History__c:
+  sf_object: Education_History__c
+  fields:
+  - College_Courses_9th_Grade_On__c
+  - Degree__c
+  - Diploma_GED_Earned_Date__c
+  - Diploma_GED_Earned__c
+  - End_Date__c
+  - Holding_Name__c
+  - Most_Recent_College_in_US__c
+  - Name
+  - RecordTypeId
+  - Related_Object_JSON__c
+  - Start_Date__c
+  - User_Created__c
+  lookups:
+    Contact__c:
+      table: Contact
+    Institution__c:
+      table: Account
+Insert Opportunity:
+  sf_object: Opportunity
+  fields:
+  - Admit_Type__c
+  - Application_Number__c
+  - Application_Submitted_Date__c
+  - CloseDate
+  - First_Inquiry_Source__c
+  - First_Recruitment_Program__c
+  - Inquiry_Date__c
+  - IsPrivate
+  - Name
+  - Opportunity_Key__c
+  - RecordTypeId
+  - StageName
+  lookups:
+    Academic_Program__c:
+      table: Program__c
+    AccountId:
+      table: Account
+    Affiliated_Account__c:
+      table: Account
+    CampaignId:
+      table: Campaign
+    ContactId:
+      table: Contact
+    Contact__c:
+      table: Contact
+    Recruitment_Program__c:
+      table: Program__c
+Insert hed__Address__c:
+  sf_object: hed__Address__c
+  fields:
+  - hed__Address_Type__c
+  - hed__Default_Address__c
+  - hed__Latest_End_Date__c
+  - hed__Latest_Start_Date__c
+  - hed__MailingCity__c
+  - hed__MailingCountry__c
+  - hed__MailingCounty__c
+  - hed__MailingPostalCode__c
+  - hed__MailingState__c
+  - hed__MailingStreet2__c
+  - hed__MailingStreet__c
+  - hed__Seasonal_End_Day__c
+  - hed__Seasonal_End_Month__c
+  - hed__Seasonal_End_Year__c
+  - hed__Seasonal_Start_Day__c
+  - hed__Seasonal_Start_Month__c
+  - hed__Seasonal_Start_Year__c
+  lookups:
+    hed__Parent_Account__c:
+      table: Account
+    hed__Parent_Contact__c:
+      table: Contact
+Insert Interaction__c:
+  sf_object: Interaction__c
+  fields:
+  - Additional_Campaign_Member_Status__c
+  - Additional_Campaign_Reference_ID__c
+  - Admit_Type__c
+  - Affiliation_Role__c
+  - Affiliation_Status__c
+  - Application_Number__c
+  - Audit_Reason__c
+  - Birthdate__c
+  - Campaign_Member_Status__c
+  - Campaign_Reference_ID__c
+  - Constituent_ID__c
+  - Contact_Title__c
+  - Email__c
+  - Ethnicity__c
+  - First_Name__c
+  - Gender__c
+  - Home_Phone__c
+  - Interaction_Source__c
+  - Interaction_Status__c
+  - Interaction_Upsert_Key__c
+  - Last_Name__c
+  - Lead_Only__c
+  - Lead_Source__c
+  - Mailing_City__c
+  - Mailing_Country__c
+  - Mailing_Postal_Code__c
+  - Mailing_State__c
+  - Mailing_Street__c
+  - Middle_Name__c
+  - Mobile_Phone__c
+  - Opportunity_Stage__c
+  - Primary_Affiliation__c
+  - Race__c
+  - Salutation__c
+  - University_Email__c
+  lookups:
+    Academic_Program__c:
+      table: Program__c
+    Additional_Campaign__c:
+      table: Campaign
+    Affiliated_Account__c:
+      table: Account
+    Campaign__c:
+      table: Campaign
+    Contact__c:
+      table: Contact
+    Lead__c:
+      table: Lead
+    Opportunity__c:
+      table: Opportunity
+    Recruitment_Program__c:
+      table: Program__c

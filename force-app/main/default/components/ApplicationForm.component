@@ -60,7 +60,7 @@
         <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>
         <apex:outputPanel id="formPageMessages" styleClass="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
-                <apex:pageMessages/>
+                <apex:pageMessages />
             </div>
         </apex:outputPanel>
         <div class="row">
@@ -93,6 +93,6 @@
                 <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;"/>
             </div>
         </div>
-        <apex:componentBody/>
+        <apex:componentBody />
     </apex:form>
 </apex:component>

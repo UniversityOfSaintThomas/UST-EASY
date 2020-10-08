@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prior_FY_Commitment_Gift_Band__c</fullName>
+    <description>Total Commitments including soft memos for last fiscal year</description>
+    <externalId>false</externalId>
+    <formula>IF(Prior_Fiscal_Year_Commitment__c &gt;= 5000000, &quot;$5M+&quot;,
+  IF(Prior_Fiscal_Year_Commitment__c &gt;= 1000000,&quot;$1M-4.9M&quot;,
+    IF(Prior_Fiscal_Year_Commitment__c &gt;= 500000,&quot;$500K-$999K&quot;,
+      If(Prior_Fiscal_Year_Commitment__c &gt;= 150000, &quot;150K-$499K&quot;,
+        IF(Prior_Fiscal_Year_Commitment__c &gt;= 50000, &quot;$50K-$149K&quot;,
+          IF(Prior_Fiscal_Year_Commitment__c &gt; 0, &quot;Under $50K&quot;,null
+          )
+        )
+      )
+    )
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Total Commitments including soft memos for last fiscal year</inlineHelpText>
+    <label>Prior FY Commitment Gift Band</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

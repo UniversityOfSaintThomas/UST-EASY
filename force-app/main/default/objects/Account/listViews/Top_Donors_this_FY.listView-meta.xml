@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Top_Donors_this_FY</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>hed__Primary_Contact__c</columns>
+    <columns>Current_FY_Commitment__c</columns>
+    <columns>Gift_Officer__c</columns>
+    <columns>Last_Gift_Date__c</columns>
+    <columns>Last_Gift_Designation__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Current_FY_Commitment__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>50000</value>
+    </filters>
+    <label>Major Donors this FY</label>
+</ListView>

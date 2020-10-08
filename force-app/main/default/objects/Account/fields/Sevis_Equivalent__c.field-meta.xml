@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sevis_Equivalent__c</fullName>
+    <description>STVMAJR_SEVIS_EQUIV</description>
+    <externalId>false</externalId>
+    <inlineHelpText>STVMAJR_SEVIS_EQUIV</inlineHelpText>
+    <label>Sevis Equivalent</label>
+    <length>6</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

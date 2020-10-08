@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>hed__FERPA__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Indicates whether this person has opted out of disclosure of information per the Family Education Rights and Privacy Act.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Indicates whether this person has opted out of disclosure of information per the Family Education Rights and Privacy Act.</inlineHelpText>
+    <label>FERPA</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

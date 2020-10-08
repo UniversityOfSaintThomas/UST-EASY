@@ -1,7 +1,12 @@
 {
   "orgName": "EASY-Open-Source-Solution - Dev Org",
   "edition": "Developer",
-  "features": ["Communities", "Sites"],
+  "features": [
+    "Communities",
+    "Sites",
+    "PartnerCommunity",
+    "ForceComPlatform"
+  ],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
@@ -18,11 +23,15 @@
         "forceRelogin": false
       }
     },
+    "nameSettings": {
+      "enableMiddleName": true
+    },
     "languageSettings": {
       "enableTranslationWorkbench": true
     },
     "orgPreferenceSettings": {
-      "networksEnabled": true
+      "networksEnabled": true,
+      "chatterEnabled": true
     }
   }
 }

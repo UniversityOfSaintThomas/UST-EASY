@@ -23,3 +23,19 @@ tasks:
     run_tests:
         options:
             required_org_code_coverage_percent: 75
+
+    config_community:
+        description: Deploys configuration for Development.
+        class_path: cumulusci.tasks.salesforce.createcommunity
+        options:
+            name: uofstthomasmn
+            description: EASY application portal for University of St. Thomas
+            template: Build Your Own
+
+flows:
+    config_dev:
+        steps:
+            3: config_community
+
+
+

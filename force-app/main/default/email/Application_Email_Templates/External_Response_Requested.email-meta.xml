@@ -4,6 +4,11 @@
     <available>true</available>
     <encodingKey>ISO-8859-1</encodingKey>
     <name>External Response Requested</name>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>107</minorNumber>
+        <namespace>hed</namespace>
+    </packageVersions>
     <style>none</style>
     <subject>Request for Information for</subject>
     <type>visualforce</type>

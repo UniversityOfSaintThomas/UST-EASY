@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ACT_Composite_Date__c</fullName>
+    <description>ACT Composite Date</description>
+    <externalId>false</externalId>
+    <inlineHelpText>ACT Composite Date</inlineHelpText>
+    <label>ACT Composite Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

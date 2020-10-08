@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ACT_Reading_Date__c</fullName>
+    <description>ACT Reading Date</description>
+    <externalId>false</externalId>
+    <inlineHelpText>ACT Reading Date</inlineHelpText>
+    <label>ACT Reading Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

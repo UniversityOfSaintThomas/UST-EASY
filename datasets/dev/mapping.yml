@@ -52,13 +52,39 @@ Insert Interaction_Mapping__c:
 Insert hed__Language__c:
   sf_object: hed__Language__c
   fields:
+  - Holding_Name__c
   - Name
+  - Related_Object_JSON__c
 Insert Account:
   sf_object: Account
   fields:
+  - ACAT_Code__c
   - Account_Integration_External_ID__c
+  - Activity_Category_Description__c
+  - Activity_Category__c
+  - Activity_Type_Description__c
+  - Activity_Type__c
+  - Aid_Eligibility__c
+  - Banner_Code__c
+  - Banner_Key__c
+  - CEEB_Code__c
+  - CEEB_Integration_Code__c
+  - CIPC_Code__c
+  - Current_Parent__c
+  - DLEV_Code__c
+  - Email__c
+  - Focus_Rating__c
+  - Inactive_School__c
   - Name
   - RecordTypeId
+  - School_Geographic_Area__c
+  - School_Type_Code__c
+  - Sevis_Equivalent__c
+  - Surrogate_ID__c
+  - University_Banner_ID__c
+  - University_Banner_PIDM__c
+  - Valid_Major__c
+  - Valid_Minor__c
   - hed__Billing_County__c
   - hed__School_Code__c
   - hed__Shipping_County__c
@@ -137,6 +163,20 @@ Insert hed__Facility__c:
     hed__Parent_Facility__c:
       table: hed__Facility__c
       after: Insert hed__Facility__c
+Insert hed__Program_Plan__c:
+  sf_object: hed__Program_Plan__c
+  fields:
+  - Name
+  - hed__Description__c
+  - hed__End_Date__c
+  - hed__Is_Primary__c
+  - hed__Start_Date__c
+  - hed__Status__c
+  - hed__Total_Required_Credits__c
+  - hed__Version__c
+  lookups:
+    hed__Account__c:
+      table: Account
 Insert hed__Term__c:
   sf_object: hed__Term__c
   fields:
@@ -468,11 +508,17 @@ Insert Contact:
   - Contact_Constituent_ID__c
   - Deceased_Date__c
   - DoNotCall
+  - Employer__c
   - FirstName
   - Grad_Level__c
   - HasOptedOutOfEmail
   - HasOptedOutOfFax
+  - Job_Title__c
   - LastName
+  - Marital_Status__c
+  - Personal_Email__c
+  - Preferred_First_Name__c
+  - Previous_Last_Name__c
   - University_Banner_ID__c
   - University_Banner_PIDM__c
   - hed__AlternateEmail__c
@@ -516,6 +562,9 @@ Insert Contact:
   lookups:
     AccountId:
       table: Account
+    MyProgram__c:
+      table: hed__Program_Enrollment__c
+      after: Insert hed__Program_Enrollment__c
     Primary_Academic_Program__c:
       table: Account
     Primary_Department__c:
@@ -563,14 +612,19 @@ Insert Opportunity:
   - Application_Number__c
   - Application_Submitted_Date__c
   - CloseDate
+  - College_Code__c
+  - Declined_Date__c
+  - Entity_ID__c
   - First_Inquiry_Source__c
   - First_Recruitment_Program__c
   - Inquiry_Date__c
   - IsPrivate
   - Name
   - Opportunity_Key__c
+  - Prospect_Rating__c
   - RecordTypeId
   - StageName
+  - Submitted_Date__c
   lookups:
     Academic_Program__c:
       table: Program__c
@@ -589,6 +643,7 @@ Insert Opportunity:
 Insert hed__Address__c:
   sf_object: hed__Address__c
   fields:
+  - Address_Banner_Key__c
   - hed__Address_Type__c
   - hed__Default_Address__c
   - hed__Latest_End_Date__c
@@ -610,6 +665,101 @@ Insert hed__Address__c:
     hed__Parent_Account__c:
       table: Account
     hed__Parent_Contact__c:
+      table: Contact
+Insert hed__Affiliation__c:
+  sf_object: hed__Affiliation__c
+  fields:
+  - hed__Description__c
+  - hed__EndDate__c
+  - hed__Primary__c
+  - hed__Role__c
+  - hed__StartDate__c
+  - hed__Status__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Contact__c:
+      table: Contact
+Insert hed__Contact_Language__c:
+  sf_object: hed__Contact_Language__c
+  fields:
+  - Holding_Name__c
+  - Related_Object_JSON__c
+  - User_Created__c
+  - hed__Fluency__c
+  - hed__Language_Details__c
+  - hed__Primary_Language__c
+  lookups:
+    hed__Contact__c:
+      table: Contact
+    hed__Language__c:
+      table: hed__Language__c
+Insert hed__Education_History__c:
+  sf_object: hed__Education_History__c
+  fields:
+  - Diploma_GED_Earned_Date__c
+  - Diploma_GED_Earned__c
+  - Holding_Name__c
+  - RecordTypeId
+  - Related_Object_JSON__c
+  - User_Created__c
+  - hed__Class_Percentile__c
+  - hed__Class_Rank_Scale__c
+  - hed__Class_Rank_Type__c
+  - hed__Class_Rank__c
+  - hed__Class_Size__c
+  - hed__Degree_Earned__c
+  - hed__Details__c
+  - hed__Education_History_JSON__c
+  - hed__Educational_Institution_Name__c
+  - hed__End_Date__c
+  - hed__GPA_Scale_Reporting__c
+  - hed__GPA_Scale_Type__c
+  - hed__GPA__c
+  - hed__Graduation_Date__c
+  - hed__Start_Date__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Contact__c:
+      table: Contact
+Insert hed__Test__c:
+  sf_object: hed__Test__c
+  fields:
+  - ACT_Composite_Date__c
+  - ACT_Composite_Score__c
+  - ACT_English_Date__c
+  - ACT_English_Score__c
+  - ACT_Math_Date__c
+  - ACT_Mathematics_Score__c
+  - ACT_Reading_Date__c
+  - ACT_Reading_Score__c
+  - ACT_Science_Date__c
+  - ACT_Science_Score__c
+  - ACT_Total_Score__c
+  - Future_ACT_SAT_Times__c
+  - Have_you_taken_the_ACT_SAT__c
+  - Holding_Name__c
+  - Related_Object_JSON__c
+  - SAT_Composite_Date__c
+  - SAT_Composite_Score__c
+  - SAT_Math_Date__c
+  - SAT_Mathematics_Score__c
+  - SAT_Total_Score__c
+  - SAT_Verbal_Date__c
+  - SAT_Verbal_Score__c
+  - SAT_Writing_Date__c
+  - SAT_Writing_Score__c
+  - Self_Reported_Test_Acknowledgement_Date__c
+  - Self_Reported_Test_Acknowledgement__c
+  - Take_ACT_SAT_Times__c
+  - User_Created__c
+  - hed__Date_Received__c
+  - hed__Source__c
+  - hed__Test_Date__c
+  - hed__Test_Type__c
+  lookups:
+    hed__Contact__c:
       table: Contact
 Insert Interaction__c:
   sf_object: Interaction__c
@@ -666,3 +816,35 @@ Insert Interaction__c:
       table: Opportunity
     Recruitment_Program__c:
       table: Program__c
+Insert hed__Program_Enrollment__c:
+  sf_object: hed__Program_Enrollment__c
+  fields:
+  - hed__Admission_Date__c
+  - hed__Application_Submitted_Date__c
+  - hed__Class_Standing__c
+  - hed__Credits_Attempted__c
+  - hed__Credits_Earned__c
+  - hed__Eligible_to_Enroll__c
+  - hed__End_Date__c
+  - hed__Enrollment_Status__c
+  - hed__GPA__c
+  - hed__Graduation_Year__c
+  - hed__Start_Date__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Affiliation__c:
+      table: hed__Affiliation__c
+    hed__Contact__c:
+      table: Contact
+    hed__Program_Plan__c:
+      table: hed__Program_Plan__c
+Insert hed__Test_Score__c:
+  sf_object: hed__Test_Score__c
+  fields:
+  - hed__Percentile__c
+  - hed__Score__c
+  - hed__Subject_Area__c
+  lookups:
+    hed__Test__c:
+      table: hed__Test__c

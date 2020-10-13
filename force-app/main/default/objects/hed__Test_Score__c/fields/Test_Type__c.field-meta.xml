@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Test_Type__c</fullName>
+    <description>Displays the Test Type from the related Test (Lookup) record.</description>
+    <externalId>false</externalId>
+    <formula>TEXT(hed__Test__r.hed__Test_Type__c)</formula>
+    <inlineHelpText>Displays the Test Type from the related Test (Lookup) record.</inlineHelpText>
+    <label>Test Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

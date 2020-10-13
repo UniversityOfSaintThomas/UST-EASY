@@ -26,16 +26,123 @@ tasks:
 
     config_community:
         description: Deploys configuration for Development.
-        class_path: cumulusci.tasks.salesforce.createcommunity
+        class_path: cumulusci.tasks.salesforce.CreateCommunity
         options:
             name: uofstthomasmn
             description: EASY application portal for University of St. Thomas
             template: Build Your Own
 
+    permission_guest_user:
+        description: 'Applies permission set to guest community guest user'
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            apex: >
+
+                Site site = [
+                    SELECT GuestUserId
+                    FROM Site
+                    WHERE Name = 'uofstthomasmn'
+                ];
+
+                List<PermissionSet> guestPermissionSet = [
+                    SELECT Name, Id
+                    FROM PermissionSet
+                    WHERE Name = 'Application_Community_Guest'
+                ];
+
+                List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
+
+                if(!guestPermissionSet.isEmpty()) {
+                    permissionSetList.add(new PermissionSetAssignment(PermissionSetId = guestPermissionSet[0].Id, AssigneeId = site.GuestUserId));
+                }
+
+                if (!permissionSetList.isEmpty()) {
+                    upsert permissionSetList;
+                }
+
+    permission_admin_user:
+        description: 'Applies permission set to guest community guest user'
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            apex: >
+
+                List<PermissionSet> adminPermissionSets = [
+                    SELECT Name, Id FROM PermissionSet
+                    WHERE Name = 'Application_Admin'
+                ];
+
+                List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
+
+                if(!adminPermissionSets.isEmpty()) {
+                    for (User u : [SELECT ID FROM User WHERE Profile.Name = 'System Administrator']) {
+                        permissionSetList.add(new PermissionSetAssignment(PermissionSetId = adminPermissionSets[0].Id, AssigneeId = u.Id));
+                    }
+                }
+
+                if (!permissionSetList.isEmpty()) {
+                    upsert permissionSetList;
+                }
+
+    set_easy_custom_settings:
+        description: 'Applies permission set to guest community guest user'
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            apex: >
+
+                Site site = [
+                        SELECT GuestUserId
+                        FROM Site
+                        WHERE Name = 'uofstthomasmn'
+                ];
+
+                List<Profile>  easyProfile = [
+                    SELECT Name, Id FROM Profile
+                    WHERE Name = 'uofstthomasmn Profile'
+                ];
+
+                List<PermissionSet> easyCommunityPermissionSet = [
+                        SELECT Id, Name FROM PermissionSet WHERE Name = 'Application_Community'
+                ];
+
+                String path = '/sites/servlet.SiteDebugMode';
+                PageReference pr = new PageReference(path);
+                pr.getParameters().put('guid', site.GuestUserId);
+                pr.getParameters().put('sitedebugmode', 'x');
+                String url = pr.getContent().toString().substringAfter('URL=').substringBefore(path);
+
+                Application_Setting__c applicationSettings = Application_Setting__c.getOrgDefaults();
+                applicationSettings.Community_URL__c = url;
+
+                if (easyProfile.size() > 0) {
+                    applicationSettings.Community_Profile_Ids__c = easyProfile[0].Id;
+                }
+
+                if (easyCommunityPermissionSet.size() > 0) {
+                    applicationSettings.Permission_Set_Id__c =  easyCommunityPermissionSet[0].Id;
+                }
+
+                upsert applicationSettings;
+
+    load_application_data:
+        description: 'Load data needed to start EASY applications'
+        class_path: cumulusci.tasks.bulkdata.load.LoadData
+        options:
+            mapping: datasets/dev/mapping.yml
+            sql_path: datasets/dev/data.sql
+
 flows:
     config_dev:
         steps:
-            3: config_community
+            3:
+                task: config_community
+            4:
+                task: permission_guest_user
+            5:
+                task: permission_admin_user
+            6:
+                task: set_easy_custom_settings
+            7:
+                task: load_application_data
 
 
 

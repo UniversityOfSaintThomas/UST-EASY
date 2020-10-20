@@ -81,6 +81,7 @@ Insert Account:
   - School_Type_Code__c
   - Sevis_Equivalent__c
   - Surrogate_ID__c
+  - Type
   - University_Banner_ID__c
   - University_Banner_PIDM__c
   - Valid_Major__c

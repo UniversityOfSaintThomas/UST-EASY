@@ -24,13 +24,14 @@ tasks:
         options:
             required_org_code_coverage_percent: 75
 
-    config_community:
+    create_community:
         description: Deploys configuration for Development.
         class_path: cumulusci.tasks.salesforce.CreateCommunity
         options:
-            name: uofstthomasmn
-            description: EASY application portal for University of St. Thomas
+            name: EASY Applicant Portal
+            description: EASY application portal
             template: Build Your Own
+            url_path_prefix: EASYApp
 
     permission_guest_user:
         description: 'Applies permission set to guest community guest user'
@@ -41,7 +42,7 @@ tasks:
                 Site site = [
                     SELECT GuestUserId
                     FROM Site
-                    WHERE Name = 'uofstthomasmn'
+                    WHERE Name = 'EASY_Applicant_Portal'
                 ];
 
                 List<PermissionSet> guestPermissionSet = [
@@ -92,12 +93,12 @@ tasks:
                 Site site = [
                         SELECT GuestUserId
                         FROM Site
-                        WHERE Name = 'uofstthomasmn'
+                        WHERE Name = 'EASY_Applicant_Portal'
                 ];
 
                 List<Profile>  easyProfile = [
                     SELECT Name, Id FROM Profile
-                    WHERE Name = 'uofstthomasmn Profile'
+                    WHERE Name = 'EASY Applicant Portal Profile'
                 ];
 
                 List<PermissionSet> easyCommunityPermissionSet = [
@@ -123,6 +124,27 @@ tasks:
 
                 upsert applicationSettings;
 
+    set_hierarchy_custom_settings:
+        description: 'Set UST EDA hierarchy settings'
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            apex: >
+                hed__Hierarchy_Settings__c hierarchySettings = hed__Hierarchy_Settings__c.getOrgDefaults();
+                hierarchySettings.hed__Admin_Account_Naming_Format__c = '{!LastName} Administrative Account';
+                hierarchySettings.hed__Household_Account_Naming_Format__c = '{!LastName} ({!{!FirstName}}) Household';
+                hierarchySettings.hed__Admin_Account_Naming_Format__c = '{!LastName} ({!{!FirstName}}) Administrative Account';
+                upsert hierarchySettings;
+
+    set_review_custom_settings:
+        description: 'Applies related object review settings per UST needs'
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            apex: >
+                insert new Related_Object_Review__c (Name='hed__Attribute__c');
+                insert new Related_Object_Review__c (Name='hed__Contact_Language__c');
+                insert new Related_Object_Review__c (Name='hed__Education_History__c');
+                insert new Related_Object_Review__c (Name='hed__Test__c');
+
     load_application_data:
         description: 'Load data needed to start EASY applications'
         class_path: cumulusci.tasks.bulkdata.load.LoadData
@@ -130,11 +152,19 @@ tasks:
             mapping: datasets/dev/mapping.yml
             sql_path: datasets/dev/data.sql
 
+    configure_community:
+        description: Deploys Network config for community for Development.
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            namespace_inject: $project_config.project__package__namespace
+            path: unpackaged/config/network
+            unmanaged: True
+
 flows:
     config_dev:
         steps:
             3:
-                task: config_community
+                task: create_community
             4:
                 task: permission_guest_user
             5:
@@ -142,7 +172,10 @@ flows:
             6:
                 task: set_easy_custom_settings
             7:
+                task: set_hierarchy_custom_settings
+            8:
+                task: set_review_custom_settings
+            9:
                 task: load_application_data
-
-
-
+            10:
+                task: configure_community

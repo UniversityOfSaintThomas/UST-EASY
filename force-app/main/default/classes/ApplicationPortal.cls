@@ -18,11 +18,19 @@ public class ApplicationPortal {
     }
 
     public ApplicationPortal() {
-        contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
+        contactId = [
+                SELECT Id, ContactId
+                FROM User
+                WHERE Id = :UserInfo.getUserId()].ContactId;
         if (UserInfo.getUserType().equals('Standard'))
             contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
         if(contactId != null){
-            apps = [SELECT Id, Name,Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Application_Status__c FROM Application__c WHERE Application_Control__c = :appControl.Id AND Contact__c = :contactId ORDER BY Intended_Term_of_Entry__r.Activate_Application_Date__c];
+            apps = [
+                    SELECT Id, Name,Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c,
+                            Intended_Term_of_Entry__r.Name, Application_Status__c
+                    FROM Application__c WHERE Application_Control__c = :appControl.Id
+                    AND Contact__c = :contactId ORDER BY Intended_Term_of_Entry__r.Activate_Application_Date__c
+            ];
         }
     }
 }

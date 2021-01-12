@@ -43,6 +43,7 @@ public class ApplicationUtilities {
         
         public Boolean doRollback = false;
         public Boolean isError = true;
+
         
         public ApplicationException(String e, Boolean doRollback) {
             this(e);

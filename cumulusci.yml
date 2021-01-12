@@ -160,6 +160,50 @@ tasks:
             path: unpackaged/config/network
             unmanaged: True
 
+    deploy_site_config:
+        description: Deploys configuration for Development.
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            namespace_inject: $project_config.project__package__namespace
+            path: unpackaged/config/site
+            unmanaged: True
+
+    set_user_user_role:
+        description: 'Apply the Easy Applicant user role to default user'
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            apex: >
+                List<User> userUsers = [SELECT Name FROM User WHERE Name = 'User User'];
+
+                List<UserRole> roles = [SELECT Name, Id FROM UserRole WHERE Name = 'EASY Applicant'];
+
+                List<PermissionSet> permissionSets = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Application_Community'];
+
+                if (userUsers.size() > 0) {
+                    if(roles.size() > 0) {
+                        userUsers[0].UserRoleId = roles[0].Id;
+                        if (permissionSets.size() >0 ) {
+                            userUsers[0].Community_Permissions__c = permissionSets[0].Id;
+                        }
+                        update userUsers[0];
+                    }
+                }
+
+    activate_community_permissions_trigger:
+        description: 'Turns on the trigger that applies permissions sets via community permissions field on user'
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            apex: >
+                hed__Trigger_Handler__c permissionTrigger = new hed__Trigger_Handler__c();
+                permissionTrigger.Name = 'User Community Permissions';
+                permissionTrigger.hed__Active__c = true;
+                permissionTrigger.hed__Class__c = 'User_Community_Permission_TDTM';
+                permissionTrigger.hed__Load_Order__c = 2.0;
+                permissionTrigger.hed__Object__c = 'User';
+                permissionTrigger.hed__Trigger_Action__c = 'AfterInsert;AfterUpdate';
+                insert permissionTrigger;
+
+
 flows:
     config_dev:
         steps:
@@ -179,3 +223,9 @@ flows:
                 task: load_application_data
             10:
                 task: configure_community
+            11:
+                task: deploy_site_config
+            12:
+                task: activate_community_permissions_trigger
+            13:
+                task: set_user_user_role

@@ -334,9 +334,8 @@ public class ApplicationCreate {
         }
         
         upsert qResponses; // Insert question responses
-        
         // Return URL for checklist page for new application
-        return '/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
+        return '/apex/CommunityAssignment?community=applicant&applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
     }
     
     @RemoteAction

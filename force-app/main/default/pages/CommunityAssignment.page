@@ -1,0 +1,15 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 11/12/2020.
+ -->
+
+<apex:page id="CommunityAssignment" controller="CommunityAssignmentController" showHeader="false" standardStylesheets="false" lightningStylesheets="false" sideBar="false" action="{!assign}">
+
+    <apex:pageMessages/>
+
+    <p>Community: {!community}</p>
+
+    <p>REFERRING URL: {!referURL1}</p>
+
+    <p>USER TYPE: {!userInfoJSON}</p>
+
+</apex:page>

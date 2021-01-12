@@ -1,4 +1,4 @@
-<apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" docType="html-5.0" >
+<apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" docType="html-5.0" action="{!init}" >
     <c:ApplicationHead />
     <c:ApplicationBody title="Application Portal" appControl="{!appControl}">
         <apex:form id="theForm" >

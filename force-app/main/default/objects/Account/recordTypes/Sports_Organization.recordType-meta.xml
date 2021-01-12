@@ -28,6 +28,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Focus_Rating__c</picklist>
+        <values>
+            <fullName>Level 1%2FTop Tier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 3%2FPipeline 3-5Yrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 4%2FDicovery-Qualify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 5%2FVolunteer - Networker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level2%2FPipeline 2 Yrs</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Industry</picklist>
         <values>
             <fullName>Agriculture</fullName>

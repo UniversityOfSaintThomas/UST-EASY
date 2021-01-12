@@ -342,7 +342,7 @@ public class ApplicationRequirement {
             if (String.isNotBlank(redirectPage)) {
                 
                 if (redirectPage == 'checklist') {
-                    PageReference pr = new PageReference('/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + contactId+(ApexPages.currentPage().getParameters().containsKey('at')?'&at='+ApexPages.currentPage().getParameters().get('at'):''));
+                    PageReference pr = new PageReference('/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + contactId+(ApexPages.currentPage().getParameters().containsKey('at')?'&at='+ApexPages.currentPage().getParameters().get('at'):''));
                     pr.setRedirect(true);
                     return pr;
                 } else if (redirectPage == 'submit') {
@@ -350,7 +350,7 @@ public class ApplicationRequirement {
                     if (allowSubmit && app != null) {
                         if (appControl != null && String.isNotBlank(appControl.Submit_Status__c)) {
                             update new Application__c(Id = app.Id, Application_Status__c = appControl.Submit_Status__c);
-                            pr = Page.ApplicationChecklist;
+                            pr = Page.ApplicationPortal;
                             pr.setRedirect(true);
                             
                             for (String s:new Set<String>{'contactId', 'applicationId', 'at'})

@@ -350,7 +350,7 @@ public class INT_InteractionProcessor {
         Integer interactionsIndex = 0;
         for (List<Contact> cons:newConsList) {
 
-            Datacloud.FindDuplicatesResult[] results = Datacloud.FindDuplicates.findDuplicates(cons);
+            List<Datacloud.FindDuplicatesResult> results = Datacloud.FindDuplicates.findDuplicates(cons);
 
             for (Integer i = 0; i < cons.size(); i++) {
                 if (interactions[interactionsIndex].Lead_Only__c == false) {

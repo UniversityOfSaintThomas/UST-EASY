@@ -957,12 +957,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Requirement_Response__c.Child_Requirement_Fulfilled_On__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Requirement_Response__c.Document_Requirement_Fulfilled_On__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1014,6 +1014,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Requirement_Response__c.ValueTextEntry__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Requirement_Response__c.Viewed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -4,7 +4,7 @@
 
 <apex:page id="CommunityAssignment" controller="CommunityAssignmentController" showHeader="false" standardStylesheets="false" lightningStylesheets="false" sideBar="false" action="{!assign}">
 
-    <apex:pageMessages/>
+    <apex:pageMessages />
 
     <p>Community: {!community}</p>
 

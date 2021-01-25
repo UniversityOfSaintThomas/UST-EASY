@@ -19,7 +19,7 @@
             );
         }
     </script>
-    <c:ApplicationHead/>
+    <c:ApplicationHead />
     <c:ApplicationBody title="New Application" rendered="{!NOT(ISBLANK(appCreate.appControl))}" appControl="{!appCreate.appControl}" loadingText="Building Your Application...">
         <c:ApplicationForm section="{!appCreate.section}" appControl="{!appCreate.appControl}">
             <div class="row">

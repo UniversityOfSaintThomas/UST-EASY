@@ -186,7 +186,7 @@ public class ApplicationProgressBar {
             con = ((List<Contact>) Database.query(query)).get(0);
 
         checkRequirementCompletion();
-        for (Requirement_Response__c rr : [Select Id, Requirement_Item__r.Required__c,Has_Child_Requirement__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,Incomplete_Questions__c, HasDocument__c, Waive_Requirement__c, Send_Reminder__c,External_Email__c,Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c, Document_Requirement_Fulfilled_On__c from Requirement_Response__c WHERE Application__c = :applicationId and Requirement_Item__r.Requirement__c in :reqIds]) {
+        for(Requirement_Response__c rr : [Select Id, Requirement_Item__r.Required__c,Has_Child_Requirement__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,Incomplete_Questions__c, HasDocument__c, Waive_Requirement__c, Send_Reminder__c,External_Email__c,Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c from Requirement_Response__c WHERE Application__c = :applicationId and Requirement_Item__r.Requirement__c in :reqIds]){
             if (riIds.contains(rr.Requirement_Item__c)) {
                 Boolean itemCompleted = true;
                 if (!completedRequirement.containsKey(rr.Requirement_Item__r.Requirement__c)) {

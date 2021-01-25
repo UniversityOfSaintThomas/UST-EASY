@@ -229,6 +229,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.AccountSource</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.Account_Integration_External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -595,6 +600,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Email</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Employer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -122,7 +122,7 @@ public class ApplicationCreate {
         if (!appControl.Hide_Term_Program__c) {
             
             // Get map of intended programs with id as key
-            List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Application_Control__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true AND Application_Control__c = :appControl.Id ORDER BY Name ASC];
+            List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true ORDER BY Name ASC];
             intendedPrograms = new Map<Id, Program__c>(progs);
             
             // Create new program question and add to list
@@ -308,11 +308,19 @@ public class ApplicationCreate {
         
         // Get list of requirement responses to insert
         List<Requirement_Response__c> rrLst = new List<Requirement_Response__c>();
+        List<List<Question_Response__c>> qrReqList = new List<List<Question_Response__c>>();
         for (ApplicationQuestionGroup aqg:section.groups) {
             if (aqg.response != null) {
                 aqg.response.Application__c = app.Id;
-                aqg.response.Id = null;
-                rrLst.add(aqg.response);
+                rrLst.add(aqg.response.clone(false, true, false, false));
+
+                List<Question_Response__c> reqQuestionResponses = new List<Question_Response__c>();
+                qrReqList.add(reqQuestionResponses);
+
+                if (aqg.questionGroup && aqg.questions != null)
+                    for (ApplicationQuestion q:aqg.questions)
+                        if (q.response != null)
+                            reqQuestionResponses.add(q.response.clone(false, true, false, false));
             }
         }
         
@@ -320,17 +328,14 @@ public class ApplicationCreate {
         
         // Get list of question responses to insert
         List<Question_Response__c> qResponses = new List<Question_Response__c>();
-        List<SObject> relatedObjects = new List<SObject>();
-        for (ApplicationQuestionGroup g:section.groups) {
-            if (g.questionGroup && g.response != null && g.questions != null) {
-                for (ApplicationQuestion q:g.questions) {
-                    if (q.response != null) {
-                        q.response.Requirement_Response__c = g.response.Id;
-                        q.response.Id = null;
-                        qResponses.add(q.response);
-                    }
-                }
-            }
+        for (Integer i = 0; i < rrLst.size(); i++) {
+
+            Id rrId = rrLst[i].Id;
+
+            for (Question_Response__c qr:qrReqList[i])
+                qr.Requirement_Response__c = rrId;
+
+            qResponses.addAll(qrReqList[i]);
         }
         
         upsert qResponses; // Insert question responses

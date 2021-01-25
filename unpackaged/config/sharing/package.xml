@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Account</members>
+        <name>SharingRules</name>
+    </types>
+    <types>
+        <members>Application__c</members>
+        <name>SharingRules</name>
+    </types>
+    <types>
+        <members>Application_Control__c</members>
+        <name>SharingRules</name>
+    </types>
+    <types>
+        <members>Requirement__c</members>
+        <name>SharingRules</name>
+    </types>
+    <version>48.0</version>
+</Package>

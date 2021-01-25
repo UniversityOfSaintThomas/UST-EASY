@@ -10,6 +10,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>Requirement_Item_Integration_Ext_Id__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Requirement__c</field>
             </layoutItems>
             <layoutItems>
@@ -183,6 +187,9 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Requirement_Item_Integration_Ext_Id__c</fields>
+    </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Active__c</fields>

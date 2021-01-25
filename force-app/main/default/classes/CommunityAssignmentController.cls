@@ -94,7 +94,7 @@ public with sharing class CommunityAssignmentController {
 
                 }
 
-                if (addNewPermissionSet) {
+          //      if (addNewPermissionSet) {
                     System.debug('update success!');
                     pr = new PageReference(nextURL);
                     Map<String, String> parameters = ApexPages.currentPage().getParameters();
@@ -104,9 +104,9 @@ public with sharing class CommunityAssignmentController {
                         }
                         pr.setRedirect(true);
                     }
-                } else {
+  //              } else {
                     //go to login with parameters in place
-                }
+ //               }
             }
         } else {
             //go to login with parameters in place

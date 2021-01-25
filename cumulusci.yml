@@ -37,113 +37,36 @@ tasks:
         description: 'Applies permission set to guest community guest user'
         class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
         options:
-            apex: >
-
-                Site site = [
-                    SELECT GuestUserId
-                    FROM Site
-                    WHERE Name = 'EASY_Applicant_Portal'
-                ];
-
-                List<PermissionSet> guestPermissionSet = [
-                    SELECT Name, Id
-                    FROM PermissionSet
-                    WHERE Name = 'Application_Community_Guest'
-                ];
-
-                List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
-
-                if(!guestPermissionSet.isEmpty()) {
-                    permissionSetList.add(new PermissionSetAssignment(PermissionSetId = guestPermissionSet[0].Id, AssigneeId = site.GuestUserId));
-                }
-
-                if (!permissionSetList.isEmpty()) {
-                    upsert permissionSetList;
-                }
+            path: scripts/setup.cls
+            apex: permissionGuestUser();
 
     permission_admin_user:
         description: 'Applies permission set to guest community guest user'
         class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
         options:
-            apex: >
-
-                List<PermissionSet> adminPermissionSets = [
-                    SELECT Name, Id FROM PermissionSet
-                    WHERE Name = 'Application_Admin'
-                ];
-
-                List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
-
-                if(!adminPermissionSets.isEmpty()) {
-                    for (User u : [SELECT ID FROM User WHERE Profile.Name = 'System Administrator']) {
-                        permissionSetList.add(new PermissionSetAssignment(PermissionSetId = adminPermissionSets[0].Id, AssigneeId = u.Id));
-                    }
-                }
-
-                if (!permissionSetList.isEmpty()) {
-                    upsert permissionSetList;
-                }
+            path: scripts/setup.cls
+            apex: permissionAdminUser();
 
     set_easy_custom_settings:
         description: 'Applies permission set to guest community guest user'
         class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
         options:
-            apex: >
-
-                Site site = [
-                        SELECT GuestUserId
-                        FROM Site
-                        WHERE Name = 'EASY_Applicant_Portal'
-                ];
-
-                List<Profile>  easyProfile = [
-                    SELECT Name, Id FROM Profile
-                    WHERE Name = 'EASY Applicant Portal Profile'
-                ];
-
-                List<PermissionSet> easyCommunityPermissionSet = [
-                        SELECT Id, Name FROM PermissionSet WHERE Name = 'Application_Community'
-                ];
-
-                String path = '/sites/servlet.SiteDebugMode';
-                PageReference pr = new PageReference(path);
-                pr.getParameters().put('guid', site.GuestUserId);
-                pr.getParameters().put('sitedebugmode', 'x');
-                String url = pr.getContent().toString().substringAfter('URL=').substringBefore(path);
-
-                Application_Setting__c applicationSettings = Application_Setting__c.getOrgDefaults();
-                applicationSettings.Community_URL__c = url;
-
-                if (easyProfile.size() > 0) {
-                    applicationSettings.Community_Profile_Ids__c = easyProfile[0].Id;
-                }
-
-                if (easyCommunityPermissionSet.size() > 0) {
-                    applicationSettings.Permission_Set_Id__c =  easyCommunityPermissionSet[0].Id;
-                }
-
-                upsert applicationSettings;
+            path: scripts/setup.cls
+            apex: setEASYCustomSettings();
 
     set_hierarchy_custom_settings:
         description: 'Set UST EDA hierarchy settings'
         class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
         options:
-            apex: >
-                hed__Hierarchy_Settings__c hierarchySettings = hed__Hierarchy_Settings__c.getOrgDefaults();
-                hierarchySettings.hed__Admin_Account_Naming_Format__c = '{!LastName} Administrative Account';
-                hierarchySettings.hed__Household_Account_Naming_Format__c = '{!LastName} ({!{!FirstName}}) Household';
-                hierarchySettings.hed__Admin_Account_Naming_Format__c = '{!LastName} ({!{!FirstName}}) Administrative Account';
-                upsert hierarchySettings;
+            path: scripts/setup.cls
+            apex: setHierarchySettings();
 
     set_review_custom_settings:
         description: 'Applies related object review settings per UST needs'
         class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
         options:
-            apex: >
-                insert new Related_Object_Review__c (Name='hed__Attribute__c');
-                insert new Related_Object_Review__c (Name='hed__Contact_Language__c');
-                insert new Related_Object_Review__c (Name='hed__Education_History__c');
-                insert new Related_Object_Review__c (Name='hed__Test__c');
+            path: scripts/setup.cls
+            apex: setReviewSettings();
 
     load_application_data:
         description: 'Load data needed to start EASY applications'
@@ -172,37 +95,44 @@ tasks:
         description: 'Apply the Easy Applicant user role to default user'
         class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
         options:
-            apex: >
-                List<User> userUsers = [SELECT Name FROM User WHERE Name = 'User User'];
-
-                List<UserRole> roles = [SELECT Name, Id FROM UserRole WHERE Name = 'EASY Applicant'];
-
-                List<PermissionSet> permissionSets = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Application_Community'];
-
-                if (userUsers.size() > 0) {
-                    if(roles.size() > 0) {
-                        userUsers[0].UserRoleId = roles[0].Id;
-                        if (permissionSets.size() >0 ) {
-                            userUsers[0].Community_Permissions__c = permissionSets[0].Id;
-                        }
-                        update userUsers[0];
-                    }
-                }
+            path: scripts/setup.cls
+            apex: setUserRole();
 
     activate_community_permissions_trigger:
         description: 'Turns on the trigger that applies permissions sets via community permissions field on user'
         class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
         options:
-            apex: >
-                hed__Trigger_Handler__c permissionTrigger = new hed__Trigger_Handler__c();
-                permissionTrigger.Name = 'User Community Permissions';
-                permissionTrigger.hed__Active__c = true;
-                permissionTrigger.hed__Class__c = 'User_Community_Permission_TDTM';
-                permissionTrigger.hed__Load_Order__c = 2.0;
-                permissionTrigger.hed__Object__c = 'User';
-                permissionTrigger.hed__Trigger_Action__c = 'AfterInsert;AfterUpdate';
-                insert permissionTrigger;
+            path: scripts/setup.cls
+            apex: turnOnCommunityTrigger();
 
+    install_sharing_rules:
+        description: 'Adds unpacked sharing rules for guest user access of EASY objects'
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            namespace_inject: $project_config.project__package__namespace
+            path: unpackaged/config/sharing
+            unmanaged: True
+
+    set_holding_ids:
+        description: 'Find Account ids for holding id values of requirements'
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            path: scripts/setup.cls
+            apex: setHoldingIds();
+
+    add_community_assigment_picklist:
+        description: "Adds Parent's Sibling, Niece, Nephew, and Sibling's Child as picklist values to the Relationship__c.Type__c field."
+        class_path: cumulusci.tasks.metadata_etl.picklists.AddPicklistEntries
+        group: "EDA: Metadata"
+        ui_options:
+            add_relationship_type_values:
+                name: Add Relationship Type Picklist Values
+
+        options:
+            picklists: User.Community_Permissions__c
+            entries:
+                - fullName: [SELECT Id, Name FROM PermissionSet WHERE Name = 'Application_Community' LIMIT 1].Id
+                  label: "Applicant"
 
 flows:
     config_dev:
@@ -228,4 +158,10 @@ flows:
             12:
                 task: activate_community_permissions_trigger
             13:
+                task: install_sharing_rules
+            14:
+                task: set_holding_ids
+            15:
                 task: set_user_user_role
+            16:
+                task: add_community_assigment_picklist

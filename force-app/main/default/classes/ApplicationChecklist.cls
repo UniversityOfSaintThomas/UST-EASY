@@ -30,13 +30,7 @@ public class ApplicationChecklist {
     /*******************************************************************************
     * @description Initialize the page - Checks if requirements have been completed
     ********************************************************************************/
-    public PageReference init() {
-
-        crudToDo doCrud = new crudToDo();
-        PageReference pr = doCrud.checkPermissionSetAssignment();
-        if(pr != null) {
-            return pr;
-        }
+    public void init() {
 
         allowSubmit = true;
         allowCancel = false;
@@ -145,7 +139,6 @@ public class ApplicationChecklist {
 
         progress = (complete / total) * 100;
 
-        return null;
     }
 
     /*******************************************************************************
@@ -342,41 +335,6 @@ public class ApplicationChecklist {
             }
         }
         return pr;
-    }
-
-    private without sharing class crudToDo {
-
-        public PageReference checkPermissionSetAssignment() {
-            System.debug('Reached Permission set check.');
-            PageReference pr;
-            List<PermissionSet> permissionSets = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Application_Community'];
-            if (permissionSets.size() > 0) {
-                User currentUser = [SELECT Community_Permissions__c FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
-                if (currentUser != null) {
-                    if (!currentUser.Community_Permissions__c.contains(permissionSets[0].Id)) {
-                        if (String.isEmpty(currentUser.Community_Permissions__c)) {
-                            currentUser.Community_Permissions__c = currentUser.Community_Permissions__c + ';' + permissionSets[0].Id;
-                        } else {
-                            if (!currentUser.Community_Permissions__c.contains(permissionSets[0].Id)) {
-                                currentUser.Community_Permissions__c = permissionSets[0].Id;
-                            }
-                        }
-                        update currentUser;
-                        pr = Page.ApplicationChecklist;
-                        pr.setRedirect(true);
-                        for (String s : new Set<String>{
-                                'contactId', 'applicationId', 'at', 'permissionset'
-                        }) {
-                            pr.getParameters().put('permissionset', 'true');
-                            pr.getParameters().put(s, ApexPages.currentPage().getParameters().get(s));
-                        }
-                        return pr;
-                    }
-                }
-            }
-            return pr;
-        }
-
     }
 
 }

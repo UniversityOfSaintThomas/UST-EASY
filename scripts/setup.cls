@@ -175,14 +175,9 @@ private static void setUserRole() {
 
     List<UserRole> roles = [SELECT Name, Id FROM UserRole WHERE Name = 'EASY Applicant'];
 
-    List<PermissionSet> permissionSets = [SELECT Id, Name FROM PermissionSet WHERE Name = 'Application_Community'];
-
     if (userUsers.size() > 0) {
         if (roles.size() > 0) {
             userUsers[0].UserRoleId = roles[0].Id;
-            if (permissionSets.size() > 0) {
-                userUsers[0].Community_Permissions__c = permissionSets[0].Id;
-            }
             update userUsers[0];
         }
     }
@@ -201,15 +196,4 @@ private static void setReviewSettings() {
     insert new Related_Object_Review__c (Name='hed__Contact_Language__c');
     insert new Related_Object_Review__c (Name='hed__Education_History__c');
     insert new Related_Object_Review__c (Name='hed__Test__c');
-}
-
-private static void turnOnCommunityTrigger() {
-    hed__Trigger_Handler__c permissionTrigger = new hed__Trigger_Handler__c();
-    permissionTrigger.Name = 'User Community Permissions';
-    permissionTrigger.hed__Active__c = true;
-    permissionTrigger.hed__Class__c = 'User_Community_Permission_TDTM';
-    permissionTrigger.hed__Load_Order__c = 2.0;
-    permissionTrigger.hed__Object__c = 'User';
-    permissionTrigger.hed__Trigger_Action__c = 'AfterInsert;AfterUpdate';
-    insert permissionTrigger;
 }

@@ -1,56 +1,70 @@
-<apex:page controller="ApplicationRequirement" extensions="ApplicationProgressBar" action="{!init}" showHeader="false" standardStylesheets="false" docType="html-5.0" >
-   <script>
-        function lookupSearchJS(sObj,sObjFilter,sObjNameField,searchTerm,callback){
-            console.log("in application requirement vfp");
-            console.log(sObj);
-            console.log(searchTerm);
-            Visualforce.remoting.Manager.invokeAction(
-            '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
-                sObj, sObjFilter,sObjNameField,searchTerm,
-                function(result, event){
-                    if (event.status) {
-                        console.log(result);
-                        callback(result)
-                    } else if (event.type === 'exception') {
-                    } else {
-                    }
-                },
-                {escape: true}
-            );
-        }
-    </script>
-    <c:ApplicationHead />
-    <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occured and you do not have access to this page.','')}" appControl="{!appControl}">
-        <c:ApplicationForm id="applicationForm" section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
-        requirementId="{!requirementId}"
-        reqs="{!reqs}"
-        progress="{!progress}"
-        isExternalUser="{!isExternalUser}"> 
-            <div class="row" >
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
-                        <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
-                        <apex:param name="p2" value="" assignTo="{!redirectPage}"/>
-                    </apex:actionFunction>
-                    <div class="row" >
-                        <style>
-                        	@media only screen and (max-width: 400px) {
-                            	.btn-lg {
-                            		padding: 10px;
-                            	}
+<apex:page controller="ApplicationRequirement" extensions="ApplicationProgressBar" action="{!init}" showHeader="false" standardStylesheets="false" docType="html-5.0">
+    <apex:composition template="Capricorn2020">
+        <apex:define name="scriptHead">
+            <script>
+                function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback) {
+                    console.log("in application requirement vfp");
+                    console.log(sObj);
+                    console.log(searchTerm);
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
+                        sObj, sObjFilter, sObjNameField, searchTerm,
+                        function (result, event) {
+                            if (event.status) {
+                                console.log(result);
+                                callback(result)
+                            } else if (event.type === 'exception') {
+                            } else {
                             }
-                        </style>
-                        <div class="col-xs-3 col-md-2" ><apex:commandLink onclick="redirect('back');" styleClass="btn btn-lg leftNav btn-lightning"  reRender="none" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; float:left; width:100%; margin: 10px;" value="Previous" /></div>
-                        <div class="col-xs-6 col-md-4 col-md-offset-2">
-                            <center>
-                                <apex:commandLink styleClass="btn btn-lg btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; width:100%; margin: 10px;" value="Back to Checklist" reRender="none" onclick="performDocUploadSave('checklist');appShowLoadingSpinner();" rendered="{!!isExternalUser}" />
-                                <apex:commandLink styleClass="btn btn-lg btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; width:100%; margin: 10px;" value="Save" reRender="none" onclick="performDocUploadSave('');appShowLoadingSpinner();" oncomplete="appShowConfimation();" rendered="{!isExternalUser}" />
-                            </center>
+                        },
+                        {escape: true}
+                    );
+                }
+            </script>
+            <style>
+                @media only screen and (max-width: 400px) {
+                    .btn-lg {
+                        padding: 10px;
+                    }
+                }
+            </style>
+            <c:ApplicationHead/>
+        </apex:define>
+        <apex:define name="body">
+
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occured and you do not have access to this page.','')}" appControl="{!appControl}">
+                <c:ApplicationForm id="applicationForm" section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
+                                   requirementId="{!requirementId}"
+                                   reqs="{!reqs}"
+                                   progress="{!progress}"
+                                   isExternalUser="{!isExternalUser}">
+                    <div class="slds-grid slds-wrap">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+                                <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
+                                    <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
+                                    <apex:param name="p2" value="" assignTo="{!redirectPage}"/>
+                                </apex:actionFunction>
+                                <div class="row">
+                                    <div class="col-xs-3 col-md-2">
+                                        <apex:commandLink onclick="redirect('back');" styleClass="btn btn-lg leftNav btn-lightning" reRender="none" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; float:left; width:100%; margin: 10px;" value="Previous"/>
+                                    </div>
+                                    <div class="col-xs-6 col-md-4 col-md-offset-2">
+                                        <center>
+                                            <apex:commandLink styleClass="btn btn-lg btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; width:100%; margin: 10px;" value="Back to Checklist" reRender="none" onclick="performDocUploadSave('checklist');appShowLoadingSpinner();" rendered="{!!isExternalUser}"/>
+                                            <apex:commandLink styleClass="btn btn-lg btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; width:100%; margin: 10px;" value="Save" reRender="none" onclick="performDocUploadSave('');appShowLoadingSpinner();" oncomplete="appShowConfimation();" rendered="{!isExternalUser}"/>
+                                        </center>
+                                    </div>
+                                    <div class="col-xs-3 col-md-2 col-md-offset-2">
+                                        <apex:commandLink onclick="redirect('forwards');" styleClass="btn btn-lg rightNav btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; float:right; width:100%; margin: 10px;" value="Next" reRender="none"/>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-3 col-md-2 col-md-offset-2"><apex:commandLink onclick="redirect('forwards');" styleClass="btn btn-lg rightNav btn-lightning" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; align-content: center; float:right; width:100%; margin: 10px;" value="Next"  reRender="none" /></div>
                     </div>
-                </div>
-            </div>
-        </c:ApplicationForm>
-    </c:ApplicationBody>
+                </c:ApplicationForm>
+            </c:ApplicationBody>
+
+        </apex:define>
+    </apex:composition>
 </apex:page>

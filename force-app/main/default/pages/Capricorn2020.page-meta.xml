@@ -3,10 +3,5 @@
     <apiVersion>48.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>CommunityAssignment</label>
-    <packageVersions>
-        <majorNumber>1</majorNumber>
-        <minorNumber>111</minorNumber>
-        <namespace>hed</namespace>
-    </packageVersions>
+    <label>Capricorn2020</label>
 </ApexPage>

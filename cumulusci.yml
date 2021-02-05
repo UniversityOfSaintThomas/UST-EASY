@@ -92,18 +92,11 @@ tasks:
             unmanaged: True
 
     set_user_user_role:
-        description: 'Apply the Easy Applicant user role to default user'
+        description: Apply the Easy Applicant user role to default user
         class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
         options:
             path: scripts/setup.cls
             apex: setUserRole();
-
-    activate_community_permissions_trigger:
-        description: 'Turns on the trigger that applies permissions sets via community permissions field on user'
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            path: scripts/setup.cls
-            apex: turnOnCommunityTrigger();
 
     install_sharing_rules:
         description: 'Adds unpacked sharing rules for guest user access of EASY objects'
@@ -119,20 +112,6 @@ tasks:
         options:
             path: scripts/setup.cls
             apex: setHoldingIds();
-
-    add_community_assigment_picklist:
-        description: "Adds Parent's Sibling, Niece, Nephew, and Sibling's Child as picklist values to the Relationship__c.Type__c field."
-        class_path: cumulusci.tasks.metadata_etl.picklists.AddPicklistEntries
-        group: "EDA: Metadata"
-        ui_options:
-            add_relationship_type_values:
-                name: Add Relationship Type Picklist Values
-
-        options:
-            picklists: User.Community_Permissions__c
-            entries:
-                - fullName: [SELECT Id, Name FROM PermissionSet WHERE Name = 'Application_Community' LIMIT 1].Id
-                  label: "Applicant"
 
 flows:
     config_dev:
@@ -155,13 +134,9 @@ flows:
                 task: configure_community
             11:
                 task: deploy_site_config
-            12:
-                task: activate_community_permissions_trigger
             13:
                 task: install_sharing_rules
             14:
                 task: set_holding_ids
             15:
                 task: set_user_user_role
-            16:
-                task: add_community_assigment_picklist

@@ -1277,8 +1277,4 @@
         <apexPage>ApplicationRequirement</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
-    <pageAccesses>
-        <apexPage>CommunityAssignment</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
 </PermissionSet>

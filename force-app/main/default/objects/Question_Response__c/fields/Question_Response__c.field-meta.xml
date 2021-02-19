@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Question_Response__c</fullName>
+    <description>This field shows whichever Value was entered.</description>
+    <externalId>false</externalId>
+    <formula>TRIM(
+IF(ValueCheckbox__c = TRUE, &quot;TRUE&quot;, &quot;&quot;) &amp; 
+TEXT(ValueCurrency__c) &amp;
+TEXT(ValueDate__c) &amp;
+TEXT(ValueDateTime__c) &amp;
+ValueEmail__c &amp;
+TEXT(ValueNumber__c) &amp; 
+TEXT(ValuePercent__c) &amp; 
+ValuePhone__c &amp;
+ValueText__c  &amp;
+LEFT(ValueTextArea__c,255) &amp; 
+ValueURL__c &amp; 
+Street__c &amp; &quot; &quot; &amp; 
+City__c	&amp;  &quot; &quot; &amp;
+State__c &amp;  &quot; &quot; &amp;
+Country__c &amp;  &quot; &quot; &amp;
+PostalCode__c
+)</formula>
+    <inlineHelpText>This field shows whichever Value was entered.</inlineHelpText>
+    <label>Question Response</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

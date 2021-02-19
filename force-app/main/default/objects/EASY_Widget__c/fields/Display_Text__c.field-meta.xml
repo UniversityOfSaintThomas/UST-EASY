@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Display_Text__c</fullName>
+    <description>Rich text the widget will display.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Rich text the widget will display.</inlineHelpText>
+    <label>Display Text</label>
+    <length>8000</length>
+    <trackTrending>false</trackTrending>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
+</CustomField>

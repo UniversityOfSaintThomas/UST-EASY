@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>Selecting the Household Name option excludes this Contact from the Household Name. NOTE: The Household Formal Greeting and Household Informal Greeting options are not currently tied to existing product functionality.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Selecting the Household Name option excludes this Contact from the Household Name. NOTE: The Household Formal Greeting and Household Informal Greeting options are not currently tied to existing product functionality.</inlineHelpText>
+    <inlineHelpText>Determines which household names this contact is NOT included as part of.</inlineHelpText>
     <label>Naming Exclusions</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

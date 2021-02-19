@@ -4,7 +4,6 @@
     <deprecated>false</deprecated>
     <description>The person&apos;s country of citizenship. If this student has dual citizenship, indicate the second country of citizenship in the Dual Citizenship field.</description>
     <externalId>false</externalId>
-    <inlineHelpText>The person&apos;s country of citizenship. If this student has dual citizenship, indicate the second country of citizenship in the Dual Citizenship field.</inlineHelpText>
     <label>Citizenship</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -226,11 +225,6 @@
                 <fullName>Cameroon</fullName>
                 <default>false</default>
                 <label>Cameroon</label>
-            </value>
-            <value>
-                <fullName>Canada</fullName>
-                <default>false</default>
-                <label>Canada</label>
             </value>
             <value>
                 <fullName>Canton and Enderbury Islands</fullName>

@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>The work email for this person.</description>
     <externalId>false</externalId>
-    <inlineHelpText>The work email for this person.</inlineHelpText>
+    <inlineHelpText>See Preferred Email field.</inlineHelpText>
     <label>Work Email</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

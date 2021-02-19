@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>An optional email address not captured in other email fields.</description>
     <externalId>false</externalId>
-    <inlineHelpText>An optional email address not captured in other email fields.</inlineHelpText>
+    <inlineHelpText>Alternate Email is an optional fourth email: Not personal, preferred, or work email.</inlineHelpText>
     <label>Alternate Email</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

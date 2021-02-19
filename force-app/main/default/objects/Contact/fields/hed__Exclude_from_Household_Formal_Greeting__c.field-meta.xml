@@ -5,7 +5,7 @@
     <deprecated>false</deprecated>
     <description>This field currently isn&apos;t tied to product functionality.</description>
     <externalId>false</externalId>
-    <inlineHelpText>This field currently isn&apos;t tied to product functionality.</inlineHelpText>
+    <inlineHelpText>Checking this box will exclude this contact from the Household Formal Greeting.</inlineHelpText>
     <label>Exclude from Household Formal Greeting</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>

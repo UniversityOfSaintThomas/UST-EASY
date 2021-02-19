@@ -4,7 +4,6 @@
     <deprecated>false</deprecated>
     <description>The country where this person was born.</description>
     <externalId>false</externalId>
-    <inlineHelpText>The country where this person was born.</inlineHelpText>
     <label>Country of Origin</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -226,11 +225,6 @@
                 <fullName>Cameroon</fullName>
                 <default>false</default>
                 <label>Cameroon</label>
-            </value>
-            <value>
-                <fullName>Canada</fullName>
-                <default>false</default>
-                <label>Canada</label>
             </value>
             <value>
                 <fullName>Canton and Enderbury Islands</fullName>

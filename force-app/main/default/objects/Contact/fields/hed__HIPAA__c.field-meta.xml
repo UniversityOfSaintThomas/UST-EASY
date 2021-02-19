@@ -5,7 +5,6 @@
     <deprecated>false</deprecated>
     <description>Can be used to indicate that the student Contact&apos;s record is subject to Health Insurance Portability and Accountability Act requirements, without displaying the details of that information.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Indicates whether this person&apos;s record is subject to Health Insurance Portability and Accountability Act standards.</inlineHelpText>
     <label>HIPAA</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>

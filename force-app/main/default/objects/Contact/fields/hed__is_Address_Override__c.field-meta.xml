@@ -5,7 +5,7 @@
     <deprecated>false</deprecated>
     <description>When selected, this Contact&apos;s address won&apos;t be synced with the Household Default or Seasonal Address. Use this to maintain a separate Mailing Address for this particular Contact. (Applies to Household Contacts only.)</description>
     <externalId>false</externalId>
-    <inlineHelpText>When selected, this Contact&apos;s address won&apos;t be synced with the Household Default or Seasonal Address. Use this to maintain a separate Mailing Address for this particular Contact. (Applies to Household Contacts only.)</inlineHelpText>
+    <inlineHelpText>If checked, the Contact&apos;s Current Address lookup overrides the Household&apos;s default Address or seasonal Address.</inlineHelpText>
     <label>Do Not Automatically Update</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>

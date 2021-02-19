@@ -5,7 +5,6 @@
     <deprecated>false</deprecated>
     <description>Lookup to the main Organization (Account record) this Contact is associated with.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Lookup to the main Organization (Account record) this Contact is associated with.</inlineHelpText>
     <label>Primary Business Organization</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Contacts (Primary Organization)</relationshipLabel>

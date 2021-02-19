@@ -150,6 +150,24 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Requirement_Response__c</fields>
+        <fields>Question__c</fields>
+        <fields>Question_Label__c</fields>
+        <fields>Question_Response__c</fields>
+        <fields>PopulatedOn__c</fields>
+        <relatedList>Question_Response__c.Application__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Date_Received__c</fields>
+        <fields>Sign_Date__c</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <fields>Title_Position__c</fields>
+        <relatedList>Recommendation__c.Application__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Decision_Recommendation__c</fields>
         <fields>Completed__c</fields>
         <fields>Terminated__c</fields>
@@ -184,7 +202,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1U00000370wo</masterLabel>
+        <masterLabel>00h19000002AE19</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

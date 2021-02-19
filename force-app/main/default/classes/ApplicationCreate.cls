@@ -134,8 +134,11 @@ public class ApplicationCreate {
         // Add term and program questions if not hidden
         if (!appControl.Hide_Term_Program__c) {
 
-            // Get map of intended programs with id as key
-            List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true ORDER BY Name ASC];
+            // Get map of intended programs with id as key, and only for a specific Application Control
+            List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Application_Control__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true AND Application_Control__c = :appControl.Id ORDER BY Name ASC];
+            // Original EASY query, that does not limit program list by application control
+            // List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Application_Control__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true  ORDER BY Name ASC];
+
             intendedPrograms = new Map<Id, Program__c>(progs);
 
             // Create new program question and add to list
@@ -350,15 +353,18 @@ public class ApplicationCreate {
 
             Id rrId = rrLst[i].Id;
 
-            for (Question_Response__c qr : qrReqList[i])
+            for (Question_Response__c qr : qrReqList[i]) {
                 qr.Requirement_Response__c = rrId;
+                qr.Application__c = app.Id;
+                qr.PopulatedOn__c = Datetime.now();
+            }
 
             qResponses.addAll(qrReqList[i]);
         }
 
         upsert qResponses; // Insert question responses
         // Return URL for checklist page for new application
-        return '/apex/CommunityAssignment/?community=applicant&applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
+        return '/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
     }
 
     @RemoteAction

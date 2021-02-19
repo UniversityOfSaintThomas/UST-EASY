@@ -1,4 +1,4 @@
-<apex:page controller="ApplicationCreate" showHeader="false" standardStylesheets="false" docType="html-5.0" action="{!init}">
+<apex:page controller="ApplicationCreate" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true"  docType="html-5.0" action="{!init}">
     <script>
         function lookupSearchJS(sObj,sObjFilter,sObjNameField,searchTerm,callback){
             console.log("in application requirement vfp");

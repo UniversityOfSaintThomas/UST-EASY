@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Stamp_for_Date_Time_Only</fullName>
+    <active>true</active>
+    <errorConditionFormula>RecordType.DeveloperName != &quot;DateTime&quot; &amp;&amp;
+ Date_Stamp__c = TRUE</errorConditionFormula>
+    <errorDisplayField>Date_Stamp__c</errorDisplayField>
+    <errorMessage>Date Stamp can only be used with a DateTime record type.</errorMessage>
+</ValidationRule>

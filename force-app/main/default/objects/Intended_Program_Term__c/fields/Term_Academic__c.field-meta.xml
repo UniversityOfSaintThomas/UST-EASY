@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Term_Academic__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Academic Term that this record is associated with.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Academic Term that this record is associated with.</inlineHelpText>
+    <label>Term (Academic)</label>
+    <referenceTo>hed__Term__c</referenceTo>
+    <relationshipLabel>Intended Program Terms</relationshipLabel>
+    <relationshipName>Intended_Program_Terms</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

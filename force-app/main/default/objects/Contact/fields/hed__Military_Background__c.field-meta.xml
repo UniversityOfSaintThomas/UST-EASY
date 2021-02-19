@@ -4,7 +4,6 @@
     <deprecated>false</deprecated>
     <description>Describe this person&apos;s miltary service, for example, the branch of the military, length of time in the miltary, date of discharge, etc.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Describe this person&apos;s miltary service, for example, the branch of the military, length of time in the miltary, date of discharge, etc.</inlineHelpText>
     <label>Military Background</label>
     <length>32768</length>
     <trackFeedHistory>false</trackFeedHistory>

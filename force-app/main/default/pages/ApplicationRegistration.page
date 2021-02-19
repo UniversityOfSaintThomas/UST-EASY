@@ -1,4 +1,4 @@
-<apex:page controller="ApplicationRegistration" showHeader="false" standardStylesheets="false" docType="html-5.0">
+<apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0">
     <apex:composition template="Capricorn2020">
         <apex:define name="scriptHead">
             <script>
@@ -35,15 +35,15 @@
                                 <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
                             </apex:actionFunction>
                             <apex:actionFunction name="login" action="{!login}" oncomplete="appHideLoadingSpinner();"/>
-                            <button Class="btn btn-lg navButton left  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c}; float:left; margin: 10px;"
-                                    role="button" data-slide="prev"
-                            >Back
-                            </button>
-                            <apex:commandLink styleClass="btn btn-lg appCreateSave" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c};float:right;margin: 10px;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
-                            <button Class="btn btn-lg navButton right  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c}; float:right; margin: 10px;"
-                                    role="button" data-slide="next"
-                            >Next
-                            </button>
+                            <!--                            <button Class="btn btn-lg navButton left  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c}; float:left; margin: 10px;"-->
+                            <!--                                    role="button" data-slide="prev"-->
+                            <!--                            >Back-->
+                            <!--                            </button>-->
+                            <apex:commandLink styleClass="slds-button slds-button_brand appCreateSave" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                            <!--                            <button Class="btn btn-lg navButton right  createSlide" href="#myCarousel" style="color:#{!appCreate.appControl.Button_Text_Color__c};background-color:#{!appCreate.appControl.Button_Color__c}; float:right; margin: 10px;"-->
+                            <!--                                    role="button" data-slide="next"-->
+                            <!--                            >Next-->
+                            <!--                            </button>-->
                         </div>
                     </c:ApplicationForm>
                 </div>

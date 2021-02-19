@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UDAR</fullName>
+    <fields>Name</fields>
+    <fields>AccountId</fields>
+    <fields>MobilePhone</fields>
+    <fields>Email</fields>
+    <fields>University_Banner_ID__c</fields>
+    <label>UDAR</label>
+</CompactLayout>

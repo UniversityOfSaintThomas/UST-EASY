@@ -5,7 +5,6 @@
     <deprecated>false</deprecated>
     <description>Indicates whether this student has applied for financial aid.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Indicates whether this student has applied for financial aid.</inlineHelpText>
     <label>Financial Aid Applicant</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>

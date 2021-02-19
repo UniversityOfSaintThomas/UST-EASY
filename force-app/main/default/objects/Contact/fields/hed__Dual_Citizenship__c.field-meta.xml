@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>For people who have dual citizenship, the second country of citizenship.</description>
     <externalId>false</externalId>
-    <inlineHelpText>For people who have dual citizenship, the second country of citizenship.</inlineHelpText>
+    <inlineHelpText>If this Contact has multiple citizenship it can be recorded here.</inlineHelpText>
     <label>Dual Citizenship</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

@@ -21,7 +21,7 @@
     ,
     &quot;&quot;)
 )</formula>
-    <inlineHelpText>If you&apos;ve set &quot;Work&quot; as the Primary Address type, the Work Address is populated with the Mailing Address values. If &quot;Work&quot; is the Secondary Address type, the Work Address is populated with the &quot;Other Address&quot; values. This field is read-only.</inlineHelpText>
+    <inlineHelpText>Formula: If the Primary Address Type is Work, the Mailing Address.  If the Secondary Address Type is Work, the Other Address.</inlineHelpText>
     <label>Work Address</label>
     <required>false</required>
     <type>Text</type>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Widget_Screen_Location__c</fullName>
+    <description>The place on the application page you would like this widget to appear.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The place on the application page you would like this widget to appear.</inlineHelpText>
+    <label>Widget Screen Location</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Top</fullName>
+                <default>false</default>
+                <label>Top</label>
+            </value>
+            <value>
+                <fullName>Bottom</fullName>
+                <default>false</default>
+                <label>Bottom</label>
+            </value>
+            <value>
+                <fullName>Left</fullName>
+                <default>false</default>
+                <label>Left</label>
+            </value>
+            <value>
+                <fullName>Right</fullName>
+                <default>false</default>
+                <label>Right</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

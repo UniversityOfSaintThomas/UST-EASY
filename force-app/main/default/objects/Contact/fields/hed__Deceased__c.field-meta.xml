@@ -5,7 +5,7 @@
     <deprecated>false</deprecated>
     <description>Indicates this person is deceased. When selected, also enables Do Not Contact, Do Not Call, Email Opt Out, and Fax Opt Out. If the Contact is not the only member of the Household, the Contact name is removed from the Household name.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Indicates this person is deceased. When selected, also enables Do Not Contact, Do Not Call, Email Opt Out, and Fax Opt Out. If the Contact is not the only member of the Household, the Contact name is removed from the Household name.</inlineHelpText>
+    <inlineHelpText>When selected, this option marks the contact as deceased, and excludes them from household naming, emails, and phone calls.</inlineHelpText>
     <label>Deceased</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>

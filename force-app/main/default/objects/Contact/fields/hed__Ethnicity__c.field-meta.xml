@@ -4,7 +4,6 @@
     <deprecated>false</deprecated>
     <description>Indicates if this person identifies as Hispanic or Latino.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Indicates if this person identifies as Hispanic or Latino.</inlineHelpText>
     <label>Ethnicity</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -13,14 +12,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Hispanic or Latino</fullName>
+                <fullName>Caucasian</fullName>
                 <default>false</default>
-                <label>Hispanic or Latino</label>
+                <label>Caucasian</label>
             </value>
             <value>
-                <fullName>Not Hispanic or Latino</fullName>
+                <fullName>Asian</fullName>
                 <default>false</default>
-                <label>Not Hispanic or Latino</label>
+                <label>Asian</label>
             </value>
         </valueSetDefinition>
     </valueSet>

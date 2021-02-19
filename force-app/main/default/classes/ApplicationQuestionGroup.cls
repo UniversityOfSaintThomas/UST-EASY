@@ -27,6 +27,7 @@ public class ApplicationQuestionGroup {
     public Boolean externalResponse {get;set;}
     private Integer newIndex;
     public Requirement_Response__c response{get;set;}
+    public String tempUniqueId {get;set;}
     
     public String instructions {
         get {

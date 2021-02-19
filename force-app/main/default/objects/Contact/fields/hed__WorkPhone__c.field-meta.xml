@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>The work phone number for this person.</description>
     <externalId>false</externalId>
-    <inlineHelpText>The work phone number for this person.</inlineHelpText>
+    <inlineHelpText>See &apos;Preferred Phone&apos; field.</inlineHelpText>
     <label>Work Phone</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

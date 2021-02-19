@@ -1,20 +1,20 @@
-<apex:component>
+<apex:component controller="ApplicationBodyController">
     <apex:attribute name="title" description="The title for this page" type="String" required="true"/>
     <apex:attribute name="subtitle" description="The subtitle for this page" type="String" required="false"/>
     <apex:attribute name="hideLogo" description="Should the logo be hidden" type="Boolean" required="false"/>
-    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true"/>
+    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" assignTo="{!applicationControlValue}"/>
     <apex:attribute name="loadingText" description="The text to display when save is occuring" type="String" required="false" default="Processing..."/>
     <script>
         function appShowLoadingSpinner() {
-            jQuery('#apploadingspinner').show();
+            document.getElementById("apploadingspinner").style.display = "block";
         }
 
         function appHideLoadingSpinner() {
-            jQuery('#apploadingspinner').hide();
+            document.getElementById("apploadingspinner").style.display = "none";
         }
 
         function appShowConfimation() {
-            jQuery('#confirmation').show();
+            document.getElementById("confirmation").style.display = "block";
         }
 
         // By default, replaceAll runs on ALL textarea fields.
@@ -34,42 +34,58 @@
         // particularly after the fields have already been rerendered. 
         // More of a safeguard than anything
         function ensureRichTextContent() {
-            jQuery('.ckeditor').each(function (index, el) {
-                var id = jQuery(el).attr('id') || jQuery(el).attr('name');
-                var data = CKEDITOR.instances[id].getData().trim();
 
-                if (CKEDITOR.instances[id].checkDirty())
-                    jQuery(el).text(data);
+            document.querySelectorAll('.ckeditor').forEach(function (el) {
+                let id = jQuery(el).attr('id') || jQuery(el).attr('name');
+                let data = CKEDITOR.instances[id].getData().trim();
+
+                if (CKEDITOR.instances[id].checkDirty()) {
+                    el.textContent = data;
+                }
+
             });
         }
 
         function performDocUploadSave(redirectTo) {
-            var docUploadPromiseArr = [];
+            let docUploadPromiseArr = [];
             ensureRichTextContent();
-            jQuery('.docUploadInput').each(function (idx, docUpload) {
+
+            document.querySelectorAll('.docUploadInput').forEach(function (el, docUpload) {
                 if (docUpload.files) {
-                    var fbody = docUpload.files[0];
+                    let fbody = docUpload.files[0];
                     if (fbody) {
                         docUploadPromiseArr.push(getAsText(fbody, jQuery(docUpload).attr('data-respid')));
                     }
                 } else {
                 }
+
             });
+
+            document.querySelectorAll('.docUploadInput').forEach(function (idx, docUpload) {
+                if (docUpload.files) {
+                    let fbody = docUpload.files[0];
+                    if (fbody) {
+                        docUploadPromiseArr.push(getAsText(fbody, docUpload.getAttribute('data-respid')));
+                    }
+                } else {
+                }
+            });
+
             Promise.all(docUploadPromiseArr).then(docUploads => {
                 var docUploadObj = {};
                 docUploads.forEach(function (docUpload) {
                     docUploadObj[docUpload.itemId] = {"attData": docUpload};
                 });
                 saveWithDocs(JSON.stringify(docUploadObj), redirectTo);
-                console.log(redirectTo);
+                //console.log(redirectTo);
             }).catch(function () {
             });
         }
 
         function getAsText(readFile, respId) {
             return new Promise((resolve, reject) => {
-                var reader = new FileReader();
-                var reader = new FileReader();
+                //var reader = new FileReader();
+                let reader = new FileReader();
                 reader.onload = (function (theFile) {
                     var fileName = theFile.name;
                     return function (e) {
@@ -96,20 +112,41 @@
             <center>Thank you! Your response has been submitted successfully.</center>
         </div>
     </div>
-    <div class="container-fluid">
-        <!--            <apex:outputPanel styleClass="row" style="padding:10px;padding-left:15px;" rendered="{!!hideLogo}">-->
-        <!--                <div class="col-xs-12" >-->
-        <!--                    <img src="{!URLFOR($Resource[appControl.Logo_Static_Resource__c], appControl.Logo_Static_Resource_Path__c)}" />-->
-        <!--                </div>-->
-        <!--            </apex:outputPanel>-->
-        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-            <h2 class="slds-text-heading_large">{!title}</h2>
-        </div>
-        <apex:outputPanel rendered="{!subtitle != null}">
-            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                <h3 class="slds-text-heading_medium">{!subtitle}</h3>
-            </div>
-        </apex:outputPanel>
-        <apex:componentBody/>
+    <!--            <apex:outputPanel styleClass="row" style="padding:10px;padding-left:15px;" rendered="{!!hideLogo}">-->
+    <!--                <div class="col-xs-12" >-->
+    <!--                    <img src="{!URLFOR($Resource[appControl.Logo_Static_Resource__c], appControl.Logo_Static_Resource_Path__c)}" />-->
+    <!--                </div>-->
+    <!--            </apex:outputPanel>-->
+    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
+        <h2 class="slds-text-heading_large">{!title} {!applicationControlValue.Id}</h2>
     </div>
+    <apex:outputPanel rendered="{!subtitle != null}" layout="none">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
+            <h3 class="slds-text-heading_medium">{!subtitle}</h3>
+
+        </div>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!NOT(topWidgets.empty)}" layout="none">
+        <apex:repeat value="{!topWidgets}" var="widget">
+            <apex:outputText escape="false" value="{!widget.Display_Text__c}"/>
+        </apex:repeat>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(leftWidgets.empty)}" layout="none">
+        <apex:repeat value="{!leftWidgets}" var="widget">
+            <apex:outputText escape="false" value="{!widget.Display_Text__c}"/>
+        </apex:repeat>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(rightWidgets.empty)}" layout="none">
+        <apex:repeat value="{!rightWidgets}" var="widget">
+            <apex:outputText escape="false" value="{!widget.Display_Text__c}"/>
+        </apex:repeat>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(bottomWidgets.empty)}" layout="none">
+        <apex:repeat value="{!bottomWidgets}" var="widget">
+            <apex:outputText escape="false" value="{!widget.Display_Text__c}"/>
+        </apex:repeat>
+    </apex:outputPanel>
+
+    <apex:componentBody/>
 </apex:component>

@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>The full name that this Contact prefers to use in place of their legal name.</description>
     <externalId>false</externalId>
-    <inlineHelpText>The full name that this Contact prefers to use in place of their legal name.</inlineHelpText>
+    <inlineHelpText>The full name that the Contact prefers to use instead of a legal or official name.</inlineHelpText>
     <label>Chosen Full Name</label>
     <length>255</length>
     <required>false</required>

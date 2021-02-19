@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>The email (University, Work, Alternate) that this Contact prefers you to use.</description>
     <externalId>false</externalId>
-    <inlineHelpText>The email (University, Work, Alternate) that this Contact prefers you to use.</inlineHelpText>
+    <inlineHelpText>Which email should be used for most communications involving this Contact?</inlineHelpText>
     <label>Preferred Email</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -13,19 +13,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>University Email</fullName>
+                <fullName>University</fullName>
                 <default>false</default>
-                <label>University Email</label>
+                <label>University</label>
             </value>
             <value>
-                <fullName>Work Email</fullName>
+                <fullName>Work</fullName>
                 <default>false</default>
-                <label>Work Email</label>
+                <label>Work</label>
             </value>
             <value>
-                <fullName>Alternate Email</fullName>
+                <fullName>Alternate</fullName>
                 <default>false</default>
-                <label>Alternate Email</label>
+                <label>Alternate</label>
+            </value>
+            <value>
+                <fullName>Personal Email</fullName>
+                <default>false</default>
+                <label>Personal Email</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Overall_Recommendation__c</fullName>
+    <externalId>false</externalId>
+    <label>Overall Recommendation</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Highly Recommend</fullName>
+                <default>false</default>
+                <label>Highly Recommend</label>
+            </value>
+            <value>
+                <fullName>Recommend</fullName>
+                <default>false</default>
+                <label>Recommend</label>
+            </value>
+            <value>
+                <fullName>Recommend with Reservations</fullName>
+                <default>false</default>
+                <label>Recommend with Reservations</label>
+            </value>
+            <value>
+                <fullName>Not Recommended</fullName>
+                <default>false</default>
+                <label>Not Recommended</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

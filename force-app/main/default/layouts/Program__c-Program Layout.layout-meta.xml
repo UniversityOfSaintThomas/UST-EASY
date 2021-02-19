@@ -130,7 +130,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Categorization</label>
+        <label>Application Filters</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -156,12 +156,6 @@
                 <behavior>Edit</behavior>
                 <field>Degree_Type__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>School_College__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Citizenship__c</field>
@@ -170,6 +164,16 @@
                 <behavior>Edit</behavior>
                 <field>Hide_Citizenship__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Application_Control__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>School_College__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Residency__c</field>
@@ -177,6 +181,9 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Generic_Filter_1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -239,7 +246,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h630000019N8V</masterLabel>
+        <masterLabel>00h19000002AE1E</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

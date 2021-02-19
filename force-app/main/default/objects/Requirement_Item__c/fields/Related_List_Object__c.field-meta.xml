@@ -35,6 +35,11 @@
                 <default>false</default>
                 <label>hed__Test__c</label>
             </value>
+            <value>
+                <fullName>Recommendation__c</fullName>
+                <default>false</default>
+                <label>Recommendation__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

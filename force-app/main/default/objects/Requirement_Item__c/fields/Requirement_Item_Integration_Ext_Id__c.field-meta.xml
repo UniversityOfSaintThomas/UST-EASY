@@ -8,7 +8,7 @@
     <inlineHelpText>Used for integration</inlineHelpText>
     <label>Requirement Item Integration Ext Id</label>
     <length>50</length>
-    <required>false</required>
+    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>true</unique>

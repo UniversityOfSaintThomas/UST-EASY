@@ -5,7 +5,6 @@
     <deprecated>false</deprecated>
     <description>Lookup to the main Household (Account record) this Contact is associated with.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Lookup to the main Household (Account record) this Contact is associated with.</inlineHelpText>
     <label>Primary Household</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Contacts (Primary Household)</relationshipLabel>

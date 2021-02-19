@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>Indicate what kind of address the Mailing Address is, for example, Work, Home, or Other.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Indicate what kind of address the Mailing Address is, for example, Work, Home, or Other.</inlineHelpText>
+    <inlineHelpText>Which type of address is the mailing address?</inlineHelpText>
     <label>Primary Address Type</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
@@ -16,11 +16,6 @@
                 <fullName>Home</fullName>
                 <default>false</default>
                 <label>Home</label>
-            </value>
-            <value>
-                <fullName>Vacation Residence</fullName>
-                <default>false</default>
-                <label>Vacation Residence</label>
             </value>
             <value>
                 <fullName>Work</fullName>

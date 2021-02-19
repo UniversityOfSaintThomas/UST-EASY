@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>hed__Test_Type__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Displays the Test Type name from the associated Test record. For example, SAT or GRE.</description>
+    <externalId>false</externalId>
+    <formula>TEXT(hed__Test__r.hed__Test_Type__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Displays the Test Type name from the associated Test record. For example, SAT or GRE.</inlineHelpText>
+    <label>Test Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

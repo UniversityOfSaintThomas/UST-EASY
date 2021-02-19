@@ -4,7 +4,6 @@
     <deprecated>false</deprecated>
     <description>The religion this person practices.</description>
     <externalId>false</externalId>
-    <inlineHelpText>The religion this person practices.</inlineHelpText>
     <label>Religion</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

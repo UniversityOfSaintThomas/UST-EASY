@@ -65,6 +65,11 @@
         <default>false</default>
         <label>Graduate School of Professional Psychology</label>
     </customValue>
+    <customValue>
+        <fullName>Dougherty Family College</fullName>
+        <default>false</default>
+        <label>Dougherty Family College</label>
+    </customValue>
     <masterLabel>School / College</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

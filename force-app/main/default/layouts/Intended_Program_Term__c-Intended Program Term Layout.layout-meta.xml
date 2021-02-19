@@ -21,6 +21,10 @@
                 <behavior>Required</behavior>
                 <field>Academic_Term__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Term_Academic__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

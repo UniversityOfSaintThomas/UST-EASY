@@ -1,4 +1,4 @@
-<apex:page controller="ApplicationAdminView" action="{!init}" showHeader="false" standardStylesheets="false" docType="html-5.0" >
+<apex:page controller="ApplicationAdminView" action="{!init}" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0" >
     <script>
         function lookupSearchJS(sObj,sObjFilter,sObjNameField,searchTerm,callback){
             console.log(sObj);

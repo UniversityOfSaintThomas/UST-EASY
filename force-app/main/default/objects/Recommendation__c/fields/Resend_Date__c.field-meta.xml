@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Resend_Date__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter TODAY&apos;s date to resend Recommendation Request email to Recommender. Document Status must be Requested and Recommender&apos;s Email address entered to trigger the send.</inlineHelpText>
+    <label>Resend Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

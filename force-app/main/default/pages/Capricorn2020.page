@@ -5,9 +5,9 @@ license that can be found in the LICENSE file.
 Created by Thaddaeus Dahlberg on 10/25/2017.
 -->
 
-<apex:page id="Capricorn2020" sidebar="false" lightningStyleSheets="true" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false">
+<apex:page id="Capricorn2020" sidebar="false" lightningStyleSheets="true" showHeader="false" standardStylesheets="false" applyHtmlTag="false" docType="html-5.0" cache="false">
     <apex:slds/>
-    <html lang="en" xml:lang="en">
+    <html lang="en" xml:lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <head>
         <meta charset="utf-8"/>
         <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
@@ -46,8 +46,7 @@ Created by Thaddaeus Dahlberg on 10/25/2017.
 
         <!-- Google Tag Manager (noscript) -->
         <noscript>
-            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KHFMKX"
-                    height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager iFrame - no content"></iframe>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KHFMKX" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager iFrame - no content"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->
 
@@ -141,7 +140,9 @@ Created by Thaddaeus Dahlberg on 10/25/2017.
             <div id="content">
                 <section class="block ">
                     <div class="grid-container">
-                        <apex:insert name="body"/>
+                        <div class="slds-scope">
+                            <apex:insert name="body"/>
+                        </div>
                     </div>
                 </section>
             </div>

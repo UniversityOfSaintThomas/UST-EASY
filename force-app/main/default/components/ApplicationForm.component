@@ -11,7 +11,12 @@
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
     <apex:attribute name="isExternalUser" description="Boolean that is true if this is an external user" type="Boolean" required="false" default="false"/>
 
+
     <script>
+        //store placeholders and maxlengths for assignment after DOM loads
+
+    </script>
+    <!--<script>
         var jq = jQuery.noConflict();
         if ({!hidePaging} == false)
         {
@@ -54,7 +59,7 @@
         }
 
 
-    </script>
+    </script>-->
     <apex:form id="theForm">
         <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>
         <apex:outputPanel id="formPageMessages" styleClass="row">

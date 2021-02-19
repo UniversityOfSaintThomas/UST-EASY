@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>This person&apos;s school email address.</description>
     <externalId>false</externalId>
-    <inlineHelpText>This person&apos;s school email address.</inlineHelpText>
+    <inlineHelpText>Official University email address.</inlineHelpText>
     <label>University Email</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

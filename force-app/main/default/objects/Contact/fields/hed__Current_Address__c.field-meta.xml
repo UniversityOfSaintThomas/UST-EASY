@@ -5,7 +5,7 @@
     <deprecated>false</deprecated>
     <description>Lookup to the current Address record for this Contact. The Contact&apos;s Mailing Address field is automatically populated with the address fields from the current Address record.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Lookup to the current Address record for this Contact. The Contact&apos;s Mailing Address field is automatically populated with the address fields from the current Address record.</inlineHelpText>
+    <inlineHelpText>The current Address that the Contact&apos;s mailing fields are filled with.</inlineHelpText>
     <label>Current Address</label>
     <lookupFilter>
         <active>true</active>

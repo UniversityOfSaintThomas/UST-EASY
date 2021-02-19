@@ -4,7 +4,6 @@
     <deprecated>false</deprecated>
     <description>Select the race(s) this person uses to describe themself.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Select the race(s) this person uses to describe themself.</inlineHelpText>
     <label>Race</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

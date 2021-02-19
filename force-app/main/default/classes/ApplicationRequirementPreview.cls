@@ -45,7 +45,7 @@ public class ApplicationRequirementPreview {
                 req.init();
 
                 Set<String> fieldSetFields = new Set<String>();
-                for(FieldSetMember f : SObjectType.Application__c.FieldSets.Application_Preview_Filters.getFields()){
+                for(FieldSetMember f : SObjectType.Application__c.fieldSets.Application_Preview_Filters.getFields()){
                         fieldSetFields.add(f.getFieldPath());
                         questionHolderMap.put(f.getFieldPath(),new ApplicationQuestion(f,app, Application__c.SObjectType));
                         questionHolderMap.get(f.getFieldPath()).application = new Application__c(Application_Status__c='NULL');

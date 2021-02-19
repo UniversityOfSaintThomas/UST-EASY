@@ -50,7 +50,7 @@ public class ApplicationRegistration {
         appCreate.setup(firstGroup, lastGroup);
     }
 
-    /*******************************************************************************
+    /* ******************************************************************************
     * @description populates fields on the contact and application through the interactions object.
     ********************************************************************************/
     public PageReference submit() {

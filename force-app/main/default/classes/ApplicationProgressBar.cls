@@ -102,8 +102,9 @@ public class ApplicationProgressBar {
         contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
 
         if (UserInfo.getUserType().equals('Standard')) {
-            if (ApexPages.currentPage().getParameters().containsKey('contactId'))
+            if (ApexPages.currentPage().getParameters().containsKey('contactId')) {
                 contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
+            }
 
         } else if (String.isNotBlank(ApexPages.currentPage().getParameters().get('h')) && String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))) {
             isExternalUserPb = true;
@@ -124,7 +125,14 @@ public class ApplicationProgressBar {
 
         reqMap = new Map<Id, RequirementWrapper>();
         Set<Id> reqIds = new Set<Id>();
-        for (Requirement__c r : [SELECT Id, Internal_Only__c, Name, Active__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Requirement__c WHERE Application_Control__c = :appControl.Id AND Active__c = :true and Show_On_Application_Creation__c = false ORDER BY Display_Order__c ASC NULLS LAST]) {
+        for (Requirement__c r : [
+                SELECT Id, Internal_Only__c, Name, Active__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                FROM Requirement__c
+                WHERE Application_Control__c = :appControl.Id
+                AND Active__c = :true
+                AND Show_on_Application_Creation__c = FALSE
+                ORDER BY Display_Order__c ASC NULLS LAST
+        ]) {
             if (ApplicationFilter.filter(app, r)) {
                 reqIds.add(r.Id);
                 reqMap.put(r.Id, new RequirementWrapper(r));
@@ -137,9 +145,23 @@ public class ApplicationProgressBar {
         Set<Id> riIds = new Set<Id>();
         Set<Id> reqIdsToKeep = new Set<Id>();
         riList = [
-                SELECT Id, File_Types__c, Required__c,Requirement__c, Internal_Only__c, Active__c, Required_Number_of_Children__c, Requirement__r.Name, Name, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (SELECT Id, Active__c,Hardcoded_value__c,Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Contact_Field__c, Application_Field__c, External_Email_Field__c, Editable_Application_Status__c, New_Reference_Field__c, URL_Parameter__c,Static_Text__c, Name_Field_API_Name__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Questions__r ORDER BY Display_Order__c ASC NULLS LAST)
+                SELECT Id, File_Types__c, Required__c,Requirement__c, Internal_Only__c, Active__c, Required_Number_of_Children__c, Requirement__r.Name, Name,
+                        Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c,
+                        Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,
+                        Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c,
+                        Editable_Application_Status__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c, Generic_Filter_1__c,
+                        Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (
+                        SELECT Id, Active__c,Hardcoded_Value__c,Required__c, Label__c,
+                                Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c,
+                                School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c,
+                                Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Contact_Field__c,
+                                Application_Field__c, External_Email_Field__c, Editable_Application_Status__c, New_Reference_Field__c, URL_Parameter__c,Static_Text__c,
+                                Name_Field_API_Name__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                        FROM Questions__r
+                        ORDER BY Display_Order__c ASC NULLS LAST
+                )
                 FROM Requirement_Item__c
-                WHERE Requirement__c in :reqIds
+                WHERE Requirement__c IN :reqIds
                 ORDER BY Display_Order__c ASC NULLS LAST
         ];
         for (Requirement_Item__c ri : riList) {
@@ -154,10 +176,13 @@ public class ApplicationProgressBar {
         Set<String> appFields = new Set<String>{
                 'id', 'contact__c', 'intended_program__r.program_name_on_application__c', 'intended_program__r.name', 'intended_term_of_entry__r.name', 'intended_term_of_entry__r.term_start_date__c', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'residency__c', 'application_status__c', 'school_college__c', 'degree_type__c', 'application_control__c', 'generic_filter_1__c', 'generic_filter_2__c', 'generic_filter_3__c', 'generic_filter_4__c'
         };
-        for (Requirement_Item__c ri : riList)
-            for (Question__c q : ri.Questions__r)
-                if (String.isNotBlank(q.Application_Field__c))
+        for (Requirement_Item__c ri : riList) {
+            for (Question__c q : ri.Questions__r) {
+                if (String.isNotBlank(q.Application_Field__c)) {
                     appFields.add(q.Application_Field__c.toLowerCase());
+                }
+            }
+        }
 
         String appQuery = 'SELECT ' + String.join(new List<String>(appFields), ',') + ' FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId';
 
@@ -168,25 +193,37 @@ public class ApplicationProgressBar {
         contactFields = new Set<String>{
                 'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode'
         };
-        if (Account.sObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode'))
+        if (Account.SObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode')) {
             contactFields.addAll(new Set<String>{
                     'mailingstatecode', 'mailingcountrycode', 'otherstatecode', 'othercountrycode'
-            }); else
-                contactFields.addAll(new Set<String>{
-                        'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'
-                });
-        for (Requirement_Item__c ri : riList)
-            for (Question__c q : ri.Questions__r)
-                if (String.isNotBlank(q.Contact_Field__c))
+            });
+        } else {
+            contactFields.addAll(new Set<String>{
+                    'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'
+            });
+        }
+        for (Requirement_Item__c ri : riList) {
+            for (Question__c q : ri.Questions__r) {
+                if (String.isNotBlank(q.Contact_Field__c)) {
                     contactFields.add(q.Contact_Field__c.toLowerCase());
-
+                }
+            }
+        }
         // Query for contact
         String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
-        if (contactId != null)
+        if (contactId != null) {
             con = ((List<Contact>) Database.query(query)).get(0);
+        }
 
         checkRequirementCompletion();
-        for(Requirement_Response__c rr : [Select Id, Requirement_Item__r.Required__c,Has_Child_Requirement__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,Incomplete_Questions__c, HasDocument__c, Waive_Requirement__c, Send_Reminder__c,External_Email__c,Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c from Requirement_Response__c WHERE Application__c = :applicationId and Requirement_Item__r.Requirement__c in :reqIds]){
+        for (Requirement_Response__c rr : [
+                SELECT Id, Requirement_Item__r.Required__c,Has_Child_Requirement__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,
+                        Requirement_Item__r.Requirement__c,Incomplete_Questions__c, HasDocument__c, Waive_Requirement__c, Send_Reminder__c,External_Email__c,
+                        Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c
+                FROM Requirement_Response__c
+                WHERE Application__c = :applicationId
+                AND Requirement_Item__r.Requirement__c IN :reqIds
+        ]) {
             if (riIds.contains(rr.Requirement_Item__c)) {
                 Boolean itemCompleted = true;
                 if (!completedRequirement.containsKey(rr.Requirement_Item__r.Requirement__c)) {
@@ -272,7 +309,22 @@ public class ApplicationProgressBar {
 
         //Requirement Responses
         Map<Id, List<Requirement_Response__c>> rrMap = new Map<Id, List<Requirement_Response__c>>();
-        for (Requirement_Response__c rr : [SELECT Id, Requirement_Item__r.Requirement__c,Requirement_Item__c,ValueTextEntry__c, Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c, HasDocument__c, Waive_Requirement__c, Application__c,Application__r.Contact__c,External_Email__c,Hashcode__c,Send_Reminder__c,Viewed__c, Document_Requirement_Fulfilled_On__c, (SELECT Id, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c, PopulatedOn__c, IsPopulated__c FROM Question_Responses__r), (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks) FROM Requirement_Response__c WHERE Requirement_Item__r.Requirement__c in :requirementIds AND Application__c = :applicationId]) {
+        for (Requirement_Response__c rr : [
+                SELECT Id, Requirement_Item__r.Requirement__c,Requirement_Item__c,ValueTextEntry__c, Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c,
+                        HasDocument__c, Waive_Requirement__c, Application__c,Application__r.Contact__c,External_Email__c,Hashcode__c,Send_Reminder__c,Viewed__c,
+                        Document_Requirement_Fulfilled_On__c, (
+                        SELECT Id, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c,
+                        ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c,
+                        ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c, PopulatedOn__c,
+                        IsPopulated__c
+                FROM Question_Responses__r), (
+                        SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title
+                        FROM ContentDocumentLinks
+                )
+                FROM Requirement_Response__c
+                WHERE Requirement_Item__r.Requirement__c IN :requirementIds
+                AND Application__c = :applicationId
+        ]) {
             if (!rrMap.containsKey(rr.Requirement_Item__r.Requirement__c)) {
                 rrMap.put(rr.Requirement_Item__r.Requirement__c, new List<Requirement_Response__c>());
             }
@@ -283,7 +335,12 @@ public class ApplicationProgressBar {
         Set<Id> questionItemSet = new Set<Id>();
         Map<Id, Id> qdReqMap = new Map<Id, Id>(); //Maps Question Dependencies to their original Requirement
         Map<Id, List<Question_Dependency__c>> qdMap = new Map<Id, List<Question_Dependency__c>>();
-        for (Question_Dependency__c qd : [SELECT Id, Question__c, Question__r.Required__c, Question__r.Requirement_Item__c,Question__r.Requirement_Item__r.Requirement__c, Controlling_Question__c, Controlling_Question__r.Requirement_Item__r.Requirement__c, Value__c, ValueCheckbox__c, RecordType.DeveloperName FROM Question_Dependency__c WHERE Question__r.Requirement_Item__r.Requirement__c in :requirementIds]) {
+        for (Question_Dependency__c qd : [
+                SELECT Id, Question__c, Question__r.Required__c, Question__r.Requirement_Item__c,Question__r.Requirement_Item__r.Requirement__c,
+                        Controlling_Question__c, Controlling_Question__r.Requirement_Item__r.Requirement__c, Value__c, ValueCheckbox__c, RecordType.DeveloperName
+                FROM Question_Dependency__c
+                WHERE Question__r.Requirement_Item__r.Requirement__c IN :requirementIds
+        ]) {
             if (!qdMap.containsKey(qd.Question__r.Requirement_Item__r.Requirement__c)) {
                 qdMap.put(qd.Question__r.Requirement_Item__r.Requirement__c, new List<Question_Dependency__c>());
             }
@@ -380,9 +437,9 @@ public class ApplicationProgressBar {
             update app;
 
         } catch (DmlException e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, e.getDMLMessage(0)));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
         } catch (Exception e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, e.getMessage()));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 
     }

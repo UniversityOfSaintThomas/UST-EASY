@@ -18,7 +18,7 @@ public class BatchApplicationArchiver implements Database.Batchable<SObject>{
         if(String.isNotBlank(applicationId)){
             query+= ' AND Id = :applicationId';
         }
-        return database.getQueryLocator(query);
+        return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext bc, List<Application__c> scope){
@@ -31,15 +31,15 @@ public class BatchApplicationArchiver implements Database.Batchable<SObject>{
             appIds.add(app.Id);
             appMap.put(app.Id, new ApplicationWrapper(app));
         }
-        for(Question_Response__c qr : database.query('SELECT '+getFields('Question_Response__c')+', Requirement_Response__r.Application__c FROM Question_Response__c WHERE Requirement_Response__r.Application__c IN :appIds')){
+        for(Question_Response__c qr : Database.query('SELECT '+getFields('Question_Response__c')+', Requirement_Response__r.Application__c FROM Question_Response__c WHERE Requirement_Response__r.Application__c IN :appIds')){
             qrLstDelete.add(qr);
             appMap.get(qr.Requirement_Response__r.Application__c).questionResponses.add(qr);
         }
-        for(Application_Review__c ar : database.query('SELECT '+getFields('Application_Review__c')+' FROM Application_Review__c WHERE Application__c IN :appIds')){
+        for(Application_Review__c ar : Database.query('SELECT '+getFields('Application_Review__c')+' FROM Application_Review__c WHERE Application__c IN :appIds')){
             arLstDelete.add(ar);
             appMap.get(ar.Application__c).applicationReviews.add(ar);
         }
-        for(Requirement_Response__c rr : database.query('SELECT '+getFields('Requirement_Response__c')+' FROM Requirement_Response__c WHERE Application__c IN :appIds')){
+        for(Requirement_Response__c rr : Database.query('SELECT '+getFields('Requirement_Response__c')+' FROM Requirement_Response__c WHERE Application__c IN :appIds')){
             rrLstDelete.add(rr);
             appMap.get(rr.Application__c).requirementResponses.add(rr);
         }
@@ -49,7 +49,7 @@ public class BatchApplicationArchiver implements Database.Batchable<SObject>{
             cvMap.put(wrap.app.Id,new ContentVersion(PathOnClient='ApplicationBackup.txt',Title='ApplicationBackup.txt',VersionData=Blob.valueOf(JSON.serialize(wrap))));
         }
         insert cvMap.values();
-        Map<Id,ContentVersion> cvNewMap = new Map<Id,ContentVersion>([SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id in :cvMap.values()]);
+        Map<Id,ContentVersion> cvNewMap = new Map<Id,ContentVersion>([SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id IN :cvMap.values()]);
         for(Id appId : cvMap.keySet()){
             ContentVersion cv = cvMap.get(appId);
             if(cvNewMap.containsKey(cv.Id)){

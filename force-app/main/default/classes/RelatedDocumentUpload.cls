@@ -33,15 +33,16 @@ public class RelatedDocumentUpload {
         success = false;
 		if(ApexPages.currentPage().getParameters().containsKey('Id')){
 			Id objId = ApexPages.currentPage().getParameters().get('Id');
-			obj = database.query('Select Id,Name, (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks Where ContentDocument.Description = \'Supporting Document\') from ' + objId.getSObjectType() + ' WHERE Id =\''+String.escapeSingleQuotes(objId)+'\'');
+			obj = Database.query('SELECT Id,Name, (SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks WHERE ContentDocument.Description = \'Supporting Document\') FROM ' + objId.getSobjectType() + ' WHERE Id =\''+String.escapeSingleQuotes(objId)+'\'');
 			aqg = new ApplicationQuestionGroup(obj);
 		}
         allowedExtensions = new Set<String>();
         if (ApexPages.currentPage().getParameters().containsKey('rId')) {
             Id rId = Id.valueOf(ApexPages.currentPage().getParameters().get('rId'));
             fileTypes = [SELECT Id, File_Types__c FROM Requirement_Item__c WHERE Id = :rId].File_Types__c;
-            if (String.isNotBlank(fileTypes))
-                allowedExtensions.addAll(fileTypes.toUpperCase().split(';'));
+            if (String.isNotBlank(fileTypes)) {
+				allowedExtensions.addAll(fileTypes.toUpperCase().split(';'));
+			}
         }
 	}
 	/*******************************************************************************
@@ -50,7 +51,7 @@ public class RelatedDocumentUpload {
 	public void submit(){
 		transient Map<String,Object> additionalDataMap;
 		transient ContentVersion att = new ContentVersion();
-		system.debug(additionalDataString);
+		System.debug(additionalDataString);
 		if(String.isNotBlank(additionalDataString)){
 			additionalDataMap = (Map<String,Object>)JSON.deserializeUntyped(additionalDataString);
 		} 
@@ -64,7 +65,7 @@ public class RelatedDocumentUpload {
                     if (String.isNotBlank(fileName) && !allowedExtensions.isEmpty()) {
                         String ext = fileName.substringAfterLast('.').toUpperCase();
                         if (!allowedExtensions.contains(ext)) {
-                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'File type not allowed. Allowed file types: ' + fileTypes));
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'File type not allowed. Allowed file types: ' + fileTypes));
                             return;
                         }
                     }
@@ -77,7 +78,7 @@ public class RelatedDocumentUpload {
 					att.VersionData = EncodingUtil.base64Decode(((String)attData.get('data')).substringAfter(','));
 				}
 				att.PathOnClient = att.Title;
-				att.firstPublishLocationId = obj.Id;
+				att.FirstPublishLocationId = obj.Id;
 				if(!Test.isRunningTest()){
 					att.put('NetworkId',Network.getNetworkId());
 				}

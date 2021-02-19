@@ -28,7 +28,16 @@ public class RelatedObjectReview {
         Map<String,String> reqItemLookupObjMap = new Map<String,String>();
         Map<String,String> reqItemRelatedObjMap = new Map<String,String>();
         //Find all relevant fields based on questions asked
-        for(Question__c q : [SELECT Id, Lookup_Object__c, Related_Object_Field__c, Requirement_Item__c, Requirement_Item__r.Related_List_Object__c, RecordType.DeveloperName, New_Reference_Field__c ,Static_Text__c FROM Question__c WHERE (Lookup_Object__c != null OR New_Reference_Field__c = true) AND Active__c = :true AND Requirement_Item__r.Active__c = :true AND Requirement_Item__r.Requirement__r.Active__c = :true AND Requirement_Item__r.Requirement__r.Application_Control__c = :appControl.Id ORDER BY New_Reference_Field__c, Display_Order__c ASC NULLS LAST]){
+        for(Question__c q : [
+                SELECT Id, Lookup_Object__c, Related_Object_Field__c, Requirement_Item__c, Requirement_Item__r.Related_List_Object__c, RecordType.DeveloperName,
+                        New_Reference_Field__c ,Static_Text__c
+                FROM Question__c
+                WHERE (Lookup_Object__c != NULL OR New_Reference_Field__c = TRUE)
+                AND Active__c = :true AND Requirement_Item__r.Active__c = :true
+                AND Requirement_Item__r.Requirement__r.Active__c = :true
+                AND Requirement_Item__r.Requirement__r.Application_Control__c = :appControl.Id
+                ORDER BY New_Reference_Field__c, Display_Order__c ASC NULLS LAST
+        ]){
             if(q.New_Reference_Field__c == false && q.RecordType.DeveloperName == 'Reference' && String.isNotBlank(q.Lookup_Object__c)){
                 reqItemLookupObjMap.put(q.Requirement_Item__c,q.Lookup_Object__c);
                 reqItemRelatedObjMap.put(q.Requirement_Item__r.Related_List_Object__c,q.Lookup_Object__c);
@@ -58,7 +67,7 @@ public class RelatedObjectReview {
                 if(!objWrappers.containsKey(reqItemRelatedObjMap.get(s))){
                     objWrappers.put(reqItemRelatedObjMap.get(s),new List<SObjectWrapper>());
                 }
-                objWrappers.get(reqItemRelatedObjMap.get(s)).addAll(convertList(database.query(query),reqItemRelatedObjMap.get(s)));
+                objWrappers.get(reqItemRelatedObjMap.get(s)).addAll(convertList(Database.query(query),reqItemRelatedObjMap.get(s)));
             }
         }
     }
@@ -109,7 +118,7 @@ public class RelatedObjectReview {
         createNewRecordType = null;
     }
 
-    /*******************************************************************************
+    /* ******************************************************************************
     * @description Converts a list of sObjects to a wrapper for ease of use
     ********************************************************************************/
     public List<SObjectWrapper> convertList(List<SObject> objList, String typeToConvert){
@@ -121,7 +130,7 @@ public class RelatedObjectReview {
         }
         return retLst;
     }
-    /*******************************************************************************
+    /* ******************************************************************************
     * @description Allows the administrator to lookup existing records to tie to.
     ********************************************************************************/
     @RemoteAction
@@ -138,7 +147,7 @@ public class RelatedObjectReview {
                 }
                 query += ' ORDER BY Name ASC';
                 try{
-                    return database.query(query);
+                    return Database.query(query);
                 }catch(Exception e){
                     return new List<SObject>();
                 }
@@ -157,7 +166,7 @@ public class RelatedObjectReview {
             this.obj = obj;
             this.cls = cls;
             Map<String, Object> cObjMap = (Map<String, Object>) JSON.deserializeUntyped((String)obj.get('Related_Object_JSON__c'));
-            relatedSObj = (SObject)JSON.deserialize(JSON.serialize(cObjMap), Sobject.class);
+            relatedSObj = (SObject)JSON.deserialize(JSON.serialize(cObjMap), SObject.class);
             relatedObjMap = new Map<String,ApplicationQuestion>();
             Map<String,Object> fieldMap = relatedSObj.getPopulatedFieldsAsMap();
             for(String s : cls.objFieldMap.get(typeOfRecord)){

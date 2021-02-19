@@ -40,9 +40,9 @@ public with sharing class ApplicationBodyController {
                         WITH SECURITY_ENFORCED
                 ];
             } catch (DmlException e) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, e.getDMLMessage(0)));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDMLMessage(0)));
             } catch (Exception e) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, e.getMessage()));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
             }
 
 

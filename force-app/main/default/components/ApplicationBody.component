@@ -4,98 +4,6 @@
     <apex:attribute name="hideLogo" description="Should the logo be hidden" type="Boolean" required="false"/>
     <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" assignTo="{!applicationControlValue}"/>
     <apex:attribute name="loadingText" description="The text to display when save is occuring" type="String" required="false" default="Processing..."/>
-    <script>
-        function appShowLoadingSpinner() {
-            document.getElementById("apploadingspinner").style.display = "block";
-        }
-
-        function appHideLoadingSpinner() {
-            document.getElementById("apploadingspinner").style.display = "none";
-        }
-
-        function appShowConfimation() {
-            document.getElementById("confirmation").style.display = "block";
-        }
-
-        // By default, replaceAll runs on ALL textarea fields.
-        // modified to run only on the class defined 'ckeditor'
-        //CKEDITOR.replaceAll = function(){for(var a=document.getElementsByClassName("ckeditor"),b=0;b<a.length;b++){var d=null,k=a[b];if(k.name||k.id){if("string"==typeof arguments[0]){if(!(new RegExp("(?:^|\\s)"+arguments[0]+"(?:$|\\s)")).test(k.className))continue}else if("function"==typeof arguments[0]&&(d={},!1===arguments[0](k,d)))continue;this.replace(k,d)}}};
-
-        // destroys and rebuilds the rich text fields after rerender
-        function afterRerenderRTF() {
-            for (name in CKEDITOR.instances) {
-                delete CKEDITOR.instances[name];
-            }
-
-            CKEDITOR.replaceAll('ckeditor');
-        }
-
-        // I use this before save as I've observed situations where changes are lost, 
-        // particularly after the fields have already been rerendered. 
-        // More of a safeguard than anything
-        function ensureRichTextContent() {
-
-            document.querySelectorAll('.ckeditor').forEach(function (el) {
-                let id = jQuery(el).attr('id') || jQuery(el).attr('name');
-                let data = CKEDITOR.instances[id].getData().trim();
-
-                if (CKEDITOR.instances[id].checkDirty()) {
-                    el.textContent = data;
-                }
-
-            });
-        }
-
-        function performDocUploadSave(redirectTo) {
-            let docUploadPromiseArr = [];
-            ensureRichTextContent();
-
-            document.querySelectorAll('.docUploadInput').forEach(function (el, docUpload) {
-                if (docUpload.files) {
-                    let fbody = docUpload.files[0];
-                    if (fbody) {
-                        docUploadPromiseArr.push(getAsText(fbody, jQuery(docUpload).attr('data-respid')));
-                    }
-                } else {
-                }
-
-            });
-
-            document.querySelectorAll('.docUploadInput').forEach(function (idx, docUpload) {
-                if (docUpload.files) {
-                    let fbody = docUpload.files[0];
-                    if (fbody) {
-                        docUploadPromiseArr.push(getAsText(fbody, docUpload.getAttribute('data-respid')));
-                    }
-                } else {
-                }
-            });
-
-            Promise.all(docUploadPromiseArr).then(docUploads => {
-                var docUploadObj = {};
-                docUploads.forEach(function (docUpload) {
-                    docUploadObj[docUpload.itemId] = {"attData": docUpload};
-                });
-                saveWithDocs(JSON.stringify(docUploadObj), redirectTo);
-                //console.log(redirectTo);
-            }).catch(function () {
-            });
-        }
-
-        function getAsText(readFile, respId) {
-            return new Promise((resolve, reject) => {
-                //var reader = new FileReader();
-                let reader = new FileReader();
-                reader.onload = (function (theFile) {
-                    var fileName = theFile.name;
-                    return function (e) {
-                        resolve({"fileName": fileName, "data": e.target.result, "itemId": respId});
-                    };
-                })(readFile);
-                reader.readAsDataURL(readFile);
-            });
-        }
-    </script>
     <div style="display:none" id="apploadingspinner">
         <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
             &nbsp;
@@ -117,36 +25,124 @@
     <!--                    <img src="{!URLFOR($Resource[appControl.Logo_Static_Resource__c], appControl.Logo_Static_Resource_Path__c)}" />-->
     <!--                </div>-->
     <!--            </apex:outputPanel>-->
-    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-        <h2 class="slds-text-heading_large">{!title} {!applicationControlValue.Id}</h2>
-    </div>
-    <apex:outputPanel rendered="{!subtitle != null}" layout="none">
-        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-            <h3 class="slds-text-heading_medium">{!subtitle}</h3>
+    <apex:variable value="{!widgets}" var="w"/>
+    <apex:variable value="{!If(w.leftWidgets.size >0, 'l', '')}{!If(w.rightWidgets.size >0, 'r', '')}" var="col"/>
 
+    <div class="slds-grid slds-wrap">
+        <!-- TITLE AND SUB TITLE -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
+                <h2 class="slds-text-heading_large">{!title}</h2>
+            </div>
+            <apex:outputPanel rendered="{!subtitle != null}" layout="none">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
+                    <h3 class="slds-text-heading_medium">{!subtitle}</h3>
+                </div>
+            </apex:outputPanel>
         </div>
-    </apex:outputPanel>
 
-    <apex:outputPanel rendered="{!NOT(topWidgets.empty)}" layout="none">
-        <apex:repeat value="{!topWidgets}" var="widget">
-            <apex:outputText escape="false" value="{!widget.Display_Text__c}"/>
-        </apex:repeat>
-    </apex:outputPanel>
-    <apex:outputPanel rendered="{!NOT(leftWidgets.empty)}" layout="none">
-        <apex:repeat value="{!leftWidgets}" var="widget">
-            <apex:outputText escape="false" value="{!widget.Display_Text__c}"/>
-        </apex:repeat>
-    </apex:outputPanel>
-    <apex:outputPanel rendered="{!NOT(rightWidgets.empty)}" layout="none">
-        <apex:repeat value="{!rightWidgets}" var="widget">
-            <apex:outputText escape="false" value="{!widget.Display_Text__c}"/>
-        </apex:repeat>
-    </apex:outputPanel>
-    <apex:outputPanel rendered="{!NOT(bottomWidgets.empty)}" layout="none">
-        <apex:repeat value="{!bottomWidgets}" var="widget">
-            <apex:outputText escape="false" value="{!widget.Display_Text__c}"/>
-        </apex:repeat>
-    </apex:outputPanel>
+        <!-- LEFT WIDGETS -->
+        <apex:outputPanel layout="block" rendered="{!CONTAINS(col,'l')}" styleClass="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-p-right_medium">
+            <apex:repeat value="{!w.leftWidgets}" var="widget">
+                <article class="slds-card">
+                    <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">
+                        <div class="slds-card__header slds-grid">
+                            <header>
+                                <div class="slds-media__body">
+                                    <h3 class="slds-card__header-title">
+                                        {!widget.Display_Heading__c}
+                                    </h3>
+                                </div>
+                            </header>
+                        </div>
+                    </apex:outputPanel>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <apex:outputText escape="false" value="{!widget.Display_Text__c}" rendered="{!If(NOT(ISBLANK(widget.Display_Text__c)), true, false)}"/>
+                        <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
+                    </div>
+                </article>
+            </apex:repeat>
+        </apex:outputPanel>
 
-    <apex:componentBody/>
+        <!-- MAIN BODY -->
+        <apex:outputPanel layout="block" styleClass="{!IF(col=='lr','slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-medium-size_6-of-12',IF(col=='l' || col=='r', 'slds-col slds-size_1-of-1 slds-large-size_9-of-12 slds-medium-size_9-of-12', 'slds-col slds-size_1-of-1 slds-large-size_12-of-12'))}">
+
+            <!-- TOP WIDGETS -->
+            <apex:outputPanel layout="block" rendered="{!IF(w.topWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <apex:repeat value="{!w.topWidgets}" var="widget" rendered="{!IF(w.topWidgets.size > 0, true, false)}">
+                    <article class="slds-card">
+                        <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">
+                            <div class="slds-card__header slds-grid">
+                                <header>
+                                    <div class="slds-media__body">
+                                        <h3 class="slds-card__header-title">
+                                            {!widget.Display_Heading__c}
+                                        </h3>
+                                    </div>
+                                </header>
+                            </div>
+                        </apex:outputPanel>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <apex:outputText escape="false" value="{!widget.Display_Text__c}" rendered="{!If(NOT(ISBLANK(widget.Display_Text__c)), true, false)}"/>
+                            <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
+                        </div>
+                    </article>
+                </apex:repeat>
+            </apex:outputPanel>
+
+            <!-- BODY -->
+            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <apex:componentBody/>
+            </div>
+
+            <!-- BOTTOM WIDGETS -->
+            <apex:outputPanel layout="block" rendered="{!IF(w.bottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <apex:repeat value="{!w.bottomWidgets}" var="widget">
+                    <article class="slds-card">
+                        <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">
+                            <div class="slds-card__header slds-grid">
+                                <header>
+                                    <div class="slds-media__body">
+                                        <h3 class="slds-card__header-title">
+                                            {!widget.Display_Heading__c}
+                                        </h3>
+                                    </div>
+                                </header>
+                            </div>
+                        </apex:outputPanel>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <apex:outputText escape="false" value="{!widget.Display_Text__c}" rendered="{!If(NOT(ISBLANK(widget.Display_Text__c)), true, false)}"/>
+                            <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
+                        </div>
+                    </article>
+                </apex:repeat>
+            </apex:outputPanel>
+
+        </apex:outputPanel>
+
+        <!-- RIGHT WIDGETS -->
+        <apex:outputPanel layout="block" rendered="{!CONTAINS(col,'r')}" styleClass="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-p-left_medium">
+            <apex:repeat value="{!w.rightWidgets}" var="widget">
+                <article class="slds-card">
+                    <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">
+                        <div class="slds-card__header slds-grid">
+                            <header>
+                                <div class="slds-media__body">
+                                    <h3 class="slds-card__header-title">
+                                        {!widget.Display_Heading__c}
+                                    </h3>
+                                </div>
+                            </header>
+                        </div>
+                    </apex:outputPanel>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <apex:outputText escape="false" value="{!widget.Display_Text__c}" rendered="{!If(NOT(ISBLANK(widget.Display_Text__c)), true, false)}"/>
+                        <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
+                    </div>
+                </article>
+            </apex:repeat>
+        </apex:outputPanel>
+
+    </div>
+
 </apex:component>

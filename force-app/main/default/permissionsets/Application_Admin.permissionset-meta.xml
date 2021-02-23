@@ -799,6 +799,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EASY_Widget__c.Display_Heading__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Display_Text__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Scripts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Intended_Program_Term__c.Activate_Application_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2733,6 +2748,15 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>EASY_Widget__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>Intended_Program_Term__c</object>
         <viewAllRecords>true</viewAllRecords>
@@ -3075,6 +3099,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Application__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>EASY_Widget__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

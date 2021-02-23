@@ -42,7 +42,7 @@
             <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
 
                 <apex:actionFunction name="sendTheReminder{!group.item.Id}" action="{!group.sendReminder}" reRender="none"/>
-                <apex:actionRegion>
+                <apex:actionRegion >
 
 
                     <apex:repeat value="{!group.questions}" var="question">
@@ -142,7 +142,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="slds-form-element">
+                                    <div class="slds-form-element dependent-picklist">
                                         <apex:outputLabel for="statePicklist" styleClass="slds-form-element__label">
                                             {!question.label} State/Province
                                             <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
@@ -150,10 +150,8 @@
                                             </apex:outputPanel>
                                         </apex:outputLabel>
                                         <div class="slds-form-element__control">
-                                            <div class="slds-select_container">
-                                                <span class="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" html-class="slds-select">
-                                                <apex:inputField id="statePicklist" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" html-class="slds-select"/>
-                                                </span>
+                                            <div class="slds-select_container ">
+                                                <apex:inputField id="statePicklist" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
                                             </div>
                                         </div>
                                         <div class="slds-form-element__help" id="error-message-{!qId}">
@@ -513,7 +511,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
-                            <apex:pageMessages/>
+                            <apex:pageMessages />
                             <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="none">
                                 You haven't created any records yet. Click "New Record" to create one.<br/><br/>
                             </apex:outputPanel>
@@ -963,7 +961,7 @@
 
 
                         <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
-                            <apex:pageMessages/>
+                            <apex:pageMessages />
                             <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                                 <apex:outputPanel rendered="{!question.showQuestion}" layout="none">
                                     <div class="row">

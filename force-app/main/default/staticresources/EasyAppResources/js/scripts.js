@@ -14,16 +14,6 @@ let maxLengths = {};
 
 ready(() => {
 
-    document.querySelectorAll(".aria-describedby-tooltip").forEach(item => {
-        console.log(JSON.stringify(item.classList));
-        item.addEventListener("mouseover", event => {
-            console.log('mouseover');
-        });
-        item.addEventListener("mouseout", event => {
-            console.log('mouseout');
-        });
-    });
-
     for (let inputId in placeholders) {
         if (inputId) {
             document.querySelectorAll('.' + inputId).forEach(field => {
@@ -48,32 +38,6 @@ ready(() => {
     document.querySelectorAll('.fieldNotEditable,.fieldNotEditable input,.fieldNotEditable select,.fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
     });
-
-    let dependentPicklists = document.querySelector(".slds-select_container .slds-dependent-picklist select");
-
-    document.querySelectorAll('.dependent-picklist').forEach(pl => {
-        pl.querySelector('select').classList.add('slds-select');
-        observer.observe(
-            pl,
-            {
-                attributes: true,
-                characterData: true,
-                childList: true,
-                subtree: true,
-                attributeOldValue: true,
-                characterDataOldValue: true
-            }
-        );
-
-        // Notify us when any node within the document is modified, added removed, etc.
-        pl.addEventListener("DOMSubtreeModified", function(e) {
-            // Notify of change!
-            console.warn("change!", e);
-        }, false);
-
-
-    });
-
 
 
 
@@ -123,7 +87,7 @@ function afterRerenderRTF() {
 function ensureRichTextContent() {
 
     document.querySelectorAll('.ckeditor').forEach(function (el) {
-        let id = jQuery(el).attr('id') || jQuery(el).attr('name');
+        let id = el.id || el.getAttribute('name');
         let data = CKEDITOR.instances[id].getData().trim();
 
         if (CKEDITOR.instances[id].checkDirty()) {
@@ -141,7 +105,7 @@ function performDocUploadSave(redirectTo) {
         if (docUpload.files) {
             let fbody = docUpload.files[0];
             if (fbody) {
-                docUploadPromiseArr.push(getAsText(fbody, jQuery(docUpload).attr('data-respid')));
+                docUploadPromiseArr.push(getAsText(fbody, docUpload.getAttribute('data-respid')));
             }
         } else {
         }

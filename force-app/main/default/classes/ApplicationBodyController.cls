@@ -5,21 +5,20 @@
 
 public with sharing class ApplicationBodyController {
 
-    public Application_Control__c applicationControlValue { get; set; }
-    public List<EASY_Widget__c> allWidgets { get; set; }
+    public Application_Control__c applicationControlValue { set; get; }
+    public String applicationIdValue { get; set; }
 
     public ApplicationBodyController() {
     }
 
     public class allWidgets {
-        public List<EASY_Widget__c> topWidgets {get;set;}
-        public List<EASY_Widget__c> rightWidgets {get;set;}
-        public List<EASY_Widget__c> bottomWidgets {get;set;}
-        public List<EASY_Widget__c> leftWidgets {get;set;}
+        public List<EASY_Widget__c> topWidgets { get; set; }
+        public List<EASY_Widget__c> rightWidgets { get; set; }
+        public List<EASY_Widget__c> bottomWidgets { get; set; }
+        public List<EASY_Widget__c> leftWidgets { get; set; }
     }
 
     public allWidgets getWidgets() {
-
         allWidgets foundWidgets = new allWidgets();
         foundWidgets.topWidgets = new List<EASY_Widget__c>();
         foundWidgets.rightWidgets = new List<EASY_Widget__c>();
@@ -31,11 +30,14 @@ public with sharing class ApplicationBodyController {
             try {
                 List<EASY_Widget__c> allPositionWidgets = [
                         SELECT
-                                Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c
+                                Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
+                                Widget_Type__c, Sort_Order__c
                         FROM EASY_Widget__c
                         WHERE Application_Control__c = :applicationControlValue.Id
                         WITH SECURITY_ENFORCED
+                        ORDER BY Sort_Order__c
                 ];
+
 
                 for (EASY_Widget__c widget : allPositionWidgets) {
                     switch on widget.Widget_Screen_Location__c.toLowerCase() {
@@ -63,5 +65,6 @@ public with sharing class ApplicationBodyController {
         }
         return foundWidgets;
     }
+
 
 }

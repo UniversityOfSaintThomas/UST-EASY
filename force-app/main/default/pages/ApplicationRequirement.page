@@ -25,7 +25,9 @@
         </apex:define>
 
         <apex:define name="body">
-            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occured and you do not have access to this page.','')}" appControl="{!appControl}">
+            <p>application id: {!resourceApplicationId} </p>
+            <p>contact id: {!contactid}</p>
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appControl="{!appControl}" applicationIdBody="{!resourceApplicationId}">
                 <c:ApplicationForm id="applicationForm" section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
                                    requirementId="{!requirementId}"
                                    reqs="{!reqs}"

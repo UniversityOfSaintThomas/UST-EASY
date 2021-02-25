@@ -1,0 +1,30 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 2/23/2021.
+ -->
+
+<apex:component id="EasyWidget">
+    <apex:attribute name="widget" description="Widget to process" type="EASY_Widget__c" required="true"/>
+    <apex:attribute name="applicationControl" description="Current Application Type Id" type="Application_Control__c" required="true"/>
+    <apex:attribute name="applicationIdWidget" description="Current Application Id" type="String" required="false"/>
+    <article class="slds-card slds-m-bottom_medium">
+        <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">
+            <div class="slds-card__header slds-grid">
+                <header>
+                    <div class="slds-media__body">
+                        <h3 class="slds-card__header-title">
+                            {!widget.Display_Heading__c}
+                        </h3>
+                    </div>
+                </header>
+            </div>
+        </apex:outputPanel>
+        <div class="slds-card__body slds-card__body_inner">
+            <apex:outputText escape="false" value="{!widget.Display_Text__c}" rendered="{!If(NOT(ISBLANK(widget.Display_Text__c)), true, false)}"/>
+            <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
+            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist'}">
+                {!applicationIdWidget}
+                <c:ApplicationChecklist applicationId="{!applicationIdWidget}" applicationControl="{!applicationControl}"/>
+            </apex:outputPanel>
+        </div>
+    </article>
+</apex:component>

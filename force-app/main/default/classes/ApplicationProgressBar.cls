@@ -393,14 +393,14 @@ public class ApplicationProgressBar {
             } else {
                 questionResponses = new List<Question_Response__c>();
             }
-            ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid, items, requirementResponses, questionResponses, questionDependencies);
-            ar.con = con;
-            ar.app = app;
-            ar.preventUpdates = true;
-            ar.ignoreExternalFilter = true;
-            arLst.add(ar);
-            ar.init();
-            responses.addAll(ar.newResponses);
+//            ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid, items, requirementResponses, questionResponses, questionDependencies);
+//            ar.con = con;
+//            ar.app = app;
+//            ar.preventUpdates = true;
+//            ar.ignoreExternalFilter = true;
+//            arLst.add(ar);
+//            ar.init();
+//            responses.addAll(ar.newResponses);
         }
         if (responses.size() > 0) {
             insert responses;

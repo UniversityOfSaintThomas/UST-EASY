@@ -19,7 +19,7 @@
         }
     </script>
     <c:ApplicationHead />
-    <c:ApplicationBody title="Related Object Review" appControl="{!appControl}">
+    <c:ApplicationBody title="Related Object Review" appControl="{!appControl}" applicationId="">
         <div class="row" >
             <div class="" >
                 <div>

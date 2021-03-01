@@ -30,6 +30,6 @@ public class ApplicationPortalTest {
         ApplicationPortal ap = new ApplicationPortal();
         Application_Control__c appControl = ap.appControl;
         System.assertNotEquals(null,appControl);
-        System.assertEquals(1,ap.apps.size());
+        System.assertEquals(1,ap.applicationsByIds.size());
     }
 }

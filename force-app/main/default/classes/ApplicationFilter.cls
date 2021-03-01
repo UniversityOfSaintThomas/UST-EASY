@@ -3,19 +3,19 @@
 @author Huron Consulting Group
 *******************************************************************************/
 public class ApplicationFilter {
-	
+
     public static Boolean filter(Application__c app, SObject obj) {
         return filter(app, obj, true);
     }
-    
+
     public static Boolean filter(Application__c app, SObject obj, Boolean checkStatus) {
-        
+
         Set<String> objFields = new Set<String>();
-        for (String fn:obj.getSObjectType().getDescribe().fields.getMap().keySet()) {
+        for (String fn : obj.getSObjectType().getDescribe().fields.getMap().keySet()) {
             objFields.add(fn.toLowerCase());
         }
-        
-        Boolean active = objFields.contains('active__c') ? (Boolean)obj.get('active__c') : true;
+
+        Boolean active = objFields.contains('active__c') ? (Boolean) obj.get('active__c') : true;
         String programId = objFields.contains('intended_program__c') ? String.valueOf(obj.get('intended_program__c')) : null;
         String applicantTypes = objFields.contains('applicant_type__c') ? String.valueOf(obj.get('applicant_type__c')) : null;
         String citizenships = objFields.contains('citizenship__c') ? String.valueOf(obj.get('citizenship__c')) : null;
@@ -29,7 +29,7 @@ public class ApplicationFilter {
         String genericFilters3 = objFields.contains('generic_filter_3__c') ? String.valueOf(obj.get('generic_filter_3__c')) : null;
         String genericFilters4 = objFields.contains('generic_filter_4__c') ? String.valueOf(obj.get('generic_filter_4__c')) : null;
         String appStatuses = objFields.contains('application_status__c') ? String.valueOf(obj.get('application_status__c')) : null;
-        
+
         if (app == null) {
             return true;
         }
@@ -75,7 +75,7 @@ public class ApplicationFilter {
         if (checkStatus && (!UserInfo.getUserType().equals('Standard') || Test.isRunningTest()) && String.isNotBlank(appStatuses) && (String.isBlank(app.Application_Status__c) || !(new Set<String>(appStatuses.split(';'))).contains(app.Application_Status__c))) {
             return false;
         }
-        
+
         return true;
     }
 }

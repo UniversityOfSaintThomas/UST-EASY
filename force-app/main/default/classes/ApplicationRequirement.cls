@@ -198,7 +198,6 @@ public class ApplicationRequirement {
             if (r.Hashcode__c != null && String.isNotBlank(ApexPages.currentPage().getParameters().get('h')) && r.Hashcode__c == ApexPages.currentPage().getParameters().get('h') && r.Requirement_Item__c == ApexPages.currentPage().getParameters().get('r')) {
                 isInvalid = false;
             }
-
             responses.put(r.Requirement_Item__c, r);
         }
         Set<Id> questionItemSet = new Set<Id>();
@@ -286,7 +285,7 @@ public class ApplicationRequirement {
     /*******************************************************************************
     * @description Initializes the page - Pulls relevant requirement items, requirement responses, etc.
     ********************************************************************************/
-    public void init() {
+    public PageReference init() {
 //        allowSubmit = true;
 //        isExternalUser = false;
 //        if (String.isBlank(contactId)) {
@@ -505,6 +504,7 @@ public class ApplicationRequirement {
 //                }
 //            }
 //        }
+        return null;
     }
 
     /* ******************************************************************************

@@ -63,7 +63,7 @@
 
             <!-- BODY -->
             <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                <apex:componentBody/>
+                <apex:componentBody />
             </div>
 
             <!-- BOTTOM WIDGETS -->

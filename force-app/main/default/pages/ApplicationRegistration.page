@@ -22,11 +22,11 @@
                 }
             </script>
         </apex:define>
-        <c:ApplicationHead/>
+        <c:ApplicationHead />
         <apex:define name="body">
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                    <c:ApplicationBody title="New Application" rendered="{!NOT(ISBLANK(appCreate.appControl))}" appControl="{!appCreate.appControl}" loadingText="Building Your Application..." applicationId="" />
+                    <c:ApplicationBody title="New Application" appControl="{!appCreate.appControl}" loadingText="Building Your Application..." applicationIdBody="" />
                 </div>
                 <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                     <c:ApplicationForm section="{!appCreate.section}" appControl="{!appCreate.appControl}">

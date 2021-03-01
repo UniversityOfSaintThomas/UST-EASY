@@ -22,7 +22,6 @@
             <apex:outputText escape="false" value="{!widget.Display_Text__c}" rendered="{!If(NOT(ISBLANK(widget.Display_Text__c)), true, false)}"/>
             <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist'}">
-                {!applicationIdWidget}
                 <c:ApplicationChecklist applicationId="{!applicationIdWidget}" applicationControl="{!applicationControl}"/>
             </apex:outputPanel>
         </div>

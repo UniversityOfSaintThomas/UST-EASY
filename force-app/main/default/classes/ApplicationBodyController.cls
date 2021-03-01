@@ -34,6 +34,7 @@ public with sharing class ApplicationBodyController {
                                 Widget_Type__c, Sort_Order__c
                         FROM EASY_Widget__c
                         WHERE Application_Control__c = :applicationControlValue.Id
+                        AND Application_Control__c != NULL
                         WITH SECURITY_ENFORCED
                         ORDER BY Sort_Order__c
                 ];

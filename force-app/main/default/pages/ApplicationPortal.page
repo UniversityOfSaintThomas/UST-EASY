@@ -1,67 +1,46 @@
 <apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0">
     <apex:composition template="Capricorn2020">
         <apex:define name="scriptHead">
-            <c:ApplicationHead/>
+            <c:ApplicationHead />
         </apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="Application Portal" appControl="{!appControl}" applicationId="">
+            <c:ApplicationBody title="Application Portal" appControl="{!appControl}" applicationIdBody="">
                 <apex:form id="theForm">
                     <div class="slds-grid slds-wrap">
                         <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                            <apex:pageMessages/>
-                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table_striped">
-                                <thead>
-                                <tr class="slds-line-height_reset">
-                                    <apex:outputPanel layout="none" rendered="{!!appControl.Hide_Term_Program__c}">
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="Application Number">App Number</div>
-                                        </th>
-                                    </apex:outputPanel>
-                                    <apex:outputPanel rendered="{!!appControl.Hide_Term_Program__c}">
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="Intended Program">Program</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="Intended Term of Enrollment">Term</div>
-                                        </th>
-                                    </apex:outputPanel>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Application Status">Status</div>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                            <apex:pageMessages />
+                            <apex:repeat value="{!applicationsByIds}" var="key">
+                                <apex:variable value="{!applicationsByIds[key]}" var="a"/>
 
-                                <apex:repeat value="{!apps}" var="a">
-                                    <tr class="slds-hint-parent">
-                                        <apex:outputPanel layout="none" rendered="{!!appControl.Hide_Term_Program__c}">
-                                            <td data-label="Application Number">
-                                                <div class="slds-truncate" title="{!a.Name}">
-                                                    <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationChecklist?applicationId={!a.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}">{!a.Name}</a>
-                                                </div>
-                                            </td>
-                                        </apex:outputPanel>
-                                        <apex:outputPanel rendered="{!!appControl.Hide_Term_Program__c}">
-                                            <td data-label="Intended Program">
-                                                <div class="slds-truncate" title="{!IF(ISBLANK(a.Intended_Program__r.Program_Name_on_Application__c), a.Intended_Program__r.Name, a.Intended_Program__r.Program_Name_on_Application__c)}">
-                                                    {!IF(ISBLANK(a.Intended_Program__r.Program_Name_on_Application__c), a.Intended_Program__r.Name, a.Intended_Program__r.Program_Name_on_Application__c)}
-                                                </div>
-                                            </td>
-                                            <td data-label="Intended Term of Enrollment">
-                                                <div class="slds-truncate" title="{!a.Intended_Term_of_Entry__r.Name}">
-                                                    {!a.Intended_Term_of_Entry__r.Name}
-                                                </div>
-                                            </td>
-                                        </apex:outputPanel>
-                                        <td data-label="Application Status">
-                                            <div class="slds-truncate" title="{!a.Application_Status__c}">
-                                                {!a.Application_Status__c}
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <apex:outputPanel layout="none" rendered="{!!appControl.Hide_Term_Program__c}">
+                                        <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationChecklist?applicationId={!a.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}">{!a.Name}</a>
+                                    <br/>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel rendered="{!!appControl.Hide_Term_Program__c}">
+                                    {!IF(ISBLANK(a.Intended_Program__r.Program_Name_on_Application__c), a.Intended_Program__r.Name, a.Intended_Program__r.Program_Name_on_Application__c)}
+                                    <br/>
+                                        {!a.Intended_Term_of_Entry__r.Name}
+                                    <br/>
+                                </apex:outputPanel>
+
+                                <apex:repeat value="{!ApplicationRequirementMap}" var="requirementAppWrap">
+                                    <apex:repeat value="{!ApplicationRequirementMap[requirementAppWrap]}" var="requirementWrap">
+                                        <apex:repeat value="{!ApplicationRequirementMap[requirementAppWrap][requirementWrap]}" var="reqs">
+                                            <p>
+                                                <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?applicationId={!requirementAppWrap}&contactId={!contactId}&requirementId={!reqs.req.Id}&at={!$CurrentPage.parameters.at}">
+                                                    {!reqs.req.Label__c}
+                                                </a>
+                                            </p>
+                                        </apex:repeat>
+                                    </apex:repeat>
                                 </apex:repeat>
-                                </tbody>
-                            </table>
+
+<!--                                <div class="slds-truncate" title="{!a.Application_Status__c}">-->
+<!--                                    {!a.Application_Status__c}-->
+<!--                                </div>-->
+                                <br/>
+                            </apex:repeat>
                         </div>
                         <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_x-large">
                             <button class="slds-button slds-button_neutral slds-button_dual-stateful" aria-live="assertive" href="{!$Site.BaseUrl}/apex/ApplicationCreate?contactId={!contactId}&at={!$CurrentPage.parameters.at}">

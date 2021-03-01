@@ -1,7 +1,7 @@
 <apex:page controller="ApplicationRequirement" extensions="ApplicationProgressBar" action="{!init}" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0">
     <apex:composition template="Capricorn2020">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead/>
+            <c:ApplicationHead />
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback) {
                     console.log("in application requirement vfp");
@@ -25,8 +25,6 @@
         </apex:define>
 
         <apex:define name="body">
-            <p>application id: {!resourceApplicationId} </p>
-            <p>contact id: {!contactid}</p>
             <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appControl="{!appControl}" applicationIdBody="{!resourceApplicationId}">
                 <c:ApplicationForm id="applicationForm" section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
                                    requirementId="{!requirementId}"

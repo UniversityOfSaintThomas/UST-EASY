@@ -23,7 +23,7 @@ public class ApplicationRequirementPreviewTest {
         for(RecordType rt : [Select Id,DeveloperName from RecordType where sObjectType = 'Requirement_Item__c']){
             rtMapRI.put(rt.DeveloperName,rt.Id);
         }
-        
+
         Application_Control__c appControl = new Application_Control__c(
             Application_Start_Status__c=Application_Control__c.Application_Start_Status__c.getDescribe().getPicklistValues()[0].getValue(),
             Active__c=true,

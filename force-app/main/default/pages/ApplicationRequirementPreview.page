@@ -39,7 +39,7 @@
         <apex:outputPanel id="themessages">
             <apex:pageMessages />
         </apex:outputPanel>
-        <c:ApplicationBody title="{!req.title+' PREVIEW'}" appControl="{!appControl}" applicationId="{!app.Id}">
+        <c:ApplicationBody title="{!req.title+' PREVIEW'}" appControl="{!appControl}" applicationIdBody="{!app.Id}">
             <c:ApplicationForm section="{!req.section}" appControl="{!appControl}">
             </c:ApplicationForm>
         </c:ApplicationBody>

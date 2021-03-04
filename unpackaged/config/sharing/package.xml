@@ -16,5 +16,9 @@
         <members>Requirement__c</members>
         <name>SharingRules</name>
     </types>
+    <types>
+        <members>EASY_Widget__c</members>
+        <name>SharingRules</name>
+    </types>
     <version>48.0</version>
 </Package>

@@ -15,7 +15,7 @@ public class ApplicationChecklistTest {
             Withdraw_Status__c=Application_Control__c.Withdraw_Status__c.getDescribe().getPicklistValues()[0].getValue()
         );
         insert appControl;
-        
+
         Contact student = new Contact(LastName='TestStudent');
         insert student;
         Application__c app = new Application__c(Contact__c=student.Id,Application_Status__c=Application__c.Application_Status__c.getDescribe().getPicklistValues()[0].getValue());

@@ -12,6 +12,7 @@ let ready = (callback) => {
 let placeholders = {};
 let maxLengths = {};
 
+
 ready(() => {
 
     for (let inputId in placeholders) {
@@ -39,21 +40,22 @@ ready(() => {
         field.setAttribute('disabled', 'disabled');
     });
 
-
-
-});
-
-let observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-        console.log(mutation);
+    // SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
+    document.querySelectorAll('.slds-summary-detail').forEach(item => {
+        item.querySelector("button.slds-button").addEventListener('click', function(e) {
+            let content = item.querySelector('.slds-summary-detail__content');
+            item.classList.remove('slds-is-open')
+            if (content.style.display === 'none') {
+                item.classList.add('slds-is-open')
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        });
     });
-});
 
-// // Notify us when any node within the document is modified, added removed, etc.
-// document.addEventListener("DOMSubtreeModified", function(e) {
-//     // Notify of change!
-//     console.warn("change!", e);
-// }, false);
+
+});
 
 
 function appShowLoadingSpinner() {
@@ -146,5 +148,6 @@ function getAsText(readFile, respId) {
         reader.readAsDataURL(readFile);
     });
 }
+
 
 

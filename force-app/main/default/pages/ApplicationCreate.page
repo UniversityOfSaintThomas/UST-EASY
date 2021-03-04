@@ -1,6 +1,6 @@
 <apex:page controller="ApplicationCreate" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!init}">
     <apex:composition template="Capricorn2020">
-        <apex:define name="scriptHead">
+        <apex:define name="scriptsHead">
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback) {
                     console.log("in application requirement vfp");

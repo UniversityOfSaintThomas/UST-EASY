@@ -1,46 +1,80 @@
 <apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0">
     <apex:composition template="Capricorn2020">
-        <apex:define name="scriptHead">
-            <c:ApplicationHead />
+        <apex:define name="scriptsHead">
+            <c:ApplicationHead/>
         </apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="Application Portal" appControl="{!appControl}" applicationIdBody="">
                 <apex:form id="theForm">
-                    <div class="slds-grid slds-wrap">
+                    <div class="slds-grid slds-wrap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                            <apex:pageMessages />
-                            <apex:repeat value="{!applicationsByIds}" var="key">
-                                <apex:variable value="{!applicationsByIds[key]}" var="a"/>
+                            <apex:pageMessages/>
+                            <!--<apex:repeat value="{!applicationsByIds}" var="key">-->
+<!--                                <apex:variable value="{!applicationsByIds[0]}" var="a"/>-->
 
-                                <apex:outputPanel layout="none" rendered="{!!appControl.Hide_Term_Program__c}">
-                                        <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationChecklist?applicationId={!a.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}">{!a.Name}</a>
-                                    <br/>
-                                </apex:outputPanel>
+                                <article class="slds-card">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__figure">
+                                            <span class="slds-icon_container slds-icon-standard-account" title="account">
+                                              <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#account')}"></use>
+                                              </svg>
+                                              <span class="slds-assistive-text">
+<!--                                              <apex:outputPanel rendered="{!!appControl.Hide_Term_Program__c}" layout="none">-->
+<!--                                                  {!currentApp.Intended_Term_of_Entry__r.Name} - -->
+<!--                                                  {!IF(ISBLANK(currentApp.Intended_Program__r.Program_Name_on_Application__c), currentApp.Intended_Program__r.Name, currentApp.Intended_Program__r.Program_Name_on_Application__c)}-->
+<!--                                                </apex:outputPanel>-->
 
-                                <apex:outputPanel rendered="{!!appControl.Hide_Term_Program__c}">
-                                    {!IF(ISBLANK(a.Intended_Program__r.Program_Name_on_Application__c), a.Intended_Program__r.Name, a.Intended_Program__r.Program_Name_on_Application__c)}
-                                    <br/>
-                                        {!a.Intended_Term_of_Entry__r.Name}
-                                    <br/>
-                                </apex:outputPanel>
+                                              </span>
+                                            </span>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <h2 class="slds-card__header-title">
+                                                    <a href="#" class="slds-card__header-link slds-truncate" title="Applications">
+                                                        <span>
+<!--                                                         <apex:outputPanel rendered="{!!appControl.Hide_Term_Program__c}" layout="none">-->
+<!--                                                            {!currentApp.Intended_Term_of_Entry__r.Name} - {!IF(ISBLANK(currentApp.Intended_Program__r.Program_Name_on_Application__c), currentApp.Intended_Program__r.Name, currentApp.Intended_Program__r.Program_Name_on_Application__c)}-->
+<!--                                                         </apex:outputPanel>-->
+<!--                                                            <apex:outputPanel layout="none" rendered="{!!appControl.Hide_Term_Program__c}">-->
+<!--                                                                ( <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationChecklist?applicationId={!a.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}">{!a.Name}</a> )-->
+<!--                                                            </apex:outputPanel>-->
+                                                        </span>
+                                                    </a>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                    </div>
+                                    <div class="slds-card__body slds-card__body_inner">
+<!--                                        <p>Application Status: {currentApp.Application_Status__c}</p>-->
+<!--                                        <apex:repeat value="{!applicationOrder}" var="appId">-->
+<!--                                            <apex:repeat value="{!ApplicationRequirementMap[appId]}" var="requirementWrap">-->
+<!--                                                <apex:repeat value="{!ApplicationRequirementMap[appId][requirementWrap]}" var="reqs">-->
+<!--                                                    <p>-->
+<!--                                                        <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?applicationId={!appId}&contactId={!contactId}&requirementId={!reqs.req.Id}&at={!$CurrentPage.parameters.at}">-->
+<!--                                                            {!reqs.req.Label__c}-->
+<!--                                                        </a>-->
+<!--                                                    </p>-->
+<!--                                                </apex:repeat>-->
+<!--                                            </apex:repeat>-->
+<!--                                        </apex:repeat>-->
 
-                                <apex:repeat value="{!ApplicationRequirementMap}" var="requirementAppWrap">
-                                    <apex:repeat value="{!ApplicationRequirementMap[requirementAppWrap]}" var="requirementWrap">
-                                        <apex:repeat value="{!ApplicationRequirementMap[requirementAppWrap][requirementWrap]}" var="reqs">
+                                        <apex:repeat value="{!rList}" var="reqs">
                                             <p>
-                                                <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?applicationId={!requirementAppWrap}&contactId={!contactId}&requirementId={!reqs.req.Id}&at={!$CurrentPage.parameters.at}">
-                                                    {!reqs.req.Label__c}
+                                                <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?applicationId={!currentApp.Id}&contactId={!contactId}&requirementId={!reqs.req.Id}&at={!$CurrentPage.parameters.at}">
+                                                    {!reqs.req.Label__c} - {!reqs.reqStatus}
                                                 </a>
                                             </p>
                                         </apex:repeat>
-                                    </apex:repeat>
-                                </apex:repeat>
 
-<!--                                <div class="slds-truncate" title="{!a.Application_Status__c}">-->
-<!--                                    {!a.Application_Status__c}-->
-<!--                                </div>-->
+                                    </div>
+                                    <footer class="slds-card__footer"></footer>
+                                </article>
+                                <!--                                <div class="slds-truncate" title="{!a.Application_Status__c}">-->
+                                <!--                                    {!a.Application_Status__c}-->
+                                <!--                                </div>-->
                                 <br/>
-                            </apex:repeat>
+<!--                            </apex:repeat>-->
                         </div>
                         <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_x-large">
                             <button class="slds-button slds-button_neutral slds-button_dual-stateful" aria-live="assertive" href="{!$Site.BaseUrl}/apex/ApplicationCreate?contactId={!contactId}&at={!$CurrentPage.parameters.at}">

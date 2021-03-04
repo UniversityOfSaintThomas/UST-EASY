@@ -26,7 +26,7 @@
                 <apex:pageMessages />
             </apex:outputPanel>
             <apex:repeat value="{!arLst}" var="req">
-                <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appControl="{!appControl}" applicationId="{!app.Id}">
+                <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appControl="{!appControl}" applicationIdBody="{!app.Id}">
                     <div class="row" >
                         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
                             <div>

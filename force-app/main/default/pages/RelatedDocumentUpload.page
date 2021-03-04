@@ -1,7 +1,7 @@
 <apex:page showHeader="false" sidebar="false" controller="RelatedDocumentUpload"  standardStylesheets="false" docType="html-5.0">
 	<c:ApplicationHead />
     <apex:form rendered="{!NOT(ISBLANK($CurrentPage.parameters.Id))}">
-        <c:ApplicationBody title="Document Upload - {!objName}" appControl="{!appControl}" applicationId="">
+        <c:ApplicationBody title="Document Upload - {!objName}" appControl="{!appControl}" applicationIdBody="">
             <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="theUploadSection" oncomplete="appHideLoadingSpinner();">
                 <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
             </apex:actionFunction>

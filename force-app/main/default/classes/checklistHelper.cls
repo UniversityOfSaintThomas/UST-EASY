@@ -1,54 +1,24 @@
-/*******************************************************************************
-@description This controller is used to show which requirements/requirement items have been completed for this application
-@author Huron Consulting Group
+/**
+ * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 3/1/2021.
+ */
 
-Revision (s):
-*******************************************************************************/
-public class ApplicationChecklist {
 
-    public Map<Id, RequirementWrapper> reqMap { get; set; }
-    public List<RequirementWrapper> reqs { get {return reqMap.values();} }
-    public Id contactId { get; set; }
-    public Id applicationId { get; set; }
-    public Contact con { get; set; }
-    public Application__c app { get; set; }
-    public Boolean allowSubmit { get; set; }
-    public Boolean allowCancel { get; set; }
-    public Boolean allowWithdraw { get; set; }
-    public List<Requirement_Item__c> riList { get; set; }
-    public Decimal progress { get; set; }
+public with sharing class checklistHelper {
+    public static Map<Id, RequirementWrapper> reqMap { get; set; }
+    public static List<RequirementWrapper> reqs { get {return reqMap.values();} }
+    public static Boolean allowSubmit { get; set; }
+    public static Boolean allowCancel { get; set; }
+    public static Boolean allowWithdraw { get; set; }
+    public static List<Requirement_Item__c> riList { get; set; }
+    public static Decimal progress { get; set; }
+    public static Map<Id, List<Requirement_Item__c>> appIdRiList { get; set; }
 
-    public Application_Control__c appControl {
-        get {
-            if (appControl == null) {
-                appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
-            }
-            return appControl;
-        }
-        set;
-    }
-
-    /*******************************************************************************
-    * @description Initialize the page - Checks if requirements have been completed
-    ********************************************************************************/
-    public void init() {
-
+    public static List<RequirementWrapper> checklistRequirements(Application__c app, Id contactId, Application_Control__c appControl) {
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
-
-        contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
-        if (UserInfo.getUserType().equals('Standard')) {
-            contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
-        }
-        applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
-
-        app = [SELECT Id, Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c, Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Residency__c, Degree_Type__c, Application_Control__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Application__c WHERE Id = :applicationId];
-        appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
-
         allowCancel = String.isNotBlank(appControl.Allow_Cancel_From__c) && new Set<String>(appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c);
         allowWithdraw = String.isNotBlank(appControl.Allow_Withdraw_From__c) && new Set<String>(appControl.Allow_Withdraw_From__c.split(';')).contains(app.Application_Status__c);
-
         reqMap = new Map<Id, RequirementWrapper>();
         Set<Id> reqIds = new Set<Id>();
         for (Requirement__c r : [
@@ -100,14 +70,15 @@ public class ApplicationChecklist {
             }
         }
 
-        checkRequirementCompletion();
+        checkRequirementCompletion(app.Id, app, contactId);
+
         for (Requirement_Response__c rr : [
                 SELECT Id, Requirement_Item__r.Required__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,
                         Fulfilled_On__c,Incomplete_Questions__c,Question_Group_Requirement_Fulfilled_On__c, HasDocument__c, Waive_Requirement__c,
                         Document_Requirement_Fulfilled_On__c,Has_Child_Requirement__c,Child_Requirement_Fulfilled_On__c,Send_Reminder__c,
                         External_Email__c,Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c
                 FROM Requirement_Response__c
-                WHERE Application__c = :applicationId
+                WHERE Application__c = :app.Id
                 AND Requirement_Item__r.Requirement__c IN :reqIds
         ]) {
             if (riIds.contains(rr.Requirement_Item__c)) {
@@ -181,12 +152,10 @@ public class ApplicationChecklist {
         }
         progress = (complete / total) * 100;
 
+        return reqMap.values();
     }
 
-    /*******************************************************************************
-    * @description Checks to see if requirements have been completed. Checks related list items too (Even if they are not marked completed on the Requirement Response)
-    ********************************************************************************/
-    public void checkRequirementCompletion() {
+    public static void checkRequirementCompletion(Id applicationId, Application__c app, Id contactId) {
 
         Set<Id> requirementIds = new Set<Id>();
 
@@ -298,9 +267,10 @@ public class ApplicationChecklist {
             ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid, items, requirementResponses, questionResponses, questionDependencies);
             ar.preventUpdates = true;
             ar.ignoreExternalFilter = true;
-            arLst.add(ar);
-            ar.init();
-            responses.addAll(ar.newResponses);
+            //System.debug(JSON.serializePretty(ar));
+            //arLst.add(ar);
+            //ar.init();
+            //responses.addAll(ar.newResponses);
         }
         if (responses.size() > 0) {
             insert responses;
@@ -333,8 +303,8 @@ public class ApplicationChecklist {
                     qr.Requirement_Response__c = questionToResponseMap.get(qr).Id;
                 }
             }
-            upsert qResponses;
-            update app;
+//            upsert qResponses;
+//            update app;
 
         } catch (DmlException e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
@@ -343,62 +313,4 @@ public class ApplicationChecklist {
         }
 
     }
-    /* ******************************************************************************
-    * @description Submits the application if the application is in the correct status
-    ********************************************************************************/
-    public PageReference submit() {
-        PageReference pr;
-        if (allowSubmit && app != null) {
-            if (appControl != null && String.isNotBlank(appControl.Submit_Status__c)) {
-                update new Application__c(Id = app.Id, Application_Status__c = appControl.Submit_Status__c);
-                pr = Page.ApplicationChecklist;
-                pr.setRedirect(true);
-                for (String s : new Set<String>{
-                        'contactId', 'applicationId', 'at'
-                }) {
-                    pr.getParameters().put(s, ApexPages.currentPage().getParameters().get(s));
-                }
-            }
-        }
-        return pr;
-    }
-    /* ******************************************************************************
-    * @description Cancels the application if the application is in the correct status
-    ********************************************************************************/
-    public PageReference cancelApp() {
-        PageReference pr;
-        if (allowCancel && app != null) {
-            if (appControl != null && String.isNotBlank(appControl.Cancel_Status__c)) {
-                update new Application__c(Id = app.Id, Application_Status__c = appControl.Cancel_Status__c);
-                pr = Page.ApplicationChecklist;
-                pr.setRedirect(true);
-                for (String s : new Set<String>{
-                        'contactId', 'applicationId', 'at'
-                }) {
-                    pr.getParameters().put(s, ApexPages.currentPage().getParameters().get(s));
-                }
-            }
-        }
-        return pr;
-    }
-    /* ******************************************************************************
-    * @description Withdraws the application if the application is in the correct status
-    ********************************************************************************/
-    public PageReference withdrawApp() {
-        PageReference pr;
-        if (allowWithdraw && app != null) {
-            if (appControl != null && String.isNotBlank(appControl.Withdraw_Status__c)) {
-                update new Application__c(Id = app.Id, Application_Status__c = appControl.Withdraw_Status__c);
-                pr = Page.ApplicationChecklist;
-                pr.setRedirect(true);
-                for (String s : new Set<String>{
-                        'contactId', 'applicationId', 'at'
-                }) {
-                    pr.getParameters().put(s, ApexPages.currentPage().getParameters().get(s));
-                }
-            }
-        }
-        return pr;
-    }
-
 }

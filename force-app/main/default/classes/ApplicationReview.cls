@@ -198,10 +198,11 @@ public class ApplicationReview {
             }else{
                 questionResponses = new List<Question_Response__c>();
             }
-            ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid,items, requirementResponses, questionResponses, questionDependencies);
-            ar.preventUpdates = true;
-            arLst.add(ar);
-            ar.init();
+            /*OLD CONSTRUCTOR - THAD DID THIS*/
+//            ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid,items, requirementResponses, questionResponses, questionDependencies);
+//            ar.preventUpdates = true;
+//            arLst.add(ar);
+//            ar.init();
         }
         
         //Application_Review__c

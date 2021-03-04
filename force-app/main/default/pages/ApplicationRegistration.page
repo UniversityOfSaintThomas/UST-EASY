@@ -1,6 +1,7 @@
 <apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0">
     <apex:composition template="Capricorn2020">
-        <apex:define name="scriptHead">
+        <apex:define name="scriptsHead">
+            <c:ApplicationHead />
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback) {
                     console.log("in application requirement vfp");
@@ -22,7 +23,6 @@
                 }
             </script>
         </apex:define>
-        <c:ApplicationHead />
         <apex:define name="body">
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">

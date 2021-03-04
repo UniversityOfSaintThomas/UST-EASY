@@ -61,8 +61,8 @@
 
     </script>-->
     <apex:form id="theForm">
-<!--        <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>-->
-        <apex:outputPanel id="formPageMessages" styleClass="row">
+        <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>
+        <apex:outputPanel id="formPageMessages" styleClass="row" layout="block">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
                 <apex:pageMessages />
             </div>

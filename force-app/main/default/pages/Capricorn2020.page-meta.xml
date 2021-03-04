@@ -4,4 +4,9 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>Capricorn2020</label>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>111</minorNumber>
+        <namespace>hed</namespace>
+    </packageVersions>
 </ApexPage>

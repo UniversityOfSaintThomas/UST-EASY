@@ -1,4 +1,4 @@
-<apex:component>
+<apex:component >
 <!--    <apex:includeScript value="{!URLFOR($Resource.bootstrap, '/js/jquery-3.1.1.min.js')}"/>-->
 <!--    <apex:includeScript value="{!URLFOR($Resource.bootstrap, '/js/bootstrap.min.js')}"/>-->
 <!--    <apex:includeScript value="{!URLFOR($Resource.jqueryui, '/jquery-ui-1.12.1.custom/jquery-ui.min.js')}"/>-->

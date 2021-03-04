@@ -1,4 +1,4 @@
-<apex:component>
+<apex:component >
 
     <apex:attribute name="prevReqId" description="The previous requirement" type="String" required="false"/>
     <apex:attribute name="nextReqId" description="The next requirement" type="String" required="false"/>
@@ -44,7 +44,7 @@
     <!--             aria-valuemin="0" aria-valuemax="100" style="width:{!progress}%;background-color:#{!appControl.Arrow_Color__c};">-->
     <!--        </div>-->
     <!--    </div>-->
-    <apex:outputPanel rendered="{!($CurrentPage.Name == 'ApplicationRequirement' || $CurrentPage.Name == 'ApplicationChecklist') && !isExternalUser}">
+    <apex:outputPanel rendered="{!($CurrentPage.Name == 'ApplicationRequirement' || $CurrentPage.Name == 'ApplicationChecklist') && !isExternalUser}" layout="none">
 
         <div class="slds-progress" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <ol class="slds-progress__list">

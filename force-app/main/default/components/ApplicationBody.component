@@ -31,7 +31,6 @@
 
     <div class="slds-grid slds-wrap">
         <!-- TITLE AND SUB TITLE -->
-        {!applicationIdValue}
         <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
             <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                 <h2 class="slds-text-heading_large">{!title}</h2>

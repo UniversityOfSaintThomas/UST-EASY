@@ -5,6 +5,7 @@
 <apex:component id="ApplicationChecklist" controller="ApplicationChecklistComponentController">
     <apex:attribute name="applicationId" description="Current Application Id" type="Id" required="true" assignTo="{!appId}"/>
     <apex:attribute name="applicationControl" description="Current Application Type Id" type="Application_Control__c" required="true" assignTo="{!appControl}"/>
+    <apex:attribute name="reqs" description="All rquirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
     <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <apex:repeat value="{!checklistItems}" var="r">
             <apex:outputPanel rendered="{!r.display}" layout="none">
@@ -21,7 +22,7 @@
                             <h3 class="slds-text-heading_small">
                                 <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!appId}&contactId={!contactId}&at={!$CurrentPage.parameters.at}">
                                     {!requirementTitle}
-                                    <span class="slds-badge {!IF(r.reqStatus,'slds-theme_success','In Progress')}">{!IF(r.reqStatus,'Complete','In Progress')}</span>
+                                    <span class="slds-badge {!IF(r.reqStatus,'slds-theme_success','In Progress')}">{!IF(r.reqStatus,'Viewed','In Progress')}</span>
                                 </a>
                             </h3>
                         </div>
@@ -31,8 +32,7 @@
                                     <apex:repeat value="{!r.reqItems}" var="ri">
                                         <apex:outputPanel rendered="{!ri.display}" layout="none">
                                             <li>
-                                                <apex:outputText>{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
-                                                -  {!!ri.reqItemStatus}
+                                                <apex:outputText >{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
                                             </li>
                                         </apex:outputPanel>
                                     </apex:repeat>

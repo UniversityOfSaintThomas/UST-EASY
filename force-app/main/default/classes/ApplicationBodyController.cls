@@ -7,6 +7,7 @@ public with sharing class ApplicationBodyController {
 
     public Application_Control__c applicationControlValue { set; get; }
     public String applicationIdValue { get; set; }
+    public Id appContactId { get; set; }
 
     public ApplicationBodyController() {
     }

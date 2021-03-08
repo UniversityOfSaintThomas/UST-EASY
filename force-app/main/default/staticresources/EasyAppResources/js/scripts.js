@@ -12,7 +12,6 @@ let ready = (callback) => {
 let placeholders = {};
 let maxLengths = {};
 
-
 ready(() => {
 
     for (let inputId in placeholders) {
@@ -51,6 +50,13 @@ ready(() => {
             } else {
                 content.style.display = 'none';
             }
+        });
+    });
+
+    let allPhones = document.querySelectorAll('.validPhone');
+    allPhones.forEach(function (ph) {
+        ph.addEventListener('change', function (e) {
+            formatPhone(ph);
         });
     });
 
@@ -147,6 +153,24 @@ function getAsText(readFile, respId) {
         })(readFile);
         reader.readAsDataURL(readFile);
     });
+}
+
+function formatPhone(phone) {
+    let intr = false;
+    let digits = 0;
+    let inValue = phone.value;
+    if (inValue.startsWith("+")) {
+        intr = true;
+    }
+    digits = inValue.replace(/\D/g, '');
+    if (intr) {
+        if (digits.startsWith("0")) {
+            digits = digits.substring(1);
+        }
+        phone.value = "+" + digits;
+    } else {
+        phone.value = digits.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+    }
 }
 
 

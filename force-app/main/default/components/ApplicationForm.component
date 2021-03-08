@@ -11,11 +11,6 @@
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
     <apex:attribute name="isExternalUser" description="Boolean that is true if this is an external user" type="Boolean" required="false" default="false"/>
 
-
-    <script>
-        //store placeholders and maxlengths for assignment after DOM loads
-
-    </script>
     <!--<script>
         var jq = jQuery.noConflict();
         if ({!hidePaging} == false)
@@ -62,17 +57,13 @@
     </script>-->
     <apex:form id="theForm">
         <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>
-        <apex:outputPanel id="formPageMessages" styleClass="row" layout="block">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
-                <apex:pageMessages />
-            </div>
-        </apex:outputPanel>
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
-                <div id="myCarousel" class="{!if(hidePaging,'','carousel')} slide" data-interval="false" data-wrap="false">
-                    <div class="row">
-                        <div class="col-lg-10 col-lg-offset-1">
-                            <div class="{!if(hidePaging,'','carousel-inner')}" role="listbox">
+        <apex:pageMessages />
+<!--        <div class="row">-->
+<!--            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">-->
+<!--                <div id="myCarousel" class="{!if(hidePaging,'','carousel')} slide" data-interval="false" data-wrap="false">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-lg-10 col-lg-offset-1">-->
+<!--                            <div class="{!if(hidePaging,'','carousel-inner')}" role="listbox">-->
                                 <apex:variable var="itemCount" value="0"/>
                                 <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
                                 <script>
@@ -86,12 +77,12 @@
                                     </div>
                                     <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
                                 </apex:repeat>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <apex:componentBody />
     </apex:form>
 </apex:component>

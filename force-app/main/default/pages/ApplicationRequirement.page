@@ -4,15 +4,15 @@
             <c:ApplicationHead />
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback) {
-                    console.log("in application requirement vfp");
-                    console.log(sObj);
-                    console.log(searchTerm);
+                    // console.log("in application requirement vfp");
+                    // console.log(sObj);
+                    // console.log(searchTerm);
                     Visualforce.remoting.Manager.invokeAction(
                         '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
                         sObj, sObjFilter, sObjNameField, searchTerm,
                         function (result, event) {
                             if (event.status) {
-                                console.log(result);
+                                //console.log(result);
                                 callback(result)
                             } else if (event.type === 'exception') {
                             } else {
@@ -26,12 +26,13 @@
 
         <apex:define name="body">
             <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appControl="{!appControl}" applicationIdBody="{!resourceApplicationId}">
-                <c:ApplicationForm id="applicationForm" section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
+                <c:ApplicationForm id="applicationForm"
+                                   section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
                                    requirementId="{!requirementId}"
                                    reqs="{!reqs}"
                                    progress="{!progress}"
-                                   isExternalUser="{!isExternalUser}">
-                    <div class="slds-grid slds-wrap">
+                                   isExternalUser="{!isExternalUser}" >
+                    <div class="slds-grid slds-wrap slds-p-vertical_large">
 
                         <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                             <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>

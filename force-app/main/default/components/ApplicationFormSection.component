@@ -18,10 +18,11 @@
         </div>-->
 
         <apex:outputPanel layout="none" rendered="{!group.instructions != null && group.instructions != ''}">
-            <p>
-                <apex:outputText value="{!group.instructions}" escape="false"/>
-            </p>
-            <br/>
+            <div class="slds-text-body_regular">
+                <p>
+                    <apex:outputText value="{!group.instructions}" escape="false"/>
+                </p>
+            </div>
         </apex:outputPanel>
 
         <apex:outputPanel layout="none" rendered="{!group.isInternal && (group.response != null && group.response.Fulfilled_On__c != null)}">
@@ -42,7 +43,7 @@
             <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
 
                 <apex:actionFunction name="sendTheReminder{!group.item.Id}" action="{!group.sendReminder}" reRender="none"/>
-                <apex:actionRegion >
+                <apex:actionRegion>
 
 
                     <apex:repeat value="{!group.questions}" var="question">
@@ -53,68 +54,123 @@
                             placeholders["{!qId}"] = "{!IF(NOT(question.placeholder == null), question.placeholder, '' )}";
                             maxLengths["{!qId}"] = "{!if(question.length == null || question.length > 255, 255, question.length)}";
                         </script>
+                        <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                            <apex:outputPanel rendered="{!question.showQuestion}" layout="none">
 
-                        <apex:outputPanel rendered="{!question.showQuestion}" layout="none">
-
-                            <!-- SLDS Address -->
-                            <apex:outputPanel rendered="{!question.fieldType == 'Address'}" layout="none">
-                                HERE -1
-                                <div class="slds-form-element">
-                                    <apex:outputLabel for="street" styleClass="slds-form-element__label">
-                                        {!question.label} Street
-                                        <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
-                                            <abbr class='slds-required' title='required'>* </abbr>
-                                        </apex:outputPanel>
-                                    </apex:outputLabel>
-                                    <div class="slds-form-element__control">
-                                        <apex:inputField id="street" value="{!question.response.Street__c}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                    </div>
-                                    <div class="slds-form-element__help" id="error-message-{!qId}">
-                                        <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </div>
-                                </div>
-
-                                <div class="slds-form-element">
-                                    <apex:outputLabel for="city" styleClass="slds-form-element__label">
-                                        {!question.label} City
-                                        <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
-                                            <abbr class='slds-required' title='required'>* </abbr>
-                                        </apex:outputPanel>
-                                    </apex:outputLabel>
-                                    <div class="slds-form-element__control">
-                                        <apex:inputField id="city" value="{!question.response.City__c}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                    </div>
-                                    <div class="slds-form-element__help" id="error-message-{!qId}">
-                                        <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </div>
-                                </div>
-
-                                <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}" layout="none">
-
+                                <!-- SLDS Address -->
+                                <apex:outputPanel rendered="{!question.fieldType == 'Address'}" layout="none">
+                                    HERE -1
                                     <div class="slds-form-element">
-                                        <apex:outputLabel for="state" styleClass="slds-form-element__label">
-                                            {!question.label} State/Province
+                                        <apex:outputLabel for="street" styleClass="slds-form-element__label">
+                                            {!question.label} Street
                                             <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
                                                 <abbr class='slds-required' title='required'>* </abbr>
                                             </apex:outputPanel>
                                         </apex:outputLabel>
                                         <div class="slds-form-element__control">
-                                            <apex:inputField id="state" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="slds-input {!qId}  {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                            <apex:inputField id="street" value="{!question.response.Street__c}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
                                         </div>
                                         <div class="slds-form-element__help" id="error-message-{!qId}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
                                         </div>
                                     </div>
 
-                                    <div class="slds-form-element">
-                                        <apex:outputLabel for="country1" styleClass="slds-form-element__label">
-                                            {!question.label} Country
+                                    <div class="slds-form-element slds-p-vertical_xx-small">
+                                        <apex:outputLabel for="city" styleClass="slds-form-element__label">
+                                            {!question.label} City
                                             <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
                                                 <abbr class='slds-required' title='required'>* </abbr>
                                             </apex:outputPanel>
                                         </apex:outputLabel>
                                         <div class="slds-form-element__control">
-                                            <apex:inputField id="country1" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingCountryCode','MailingCountry')]}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                            <apex:inputField id="city" value="{!question.response.City__c}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                        </div>
+                                        <div class="slds-form-element__help" id="error-message-{!qId}">
+                                            <apex:outputText value="{!question.helpText}" escape="false"/>
+                                        </div>
+                                    </div>
+
+                                    <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}" layout="none">
+
+                                        <div class="slds-form-element slds-p-vertical_xx-small">
+                                            <apex:outputLabel for="state" styleClass="slds-form-element__label">
+                                                {!question.label} State/Province
+                                                <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                                    <abbr class='slds-required' title='required'>* </abbr>
+                                                </apex:outputPanel>
+                                            </apex:outputLabel>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField id="state" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="slds-input {!qId}  {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                            </div>
+                                            <div class="slds-form-element__help" id="error-message-{!qId}">
+                                                <apex:outputText value="{!question.helpText}" escape="false"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-form-element slds-p-vertical_xx-small">
+                                            <apex:outputLabel for="country1" styleClass="slds-form-element__label">
+                                                {!question.label} Country
+                                                <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                                    <abbr class='slds-required' title='required'>* </abbr>
+                                                </apex:outputPanel>
+                                            </apex:outputLabel>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField id="country1" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingCountryCode','MailingCountry')]}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                            </div>
+                                            <div class="slds-form-element__help" id="error-message-{!qId}">
+                                                <apex:outputText value="{!question.helpText}" escape="false"/>
+                                            </div>
+                                        </div>
+
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}" layout="none">
+
+                                        <div class="slds-form-element slds-p-vertical_xx-small">
+                                            <apex:outputLabel for="country" styleClass="slds-form-element__label">
+                                                {!question.label} Country
+                                                <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                                    <abbr class='slds-required' title='required'>* </abbr>
+                                                </apex:outputPanel>
+                                            </apex:outputLabel>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                    <apex:inputField id="country" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingCountryCode','MailingCountry')]}" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form-element__help" id="error-message-{!qId}">
+                                                <apex:outputText value="{!question.helpText}" escape="false"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-form-element dependent-picklist slds-p-vertical_xx-small">
+                                            <apex:outputLabel for="statePicklist" styleClass="slds-form-element__label">
+                                                {!question.label} State/Province
+                                                <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                                    <abbr class='slds-required' title='required'>* </abbr>
+                                                </apex:outputPanel>
+                                            </apex:outputLabel>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container ">
+                                                    <apex:inputField id="statePicklist" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form-element__help" id="error-message-{!qId}">
+                                                <apex:outputText value="{!question.helpText}" escape="false"/>
+                                            </div>
+                                        </div>
+
+                                    </apex:outputPanel>
+
+                                    <div class="slds-form-element slds-p-vertical_xx-small">
+                                        <apex:outputLabel for="postal" styleClass="slds-form-element__label">
+                                            {!question.label} Postal Code
+                                            <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                                <abbr class='slds-required' title='required'>* </abbr>
+                                            </apex:outputPanel>
+                                        </apex:outputLabel>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputField id="postal" value="{!question.response.PostalCode__c}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
                                         </div>
                                         <div class="slds-form-element__help" id="error-message-{!qId}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
@@ -122,366 +178,320 @@
                                     </div>
 
                                 </apex:outputPanel>
+                                <!-- End Address -->
 
-                                <apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}" layout="none">
+                                <!--                            <apex:outputPanel layout="none">
+                                                                <script>
+                                                                    jQuery('.statePicklist').unbind('DOMNodeInserted').on('DOMNodeInserted', function () {
+                                                                        jQuery('.statePicklist select:not(.form-control)').addClass('form-control');
+                                                                        makeNonEditable();
+                                                                    });
+                                                                </script>
+                                                            </apex:outputPanel>-->
 
-                                    <div class="slds-form-element">
-                                        <apex:outputLabel for="country" styleClass="slds-form-element__label">
-                                            {!question.label} Country
-                                            <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
-                                                <abbr class='slds-required' title='required'>* </abbr>
-                                            </apex:outputPanel>
-                                        </apex:outputLabel>
-                                        <div class="slds-form-element__control">
-                                            <div class="slds-select_container">
-                                                <apex:inputField id="country" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingCountryCode','MailingCountry')]}" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                            </div>
-                                        </div>
-                                        <div class="slds-form-element__help" id="error-message-{!qId}">
+
+                                <apex:outputPanel rendered="{!question.fieldType == 'Checkbox'}" layout="none">
+                                    HERE 1
+                                    <div class="checkbox">
+                                        <label for="field">
+                                            <apex:inputCheckbox id="checkBoxField" onchange="reRenderAllGroups();" value="{!question.response.ValueCheckbox__c}" styleClass="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                            {!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}
+                                        </label>
+                                        <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
-                                        </div>
+                                        </p>
                                     </div>
-
-                                    <div class="slds-form-element dependent-picklist">
-                                        <apex:outputLabel for="statePicklist" styleClass="slds-form-element__label">
-                                            {!question.label} State/Province
-                                            <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
-                                                <abbr class='slds-required' title='required'>* </abbr>
-                                            </apex:outputPanel>
-                                        </apex:outputLabel>
-                                        <div class="slds-form-element__control">
-                                            <div class="slds-select_container ">
-                                                <apex:inputField id="statePicklist" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                            </div>
-                                        </div>
-                                        <div class="slds-form-element__help" id="error-message-{!qId}">
-                                            <apex:outputText value="{!question.helpText}" escape="false"/>
-                                        </div>
-                                    </div>
-
                                 </apex:outputPanel>
 
-                                <div class="slds-form-element">
-                                    <apex:outputLabel for="postal" styleClass="slds-form-element__label">
-                                        {!question.label} Postal Code
-                                        <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
-                                            <abbr class='slds-required' title='required'>* </abbr>
+
+                                <apex:outputPanel rendered="{!question.fieldType == 'Currency'}" layout="none">
+                                    HERE 2
+                                    <div class="form-group">
+                                        <label for="CurrencyField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                            <apex:inputField id="CurrencyField" value="{!question.response.ValueCurrency__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" rendered="{!question.response != null}"/>
+                                        </div>
+                                        <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                            <apex:outputText value="{!question.helpText}" escape="false"/>
+                                        </p>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <!-- SLDS Date -->
+                                <apex:outputPanel rendered="{!question.fieldType == 'Date'}" layout="block" styleClass="slds-form-element">
+                                    <label class="slds-form-element__label" for="DateField">
+                                        <apex:outputPanel rendered="{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),true,false)}">
+                                            <abbr class="slds-required" title="required">* </abbr>
                                         </apex:outputPanel>
-                                    </apex:outputLabel>
-                                    <div class="slds-form-element__control">
-                                        <apex:inputField id="postal" value="{!question.response.PostalCode__c}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                    </div>
-                                    <div class="slds-form-element__help" id="error-message-{!qId}">
-                                        <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </div>
-                                </div>
-
-                            </apex:outputPanel>
-                            <!-- End Address -->
-
-                            <!--                            <apex:outputPanel layout="none">
-                                                            <script>
-                                                                jQuery('.statePicklist').unbind('DOMNodeInserted').on('DOMNodeInserted', function () {
-                                                                    jQuery('.statePicklist select:not(.form-control)').addClass('form-control');
-                                                                    makeNonEditable();
-                                                                });
-                                                            </script>
-                                                        </apex:outputPanel>-->
-
-
-                            <apex:outputPanel rendered="{!question.fieldType == 'Checkbox'}" layout="none">
-                                HERE 1
-                                <div class="checkbox">
-                                    <label for="field">
-                                        <apex:inputCheckbox id="checkBoxField" onchange="reRenderAllGroups();" value="{!question.response.ValueCheckbox__c}" styleClass="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                        {!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}
+                                        {!question.label}
                                     </label>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
-                                        <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
-
-
-                            <apex:outputPanel rendered="{!question.fieldType == 'Currency'}" layout="none">
-                                HERE 2
-                                <div class="form-group">
-                                    <label for="CurrencyField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-                                        <apex:inputField id="CurrencyField" value="{!question.response.ValueCurrency__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" rendered="{!question.response != null}"/>
+                                    <div class="slds-form-element__control">
+                                        <div aria-describedby="error-{!qId}" aria-invalid="true">
+                                            <apex:input id="DateField" type="date" value="{!question.dateValue}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                        </div>
                                     </div>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                    <div class="slds-form-element__help" id="error-{!qId}">
                                         <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
-
-                            <!-- SLDS Date -->
-                            <apex:outputPanel rendered="{!question.fieldType == 'Date'}" layout="block" styleClass="slds-form-element">
-                                <label class="slds-form-element__label" for="DateField">
-                                    <apex:outputPanel rendered="{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),true,false)}">
-                                        <abbr class="slds-required" title="required">* </abbr>
-                                    </apex:outputPanel>
-                                    {!question.label}
-                                </label>
-                                <div class="slds-form-element__control">
-                                    <div aria-describedby="error-{!qId}" aria-invalid="true">
-                                        <apex:input id="DateField" type="date" value="{!question.dateValue}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
                                     </div>
-                                </div>
-                                <div class="slds-form-element__help" id="error-{!qId}">
-                                    <apex:outputText value="{!question.helpText}" escape="false"/>
-                                </div>
-                            </apex:outputPanel>
+                                </apex:outputPanel>
 
 
-                            <apex:outputPanel rendered="{!question.fieldType == 'DateTime'}" layout="none">
-                                HERE 3
-                                <div class="form-group">
-                                    <label for="dateTimeField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                                        <apex:input id="dateTimeField" type="auto" value="{!question.datetimeValue}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
+                                <apex:outputPanel rendered="{!question.fieldType == 'DateTime'}" layout="none">
+                                    HERE 3
+                                    <div class="form-group">
+                                        <label for="dateTimeField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                            <apex:input id="dateTimeField" type="auto" value="{!question.datetimeValue}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
+                                        </div>
+                                        <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                            <apex:outputText value="{!question.helpText}" escape="false"/>
+                                        </p>
                                     </div>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                </apex:outputPanel>
+
+
+                                <apex:outputPanel rendered="{!question.fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'}" layout="none">
+                                    HERE 4
+                                    <div class="form-group">
+                                        <label for="numberField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <apex:inputField id="numberField" value="{!question.response.ValueNumber__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
+                                        <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                            <apex:outputText value="{!question.helpText}" escape="false"/>
+                                        </p>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <!-- SLDS Email -->
+                                <apex:outputPanel rendered="{!question.fieldType == 'Email'}" layout="block" styleClass="slds-form-element">
+                                    <apex:outputLabel for="field" styleClass="slds-form-element__label">
+                                        {!question.label}
+                                        <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                            <abbr class='slds-required' title='required'>* </abbr>
+                                        </apex:outputPanel>
+                                    </apex:outputLabel>
+                                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                        <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#email"></use>
+                                        </svg>
+                                        <apex:inputField id="field" type="email"
+                                                         styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"
+                                                         value="{!question.response.ValueText__c}"
+                                                         html-aria-invalid="true"
+                                        />
+                                        <apex:commandLink styleClass="btn-lightning" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder{!group.item.Id}();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
+                                    </div>
+                                    <div class="slds-form-element__help" id="error-message-{!qId}">
                                         <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
-
-
-                            <apex:outputPanel rendered="{!question.fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'}" layout="none">
-                                HERE 4
-                                <div class="form-group">
-                                    <label for="numberField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                    <apex:inputField id="numberField" value="{!question.response.ValueNumber__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
-                                        <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
-
-                            <!-- SLDS Email -->
-                            <apex:outputPanel rendered="{!question.fieldType == 'Email'}" layout="block" styleClass="slds-form-element">
-                                <apex:outputLabel for="field" styleClass="slds-form-element__label">
-                                    {!question.label}
-                                    <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
-                                        <abbr class='slds-required' title='required'>* </abbr>
-                                    </apex:outputPanel>
-                                </apex:outputLabel>
-                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
-                                    <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#email"></use>
-                                    </svg>
-                                    <apex:inputField id="field" type="email"
-                                                     styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"
-                                                     value="{!question.response.ValueText__c}"
-                                                     html-aria-invalid="true"
-                                    />
-                                    <apex:commandLink styleClass="btn-lightning" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder{!group.item.Id}();" oncomplete="appHideLoadingSpinner();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
-                                </div>
-                                <div class="slds-form-element__help" id="error-message-{!qId}">
-                                    <apex:outputText value="{!question.helpText}" escape="false"/>
-                                </div>
-                            </apex:outputPanel>
-
-                            <!-- SLDS Password Encrypted Text Input -->
-                            <apex:outputPanel rendered="{!question.fieldType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element">
-                                <apex:outputLabel styleClass="lds-form-element__label" for="textEncryptedField">
-                                    {!question.label}
-                                    <apex:outputPanel layout="none" rendered="{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),true,false)}">
-                                        <abbr class="slds-required" title="required">* </abbr>
-                                    </apex:outputPanel>
-                                </apex:outputLabel>
-                                <div class="slds-form-element__control">
-                                    <div aria-describedby="error-{!qId}">
-                                        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!question.textEncryptedValue}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
                                     </div>
-                                </div>
-                                <div class="slds-form-element__help" id="error-{!qId}">
-                                    <apex:outputText value="{!question.helpText}" escape="false"/>
-                                </div>
-                            </apex:outputPanel>
+                                </apex:outputPanel>
 
-                            <!-- SLDS Mulit Picklist -->
-                            <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element">
-                                <apex:outputLabel for="field" styleClass="slds-form-element__label">
-                                    {!question.label}
-                                    <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
-                                        <abbr class='slds-required' title='required'>* </abbr>
-                                    </apex:outputPanel>
-                                </apex:outputLabel>
-                                <div class="slds-form-element__control">
-                                    <div class="slds-checkbox">
-                                        <apex:selectCheckboxes id="multiPicklistField" onchange="reRenderAllGroups();" value="{!question.multiPicklistValues}" layout="pageDirection" styleClass="slds-tabled-checklist">
+                                <!-- SLDS Password Encrypted Text Input -->
+                                <apex:outputPanel rendered="{!question.fieldType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element">
+                                    <apex:outputLabel styleClass="lds-form-element__label" for="textEncryptedField">
+                                        {!question.label}
+                                        <apex:outputPanel layout="none" rendered="{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),true,false)}">
+                                            <abbr class="slds-required" title="required">* </abbr>
+                                        </apex:outputPanel>
+                                    </apex:outputLabel>
+                                    <div class="slds-form-element__control">
+                                        <div aria-describedby="error-{!qId}">
+                                            <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!question.textEncryptedValue}" styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__help" id="error-{!qId}">
+                                        <apex:outputText value="{!question.helpText}" escape="false"/>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <!-- SLDS Mulit Picklist -->
+                                <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element">
+                                    <apex:outputLabel for="field" styleClass="slds-form-element__label">
+                                        {!question.label}
+                                        <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                            <abbr class='slds-required' title='required'>* </abbr>
+                                        </apex:outputPanel>
+                                    </apex:outputLabel>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-checkbox">
+                                            <apex:selectCheckboxes id="multiPicklistField" onchange="reRenderAllGroups();" value="{!question.multiPicklistValues}" layout="pageDirection" styleClass="slds-tabled-checklist">
+                                                <apex:selectOptions value="{!question.options}"/>
+                                            </apex:selectCheckboxes>
+                                            <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                                <apex:outputText value="{!question.helpText}" escape="false"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+
+
+                                <apex:outputPanel rendered="{!question.fieldType == 'Percent'}" layout="none">
+                                    HERE 5
+                                    <div class="form-group">
+                                        <label for="percentField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">%</span>
+                                            <apex:inputField id="percentField" value="{!question.response.ValuePercent__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
+                                        </div>
+                                        <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                            <apex:outputText value="{!question.helpText}" escape="false"/>
+                                        </p>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <!-- SLDS Phone -->
+                                <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" layout="none">
+                                    <apex:outputLabel for="phoneField" styleClass="slds-form-element__label">
+                                        {!question.label}
+                                        <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                            <abbr class='slds-required' title='required'>* </abbr>
+                                        </apex:outputPanel>
+                                    </apex:outputLabel>
+                                    <apex:variable value="{!question.placeholder}" var="placeholder"/>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField id="phoneField"
+                                                         type="tel"
+                                                         styleClass="slds-input {!qId} validPhone {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"
+                                                         value="{!question.response.ValuePhone__c}"
+                                                         html-aria-invalid="true"
+                                        />
+                                    </div>
+                                    <div class="slds-form-element__help" id="error-message-{!qId}">
+                                        <apex:outputText value="{!question.helpText}" escape="false"/>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <!-- SLDS picklist -->
+                                <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element">
+                                    <apex:outputLabel styleClass="slds-form-element__label" for="picklistField">
+                                        {!question.label}
+                                        <apex:outputPanel layout="none" rendered="{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),true,false)}">
+                                            <abbr class="slds-required" title="required">* </abbr>
+                                        </apex:outputPanel>
+                                    </apex:outputLabel>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-select_container">
+                                            <div aria-describedby="error-{!qId}">
+                                                <apex:selectList id="picklistField" onchange="reRenderAllGroups();" value="{!question.response.ValueText__c}" size="1" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
+                                                    <apex:selectOptions value="{!question.options}"/>
+                                                </apex:selectList>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__help" id="error-{!qId}">{!question.helpText}</div>
+                                </apex:outputPanel>
+
+
+                                <apex:outputPanel rendered="{!(question.fieldType == 'Picklist' && question.radio) || question.fieldType == 'Radio'}" layout="none">
+                                    HERE 7
+                                    <div class="form-group">
+                                        HERE 1 <label for="radioField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <apex:selectRadio id="radioField" onchange="reRenderAllGroups();" value="{!question.response.ValueText__c}" layout="pageDirection" styleClass="selectRadio {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;">
                                             <apex:selectOptions value="{!question.options}"/>
-                                        </apex:selectCheckboxes>
+                                        </apex:selectRadio>
                                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
                                         </p>
                                     </div>
-                                </div>
-                            </apex:outputPanel>
+                                </apex:outputPanel>
 
-
-                            <apex:outputPanel rendered="{!question.fieldType == 'Percent'}" layout="none">
-                                HERE 5
-                                <div class="form-group">
-                                    <label for="percentField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">%</span>
-                                        <apex:inputField id="percentField" value="{!question.response.ValuePercent__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
-                                    </div>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
-                                        <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
-
-
-                            <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" layout="none">
-                                HERE 6
-                                <div class="form-group">
-                                    <label for="phoneField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                                        <apex:inputField id="phoneField" value="{!question.response.ValuePhone__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                    </div>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
-                                        <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
-
-                            <!-- SLDS picklist -->
-                            <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element">
-                                <apex:outputLabel styleClass="slds-form-element__label" for="picklistField">
-                                    {!question.label}
-                                    <apex:outputPanel layout="none" rendered="{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),true,false)}">
-                                        <abbr class="slds-required" title="required">* </abbr>
-                                    </apex:outputPanel>
-                                </apex:outputLabel>
-                                <div class="slds-form-element__control">
-                                    <div class="slds-select_container">
-                                        <div aria-describedby="error-{!qId}">
-                                            <apex:selectList id="picklistField" onchange="reRenderAllGroups();" value="{!question.response.ValueText__c}" size="1" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
-                                                <apex:selectOptions value="{!question.options}"/>
-                                            </apex:selectList>
+                                <!-- SLDS Reference Picklist -->
+                                <apex:outputPanel rendered="{!question.fieldType == 'Reference'}" layout="block" styleClass="slds-form-element">
+                                    <apex:outputLabel for="referenceField" styleClass="slds-form-element__label">
+                                        {!question.label}
+                                        <apex:outputPanel rendered="{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),true,false)}">
+                                            <abbr class="slds-required" title="required">* </abbr>
+                                        </apex:outputPanel>
+                                    </apex:outputLabel>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-select_container">
+                                            <div aria-describedby="error-{!qId}">
+                                                <apex:selectList id="referenceField" value="{!question.response.ValueText__c}" size="1" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
+                                                    <apex:selectOptions value="{!question.options}"/>
+                                                    <apex:actionSupport event="onchange" reRender="questionGroup"/>
+                                                </apex:selectList>
+                                            </div>
+                                            <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                                <apex:outputText value="{!question.helpText}" escape="false"/>
+                                            </p>
+                                            <div class="slds-form-element__help" id="error-{!qId}">{!question.helpText}</div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="slds-form-element__help" id="error-{!qId}">{!question.helpText}</div>
-                            </apex:outputPanel>
+                                </apex:outputPanel>
 
 
-                            <apex:outputPanel rendered="{!(question.fieldType == 'Picklist' && question.radio) || question.fieldType == 'Radio'}" layout="none">
-                                HERE 7
-                                <div class="form-group">
-                                    HERE 1 <label for="radioField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                    <apex:selectRadio id="radioField" onchange="reRenderAllGroups();" value="{!question.response.ValueText__c}" layout="pageDirection" styleClass="selectRadio {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;">
-                                        <apex:selectOptions value="{!question.options}"/>
-                                    </apex:selectRadio>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Static'}" layout="none">
+                                    HERE 8
+                                    <div class="form-group">
+                                        <label for="field" rendered="{!NOT(ISBLANK(question.label))}">{!question.label}</label>
+                                        <p>
+                                            <apex:outputText value="{!question.question.Static_Text__c}" escape="false"/>
+                                        </p>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <!-- SLDS Text Input -->
+                                <apex:outputPanel rendered="{!question.fieldType == 'Text'}" layout="block" styleClass="slds-form-element">
+                                    <apex:outputLabel for="textField" styleClass="slds-form-element__label">
+                                        {!question.label}
+                                        <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                            <abbr class='slds-required' title='required'>* </abbr>
+                                        </apex:outputPanel>
+                                    </apex:outputLabel>
+                                    <apex:variable value="{!question.placeholder}" var="placeholder"/>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField id="textField"
+                                                         styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"
+                                                         value="{!question.response.ValueText__c}"
+                                                         html-aria-invalid="true"
+                                        />
+                                    </div>
+                                    <div class="slds-form-element__help" id="error-message-{!qId}">
                                         <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
+                                    </div>
+                                </apex:outputPanel>
 
-                            <!-- SLDS Reference Picklist -->
-                            <apex:outputPanel rendered="{!question.fieldType == 'Reference'}" layout="block" styleClass="slds-form-element">
-                                <apex:outputLabel for="referenceField" styleClass="slds-form-element__label">
-                                    {!question.label}
-                                    <apex:outputPanel rendered="{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),true,false)}">
-                                        <abbr class="slds-required" title="required">* </abbr>
-                                    </apex:outputPanel>
-                                </apex:outputLabel>
-                                <div class="slds-form-element__control">
-                                    <div class="slds-select_container">
-                                        <div aria-describedby="error-{!qId}">
-                                            <apex:selectList id="referenceField" value="{!question.response.ValueText__c}" size="1" styleClass="slds-select {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
-                                                <apex:selectOptions value="{!question.options}"/>
-                                                <apex:actionSupport event="onchange" reRender="questionGroup"/>
-                                            </apex:selectList>
-                                        </div>
+                                <apex:outputPanel rendered="{!question.fieldType == 'TextArea'}" layout="none">
+                                    HERE 9
+                                    <div class="form-group">
+                                        <label for="textAreaField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <apex:inputField id="textAreaField" value="{!question.response.ValueTextArea__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;"/>
                                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
                                         </p>
-                                        <div class="slds-form-element__help" id="error-{!qId}">{!question.helpText}</div>
                                     </div>
-                                </div>
-                            </apex:outputPanel>
+                                </apex:outputPanel>
 
-
-                            <apex:outputPanel rendered="{!question.fieldType == 'Static'}" layout="none">
-                                HERE 8
-                                <div class="form-group">
-                                    <label for="field" rendered="{!NOT(ISBLANK(question.label))}">{!question.label}</label>
-                                    <p>
-                                        <apex:outputText value="{!question.question.Static_Text__c}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
-
-                            <!-- SLDS Text Input -->
-                            <apex:outputPanel rendered="{!question.fieldType == 'Text'}" layout="block" styleClass="slds-form-element">
-                                <apex:outputLabel for="textField" styleClass="slds-form-element__label">
-                                    {!question.label}
-                                    <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
-                                        <abbr class='slds-required' title='required'>* </abbr>
-                                    </apex:outputPanel>
-                                </apex:outputLabel>
-                                <apex:variable value="{!question.placeholder}" var="placeholder"/>
-                                <div class="slds-form-element__control">
-                                    <apex:inputField id="textField"
-                                                     styleClass="slds-input {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"
-                                                     value="{!question.response.ValueText__c}"
-                                                     html-aria-invalid="true"
-                                    />
-                                </div>
-                                <div class="slds-form-element__help" id="error-message-{!qId}">
-                                    <apex:outputText value="{!question.helpText}" escape="false"/>
-                                </div>
-                            </apex:outputPanel>
-
-
-                            <apex:outputPanel rendered="{!question.fieldType == 'TextArea'}" layout="none">
-                                HERE 9
-                                <div class="form-group">
-                                    <label for="textAreaField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                    <apex:inputField id="textAreaField" value="{!question.response.ValueTextArea__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;"/>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                <apex:outputPanel rendered="{!question.fieldType == 'LongTextArea'}" layout="block" styleClass="slds-form-element">
+                                    <apex:outputLabel for="longTextAreaField" styleClass="slds-form-element__label">
+                                        {!question.label}
+                                        <apex:outputPanel layout="none" rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}">
+                                            <abbr class='slds-required' title='required'>* </abbr>
+                                        </apex:outputPanel>
+                                    </apex:outputLabel>
+                                    <div class="slds-form-element__control">
+                                        <apex:inputTextarea rows="10" value="{!question.response.ValueLongTextArea__c}" styleClass="slds-textarea {!qId} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                    </div>
+                                    <div class="slds-form-element__help" id="error-message-{!qId}">
                                         <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
+                                    </div>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel rendered="{!question.fieldType == 'URL'}" layout="none">
+                                    HERE 11
+                                    <div class="form-group">
+                                        <label for="urlField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <apex:inputField id="urlField" value="{!question.response.ValueURL__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
+                                        <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
+                                            <apex:outputText value="{!question.helpText}" escape="false"/>
+                                        </p>
+                                    </div>
+                                </apex:outputPanel>
+
+
                             </apex:outputPanel>
-
-
-                            <apex:outputPanel rendered="{!question.fieldType == 'LongTextArea'}" layout="none">
-                                HERE 10
-                                <div class="form-group">
-                                    <label for="longTextAreaField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                    <apex:inputField id="longTextAreaField" value="{!question.response.ValueLongTextArea__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;"/>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
-                                        <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
-
-
-                            <apex:outputPanel rendered="{!question.fieldType == 'URL'}" layout="none">
-                                HERE 11
-                                <div class="form-group">
-                                    <label for="urlField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                    <apex:inputField id="urlField" value="{!question.response.ValueURL__c}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
-                                    <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
-                                        <apex:outputText value="{!question.helpText}" escape="false"/>
-                                    </p>
-                                </div>
-                            </apex:outputPanel>
-
-
-                        </apex:outputPanel>
+                        </div>
                     </apex:repeat>
                 </apex:actionRegion>
             </apex:outputPanel>
@@ -510,8 +520,8 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
-                            <apex:pageMessages />
+                        <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}" layout="block">
+                            <apex:pageMessages/>
                             <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="none">
                                 You haven't created any records yet. Click "New Record" to create one.<br/><br/>
                             </apex:outputPanel>
@@ -883,6 +893,83 @@
                                 <apex:commandLink styleClass="btn" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="New Record" action="{!group.newRow}" reRender="theTable" rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}"/>
                             </div>
                             <apex:outputPanel layout="none">
+
+
+                                <!--                                <script>-->
+                                <!--                                    jQuery(function () {-->
+                                <!--                                        jQuery('.appReferenceField').find('[id^=lookup]').each(function (idx, lookup) {-->
+                                <!--                                            var lookupJQ = jQuery(lookup);-->
+                                <!--                                            lookupJQ.closest('td').html(lookupJQ.html());-->
+                                <!--                                        });-->
+                                <!--                                        jQuery('.bind-autocomplete').each(function (idx, autocompleteItem) {-->
+                                <!--                                            var objType = jQuery(autocompleteItem).attr('data-objtype');-->
+                                <!--                                            var objTypeFilter = jQuery(autocompleteItem).attr('data-objtypefilter');-->
+                                <!--                                            var objTypeNameField = jQuery(autocompleteItem).attr('data-objtypenamefield');-->
+                                <!--                                            if (!objTypeNameField) {-->
+                                <!--                                                objTypeNameField = "Name";-->
+                                <!--                                            }-->
+                                <!--                                            jQuery(autocompleteItem).autocomplete({-->
+                                <!--                                                delay: 300,-->
+                                <!--                                                minLength: 3,-->
+                                <!--                                                source: function (request, response) {-->
+                                <!--                                                    lookupSearchJS(objType, objTypeFilter, objTypeNameField, request.term, function (results) {-->
+                                <!--                                                        var retResults = jQuery.map(results, function (item) {-->
+                                <!--                                                            return {-->
+                                <!--                                                                label: item[objTypeNameField],-->
+                                <!--                                                                value: item.Id-->
+                                <!--                                                            }-->
+                                <!--                                                        });-->
+                                <!--                                                        retResults.push({label: "Create as New", value: '**createnew**'});-->
+                                <!--                                                        response(retResults);-->
+                                <!--                                                    })-->
+                                <!--                                                },-->
+                                <!--                                                open: function (event, ui) {-->
+                                <!--                                                    var carHeight = jQuery(this).closest('.carousel-inner').height();-->
+                                <!--                                                    var uiDrop = jQuery(this).closest('.ui-front').find('ul.ui-front');-->
+                                <!--                                                    var uiDropPos = uiDrop.position().top;-->
+                                <!--                                                    uiDrop.css('max-height', (carHeight - uiDropPos) + 'px');-->
+                                <!--                                                },-->
+                                <!--                                                select: function (event, ui) {-->
+                                <!--                                                    if (ui.item.value == '**createnew**') {-->
+                                <!--                                                        lookupCreateOpenJS{!group.item.Id}(jQuery(autocompleteItem));-->
+                                <!--                                                    } else {-->
+                                <!--                                                        jQuery(autocompleteItem).val(ui.item.label);-->
+                                <!--                                                        jQuery(autocompleteItem).closest('.form-group').find('.inputHidden').val(ui.item.value);-->
+                                <!--                                                    }-->
+                                <!--                                                    event.preventDefault();-->
+                                <!--                                                },-->
+                                <!--                                                focus: function (event, ui) {-->
+                                <!--                                                    event.preventDefault();-->
+                                <!--                                                }-->
+                                <!--                                            });-->
+                                <!--                                            jQuery(this).on('focus', function () {-->
+                                <!--                                                jQuery(this).autocomplete("search", this.value);-->
+                                <!--                                            });-->
+                                <!--                                            jQuery(this).on('blur', function () {-->
+                                <!--                                                if (!jQuery(this).closest('.form-group').find('.inputHidden').val()) {-->
+                                <!--                                                    jQuery(this).addClass('ui-state-error');-->
+                                <!--                                                } else {-->
+                                <!--                                                    jQuery(this).removeClass('ui-state-error');-->
+                                <!--                                                }-->
+                                <!--                                            });-->
+                                <!--                                        });-->
+                                <!--                                        jQuery('.bind-autocomplete').each(function (item) {-->
+                                <!--                                            if (jQuery(this).closest('.form-group').find('.lookupPanel a').length > 0) {-->
+                                <!--                                                jQuery(this).val(jQuery(this).closest('.form-group').find('.lookupPanel a').html())-->
+                                <!--                                            } else {-->
+                                <!--                                                var lookupVal = jQuery(this).closest('.form-group').find('.lookupPanel span').html();-->
+                                <!--                                                if (lookupVal == jQuery('<div/>').html("&nbsp;").html()) {-->
+                                <!--                                                    lookupVal = '';-->
+                                <!--                                                }-->
+                                <!--                                                console.log(lookupVal);-->
+                                <!--                                                jQuery(this).val(lookupVal);-->
+                                <!--                                            }-->
+                                <!--                                            jQuery(this).closest('.form-group').find('.lookupPanel').remove();-->
+                                <!--                                        });-->
+                                <!--                                    });-->
+                                <!--                                </script>-->
+
+
                                 <!--                                <script>-->
                                 <!--                                    jQuery(function () {-->
                                 <!--                                        jQuery('.appReferenceField').find('[id^=lookup]').each(function (idx, lookup) {-->
@@ -961,7 +1048,7 @@
 
 
                         <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
-                            <apex:pageMessages />
+                            <apex:pageMessages/>
                             <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                                 <apex:outputPanel rendered="{!question.showQuestion}" layout="none">
                                     <div class="row">

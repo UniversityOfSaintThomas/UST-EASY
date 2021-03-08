@@ -7,37 +7,62 @@
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
     <apex:attribute name="isExternalUser" description="Boolean that is true if this is an external user" type="Boolean" required="false" default="false"/>
 
-    <!--<script>
-            function redirect(redirectTo){
-                var jq = jQuery.noConflict();
-                if (redirectTo == 'forwards' && jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
-                    appShowLoadingSpinner();
-                    performDocUploadSave("{!nextReqId}");
+    <script>
+        function redirect(redirectTo) {
+            if (redirectTo == 'forwards') {
+                appShowLoadingSpinner();
+                performDocUploadSave("{!nextReqId}");
+            } else if (redirectTo == 'back') {
+                appShowLoadingSpinner();
+                performDocUploadSave("{!prevReqId}");
 
-                } else if(redirectTo == 'forwards') {
-                    jq("#myCarousel").carousel("next");
-                } else if (redirectTo == 'back' && jq("#myCarousel .carousel-inner .item:first").hasClass("active")) {
-                    appShowLoadingSpinner();
-                    performDocUploadSave("{!prevReqId}");
+            } else {
+                console.log(redirectTo);
+                appShowLoadingSpinner();
+                performDocUploadSave(redirectTo);
+            }
+        }
 
-                } else if (redirectTo == 'back') {
-                    jq("#myCarousel").carousel("prev");
-                } else {
-                    console.log(redirectTo);
-                    appShowLoadingSpinner();
-                    performDocUploadSave(redirectTo);
+        function isNext() {
+            return {!nextReqId != null};
+        }
 
+        function isPrev() {
+            return {!prevReqId != null};
+        }
+    </script>
+
+    <!--    <script>
+                function redirect(redirectTo){
+                    var jq = jQuery.noConflict();
+                    if (redirectTo == 'forwards' && jq("#myCarousel .carousel-inner .item:last").hasClass("active")) {
+                        appShowLoadingSpinner();
+                        performDocUploadSave("{!nextReqId}");
+
+                    } else if(redirectTo == 'forwards') {
+                        jq("#myCarousel").carousel("next");
+                    } else if (redirectTo == 'back' && jq("#myCarousel .carousel-inner .item:first").hasClass("active")) {
+                        appShowLoadingSpinner();
+                        performDocUploadSave("{!prevReqId}");
+
+                    } else if (redirectTo == 'back') {
+                        jq("#myCarousel").carousel("prev");
+                    } else {
+                        console.log(redirectTo);
+                        appShowLoadingSpinner();
+                        performDocUploadSave(redirectTo);
+
+                    }
                 }
-            }
 
-            function isNext(){
-                return {!nextReqId != null};
-            }
+                function isNext(){
+                    return {!nextReqId != null};
+                }
 
-            function isPrev(){
-                return {!prevReqId != null};
-            }
-    </script>-->
+                function isPrev(){
+                    return {!prevReqId != null};
+                }
+        </script>-->
 
     <!--    <div class="progress" type="Integer">-->
     <!--        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"-->

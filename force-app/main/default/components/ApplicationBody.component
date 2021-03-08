@@ -29,9 +29,9 @@
     <apex:variable value="{!widgets}" var="w"/>
     <apex:variable value="{!If(w.leftWidgets.size >0, 'l', '')}{!If(w.rightWidgets.size >0, 'r', '')}" var="col"/>
 
-    <div class="slds-grid slds-wrap">
+    <div class="slds-grid slds-wrap slds-p-bottom_x-large">
         <!-- TITLE AND SUB TITLE -->
-        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 ">
             <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                 <h2 class="slds-text-heading_large">{!title}</h2>
 

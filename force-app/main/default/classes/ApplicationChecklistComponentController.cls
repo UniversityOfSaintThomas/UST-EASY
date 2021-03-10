@@ -16,11 +16,16 @@ public with sharing class ApplicationChecklistComponentController {
     }
 
     public List<RequirementWrapper> getChecklistItems() {
-        contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
+        contactId = [
+                SELECT Id, ContactId
+                FROM User
+                WHERE Id = :UserInfo.getUserId()
+        ].ContactId;
+
         if (UserInfo.getUserType().equals('Standard')) {
             contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
         }
-        if (contactId != null) {
+        if (String.isNotBlank(contactId) && String.isNotBlank(appId)) {
             app = [
                     SELECT Id, Name,Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name,
                             Intended_Term_of_Entry__r.Term_Status_Type__c, Application_Status__c, Application_Control__c, Citizenship__c,

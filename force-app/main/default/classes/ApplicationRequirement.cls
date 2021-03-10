@@ -89,7 +89,7 @@ public class ApplicationRequirement {
     /*******************************************************************************
     * @description Initializes the page - Pulls relevant requirement items, requirement responses, etc.
     ********************************************************************************/
-    public PageReference init() {
+    public void init() {
         allowSubmit = true;
         isExternalUser = false;
         if (String.isBlank(contactId)) {
@@ -325,7 +325,6 @@ public class ApplicationRequirement {
                 }
             }
         }
-        return null;
     }
 
     /* ******************************************************************************
@@ -333,7 +332,6 @@ public class ApplicationRequirement {
     ********************************************************************************/
     @RemoteAction
     public static List<SObject> lookupSearch(String sObj, String sObjFilter, String sObjNameField, String term) {
-
         return new ActionWithSharing().lookupSearchWithSharing(sObj, sObjFilter, sObjNameField, term);
     }
     public with sharing class ActionWithSharing {
@@ -386,8 +384,9 @@ public class ApplicationRequirement {
             }
 
             transient Map<String, Object> additionalData;
-            if (String.isNotBlank(additionalDataString) && additionalDataString != '{}')
+            if (String.isNotBlank(additionalDataString) && additionalDataString != '{}') {
                 additionalData = (Map<String, Object>) JSON.deserializeUntyped(additionalDataString);
+            }
 
             for (ApplicationQuestionGroup g : section.groups) {
                 if (g.documentUpload == true) {

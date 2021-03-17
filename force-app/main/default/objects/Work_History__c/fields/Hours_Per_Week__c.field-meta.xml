@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hours_Per_Week__c</fullName>
+    <externalId>false</externalId>
+    <label>Hours Per Week</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>0-20</fullName>
+                <default>false</default>
+                <label>0-20</label>
+            </value>
+            <value>
+                <fullName>21-34</fullName>
+                <default>false</default>
+                <label>21-34</label>
+            </value>
+            <value>
+                <fullName>35 or more</fullName>
+                <default>false</default>
+                <label>35 or more</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

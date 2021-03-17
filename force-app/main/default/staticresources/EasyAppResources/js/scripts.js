@@ -13,7 +13,10 @@ let placeholders = {};
 let maxLengths = {};
 
 ready(() => {
+    pageLoadReRendered();
+});
 
+function pageLoadReRendered() {
     for (let inputId in placeholders) {
         if (inputId) {
             document.querySelectorAll('.' + inputId).forEach(field => {
@@ -41,7 +44,7 @@ ready(() => {
 
     // SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
     document.querySelectorAll('.slds-summary-detail').forEach(item => {
-        item.querySelector("button.slds-button").addEventListener('click', function(e) {
+        item.querySelector("button.slds-button").addEventListener('click', function (e) {
             let content = item.querySelector('.slds-summary-detail__content');
             item.classList.remove('slds-is-open')
             if (content.style.display === 'none') {
@@ -60,7 +63,8 @@ ready(() => {
         });
     });
 
-});
+    activateAutoComplete();
+}
 
 
 function appShowLoadingSpinner() {
@@ -172,5 +176,76 @@ function formatPhone(phone) {
     }
 }
 
+const resultListTemplate = (title, subtitle, icon, originObjId, resultId) => `
+    <li role="presentation" class="slds-listbox__item">
+        <div id="option1" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option" onclick="assignLookupValue('${title} ${subtitle}','${originObjId}', '${resultId}');">
+          <span class="slds-media__figure slds-listbox__option-icon">
+            <span class="slds-icon_container slds-icon-standard-account">
+              <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                <use xlink:href="${icon}"></use>
+              </svg>
+            </span>
+          </span>
+          <span class="slds-media__body">
+            <span class="slds-listbox__option-text slds-listbox__option-text_entity">${title}</span>
+            <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">${subtitle}</span>
+          </span>
+        </div>
+    </li>
+`;
 
+function assignLookupValue(selectedValue, originObjId, resultId) {
+    let originObject = document.getElementById(originObjId);
+    let comboBox = originObject.closest('.slds-combobox');
+    let fullWrapper = originObject.closest('.referenceLookup');
+    let hiddenInput = fullWrapper.querySelector('.inputHidden');
+    comboBox.classList.remove('slds-is-open');
+    hiddenInput.value = resultId;
+    originObject.value = selectedValue;
+}
 
+function lookupResultsFormatter(data, originObjId) {
+    let outputList = '';
+    let originObject = document.getElementById(originObjId);
+    let listObjectId = originObjId.replace('combobox-', 'listbox-');
+    let listObject = document.getElementById(listObjectId);
+    let resultList = listObject.querySelector('.slds-listbox');
+    let comboBox = originObject.closest('.slds-combobox');
+    let fieldNames = originObject.dataset.objtypenamefield.split(',');
+    console.log(JSON.stringify(data));
+    data.forEach(result => {
+        let resultName = '';
+        let subTitle = '';
+        for (let x = 0; x < fieldNames.length; x++) {
+            if (x == 0) {
+                resultName = result[fieldNames[0].trim()];
+            } else {
+                if (result[fieldNames[x].trim()]) {
+                    subTitle += result[fieldNames[x].trim()] + ' ';
+                }
+            }
+        }
+        outputList += resultListTemplate(resultName, subTitle, originObject.dataset.listicon, originObjId, result.Id);
+    });
+    resultList.innerHTML = '';
+    comboBox.classList.remove('slds-is-open');
+    if (outputList) {
+        comboBox.classList.add('slds-is-open');
+    }
+    resultList.insertAdjacentHTML("beforeend", outputList);
+}
+
+function activateAutoComplete() {
+    document.querySelectorAll('.bind-autocomplete').forEach(autoItem => {
+        autoItem.addEventListener('keyup', (e) => {
+            let objectType = autoItem.dataset.objtype;
+            let objectTypeFilter = autoItem.dataset.objtypefilter;
+            let objectTypeNameField = autoItem.dataset.objtypenamefield;
+            let searchTerm = autoItem.value;
+            let originObjId = autoItem.id;
+            if (objectType && objectTypeFilter && objectTypeNameField && searchTerm.length > 2) {
+                lookupSearchJS(objectType, objectTypeFilter, objectTypeNameField, searchTerm, lookupResultsFormatter, originObjId);
+            }
+        })
+    });
+}

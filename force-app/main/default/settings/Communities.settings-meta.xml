@@ -6,7 +6,6 @@
     <enableCommunityWorkspaces>true</enableCommunityWorkspaces>
     <enableCspContactVisibilityPref>false</enableCspContactVisibilityPref>
     <enableCspNotesOnAccConPref>false</enableCspNotesOnAccConPref>
-    <enableEnablePRM>false</enableEnablePRM>
     <enableExternalAccHierPref>false</enableExternalAccHierPref>
     <enableGuestRecordReassignOrgPref>true</enableGuestRecordReassignOrgPref>
     <enableGuestSecurityOptOutCruc>false</enableGuestSecurityOptOutCruc>

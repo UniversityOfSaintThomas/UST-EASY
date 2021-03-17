@@ -39,7 +39,7 @@ public class ApplicationPortal {
             ];
 
             currentApp = applicationsByOrder[0];
-            rList = checklistHelper.checklistRequirements(currentApp, contactId, appControl);
+            //rList = checklistHelper.checklistRequirements(currentApp, contactId, appControl);
 
             //system.debug(JSON.serializePretty(rList));
 

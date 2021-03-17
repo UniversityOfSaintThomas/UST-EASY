@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Competitors__c</fullName>
+    <description>Exec MBA Only</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Exec MBA Only</inlineHelpText>
+    <label>Primary Competitors</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

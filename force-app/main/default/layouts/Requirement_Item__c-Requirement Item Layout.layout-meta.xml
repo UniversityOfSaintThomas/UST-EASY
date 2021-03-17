@@ -91,13 +91,17 @@
     <miniLayout>
         <fields>Requirement_Item_Integration_Ext_Id__c</fields>
     </miniLayout>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Question__c.Requirement_Item__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000MDm9</masterLabel>
+        <masterLabel>00h54000003X6QI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -2022,11 +2022,11 @@
     <picklistValues>
         <picklist>Generic_Filter_3__c</picklist>
         <values>
-            <fullName>Generic Value 1</fullName>
+            <fullName>Apply With Standardized Test</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Generic Value 2</fullName>
+            <fullName>Apply Without Standardized Test</fullName>
             <default>false</default>
         </values>
     </picklistValues>

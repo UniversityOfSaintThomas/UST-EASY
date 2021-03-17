@@ -3,17 +3,17 @@
         <apex:define name="scriptsHead">
             <c:ApplicationHead />
             <script>
-                function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback) {
-                    console.log("in application requirement vfp");
+                function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
+                    console.log(sObjFilter);
                     console.log(sObj);
                     console.log(searchTerm);
+                    console.log(sObjNameField);
                     Visualforce.remoting.Manager.invokeAction(
                         '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
                         sObj, sObjFilter, sObjNameField, searchTerm,
                         function (result, event) {
                             if (event.status) {
-                                //console.log(result);
-                                callback(result)
+                                callback(result, originObjId)
                             } else if (event.type === 'exception') {
                             } else {
                             }
@@ -31,7 +31,7 @@
                                    requirementId="{!requirementId}"
                                    reqs="{!reqs}"
                                    progress="{!progress}"
-                                   isExternalUser="{!isExternalUser}" >
+                                   isExternalUser="{!isExternalUser}">
                     <div class="slds-grid slds-wrap slds-p-vertical_large">
 
                         <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">

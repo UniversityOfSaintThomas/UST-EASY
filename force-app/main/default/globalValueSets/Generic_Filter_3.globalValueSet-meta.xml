@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Apply With Standardized Test</fullName>
+        <default>false</default>
+        <label>Apply With Standardized Test</label>
+    </customValue>
+    <customValue>
+        <fullName>Apply Without Standardized Test</fullName>
+        <default>false</default>
+        <label>Apply Without Standardized Test</label>
+    </customValue>
+    <customValue>
         <fullName>Generic Value 1</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Generic Value 1</label>
     </customValue>
     <customValue>
         <fullName>Generic Value 2</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Generic Value 2</label>
     </customValue>
-    <masterLabel>Generic Filter 3</masterLabel>
+    <masterLabel>Test Score Preference</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

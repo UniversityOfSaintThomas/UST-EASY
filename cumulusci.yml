@@ -1,142 +1,147 @@
 minimum_cumulusci_version: '3.15.0.dev2'
 project:
+  name: EASY-Open-Source-Solution
+  package:
     name: EASY-Open-Source-Solution
-    package:
-        name:  EASY-Open-Source-Solution
-        api_version: '48.0'
-    dependencies:
-        - github: 'https://github.com/SalesforceFoundation/EDA'
-    source_format: sfdx
+    api_version: '48.0'
+  dependencies:
+    - github: 'https://github.com/SalesforceFoundation/EDA'
+  source_format: sfdx
 
 tasks:
-    robot:
-        options:
-            suites: robot/EASY-Open-Source-Solution/tests
-            options:
-                outputdir: robot/EASY-Open-Source-Solution/results
+  robot:
+    options:
+      suites: robot/EASY-Open-Source-Solution/tests
+      options:
+        outputdir: robot/EASY-Open-Source-Solution/results
 
-    robot_testdoc:
-        options:
-            path: robot/EASY-Open-Source-Solution/tests
-            output: robot/EASY-Open-Source-Solution/doc/EASY-Open-Source-Solution_tests.html
+  robot_testdoc:
+    options:
+      path: robot/EASY-Open-Source-Solution/tests
+      output: robot/EASY-Open-Source-Solution/doc/EASY-Open-Source-Solution_tests.html
 
-    run_tests:
-        options:
-            required_org_code_coverage_percent: 75
+  run_tests:
+    options:
+      required_org_code_coverage_percent: 75
 
-    create_community:
-        description: Deploys configuration for Development.
-        class_path: cumulusci.tasks.salesforce.CreateCommunity
-        options:
-            name: EASY Applicant Portal
-            description: EASY application portal
-            template: Build Your Own
-            url_path_prefix: EASYApp
+  create_community:
+    description: Deploys configuration for Development.
+    class_path: cumulusci.tasks.salesforce.CreateCommunity
+    options:
+      name: EASY Applicant Portal
+      description: EASY application portal
+      template: Build Your Own
+      url_path_prefix: EASYApp
 
-    permission_guest_user:
-        description: 'Applies permission set to guest community guest user'
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            path: scripts/setup.cls
-            apex: permissionGuestUser();
+  permission_guest_user:
+    description: 'Applies permission set to guest community guest user'
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      path: scripts/setup.cls
+      apex: permissionGuestUser();
 
-    permission_admin_user:
-        description: 'Applies permission set to guest community guest user'
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            path: scripts/setup.cls
-            apex: permissionAdminUser();
+  permission_admin_user:
+    description: 'Applies permission set to guest community guest user'
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      path: scripts/setup.cls
+      apex: permissionAdminUser();
 
-    set_easy_custom_settings:
-        description: 'Applies permission set to guest community guest user'
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            path: scripts/setup.cls
-            apex: setEASYCustomSettings();
+  set_easy_custom_settings:
+    description: 'Applies permission set to guest community guest user'
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      path: scripts/setup.cls
+      apex: setEASYCustomSettings();
 
-    set_hierarchy_custom_settings:
-        description: 'Set UST EDA hierarchy settings'
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            path: scripts/setup.cls
-            apex: setHierarchySettings();
+  set_hierarchy_custom_settings:
+    description: 'Set UST EDA hierarchy settings'
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      path: scripts/setup.cls
+      apex: setHierarchySettings();
 
-    set_review_custom_settings:
-        description: 'Applies related object review settings per UST needs'
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            path: scripts/setup.cls
-            apex: setReviewSettings();
+  set_review_custom_settings:
+    description: 'Applies related object review settings per UST needs'
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      path: scripts/setup.cls
+      apex: setReviewSettings();
 
-    load_application_data:
-        description: 'Load data needed to start EASY applications'
-        class_path: cumulusci.tasks.bulkdata.load.LoadData
-        options:
-            mapping: datasets/dev/mapping.yml
-            sql_path: datasets/dev/data.sql
+  load_account_data:
+    description: 'Load data needed to start EASY applications'
+    class_path: cumulusci.tasks.bulkdata.load.LoadData
+    options:
+      mapping: datasets/dev/mapping.yml
+      sql_path: datasets/dev/data.sql
+      inject_namespaces: False
 
-    configure_community:
-        description: Deploys Network config for community for Development.
-        class_path: cumulusci.tasks.salesforce.Deploy
-        options:
-            namespace_inject: $project_config.project__package__namespace
-            path: unpackaged/config/network
-            unmanaged: True
+  configure_community:
+    description: Deploys Network config for community for Development.
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      namespace_inject: $project_config.project__package__namespace
+      path: unpackaged/config/network
+      unmanaged: True
 
-    deploy_site_config:
-        description: Deploys configuration for Development.
-        class_path: cumulusci.tasks.salesforce.Deploy
-        options:
-            namespace_inject: $project_config.project__package__namespace
-            path: unpackaged/config/site
-            unmanaged: True
+  deploy_site_config:
+    description: Deploys configuration for Development.
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      namespace_inject: $project_config.project__package__namespace
+      path: unpackaged/config/site
+      unmanaged: True
 
-    set_user_user_role:
-        description: Apply the Easy Applicant user role to default user
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            path: scripts/setup.cls
-            apex: setUserRole();
+  set_user_user_role:
+    description: Apply the Easy Applicant user role to default user
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      path: scripts/setup.cls
+      apex: setUserRole();
 
-    install_sharing_rules:
-        description: 'Adds unpacked sharing rules for guest user access of EASY objects'
-        class_path: cumulusci.tasks.salesforce.Deploy
-        options:
-            namespace_inject: $project_config.project__package__namespace
-            path: unpackaged/config/sharing
-            unmanaged: True
+  install_sharing_rules:
+    description: 'Adds unpacked sharing rules for guest user access of EASY objects'
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      namespace_inject: $project_config.project__package__namespace
+      path: unpackaged/config/sharing
+      unmanaged: True
 
-    set_holding_ids:
-        description: 'Find Account ids for holding id values of requirements'
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            path: scripts/setup.cls
-            apex: setHoldingIds();
+  set_holding_ids:
+    description: 'Find Account ids for holding id values of requirements'
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      path: scripts/setup.cls
+      apex: setHoldingIds();
 
 flows:
-    config_dev:
-        steps:
-            3:
-                task: create_community
-            4:
-                task: permission_guest_user
-            5:
-                task: permission_admin_user
-            6:
-                task: set_easy_custom_settings
-            7:
-                task: set_hierarchy_custom_settings
-            8:
-                task: set_review_custom_settings
-            9:
-                task: load_application_data
-            10:
-                task: configure_community
-            11:
-                task: deploy_site_config
-            13:
-                task: install_sharing_rules
-            14:
-                task: set_holding_ids
-            15:
-                task: set_user_user_role
+  config_dev:
+    steps:
+      3:
+        task: permission_admin_user
+      3.1:
+        task: create_bulk_data_permission_set
+      3.2:
+        task: load_account_data
+      3.3:
+        task: create_community
+      6:
+        task: set_easy_custom_settings
+      7:
+        task: set_hierarchy_custom_settings
+      8:
+        task: set_review_custom_settings
+      10:
+        task: configure_community
+      11:
+        task: deploy_site_config
+      12:
+        task: permission_guest_user
+      13:
+        task: install_sharing_rules
+      14:
+        task: set_holding_ids
+      15:
+        task: set_user_user_role
+
+

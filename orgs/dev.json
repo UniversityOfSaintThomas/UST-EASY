@@ -19,6 +19,7 @@
     },
     "securitySettings": {
       "enableAdminLoginAsAnyUser": true,
+      "enableAuditFieldsInactiveOwner": true,
       "sessionSettings": {
         "forceRelogin": false
       }

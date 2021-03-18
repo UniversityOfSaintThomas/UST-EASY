@@ -68,7 +68,7 @@ tasks:
       path: scripts/setup.cls
       apex: setReviewSettings();
 
-  load_account_data:
+  load_application_data:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
@@ -114,34 +114,50 @@ tasks:
       path: scripts/setup.cls
       apex: setHoldingIds();
 
+  turn_off_duplicate_rules:
+    description: 'Turn off duplicate rules that activated on EDA install'
+    class_path: cumulusci.tasks.metadata_etl.SetDuplicateRuleStatus
+    options:
+      active: False
+      api_names: Account.Standard_Account_Duplicate_Rule,Contact.Standard_Contact_Duplicate_Rule,Lead.Standard_Lead_Duplicate_Rule
+
+  turn_on_duplicate_rules:
+    description: 'Turn back on duplicate rules that activated on EDA install'
+    class_path: cumulusci.tasks.metadata_etl.SetDuplicateRuleStatus
+    options:
+      active: True
+      api_names: Account.Standard_Account_Duplicate_Rule,Contact.Standard_Contact_Duplicate_Rule,Lead.Standard_Lead_Duplicate_Rule
+
 flows:
   config_dev:
     steps:
       3:
-        task: permission_admin_user
-      3.1:
-        task: create_bulk_data_permission_set
-      3.2:
-        task: load_account_data
-      3.3:
         task: create_community
+      4:
+        task: permission_guest_user
+      5:
+        task: permission_admin_user
       6:
-        task: set_easy_custom_settings
+        task: create_bulk_data_permission_set
       7:
-        task: set_hierarchy_custom_settings
+        task: set_easy_custom_settings
       8:
+        task: set_hierarchy_custom_settings
+      9:
         task: set_review_custom_settings
       10:
-        task: configure_community
+        task: turn_off_duplicate_rules
       11:
-        task: deploy_site_config
+        task: load_application_data
       12:
-        task: permission_guest_user
+        task: turn_on_duplicate_rules
       13:
-        task: install_sharing_rules
+        task: configure_community
       14:
-        task: set_holding_ids
+        task: deploy_site_config
       15:
+        task: install_sharing_rules
+      16:
+        task: set_holding_ids
+      17:
         task: set_user_user_role
-
-

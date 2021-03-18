@@ -3,7 +3,9 @@
   "edition": "Enterprise",
   "features": [
     "Communities",
-    "Sites"
+    "Sites",
+    "PartnerCommunity",
+    "ForceComPlatform"
   ],
   "settings": {
     "lightningExperienceSettings": {

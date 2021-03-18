@@ -84,6 +84,7 @@ Insert Account:
     - BillingCity
     - BillingStreet
     - BillingState
+    - BillingCountry
     - CEEB_Code__c
     - CEEB_Integration_Code__c
     - CIPC_Code__c

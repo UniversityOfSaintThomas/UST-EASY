@@ -4,10 +4,6 @@
             <c:ApplicationHead />
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
-                    console.log(sObjFilter);
-                    console.log(sObj);
-                    console.log(searchTerm);
-                    console.log(sObjNameField);
                     Visualforce.remoting.Manager.invokeAction(
                         '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
                         sObj, sObjFilter, sObjNameField, searchTerm,
@@ -34,6 +30,7 @@
                                    isExternalUser="{!isExternalUser}">
                     <div class="slds-grid slds-wrap slds-p-vertical_large">
 
+                        {!isExternalUser}
                         <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                             <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                             <apex:param name="p2" value="" assignTo="{!redirectPage}"/>

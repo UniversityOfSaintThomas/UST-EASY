@@ -52,8 +52,10 @@ public class ApplicationRequirement {
     }
 
     public ApplicationRequirement() {
+        System.debug('contactId: ' + contactId);
         if (String.isBlank(contactId)) {
             contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
+            System.debug('User Type: ' + UserInfo.getUserType());
             if (UserInfo.getUserType().equals('Standard')) {
                 if (ApexPages.currentPage().getParameters().containsKey('contactId')) {
                     contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
@@ -384,7 +386,6 @@ public class ApplicationRequirement {
     ********************************************************************************/
     public PageReference submit() {
         try {
-
             Boolean hasError = false;
             for (ApplicationQuestionGroup g : section.groups) {
                 if (g.relatedObject == true) {

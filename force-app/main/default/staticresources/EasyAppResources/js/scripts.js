@@ -64,6 +64,25 @@ function pageLoadReRendered() {
     });
 
     activateAutoComplete();
+    radioCheckBox();
+}
+
+function radioCheckBox() {
+    document.querySelectorAll('.slds-radio_button-group').forEach(radioGroup => {
+        let radioGroupValue = radioGroup.querySelector("[id$='radioField1']");
+        radioGroup.querySelectorAll('.faux-radio-value').forEach(faux => {
+            faux.checked = false;
+            if (faux.value === radioGroupValue.value) {
+                faux.checked = true;
+            }
+        });
+        document.querySelectorAll('.slds-radio_button').forEach(radioButton => {
+            radioButton.addEventListener('click', (e) => {
+                radioGroupValue.value = radioButton.dataset.radiovalue;
+                rerenderTheTable();
+            })
+        });
+    });
 }
 
 
@@ -211,19 +230,23 @@ function lookupResultsFormatter(data, originObjId) {
     let listObject = document.getElementById(listObjectId);
     let resultList = listObject.querySelector('.slds-listbox');
     let comboBox = originObject.closest('.slds-combobox');
-    let fieldNames = originObject.dataset.objtypenamefield.split(',');
-    console.log(JSON.stringify(data));
+    let fieldNames = originObject.dataset.objtypenamefield.replace(' ', '').split(',');
+    //console.log(JSON.stringify(data));
     data.forEach(result => {
         let resultName = '';
         let subTitle = '';
         for (let x = 0; x < fieldNames.length; x++) {
-            if (x == 0) {
-                resultName = result[fieldNames[0].trim()];
+            let fieldName = fieldNames[x].trim();
+            if (x === 0) {
+                resultName = result[fieldName];
             } else {
-                if (result[fieldNames[x].trim()]) {
-                    subTitle += result[fieldNames[x].trim()] + ' ';
+                if (result[fieldName]) {
+                    subTitle += result[fieldName] + ', ';
                 }
             }
+        }
+        if (subTitle) {
+            subTitle = subTitle.substr(0, subTitle.length - 2);
         }
         outputList += resultListTemplate(resultName, subTitle, originObject.dataset.listicon, originObjId, result.Id);
     });

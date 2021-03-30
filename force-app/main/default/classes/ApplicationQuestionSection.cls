@@ -116,9 +116,7 @@ public class ApplicationQuestionSection {
     }
 
     public void pushValuesToObjects() {
-
         if (con == null && application == null) return;
-
         Set<String> allContactFields = new Set<String>();
         Set<String> allApplicationFields = new Set<String>();
         Map<String, Object> contactValues = new Map<String, Object>();
@@ -163,6 +161,7 @@ public class ApplicationQuestionSection {
             try {
                 con.put(f, contactValues.get(f));
             } catch (Exception e) {
+                system.debug(e.getMessage());
             }
         }
 
@@ -170,6 +169,7 @@ public class ApplicationQuestionSection {
             try {
                 application.put(f, applicationValues.get(f));
             } catch (Exception e) {
+                system.debug(e.getMessage());
             }
         }
     }

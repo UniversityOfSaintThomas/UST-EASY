@@ -2,17 +2,13 @@
     <apex:composition template="Capricorn2020">
         <apex:define name="scriptsHead">
             <script>
-                function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback) {
-                    console.log("in application requirement vfp");
-                    console.log(sObj);
-                    console.log(searchTerm);
+                function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
                     Visualforce.remoting.Manager.invokeAction(
                         '{!$RemoteAction.ApplicationCreate.lookupSearch}',
                         sObj, sObjFilter, sObjNameField, searchTerm,
                         function (result, event) {
                             if (event.status) {
-                                console.log(result);
-                                callback(result)
+                                callback(result, originObjId)
                             } else if (event.type === 'exception') {
                             } else {
                             }

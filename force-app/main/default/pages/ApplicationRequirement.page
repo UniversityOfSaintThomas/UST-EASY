@@ -36,12 +36,12 @@
                             <apex:param name="p2" value="" assignTo="{!redirectPage}"/>
                         </apex:actionFunction>
 
-                        <apex:commandLink onclick="redirect('back');" styleClass="slds-button slds-button_brand" reRender="none" value="Previous"/>
+                        <apex:commandLink onclick="redirect('back');" styleClass="slds-button slds-button_brand carousel__button--prev" reRender="none" value="Previous"/>
 
                         <apex:commandLink styleClass="slds-button slds-button_brand" value="Back to Checklist" reRender="none" onclick="performDocUploadSave('checklist');appShowLoadingSpinner();" rendered="{!!isExternalUser}"/>
                         <apex:commandLink styleClass="slds-button slds-button_brand" value="Save" reRender="none" onclick="performDocUploadSave('');appShowLoadingSpinner();" oncomplete="appShowConfimation();" rendered="{!isExternalUser}"/>
 
-                        <apex:commandLink onclick="redirect('forwards');" styleClass="slds-button slds-button_brand" value="Next" reRender="none"/>
+                        <apex:commandLink onclick="redirect('forwards');" styleClass="slds-button slds-button_brand carousel__button--next" value="Next" reRender="none"/>
 
                     </div>
                 </c:ApplicationForm>

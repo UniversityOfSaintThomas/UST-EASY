@@ -8,7 +8,7 @@ public with sharing class ApplicationChecklistComponentController {
     public Id appId { get; set; }
     public Id contactId { get; set; }
     public Application__c app { get; set; }
-    public Application_Control__c appControl { get; set; }
+    public Id appControlId { get; set; }
     public Id currentApp { get; set; }
 
     public ApplicationChecklistComponentController() {
@@ -35,7 +35,7 @@ public with sharing class ApplicationChecklistComponentController {
                     ORDER BY Name
             ];
 
-            return checklistHelper.checklistRequirements(app, contactId, appControl);
+            return checklistHelper.checklistRequirements(app, contactId, appControlId);
         }
         return null;
 

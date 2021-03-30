@@ -31,17 +31,50 @@
     float: left;
 }
 
-
-
-
 div.slds-progress {
     padding-top: 30px;
     padding-bottom: 30px;
 }
-
 .progress-tooltip {
     position: relative;
     display: inline-block;
+}
+.carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+    margin: auto;
+}
+.carousel-wrapper * {
+    box-sizing: border-box;
+}
+.carousel {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+.carousel__item {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    margin: auto;
+    z-index: 100;
+    transition: transform .5s, opacity .5s, z-index .5s;
+}
+
+/* Carousel styles */
+.carousel__item.initial,
+.carousel__item.active {
+    opacity: 1;
+    position: relative;
+    z-index: 900;
+}
+.carousel__item.prev,
+.carousel__item.next {
+    z-index: 800;
+}
+.carousel__item.prev {
+    transform: translateX(-100%);
 }
 
 /* Tooltip text */

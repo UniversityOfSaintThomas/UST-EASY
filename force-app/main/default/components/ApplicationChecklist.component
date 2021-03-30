@@ -4,8 +4,8 @@
 
 <apex:component id="ApplicationChecklist" controller="ApplicationChecklistComponentController" allowDML="true">
     <apex:attribute name="applicationId" description="Current Application Id" type="Id" required="true" assignTo="{!appId}"/>
-    <apex:attribute name="applicationControl" description="Current Application Type Id" type="Application_Control__c" required="true" assignTo="{!appControl}"/>
-    <apex:attribute name="reqs" description="All rquirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
+    <apex:attribute name="applicationControl" description="Current Application" type="Id" required="false" assignTo="{!appControlId}"/>
+    <apex:attribute name="reqs" description="All requirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
     <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <apex:repeat value="{!checklistItems}" var="r">
             <apex:outputPanel rendered="{!r.display}" layout="none">

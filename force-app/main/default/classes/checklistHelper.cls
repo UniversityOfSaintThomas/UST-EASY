@@ -13,10 +13,17 @@ public with sharing class checklistHelper {
     public static Decimal progress { get; set; }
     public static Map<Id, List<Requirement_Item__c>> appIdRiList { get; set; }
 
-    public static List<RequirementWrapper> checklistRequirements(Application__c app, Id contactId, Application_Control__c appControl) {
+    public static List<RequirementWrapper> checklistRequirements(Application__c app, Id contactId, Id appControlId) {
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
+
+        Application_control__c appControl = [
+                SELECT Allow_Cancel_From__c,Allow_Withdraw_From__c, Allow_Submit_From__c,Submit_Status__c
+                FROM Application_Control__c
+                WHERE Id = :appControlId
+        ];
+
         allowCancel = String.isNotBlank(appControl.Allow_Cancel_From__c) && new Set<String>(appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c);
         allowWithdraw = String.isNotBlank(appControl.Allow_Withdraw_From__c) && new Set<String>(appControl.Allow_Withdraw_From__c.split(';')).contains(app.Application_Status__c);
         reqMap = new Map<Id, RequirementWrapper>();
@@ -27,7 +34,7 @@ public with sharing class checklistHelper {
                         Residency__c, School_College__c, Student_Type__c, Generic_Filter_1__c, Generic_Filter_2__c,
                         Generic_Filter_3__c, Generic_Filter_4__c
                 FROM Requirement__c
-                WHERE Application_Control__c = :appControl.Id
+                WHERE Application_Control__c = :appControlId
                 AND Active__c = :true
                 AND Show_on_Application_Creation__c = FALSE
                 ORDER BY Display_Order__c ASC NULLS LAST
@@ -37,6 +44,7 @@ public with sharing class checklistHelper {
                 reqMap.put(r.Id, new RequirementWrapper(r));
             }
         }
+
 
         Map<Id, Boolean> completedRequirement = new Map<Id, Boolean>();
         Map<Id, Boolean> viewedRequirement = new Map<Id, Boolean>();

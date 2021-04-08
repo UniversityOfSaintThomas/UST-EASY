@@ -29,19 +29,18 @@
     <apex:variable value="{!widgets}" var="w"/>
     <apex:variable value="{!If(w.leftWidgets.size >0, 'l', '')}{!If(w.rightWidgets.size >0, 'r', '')}" var="col"/>
 
-    <div class="slds-grid slds-wrap slds-p-bottom_x-large">
+    <apex:outputPanel styleClass="slds-grid slds-wrap slds-p-bottom_x-large" layout="block">
         <!-- TITLE AND SUB TITLE -->
-        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 ">
+        <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 " layout="block">
             <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                 <h2 class="slds-text-heading_large">{!title}</h2>
-
             </div>
             <apex:outputPanel rendered="{!subtitle != null}" layout="none">
                 <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                     <h3 class="slds-text-heading_medium">{!subtitle}</h3>
                 </div>
             </apex:outputPanel>
-        </div>
+        </apex:outputPanel>
 
         <!-- LEFT WIDGETS -->
         <apex:outputPanel layout="block" rendered="{!CONTAINS(col,'l')}" styleClass="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-p-right_medium">
@@ -61,9 +60,9 @@
             </apex:outputPanel>
 
             <!-- BODY -->
-            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                <apex:componentBody />
-            </div>
+            <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
+                <apex:componentBody/>
+            </apex:outputPanel>
 
             <!-- BOTTOM WIDGETS -->
             <apex:outputPanel layout="block" rendered="{!IF(w.bottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
@@ -81,6 +80,6 @@
             </apex:repeat>
         </apex:outputPanel>
 
-    </div>
+    </apex:outputPanel>
 
 </apex:component>

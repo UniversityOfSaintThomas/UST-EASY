@@ -357,7 +357,7 @@ public class ApplicationRequirement {
                 }
                 likeStatement = ' ( ' + likeStatement.removeEnd(' OR ') + ' )';
 
-                String query = 'Select Id, ' + fieldList;
+                String query = 'SELECT Id, ' + fieldList;
                 query += ' FROM ' + sObj;
                 query += ' WHERE ' + likeStatement;
                 if (String.isNotBlank(sObjFilter)) {

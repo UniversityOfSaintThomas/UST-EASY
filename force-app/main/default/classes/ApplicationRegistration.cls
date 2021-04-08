@@ -146,6 +146,7 @@ public class ApplicationRegistration {
     }
 
     public PageReference login() {
+        System.debug(loginUrl);
         if (String.isNotBlank(loginUrl)) {
             return Site.login(loginUser.Username, loginPassword, loginUrl);
         }

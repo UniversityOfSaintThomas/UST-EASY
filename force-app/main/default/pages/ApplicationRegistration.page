@@ -20,16 +20,16 @@
             </script>
         </apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="New Application" appControl="{!appCreate.appControl}" loadingText="Building Your Application..." applicationIdBody="">
+            <c:ApplicationBody title="New Application" appControl="{!appCreate.appControl}" loadingText="Building Your Application...">
                 <c:ApplicationForm section="{!appCreate.section}" appControl="{!appCreate.appControl}">
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                         <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="login();">
                             <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
                         </apex:actionFunction>
                         <apex:actionFunction name="login" action="{!login}" oncomplete="appHideLoadingSpinner();"/>
-                        <apex:commandLink styleClass="slds-button slds-button_brand carousel__button--prev" value="Back" reRender="none"/>
-                        <apex:commandLink styleClass="slds-button slds-button_brand appCreateSave" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
-                        <apex:commandLink styleClass="slds-button slds-button_brand carousel__button--next" value="Next" reRender="none"/>
+                        <a href="#0" class="slds-button slds-button_brand carousel__button--prev">Back</a>
+                        <a href="#0" class="slds-button slds-button_brand appCreateSave" id="groupSaveButton" onclick="performDocUploadSave();appShowLoadingSpinner();">Save</a>
+                        <a href="#0" class="slds-button slds-button_brand carousel__button--next">Next</a>
                     </div>
                 </c:ApplicationForm>
             </c:ApplicationBody>

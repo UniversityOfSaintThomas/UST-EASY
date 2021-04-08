@@ -13,14 +13,16 @@
 
     <apex:form id="theForm">
         <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>
-        <apex:pageMessages/>
+        <apex:outputPanel id="formPageMessages">
+            <apex:pageMessages/>
+        </apex:outputPanel>
         <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
         <script>
             function reRenderAllGroups() {
                 document.getElementById('{!$Component.reRenderGroups}').click();
             }
         </script>
-        <div class="{!if(hidePaging,'','carousel-wrapper')}">
+        <div class="{!if(hidePaging,'','carousel-wrapper slds-p-vertical_large slds-border_top slds-m-vertical_medium slds-border_bottom')}">
             <div class="{!if(hidePaging,'','carousel')}">
                 <apex:variable var="itemCount" value="0"/>
                 <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}">
@@ -31,7 +33,6 @@
                 </apex:repeat>
             </div>
         </div>
-
         <apex:componentBody/>
     </apex:form>
 </apex:component>

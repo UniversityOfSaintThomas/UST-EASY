@@ -304,7 +304,10 @@ public class ApplicationQuestionGroup {
                     sObj.put(question.question.Related_Object_Field__c, questionValue);
                 }
             }
+
             relatedObjectsMap.put('new' + newIndex, new SObjectWrapper(this, 'new' + newIndex, sObj, true));
+            System.debug('new' + newIndex);
+            System.debug(sObj);
             newIndex++;
         }
     }

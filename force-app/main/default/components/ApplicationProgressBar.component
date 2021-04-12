@@ -1,36 +1,11 @@
-<apex:component>
+<apex:component >
 
     <apex:attribute name="prevReqId" description="The previous requirement" type="String" required="false"/>
     <apex:attribute name="nextReqId" description="The next requirement" type="String" required="false"/>
     <apex:attribute name="requirementId" description="Current requirement" type="String" required="false"/>
-    <apex:attribute name="reqs" description="All rquirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
+    <apex:attribute name="reqs" description="All requirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
     <apex:attribute name="isExternalUser" description="Boolean that is true if this is an external user" type="Boolean" required="false" default="false"/>
-
-    <script>
-        function redirect(redirectTo) {
-            if (redirectTo == 'forwards') {
-                appShowLoadingSpinner();
-                performDocUploadSave("{!nextReqId}");
-            } else if (redirectTo == 'back') {
-                appShowLoadingSpinner();
-                performDocUploadSave("{!prevReqId}");
-
-            } else {
-                console.log(redirectTo);
-                appShowLoadingSpinner();
-                performDocUploadSave(redirectTo);
-            }
-        }
-
-        function isNext() {
-            return {!nextReqId != null};
-        }
-
-        function isPrev() {
-            return {!prevReqId != null};
-        }
-    </script>
 
 <!--    <div class="progress" type="Integer">-->
 <!--        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"-->

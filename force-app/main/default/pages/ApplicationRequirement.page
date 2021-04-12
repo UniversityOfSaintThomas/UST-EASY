@@ -1,7 +1,7 @@
 <apex:page controller="ApplicationRequirement" extensions="ApplicationProgressBar" action="{!init}" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0">
     <apex:composition template="Capricorn2020">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead/>
+            <c:ApplicationHead />
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
                     Visualforce.remoting.Manager.invokeAction(
@@ -32,11 +32,10 @@
                         <apex:param name="p2" value="" assignTo="{!redirectPage}"/>
                     </apex:actionFunction>
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                        <a href="#0" class="slds-button" onclick="redirect('back');">Previous Section</a>
+                        <a href="#0" class="slds-button slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">Back</a>
                         <a href="#0" class="slds-button slds-button_brand carousel__button--prev">Back</a>
-                        <a href="#0" class="slds-button slds-button_brand" id="groupSaveButton" onclick="performDocUploadSave();appShowLoadingSpinner();">Save</a>
+                        <a href="#0" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
                         <a href="#0" class="slds-button slds-button_brand carousel__button--next">Next</a>
-                        <a href="#0" class="slds-button" onclick="redirect('forwards');">Next Section</a>
                     </div>
                 </c:ApplicationForm>
             </c:ApplicationBody>

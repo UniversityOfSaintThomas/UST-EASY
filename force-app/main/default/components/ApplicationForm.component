@@ -14,10 +14,11 @@
     <apex:form id="theForm">
         <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>
         <apex:outputPanel id="formPageMessages">
-            <apex:pageMessages/>
+            <apex:pageMessages />
         </apex:outputPanel>
         <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
         <script>
+            const previousRequirement = "{!prevId}", nextRequirement = "{!nextId}";
             function reRenderAllGroups() {
                 document.getElementById('{!$Component.reRenderGroups}').click();
             }
@@ -26,13 +27,13 @@
             <div class="{!if(hidePaging,'','carousel')}">
                 <apex:variable var="itemCount" value="0"/>
                 <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}">
-                    <div class="carousel__item {!IF(VALUE(itemCount) == 0,'initial','')}">
+                    <div class="carousel__item {!IF(VALUE(itemCount) == 0,'initial','')} slide-{!itemCount}">
                         <c:ApplicationFormSection id="theFormSectionComponent" groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appControl="{!appControl}"/>
                     </div>
                     <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
                 </apex:repeat>
             </div>
         </div>
-        <apex:componentBody/>
+        <apex:componentBody />
     </apex:form>
 </apex:component>

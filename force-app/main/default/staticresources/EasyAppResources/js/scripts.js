@@ -46,12 +46,15 @@ function pageLoadReRendered() {
 }
 
 function adjustLabelsFor() {
-    document.querySelectorAll('.slds-input').forEach(inputFound => {
+    document.querySelectorAll('.slds-input, .slds-select').forEach(inputFound => {
         let inputWrapper = inputFound.closest('.slds-form-element'),
             inputLabel = inputWrapper.querySelector('label'),
             helpText = inputWrapper.querySelector('.slds-form-element__help');
 
-        inputLabel.htmlFor = inputFound.getAttribute('id');
+        if (inputLabel) {
+            console.log('label found');
+            inputLabel.htmlFor = inputFound.getAttribute('id');
+        }
         if (inputFound && helpText) {
             if (helpText) {
                 inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
@@ -72,10 +75,7 @@ function radioCheckBox() {
     document.querySelectorAll('.slds-radio_button-group').forEach(radioGroup => {
         let radioGroupValue = radioGroup.querySelector("[id$='radioField1']");
         radioGroup.querySelectorAll('.faux-radio-value').forEach(faux => {
-            faux.checked = false;
-            if (faux.value === radioGroupValue.value) {
-                faux.checked = true;
-            }
+            faux.checked = faux.value === radioGroupValue.value;
         });
         document.querySelectorAll('.slds-radio_button').forEach(radioButton => {
             radioButton.addEventListener('click', (e) => {
@@ -95,7 +95,7 @@ function appHideLoadingSpinner() {
     document.getElementById("apploadingspinner").style.display = "none";
 }
 
-function appShowConfimation() {
+function appShowConfirmation() {
     document.getElementById("confirmation").style.display = "block";
 }
 
@@ -105,7 +105,7 @@ function appShowConfimation() {
 
 // destroys and rebuilds the rich text fields after rerender
 function afterRerenderRTF() {
-    for (name in CKEDITOR.instances) {
+    for (let name in CKEDITOR.instances) {
         delete CKEDITOR.instances[name];
     }
 
@@ -178,14 +178,13 @@ function getAsText(readFile, respId) {
 }
 
 function formatPhone(phone) {
-    let intr = false;
-    let digits = 0;
+    let internationalNum = false;
     let inValue = phone.value;
     if (inValue.startsWith("+")) {
-        intr = true;
+        internationalNum = true;
     }
-    digits = inValue.replace(/\D/g, '');
-    if (intr) {
+    let digits = inValue.replace(/\D/g, '');
+    if (internationalNum) {
         if (digits.startsWith("0")) {
             digits = digits.substring(1);
         }
@@ -276,6 +275,21 @@ function activateAutoComplete() {
     });
 }
 
+
+function navigateRequirementGroup(redirectTo) {
+    if (redirectTo === 'forwards') {
+        appShowLoadingSpinner();
+        performDocUploadSave(nextRequirement);
+    } else if (redirectTo === 'back') {
+        appShowLoadingSpinner();
+        performDocUploadSave(previousRequirement);
+    } else {
+        console.log(redirectTo);
+        appShowLoadingSpinner();
+        performDocUploadSave(redirectTo);
+    }
+}
+
 function activateCarousel() {
     // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
     const itemClassName = "carousel__item";
@@ -283,7 +297,8 @@ function activateCarousel() {
         totalItems = items.length,
         slide = 0,
         moving = true,
-        saveButton = document.querySelector("[id$='groupSaveButton']"),
+        saveAndAdvance = document.getElementById('saveAndAdvance'),
+        saveAndGoBack = document.getElementById('saveAndGoBack'),
         next = document.getElementsByClassName('carousel__button--next')[0],
         prev = document.getElementsByClassName('carousel__button--prev')[0];
 
@@ -304,10 +319,13 @@ function activateCarousel() {
         if (totalItems === 1) {
             next.style.display = 'none';
             prev.style.display = 'none';
-            saveButton.style.dispay = 'inline-flex';
+            saveAndAdvance.style.dispay = 'inline-flex';
         } else {
             prev.style.display = 'none';
-            saveButton.style.display = "none";
+            saveAndAdvance.style.display = "none";
+        }
+        if (slide === 0 && previousRequirement) {
+            saveAndGoBack.style.display = 'inline-flex';
         }
     }
 
@@ -336,6 +354,10 @@ function activateCarousel() {
                 }
 
                 if (slide === 0) {
+                    prev.style.display = "none";
+                    if (previousRequirement) {
+                        saveAndGoBack.style.display = 'inline-flex';
+                    }
                     newPrevious = (totalItems - 1);
                     oldPrevious = (totalItems - 2);
                     oldNext = (slide + 1);
@@ -350,10 +372,10 @@ function activateCarousel() {
                 }
 
                 if (slide + 1 === totalItems || totalItems === 1) {
-                    saveButton.style.display = "inline-flex"
+                    saveAndAdvance.style.display = "inline-flex"
                     next.style.display = "none"
                 } else {
-                    saveButton.style.display = "none"
+                    saveAndAdvance.style.display = "none"
                     next.style.display = "inline-flex"
                 }
 

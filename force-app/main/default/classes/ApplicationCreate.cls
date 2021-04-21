@@ -170,6 +170,7 @@ public class ApplicationCreate {
             programQuestion.addQuestionObject(new Question__c(Label__c = 'What program are you applying to?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Program'));
             programQuestion.addIntendedProgramFilteringList(progs);
 
+
             // Get map of term names with id as key
             List<Id> termIds = new List<Id>();
             List<String> termNames = new List<String>();
@@ -413,7 +414,7 @@ public class ApplicationCreate {
 
         upsert qResponses; // Insert question responses
         // Return URL for checklist page for new application
-        return '/apex/ApplicationChecklist?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
+        return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
     }
 
     @RemoteAction

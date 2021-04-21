@@ -1,6 +1,5 @@
 <apex:component id="applicationFormSectionComponent" allowDML="true">
-
-    <apex:actionFunction name="setCreatingNewRelatedRecordAF{!group.item.Id}" action="{!groupNewRelatedRecord}" rerender="theSection">
+    <apex:actionFunction name="setCreatingNewRelatedRecordAF{!group.item.Id}" action="{!groupNewRelatedRecord}" rerender="theSection" onComplete="pageLoadReRendered();">
         <apex:param name="p1" assignTo="{!group.newReferenceObjectSelectedWrapper}" value=""/>
         <apex:param name="p2" assignTo="{!group.newReferenceObjectSelectedWrapperName}" value=""/>
     </apex:actionFunction>
@@ -41,23 +40,24 @@
 
         <apex:outputPanel id="questionGroupWrapper" layout="block">
             <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
-                <apex:actionRegion >
+                <apex:actionRegion>
                     <apex:repeat value="{!group.questions}" var="question">
-
+                        <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
                         <apex:outputPanel rendered="{!If(question.showQuestion, true, false)}" styleClass="slds-p-vertical_xxx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
 
-                            <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
+                            <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!placeholderUUID}">
+
                                 <apex:variable value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" var="readOnlyInput"/>
 
                                 <!-- Label for input -->
-                                <apex:outputLabel styleClass="slds-form-element__label" rendered="{!question.fieldType != 'Address'}">
-                                    <div class="slds-p-vertical_x-small slds-text-body_regular">
+                                <apex:outputPanel rendered="{!question.fieldType != 'Address' && !ISBLANK(question.label)}" layout="none">
+                                    <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
                                         {!question.label}  (field type: {!question.fieldType})
                                         <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
                                             <abbr class='slds-required' title='required'>* </abbr>
                                         </apex:outputPanel>
-                                    </div>
-                                </apex:outputLabel>
+                                    </label>
+                                </apex:outputPanel>
 
                                 <!--Text Box-->
                                 <apex:outputPanel rendered="{!question.fieldType == 'Text'}" layout="block" styleClass="slds-form-element__control">
@@ -174,14 +174,14 @@
                                     <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
                                     <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
                                         <!-- Label for input -->
-                                        <apex:outputLabel styleClass="slds-form-element__label">
-                                            <div class="slds-p-vertical_x-small slds-text-body_regular">
+                                        <apex:outputPanel rendered="{!question.fieldType = 'Address' && !ISBLANK(question.label)}" layout="none">
+                                            <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
                                                 {!question.label}  {!inputType} (field type: {!question.fieldType})
                                                 <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
                                                     <abbr class='slds-required' title='required'>* </abbr>
                                                 </apex:outputPanel>
-                                            </div>
-                                        </apex:outputLabel>
+                                            </label>
+                                        </apex:outputPanel>
 
                                         <apex:outputPanel styleClass="slds-form-element__control" layout="block">
 
@@ -251,7 +251,7 @@
             </apex:outputPanel>
             <apex:actionFunction name="rerenderTheTable" rerender="theTable" onComplete="pageLoadReRendered();"/>
             <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}" layout="block">
-                <apex:pageMessages />
+                <apex:pageMessages/>
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}">
                     <p>You haven't created any records yet. Click "New Record" to create one.</p>
                 </apex:outputPanel>
@@ -261,12 +261,14 @@
                 <apex:outputPanel rendered="{!group.relatedObjects.size > 0}">
                     <apex:repeat value="{!group.relatedObjects}" var="rr">
                         <apex:repeat value="{!group.questions}" var="question">
-                            <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="none">
+                            <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="block" styleClass="record-id" html-data-recid="{!rr.idx}">
+
 
                                 <apex:outputPanel styleClass="appReferenceField">
                                     <apex:outputField value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}" style="{!IF(rr.isEditMode,'display:none;','')}" rendered="{!!rr.isEditMode && question.question.Related_Object_Field__c != null && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
                                 </apex:outputPanel>
                                 <apex:outputField value="{!rr.obj[question.question.Related_Object_Field__c]}" rendered="{!!rr.isEditMode && question.question.Related_Object_Field__c != null && !group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
+
 
                                 <apex:outputPanel id="editQuestion" rendered="{!rr.isEditMode}" layout="block" styleClass="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
 
@@ -278,14 +280,14 @@
                                         <apex:variable value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" var="readOnlyInput"/>
 
                                         <!-- Label for input -->
-                                        <apex:outputLabel styleClass="slds-form-element__label" rendered="{!question.fieldType != 'Address'}">
-                                            <div class="slds-p-vertical_x-small slds-text-body_regular">
+                                        <apex:outputPanel rendered="{!question.fieldType != 'Address'}">
+                                            <label class="slds-form-element__label this_label_1 slds-p-vertical_x-small slds-text-body_regular">
                                                 {!question.label}  (field type: {!question.fieldType})
                                                 <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
                                                     <abbr class='slds-required' title='required'>* </abbr>
                                                 </apex:outputPanel>
-                                            </div>
-                                        </apex:outputLabel>
+                                            </label>
+                                        </apex:outputPanel>
 
                                         <!-- Multi Checkbox -->
                                         <apex:outputPanel rendered="{!question.fieldType == 'Checkbox'}" layout="block" styleClass="slds-form-element__control">
@@ -366,7 +368,7 @@
                                                         <apex:variable var="num" value="{!num + 1}"/>
                                                         <span class="slds-button slds-radio_button" data-radiovalue="{!radioQuestion.value}">
                                                             <input type="radio" name="radio-group-{!qId}" id="radio-group-{!qId}-{!num}" value="{!radioQuestion.value}" class="faux-radio-value"/>
-                                                            <label class="slds-radio_button__label" for="radio-group-{!qId}-{!num}">
+                                                            <label class="slds-radio_button__label this" for="radio-group-{!qId}-{!num}">
                                                               <span class="slds-radio_faux">{!radioQuestion.label}</span>
                                                             </label>
                                                         </span>
@@ -381,16 +383,27 @@
                                             <apex:outputPanel rendered="{!question.question.New_Reference_Field__c == false}" layout="block">
                                                 <div class="slds-form-element__control">
                                                     <div class="slds-combobox_container">
-                                                        <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                        <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox"
+                                                             data-objtype="{!question.question.Lookup_Object__c}"
+                                                             data-objtypefilter="{!question.question.Lookup_Where_Clause__c}"
+                                                             data-objtypenamefield="{!question.question.Name_Field_API_Name__c}"
+                                                             data-listicon="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#account')}"
+                                                             data-groupitemid="{!group.Item.Id}"
+                                                        >
                                                             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                                                                <input type="text" id="combobox-{!qId}" data-objtype="{!question.question.Lookup_Object__c}" data-objtypefilter="{!question.question.Lookup_Where_Clause__c}" data-objtypenamefield="{!question.question.Name_Field_API_Name__c}" data-listIcon="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#account')}" placeholder="{!question.placeholder}" class="bind-autocomplete slds-input slds-combobox__input" aria-controls="listbox-{!qId}" autocomplete="off" role="textbox" aria-autocomplete="list"/>
+                                                                <apex:inputText
+                                                                        value="{!rr.obj['Holding_Name__c']}"
+                                                                        id="combobox"
+                                                                        styleClass="bind-autocomplete slds-input slds-combobox__input"
+                                                                        html-autocomplete="off" html-role="textbox" html-aria-autocomplete="list"
+                                                                />
                                                                 <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
                                                                   <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
                                                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
                                                                   </svg>
                                                                 </span>
                                                             </div>
-                                                            <div id="listbox-{!qId}" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                                                            <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
                                                                 <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                                                                 </ul>
                                                             </div>
@@ -530,7 +543,7 @@
 
             <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
                 <h1>Render Section 4</h1>
-                <apex:pageMessages />
+                <apex:pageMessages/>
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                     <apex:outputPanel rendered="{!question.showQuestion}">
                         <apex:outputPanel rendered="{!question.showQuestion}">

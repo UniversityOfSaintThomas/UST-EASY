@@ -52,7 +52,6 @@ function adjustLabelsFor() {
             helpText = inputWrapper.querySelector('.slds-form-element__help');
 
         if (inputLabel) {
-            console.log('label found');
             inputLabel.htmlFor = inputFound.getAttribute('id');
         }
         if (inputFound && helpText) {
@@ -214,22 +213,36 @@ const resultListTemplate = (title, subtitle, icon, originObjId, resultId) => `
 
 function assignLookupValue(selectedValue, originObjId, resultId) {
     let originObject = document.getElementById(originObjId);
+    let recordIdWrap = originObject.closest('.record-id');
     let comboBox = originObject.closest('.slds-combobox');
     let fullWrapper = originObject.closest('.referenceLookup');
     let hiddenInput = fullWrapper.querySelector('.inputHidden');
+    let groupId = comboBox.dataset.groupitemid;
+    let recordId = recordIdWrap.dataset.recid;
     comboBox.classList.remove('slds-is-open');
     hiddenInput.value = resultId;
     originObject.value = selectedValue;
+
+    // find object
+    let fn = window['setCreatingNewRelatedRecordAF' + groupId];
+
+    // is object a function?
+    console.log('groupId : ' + groupId);
+    console.log('recordId : ' + recordId);
+    console.log('resultId : ' + resultId);
+    if (typeof fn === "function" && recordId && resultId) {
+        fn.apply(recordId, resultId);
+        console.log('result function called!');
+    }
+    //setCreatingNewRelatedRecordAF
 }
 
 function lookupResultsFormatter(data, originObjId) {
     let outputList = '';
     let originObject = document.getElementById(originObjId);
-    let listObjectId = originObjId.replace('combobox-', 'listbox-');
-    let listObject = document.getElementById(listObjectId);
-    let resultList = listObject.querySelector('.slds-listbox');
     let comboBox = originObject.closest('.slds-combobox');
-    let fieldNames = originObject.dataset.objtypenamefield.replace(' ', '').split(',');
+    let resultList = comboBox.querySelector('.slds-listbox');
+    let fieldNames = comboBox.dataset.objtypenamefield.replace(' ', '').split(',');
     data.forEach(result => {
         let resultName = '';
         let subTitle = '';
@@ -263,9 +276,10 @@ function lookupResultsFormatter(data, originObjId) {
 function activateAutoComplete() {
     document.querySelectorAll('.bind-autocomplete').forEach(autoItem => {
         autoItem.addEventListener('keyup', (e) => {
-            let objectType = autoItem.dataset.objtype;
-            let objectTypeFilter = autoItem.dataset.objtypefilter;
-            let objectTypeNameField = autoItem.dataset.objtypenamefield;
+            let comboBox = autoItem.closest('.slds-combobox');
+            let objectType = comboBox.dataset.objtype;
+            let objectTypeFilter = comboBox.dataset.objtypefilter;
+            let objectTypeNameField = comboBox.dataset.objtypenamefield;
             let searchTerm = autoItem.value;
             let originObjId = autoItem.id;
             if (objectType && objectTypeFilter && objectTypeNameField && searchTerm.length > 2) {

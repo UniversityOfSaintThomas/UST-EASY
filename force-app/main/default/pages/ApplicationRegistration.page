@@ -27,9 +27,10 @@
                             <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
                         </apex:actionFunction>
                         <apex:actionFunction name="login" action="{!login}" oncomplete="appHideLoadingSpinner();"/>
-                        <a href="#0" class="slds-button slds-button_brand carousel__button--prev">Back</a>
-                        <a href="#0" class="slds-button slds-button_brand appCreateSave" id="groupSaveButton" onclick="performDocUploadSave();appShowLoadingSpinner();">Save</a>
-                        <a href="#0" class="slds-button slds-button_brand carousel__button--next">Next</a>
+                        <a href="javascript:null;" class="slds-button slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">Back</a>
+                        <a href="javascript:null;" class="slds-button slds-button_brand carousel__button--prev">Back</a>
+                        <a href="javascript:null;" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
+                        <a href="javascript:null;" class="slds-button slds-button_brand carousel__button--next">Next</a>
                     </div>
                 </c:ApplicationForm>
             </c:ApplicationBody>

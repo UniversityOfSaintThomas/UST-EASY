@@ -231,6 +231,7 @@ public class ApplicationQuestionGroup {
     * @description Saves the changes on a related object list item and  places it back into read only mode
     ********************************************************************************/
     public void enableConfirmMode() {
+        System.debug('selectedRelatedId: ' + selectedRelatedId);
         if (String.isNotBlank(selectedRelatedId) && relatedObjectsMap.containsKey(selectedRelatedId)) {
             relatedObjectsMap.get(selectedRelatedId).enableConfirmMode();
             selectedRelatedId = null;

@@ -1,4 +1,4 @@
-minimum_cumulusci_version: '3.15.0.dev2'
+minimum_cumulusci_version: '3.32.1'
 project:
   name: EASY-Open-Source-Solution
   package:

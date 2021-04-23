@@ -4,7 +4,7 @@
     <label>ApplicationQuestionHelpText</label>
     <packageVersions>
         <majorNumber>1</majorNumber>
-        <minorNumber>107</minorNumber>
+        <minorNumber>112</minorNumber>
         <namespace>hed</namespace>
     </packageVersions>
 </ApexComponent>

@@ -6,7 +6,7 @@
     <name>External Response Requested</name>
     <packageVersions>
         <majorNumber>1</majorNumber>
-        <minorNumber>107</minorNumber>
+        <minorNumber>112</minorNumber>
         <namespace>hed</namespace>
     </packageVersions>
     <style>none</style>

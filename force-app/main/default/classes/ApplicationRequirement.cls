@@ -445,6 +445,8 @@ public class ApplicationRequirement {
                 }
             }
 
+            System.debug(JSON.serializePretty(rrLst));
+
             upsert rrLst;
 
             qResponses = new List<Question_Response__c>();
@@ -518,7 +520,7 @@ public class ApplicationRequirement {
             System.debug('DML error:' + e.getDmlMessage(0));
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
         } catch (Exception e) {
-            System.debug('Error:' + e.getMessage());
+            System.debug('Error:' + e.getMessage() + ' - THAD!');
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 

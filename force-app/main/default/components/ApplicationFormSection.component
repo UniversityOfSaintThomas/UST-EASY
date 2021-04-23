@@ -263,12 +263,12 @@
                         <apex:repeat value="{!group.questions}" var="question">
                             <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="block" styleClass="record-id" html-data-recid="{!rr.idx}">
 
-
                                 <apex:outputPanel styleClass="appReferenceField">
-                                    <apex:outputField value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}" style="{!IF(rr.isEditMode,'display:none;','')}" rendered="{!!rr.isEditMode && question.question.Related_Object_Field__c != null && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
+                                    <apex:outputLabel rendered="{!!rr.isEditMode}" for="appReferenceField" value="{!question.question.Label__c}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}"/>
+                                    <apex:outputField id="appReferenceField" value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}" style="{!IF(rr.isEditMode,'display:none;','')}" rendered="{!!rr.isEditMode && question.question.Related_Object_Field__c != null && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
                                 </apex:outputPanel>
-                                <apex:outputField value="{!rr.obj[question.question.Related_Object_Field__c]}" rendered="{!!rr.isEditMode && question.question.Related_Object_Field__c != null && !group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
 
+                                <apex:outputField value="{!rr.obj[question.question.Related_Object_Field__c]}" rendered="{!!rr.isEditMode && question.question.Related_Object_Field__c != null && !group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
 
                                 <apex:outputPanel id="editQuestion" rendered="{!rr.isEditMode}" layout="block" styleClass="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
 

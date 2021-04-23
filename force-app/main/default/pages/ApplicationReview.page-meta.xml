@@ -6,7 +6,7 @@
     <label>ApplicationReview</label>
     <packageVersions>
         <majorNumber>1</majorNumber>
-        <minorNumber>111</minorNumber>
+        <minorNumber>112</minorNumber>
         <namespace>hed</namespace>
     </packageVersions>
 </ApexPage>

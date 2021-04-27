@@ -20,9 +20,9 @@
                     <div>
                         <div class="slds-summary-detail__title">
                             <h3 class="slds-text-heading_small">
-                                <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!appId}&contactId={!contactId}&at={!$CurrentPage.parameters.at}">
+                                <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!appId}&contactId={!contactId}&at={!$CurrentPage.parameters.at}" onclick="appShowLoadingSpinner();">
                                     {!requirementTitle}
-<!--                                    <span class="slds-badge {!IF(r.reqStatus,'slds-theme_success','In Progress')}">{!IF(r.reqStatus,'Viewed','In Progress')}</span>-->
+                                    <!--                                    <span class="slds-badge {!IF(r.reqStatus,'slds-theme_success','In Progress')}">{!IF(r.reqStatus,'Viewed','In Progress')}</span>-->
                                 </a>
                             </h3>
                         </div>
@@ -32,7 +32,7 @@
                                     <apex:repeat value="{!r.reqItems}" var="ri">
                                         <apex:outputPanel rendered="{!ri.display}" layout="none">
                                             <li>
-                                                <apex:outputText >{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
+                                                <apex:outputText>{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
                                             </li>
                                         </apex:outputPanel>
                                     </apex:repeat>

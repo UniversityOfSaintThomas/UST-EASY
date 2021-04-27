@@ -501,10 +501,10 @@
 
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && !rr.isEditMode && !preventUpdates && group.isEditable}">
                             <div class="slds-p-vertical_small">
-                                <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" value="Edit" styleClass="slds-button slds-button_brand">
+                                <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" value="Edit" onClick="showFormSpinner();" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_brand">
                                     <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                                 </apex:commandLink>
-                                <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" value="Del" styleClass="slds-button slds-button_brand">
+                                <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" value="Delete" onClick="showFormSpinner();" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_brand">
                                     <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                                 </apex:commandLink>
                             </div>
@@ -512,10 +512,10 @@
 
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}">
                             <div class="slds-p-vertical_small">
-                                <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" value="Ok" styleClass="slds-button slds-button_brand" onComplete="pageLoadReRendered();">
+                                <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" value="Ok" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand" onComplete="pageLoadReRendered();">
                                     <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                                 </apex:commandLink>
-                                <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" value="Cancel" styleClass="slds-button slds-button_brand" onComplete="pageLoadReRendered();">
+                                <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" value="Cancel" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand" onComplete="pageLoadReRendered();">
                                     <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                                 </apex:commandLink>
                             </div>
@@ -536,7 +536,7 @@
 
                 </apex:outputPanel>
 
-                <apex:commandLink styleClass="slds-button slds-button_neutral" value="New Record" action="{!group.newRow}" onComplete="pageLoadReRendered();" reRender="theTable" rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}"/>
+                <apex:commandLink styleClass="slds-button slds-button_neutral" value="New Record" onClick="showFormSpinner();" action="{!group.newRow}" onComplete="pageLoadReRendered();" reRender="theTable" rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}"/>
 
             </apex:outputPanel>
 

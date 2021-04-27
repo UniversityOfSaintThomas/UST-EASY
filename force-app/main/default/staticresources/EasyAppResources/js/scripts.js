@@ -10,12 +10,20 @@ let ready = (callback) => {
 }
 
 ready(() => {
+    hideFormSpinner();
     pageLoadReRendered();
     activateCarousel();
 });
 
-function pageLoadReRendered() {
+function hideFormSpinner() {
+    document.getElementById("form-spinner").style.display = 'none';
+}
 
+function showFormSpinner() {
+    document.getElementById("form-spinner").style.display = 'block';
+}
+
+function pageLoadReRendered() {
     document.querySelectorAll('.fieldNotEditable,.fieldNotEditable input,.fieldNotEditable select,.fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
     });
@@ -43,6 +51,7 @@ function pageLoadReRendered() {
     adjustLabelsFor();
     radioCheckBox();
     activateAutoComplete();
+    hideFormSpinner();
 }
 
 function adjustLabelsFor() {
@@ -78,24 +87,12 @@ function radioCheckBox() {
         });
         document.querySelectorAll('.slds-radio_button').forEach(radioButton => {
             radioButton.addEventListener('click', (e) => {
+                showFormSpinner();
                 radioGroupValue.value = radioButton.dataset.radiovalue;
                 rerenderTheTable();
             })
         });
     });
-}
-
-
-function appShowLoadingSpinner() {
-    document.getElementById("apploadingspinner").style.display = "block";
-}
-
-function appHideLoadingSpinner() {
-    document.getElementById("apploadingspinner").style.display = "none";
-}
-
-function appShowConfirmation() {
-    document.getElementById("confirmation").style.display = "block";
 }
 
 // By default, replaceAll runs on ALL textarea fields.
@@ -153,7 +150,7 @@ function performDocUploadSave(redirectTo) {
     });
 
     Promise.all(docUploadPromiseArr).then(docUploads => {
-        var docUploadObj = {};
+        let docUploadObj = {};
         docUploads.forEach(function (docUpload) {
             docUploadObj[docUpload.itemId] = {"attData": docUpload};
         });
@@ -167,7 +164,7 @@ function getAsText(readFile, respId) {
         //var reader = new FileReader();
         let reader = new FileReader();
         reader.onload = (function (theFile) {
-            var fileName = theFile.name;
+            let fileName = theFile.name;
             return function (e) {
                 resolve({"fileName": fileName, "data": e.target.result, "itemId": respId});
             };
@@ -192,6 +189,8 @@ function formatPhone(phone) {
         phone.value = digits.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
     }
 }
+
+/* Remote reference lookup */
 
 const resultListTemplate = (title, subtitle, icon, originObjId, resultId) => `
     <li role="presentation" class="slds-listbox__item">
@@ -291,19 +290,17 @@ function activateAutoComplete() {
 
 
 function navigateRequirementGroup(redirectTo) {
+    appShowLoadingSpinner();
     if (redirectTo === 'forwards') {
-        appShowLoadingSpinner();
         performDocUploadSave(nextRequirement);
     } else if (redirectTo === 'back') {
-        appShowLoadingSpinner();
         performDocUploadSave(previousRequirement);
     } else {
-        console.log(redirectTo);
-        appShowLoadingSpinner();
         performDocUploadSave(redirectTo);
     }
 }
 
+/* Carousel Script */
 function activateCarousel() {
     // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
     const itemClassName = "carousel__item";
@@ -438,3 +435,48 @@ function activateCarousel() {
 
     initCarousel();
 }
+
+/* Page loading spinner */
+const loadReady = (callback) => {
+    if (document.readyState != "loading") callback();
+    else document.addEventListener("DOMContentLoaded", callback);
+}
+
+loadReady(() => {
+    let loadSpinner = document.createElement("div");
+    loadSpinner.setAttribute("id", "loadSpinner");
+    loadSpinner.classList.add("popupBackground");
+
+    let loadingPanel = document.createElement("div");
+    loadingPanel.setAttribute("id", "loading");
+    loadingPanel.classList.add("PopupPanel");
+
+    let background = document.createElement("div");
+    background.classList.add("background");
+
+    let pleaseWait = document.createElement("span");
+    pleaseWait.style.fontFamily = "Arial, Helvetica, sans-serif";
+    pleaseWait.style.fontSize = '12px';
+    pleaseWait.innerHTML = "Please Wait..";
+    loadingPanel.appendChild(background);
+    loadingPanel.appendChild(pleaseWait);
+    loadSpinner.appendChild(loadingPanel);
+    document.body.appendChild(loadSpinner);
+});
+
+
+function appHideLoadingSpinner() {
+    console.log('App load spinner activate');
+    document.getElementById('loadSpinner').style.display = "none";
+    return true;
+}
+
+function appShowLoadingSpinner() {
+    document.getElementById('loadSpinner').style.display = "block";
+    return true;
+}
+
+function appShowConfirmation() {
+    document.getElementById("confirmation").style.display = "block";
+}
+

@@ -29,19 +29,7 @@
     <apex:variable value="{!widgets}" var="w"/>
     <apex:variable value="{!If(w.leftWidgets.size >0, 'l', '')}{!If(w.rightWidgets.size >0, 'r', '')}" var="col"/>
 
-    <apex:outputPanel styleClass="slds-grid slds-wrap slds-p-bottom_x-large" layout="block">
-        <!-- TITLE AND SUB TITLE -->
-        <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 " layout="block">
-            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                <h2 class="slds-text-heading_large">{!title}</h2>
-            </div>
-            <apex:outputPanel rendered="{!subtitle != null}" layout="none">
-                <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                    <h3 class="slds-text-heading_medium">{!subtitle}</h3>
-                </div>
-            </apex:outputPanel>
-        </apex:outputPanel>
-
+    <apex:outputPanel styleClass="slds-grid slds-wrap slds-p-bottom_x-large application-body" layout="block">
         <!-- LEFT WIDGETS -->
         <apex:outputPanel layout="block" rendered="{!CONTAINS(col,'l')}" styleClass="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-p-right_medium">
             <apex:repeat value="{!w.leftWidgets}" var="widget">
@@ -57,6 +45,18 @@
                 <apex:repeat value="{!w.topWidgets}" var="widget" rendered="{!IF(w.topWidgets.size > 0, true, false)}">
                     <c:EasyWidget widget="{!widget}" applicationControl="{!applicationControlValue}" applicationIdWidget="{!applicationIdValue}"/>
                 </apex:repeat>
+            </apex:outputPanel>
+
+            <!-- TITLE AND SUB TITLE -->
+            <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 " layout="block">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
+                    <h2 class="slds-text-heading_large">{!title}</h2>
+                </div>
+                <apex:outputPanel rendered="{!subtitle != null}" layout="none">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
+                        <h3 class="slds-text-heading_medium">{!subtitle}</h3>
+                    </div>
+                </apex:outputPanel>
             </apex:outputPanel>
 
             <!-- BODY -->

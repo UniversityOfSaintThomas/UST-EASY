@@ -77,6 +77,19 @@ Created by Thaddaeus Dahlberg on 10/25/2017.
 
 
         <link href="https://business.stthomas.edu/_files/css/compare.css" rel="stylesheet" type="text/css"/>
+
+        <style>
+            #loading .background {
+                background-image: url({!URLFOR($Resource.EasyAppResources, '/img/loading-shield.gif')}) !important;
+                width: 160px;
+                height: 160px;
+            }
+
+            .slds-col img {
+                max-width: 99%;
+            }
+        </style>
+
         <apex:insert name="scriptsHead"/>
 
     </head>

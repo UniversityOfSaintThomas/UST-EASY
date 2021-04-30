@@ -22,7 +22,7 @@ Created by Thaddaeus Dahlberg on 10/25/2017.
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta content="#8348ad" name="theme-color"/>
         <link href="https://www.stthomas.edu/admissions/undergraduate/freshman/" rel="canonical"/>
-        <meta content="28128ac1ac1e00462ca31f8abafd5fdf" name="id"/>
+<!--        <meta content="28128ac1ac1e00462ca31f8abafd5fdf" name="id"/>-->
         <title>Freshman Admissions | University of St. Thomas - Minnesota</title>
         <meta content="Our 55+ graduate degree programs offer options for you to grow your career or advance in your field of study. " name="description"/>
         <link href="https://s3.amazonaws.com/capricorn-static-files/css/app.css" rel="stylesheet"/>
@@ -76,7 +76,7 @@ Created by Thaddaeus Dahlberg on 10/25/2017.
         <!-- End Google Tag Manager (noscript) -->
 
 
-        <link href="https://business.stthomas.edu/_files/css/compare.css" rel="stylesheet" type="text/css"/>
+<!--        <link href="https://business.stthomas.edu/_files/css/compare.css" rel="stylesheet" type="text/css"/>-->
 
         <style>
             #loading .background {
@@ -349,21 +349,21 @@ Created by Thaddaeus Dahlberg on 10/25/2017.
 <!--    <script src="https://s3.amazonaws.com/capricorn-static-files/js/vendor.js?v=a8bad3ed58c5934ee23409ad87ca26eb86bd3a44"></script>-->
 <!--    <script src="https://s3.amazonaws.com/capricorn-static-files/js/app.js?v=a8bad3ed58c5934ee23409ad87ca26eb86bd3a44"></script>-->
 
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org/",
-            "@type": "Organization",
-            "name": "University of St. Thomas",
-            "url": "https://www.stthomas.edu",
-            "contactPoint": [
-                {
-                    "@type": "ContactPoint",
-                    "telephone": "+1-651-962-5000",
-                    "contactType": "customer service"
-                }
-            ]
-        }
-    </script>
+<!--    <script type="application/ld+json">-->
+<!--        {-->
+<!--            "@context": "https://schema.org/",-->
+<!--            "@type": "Organization",-->
+<!--            "name": "University of St. Thomas",-->
+<!--            "url": "https://www.stthomas.edu",-->
+<!--            "contactPoint": [-->
+<!--                {-->
+<!--                    "@type": "ContactPoint",-->
+<!--                    "telephone": "+1-651-962-5000",-->
+<!--                    "contactType": "customer service"-->
+<!--                }-->
+<!--            ]-->
+<!--        }-->
+<!--    </script>-->
     </body>
     </html>
 </apex:page>

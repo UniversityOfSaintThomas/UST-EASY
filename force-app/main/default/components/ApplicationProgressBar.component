@@ -1,4 +1,4 @@
-<apex:component >
+<apex:component>
 
     <apex:attribute name="prevReqId" description="The previous requirement" type="String" required="false"/>
     <apex:attribute name="nextReqId" description="The next requirement" type="String" required="false"/>
@@ -7,11 +7,11 @@
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
     <apex:attribute name="isExternalUser" description="Boolean that is true if this is an external user" type="Boolean" required="false" default="false"/>
 
-<!--    <div class="progress" type="Integer">-->
-<!--        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"-->
-<!--             aria-valuemin="0" aria-valuemax="100" style="width:{!progress}%;">-->
-<!--        </div>-->
-<!--    </div>-->
+    <!--    <div class="progress" type="Integer">-->
+    <!--        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"-->
+    <!--             aria-valuemin="0" aria-valuemax="100" style="width:{!progress}%;">-->
+    <!--        </div>-->
+    <!--    </div>-->
     <apex:outputPanel rendered="{!($CurrentPage.Name == 'ApplicationRequirement' || $CurrentPage.Name == 'ApplicationChecklist') && !isExternalUser}" layout="none">
 
         <div class="slds-progress slds-p-vertical_x-small" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -27,31 +27,34 @@
 
                             <apex:outputPanel rendered="{!r.reqStatus  && requirementId != r.req.Id}" layout="none">
                                 <svg class="slds-button__icon slds-icon_small icon-Complete">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}"></use>
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}"></use>
                                 </svg>
                             </apex:outputPanel>
 
                             <apex:outputPanel rendered="{!!r.reqStatus && requirementId != r.req.Id && r.viewed}" layout="none">
                                 <svg class="slds-button__icon slds-icon_small icon-warn">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#clear')}"></use>
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#clear')}"></use>
                                 </svg>
                             </apex:outputPanel>
 
                             <apex:outputPanel rendered="{!requirementId == r.req.Id}" layout="none">
                                 <svg class="slds-button__icon slds-icon_small icon-CurrentPage">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#record')}"></use>
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#record')}"></use>
                                 </svg>
                             </apex:outputPanel>
 
                             <apex:outputPanel rendered="{!requirementId != r.req.Id && !r.reqStatus && !r.viewed}" layout="none">
                                 <svg class="slds-button__icon slds-icon_small icon-not-Visited">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#record')}"></use>
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#record')}"></use>
                                 </svg>
                             </apex:outputPanel>
 
                             <span class="slds-assistive-text">{!r.req.Name}</span>
 
                         </button>
+                        <div class="slds-popover slds-popover_tooltip slds-fall-into-ground" role="tooltip" id="tooltip-{!r.req.Id}" style="position:absolute;">
+                            <div class="slds-popover__body" style="min-width:150px;">{!r.req.Name}</div>
+                        </div>
                     </li>
                 </apex:repeat>
             </ol>
@@ -61,12 +64,6 @@
 		      <span class="slds-assistive-text">Progress: 0%</span>
 		    </span>
             </div>
-
-            <apex:repeat value="{!reqs}" var="r">
-                <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom" role="tooltip" id="tooltip-{!r.req.Id}" style="position:absolute;top:1rem;left:calc(50% + 6px);transform:translateX(-50%); display: none;">
-                    <div class="slds-popover__body">{!r.req.Name}</div>
-                </div>
-            </apex:repeat>
 
 
             <!-- <apex:repeat value="{!reqs}" var="r" >

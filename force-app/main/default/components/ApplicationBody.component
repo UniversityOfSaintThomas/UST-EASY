@@ -5,22 +5,13 @@
     <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true" assignTo="{!applicationControlValue}"/>
     <apex:attribute name="applicationIdBody" description="Current Application Id" type="String" required="false" assignTo="{!applicationIdValue}"/>
     <apex:attribute name="loadingText" description="The text to display when save is occuring" type="String" required="false" default="Processing..."/>
-    <div style="display:none" id="apploadingspinner">
-        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
-            &nbsp;
-        </div>
-        <div style="position: fixed; width: 100%; top: 50%; z-index: 1001;font-size:30px;">
-            <center><span class='glyphicon glyphicon-refresh spinning'></span> {!loadingText}</center>
+    <div id="loadSpinner" class="popupBackground">
+        <div id="loading" class="PopupPanel">
+            <div class="background"></div>
+            <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Please Wait..</span>
         </div>
     </div>
-    <div style="display:none" id="confirmation">
-        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1002; background-color: black;">
-            &nbsp;
-        </div>
-        <div style="position: fixed; top: 50%; width: 100%; z-index: 1003;font-size:30px; color:white;">
-            <center>Thank you! Your response has been submitted successfully.</center>
-        </div>
-    </div>
+
     <!--            <apex:outputPanel styleClass="row" style="padding:10px;padding-left:15px;" rendered="{!!hideLogo}">-->
     <!--                <div class="col-xs-12" >-->
     <!--                    <img src="{!URLFOR($Resource[appControl.Logo_Static_Resource__c], appControl.Logo_Static_Resource_Path__c)}" />-->
@@ -61,7 +52,7 @@
 
             <!-- BODY -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                <apex:componentBody />
+                <apex:componentBody/>
             </apex:outputPanel>
 
             <!-- BOTTOM WIDGETS -->

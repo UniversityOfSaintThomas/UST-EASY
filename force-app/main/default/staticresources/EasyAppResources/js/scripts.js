@@ -10,18 +10,10 @@ let ready = (callback) => {
 }
 
 ready(() => {
-    hideFormSpinner();
+    appHideLoadingSpinner();
     pageLoadReRendered();
     activateCarousel();
 });
-
-function hideFormSpinner() {
-    document.getElementById("form-spinner").style.display = 'none';
-}
-
-function showFormSpinner() {
-    document.getElementById("form-spinner").style.display = 'block';
-}
 
 function pageLoadReRendered() {
     document.querySelectorAll('.fieldNotEditable,.fieldNotEditable input,.fieldNotEditable select,.fieldNotEditable textarea').forEach(field => {
@@ -52,6 +44,7 @@ function pageLoadReRendered() {
     radioCheckBox();
     activateAutoComplete();
     hideFormSpinner();
+    activateTooltips();
 }
 
 function adjustLabelsFor() {
@@ -191,7 +184,6 @@ function formatPhone(phone) {
 }
 
 /* Remote reference lookup */
-
 const resultListTemplate = (title, subtitle, icon, originObjId, resultId) => `
     <li role="presentation" class="slds-listbox__item">
         <div id="option1" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option" onclick="assignLookupValue('${title} ${subtitle}','${originObjId}', '${resultId}');">
@@ -221,19 +213,16 @@ function assignLookupValue(selectedValue, originObjId, resultId) {
     comboBox.classList.remove('slds-is-open');
     hiddenInput.value = resultId;
     originObject.value = selectedValue;
-
-    // find object
-    let fn = window['setCreatingNewRelatedRecordAF' + groupId];
-
-    // is object a function?
     console.log('groupId : ' + groupId);
     console.log('recordId : ' + recordId);
     console.log('resultId : ' + resultId);
-    if (typeof fn === "function" && recordId && resultId) {
-        fn.apply(recordId, resultId);
+    //For creation of a new record ui.item.value == '**createnew**'
+    /*
+    if (typeof window['setCreatingNewRelatedRecordAF' + groupId] === "function" && recordId && resultId) {
+        window['setCreatingNewRelatedRecordAF' + groupId](recordId,resultId)
         console.log('result function called!');
     }
-    //setCreatingNewRelatedRecordAF
+    */
 }
 
 function lookupResultsFormatter(data, originObjId) {
@@ -262,7 +251,7 @@ function lookupResultsFormatter(data, originObjId) {
         if (subTitle) {
             subTitle = subTitle.substr(0, subTitle.length - 2);
         }
-        outputList += resultListTemplate(resultName, subTitle, originObject.dataset.listicon, originObjId, resultId);
+        outputList += resultListTemplate(resultName, subTitle, comboBox.dataset.listicon, originObjId, resultId);
     });
     resultList.innerHTML = '';
     comboBox.classList.remove('slds-is-open');
@@ -436,37 +425,8 @@ function activateCarousel() {
     initCarousel();
 }
 
-/* Page loading spinner */
-const loadReady = (callback) => {
-    if (document.readyState != "loading") callback();
-    else document.addEventListener("DOMContentLoaded", callback);
-}
-
-loadReady(() => {
-    let loadSpinner = document.createElement("div");
-    loadSpinner.setAttribute("id", "loadSpinner");
-    loadSpinner.classList.add("popupBackground");
-
-    let loadingPanel = document.createElement("div");
-    loadingPanel.setAttribute("id", "loading");
-    loadingPanel.classList.add("PopupPanel");
-
-    let background = document.createElement("div");
-    background.classList.add("background");
-
-    let pleaseWait = document.createElement("span");
-    pleaseWait.style.fontFamily = "Arial, Helvetica, sans-serif";
-    pleaseWait.style.fontSize = '12px';
-    pleaseWait.innerHTML = "Please Wait..";
-    loadingPanel.appendChild(background);
-    loadingPanel.appendChild(pleaseWait);
-    loadSpinner.appendChild(loadingPanel);
-    document.body.appendChild(loadSpinner);
-});
-
-
+/* Spinners on/off */
 function appHideLoadingSpinner() {
-    console.log('App load spinner activate');
     document.getElementById('loadSpinner').style.display = "none";
     return true;
 }
@@ -478,5 +438,41 @@ function appShowLoadingSpinner() {
 
 function appShowConfirmation() {
     document.getElementById("confirmation").style.display = "block";
+}
+
+function hideFormSpinner() {
+    document.getElementById("form-spinner").style.display = 'none';
+}
+
+function showFormSpinner() {
+    document.getElementById("form-spinner").style.display = 'block';
+}
+
+/* Tooltip */
+function activateTooltips() {
+    document.querySelectorAll('.aria-describedby-tooltip').forEach(item => {
+        let toolTipElement = document.getElementById(item.getAttribute('aria-describedby'));
+        let toolTipOffsetElem = toolTipElement.offsetParent;
+        item.addEventListener('mousemove', function (e) {
+            toolTipElement.classList.remove('slds-fall-into-ground', 'slds-nubbin_left', 'slds-nubbin_right');
+            toolTipElement.classList.add('slds-rise-from-ground');
+            let leftPosition = (e.clientX - toolTipOffsetElem.getBoundingClientRect().x);
+            let topPosition = ((e.clientY - toolTipOffsetElem.getBoundingClientRect().y) + 25);
+            if (document.body.clientWidth < toolTipElement.clientWidth + e.clientX) {
+                toolTipElement.classList.add('slds-nubbin_top-right');
+                leftPosition = leftPosition - (toolTipElement.clientWidth - 10);
+            } else {
+                toolTipElement.classList.add('slds-nubbin_top-left');
+                leftPosition = leftPosition - 20;
+            }
+            toolTipElement.style.left = leftPosition + 'px';
+            toolTipElement.style.top = topPosition + 'px';
+        });
+        item.addEventListener('mouseleave', function (e) {
+            toolTipElement.classList.remove('slds-rise-from-ground');
+            toolTipElement.classList.add('slds-fall-into-ground');
+        });
+    });
+
 }
 

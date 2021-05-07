@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>http://www.google.com/search?q={!Account_Name}</url>
+    <url>http://www.google.com/search?q={!Account.Name}</url>
 </WebLink>

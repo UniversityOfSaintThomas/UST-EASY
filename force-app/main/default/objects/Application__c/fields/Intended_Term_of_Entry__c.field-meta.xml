@@ -5,7 +5,6 @@
     <externalId>false</externalId>
     <label>Intended Term of Entry</label>
     <referenceTo>Academic_Term__c</referenceTo>
-    <relationshipLabel>Applications</relationshipLabel>
     <relationshipName>Applications</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

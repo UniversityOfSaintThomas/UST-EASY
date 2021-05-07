@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Related_Object_Record_Type_ID__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the Record Type ID for the record being created on the Reference Object.  If nothing is specified, it will use default record type for the profile creating the record.</inlineHelpText>
+    <label>Related Object Record Type ID</label>
+    <length>20</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

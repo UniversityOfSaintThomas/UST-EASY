@@ -11,16 +11,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Education_History__c</fullName>
-                <default>false</default>
-                <label>Education_History__c</label>
-            </value>
-            <value>
-                <fullName>Employment_History__c</fullName>
-                <default>false</default>
-                <label>Employment_History__c</label>
-            </value>
-            <value>
                 <fullName>hed__Contact_Language__c</fullName>
                 <default>false</default>
                 <label>hed__Contact_Language__c</label>
@@ -39,6 +29,21 @@
                 <fullName>Recommendation__c</fullName>
                 <default>false</default>
                 <label>Recommendation__c</label>
+            </value>
+            <value>
+                <fullName>Family__c</fullName>
+                <default>false</default>
+                <label>Family__c</label>
+            </value>
+            <value>
+                <fullName>Work_History__c</fullName>
+                <default>false</default>
+                <label>Work_History__c</label>
+            </value>
+            <value>
+                <fullName>hed__Education_History__c</fullName>
+                <default>false</default>
+                <label>hed__Education_History__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>

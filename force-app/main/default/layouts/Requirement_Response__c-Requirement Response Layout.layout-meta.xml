@@ -109,7 +109,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Question__c</fields>
-        <fields>ValueText__c</fields>
+        <fields>Question_Response__c</fields>
         <fields>IsShown__c</fields>
         <fields>IsRequired__c</fields>
         <fields>IsPopulated__c</fields>

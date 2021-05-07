@@ -27,6 +27,18 @@
                 <behavior>Edit</behavior>
                 <field>Logo_Static_Resource_Path__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Academic_Level__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>School_College__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Degree_Levels__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -156,6 +168,7 @@
         <fields>Active__c</fields>
         <fields>Label__c</fields>
         <fields>Display_Order__c</fields>
+        <fields>Show_on_Application_Creation__c</fields>
         <relatedList>Requirement__c.Application_Control__c</relatedList>
         <sortField>Display_Order__c</sortField>
         <sortOrder>Asc</sortOrder>

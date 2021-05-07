@@ -12,6 +12,7 @@ public class ApplicationCreate {
     public Map<Id, Program__c> intendedPrograms { get; set; }
     public transient String additionalDataString { get; set; }
     public Set<String> contactFields { get; set; }
+    public String degreeType {get; set; }
 
     public Application_Control__c appControl {
         get {
@@ -76,7 +77,7 @@ public class ApplicationCreate {
         items = [
                 SELECT Id, File_Types__c, Requirement__r.Application_Creation_Display_Order__c, Active__c, Required__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Name, Label__c,
                         Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c,
-                        Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c,
+                        Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_Object_Record_Type_ID__c,
                         Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Holding_Record_Id__c, Internal_Requirement_Item__c, Editable_Application_Status__c,
                         Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
                         Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (
@@ -143,6 +144,36 @@ public class ApplicationCreate {
                 groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
             }
         }
+        ApplicationQuestion dLQuestion;
+
+        // Create new Graduate specific application questions used to limit Program List
+        if (appControl.Academic_Level__c == 'Graduate') {
+
+
+            dLQuestion = new ApplicationQuestion(con, app, '', app, 'Degree_Type__c');
+            dLQuestion.addQuestionObject(new Question__c(Label__c = 'What type of degree are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Level', Picklist_Values__c = appControl.Degree_Levels__c ));
+
+            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+                    dLQuestion
+            }));
+
+        }
+      //  if (appControl.Academic_Level__c == 'Undergraduate') {
+
+
+           // dLQuestion = new ApplicationQuestion(con, app, '', app, 'Degree_Type__c');
+           // dLQuestion.addQuestionObject(new Question__c(Label__c = 'Testing Undergrad: '+ appControl.Id , Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Level', Picklist_Values__c = appControl.Degree_Levels__c ));
+
+           // groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+          //          dLQuestion
+         //   }));
+
+       // }
+
+
+
+        System.debug('dLQuestion: ' + dLQuestion);
+
         ApplicationQuestion programQuestion;
 
         // Add term and program questions if not hidden
@@ -150,7 +181,7 @@ public class ApplicationCreate {
 
             // Get map of intended programs with id as key, and only for a specific Application Control
             List<Program__c> progs = [
-                    SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c,
+                    SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Degree__c,
                             Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c,
                             Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c,
                             Generic_Filter_4__c, Application_Control__c
@@ -158,6 +189,7 @@ public class ApplicationCreate {
                     WHERE Hide_from_Application__c = :false
                     AND Active__c = :true
                     AND Application_Control__c = :appControl.Id
+                    //AND Degree__c = :degreeType
                     ORDER BY Name ASC
             ];
             // Original EASY query, that does not limit program list by application control

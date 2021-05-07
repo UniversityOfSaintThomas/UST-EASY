@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Academic Behavioral Strategist</fullName>
+        <default>false</default>
+        <label>Academic Behavioral Strategist</label>
+    </customValue>
+    <customValue>
+        <fullName>Autism Spectrum Disorders</fullName>
+        <default>false</default>
+        <label>Autism Spectrum Disorders</label>
+    </customValue>
+    <customValue>
+        <fullName>Developmental Disabilities</fullName>
+        <default>false</default>
+        <label>Developmental Disabilities</label>
+    </customValue>
+    <customValue>
+        <fullName>Early Childhood Special Education</fullName>
+        <default>false</default>
+        <label>Early Childhood Special Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Emotional Behavioral Disorders</fullName>
+        <default>false</default>
+        <label>Emotional Behavioral Disorders</label>
+    </customValue>
+    <customValue>
+        <fullName>Learning Disabilities</fullName>
+        <default>false</default>
+        <label>Learning Disabilities</label>
+    </customValue>
+    <customValue>
+        <fullName>Special Ed 6</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Special Ed 6</label>
+    </customValue>
+    <customValue>
+        <fullName>Special Ed 5</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Special Ed 5</label>
+    </customValue>
+    <customValue>
+        <fullName>Special Ed 4</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Special Ed 4</label>
+    </customValue>
+    <masterLabel>License Area</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

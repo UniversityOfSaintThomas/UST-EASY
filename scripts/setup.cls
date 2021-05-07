@@ -1,89 +1,90 @@
 private static void setHoldingIds() {
-    String collegeRecordTypeId = null;
-    String highSchoolRecordTypeId = null;
-    List<RecordType> EducationRecordTypes = [
+
+    List<RecordType> highSchoolRecordType = [
             SELECT Id, Name, SobjectType
             FROM RecordType
             WHERE SobjectType = 'hed__Education_History__c'
+            AND Name LIKE 'High School'
     ];
-    for (RecordType recType : EducationRecordTypes) {
-        if (recType.Name.equalsIgnoreCase('college')) {
-            collegeRecordTypeId = recType.Id;
-        } else if (recType.Name.equalsIgnoreCase('high school')) {
-            highSchoolRecordTypeId = recType.Id;
-        }
-    }
-    //College holding Ids in place
-    Id collegeHolderId = null;
+
+    Id highSchoolRecordTypeId = Schema.SObjectType.hed__Education_History__c.getRecordTypeInfosByName().get('High School').getRecordTypeId();
+    Id collegeRecordTypeId = Schema.SObjectType.hed__Education_History__c.getRecordTypeInfosByName().get('College').getRecordTypeId();
+
+    List<RecordType> collegeRecordType = [
+            SELECT Id, Name, SobjectType
+            FROM RecordType
+            WHERE SobjectType = 'hed__Education_History__c'
+            AND Name LIKE 'College'
+    ];
+
     List<Account> collegeHolders = [
             SELECT Id, Name
             FROM Account
             WHERE Name = 'Unknown College'
     ];
-
-    if (collegeHolders.size() > 0) {
-        collegeHolderId = collegeHolders[0].Id;
-
-        List<Requirement_Item__c> collegeRequirementItems = [
-                SELECT Id, Name
-                FROM Requirement_Item__c
-                WHERE Name LIKE 'College%'
-                AND Holding_Record_Id__c != ''
-        ];
-        for (Requirement_Item__c requirementItem : collegeRequirementItems) {
-            requirementItem.Holding_Record_Id__c = collegeHolderId;
-            if (collegeRecordTypeId != null) {
-                requirementItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + collegeRecordTypeId + '\')';
-            }
-        }
-        upsert collegeRequirementItems;
-    }
-
-    //High School holding Ids in place
-    Id highSchoolHolderId = null;
     List<Account> highSchoolHolders = [
             SELECT Id, Name
             FROM Account
             WHERE Name = 'Unknown High School'
     ];
-    if (highSchoolHolders.size() > 0) {
-        highSchoolHolderId = highSchoolHolders[0].Id;
 
-        List<Requirement_Item__c> collegeRequirementItems = [
-                SELECT Id, Name, Related_List_Where_Clause__c
-                FROM Requirement_Item__c
-                WHERE Name LIKE 'High School%'
-                AND Holding_Record_Id__c != ''
-        ];
-        for (Requirement_Item__c requirementItem : collegeRequirementItems) {
-            requirementItem.Holding_Record_Id__c = highSchoolHolderId;
-            if (highSchoolRecordTypeId != null) {
-                requirementItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + highSchoolRecordTypeId + '\')';
-            }
+    List<Requirement_Item__c> collegeRequirementItems = [
+            SELECT Id, Name
+            FROM Requirement_Item__c
+            WHERE Name LIKE 'College%'
+    ];
+
+    List<Requirement_Item__c> hsRequirementItems = [
+            SELECT Id, Name, Related_List_Where_Clause__c
+            FROM Requirement_Item__c
+            WHERE Name LIKE 'High School%'
+    ];
+
+    List<Requirement_Item__c> updateItems = new List<Requirement_Item__c>();
+
+    for (Requirement_Item__c rItem : collegeRequirementItems) {
+        if (collegeHolders.size() > 0) {
+            rItem.Holding_Record_Id__c = collegeHolders[0].Id;
         }
-        upsert collegeRequirementItems;
+        if (collegeRecordType.size() > 0) {
+            rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + collegeRecordType[0].Id + '\')';
+        }
+        rItem.Related_Object_Record_Type_ID__c = collegeRecordTypeId;
+        updateItems.add(rItem);
     }
 
-    //Language holding Ids in place
-    Id languageHolderId = null;
+    for (Requirement_Item__c rItem : hsRequirementItems) {
+        if (highSchoolHolders.size() > 0) {
+            rItem.Holding_Record_Id__c = highSchoolHolders[0].Id;
+        }
+        if (highSchoolRecordType.size() > 0) {
+            rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + highSchoolRecordType[0].Id + '\')';
+        }
+        rItem.Related_Object_Record_Type_ID__c = highSchoolRecordTypeId;
+        updateItems.add(rItem);
+    }
+
     List<hed__Language__c> languageHolders = [
             SELECT Id, Name
             FROM hed__Language__c
             WHERE Name = 'English'
     ];
-    if (languageHolders.size() > 0) {
-        languageHolderId = languageHolders[0].Id;
 
-        List<Requirement_Item__c> languageRequirementItems = [
-                SELECT Id, Name
-                FROM Requirement_Item__c
-                WHERE Name LIKE 'Language%'
-                AND Holding_Record_Id__c != ''
-        ];
-        for (Requirement_Item__c requirementItem : languageRequirementItems) {
-            requirementItem.Holding_Record_Id__c = languageHolderId;
+    List<Requirement_Item__c> languageRequirementItems = [
+            SELECT Id, Name
+            FROM Requirement_Item__c
+            WHERE Name LIKE 'Language%'
+    ];
+
+    for (Requirement_Item__c rItem : languageRequirementItems) {
+        if (languageHolders.size() > 0) {
+            rItem.Holding_Record_Id__c = languageHolders[0].Id;
+            updateItems.add(rItem);
         }
-        upsert languageRequirementItems;
+    }
+
+    if (updateItems.size() > 0) {
+        update updateItems;
     }
 }
 
@@ -192,8 +193,8 @@ private static void setHierarchySettings() {
 }
 
 private static void setReviewSettings() {
-    insert new Related_Object_Review__c (Name='hed__Attribute__c');
-    insert new Related_Object_Review__c (Name='hed__Contact_Language__c');
-    insert new Related_Object_Review__c (Name='hed__Education_History__c');
-    insert new Related_Object_Review__c (Name='hed__Test__c');
+    insert new Related_Object_Review__c (Name = 'hed__Attribute__c');
+    insert new Related_Object_Review__c (Name = 'hed__Contact_Language__c');
+    insert new Related_Object_Review__c (Name = 'hed__Education_History__c');
+    insert new Related_Object_Review__c (Name = 'hed__Test__c');
 }

@@ -246,7 +246,7 @@
         <apex:outputPanel rendered="{!group.relatedObject && !group.isInternal}">
 
             <apex:outputPanel styleClass="slds-text-heading_medium" layout="block">
-                <h2>{!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)} here</h2>
+                <h2>{!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}</h2>
             </apex:outputPanel>
             <apex:actionFunction name="rerenderTheTable" rerender="theTable" onComplete="pageLoadReRendered();"/>
             <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}" layout="block">
@@ -266,6 +266,7 @@
                             <apex:repeat value="{!group.questions}" var="question">
 
                                 <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="block">
+                                    {!rr.showQuestions[question]}
                                     <apex:outputLabel rendered="{!!rr.isEditMode}" for="appReferenceField" value="{!question.question.Label__c}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}"/>
                                     <apex:outputPanel styleClass="appReferenceField">
                                         <apex:outputField value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}" style="{!IF(rr.isEditMode,'display:none;','')}" rendered="{!!rr.isEditMode && question.question.Related_Object_Field__c != null && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>

@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>http://www.google.com/search?q={!Lead_Company}</url>
+    <url>http://www.google.com/search?q={!Lead.Company}</url>
 </WebLink>

@@ -156,16 +156,21 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>Application</label>
+    <label>Admissions Application</label>
     <nameField>
         <displayFormat>A-{0000000}</displayFormat>
         <label>Application Name</label>
         <trackFeedHistory>false</trackFeedHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Applications</pluralLabel>
+    <pluralLabel>Admissions Applications</pluralLabel>
     <searchLayouts>
         <customTabListAdditionalFields>Intended_Program__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Application_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Intended_Term_of_Entry__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Intended_Program__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

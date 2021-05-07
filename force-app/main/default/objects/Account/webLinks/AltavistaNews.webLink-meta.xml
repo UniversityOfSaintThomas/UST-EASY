@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>true</showsLocation>
     <showsStatus>true</showsStatus>
-    <url>http://news.altavista.com/search?nc=0&amp;q={!Account_Name}</url>
+    <url>http://news.altavista.com/search?nc=0&amp;q={!Account.Name}</url>
 </WebLink>

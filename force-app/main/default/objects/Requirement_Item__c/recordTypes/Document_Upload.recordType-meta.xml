@@ -2059,10 +2059,6 @@
     <picklistValues>
         <picklist>Related_List_Object__c</picklist>
         <values>
-            <fullName>Education_History%5F%5Fc</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>hed%5F%5FContact_Language%5F%5Fc</fullName>
             <default>false</default>
         </values>

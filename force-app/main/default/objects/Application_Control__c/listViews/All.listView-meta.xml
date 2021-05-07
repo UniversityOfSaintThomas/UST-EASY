@@ -3,6 +3,9 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>OBJECT_ID</columns>
+    <columns>URL_Parameter__c</columns>
+    <columns>Active__c</columns>
+    <columns>Default__c</columns>
     <columns>CREATED_DATE</columns>
     <columns>CREATEDBY_USER</columns>
     <filterScope>Everything</filterScope>

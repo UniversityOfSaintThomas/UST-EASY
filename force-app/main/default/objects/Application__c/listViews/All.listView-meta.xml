@@ -5,6 +5,7 @@
     <columns>Intended_Program__c</columns>
     <columns>Application_Status__c</columns>
     <columns>CREATED_DATE</columns>
+    <columns>Contact__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

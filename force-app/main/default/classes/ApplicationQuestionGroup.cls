@@ -362,6 +362,8 @@ public class ApplicationQuestionGroup {
                 qResponses.put(qr.Question__c, qr);
             }
         }
+
+        System.debug('item.RecordType.DeveloperName: ' + item.RecordType.DeveloperName);
         if (item.RecordType.DeveloperName.equals('Question_Group')) {
             questionGroup = true;
             documentUpload = false;
@@ -452,7 +454,7 @@ public class ApplicationQuestionGroup {
                         'id', 'user_created__c', 'holding_name__c'
                 };
                 for (Question__c q : item.Questions__r) {
-                    if (q != null && String.isNotBlank(q.Related_Object_Field__c) && !q.New_Reference_Field__c) {
+                    if (q != null && String.isNotBlank(q.Related_Object_Field__c) && !q.New_Reference_Field__c && q.Active__c) {
                         fieldsSet.add(q.Related_Object_Field__c.toLowerCase());
                         if (String.isNotBlank(q.Lookup_Object__c)) {
                             newReferenceObjectType = q.Lookup_Object__c;
@@ -470,6 +472,7 @@ public class ApplicationQuestionGroup {
                     if (String.isNotBlank(item.Related_List_Where_Clause__c)) {
                         query += ' AND ' + item.Related_List_Where_Clause__c;
                     }
+
                     for (SObject obj : database.query(query)) {
                         relatedObjectsMap.put(obj.Id, new SObjectWrapper(this, obj.Id, obj));
                     }
@@ -611,15 +614,20 @@ public class ApplicationQuestionGroup {
                     List<SObject> lstUpdate = new List<SObject>();
                     List<SObject> lstDelete = new List<SObject>();
                     Integer childCount = 0;
+
                     if (relatedObjects != null) {
                         for (SObjectWrapper objW : relatedObjects) {
                             if (objW.isDeleted == false && ((Boolean) objW.obj.get('User_Created__c')) == true && objW.isValid == true) {
+                                if(String.isNotBLank(item.Related_Object_Record_Type_ID__c)){
+                                    objW.obj.put('recordtypeid', item.Related_Object_Record_Type_ID__c);
+                                }
                                 if (objW.obj.Id != null) {
                                     lstUpdate.add(objW.obj);
                                 } else {
                                     objW.obj.put(item.Related_List_Object_Master_Field__c, item.Related_List_Object_Master__c == 'Contact' ? app.Contact__c : app.Id);
                                     lstInsert.add(objW.obj);
                                 }
+
                             }
                             if (objW.isDeleted == false && objW.isValid == true && (String.isBlank(item.Required_Supporting_Documentation__c) || !item.Required_Supporting_Documentation__c.contains(app.Application_Status__c) || objW.att != null)) {
                                 childCount++;

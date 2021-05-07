@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>hed__HEDA_Contact_Language_Compact_Layout</fullName>
+    <fields>Name</fields>
+    <fields>hed__Contact__c</fields>
+    <fields>hed__Language__c</fields>
+    <fields>hed__Fluency__c</fields>
+    <fields>hed__Primary_Language__c</fields>
+    <label>HEDA Contact Language Compact Layout</label>
+</CompactLayout>

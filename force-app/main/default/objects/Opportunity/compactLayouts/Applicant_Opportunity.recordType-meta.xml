@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Applicant_Opportunity</fullName>
+    <active>true</active>
+    <businessProcess>Applicant</businessProcess>
+    <compactLayoutAssignment>Applicant_Opportunity</compactLayoutAssignment>
+    <label>Applicant Opportunity</label>
+    <picklistValues>
+        <picklist>Admit_Type__c</picklist>
+        <values>
+            <fullName>New Freshman</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ForecastCategoryName</picklist>
+        <values>
+            <fullName>Best Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Omitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LeadSource</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Prospect_Rating__c</picklist>
+        <values>
+            <fullName>Level 1%2FTop Tier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 2%2FPipeline 2 Yrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 3%2FPipeline 3-5 Yrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 4%2FDiscovery-Qualify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 5%2FVolunteer%2FNetworker</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Existing Customer - Downgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Customer - Replacement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Customer - Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Customer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

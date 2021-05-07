@@ -26,9 +26,13 @@ public class ApplicationRegistration {
             return;
         }
 
-        // Create questions for first name, last name, email, password, and password confirmation
+        // Create questions for first name, middle name, last name, email, password, and password confirmation
         ApplicationQuestion firstName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'First_Name__c');
         firstName.addQuestionObject(new Question__c(Label__c = 'First Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
+
+        ApplicationQuestion middleName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Middle_Name__c');
+        middleName.addQuestionObject(new Question__c(Label__c = 'Middle Name', Active__c = true));
+
         ApplicationQuestion lastName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Last_Name__c');
         lastName.addQuestionObject(new Question__c(Label__c = 'Last Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
         ApplicationQuestion email = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Email__c');
@@ -40,7 +44,7 @@ public class ApplicationRegistration {
 
         // Create question groups
         ApplicationQuestionGroup firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                firstName, lastName, email
+                firstName, middleName, lastName, email
         });
         ApplicationQuestionGroup lastGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
                 portalPassword, portalPasswordConfirmation
@@ -73,8 +77,8 @@ public class ApplicationRegistration {
 
             // Insert interaction to create/update Contact
             insert interaction;
-            interaction = [SELECT Id, Contact__c, First_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
-            Contact con = [SELECT Id, FirstName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
+            interaction = [SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
+            Contact con = [SELECT Id, FirstName, MiddleName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
             appCreate.con.Id = con.Id;
 
             // Exit and roll-back if User with Email or Contact already exists

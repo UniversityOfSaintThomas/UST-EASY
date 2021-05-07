@@ -147,7 +147,7 @@ public class ApplicationProgressBar {
         riList = [
                 SELECT Id, File_Types__c, Required__c,Requirement__c, Internal_Only__c, Active__c, Required_Number_of_Children__c, Requirement__r.Name, Name,
                         Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c,
-                        Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c,
+                        Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_Object_Record_Type_ID__c,
                         Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c,
                         Editable_Application_Status__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c, Generic_Filter_1__c,
                         Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (

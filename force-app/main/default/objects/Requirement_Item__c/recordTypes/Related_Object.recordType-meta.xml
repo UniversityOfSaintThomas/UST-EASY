@@ -2058,11 +2058,7 @@
     <picklistValues>
         <picklist>Related_List_Object__c</picklist>
         <values>
-            <fullName>Education_History%5F%5Fc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Employment_History%5F%5Fc</fullName>
+            <fullName>Family%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>

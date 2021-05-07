@@ -314,6 +314,7 @@ function activateCarousel() {
 
     // Set click events to navigation buttons
     function setEventListeners() {
+        console.log(totalItems);
         next.addEventListener('click', moveNext);
         prev.addEventListener('click', movePrev);
         if (totalItems === 1) {
@@ -452,8 +453,8 @@ function showFormSpinner() {
 function activateTooltips() {
     document.querySelectorAll('.aria-describedby-tooltip').forEach(item => {
         let toolTipElement = document.getElementById(item.getAttribute('aria-describedby'));
-        let toolTipOffsetElem = toolTipElement.offsetParent;
         item.addEventListener('mousemove', function (e) {
+            let toolTipOffsetElem = toolTipElement.offsetParent;
             toolTipElement.classList.remove('slds-fall-into-ground', 'slds-nubbin_left', 'slds-nubbin_right');
             toolTipElement.classList.add('slds-rise-from-ground');
             let leftPosition = (e.clientX - toolTipOffsetElem.getBoundingClientRect().x);
@@ -463,7 +464,7 @@ function activateTooltips() {
                 leftPosition = leftPosition - (toolTipElement.clientWidth - 10);
             } else {
                 toolTipElement.classList.add('slds-nubbin_top-left');
-                leftPosition = leftPosition - 20;
+                leftPosition = leftPosition - 10;
             }
             toolTipElement.style.left = leftPosition + 'px';
             toolTipElement.style.top = topPosition + 'px';
@@ -473,6 +474,5 @@ function activateTooltips() {
             toolTipElement.classList.add('slds-fall-into-ground');
         });
     });
-
 }
 

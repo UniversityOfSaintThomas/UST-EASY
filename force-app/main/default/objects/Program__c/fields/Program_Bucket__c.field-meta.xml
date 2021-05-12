@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Program_Bucket__c</fullName>
+    <description>Use this for graduate schools to limit Programs that will appear to the applicant when creating an application.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Use this for graduate schools to limit Programs that will appear to the applicant when creating an application.</inlineHelpText>
+    <label>Program Bucket</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Program_Bucket</valueSetName>
+    </valueSet>
+</CustomField>

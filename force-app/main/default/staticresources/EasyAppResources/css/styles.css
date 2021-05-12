@@ -9,6 +9,10 @@
     background-color: #9E28B5;
     border-color: #9E28B5;
 }
+.slds-scope label.slds-text-body_regular {
+    font-size: 1.1em;
+    font-weight: 400;
+}
 .slds-checkbox .slds-tabled-checklist td [type=checkbox] {
     width: 15px;
     height: 15px;

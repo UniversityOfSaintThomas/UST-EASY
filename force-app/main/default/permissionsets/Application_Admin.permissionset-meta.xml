@@ -2299,11 +2299,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Requirement_Response__c.Applications__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Requirement_Response__c.Archive_Payload__c</field>
         <readable>true</readable>
     </fieldPermissions>

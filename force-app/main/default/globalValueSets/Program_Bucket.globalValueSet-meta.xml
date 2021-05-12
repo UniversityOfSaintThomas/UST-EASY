@@ -20,6 +20,16 @@
         <default>false</default>
         <label>Non-Degree</label>
     </customValue>
+    <customValue>
+        <fullName>Master&apos;s</fullName>
+        <default>false</default>
+        <label>Master&apos;s</label>
+    </customValue>
+    <customValue>
+        <fullName>Certificate</fullName>
+        <default>false</default>
+        <label>Certificate</label>
+    </customValue>
     <description>Use this for graduate schools to limit Programs that will appear to the applicant when creating an application.</description>
     <masterLabel>Program Bucket</masterLabel>
     <sorted>false</sorted>

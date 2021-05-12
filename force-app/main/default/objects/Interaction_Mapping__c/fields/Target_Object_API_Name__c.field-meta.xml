@@ -36,6 +36,11 @@
                 <default>false</default>
                 <label>Opportunity</label>
             </value>
+            <value>
+                <fullName>Application__c</fullName>
+                <default>false</default>
+                <label>Application__c</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

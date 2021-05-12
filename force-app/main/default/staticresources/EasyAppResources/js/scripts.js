@@ -1,9 +1,3 @@
-// $(document).keypress(function (event) {
-//     if (event.which == '13') {
-//         event.preventDefault();
-//     }
-// });
-
 let ready = (callback) => {
     if (document.readyState !== "loading") callback();
     else document.addEventListener("DOMContentLoaded", callback);
@@ -15,10 +9,18 @@ ready(() => {
     activateCarousel();
 });
 
+function checkEnter(e){
+    e = e || event;
+    let txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
+    return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
+}
+
 function pageLoadReRendered() {
     document.querySelectorAll('.fieldNotEditable,.fieldNotEditable input,.fieldNotEditable select,.fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
     });
+
+    document.querySelector('form').onkeypress = checkEnter;
 
     // SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
     document.querySelectorAll('.slds-summary-detail').forEach(item => {
@@ -363,6 +365,7 @@ function activateCarousel() {
                     oldPrevious = (totalItems - 2);
                     oldNext = (slide + 1);
                 } else if (slide === 1) {
+                    saveAndGoBack.style.display = "none"
                     newPrevious = 0;
                     oldPrevious = (totalItems - 1);
                     oldNext = (slide + 1);
@@ -379,6 +382,7 @@ function activateCarousel() {
                     saveAndAdvance.style.display = "none"
                     next.style.display = "inline-flex"
                 }
+
 
                 if (slide > 0) {
                     prev.style.display = "inline-flex"

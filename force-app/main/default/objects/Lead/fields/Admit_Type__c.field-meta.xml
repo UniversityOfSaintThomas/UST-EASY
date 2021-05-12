@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>New Freshman</fullName>
+                <fullName>First-Year</fullName>
                 <default>false</default>
-                <label>New Freshman</label>
+                <label>First-Year</label>
             </value>
             <value>
                 <fullName>Transfer</fullName>

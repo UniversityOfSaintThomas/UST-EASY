@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Highest_Level_of_Education__c</fullName>
+    <externalId>false</externalId>
+    <label>Highest Level of Education</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Some grade/primary school</fullName>
+                <default>false</default>
+                <label>Some grade/primary school</label>
+            </value>
+            <value>
+                <fullName>Completed grade/primary school</fullName>
+                <default>false</default>
+                <label>Completed grade/primary school</label>
+            </value>
+            <value>
+                <fullName>Some high/secondary school</fullName>
+                <default>false</default>
+                <label>Some high/secondary school</label>
+            </value>
+            <value>
+                <fullName>Graduated from high/secondary school</fullName>
+                <default>false</default>
+                <label>Graduated from high/secondary school (or equivalent)</label>
+            </value>
+            <value>
+                <fullName>Some trade school</fullName>
+                <default>false</default>
+                <label>Some trade school</label>
+            </value>
+            <value>
+                <fullName>Graduated trade school</fullName>
+                <default>false</default>
+                <label>Graduated trade school</label>
+            </value>
+            <value>
+                <fullName>Some college/university</fullName>
+                <default>false</default>
+                <label>Some college/university</label>
+            </value>
+            <value>
+                <fullName>Graduated from college/university</fullName>
+                <default>false</default>
+                <label>Graduated from college/university</label>
+            </value>
+            <value>
+                <fullName>Graduate school</fullName>
+                <default>false</default>
+                <label>Graduate school</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

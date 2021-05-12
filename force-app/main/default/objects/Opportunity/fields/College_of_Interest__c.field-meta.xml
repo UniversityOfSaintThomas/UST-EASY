@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>College_of_Interest__c</fullName>
+    <externalId>false</externalId>
+    <label>College of Interest</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>4 Year College</fullName>
+                <default>false</default>
+                <label>4 Year College</label>
+            </value>
+            <value>
+                <fullName>2 Year College</fullName>
+                <default>false</default>
+                <label>2 Year College</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

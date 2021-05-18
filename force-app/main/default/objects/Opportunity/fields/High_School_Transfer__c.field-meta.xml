@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>High_School_Transfer__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>High School lookup for Transfer Students as it will get captured, but not as pertinent to College on the High School or College field.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>For use by Transfer Only.</inlineHelpText>
+    <label>High School (Transfer)</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Opportunities (High School (Transfer))</relationshipLabel>
+    <relationshipName>Opportunities_High_School</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

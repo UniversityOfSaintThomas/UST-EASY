@@ -9,6 +9,7 @@
                         sObj, sObjFilter, sObjNameField, searchTerm,
                         function (result, event) {
                             if (event.status) {
+                                console.log(JSON.stringify(result));
                                 callback(result, originObjId)
                             } else if (event.type === 'exception') {
                             } else {

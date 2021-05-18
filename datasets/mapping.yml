@@ -100,6 +100,9 @@ Insert Account:
   - BillingStreet
   - BillingState
   - BillingCountry
+  - BillingPostalCode
+  - BillingLatitude
+  - BillingLongitude
   - CEEB_Code__c
   - CEEB_Integration_Code__c
   - CIPC_Code__c
@@ -115,7 +118,9 @@ Insert Account:
   - School_Geographic_Area__c
   - School_Type_Code__c
   - Sevis_Equivalent__c
+  - ShippingCountry
   - Surrogate_ID__c
+  - Type
   - University_Banner_ID__c
   - University_Banner_PIDM__c
   - Valid_Major__c

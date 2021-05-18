@@ -25,7 +25,7 @@ public class ApplicationRequirement {
     public Boolean isInvalid { get; set; }
     public Boolean isExternalUser { get; set; }
     public Boolean ignoreExternalFilter { get; set; }
-    public String urlAppId {get;set;}
+    public String urlAppId { get; set; }
 
     //Added by Chris 5-15
     //public Id previousSectionID{get;set;}
@@ -259,7 +259,6 @@ public class ApplicationRequirement {
                 }
 
 
-
                 // Filter out external requirements based on the hashcode
                 if ((ignoreExternalFilter != null && ignoreExternalFilter) || !(i.Internal_Requirement_Item__c != null && UserInfo.getUserType() != 'Standard' && !ApexPages.currentPage().getParameters().containsKey('h'))) {
                     riLst.add(i);
@@ -328,14 +327,19 @@ public class ApplicationRequirement {
                 query += ' FROM ' + sObj;
                 query += ' WHERE ' + likeStatement;
                 if (String.isNotBlank(sObjFilter)) {
-                    query += ' AND (' + sObjFilter + ')';
+                    query += ' AND ' + sObjFilter;
                 }
                 query += ' ORDER BY ' + fieldList + ' ASC';
                 query += ' LIMIT 50';
-                System.debug(query);
+                System.debug('Query -- ' + query);
+                System.debug(UserInfo.getProfileId());
+                System.debug(UserInfo.getUserRoleId());
+                System.debug(UserInfo.getUserType());
+
                 try {
                     return Database.query(query);
                 } catch (Exception e) {
+                    System.debug('Error --- ' + e.getMessage());
                     return new List<SObject>();
                 }
             }

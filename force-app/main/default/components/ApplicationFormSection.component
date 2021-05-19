@@ -230,10 +230,15 @@
 
         <apex:outputPanel rendered="{!group.documentUpload && !group.isInternal}" layout="block" styleClass="slds-form-element">
             <span class="slds-form-element__label" id="file-selector-primary-label">Attachment</span>
-            <apex:inputTExtArea styleClass="ckeditor" value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && !preventUpdates}"/>
+
+            <apex:inputTextarea richText="true" styleClass="ckeditor" value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && !preventUpdates}"/>
+
+            <script src="{!URLFOR($Resource.EasyAppResources, '/js/ckeditorConfig.js')}"/>
+
             <apex:outputField value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && (preventUpdates || !group.isEditable)}"/>
 
             <apex:outputText style="font-weight:bold" value="Previously Uploaded Document: "/>
+
             <apex:outputText value="{!group.att.Title}" label="Previously Uploaded Document:" rendered="{!!preventUpdates && group.isEditable}"/>
 
             <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!group.oldAttVersion.Id}" rendered="{!(preventUpdates || !group.isEditable) && NOT(ISBLANK(group.oldAttVersion.Id))}" target="_blank">{!group.att.Title}</apex:outputLink>
@@ -309,7 +314,7 @@
                                             <!-- Label for input -->
                                             <apex:outputPanel rendered="{!question.fieldType != 'Address'}">
                                                 <label class="slds-form-element__label this_label_1 slds-p-vertical_x-small slds-text-body_regular">
-                                                    {!question.label}  {!question.label}  (field type: {!question.fieldType} - 2nd group)
+                                                    {!question.label}  {!question.label}  (field type: {!question.fieldType} - 2nd group - Radio: {!question.radio})
                                                     <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
                                                         <abbr class='slds-required' title='required'>* </abbr>
                                                     </apex:outputPanel>

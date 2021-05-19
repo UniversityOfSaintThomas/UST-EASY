@@ -9,7 +9,7 @@ ready(() => {
     activateCarousel();
 });
 
-function checkEnter(e){
+function checkEnter(e) {
     e = e || event;
     let txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
     return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
@@ -47,6 +47,7 @@ function pageLoadReRendered() {
     activateAutoComplete();
     hideFormSpinner();
     activateTooltips();
+
 }
 
 function adjustLabelsFor() {
@@ -101,6 +102,7 @@ function afterRerenderRTF() {
     }
 
     CKEDITOR.replaceAll('ckeditor');
+
 }
 
 // I use this before save as I've observed situations where changes are lost,
@@ -123,19 +125,10 @@ function performDocUploadSave(redirectTo) {
     let docUploadPromiseArr = [];
     ensureRichTextContent();
 
-    document.querySelectorAll('.docUploadInput').forEach(function (el, docUpload) {
+    document.querySelectorAll('.docUploadInput').forEach(function (docUpload, idx) {
+        console.log(docUpload.files);
         if (docUpload.files) {
-            let fbody = docUpload.files[0];
-            if (fbody) {
-                docUploadPromiseArr.push(getAsText(fbody, docUpload.getAttribute('data-respid')));
-            }
-        } else {
-        }
-
-    });
-
-    document.querySelectorAll('.docUploadInput').forEach(function (idx, docUpload) {
-        if (docUpload.files) {
+            console.log(docUpload.files[0]);
             let fbody = docUpload.files[0];
             if (fbody) {
                 docUploadPromiseArr.push(getAsText(fbody, docUpload.getAttribute('data-respid')));
@@ -149,6 +142,7 @@ function performDocUploadSave(redirectTo) {
         docUploads.forEach(function (docUpload) {
             docUploadObj[docUpload.itemId] = {"attData": docUpload};
         });
+        console.log(JSON.stringify(docUploadObj));
         saveWithDocs(JSON.stringify(docUploadObj), redirectTo);
     }).catch(function () {
     });
@@ -316,7 +310,6 @@ function activateCarousel() {
 
     // Set click events to navigation buttons
     function setEventListeners() {
-        console.log(totalItems);
         next.addEventListener('click', moveNext);
         prev.addEventListener('click', movePrev);
         if (totalItems === 1) {
@@ -391,10 +384,22 @@ function activateCarousel() {
                 }
 
                 items[oldPrevious].className = itemClassName;
-                items[oldNext].className = itemClassName;
-                items[newPrevious].className = itemClassName + " prev";
-                items[slide].className = itemClassName + " active";
-                items[newNext].className = itemClassName + " next";
+                if (items[oldPrevious]) {
+                    items[oldPrevious].className = itemClassName;
+                }
+                if (items[oldNext]) {
+                    items[oldNext].className = itemClassName;
+                }
+                if (items[newPrevious]) {
+                    items[newPrevious].className = itemClassName + " prev";
+                }
+                if (items[slide]) {
+                    items[slide].className = itemClassName + " active";
+                }
+                if (items[newNext]) {
+                    items[newNext].className = itemClassName + " next";
+                }
+
             }
         }
     }

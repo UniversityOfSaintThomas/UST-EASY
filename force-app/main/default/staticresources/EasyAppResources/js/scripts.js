@@ -47,7 +47,60 @@ function pageLoadReRendered() {
     activateAutoComplete();
     hideFormSpinner();
     activateTooltips();
+    fileUploadAreas();
+}
 
+function fileUploadAreas() {
+
+    document.querySelectorAll('.slds-file-selector__dropzone').forEach(upload => {
+        let fileInput = upload.querySelector('input');
+        let fileCard = upload.closest('.slds-card');
+        let currentFile = fileCard.querySelector('.currentlySelectedFile');
+
+        ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(evt => {
+            upload.addEventListener(evt, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+
+        ['dragover', 'dragenter'].forEach(evt => {
+            upload.addEventListener(evt, function (e) {
+                upload.classList.add('slds-has-drag-over');
+            });
+        });
+
+        ['dragleave', 'dragend', 'drop'].forEach(evt => {
+            upload.addEventListener(evt, function (e) {
+                upload.classList.remove('slds-has-drag-over');
+            });
+        });
+
+        upload.addEventListener('drop', function (e) {
+            fileInput.files = e.dataTransfer.files;
+            currentFile.innerHTML = findFileName(fileInput.value);
+        });
+
+        upload.addEventListener('click', function (e) {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', function (e) {
+            console.log('file change detected');
+            currentFile.innerHTML = findFileName(fileInput.value);
+        });
+    })
+}
+
+function findFileName(filePath) {
+    if(filePath) {
+        filePath = filePath.split('\\');
+        filePath = filePath[filePath.length - 1];
+    } else {
+        filePath = 'None';
+    }
+    filePath = '<strong>Currently Selected:</strong> ' + filePath;
+    return filePath;
 }
 
 function adjustLabelsFor() {

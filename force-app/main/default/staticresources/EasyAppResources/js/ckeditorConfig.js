@@ -1,6 +1,6 @@
 editor.on('instanceReady', function (e) {
-    const oldConfig = Object.assign({}, editor.config);
-    oldConfig.toolbar_EASY = [
+    const newConfig = Object.assign({}, editor.config);
+    newConfig.toolbar_EASY = [
         {name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
         {name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']},
         {
@@ -9,7 +9,7 @@ editor.on('instanceReady', function (e) {
         },
         {
             name: 'paragraph',
-            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language']
+            items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language']
         },
         {name: 'links', items: ['Link', 'Unlink', 'Anchor']},
         {name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak']},
@@ -18,10 +18,10 @@ editor.on('instanceReady', function (e) {
         {name: 'colors', items: ['TextColor', 'BGColor']},
         {name: 'tools', items: ['Maximize', 'ShowBlocks']},
     ];
-    oldConfig.toolbar = 'EASY';
-    oldConfig.disableNativeSpellChecker = false;
+    newConfig.toolbar = 'EASY';
+    newConfig.disableNativeSpellChecker = false;
     e.editor.destroy();
-    CKEDITOR.replace(e.editor.name,oldConfig).on('instanceReady', function (evt) {
+    CKEDITOR.replace(e.editor.name, newConfig).on('instanceReady', function (evt) {
         try {
             var id = evt.editor.name;
             CKiframe = document.getElementById('cke_' + id).querySelector('iframe');

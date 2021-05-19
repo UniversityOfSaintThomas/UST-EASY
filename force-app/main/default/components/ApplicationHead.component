@@ -4,7 +4,7 @@
 <!--    <apex:includeScript value="{!URLFOR($Resource.jqueryui, '/jquery-ui-1.12.1.custom/jquery-ui.min.js')}"/>-->
 <!--    <apex:stylesheet value="{!URLFOR($Resource.bootstrap, '/css/bootstrap.css')}"/>-->
 <!--    <apex:stylesheet value="{!URLFOR($Resource.jqueryui, '/jquery-ui-1.12.1.custom/jquery-ui.min.css')}"/>-->
-    <apex:includescript value="{!URLFOR($Resource.ckeditor, 'ckeditor/ckeditor.js')}"/>
+<!--    <apex:includescript value="{!URLFOR($Resource.ckeditor, 'ckeditor/ckeditor.js')}"/>-->
     <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/scripts.js')}"/>
     <link href="{!URLFOR($Resource.EasyAppResources, '/css/styles.css')}" rel="stylesheet" type="text/css"/>
 </apex:component>

@@ -197,11 +197,10 @@ public class ApplicationAdminView {
             //Question Responses
             List<Question_Response__c> questionResponses = qrMap.containsKey(rid) ? qrMap.get(rid) : new List<Question_Response__c>();
 
-            /*OLD CONSTRUCTOR - THAD DID THIS*/
-//            ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid, items, requirementResponses, questionResponses, questionDependencies);
-//            ar.preventUpdates = true;
-//            arLst.add(ar);
-//            ar.init();
+            ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid, items, requirementResponses, questionResponses, questionDependencies);
+            ar.preventUpdates = true;
+            arLst.add(ar);
+            ar.init();
         }
     }
 

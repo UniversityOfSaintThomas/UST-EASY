@@ -17,7 +17,7 @@
                     <apex:outputText value="{!group.instructions}" escape="false"/>
                 </p>
             </div>
-        </apex:outputPanel>
+        </apex:outputPanel>1    
 
         <apex:outputPanel rendered="{!group.isInternal && (group.response != null && group.response.Fulfilled_On__c != null)}">
             <div class="slds-text-body_regular">
@@ -481,20 +481,27 @@
                                                                             styleClass="bind-autocomplete slds-input slds-combobox__input"
                                                                             html-autocomplete="off" html-role="textbox" html-aria-autocomplete="list"
                                                                     />
-                                                                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
-                                                                  <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
-                                                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
-                                                                  </svg>
-                                                                </span>
+                                                                    <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right refRemoveButton" title="Remove selected option" style="display:none;">
+                                                                        <svg class="slds-button__icon" aria-hidden="true">
+                                                                            <use xxmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                                                        </svg>
+                                                                        <span class="slds-assistive-text">Remove selected option</span>
+                                                                    </button>
+                                                                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right refMagGlass">
+                                                                          <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default " aria-hidden="true">
+                                                                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                                                                          </svg>
+                                                                    </span>
                                                                 </div>
                                                                 <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
                                                                     <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                                                                     </ul>
                                                                 </div>
                                                             </div>
+                                                            <apex:inputHidden html-class="inputHidden" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
                                                         </div>
                                                     </div>
-                                                    <apex:inputHidden html-class="inputHidden" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
+
                                                 </apex:outputPanel>
 
                                                 <apex:inputField value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="form-control" rendered="{!question.question.New_Reference_Field__c == true}"/>
@@ -585,10 +592,10 @@
                         </apex:outputPanel>
 
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && !rr.isEditMode && !preventUpdates && group.isEditable}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" value="Edit" styleClass="slds-button slds-button_neutral slds-m-right-small">
+                            <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" value="Edit" onClick="showFormSpinner()" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_neutral slds-m-right-small">
                                 <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                             </apex:commandLink>
-                            <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" value="Delete" styleClass="slds-button slds-button_neutral">
+                            <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" value="Delete" onClick="showFormSpinner()" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_neutral">
                                 <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                             </apex:commandLink>
                         </apex:outputPanel>

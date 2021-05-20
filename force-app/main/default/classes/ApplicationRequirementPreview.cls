@@ -41,9 +41,9 @@ public class ApplicationRequirementPreview {
                 if(String.isNotBlank(app.Applicant_Type__c)){
                         appType = app.Applicant_Type__c;
                 }
-            /*OLD CONSTRUCTOR - THAD DID THIS*/
-//                req = new ApplicationRequirement(requirementId,app,true);
-//                req.init();
+
+                req = new ApplicationRequirement(requirementId,app,true);
+                req.init();
 
                 Set<String> fieldSetFields = new Set<String>();
                 for(FieldSetMember f : SObjectType.Application__c.fieldSets.Application_Preview_Filters.getFields()){

@@ -2,7 +2,7 @@
  - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 2/23/2021.
  -->
 
-<apex:component id="ApplicationChecklist" controller="ApplicationChecklistComponentController" allowDML="true">
+<apex:component id="ApplicationChecklist" controller="ApplicationChecklistComponentController">
     <apex:attribute name="applicationId" description="Current Application Id" type="Id" required="true" assignTo="{!appId}"/>
     <apex:attribute name="applicationControl" description="Current Application" type="Id" required="false" assignTo="{!appControlId}"/>
     <apex:attribute name="reqs" description="All requirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>

@@ -4,4 +4,9 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>ApplicationRegistration</label>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>113</minorNumber>
+        <namespace>hed</namespace>
+    </packageVersions>
 </ApexPage>

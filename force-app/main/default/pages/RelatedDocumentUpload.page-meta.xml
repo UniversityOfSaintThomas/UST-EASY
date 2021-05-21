@@ -6,7 +6,7 @@
     <label>RelatedDocumentUpload</label>
     <packageVersions>
         <majorNumber>1</majorNumber>
-        <minorNumber>112</minorNumber>
+        <minorNumber>113</minorNumber>
         <namespace>hed</namespace>
     </packageVersions>
 </ApexPage>

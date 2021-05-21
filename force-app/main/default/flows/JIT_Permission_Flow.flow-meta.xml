@@ -7,6 +7,7 @@
         <locationY>660</locationY>
         <actionName>JustInTimePermissionSets</actionName>
         <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>permissionSetNames</name>
             <value>
@@ -20,6 +21,7 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <description>User is an applicant so apply the Application Community permissions set</description>
         <name>Apply_Applicant_Permissions</name>
@@ -141,6 +143,7 @@
         <connector>
             <targetReference>Applicant_Permission_Set</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>

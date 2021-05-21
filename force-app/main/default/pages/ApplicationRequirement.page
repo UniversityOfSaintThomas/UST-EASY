@@ -1,7 +1,7 @@
 <apex:page controller="ApplicationRequirement" extensions="ApplicationProgressBar" action="{!init}" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0">
     <apex:composition template="Capricorn2020">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead/>
+            <c:ApplicationHead />
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
                     Visualforce.remoting.Manager.invokeAction(

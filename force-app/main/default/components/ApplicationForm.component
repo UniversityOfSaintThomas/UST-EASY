@@ -12,7 +12,7 @@
     <apex:form id="theForm">
         <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>
         <apex:outputPanel id="formPageMessages">
-            <apex:pageMessages/>
+            <apex:pageMessages />
         </apex:outputPanel>
         <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
         <script>
@@ -47,6 +47,6 @@
                 <p>This question group will not be complete until you click the "Save and Continue" button at the end of this grouping.</p>
             </div>
         </div>
-        <apex:componentBody/>
+        <apex:componentBody />
     </apex:form>
 </apex:component>

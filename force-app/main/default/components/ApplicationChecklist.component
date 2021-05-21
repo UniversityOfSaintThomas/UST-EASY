@@ -32,7 +32,7 @@
                                     <apex:repeat value="{!r.reqItems}" var="ri">
                                         <apex:outputPanel rendered="{!ri.display}" layout="none">
                                             <li>
-                                                <apex:outputText>{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
+                                                <apex:outputText >{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
                                             </li>
                                         </apex:outputPanel>
                                     </apex:repeat>

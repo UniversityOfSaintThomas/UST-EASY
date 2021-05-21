@@ -1,12 +1,12 @@
 <apex:page controller="ApplicationChecklist" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0" action="{!init}">
     <apex:composition template="Capricorn2020">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead/>
+            <c:ApplicationHead />
         </apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="Application Checklist" subtitle="{!IF(appControl.Hide_Term_Program__c, '', IF(ISBLANK(app.Intended_Program__r.Program_Name_on_Application__c), app.Intended_Program__r.Name, app.Intended_Program__r.Program_Name_on_Application__c) + ' - ' + app.Intended_Term_of_Entry__r.Name)}" appControl="{!appControl}" applicationIdBody="{!app.Id}">
                 <apex:form id="theForm">
-                    <apex:pageMessages/>
+                    <apex:pageMessages />
                     <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-p-right_medium">
                             <apex:repeat value="{!reqs}" var="r">
                                 <apex:outputPanel rendered="{!r.display}">

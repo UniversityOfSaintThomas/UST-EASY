@@ -5,7 +5,29 @@
     <description>College Education History Record</description>
     <label>College</label>
     <picklistValues>
+        <picklist>College_Courses_9th_Grade_On__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Diploma_GED_Earned__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Most_Recent_College_in_US__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>

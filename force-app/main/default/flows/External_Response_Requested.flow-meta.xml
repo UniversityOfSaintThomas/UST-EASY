@@ -16,7 +16,6 @@
         <connector>
             <targetReference>myDecision3</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -37,7 +36,6 @@
         <locationY>200</locationY>
         <actionName>Requirement_Response__c.Email_External_Reminder</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -45,7 +43,6 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>myVariable_waitStartTimeAssignment</name>
         <label>myVariable_waitStartTimeAssignment</label>
@@ -255,7 +252,6 @@
         <connector>
             <targetReference>myRule_1_A2</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>

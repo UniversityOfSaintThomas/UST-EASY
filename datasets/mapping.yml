@@ -560,11 +560,13 @@ Insert hed__Term__c:
   - Activate_Application_Date__c
   - Banner_Term_Code__c
   - CreatedDate
+  - Early_Action_End_Date__c
   - End_Application_Date__c
   - Housing_End_Date__c
   - Housing_Start_Date__c
   - LastModifiedDate
   - Name
+  - Regular_Decision_End_Date__c
   - Term_Code__c
   - Term_End_Date__c
   - Term_Friendly_Name__c
@@ -804,6 +806,7 @@ Insert Application_Payment__c:
   - Account_Number__c
   - Address_1__c
   - Address_2__c
+  - Applicant_Email__c
   - Card_Type__c
   - City__c
   - Country__c
@@ -830,6 +833,7 @@ Insert Application_Payment__c:
   - State__c
   - TouchNet_Ext_Trans_Id__c
   - TouchnetReceiptNumber__c
+  - Waived_Reason__c
   - Zip__c
   lookups:
     Admissions_Application__c:
@@ -1097,6 +1101,8 @@ Insert Application__c:
       table: Account
     Institution_Attending__c:
       table: Account
+    Intended_Program_Term__c:
+      table: Intended_Program_Term__c
     Intended_Program__c:
       table: Program__c
     Intended_Term_of_Entry__c:
@@ -1303,6 +1309,7 @@ Insert Contact:
   - UST_Account_Claimed__c
   - UST_Test_Contact__c
   - University_Banner_ID__c
+  - University_Banner_PIDM__c
   - University_Vanity_Email__c
   - hed__AlternateEmail__c
   - hed__Chosen_Full_Name__c
@@ -1368,6 +1375,31 @@ Insert Contact:
       table: hed__Language__c
     hed__Primary_Organization__c:
       table: Account
+Insert External_Course__c:
+  sf_object: External_Course__c
+  fields:
+  - CreatedDate
+  - Date_Reviewed__c
+  - External_Course_Number__c
+  - External_Course_Subject__c
+  - External_Course_Title__c
+  - LastModifiedDate
+  - Name
+  - Review_Result__c
+  - St_Thomas_Course_Credits__c
+  - St_Thomas_Course_Level__c
+  - St_Thomas_Course_Number__c
+  - St_Thomas_Course_Subject__c
+  - St_Thomas_Course_Title__c
+  lookups:
+    Course__c:
+      table: hed__Course__c
+    Effective_Term__c:
+      table: hed__Term__c
+    Institution__c:
+      table: Account
+    Reviewer__c:
+      table: Contact
 Insert Extracurricular_Activity__c:
   sf_object: Extracurricular_Activity__c
   fields:
@@ -1647,25 +1679,49 @@ Insert hed__Contact_Language__c:
 Insert hed__Education_History__c:
   sf_object: hed__Education_History__c
   fields:
+  - Admissions_Credit__c
+  - Associate_s_Degree_Detail__c
+  - CEEB_Code__c
+  - Certification_Expiration__c
+  - Certification_Organization__c
   - City__c
   - College_Courses_9th_Grade_On__c
   - Country__c
   - CreatedDate
+  - Currently_Attending__c
+  - Date_Received__c
   - Diploma_GED_Earned_Date__c
   - Diploma_GED_Earned__c
   - Education_History_Unique_External_ID__c
+  - Evaluated__c
+  - Final_Transcript__c
   - Holding_Name__c
+  - Internal_Comments__c
   - LastModifiedDate
+  - MnTC_Satisfied__c
   - Most_Recent_College_in_US__c
+  - Name_Different_on_Transcript__c
+  - Official_Credit__c
+  - Official_Degree__c
+  - Official_Graduation_Date__c
+  - Official_Transcript__c
   - Postal_Code__c
+  - Primary_Bachelor_Institution__c
   - Primary_High_School__c
+  - Quality_Points__c
   - RecordTypeId
   - Related_Object_JSON__c
   - School_Not_Found__c
+  - Self_Reported_Major__c
   - State__c
   - Street__c
   - Transcript_Evaluator__c
+  - Transcript_Other_First_Name__c
+  - Transcript_Other_Last_Name__c
+  - Transcript_Other_M_I__c
   - Transcripts_Evaluated_Previously__c
+  - Trigger_Opportunity_Update__c
+  - Type_of_Certification__c
   - User_Created__c
   - hed__Class_Percentile__c
   - hed__Class_Rank_Scale__c
@@ -1688,6 +1744,8 @@ Insert hed__Education_History__c:
   - hed__Verification_Status_Date__c
   - hed__Verification_Status__c
   lookups:
+    Official_Major__c:
+      table: Account
     hed__Academic_Certification__c:
       table: hed__Academic_Certification__c
     hed__Account__c:
@@ -1697,6 +1755,7 @@ Insert hed__Education_History__c:
 Insert hed__Test__c:
   sf_object: hed__Test__c
   fields:
+  - ACT_Combined_English_Writing_Score__c
   - ACT_Composite_Date__c
   - ACT_Composite_Score__c
   - ACT_English_Date__c
@@ -1708,12 +1767,56 @@ Insert hed__Test__c:
   - ACT_Science_Date__c
   - ACT_Science_Score__c
   - ACT_Total_Score__c
+  - ACT_Writing_EW_Date__c
+  - ACT_Writing_Score__c
+  - ACT_Writing_WR_Date__c
+  - AP_Test_Type__c
+  - Banner_Code__c
   - CreatedDate
   - Future_ACT_SAT_Times__c
+  - GMAT_Analytical_Writing_Assessment__c
+  - GMAT_Analytical_Writing_Percentile__c
+  - GMAT_Integrated_Reasoning_Percentile__c
+  - GMAT_Integrated_Reasoning_Score__c
+  - GMAT_Quantitative_Percentile__c
+  - GMAT_Quantitative_Scaled_Score__c
+  - GMAT_Total_Percentile__c
+  - GMAT_Total_Scaled_Score__c
+  - GMAT_Verbal_Percentile__c
+  - GMAT_Verbal_Scaled_Score__c
+  - GRE_Analytical_Writing_Percentile__c
+  - GRE_Analytical_Writing_Score__c
+  - GRE_Quantitative_Reasoning_Percentile__c
+  - GRE_Quantitative_Reasoning_Score__c
+  - GRE_Verbal_Reasoning_Percentile__c
+  - GRE_Verbal_Reasoning_Score__c
   - Have_you_taken_the_ACT_SAT__c
   - Holding_Name__c
+  - IELTS_Listening_Score__c
+  - IELTS_Overall_Band_Score__c
+  - IELTS_Reading_Score__c
+  - IELTS_Speaking_Score__c
+  - IELTS_Writing_Score__c
+  - LSAT_Percentile__c
+  - LSAT_Scaled_Score__c
   - LastModifiedDate
+  - MAT_Percentile_for_Intended_Major__c
+  - MAT_Percentile_for_Total_Group__c
+  - MAT_Scaled_Score__c
+  - MN_NES_Math__c
+  - MN_NES_Reading__c
+  - MN_NES_Writing__c
+  - Math_Passed__c
+  - Other_Test_Name__c
+  - Other_Test_Score__c
+  - Placement__c
   - Planned_Future_Test_Sittings__c
+  - Praxis_Math_PPSM__c
+  - Praxis_Passed_Not_Passed__c
+  - Praxis_Reading_PPSR__c
+  - Praxis_Writing_PPSW__c
+  - QUAT_Score__c
+  - Reading_Passed__c
   - RecordTypeId
   - Related_Object_JSON__c
   - SAT_Composite_Date__c
@@ -1727,8 +1830,19 @@ Insert hed__Test__c:
   - SAT_Writing_Score__c
   - Self_Reported_Test_Acknowledgement_Date__c
   - Self_Reported_Test_Acknowledgement__c
+  - TOEFL_Listening_Score__c
+  - TOEFL_Reading_Score__c
+  - TOEFL_Speaking_Score__c
+  - TOEFL_Total_Score__c
+  - TOEFL_Writing_Score__c
   - Take_ACT_SAT_Times__c
+  - Test_Code_Origin__c
+  - Test_Date__c
+  - Test_Name__c
+  - Test_Result__c
+  - Test_Score_Status__c
   - User_Created__c
+  - Writing_Passed__c
   - hed__Credentialing_Identifier__c
   - hed__Credits_Earned__c
   - hed__Date_Received__c
@@ -1737,9 +1851,42 @@ Insert hed__Test__c:
   - hed__Test_Type__c
   - hed__Verification_Status_Date__c
   - hed__Verification_Status__c
+  - old_GRE_Analytical_Percentile__c
+  - old_GRE_Analytical_Score__c
+  - old_GRE_Quantitative_Reasoning_Percenti__c
+  - old_GRE_Quantitative_Reasoning_Score__c
+  - old_GRE_Verbal_Reasoning_Percentile__c
+  - old_GRE_Verbal_Reasoning_Score__c
   lookups:
     hed__Contact__c:
       table: Contact
+Insert External_Course_Connection__c:
+  sf_object: External_Course_Connection__c
+  fields:
+  - Course_Not_Found_Course_Title__c
+  - Course_Not_Found__c
+  - CreatedDate
+  - Credits__c
+  - Educational_Institution_Not_Found_Name__c
+  - Effective_Term__c
+  - External_Course_Number__c
+  - Holding_Name__c
+  - LastModifiedDate
+  - Not_Found_External_Course_Subject__c
+  - Related_Object_JSON__c
+  - School_Not_Found__c
+  - User_Created__c
+  lookups:
+    Education_History__c:
+      table: hed__Education_History__c
+    Educational_Institution__c:
+      table: Account
+    External_Course__c:
+      table: External_Course__c
+    Student__c:
+      table: Contact
+    Term_Taken__c:
+      table: hed__Term__c
 Insert Opportunity:
   sf_object: Opportunity
   fields:
@@ -1866,6 +2013,7 @@ Insert Opportunity:
   - State__c
   - Submitted_Date__c
   - Substantive_Visits_Estimate__c
+  - Transaction_ID__c
   - Transaction_this_year__c
   - Tribal_Identity__c
   - Tribe_Enrolled_Ind__c

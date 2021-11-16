@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Undergraduate</fullName>
+    <active>true</active>
+    <description>For Undergraduate Recruitment</description>
+    <label>Undergraduate</label>
+    <picklistValues>
+        <picklist>Audience__c</picklist>
+        <values>
+            <fullName>Administrators</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Community Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DFC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>First-Year</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>First-Year International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate Students</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paraprofessionals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Principals</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teachers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Undergraduate Students</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Intention_of_Visit__c</picklist>
+        <values>
+            <fullName>Financial Aid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recruitment</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Subtype__c</picklist>
+        <values>
+            <fullName>Career Fair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College Fair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corporate Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diversity Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Aid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High School Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professional Conference</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer Fair</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tracking_Status__c</picklist>
+        <values>
+            <fullName>Attended</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Canceled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Did Not Attend</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduled</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Classroom Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College Planning Days</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Community Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Evening Program</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recruitment</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

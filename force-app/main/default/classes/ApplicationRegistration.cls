@@ -152,7 +152,7 @@ public class ApplicationRegistration {
 
             Id uId;
             if (!Test.isRunningTest() && pass.equals(passConfirm)) {
-                uId = Site.createExternalUser(u, con.AccountId, pass, true);
+                uId = Site.createExternalUser(u, con.AccountId, pass, false);
                 if (uId == null) {
                     throw new ApplicationUtilities.ApplicationException('Error occurred when creating user.', true, true);
                 }

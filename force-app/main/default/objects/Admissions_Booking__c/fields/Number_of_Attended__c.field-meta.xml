@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_Attended__c</fullName>
+    <description>Intended to capture how many student showed up, knowing that not everyone completed an inquiry card</description>
+    <externalId>false</externalId>
+    <inlineHelpText>How many showed up?</inlineHelpText>
+    <label>Number of Attended</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

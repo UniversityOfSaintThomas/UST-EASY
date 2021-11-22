@@ -17,7 +17,7 @@
                     <apex:outputText value="{!group.instructions}" escape="false"/>
                 </p>
             </div>
-        </apex:outputPanel>1    
+        </apex:outputPanel>
 
         <apex:outputPanel rendered="{!group.isInternal && (group.response != null && group.response.Fulfilled_On__c != null)}">
             <div class="slds-text-body_regular">
@@ -50,7 +50,7 @@
                                 <apex:variable value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" var="readOnlyInput"/>
 
                                 <!-- Label for input -->
-                                <apex:outputPanel rendered="{!question.fieldType != 'Address' && !ISBLANK(question.label)}" layout="none">
+                                <apex:outputPanel rendered="{!question.fieldType != 'Address' && !ISBLANK(question.label) && question.fieldType != 'Checkbox'}" layout="none">
                                     <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
                                         {!question.label}  (field type: {!question.fieldType} - 1st group)
                                         <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
@@ -98,9 +98,15 @@
 
                                 <!-- Multi Checkbox -->
                                 <apex:outputPanel rendered="{!question.fieldType == 'Checkbox'}" layout="block" styleClass="slds-form-element__control">
-                                    <div class="slds-checkbox">
+                                    <apex:outputPanel layout="block" styleClass="slds-checkbox">
                                         <apex:inputCheckbox id="checkBoxField" onchange="reRenderAllGroups();" value="{!question.response.ValueCheckbox__c}" styleClass=" {!readOnlyInput}"/>
-                                    </div>
+                                        <label class="slds-checkbox__label">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label">
+                                                {!question.label}  (field type: {!question.fieldType} - 1st group)
+                                            </span>
+                                        </label>
+                                    </apex:outputPanel>
                                 </apex:outputPanel>
 
                                 <!-- Reference -->
@@ -365,7 +371,7 @@
                                             <!-- Label for input -->
                                             <apex:outputPanel rendered="{!question.fieldType != 'Address'}">
                                                 <label class="slds-form-element__label this_label_1 slds-p-vertical_x-small slds-text-body_regular">
-                                                    {!question.label}  {!question.label}  (field type: {!question.fieldType} - 2nd group - Radio: {!question.radio})
+                                                    {!question.label}  (field type: {!question.fieldType} - 2nd group - Radio: {!question.radio})
                                                     <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
                                                         <abbr class='slds-required' title='required'>* </abbr>
                                                     </apex:outputPanel>
@@ -375,28 +381,28 @@
                                             <!-- Multi Checkbox -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Checkbox'}" layout="block" styleClass="slds-form-element__control">
                                                 <div class="slds-checkbox">
-                                                    <apex:inputCheckbox id="checkBoxField" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass=" {!qId} {!readOnlyInput}"/>
+                                                    <apex:inputCheckbox id="checkBoxField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass=" {!qId} {!readOnlyInput}"/>
                                                 </div>
                                             </apex:outputPanel>
 
                                             <!-- Currency -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Currency'}" layout="block" styleClass="slds-form-element__control">
-                                                <apex:inputField id="CurrencyField" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(rr.obj))}"/>
+                                                <apex:inputField id="CurrencyField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(rr.obj))}"/>
                                             </apex:outputPanel>
 
                                             <!--Date Box-->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Date'}" layout="block" styleClass="slds-form-element__control">
-                                                <apex:inputField id="DateField" type="date" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
+                                                <apex:inputField id="DateField1" type="date" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- Date Time -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'DateTime'}" layout="block" styleClass="slds-form-element__control">
-                                                <apex:inputField id="dateTimeField" type="datetime-local" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
+                                                <apex:inputField id="dateTimeField1" type="datetime-local" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- Decimal -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'}" layout="block" styleClass="slds-form-element__control">
-                                                <apex:inputField id="numberField" type="number" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
+                                                <apex:inputField id="numberField1" type="number" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!--Email-->
@@ -404,7 +410,7 @@
                                                 <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
                                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#email")}"></use>
                                                 </svg>
-                                                <apex:inputField id="field" type="email" styleClass="slds-input {!qId} {!readOnlyInput}" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
+                                                <apex:inputField id="field1" type="email" styleClass="slds-input {!qId} {!readOnlyInput}" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
                                                 <apex:commandLink styleClass="btn-lightning" style="width:1%;display:table-cell;color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder{!group.item.Id}();" oncomplete="appHideLoadingSpinner();pageLoadReRendered();" reRender="none" rendered="{!!preventUpdates && question.isEditable && question.question.External_Email_Field__c == true}"/>
                                             </apex:outputPanel>
 
@@ -416,7 +422,7 @@
                                             <!-- Multi Picklist -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
                                                 <div class="slds-checkbox">
-                                                    <apex:selectCheckboxes id="multiPicklistField" value="{!rr.multiPicklistValues[question.question.Related_Object_Field__c].multiPicklistValues}" layout="pageDirection" styleClass="slds-tabled-checklist {!readOnlyInput}">
+                                                    <apex:selectCheckboxes id="multiPicklistField1" value="{!rr.multiPicklistValues[question.question.Related_Object_Field__c].multiPicklistValues}" layout="pageDirection" styleClass="slds-tabled-checklist {!readOnlyInput}">
                                                         <apex:selectOptions value="{!question.options}"/>
                                                         <apex:actionSupport event="onchange" reRender="theTable" onSubmit="showFormSpinner();" onComplete="hideFormSpinner();"/>
                                                     </apex:selectCheckboxes>
@@ -425,20 +431,20 @@
 
                                             <!-- Percent -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Percent'}" layout="block" styleClass="slds-form-element__control">
-                                                <apex:inputField id="percentField" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
+                                                <apex:inputField id="percentField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- Phone -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" layout="block" styleClass="slds-form-element__control">
-                                                <apex:inputField id="phoneField" type="tel" styleClass="slds-input {!qId} {!readOnlyInput}" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
+                                                <apex:inputField id="phoneField1" type="tel" styleClass="slds-input {!qId} {!readOnlyInput}" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
                                             </apex:outputPanel>
 
                                             <!--Plain Picklist - no radio -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element__control">
                                                 <div class="slds-select_container">
-                                                    <apex:selectList id="picklistField" value="{!rr.obj[question.question.Related_Object_Field__c]}" size="1" styleClass="slds-select {!qId} {!readOnlyInput}">
+                                                    <apex:selectList id="picklistField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" size="1" styleClass="slds-select {!qId} {!readOnlyInput}">
                                                         <apex:selectOptions value="{!question.options}"/>
-                                                        <apex:actionSupport event="onchange" reRender="theTable" onSubmit="showFormSpinner();" onComplete="hideFormSpinner();"/>
+                                                        <apex:actionSupport event="onchange" reRender="theTable" onBeforeDomUpdate="showFormSpinner();" onComplete="hideFormSpinner();pageLoadReRendered();"/>
                                                     </apex:selectList>
                                                 </div>
                                             </apex:outputPanel>
@@ -475,11 +481,10 @@
                                                                  data-groupitemid="{!group.Item.Id}"
                                                             >
                                                                 <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
-                                                                    <apex:inputText
-                                                                            value="{!rr.obj['Holding_Name__c']}"
-                                                                            id="combobox"
-                                                                            styleClass="bind-autocomplete slds-input slds-combobox__input"
-                                                                            html-autocomplete="off" html-role="textbox" html-aria-autocomplete="list"
+                                                                    <apex:inputText value="{!rr.obj['Holding_Name__c']}"
+                                                                                    id="combobox"
+                                                                                    styleClass="bind-autocomplete slds-input slds-combobox__input"
+                                                                                    html-autocomplete="off" html-role="textbox" html-aria-autocomplete="list"
                                                                     />
                                                                     <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right refRemoveButton" title="Remove selected option" style="display:none;">
                                                                         <svg class="slds-button__icon" aria-hidden="true">
@@ -515,12 +520,12 @@
 
                                             <!--Text Box-->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Text'}" layout="block" styleClass="slds-form-element__control">
-                                                <apex:inputField id="textField" styleClass="slds-input {!qId} {!readOnlyInput}" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
+                                                <apex:inputField id="textField1" styleClass="slds-input {!qId} {!readOnlyInput}" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
                                             </apex:outputPanel>
 
                                             <!-- TextArea -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'TextArea'}" layout="block" styleClass="slds-form-element__control">
-                                                <apex:inputField id="textAreaField" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
+                                                <apex:inputField id="textAreaField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- LongTextArea -->
@@ -530,7 +535,7 @@
 
                                             <!-- URL -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'URL'}" layout="block" styleClass="slds-form-element__control">
-                                                <apex:inputField id="urlField" type="url" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
+                                                <apex:inputField id="urlField1" type="url" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
 
@@ -565,7 +570,7 @@
                                                         HERE 4
                                                         <label for="state1Picklist">{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
                                                         <div class="statePicklist {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
-                                                            <apex:inputField id="state1Picklist" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                                            <apex:inputField id="state1Picklist1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
                                                         </div>
                                                     </div>
                                                 </apex:outputPanel>
@@ -766,7 +771,6 @@
                                         </p>
                                     </div>
                                 </apex:outputPanel>
-
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'TextEncrypted'}">
                                     <div class="form-group">

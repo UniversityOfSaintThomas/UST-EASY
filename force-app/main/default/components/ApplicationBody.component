@@ -52,7 +52,7 @@
 
             <!-- BODY -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                <apex:componentBody/>
+                <apex:componentBody />
             </apex:outputPanel>
 
             <!-- BOTTOM WIDGETS -->

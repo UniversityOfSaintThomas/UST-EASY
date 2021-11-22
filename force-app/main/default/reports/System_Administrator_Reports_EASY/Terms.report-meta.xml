@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>hed__Term__c$Id</field>
+    </columns>
+    <columns>
+        <field>hed__Term__c$Name</field>
+    </columns>
+    <columns>
+        <field>hed__Term__c$Term_Integration_External_Id__c</field>
+    </columns>
+    <columns>
+        <field>hed__Term__c$CreatedDate</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Terms</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Terms__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>hed__Term__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

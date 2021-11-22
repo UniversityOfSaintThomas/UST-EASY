@@ -9,6 +9,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Opportunity_First_Recruitment_Program</fullName>
@@ -19,6 +20,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Opportunity_Key_Set_Based_on_Career</fullName>
@@ -40,6 +42,7 @@ IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academ
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Opportunity_Name_Set_to_Last_Term</fullName>
@@ -50,6 +53,7 @@ IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academ
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Opportunity_Set_First_Inquiry_Source</fullName>
@@ -60,6 +64,7 @@ IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academ
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Opportunity_Set_Inquiry_Date</fullName>
@@ -70,6 +75,7 @@ IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academ
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Record_Type_Set_to_Applicant</fullName>
@@ -81,6 +87,7 @@ IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academ
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Record_Type_Set_to_Inquiry</fullName>
@@ -92,6 +99,7 @@ IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academ
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <rules>
         <fullName>Opportunity%3A Set Applicant Record Type</fullName>

@@ -39,7 +39,98 @@ public class ApplicationUtilities {
     public class AdditionalDataWrapper {
         Map<String, Map<String,Object>> additionalData;
     }
-    
+
+    public String createEncryptedCookie(String audience, String instanceId, String eventId, String registrationId) {
+
+        //Check everything to not let nulls through to JSON string
+        audience = (String.isNotBlank(audience) && !audience.equalsIgnoreCase('null')) ? audience : '';
+        instanceId = (String.isNotBlank(instanceId) && !instanceId.equalsIgnoreCase('null')) ? instanceId : '';
+        eventId = (String.isNotBlank(eventId) && !eventId.equalsIgnoreCase('null')) ? eventId : '';
+        registrationId = (String.isNotBlank(registrationId) && !registrationId.equalsIgnoreCase('null')) ? registrationId : '';
+        String CookieValue = '{"audience":"' + audience + '","instanceId":"' + instanceId + '","eventId":"' + eventId + '","registrationId":"' + registrationId + '","dt":"' + String.valueOf(Datetime.now()) + '"}';
+        String encodedCipherText = '';
+        String key = getCookieKey();
+        if (String.isNotBlank(String.valueOf(key))) {
+            Blob data = Blob.valueOf(CookieValue);
+            Blob encrypted = Crypto.encryptWithManagedIV('AES256', Blob.valueOf(key), data);
+            encodedCipherText = EncodingUtil.base64Encode(encrypted);
+            encodedCipherText = EncodingUtil.urlEncode(encodedCipherText, 'UTF-8');
+            Cookie SummitEventsCookie = new Cookie('SummitEvents', encodedCipherText, null, -1, false);
+            ApexPages.currentPage().setCookies(new Cookie[]{
+                    SummitEventsCookie
+            });
+        }
+        return encodedCipherText;
+    }
+
+    public String getDecryptCookie() {
+        String CookieName = 'SummitEvents';
+        Cookie encodedCipherText = ApexPages.currentPage().getCookies().get(CookieName);
+        if (encodedCipherText != null) {
+            return decryptString(encodedCipherText.getValue(), true);
+        }
+        return '';
+    }
+
+    public String decryptString(String encryptedString, Boolean urlDecodeString) {
+        String key = getCookieKey();
+        if (String.isNotBlank(encryptedString) && String.isNotBlank(String.valueOf(key))) {
+            if (urlDecodeString) {
+                encryptedString = EncodingUtil.urlDecode(encryptedString, 'UTF-8');
+            }
+            try {
+                Blob decrypted = Crypto.decryptWithManagedIV(
+                        'AES256',
+                        Blob.valueOf(key),
+                        EncodingUtil.base64Decode(encryptedString)
+                );
+                return decrypted.toString();
+            } catch (Exception e) {
+                return '';
+            }
+        }
+        return '';
+    }
+
+    public String getCookieKey() {
+        String key = '';
+        Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+        if (String.isNotBlank(AppSettings.Cookie_Encryption_Key__c)) {
+            key = AppSettings.Cookie_Encryption_Key__c;
+        }
+        return key;
+    }
+
+    private without sharing class crudToDo {
+        public void setCookieKey() {
+            Application_Setting__c SummitEventsSettings = Application_Setting__c.getOrgDefaults();
+            if (String.isBlank(SummitEventsSettings.Cookie_Encryption_Key__c)) {
+                Blob cryptoKey = Crypto.generateAesKey(256);
+                String encryptionString = EncodingUtil.base64Encode(cryptoKey).substring(0, 32);
+                SummitEventsSettings.Cookie_Encryption_Key__c = encryptionString;
+                update SummitEventsSettings;
+            }
+        }
+    }
+
+    public String getTemplate(String templateName) {
+        List<String> namespaceTemplate = new List<String>{
+                'GeneralSLDS',
+                'crowncollege2020',
+                'OPUSTemplate2018',
+                'CastorTemplate2017'
+        };
+        if (String.isNotBlank(templateName)) {
+            if (!namespaceTemplate.contains(templateName)) {
+                templateName = 'c__' + templateName;
+            }
+        } else {
+            templateName = 'GeneralSLDS';
+        }
+        return templateName;
+    }
+
+
     // Custom exception class for validation
     public class ApplicationException extends Exception {
         

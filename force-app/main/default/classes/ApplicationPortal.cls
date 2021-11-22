@@ -32,7 +32,9 @@ public class ApplicationPortal {
             applicationsByIds = new Map<Id, Application__c>([
                     SELECT Id, Application_Control__c, Application_Control__r.Id
                     FROM Application__c
-                    WHERE Contact__c = :contactId AND Intended_Term_of_Entry__r.Term_Status_Type__c = 'FUTURE'
+                    WHERE Contact__c = :contactId
+                    //TODO: reinstate FUTURE in this query
+                    //AND Intended_Term_of_Entry__r.Term_Status_Type__c = 'FUTURE'
                     ORDER BY Name
             ]);
 

@@ -14,9 +14,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>GED</fullName>
+                <fullName>None</fullName>
                 <default>false</default>
-                <label>GED</label>
+                <label>None</label>
             </value>
             <value>
                 <fullName>High School Diploma</fullName>
@@ -24,59 +24,105 @@
                 <label>High School Diploma</label>
             </value>
             <value>
-                <fullName>AA</fullName>
+                <fullName>Associates</fullName>
                 <default>false</default>
-                <label>AA</label>
+                <label>Associates</label>
             </value>
             <value>
-                <fullName>AS</fullName>
+                <fullName>Bachelors</fullName>
                 <default>false</default>
-                <label>AS</label>
+                <label>Bachelors</label>
             </value>
             <value>
-                <fullName>BA</fullName>
+                <fullName>Masters</fullName>
                 <default>false</default>
-                <label>BA</label>
+                <label>Masters</label>
             </value>
             <value>
-                <fullName>BS</fullName>
+                <fullName>Doctoral</fullName>
                 <default>false</default>
-                <label>BS</label>
+                <label>Doctoral</label>
             </value>
             <value>
-                <fullName>MA</fullName>
+                <fullName>Certificate</fullName>
                 <default>false</default>
-                <label>MA</label>
+                <label>Certificate</label>
             </value>
             <value>
-                <fullName>MBA</fullName>
+                <fullName>Post Graduate Diploma</fullName>
                 <default>false</default>
-                <label>MBA</label>
-            </value>
-            <value>
-                <fullName>MS</fullName>
-                <default>false</default>
-                <label>MS</label>
-            </value>
-            <value>
-                <fullName>JD</fullName>
-                <default>false</default>
-                <label>JD</label>
-            </value>
-            <value>
-                <fullName>MD</fullName>
-                <default>false</default>
-                <label>MD</label>
-            </value>
-            <value>
-                <fullName>PhD</fullName>
-                <default>false</default>
-                <label>PhD</label>
+                <label>Post Graduate Diploma</label>
             </value>
             <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
+            </value>
+            <value>
+                <fullName>AA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>AA</label>
+            </value>
+            <value>
+                <fullName>AS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>AS</label>
+            </value>
+            <value>
+                <fullName>BA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BA</label>
+            </value>
+            <value>
+                <fullName>BS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BS</label>
+            </value>
+            <value>
+                <fullName>GED</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>GED</label>
+            </value>
+            <value>
+                <fullName>JD</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>JD</label>
+            </value>
+            <value>
+                <fullName>MA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MA</label>
+            </value>
+            <value>
+                <fullName>MBA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MBA</label>
+            </value>
+            <value>
+                <fullName>MD</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MD</label>
+            </value>
+            <value>
+                <fullName>MS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MS</label>
+            </value>
+            <value>
+                <fullName>PhD</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>PhD</label>
             </value>
         </valueSetDefinition>
     </valueSet>

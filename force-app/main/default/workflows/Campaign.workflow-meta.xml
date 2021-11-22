@@ -9,6 +9,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <rules>
         <fullName>Campaign%3A Update Campaign Key</fullName>

@@ -109,7 +109,7 @@
                             <apex:inputField id="postal1" value="{!obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','PostalCode')]}" styleClass="form-control {!if(question.isEditable,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
                         </div>
                     </apex:outputPanel>
-                    <apex:outputPanel>
+                    <apex:outputPanel >
                         <script>
                             jQuery('.statePicklist').unbind('DOMNodeInserted').on('DOMNodeInserted', function () {
                                 jQuery('.statePicklist select:not(.form-control)').addClass('form-control');

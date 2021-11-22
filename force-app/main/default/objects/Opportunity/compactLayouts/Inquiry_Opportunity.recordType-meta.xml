@@ -21,6 +21,39 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Citizenship__c</picklist>
+        <values>
+            <fullName>International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>U%2ES%2E Citizen</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>College_of_Interest__c</picklist>
+        <values>
+            <fullName>2 Year College</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 Year College</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Degree_Level__c</picklist>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Undergraduate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ForecastCategoryName</picklist>
         <values>
             <fullName>Best Case</fullName>
@@ -40,6 +73,53 @@
         </values>
         <values>
             <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Heard_About_Us__c</picklist>
+        <values>
+            <fullName>Alumni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College Fair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Family</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Friend</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Google Search</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HS Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info Session</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Newspaper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Radio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>St%2E Thomas Website</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -70,6 +150,17 @@
         </values>
         <values>
             <fullName>Level 5%2FVolunteer%2FNetworker</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Receive_Texts__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>

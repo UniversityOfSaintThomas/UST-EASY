@@ -133,11 +133,10 @@ private static void permissionAdminUser() {
 }
 
 private static void setEASYCustomSettings() {
-    Site site = [
-            SELECT GuestUserId
-            FROM Site
-            WHERE Name = 'EASY_Applicant_Portal'
-    ];
+
+    Site mySite = [SELECT Id FROM Site WHERE Name = 'EASY_Applicant_Portal'];
+    SiteDetail mySiteDetail = [SELECT SecureURL FROM SiteDetail WHERE DurableId = :mySite.Id];
+    String url = mySiteDetail.SecureURL;
 
     List<Profile> easyProfile = [
             SELECT Name, Id
@@ -150,12 +149,6 @@ private static void setEASYCustomSettings() {
             FROM PermissionSet
             WHERE Name = 'Application_Community'
     ];
-
-    String path = '/sites/servlet.SiteDebugMode';
-    PageReference pr = new PageReference(path);
-    pr.getParameters().put('guid', site.GuestUserId);
-    pr.getParameters().put('sitedebugmode', 'x');
-    String url = pr.getContent().toString().substringAfter('URL=').substringBefore(path);
 
     Application_Setting__c applicationSettings = Application_Setting__c.getOrgDefaults();
     applicationSettings.Community_URL__c = url;

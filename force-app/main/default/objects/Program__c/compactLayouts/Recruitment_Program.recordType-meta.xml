@@ -218,6 +218,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>First_License__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Generic_Filter_1__c</picklist>
         <values>
             <fullName>AS_AH_MA%7CARTH</fullName>
@@ -2079,6 +2090,33 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>License_Area__c</picklist>
+        <values>
+            <fullName>Academic Behavioral Strategist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autism Spectrum Disorders</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Developmental Disabilities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Early Childhood Special Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emotional Behavioral Disorders</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Learning Disabilities</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Number_of_Applications_Limit__c</picklist>
         <values>
             <fullName>One Application</fullName>
@@ -2098,6 +2136,33 @@
         </values>
         <values>
             <fullName>One Application Per Term and Program</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Program_Bucket__c</picklist>
+        <values>
+            <fullName>Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education Leadership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master%27s</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teacher Education</fullName>
             <default>false</default>
         </values>
     </picklistValues>

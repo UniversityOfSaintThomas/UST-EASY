@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Music__c</fullName>
+    <externalId>false</externalId>
+    <label>Music</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Band</fullName>
+                <default>false</default>
+                <label>Band</label>
+            </value>
+            <value>
+                <fullName>Choir</fullName>
+                <default>false</default>
+                <label>Choir</label>
+            </value>
+            <value>
+                <fullName>Orchestra</fullName>
+                <default>false</default>
+                <label>Orchestra</label>
+            </value>
+            <value>
+                <fullName>Guitar</fullName>
+                <default>false</default>
+                <label>Guitar</label>
+            </value>
+            <value>
+                <fullName>Piano</fullName>
+                <default>false</default>
+                <label>Piano</label>
+            </value>
+            <value>
+                <fullName>Digital Composition</fullName>
+                <default>false</default>
+                <label>Digital Composition</label>
+            </value>
+            <value>
+                <fullName>Major</fullName>
+                <default>false</default>
+                <label>Major</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

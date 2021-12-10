@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sport_Type_1__c</fullName>
+    <description>Contact Special_Athlete_Type_1__c</description>
+    <externalId>false</externalId>
+    <label>Sport Type 1</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Regular</fullName>
+                <default>false</default>
+                <label>Regular</label>
+            </value>
+            <value>
+                <fullName>Blue Chip/Coach Priority</fullName>
+                <default>false</default>
+                <label>Blue Chip/Coach Priority</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

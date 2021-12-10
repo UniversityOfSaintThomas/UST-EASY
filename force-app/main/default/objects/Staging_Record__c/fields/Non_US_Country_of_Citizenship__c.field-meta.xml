@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_US_Country_of_Citizenship__c</fullName>
+    <description>Non US Country of Citizenship load initially built for ELS load.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Non US Country of Citizenship load initially built for ELS load.</inlineHelpText>
+    <label>Non US Country of Citizenship</label>
+    <length>40</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

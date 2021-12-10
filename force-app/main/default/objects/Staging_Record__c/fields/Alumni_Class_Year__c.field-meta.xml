@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alumni_Class_Year__c</fullName>
+    <description>The field was initially created to capture the Alumni&apos;s Class Year with the referral form.</description>
+    <externalId>false</externalId>
+    <label>Alumni Class Year</label>
+    <length>4</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

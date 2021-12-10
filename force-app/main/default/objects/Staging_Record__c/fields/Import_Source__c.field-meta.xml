@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Import_Source__c</fullName>
+    <externalId>false</externalId>
+    <label>Import Source</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>ACT</fullName>
+                <default>false</default>
+                <label>ACT</label>
+            </value>
+            <value>
+                <fullName>A Default</fullName>
+                <default>false</default>
+                <label>A Default</label>
+            </value>
+            <value>
+                <fullName>Alumni Referral Program</fullName>
+                <default>false</default>
+                <label>Alumni Referral Program</label>
+            </value>
+            <value>
+                <fullName>Banner Conversion</fullName>
+                <default>false</default>
+                <label>Banner Conversion</label>
+            </value>
+            <value>
+                <fullName>Coach List</fullName>
+                <default>false</default>
+                <label>Coach List</label>
+            </value>
+            <value>
+                <fullName>College Fair</fullName>
+                <default>false</default>
+                <label>College Fair</label>
+            </value>
+            <value>
+                <fullName>Common App</fullName>
+                <default>false</default>
+                <label>Common App</label>
+            </value>
+            <value>
+                <fullName>Common App Partial</fullName>
+                <default>false</default>
+                <label>Common App Partial</label>
+            </value>
+            <value>
+                <fullName>ELS Pathways</fullName>
+                <default>false</default>
+                <label>ELS Pathways</label>
+            </value>
+            <value>
+                <fullName>FAFSA</fullName>
+                <default>false</default>
+                <label>FAFSA</label>
+            </value>
+            <value>
+                <fullName>FAFSA Suspense</fullName>
+                <default>false</default>
+                <label>FAFSA Suspense</label>
+            </value>
+            <value>
+                <fullName>Fire Engine Red</fullName>
+                <default>false</default>
+                <label>Fire Engine Red</label>
+            </value>
+            <value>
+                <fullName>Generic</fullName>
+                <default>false</default>
+                <label>Generic</label>
+            </value>
+            <value>
+                <fullName>HS_Employee_Test</fullName>
+                <default>false</default>
+                <label>HS_Employee_Test</label>
+            </value>
+            <value>
+                <fullName>MN Private Colleges</fullName>
+                <default>false</default>
+                <label>MN Private Colleges</label>
+            </value>
+            <value>
+                <fullName>OCB Migration</fullName>
+                <default>false</default>
+                <label>OCB Migration</label>
+            </value>
+            <value>
+                <fullName>OCB Migration - Matched</fullName>
+                <default>false</default>
+                <label>OCB Migration - Matched</label>
+            </value>
+            <value>
+                <fullName>Purchased List</fullName>
+                <default>false</default>
+                <label>Purchased List</label>
+            </value>
+            <value>
+                <fullName>RaiseMe</fullName>
+                <default>false</default>
+                <label>RaiseMe</label>
+            </value>
+            <value>
+                <fullName>SAT</fullName>
+                <default>false</default>
+                <label>SAT</label>
+            </value>
+            <value>
+                <fullName>Search</fullName>
+                <default>false</default>
+                <label>Search</label>
+            </value>
+            <value>
+                <fullName>Test_2</fullName>
+                <default>false</default>
+                <label>Test_2</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

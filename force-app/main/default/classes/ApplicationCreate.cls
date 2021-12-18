@@ -12,7 +12,8 @@ public class ApplicationCreate {
     public Map<Id, Program__c> intendedPrograms { get; set; }
     public transient String additionalDataString { get; set; }
     public Set<String> contactFields { get; set; }
-    public String degreeType {get; set; }
+    public String degreeType { get; set; }
+    public Id academictermId { get; set; }
 
     public Application_Control__c appControl {
         get {
@@ -153,23 +154,9 @@ public class ApplicationCreate {
             dLQuestion = new ApplicationQuestion(con, app, '', app, 'Degree_Type__c');
             dLQuestion.addQuestionObject(new Question__c(Label__c = 'What type of degree are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Level', Picklist_Values__c = appControl.Degree_Levels__c ));
 
-            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                    dLQuestion
-            }));
+            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{dLQuestion}));
 
         }
-      //  if (appControl.Academic_Level__c == 'Undergraduate') {
-
-
-           // dLQuestion = new ApplicationQuestion(con, app, '', app, 'Degree_Type__c');
-           // dLQuestion.addQuestionObject(new Question__c(Label__c = 'Testing Undergrad: '+ appControl.Id , Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Level', Picklist_Values__c = appControl.Degree_Levels__c ));
-
-           // groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-          //          dLQuestion
-         //   }));
-
-       // }
-
 
 
         System.debug('dLQuestion: ' + dLQuestion);
@@ -204,11 +191,30 @@ public class ApplicationCreate {
 
 
             // Get map of term names with id as key
+            //List<Id> termIds = new List<Id>();
+            //List<String> termNames = new List<String>();
+            //for (Academic_Term__c at : [SELECT Id, Name FROM Academic_Term__c WHERE Application_Status__c = :'Active' ORDER BY Activate_Application_Date__c ASC]) {
+            //    termIds.add(at.Id);
+            //    termNames.add(at.Name);
+           // }
+
+            // Get map of term names with id as key - updated by FDF 12/17/2021 to pull a unique list of Academic Terms that have an Intended Program Term for that Application Control
+            List<Academic_Term__c> aTermList = new List<Academic_Term__c>();
             List<Id> termIds = new List<Id>();
             List<String> termNames = new List<String>();
-            for (Academic_Term__c at : [SELECT Id, Name FROM Academic_Term__c WHERE Application_Status__c = :'Active' ORDER BY Activate_Application_Date__c ASC]) {
-                termIds.add(at.Id);
-                termNames.add(at.Name);
+
+            //pull a list of all Academic_Term__c records that are associated to the Application Control
+            AggregateResult[] at = [SELECT Academic_Term__r.Id, Academic_Term__r.Name FROM Intended_Program_Term__c WHERE Application_Control__c = :appControl.Id AND Academic_Term__r.Application_Status__c = :'Active' GROUP BY Academic_Term__r.Id, Academic_Term__r.Name];
+
+            for(AggregateResult ar:at){
+                Academic_Term__c aTerm = new Academic_Term__c();
+                aTerm.Id= (Id) ar.get('Id');
+                aTerm.Name = (String) ar.get('Name');
+                aTermList.add(aTerm);
+
+                termIds.add(aTerm.Id);
+                termNames.add(aTerm.Name);
+
             }
 
             // Create new term question and add to list

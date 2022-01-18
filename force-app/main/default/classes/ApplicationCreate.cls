@@ -204,7 +204,7 @@ public class ApplicationCreate {
             List<String> termNames = new List<String>();
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
-            AggregateResult[] at = [SELECT Academic_Term__r.Id, Academic_Term__r.Name FROM Intended_Program_Term__c WHERE Application_Control__c = :appControl.Id AND Academic_Term__r.Application_Status__c = :'Active' GROUP BY Academic_Term__r.Id, Academic_Term__r.Name];
+            AggregateResult[] at = [SELECT Academic_Term__r.Id, Academic_Term__r.Name FROM Intended_Program_Term__c WHERE Intended_Program__r.Application_Control__c = :appControl.Id AND Academic_Term__r.Application_Status__c = :'Active' GROUP BY Academic_Term__r.Id, Academic_Term__r.Name];
 
             for(AggregateResult ar:at){
                 Academic_Term__c aTerm = new Academic_Term__c();

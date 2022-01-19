@@ -3,7 +3,7 @@ project:
   name: EASY-Open-Source-Solution
   package:
     name: EASY-Open-Source-Solution
-    api_version: '51.0'
+    api_version: '52.0'
   dependencies:
     - github: 'https://github.com/SalesforceFoundation/EDA'
   source_format: sfdx

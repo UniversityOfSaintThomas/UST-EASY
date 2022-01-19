@@ -5,7 +5,8 @@
     "Communities",
     "Sites",
     "PartnerCommunity",
-    "ForceComPlatform"
+    "ForceComPlatform",
+    "DevelopmentWave"
   ],
   "settings": {
     "lightningExperienceSettings": {
@@ -30,9 +31,16 @@
     "languageSettings": {
       "enableTranslationWorkbench": true
     },
-    "orgPreferenceSettings": {
-      "networksEnabled": true,
-      "chatterEnabled": true
+    "communitiesSettings": {
+      "enableNetworksEnabled": true
+    },
+    "experienceBundleSettings": {
+      "enableExperienceBundleMetadata": true
+    }
+  },
+  "objectSettings": {
+    "account": {
+      "defaultRecordType": "default"
     }
   }
 }

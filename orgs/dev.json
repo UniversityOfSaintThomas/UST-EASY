@@ -6,7 +6,8 @@
     "Sites",
     "PartnerCommunity",
     "ForceComPlatform",
-    "DevelopmentWave"
+    "DevelopmentWave",
+    "RecordTypes"
   ],
   "settings": {
     "lightningExperienceSettings": {

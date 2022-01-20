@@ -9,7 +9,7 @@
     <summaryFilterItems>
         <field>Question_Response__c.PopulatedOn__c</field>
         <operation>notEqual</operation>
-        <value/>
+        <value></value>
     </summaryFilterItems>
     <summaryForeignKey>Question_Response__c.Requirement_Response__c</summaryForeignKey>
     <summaryOperation>max</summaryOperation>

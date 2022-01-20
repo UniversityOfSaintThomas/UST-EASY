@@ -159,7 +159,7 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Academic Terms</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

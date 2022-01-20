@@ -159,7 +159,7 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>EASY Widgets</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

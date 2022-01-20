@@ -161,7 +161,7 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Terms</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

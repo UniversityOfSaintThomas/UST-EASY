@@ -161,7 +161,7 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Languages</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

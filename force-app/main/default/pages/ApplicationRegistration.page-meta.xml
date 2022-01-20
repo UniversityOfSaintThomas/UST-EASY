@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
+    <apiVersion>50.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>ApplicationRegistration</label>
     <packageVersions>
         <majorNumber>1</majorNumber>
-        <minorNumber>113</minorNumber>
+        <minorNumber>118</minorNumber>
         <namespace>hed</namespace>
     </packageVersions>
 </ApexPage>

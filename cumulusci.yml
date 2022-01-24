@@ -161,3 +161,7 @@ flows:
         task: set_holding_ids
       17:
         task: set_user_user_role
+orgs:
+  scratch:
+    build:
+      config_file: orgs/build.json

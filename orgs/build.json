@@ -33,5 +33,10 @@
     "communitiesSettings": {
       "enableNetworksEnabled": true
     }
+  },
+  "objectSettings": {
+    "account": {
+      "defaultRecordType": "Administrative"
+    }
   }
 }

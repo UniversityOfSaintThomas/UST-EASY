@@ -161,6 +161,30 @@ flows:
         task: set_holding_ids
       17:
         task: set_user_user_role
+
+  set_up_new_org:
+    steps:
+      3:
+        task: create_community
+      4:
+        task: permission_guest_user
+      5:
+        task: permission_admin_user
+      6:
+        task: create_bulk_data_permission_set
+      8:
+        task: set_hierarchy_custom_settings
+      10:
+        task: turn_off_duplicate_rules
+      11:
+        task: load_application_data
+      12:
+        task: turn_on_duplicate_rules
+      13:
+        task: configure_community
+      14:
+        task: deploy_site_config
+
 orgs:
   scratch:
     build:

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Term__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The academic term a prospect is interested in. Tracked on the Opportunity when converted to a Contact.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The academic term a prospect is interested in.</inlineHelpText>
+    <label>Term</label>
+    <referenceTo>hed__Term__c</referenceTo>
+    <relationshipLabel>Leads</relationshipLabel>
+    <relationshipName>Leads</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

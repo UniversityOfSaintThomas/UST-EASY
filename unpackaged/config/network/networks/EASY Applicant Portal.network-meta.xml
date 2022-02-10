@@ -2,7 +2,7 @@
 <Network xmlns="http://soap.sforce.com/2006/04/metadata">
     <allowInternalUserLogin>false</allowInternalUserLogin>
     <allowMembersToFlag>false</allowMembersToFlag>
-    <changePasswordTemplate>Community_Communication/CommunityChangePasswordEmailTemplate</changePasswordTemplate>
+    <changePasswordTemplate>unfiled$public/CommunityChangePasswordEmailTemplate</changePasswordTemplate>
     <communityRoles/>
     <description>EASY application portal</description>
     <disableReputationRecordConversations>true</disableReputationRecordConversations>
@@ -25,7 +25,7 @@
     <enableTopicAssignmentRules>true</enableTopicAssignmentRules>
     <enableTopicSuggestions>false</enableTopicSuggestions>
     <enableUpDownVote>false</enableUpDownVote>
-    <forgotPasswordTemplate>Community_Communication/CommunityForgotPasswordEmailTemplate</forgotPasswordTemplate>
+    <forgotPasswordTemplate>unfiled$public/CommunityForgotPasswordEmailTemplate</forgotPasswordTemplate>
     <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
     <networkMemberGroups>
         <permissionSet>Application_Community</permissionSet>
@@ -50,5 +50,5 @@
         <standardTab>Chatter</standardTab>
     </tabs>
     <urlPathPrefix>EASYApp</urlPathPrefix>
-    <welcomeTemplate>Community_Communication/CommunityWelcomeEmailTemplate</welcomeTemplate>
+    <welcomeTemplate>unfiled$public/CommunityWelcomeEmailTemplate</welcomeTemplate>
 </Network>

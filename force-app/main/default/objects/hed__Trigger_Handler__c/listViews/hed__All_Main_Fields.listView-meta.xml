@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>hed__All_Main_Fields</fullName>
+    <columns>NAME</columns>
+    <columns>hed__Class__c</columns>
+    <columns>hed__Object__c</columns>
+    <columns>hed__Active__c</columns>
+    <columns>hed__Load_Order__c</columns>
+    <columns>hed__User_Managed__c</columns>
+    <columns>hed__Owned_by_Namespace__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All - Main Fields</label>
+</ListView>

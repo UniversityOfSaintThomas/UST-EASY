@@ -3,7 +3,7 @@
     <fullName>Opportunity_Name__c</fullName>
     <description>Last Name - Term Name, used to set the Name of the Opportunity that will be created or updated.</description>
     <externalId>false</externalId>
-    <formula>Last_Name__c</formula>
+    <formula>Last_Name__c &amp;&quot; - &quot;&amp; Term__r.Name</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Opportunity Name</label>
     <required>false</required>

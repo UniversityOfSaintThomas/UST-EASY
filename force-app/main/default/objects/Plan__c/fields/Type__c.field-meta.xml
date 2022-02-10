@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <description>Tracks whether it is a recruitment or academic record for use in lookup filters on Lead, Opportunity, Interaction, and Plan. If record types are created, the lookup filters could be updated and this field would no longer be needed.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Track whether it is a recruitment or academic record for use in lookup filters on Lead, Opportunity, Interaction, and Plan.</inlineHelpText>
+    <label>Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Recruitment</fullName>
+                <default>false</default>
+                <label>Recruitment</label>
+            </value>
+            <value>
+                <fullName>Academic</fullName>
+                <default>false</default>
+                <label>Academic</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

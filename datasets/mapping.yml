@@ -49,6 +49,10 @@ Insert Campaign:
   - Campaign_Key__c
   - IsActive
   - Name
+  lookups:
+    ParentId:
+      table: Campaign
+      after: Insert Campaign
 Insert Interaction_Mapping__c:
   sf_object: Interaction_Mapping__c
   fields:
@@ -60,6 +64,196 @@ Insert Interaction_Mapping__c:
   - Skip_Mapping__c
   - Target_Field_API_Name__c
   - Target_Object_API_Name__c
+Insert Plan__c:
+  sf_object: Plan__c
+  fields:
+  - CreatedDate
+  - LastModifiedDate
+  - Name
+Insert Staging_Record__c:
+  sf_object: Staging_Record__c
+  fields:
+  - ACT_Composite_Score__c
+  - ACT_English_Score__c
+  - ACT_Mathematics_Score__c
+  - ACT_Reading_Score__c
+  - ACT_Science_Score__c
+  - ACT_Writing_EW_Score__c
+  - ACT_Writing_WR_Score__c
+  - AP_Banner_Code__c
+  - AP_Test_Score__c
+  - AP_Test_Type__c
+  - AP_Test_origin__c
+  - Academic_Interests__c
+  - Admissions_Status__c
+  - Alumni_Class_Year__c
+  - Applicant_Type__c
+  - Application_Common_App_ID__c
+  - Application_Stage__c
+  - Attended_College_End__c
+  - Attended_College_Start__c
+  - Banner_Admission_Type__c
+  - Banner_ID__c
+  - Banner_Student_Type__c
+  - Birthdate__c
+  - Booking__c
+  - Business_Email__c
+  - CEEB_Code__c
+  - Campaign_ID__c
+  - Cheer__c
+  - Citizenship_Status__c
+  - City__c
+  - Common_App_ID__c
+  - Community_Based_Organization__c
+  - Company_Employer__c
+  - Country__c
+  - Country_of_Birth__c
+  - CreatedDate
+  - Dance__c
+  - Deceased__c
+  - Degree_Level__c
+  - Degree_Sought_Contact__c
+  - Degree_Sought__c
+  - Document_Status__c
+  - ELS_Student_ID__c
+  - Email__c
+  - Expected_Graduation_Date__c
+  - External_Salesforce_ID__c
+  - FAFSA_Current_CPS_Process_Date__c
+  - FAFSA_Filed_Load_Date__c
+  - FAFSA_Filed__c
+  - FAFSA_Guardian_Email__c
+  - FAFSA_ID__c
+  - FAFSA_Initial_CPS_Process_Date__c
+  - FAFSA_Parent_1_School_Level__c
+  - FAFSA_Parent_2_School_Level__c
+  - FAFSA_Selected_for_Verification__c
+  - FAFSA_Term__c
+  - First_Name__c
+  - Foot_on_Campus_Date__c
+  - Foot_on_Campus__c
+  - Former_Last_Name__c
+  - GPA__c
+  - Gender_Identity__c
+  - Gender__c
+  - High_School_Code__c
+  - High_School_Expected_Graduation_Year__c
+  - High_School_Name_Text__c
+  - Hispanic_Latino__c
+  - HomePhone__c
+  - Home_Phone__c
+  - Import_Source__c
+  - Inquiry_Citizenship__c
+  - Inquiry_College_Interest__c
+  - Language_Proficiency__c
+  - Language__c
+  - LastModifiedDate
+  - Last_Name__c
+  - Lead_Source__c
+  - Legacy_Add_Date__c
+  - Legacy_Application_Received_Date__c
+  - Legacy_Application_Record_Date__c
+  - Legacy_Decision_Date__c
+  - Legacy_Primary_Source__c
+  - LinkedIn_Profile__c
+  - MailingCity__c
+  - MailingCountry__c
+  - MailingPostalCode__c
+  - MailingSreetLine1__c
+  - MailingState__c
+  - MailingStreet3__c
+  - MailingStreetLine2__c
+  - MailingZip__c
+  - Mailing_State_Prov__c
+  - Major1__c
+  - Major2__c
+  - Major3__c
+  - Major_Code__c
+  - Major_Interest_Group__c
+  - Master_or_Copy_Test_Scores__c
+  - Middle_Name__c
+  - MobilePhone__c
+  - Mobile_Phone__c
+  - Music__c
+  - Non_US_Country_of_Citizenship__c
+  - Official_Major_Code__c
+  - Official_Transcript_Received__c
+  - PIDM__c
+  - Parent_1_Email__c
+  - Parent_1_First_Name__c
+  - Parent_1_Last_Name__c
+  - Parent_2_Email__c
+  - Parent_2_First_Name__c
+  - Parent_2_Last_Name__c
+  - PermCity__c
+  - PermCountry__c
+  - PermPostalCode__c
+  - PermState__c
+  - PermStreet1__c
+  - PermStreet2__c
+  - PermStreet3__c
+  - PermZip__c
+  - Perm_State_Prov__c
+  - Preferred_First_Name__c
+  - Preferred_Phone__c
+  - Primary_Relationship_to_Referral__c
+  - Program_Catalog__c
+  - Program_Code__c
+  - Program_Offered__c
+  - ROTC__c
+  - Race__c
+  - RaiseMe_ID__c
+  - RaiseMe_Portfolio_URL__c
+  - Receive_Texts__c
+  - Rejected_FAFSA__c
+  - Religious_Preference__c
+  - SF_LID__c
+  - SSN__c
+  - Salary__c
+  - Salesforce_Contact_ID__c
+  - Salutation__c
+  - School__c
+  - Self_Reported_ACT__c
+  - Self_Reported_IELTS__c
+  - Self_Reported_SAT__c
+  - Self_Reported_TOEFL__c
+  - Self_Reported_Undergrad_Degree__c
+  - Self_Reported_Undergrad_Grad_Year__c
+  - Self_Reported_Undergrad_Institution__c
+  - Session__c
+  - Source_Area_of_Interest__c
+  - Sport_1__c
+  - Sport_2__c
+  - Sport_3__c
+  - Sport_Type_1__c
+  - Sport_Type_2__c
+  - Sport_Type_3__c
+  - St_Thomas_School__c
+  - Start_Term__c
+  - State__c
+  - Status__c
+  - Street_Line_1__c
+  - Street_Line_2__c
+  - Student_Type__c
+  - Suffix__c
+  - System_Export_User_ID__c
+  - Term__c
+  - Test_Date__c
+  - Test_Score_Status__c
+  - Test_Type__c
+  - Title__c
+  - Touch_Point_Source__c
+  - Touch_Point_Status__c
+  - UST_Email__c
+  - Visit_Date_Time__c
+  - Visit_Event_Name__c
+  - Visit_Guests__c
+  - Visit_ID__c
+  - Visit_Needs__c
+  - Visit_Requester_Role__c
+  - Visit_Status__c
+  - Work_Phone__c
+  - Zip__c
 Insert hed__Language__c:
   sf_object: hed__Language__c
   fields:
@@ -96,17 +290,11 @@ Insert Account:
   - Aid_Eligibility__c
   - Banner_Code__c
   - Banner_Key__c
-  - BillingCity
-  - BillingStreet
-  - BillingState
-  - BillingCountry
-  - BillingPostalCode
-  - BillingLatitude
-  - BillingLongitude
   - CEEB_Code__c
   - CEEB_Integration_Code__c
   - CIPC_Code__c
   - CreatedDate
+  - Credentialing_Identifier__c
   - Current_Parent__c
   - DLEV_Code__c
   - Email__c
@@ -118,14 +306,14 @@ Insert Account:
   - School_Geographic_Area__c
   - School_Type_Code__c
   - Sevis_Equivalent__c
-  - ShippingCountry
   - Surrogate_ID__c
-  - Type
   - University_Banner_ID__c
   - University_Banner_PIDM__c
   - Valid_Major__c
   - Valid_Minor__c
+  - hed__Billing_Address_Inactive__c
   - hed__Billing_County__c
+  - hed__Credentialing_Email__c
   - hed__School_Code__c
   - hed__Shipping_County__c
   lookups:
@@ -195,6 +383,21 @@ Insert Program__c:
     Recruitment_Program__c:
       table: Program__c
       after: Insert Program__c
+Insert hed__Academic_Certification__c:
+  sf_object: hed__Academic_Certification__c
+  fields:
+  - CreatedDate
+  - LastModifiedDate
+  - Name
+  - RecordTypeId
+  - hed__Academic_Level__c
+  - hed__Credentialing_Identifier__c
+  - hed__Description__c
+  - hed__Extended_Name__c
+  - hed__Field_Of_Study__c
+  lookups:
+    hed__Issuer__c:
+      table: Account
 Insert hed__Facility__c:
   sf_object: hed__Facility__c
   fields:
@@ -654,6 +857,7 @@ Insert Contact:
   - Contact_Banner_Key__c
   - Contact_Constituent_ID__c
   - CreatedDate
+  - Credentialing_Identifier__c
   - Deceased_Date__c
   - DoNotCall
   - Employer__c
@@ -668,6 +872,7 @@ Insert Contact:
   - Personal_Email__c
   - Preferred_First_Name__c
   - Previous_Last_Name__c
+  - Receive_Texts__c
   - University_Banner_ID__c
   - University_Banner_PIDM__c
   - hed__AlternateEmail__c
@@ -678,6 +883,7 @@ Insert Contact:
   - hed__Country_of_Origin__c
   - hed__Date_Deceased__c
   - hed__Deceased__c
+  - hed__Disability_Status__c
   - hed__Do_Not_Contact__c
   - hed__Dual_Citizenship__c
   - hed__Ethnicity__c
@@ -692,6 +898,7 @@ Insert Contact:
   - hed__Gender__c
   - hed__HIPAA_Detail__c
   - hed__HIPAA__c
+  - hed__Mailing_Address_Inactive__c
   - hed__Mailing_County__c
   - hed__Military_Background__c
   - hed__Military_Service__c
@@ -702,6 +909,7 @@ Insert Contact:
   - hed__Primary_Address_Type__c
   - hed__Race__c
   - hed__Religion__c
+  - hed__SMS_Opt_Out__c
   - hed__Secondary_Address_Type__c
   - hed__Social_Security_Number__c
   - hed__UniversityEmail__c
@@ -756,6 +964,50 @@ Insert Education_History__c:
       table: Contact
     Institution__c:
       table: Account
+Insert Family__c:
+  sf_object: Family__c
+  fields:
+  - Address__c
+  - Age__c
+  - Alumni__c
+  - Birth_Country_Region_Territory__c
+  - Cell_Phone__c
+  - CreatedDate
+  - Date_Deceased__c
+  - Email__c
+  - Employer__c
+  - First_Name__c
+  - Grad_Year__c
+  - Graduate_from_UST__c
+  - Highest_Level_of_Education__c
+  - Holding_Name__c
+  - Home_Phone__c
+  - LastModifiedDate
+  - Last_Name__c
+  - Maiden_Other_Last__c
+  - Middle_Name__c
+  - Number_of_Siblings__c
+  - Occupation__c
+  - Other_Occupation_Details__c
+  - Other_Phone__c
+  - Parent_Living__c
+  - Prefix__c
+  - RecordTypeId
+  - Related_Object_JSON__c
+  - Relationship__c
+  - Suffix__c
+  - UST_Attended__c
+  - UST_Employee__c
+  - UST_Sibling_Same_Term__c
+  - User_Created__c
+  - Work_Phone__c
+  lookups:
+    Applicant__c:
+      table: Contact
+    Application__c:
+      table: Application__c
+    Contact__c:
+      table: Contact
 Insert Opportunity:
   sf_object: Opportunity
   fields:
@@ -776,6 +1028,7 @@ Insert Opportunity:
   - First_Inquiry_Source__c
   - First_Recruitment_Program__c
   - Heard_About_Us__c
+  - High_School_Graduation_Year__c
   - Inquiry_Date__c
   - IsPrivate
   - LastModifiedDate
@@ -787,6 +1040,11 @@ Insert Opportunity:
   - RecordTypeId
   - StageName
   - Submitted_Date__c
+  - Years_Attended__c
+  - hed__Completed_FAFSA__c
+  - hed__Desired_Campus__c
+  - hed__Desired_Degree_Level__c
+  - hed__Living_Situation__c
   lookups:
     Academic_Program__c:
       table: Program__c
@@ -800,8 +1058,12 @@ Insert Opportunity:
       table: Contact
     Contact__c:
       table: Contact
+    High_School_Transfer__c:
+      table: Account
     High_School_or_College__c:
       table: Account
+    Intended_Start_Term__c:
+      table: Academic_Term__c
     Major_Program_1__c:
       table: Program__c
     Major_Program_2__c:
@@ -814,6 +1076,8 @@ Insert Opportunity:
       table: Program__c
     St_Thomas_College_School__c:
       table: Account
+    hed__Desired_Start_Term__c:
+      table: hed__Term__c
 Insert Work_History__c:
   sf_object: Work_History__c
   fields:
@@ -863,6 +1127,7 @@ Insert hed__Address__c:
   - LastModifiedDate
   - hed__Address_Type__c
   - hed__Default_Address__c
+  - hed__Inactive__c
   - hed__Latest_End_Date__c
   - hed__Latest_Start_Date__c
   - hed__MailingCity__c
@@ -934,6 +1199,8 @@ Insert hed__Education_History__c:
   - hed__Class_Rank_Type__c
   - hed__Class_Rank__c
   - hed__Class_Size__c
+  - hed__Credentialing_Identifier__c
+  - hed__Credits_Earned__c
   - hed__Degree_Earned__c
   - hed__Details__c
   - hed__Education_History_JSON__c
@@ -944,7 +1211,12 @@ Insert hed__Education_History__c:
   - hed__GPA__c
   - hed__Graduation_Date__c
   - hed__Start_Date__c
+  - hed__Status__c
+  - hed__Verification_Status_Date__c
+  - hed__Verification_Status__c
   lookups:
+    hed__Academic_Certification__c:
+      table: hed__Academic_Certification__c
     hed__Account__c:
       table: Account
     hed__Contact__c:
@@ -982,10 +1254,14 @@ Insert hed__Test__c:
   - Self_Reported_Test_Acknowledgement__c
   - Take_ACT_SAT_Times__c
   - User_Created__c
+  - hed__Credentialing_Identifier__c
+  - hed__Credits_Earned__c
   - hed__Date_Received__c
   - hed__Source__c
   - hed__Test_Date__c
   - hed__Test_Type__c
+  - hed__Verification_Status_Date__c
+  - hed__Verification_Status__c
   lookups:
     hed__Contact__c:
       table: Contact
@@ -1026,6 +1302,23 @@ Insert Lead:
   - Referral_Website__c
   - Send_Printed_Info__c
   - Status
+  - hed__Area_Of_Interest__c
+  - hed__Birth_Date__c
+  - hed__Citizenship__c
+  - hed__Ethnicity__c
+  - hed__External_Id__c
+  - hed__GPA__c
+  - hed__Gender__c
+  - hed__Highest_Degree_Earned__c
+  - hed__Language__c
+  - hed__Most_Recent_School__c
+  - hed__Preferred_Enrollment_Date__c
+  - hed__Preferred_Enrollment_Status__c
+  - hed__Preferred_Teaching_Format__c
+  - hed__Recruitment_Stage__c
+  - hed__SMS_Opt_Out__c
+  - hed__SSN__c
+  - hed__Undergraduate_Major__c
   - utm_campaign__c
   - utm_content__c
   - utm_medium__c
@@ -1044,6 +1337,14 @@ Insert Lead:
       table: Account
     Intended_Start_Term__c:
       table: Academic_Term__c
+    Major_Program_2__c:
+      table: Program__c
+    Major_Program_3__c:
+      table: Program__c
+    Major_Program_4__c:
+      table: Program__c
+    Major_Program__c:
+      table: Program__c
     Recruitment_Program__c:
       table: Program__c
     St_Thomas_College_School__c:
@@ -1071,6 +1372,8 @@ Insert hed__Program_Enrollment__c:
       table: hed__Affiliation__c
     hed__Contact__c:
       table: Contact
+    hed__Education_History__c:
+      table: hed__Education_History__c
     hed__Program_Plan__c:
       table: hed__Program_Plan__c
 Insert hed__Test_Score__c:
@@ -1078,8 +1381,11 @@ Insert hed__Test_Score__c:
   fields:
   - CreatedDate
   - LastModifiedDate
+  - hed__Credentialing_Identifier__c
+  - hed__Letter_Score__c
   - hed__Percentile__c
   - hed__Score__c
+  - hed__Status__c
   - hed__Subject_Area__c
   lookups:
     hed__Test__c:
@@ -1107,6 +1413,7 @@ Insert Interaction__c:
   - Ethnicity__c
   - First_Name__c
   - Gender__c
+  - High_School_Graduation_Year__c
   - Home_Phone__c
   - Interaction_Source__c
   - Interaction_Status__c
@@ -1128,6 +1435,7 @@ Insert Interaction__c:
   - Receive_Texts__c
   - Salutation__c
   - University_Email__c
+  - Years_Attended__c
   - utm_campaign__c
   - utm_content__c
   - utm_medium__c
@@ -1144,21 +1452,11 @@ Insert Interaction__c:
       table: Campaign
     Contact__c:
       table: Contact
-    High_School_or_College__c:
-      table: Account
     Intended_Start_Term__c:
       table: Academic_Term__c
     Lead__c:
       table: Lead
-    Major_Program_1__c:
-      table: Program__c
-    Major_Program_2__c:
-      table: Program__c
-    Major_Program_3__c:
-      table: Program__c
     Opportunity__c:
       table: Opportunity
     Recruitment_Program__c:
       table: Program__c
-    St_Thomas_College_School__c:
-      table: Account

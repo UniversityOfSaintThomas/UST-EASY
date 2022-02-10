@@ -183,4 +183,49 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>hed__Desired_Campus__c</picklist>
+        <values>
+            <fullName>Main</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>hed__Desired_Degree_Level__c</picklist>
+        <values>
+            <fullName>Certification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Undergraduate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>hed__Living_Situation__c</picklist>
+        <values>
+            <fullName>Off Campus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Campus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>With Family</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>

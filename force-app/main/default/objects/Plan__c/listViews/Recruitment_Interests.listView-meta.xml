@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recruitment_Interests</fullName>
+    <columns>NAME</columns>
+    <columns>Career__c</columns>
+    <columns>Department__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Type__c</field>
+        <operation>equals</operation>
+        <value>Recruitment</value>
+    </filters>
+    <label>Recruitment Interests</label>
+</ListView>

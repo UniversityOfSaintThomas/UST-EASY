@@ -9,7 +9,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationAdminViewTest</apexClass>
+        <apexClass>ApplicationAdminView_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -17,7 +17,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationChecklistTest</apexClass>
+        <apexClass>ApplicationChecklist_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -25,7 +25,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationCreateTest</apexClass>
+        <apexClass>ApplicationCreate_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -33,7 +33,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationFilterTest</apexClass>
+        <apexClass>ApplicationFilter_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -41,7 +41,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationPortalTest</apexClass>
+        <apexClass>ApplicationPortal_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -49,7 +49,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationProgressBarTest</apexClass>
+        <apexClass>ApplicationProgressBar_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -69,7 +69,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationRegistrationTest</apexClass>
+        <apexClass>ApplicationRegistration_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -81,11 +81,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationRequirementPreviewTest</apexClass>
+        <apexClass>ApplicationRequirementPreview_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationRequirementTest</apexClass>
+        <apexClass>ApplicationRequirement_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -93,11 +93,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationReviewTest</apexClass>
+        <apexClass>ApplicationReview_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ApplicationTestUtilities</apexClass>
+        <apexClass>ApplicationTESTUtilities</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -109,7 +109,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>BatchApplicationArchiverTest</apexClass>
+        <apexClass>BatchApplicationArchiver_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -145,7 +145,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>RelatedDocumentUploadTest</apexClass>
+        <apexClass>RelatedDocumentUpload_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -153,7 +153,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>RelatedObjectReviewTest</apexClass>
+        <apexClass>RelatedObjectReview_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -161,7 +161,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UserApplicationTriggerHandlerTest</apexClass>
+        <apexClass>UserApplicationTriggerHandler_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <customSettingAccesses>

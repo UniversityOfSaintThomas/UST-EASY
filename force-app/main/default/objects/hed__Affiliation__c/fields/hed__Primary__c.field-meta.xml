@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>hed__Primary__c</fullName>
+    <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Indicates whether this is the main Affiliation for this person. If selected, the organization name is stored in the relevant Primary Affiliation field on the Contact record.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Indicates whether this is the main Affiliation for this person. If selected, the organization name is stored in the relevant Primary Affiliation field on the Contact record.</inlineHelpText>
+    <label>Primary</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

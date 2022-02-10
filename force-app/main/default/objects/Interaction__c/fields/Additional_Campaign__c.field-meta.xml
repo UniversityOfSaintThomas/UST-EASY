@@ -7,6 +7,7 @@
     <inlineHelpText>Set the secondary campaign (event, marketing effort, etc.) connected to this Interaction to create another Campaign Member.</inlineHelpText>
     <label>Additional Campaign</label>
     <referenceTo>Campaign</referenceTo>
+    <relationshipLabel>Interactions (Additional Campaign)</relationshipLabel>
     <relationshipName>Additional_Campaigns</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>

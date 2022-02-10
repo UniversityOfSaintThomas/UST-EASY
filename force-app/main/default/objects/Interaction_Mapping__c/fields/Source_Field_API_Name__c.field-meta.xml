@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Source_Field_API_Name__c</fullName>
+    <description>The Source Object field you would like to map to a Target Object field. The value in this field must be in API format and matches an existing field on the Source Object.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Source Object field you would like to map to a Target Object field. Ensure this is in API format and matches the existing field on the Source Object.</inlineHelpText>
+    <label>Source Field API Name</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -6,7 +6,17 @@
     <externalId>false</externalId>
     <inlineHelpText>Select the organizational account (Ex: business, high school, college, etc.) the individual is affiliated with.</inlineHelpText>
     <label>Affiliated Account</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordType.Name</field>
+            <operation>equals</operation>
+            <value>Business Organization, Educational Institution, Sports Organization, University Department</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Account</referenceTo>
+    <relationshipLabel>Interactions</relationshipLabel>
     <relationshipName>Interactions</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>

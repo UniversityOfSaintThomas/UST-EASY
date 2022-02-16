@@ -73,7 +73,7 @@ tasks:
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
       mapping: datasets/dev5/mapping.yml
-      sql_path: datasets/dev5/data_mappings.sql
+      sql_path: datasets/dev5/data.sql
       inject_namespaces: False
 
   configure_community:

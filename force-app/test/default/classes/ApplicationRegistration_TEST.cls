@@ -3,15 +3,7 @@ private class ApplicationRegistration_TEST {
 
     @TestSetup
     static void dataSetup() {
-
-        Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl();
-
-        Academic_Term__c at = new Academic_Term__c(Name = 'test', Activate_Application_Date__c = Date.today().addDays(-2), End_Application_Date__c = Date.today().addDays(2), Academic_Term_Integration_External_ID__c = ApplicationUtilities.getUUID());
-        insert at;
-
-        //Thad - added hide from application, ext id, active true, and app control id
-        insert new Program__c(Name = 'test', Program_Integration_External_Id__c = ApplicationUtilities.getUUID(), Hide_from_Application__c = false, Active__c = true, Application_Control__c = appControl.Id);
-
+        //Turn of hed__ TDTM triggers
         List<hed.TDTM_Global_API.TdtmToken> tokens = hed.TDTM_Global_API.getTdtmConfig();
         for (hed.TDTM_Global_API.TdtmToken TDTMToken : tokens) {
             // disable all EDA-provided trigger handlers
@@ -20,6 +12,14 @@ private class ApplicationRegistration_TEST {
             }
         }
         hed.TDTM_Global_API.setTdtmConfig(tokens);
+
+        Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl();
+
+        Academic_Term__c at = new Academic_Term__c(Name = 'test', Activate_Application_Date__c = Date.today().addDays(-2), End_Application_Date__c = Date.today().addDays(2), Academic_Term_Integration_External_ID__c = ApplicationUtilities.getUUID());
+        insert at;
+
+        //Thad - added hide from application, ext id, active true, and app control id
+        insert new Program__c(Name = 'test', Program_Integration_External_Id__c = ApplicationUtilities.getUUID(), Hide_from_Application__c = false, Active__c = true, Application_Control__c = appControl.Id);
 
         Interaction_Mapping__c im1 = new Interaction_Mapping__c(Target_Object_API_Name__c = 'Contact', Target_Field_API_Name__c = 'FirstName', Interaction_Source_Field_API_Name__c = 'First_Name__c', Active__c = true);
         Interaction_Mapping__c im2 = new Interaction_Mapping__c(Target_Object_API_Name__c = 'Contact', Target_Field_API_Name__c = 'LastName', Interaction_Source_Field_API_Name__c = 'Last_Name__c', Active__c = true);

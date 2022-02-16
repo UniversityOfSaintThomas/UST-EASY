@@ -2,6 +2,17 @@
 public class ApplicationReview_TEST {
     @TestSetup
     public static void testSetup() {
+        //Turn of hed__ TDTM
+        List<hed.TDTM_Global_API.TdtmToken> tokens = hed.TDTM_Global_API.getTdtmConfig();
+        for (hed.TDTM_Global_API.TdtmToken TDTMToken : tokens) {
+            // disable all EDA-provided trigger handlers
+            if (TDTMToken.ownedByNamespace == 'hed') {
+                TDTMToken.active = false;
+            }
+        }
+        hed.TDTM_Global_API.setTdtmConfig(tokens);
+
+
         Application_Control__c appControl = new Application_Control__c(
                 Application_Start_Status__c = Application_Control__c.Application_Start_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 Active__c = true,

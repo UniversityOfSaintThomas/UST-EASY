@@ -25,14 +25,14 @@ private class INT_InteractionMappingService_TEST {
     static void testCreateContact() {
         // Arrange
         Interaction__c testInteraction = new Interaction__c(
-            First_Name__c = 'Test',
-            Last_Name__c = 'Contact',
-            Interaction_Status__c = 'New'
+                First_Name__c = 'Test',
+                Last_Name__c = 'Contact',
+                Interaction_Status__c = 'New'
         );
 
         Contact c = new Contact(
-            FirstName = 'Something',
-            LastName = 'Else'
+                FirstName = 'Something',
+                LastName = 'Else'
         );
 
         // Act
@@ -50,15 +50,15 @@ private class INT_InteractionMappingService_TEST {
     static void testCreateContactExcludedSources() {
         // Arrange
         Interaction__c testInteraction = new Interaction__c(
-            First_Name__c = 'Test',
-            Last_Name__c = 'Contact',
-            Interaction_Status__c = 'New',
-            Interaction_Source__c = 'Webform'
+                First_Name__c = 'Test',
+                Last_Name__c = 'Contact',
+                Interaction_Status__c = 'New',
+                Interaction_Source__c = 'Webform'
         );
 
         Contact c = new Contact(
-            FirstName = 'Something',
-            LastName = 'Else'
+                FirstName = 'Something',
+                LastName = 'Else'
         );
 
         // Act
@@ -69,25 +69,25 @@ private class INT_InteractionMappingService_TEST {
 
         // Assert
         // Interaction data should NOT be copied over since we exclude Webform Sources
-       	System.assert(c.FirstName == 'Something');
-       	System.assert(c.LastName == 'Else');
+        System.assert(c.FirstName == 'Something');
+        System.assert(c.LastName == 'Else');
     }
 
     @IsTest
     static void testMapFromLeadSources() {
         // Arrange
         Lead testLead = new Lead(
-            FirstName = 'Test',
-            LastName = 'Lead',
-            Email = 'test@nomail.com',
-            Company = 'Lead, Test'
+                FirstName = 'Test',
+                LastName = 'Lead',
+                Email = 'test@nomail.com',
+                Company = 'Lead, Test'
         );
 
         Interaction__c testInteraction = new Interaction__c(
-            First_Name__c = '',
-            Last_Name__c = 'Lead',
-            Interaction_Status__c = 'New',
-            Interaction_Source__c = 'Webform'
+                First_Name__c = '',
+                Last_Name__c = 'Lead',
+                Interaction_Status__c = 'New',
+                Interaction_Source__c = 'Webform'
         );
 
         // Act

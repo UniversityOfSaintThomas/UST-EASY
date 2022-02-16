@@ -3,7 +3,24 @@
     <fullName>Applicant</fullName>
     <isActive>true</isActive>
     <values>
-        <fullName>Prospecting</fullName>
-        <default>false</default>
-    </values>
+        
+            <fullName>Closed Lost</fullName>
+        
+            <default>false</default>
+        
+        </values>
+    <values>
+        
+            <fullName>Closed Won</fullName>
+        
+            <default>false</default>
+        
+        </values>
+    <values>
+        
+            <fullName>Prospecting</fullName>
+        
+            <default>false</default>
+        
+        </values>
 </BusinessProcess>

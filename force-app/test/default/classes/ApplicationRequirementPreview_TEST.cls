@@ -77,12 +77,13 @@ public class ApplicationRequirementPreview_TEST {
 
     @IsTest
     public static void appPreview() {
-        Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
+        Requirement__c req = [SELECT Id, Application_Control__r.Id FROM Requirement__c LIMIT 1];
         System.debug(JSON.serializePretty(req));
         Test.startTest();
         PageReference pr = Page.ApplicationRequirementPreview;
         pr.getParameters().put('at', 'st');
         pr.getParameters().put('Id', req.Id);
+        pr.getParameters().put('applicationId', req.Application_Control__r.Id);
         Test.setCurrentPage(pr);
         ApplicationRequirementPreview arp = new ApplicationRequirementPreview();
         arp.init();

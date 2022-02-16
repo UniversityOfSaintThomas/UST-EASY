@@ -19,6 +19,16 @@ private class INT_InteractionProcessor_TEST {
             }
         }
         hed.TDTM_Global_API.setTdtmConfig(tokens);
+
+        hed__Trigger_Handler__c oppHandler = new hed__Trigger_Handler__c(
+                Name = 'Update Opportunity Contact Role',
+                hed__Object__c = 'Opportunity',
+                hed__Class__c = 'INT_OpportunityContactRoleHandler',
+                hed__Active__c = true,
+                hed__Trigger_Action__c = 'BeforeUpdate;AfterInsert',
+                hed__Load_Order__c = 1
+        );
+        insert oppHandler;
     }
 
     @IsTest
@@ -123,10 +133,10 @@ private class INT_InteractionProcessor_TEST {
                 'Lead count expected to be at 0. Once converted, the Leads should be deleted');
 
         Map<Id, Contact> contactMap = new Map<Id, Contact>([SELECT Name, Account.Name FROM Contact]);
-        System.assert(contactMap.size() == 52, '52 Contacts Expected - 1 for each of the 502 Interactions. Found: ' + contactMap.size());
+        System.assert(contactMap.size() == 52, '52 Contacts Expected - 1 for each of the 52 Interactions. Found: ' + contactMap.size()) ;
 
         Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Name FROM Account]);
-        System.assert(accountMap.size() == 52, '52 Accounts Expected - 1 for each of the 502 Interactions. Found: ' + contactMap.size());
+        System.assert(accountMap.size() == 52, '52 Accounts Expected - 1 for each of the 52 Interactions. Found: ' + contactMap.size());
 
         List<Interaction__c> interactions = [
                 SELECT First_Name__c, Last_Name__c, Contact__r.Name, Contact__c, Contact_Account_ID__c, Opportunity__c,
@@ -196,13 +206,15 @@ private class INT_InteractionProcessor_TEST {
 
         Account testCollege = new Account(
                 Name = 'College of Arts & Sciences',
-                RecordTypeId = accRTInfo.get('University Department').getRecordTypeId()
+                RecordTypeId = accRTInfo.get('University Department').getRecordTypeId(),
+                Account_Integration_External_ID__c = ApplicationUtilities.getUUID()
         );
         insert testCollege;
 
         Account testUniversity = new Account(
                 Name = 'Connected University',
-                RecordTypeId = accRTInfo.get('Educational Institution').getRecordTypeId()
+                RecordTypeId = accRTInfo.get('Educational Institution').getRecordTypeId(),
+                Account_Integration_External_ID__c = ApplicationUtilities.getUUID()
         );
         insert testUniversity;
 
@@ -258,7 +270,7 @@ private class INT_InteractionProcessor_TEST {
                 FROM Interaction__c
                 WHERE Id = :testInt.Id
         ];
-        System.assert(assertInteraction.Interaction_Status__c == 'Imported', 'Interaction should have been updated to \'Imported\' status.');
+        System.assert(assertInteraction.Interaction_Status__c == 'Imported', 'Interaction should have been updated to \'Imported\' status. Found status: ' + assertInteraction.Interaction_Status__c);
         System.assert(!String.isEmpty(assertInteraction.Contact__c), 'Contact should have been populated.');
         System.assert(!String.isEmpty(assertInteraction.Contact_Account_ID__c), 'Account should have been populated.');
         System.assert(!String.isEmpty(assertInteraction.Opportunity__c), 'Opportunity should have been populated.');

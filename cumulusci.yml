@@ -72,8 +72,8 @@ tasks:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/dev4/mapping.yml
-      sql_path: datasets/dev4/data.sql
+      mapping: datasets/dev5/mapping.yml
+      sql_path: datasets/dev5/data_mappings.sql
       inject_namespaces: False
 
   configure_community:
@@ -128,6 +128,49 @@ tasks:
       active: True
       api_names: Account.Standard_Account_Duplicate_Rule,Contact.Standard_Contact_Duplicate_Rule,Lead.Standard_Lead_Duplicate_Rule
 
+  update_admin_profile:
+    options:
+      record_types:
+        - record_type: Account.Academic_Program
+        - record_type: Account.Administrative
+          default: true
+        - record_type: Account.Business_Organization
+        - record_type: Account.Educational_Institution
+        - record_type: Account.HH_Account
+        - record_type: Account.Sports_Organization
+        - record_type: Account.University_Department
+        - record_type: Program__c.Academic_Program
+          default: true
+        - record_type: Program__c.Recruitment_Program
+        - record_type: Question__c.Address
+        - record_type: Question__c.Checkbox
+        - record_type: Question__c.Currency
+        - record_type: Question__c.Date
+        - record_type: Question__c.DateTime
+        - record_type: Question__c.Email
+        - record_type: Question__c.LongTextArea
+        - record_type: Question__c.MultiPicklist
+        - record_type: Question__c.Number
+        - record_type: Question__c.Percent
+        - record_type: Question__c.Phone
+        - record_type: Question__c.Picklist
+        - record_type: Question__c.Radio
+        - record_type: Question__c.Reference
+        - record_type: Question__c.Static
+        - record_type: Question__c.Text
+          default: true
+        - record_type: Question__c.TextArea
+        - record_type: Question__c.TextEncrypted
+        - record_type: Question__c.URL
+        - record_type: Question_Dependency__c.Checkbox
+        - record_type: Question_Dependency__c.Multi_Select_Picklist
+        - record_type: Question_Dependency__c.Picklist
+          default: true
+        - record_type: Requirement_Item__c.Document_Upload
+        - record_type: Requirement_Item__c.Question_Group
+        - record_type: Requirement_Item__c.Related_Object
+          default: true
+
 flows:
   config_dev:
     steps:
@@ -145,6 +188,8 @@ flows:
         task: set_hierarchy_custom_settings
       9:
         task: set_review_custom_settings
+      9.5:
+        task: update_admin_profile
       10:
         task: turn_off_duplicate_rules
       11:

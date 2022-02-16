@@ -1,3551 +1,3543 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    
     <applicationVisibilities>
+        
         <application>Enterprise_Application</application>
+        
         <visible>true</visible>
+        
     </applicationVisibilities>
-    <classAccesses>
-        <apexClass>ApplicationAdminView</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationAdminView_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationChecklist</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationChecklist_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationCreate</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationCreate_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationFilter</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationFilter_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationPortal</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationPortal_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationProgressBar</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationProgressBar_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationQuestion</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationQuestionGroup</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationQuestionSection</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationRegistration</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationRegistration_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationRequirement</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationRequirementPreview</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationRequirementPreview_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationRequirement_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationReview</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationReview_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationTESTUtilities</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ApplicationUtilities</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>BatchApplicationArchiver</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>BatchApplicationArchiver_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>INT_InteractionMappingService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>INT_InteractionMappingService_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>INT_InteractionProcessor</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>INT_InteractionProcessor_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>INT_OpportunityContactRoleHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>INT_OpportunityContactRoleHandler_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>INT_TestDataFactory</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>RelatedDocumentUpload</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>RelatedDocumentUpload_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>RelatedObjectReview</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>RelatedObjectReview_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UserApplicationTriggerHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UserApplicationTriggerHandler_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>Application_Setting__c</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>Interactions_PreProcessing__c</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>Related_Object_Review__c</name>
-    </customSettingAccesses>
-    <description>This permission set is assigned to System Admins so they can view/edit all EASY app related objects and fields.</description>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
-        <field>Academic_Term__c.Academic_Term_Integration_External_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Academic_Term__c.Activate_Application_Date__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Academic_Term__c.Application_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
-        <field>Academic_Term__c.Banner_Term_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Academic_Term__c.End_Application_Date__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
-        <field>Academic_Term__c.Housing_End_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Academic_Term__c.Housing_Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Academic_Term__c.Term_End_Date__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Academic_Term__c.Term_Start_Date__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Academic_Term__c.Term_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
-        <field>Account.ACAT_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.AccountNumber</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.AccountSource</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Account_Integration_External_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Activity_Category_Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Activity_Category__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Activity_Type_Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Activity_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Aid_Eligibility__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.AnnualRevenue</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Banner_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Banner_Key__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.BillingAddress</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.CEEB_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.CEEB_Integration_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.CIPC_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.CleanStatus</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Current_Parent__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.DLEV_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.DandbCompanyId</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Description</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.DunsNumber</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Email__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Fax</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Focus_Rating__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Inactive_School__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Industry</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Jigsaw</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NaicsCode</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NaicsDesc</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.NumberOfEmployees</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.OperatingHoursId</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Ownership</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.ParentId</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Phone</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Rating</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.School_Geographic_Area__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.School_Type_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Sevis_Equivalent__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.ShippingAddress</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Sic</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.SicDesc</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Site</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Surrogate_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.TickerSymbol</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Tradestyle</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Type</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.University_Banner_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.University_Banner_PIDM__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Valid_Major__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Valid_Minor__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Website</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.YearStarted</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.hed__Billing_County__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.hed__Current_Address__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.hed__Primary_Contact__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.hed__School_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.hed__Shipping_County__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Application_Control__c.Active__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Allow_Cancel_From__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Allow_Submit_From__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Allow_Withdraw_From__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
-        <field>Application_Control__c.Application_Control_External_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Application_Control__c.Arrow_Color__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Button_Color__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Button_Text_Color__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Cancel_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Default__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Hide_Term_Program__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Line_Color__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Link_Color__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Logo_Static_Resource_Path__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Logo_Static_Resource__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Submit_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Text_Color__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.URL_Parameter__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Control__c.Withdraw_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Review__c.Application__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Review__c.Completed__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Review__c.Date_Completed__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Review__c.Decision_Recommendation__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Review__c.Due_Date__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Review__c.Start_Date__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application_Review__c.Terminated__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Admission_Decision__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Application__c.Applicant_Age__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Applicant_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Application_Control__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Application_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Citizenship__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Contact__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Degree_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Delivery_Location__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Delivery_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Educational_Background__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
-        <field>Application__c.Future_ACT_SAT_Times__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Application__c.Future_Test_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Application__c.Generic_Filter_1__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Generic_Filter_2__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Generic_Filter_3__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Generic_Filter_4__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Holding_Name__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Intended_Program__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Intended_Term_of_Entry__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Related_Object_JSON__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.Residency__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Application__c.School_College__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
-        <field>Application__c.Self_Reported_Test_Acknowledgement_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Application__c.Self_Reported_Test_Acknowledgement__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Application__c.Self_Reported_Test_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Application__c.Self_Reported_Test_Scores_Times_Taken__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Application__c.Student_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
-        <field>Application__c.Take_ACT_SAT__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Application__c.User_Created__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.AccountId</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Birthdate</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Email</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Employer__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.HomePhone</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
+        
         <editable>false</editable>
-        <field>Contact.Is_Portal_User__c</field>
-        <readable>true</readable>
+        
+        <field>Campaign.Campaign_Key__c</field>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.LeadSource</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.MailingAddress</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Marital_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.MobilePhone</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.OtherAddress</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Personal_Email__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Phone</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Portal_User__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Preferred_First_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Previous_Last_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Primary_Academic_Program__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.University_Banner_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.University_Banner_PIDM__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__AlternateEmail__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Chosen_Full_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Citizenship_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Citizenship__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Contact_JSON__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Current_Address__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Ethnicity__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Former_First_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Former_Last_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Former_Middle_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Gender__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Mailing_County__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Naming_Exclusions__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Other_County__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__PreferredPhone__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Preferred_Email__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Primary_Address_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Race__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Religion__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__UniversityEmail__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__WorkEmail__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__WorkPhone__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
+        
         <editable>false</editable>
-        <field>Contact.hed__Work_Address__c</field>
-        <readable>true</readable>
+        
+        <field>CampaignMember.Campaign_Member_Key__c</field>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>EASY_Widget__c.Display_Heading__c</field>
-        <readable>true</readable>
+        
+        <editable>false</editable>
+        
+        <field>Contact.Constituent_ID__c</field>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>EASY_Widget__c.Display_Text__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EASY_Widget__c.Scripts__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EASY_Widget__c.Sort_Order__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EASY_Widget__c.Widget_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Activate_Application_Date__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Applicant_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Application_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Citizenship__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Degree_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Delivery_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.End_Application_Date__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Generic_Filter_1__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Generic_Filter_2__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Generic_Filter_3__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Generic_Filter_4__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Intended_Program_Term__c.Intended_Program_Term_Integration_Ext_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Intended_Program__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Period_Id__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Residency__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.School_College__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Intended_Program_Term__c.Student_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction_Mapping__c.Active__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction_Mapping__c.Insert_Null__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction_Mapping__c.Interaction_Source_Field_API_Name__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction_Mapping__c.Skip_Mapping__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction_Mapping__c.Target_Field_API_Name__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction_Mapping__c.Target_Object_API_Name__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Academic_Program__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Interaction__c.Additional_Campaign_Key__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Additional_Campaign_Member_Status__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Additional_Campaign_Reference_ID__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Additional_Campaign__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Admit_Type__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Affiliated_Account__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Interaction__c.Affiliation_Key__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Affiliation_Role__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Affiliation_Status__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Application_Number__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Audit_Reason__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Birthdate__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Interaction__c.Campaign_Key__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Campaign_Member_Status__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Campaign_Reference_ID__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Campaign__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Interaction__c.Career__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Constituent_ID__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Interaction__c.Contact_Account_ID__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Contact_Title__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Contact__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Ethnicity__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Gender__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Home_Phone__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Interaction_Source__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Interaction_Status__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Interaction_Upsert_Key__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Lead_Only__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Lead_Source__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Lead__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Mailing_City__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Mailing_Country__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Mailing_Postal_Code__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Mailing_State__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Mailing_Street__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Middle_Name__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Mobile_Phone__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Interaction__c.Opportunity_Close_Date__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Interaction__c.Opportunity_Key__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Interaction__c.Opportunity_Name__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Opportunity_Stage__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Opportunity__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Primary_Affiliation__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Race__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Recruitment_Program__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.Salutation__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Interaction__c.University_Email__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Admit_Type__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Affiliated_Account__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Affiliation_Role__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Birthdate__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Career__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Constituent_ID__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Ethnicity__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Gender__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Primary_Affiliation__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Race__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
+        <field>Lead.Recruitment_Program__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
         <field>Opportunity.Academic_Program__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Opportunity.Admit_Type__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
+        <field>Opportunity.Affiliated_Account__c</field>
+        
+        <readable>false</readable>
+        
+    </fieldPermissions>
+    
+    <fieldPermissions>
+        
+        <editable>false</editable>
+        
         <field>Opportunity.Application_Number__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Opportunity.Application_Submitted_Date__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.College_Code__c</field>
-        <readable>true</readable>
+        
+        <editable>false</editable>
+        
+        <field>Opportunity.Career__c</field>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Opportunity.Contact__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.Declined_Date__c</field>
-        <readable>true</readable>
+        
+        <editable>false</editable>
+        
+        <field>Opportunity.Department__c</field>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.Description</field>
-        <readable>true</readable>
+        
+        <editable>false</editable>
+        
+        <field>Opportunity.First_Inquiry_Source__c</field>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.Entity_ID__c</field>
-        <readable>true</readable>
+        
+        <editable>false</editable>
+        
+        <field>Opportunity.First_Recruitment_Program__c</field>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Opportunity.Inquiry_Date__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.LeadSource</field>
-        <readable>true</readable>
+        
+        <editable>false</editable>
+        
+        <field>Opportunity.Opportunity_Key__c</field>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.NextStep</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.Prospect_Rating__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Opportunity.Recruitment_Program__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.Submitted_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.Type</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Academic_Level__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Active__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Applicant_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.Application_Control__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.Application_Fee_Amount__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.Banner_Program_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.CIP_Code__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Career__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Citizenship__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.Concentration_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Degree_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Degree__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Delivery_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Department__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Description__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Generic_Filter_1__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Generic_Filter_2__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Generic_Filter_3__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Generic_Filter_4__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Hide_Applicant_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Hide_Citizenship__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Hide_Student_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Hide_from_Application__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.Major_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Number_of_Applications_Limit__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.Pre_Professional_Program__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Program_Code__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.Program_Integration_External_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
+        
         <editable>false</editable>
-        <field>Program__c.Program_Major_Concentration__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Program__c.Program_Name_on_Application__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.Program_Offered_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Program_Record_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Program_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Recruitment_Program__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Residency__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.STEM_Major__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.STVMAJR_CIPC_CODE__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.STVMAJR_VALID_CONCENTRATN_IND__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.STVMAJR_VALID_MAJOR_IND__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.STVMAJR_VALID_MINOR_IND__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.School_College__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Program__c.Student_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Program__c.UG_Integration_Program_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question_Dependency__c.Controlling_Question__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Question_Dependency__c.Question_Dependency_Integration_Ext_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question_Dependency__c.ValueCheckbox__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question_Dependency__c.Value__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
-        <field>Question_Response__c.Application__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Question_Response__c.City__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.Country__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Question_Response__c.IsComplete__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.IsPopulated__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.IsRequired__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.IsShown__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.PopulatedOn__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.PostalCode__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Question_Response__c.Question_Label__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Question_Response__c.Question_Response__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.Question__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.State__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.Street__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueCheckbox__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueCurrency__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueDateTime__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueDate__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueEmail__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueLongTextArea__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueNumber__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValuePercent__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValuePhone__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueTextArea__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueTextEncrypted__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueText__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question_Response__c.ValueURL__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Active__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Applicant_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
-        <field>Question__c.Application_Control_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Question__c.Application_Control_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Question__c.Application_Field__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Application_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Citizenship__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Contact_Field__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Question__c.Date_Stamp__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Degree_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Delivery_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Dependency_Behavior__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Dependency_Logic__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Display_Order__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Display_as_Picklist__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Display_on_Admin_Review_Pages__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Editable_Application_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.External_Email_Field__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Generic_Filter_1__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Generic_Filter_2__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Generic_Filter_3__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Generic_Filter_4__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Hardcoded_Value__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Help_Text__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Question__c.Hide_from_Application__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Intended_Program__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Label__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Question__c.Length__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Lookup_Object__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Lookup_Where_Clause__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Name_Field_API_Name__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.New_Reference_Field__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Picklist_Values__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Placeholder__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Question__c.Q_UID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Question__c.Question_Integration_External_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Question__c.RI_UID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Related_Object_Field__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Required__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
-        <field>Question__c.Requirement_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Question__c.Requirement_Item_Display_Order__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Question__c.Requirement_Item_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Question__c.Requirement_Item_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Question__c.Requirement_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Question__c.Residency__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.School_College__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Static_Text__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.Student_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Question__c.URL_Parameter__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Active__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Allow_Supporting_Documentation_Upload__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Allow_Text_Entry__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Applicant_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
-        <field>Requirement_Item__c.Application_Control_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Requirement_Item__c.Application_Control__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Requirement_Item__c.Application_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Citizenship__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Degree_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Delivery_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Display_Order__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Display_on_Admin_Review_Pages__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Display_on_Checklist__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Editable_Application_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.File_Types__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Generic_Filter_1__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Generic_Filter_2__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Generic_Filter_3__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Generic_Filter_4__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Holding_Record_Id__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Instructions__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Intended_Program__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Internal_Only_Applicant_Instructions__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Internal_Only_Show_on_Checklist__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Internal_Only__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Internal_Requirement_Item__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Label__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Maximum_Number_of_Children__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Requirement_Item__c.RI_UID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Requirement_Item__c.R_UID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Related_List_Object_Master_Field__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Related_List_Object_Master__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Related_List_Object__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Related_List_Where_Clause__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Required_Number_of_Children__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Required_Supporting_Documentation__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Required__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
-        <field>Requirement_Item__c.Requirement_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
         <field>Requirement_Item__c.Residency__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.School_College__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Student_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Requirement_Item__c.Viewing_Requirement_Formula__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Item__c.Viewing_Requirement__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.Archive_Payload__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.Child_Requirement_Fulfilled_On__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.Document_Requirement_Fulfilled_On__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.External_Email__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Requirement_Response__c.Fulfilled_On__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.HasDocument__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.Has_Child_Requirement__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.Hashcode__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Requirement_Response__c.Incomplete_Questions__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Requirement_Response__c.Question_Group_Requirement_Fulfilled_On__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.Requirement_Item__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.Send_Reminder__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.ValueTextEntry__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement_Response__c.Viewed__c</field>
-        <readable>true</readable>
+        
+        <readable>false</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>true</editable>
+        
         <field>Requirement_Response__c.Waive_Requirement__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Active__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Applicant_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Application_Creation_Display_Order__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Application_Status__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Citizenship__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Degree_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Delivery_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Display_Order__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Display_on_Admin_Review_Pages__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Display_on_Checklist__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Generic_Filter_1__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Generic_Filter_2__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Generic_Filter_3__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Generic_Filter_4__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Intended_Program__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Internal_Only_Show_on_Checklist__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Internal_Only__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Label__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Requirement__c.R_IUD__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Requirement__c.Requirement_Integration_External_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Residency__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.School_College__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Show_on_Application_Creation__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Student_Type__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
+        
         <editable>false</editable>
+        
         <field>Requirement__c.URL_Parameter__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
+    
     <fieldPermissions>
-        <editable>true</editable>
+        
+        <editable>false</editable>
+        
         <field>Requirement__c.Viewing_Requirement__c</field>
+        
         <readable>true</readable>
+        
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.Address_Banner_Key__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>hed__Address__c.Latitude__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>hed__Address__c.Longitude__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Address_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Default_Address__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>hed__Address__c.hed__Formula_MailingAddress__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>hed__Address__c.hed__Formula_MailingStreetAddress__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Geolocation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Latest_End_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Latest_Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__MailingCity__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__MailingCountry__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__MailingCounty__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__MailingPostalCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__MailingState__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__MailingStreet2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__MailingStreet__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Parent_Account__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Parent_Contact__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Seasonal_End_Day__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Seasonal_End_Month__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Seasonal_End_Year__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Seasonal_Start_Day__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Seasonal_Start_Month__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Address__c.hed__Seasonal_Start_Year__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Applicant_Decision_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Applicant__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Application_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Application_Decision_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Application_JSON__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Application_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Application_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Applying_To__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Initial_Creation_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Preparer__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Application__c.hed__Term__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Contact_Language__c.Holding_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Contact_Language__c.Related_Object_JSON__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Contact_Language__c.User_Created__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Contact_Language__c.hed__Fluency__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Contact_Language__c.hed__Language_Details__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Contact_Language__c.hed__Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Contact_Language__c.hed__Primary_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.Diploma_GED_Earned_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.Diploma_GED_Earned__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.Holding_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.Related_Object_JSON__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.User_Created__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Account__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Class_Percentile__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Class_Rank_Scale__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Class_Rank_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Class_Rank__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Class_Size__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Contact__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Degree_Earned__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Details__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Education_History_JSON__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Educational_Institution_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__End_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__GPA_Scale_Reporting__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__GPA_Scale_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__GPA__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Graduation_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Education_History__c.hed__Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Language__c.Holding_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Language__c.Related_Object_JSON__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Term__c.Term_Integration_External_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Term__c.hed__End_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Term__c.hed__Grading_Period_Sequence__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Term__c.hed__Instructional_Days__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Term__c.hed__Parent_Term__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Term__c.hed__Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Term__c.hed__Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_Composite_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_Composite_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_English_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_English_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_Math_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_Mathematics_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_Reading_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_Reading_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_Science_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_Science_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.ACT_Total_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.Future_ACT_SAT_Times__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.Have_you_taken_the_ACT_SAT__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.Holding_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.Related_Object_JSON__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.SAT_Composite_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.SAT_Composite_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.SAT_Math_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.SAT_Mathematics_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.SAT_Total_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.SAT_Verbal_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.SAT_Verbal_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.SAT_Writing_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.SAT_Writing_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.Self_Reported_Test_Acknowledgement_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.Self_Reported_Test_Acknowledgement__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.Take_ACT_SAT_Times__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.User_Created__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.hed__Contact__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.hed__Date_Received__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.hed__Source__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.hed__Test_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>hed__Test__c.hed__Test_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
+    
     <hasActivationRequired>false</hasActivationRequired>
+    
     <label>Application Admin</label>
+    
     <objectPermissions>
+        
         <allowCreate>true</allowCreate>
+        
         <allowDelete>true</allowDelete>
+        
         <allowEdit>true</allowEdit>
+        
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Academic_Term__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Account</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Application_Control__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Application_Review__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Application__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Contact</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
+        
         <modifyAllRecords>false</modifyAllRecords>
-        <object>EASY_Widget__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        
+        <object>Academic_Term__c</object>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
     </objectPermissions>
+    
     <objectPermissions>
+        
         <allowCreate>true</allowCreate>
+        
         <allowDelete>true</allowDelete>
+        
         <allowEdit>true</allowEdit>
+        
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
+        <object>Application_Control__c</object>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
+    </objectPermissions>
+    
+    <objectPermissions>
+        
+        <allowCreate>true</allowCreate>
+        
+        <allowDelete>true</allowDelete>
+        
+        <allowEdit>true</allowEdit>
+        
+        <allowRead>true</allowRead>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
+        <object>Application_Review__c</object>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
+    </objectPermissions>
+    
+    <objectPermissions>
+        
+        <allowCreate>true</allowCreate>
+        
+        <allowDelete>true</allowDelete>
+        
+        <allowEdit>true</allowEdit>
+        
+        <allowRead>true</allowRead>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
+        <object>Application__c</object>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
+    </objectPermissions>
+    
+    <objectPermissions>
+        
+        <allowCreate>true</allowCreate>
+        
+        <allowDelete>true</allowDelete>
+        
+        <allowEdit>true</allowEdit>
+        
+        <allowRead>true</allowRead>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
         <object>Intended_Program_Term__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
     </objectPermissions>
+    
     <objectPermissions>
+        
         <allowCreate>true</allowCreate>
+        
         <allowDelete>true</allowDelete>
+        
         <allowEdit>true</allowEdit>
+        
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Interaction_Mapping__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Interaction__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Opportunity</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
         <object>Program__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
     </objectPermissions>
+    
     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        
+        <allowCreate>false</allowCreate>
+        
+        <allowDelete>false</allowDelete>
+        
+        <allowEdit>false</allowEdit>
+        
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
         <object>Question_Dependency__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
     </objectPermissions>
+    
     <objectPermissions>
+        
         <allowCreate>true</allowCreate>
+        
         <allowDelete>true</allowDelete>
+        
         <allowEdit>true</allowEdit>
+        
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
         <object>Question_Response__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
     </objectPermissions>
+    
     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        
+        <allowCreate>false</allowCreate>
+        
+        <allowDelete>false</allowDelete>
+        
+        <allowEdit>false</allowEdit>
+        
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
         <object>Question__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
     </objectPermissions>
+    
     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        
+        <allowCreate>false</allowCreate>
+        
+        <allowDelete>false</allowDelete>
+        
+        <allowEdit>false</allowEdit>
+        
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
         <object>Requirement_Item__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
     </objectPermissions>
+    
     <objectPermissions>
+        
         <allowCreate>true</allowCreate>
+        
         <allowDelete>true</allowDelete>
+        
         <allowEdit>true</allowEdit>
+        
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
         <object>Requirement_Response__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
     </objectPermissions>
+    
     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        
+        <allowCreate>false</allowCreate>
+        
+        <allowDelete>false</allowDelete>
+        
+        <allowEdit>false</allowEdit>
+        
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        
+        <modifyAllRecords>false</modifyAllRecords>
+        
         <object>Requirement__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        
+        <viewAllRecords>false</viewAllRecords>
+        
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>hed__Address__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>hed__Application__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>hed__Contact_Language__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>hed__Education_History__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>hed__Language__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>hed__Term__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>hed__Test__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
+    
     <pageAccesses>
+        
         <apexPage>ApplicationAdminView</apexPage>
+        
         <enabled>true</enabled>
+        
     </pageAccesses>
+    
     <pageAccesses>
+        
         <apexPage>ApplicationChecklist</apexPage>
+        
         <enabled>true</enabled>
+        
     </pageAccesses>
+    
     <pageAccesses>
+        
         <apexPage>ApplicationCreate</apexPage>
+        
         <enabled>true</enabled>
+        
     </pageAccesses>
+    
     <pageAccesses>
+        
         <apexPage>ApplicationPortal</apexPage>
+        
         <enabled>true</enabled>
+        
     </pageAccesses>
+    
     <pageAccesses>
-        <apexPage>ApplicationRegistration</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
+        
         <apexPage>ApplicationRequirement</apexPage>
+        
         <enabled>true</enabled>
+        
     </pageAccesses>
+    
     <pageAccesses>
+        
         <apexPage>ApplicationRequirementPreview</apexPage>
+        
         <enabled>true</enabled>
+        
     </pageAccesses>
+    
     <pageAccesses>
+        
         <apexPage>ApplicationReview</apexPage>
+        
         <enabled>true</enabled>
+        
     </pageAccesses>
+    
     <pageAccesses>
+        
         <apexPage>RelatedDocumentUpload</apexPage>
+        
         <enabled>true</enabled>
+        
     </pageAccesses>
+    
     <pageAccesses>
+        
         <apexPage>RelatedObjectReview</apexPage>
+        
         <enabled>true</enabled>
+        
     </pageAccesses>
-    <recordTypeVisibilities>
-        <recordType>Account.Academic_Program</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Account.Administrative</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Account.Business_Organization</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Account.Educational_Institution</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Account.HH_Account</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Account.Sports_Organization</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Account.University_Department</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Opportunity.Applicant_Opportunity</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Opportunity.Inquiry_Opportunity</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Program__c.Academic_Program</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Program__c.Recruitment_Program</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question_Dependency__c.Checkbox</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question_Dependency__c.Multi_Select_Picklist</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question_Dependency__c.Picklist</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Address</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Checkbox</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Currency</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Date</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.DateTime</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Email</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.LongTextArea</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.MultiPicklist</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Number</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Percent</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Phone</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Picklist</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Radio</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Reference</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Static</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.Text</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.TextArea</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.TextEncrypted</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Question__c.URL</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Requirement_Item__c.Document_Upload</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Requirement_Item__c.Question_Group</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Requirement_Item__c.Related_Object</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>hed__Education_History__c.College</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>hed__Education_History__c.High_School</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
+    
     <tabSettings>
+        
         <tab>Academic_Term__c</tab>
+        
         <visibility>Visible</visibility>
+        
     </tabSettings>
+    
     <tabSettings>
+        
         <tab>Application_Control__c</tab>
+        
         <visibility>Visible</visibility>
+        
     </tabSettings>
+    
     <tabSettings>
+        
         <tab>Application_Review__c</tab>
+        
         <visibility>Visible</visibility>
+        
     </tabSettings>
+    
     <tabSettings>
+        
         <tab>Application__c</tab>
+        
         <visibility>Visible</visibility>
+        
     </tabSettings>
+    
     <tabSettings>
-        <tab>EASY_Widget__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Intended_Program_Term__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Interaction_Mapping__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Interaction__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
+        
         <tab>Program__c</tab>
+        
         <visibility>Visible</visibility>
+        
     </tabSettings>
+    
     <tabSettings>
-        <tab>Question_Dependency__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Question_Response__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Question__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Requirement_Item__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Requirement_Response__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
+        
         <tab>Requirement__c</tab>
+        
         <visibility>Visible</visibility>
+        
     </tabSettings>
-    <tabSettings>
-        <tab>hed__Address__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>hed__Application__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>hed__Contact_Language__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>hed__Education_History__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>hed__Language__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>hed__Term__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>hed__Test__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ApiEnabled</name>
-    </userPermissions>
+    
 </PermissionSet>

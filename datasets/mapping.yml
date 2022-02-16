@@ -47,6 +47,7 @@ Insert Campaign:
   sf_object: Campaign
   fields:
   - Campaign_Key__c
+  - Campaign_Reference_ID__c
   - IsActive
   - Name
   lookups:
@@ -62,14 +63,10 @@ Insert Interaction_Mapping__c:
   - Interaction_Source_Field_API_Name__c
   - LastModifiedDate
   - Skip_Mapping__c
+  - Source_Field_API_Name__c
+  - Source_Object_API_Name__c
   - Target_Field_API_Name__c
   - Target_Object_API_Name__c
-Insert Plan__c:
-  sf_object: Plan__c
-  fields:
-  - CreatedDate
-  - LastModifiedDate
-  - Name
 Insert Staging_Record__c:
   sf_object: Staging_Record__c
   fields:
@@ -258,11 +255,8 @@ Insert hed__Language__c:
   sf_object: hed__Language__c
   fields:
   - CreatedDate
-  - Holding_Name__c
-  - Language_External_Id__c
   - LastModifiedDate
   - Name
-  - Related_Object_JSON__c
 Insert EASY_Widget__c:
   sf_object: EASY_Widget__c
   fields:
@@ -290,6 +284,13 @@ Insert Account:
   - Aid_Eligibility__c
   - Banner_Code__c
   - Banner_Key__c
+  - BillingCity
+  - BillingStreet
+  - BillingState
+  - BillingCountry
+  - BillingPostalCode
+  - BillingLatitude
+  - BillingLongitude
   - CEEB_Code__c
   - CEEB_Integration_Code__c
   - CIPC_Code__c
@@ -306,6 +307,7 @@ Insert Account:
   - School_Geographic_Area__c
   - School_Type_Code__c
   - Sevis_Equivalent__c
+  - ShippingCountry
   - Surrogate_ID__c
   - University_Banner_ID__c
   - University_Banner_PIDM__c
@@ -326,6 +328,25 @@ Insert Account:
     hed__Primary_Contact__c:
       table: Contact
       after: Insert Contact
+Insert Plan__c:
+  sf_object: Plan__c
+  fields:
+  - Active__c
+  - CIP_Code__c
+  - Career__c
+  - CreatedDate
+  - Degree__c
+  - LastModifiedDate
+  - Name
+  - Plan_Code__c
+  - Plan_Type__c
+  - Type__c
+  lookups:
+    Department__c:
+      table: Account
+    Recruitment_Interest__c:
+      table: Plan__c
+      after: Insert Plan__c
 Insert Program__c:
   sf_object: Program__c
   fields:
@@ -413,22 +434,6 @@ Insert hed__Facility__c:
     hed__Parent_Facility__c:
       table: hed__Facility__c
       after: Insert hed__Facility__c
-Insert hed__Program_Plan__c:
-  sf_object: hed__Program_Plan__c
-  fields:
-  - CreatedDate
-  - LastModifiedDate
-  - Name
-  - hed__Description__c
-  - hed__End_Date__c
-  - hed__Is_Primary__c
-  - hed__Start_Date__c
-  - hed__Status__c
-  - hed__Total_Required_Credits__c
-  - hed__Version__c
-  lookups:
-    hed__Account__c:
-      table: Account
 Insert hed__Term__c:
   sf_object: hed__Term__c
   fields:
@@ -852,29 +857,18 @@ Insert CampaignMember:
 Insert Contact:
   sf_object: Contact
   fields:
-  - Admissions_Mobile_Opt_In__c
   - Constituent_ID__c
-  - Contact_Banner_Key__c
   - Contact_Constituent_ID__c
   - CreatedDate
   - Credentialing_Identifier__c
   - Deceased_Date__c
   - DoNotCall
-  - Employer__c
   - FirstName
-  - Grad_Level__c
   - HasOptedOutOfEmail
   - HasOptedOutOfFax
   - Job_Title__c
   - LastModifiedDate
   - LastName
-  - Marital_Status__c
-  - Personal_Email__c
-  - Preferred_First_Name__c
-  - Previous_Last_Name__c
-  - Receive_Texts__c
-  - University_Banner_ID__c
-  - University_Banner_PIDM__c
   - hed__AlternateEmail__c
   - hed__Chosen_Full_Name__c
   - hed__Citizenship_Status__c
@@ -919,16 +913,9 @@ Insert Contact:
   lookups:
     AccountId:
       table: Account
-    MyProgram__c:
-      table: hed__Program_Enrollment__c
-      after: Insert hed__Program_Enrollment__c
     Primary_Academic_Program__c:
       table: Account
-    Primary_Department__c:
-      table: Account
     Primary_Educational_Institution__c:
-      table: Account
-    Primary_Sports_Organization__c:
       table: Account
     ReportsToId:
       table: Contact
@@ -1012,40 +999,27 @@ Insert Opportunity:
   sf_object: Opportunity
   fields:
   - Admit_Type__c
-  - All_Interested_Programs__c
   - Application_Number__c
   - Application_Submitted_Date__c
-  - Citizenship__c
   - CloseDate
-  - College_Code__c
-  - College_of_Interest__c
   - CreatedDate
-  - Declined_Date__c
-  - Degree_Level__c
-  - Employer__c
-  - Entity_ID__c
-  - Expected_Graduate_Date__c
   - First_Inquiry_Source__c
+  - First_Recruitment_Interest__c
   - First_Recruitment_Program__c
-  - Heard_About_Us__c
-  - High_School_Graduation_Year__c
   - Inquiry_Date__c
   - IsPrivate
   - LastModifiedDate
   - Name
   - Opportunity_Key__c
-  - Program_Offered_Code__c
-  - Prospect_Rating__c
-  - Receive_Texts__c
   - RecordTypeId
   - StageName
-  - Submitted_Date__c
-  - Years_Attended__c
   - hed__Completed_FAFSA__c
   - hed__Desired_Campus__c
   - hed__Desired_Degree_Level__c
   - hed__Living_Situation__c
   lookups:
+    Academic_Interest__c:
+      table: Plan__c
     Academic_Program__c:
       table: Program__c
     AccountId:
@@ -1058,24 +1032,14 @@ Insert Opportunity:
       table: Contact
     Contact__c:
       table: Contact
-    High_School_Transfer__c:
-      table: Account
-    High_School_or_College__c:
-      table: Account
-    Intended_Start_Term__c:
-      table: Academic_Term__c
-    Major_Program_1__c:
-      table: Program__c
-    Major_Program_2__c:
-      table: Program__c
-    Major_Program_3__c:
-      table: Program__c
-    Major_Program_4__c:
-      table: Program__c
+    Last_Campaign_Source__c:
+      table: Campaign
+    Recruitment_Interest__c:
+      table: Plan__c
     Recruitment_Program__c:
       table: Program__c
-    St_Thomas_College_School__c:
-      table: Account
+    Term__c:
+      table: hed__Term__c
     hed__Desired_Start_Term__c:
       table: hed__Term__c
 Insert Work_History__c:
@@ -1122,7 +1086,6 @@ Insert Work_History__c:
 Insert hed__Address__c:
   sf_object: hed__Address__c
   fields:
-  - Address_Banner_Key__c
   - CreatedDate
   - LastModifiedDate
   - hed__Address_Type__c
@@ -1153,6 +1116,7 @@ Insert hed__Affiliation__c:
   fields:
   - CreatedDate
   - LastModifiedDate
+  - Upsert_Key__c
   - hed__Description__c
   - hed__EndDate__c
   - hed__Primary__c
@@ -1164,23 +1128,6 @@ Insert hed__Affiliation__c:
       table: Account
     hed__Contact__c:
       table: Contact
-Insert hed__Contact_Language__c:
-  sf_object: hed__Contact_Language__c
-  fields:
-  - CreatedDate
-  - Holding_Name__c
-  - Language_Fluency__c
-  - LastModifiedDate
-  - Related_Object_JSON__c
-  - User_Created__c
-  - hed__Fluency__c
-  - hed__Language_Details__c
-  - hed__Primary_Language__c
-  lookups:
-    hed__Contact__c:
-      table: Contact
-    hed__Language__c:
-      table: hed__Language__c
 Insert hed__Education_History__c:
   sf_object: hed__Education_History__c
   fields:
@@ -1271,36 +1218,22 @@ Insert Lead:
   - Admit_Type__c
   - Affiliation_Role__c
   - Birthdate__c
-  - Citizenship__c
-  - College_of_Interest__c
   - Company
   - Constituent_ID__c
-  - Converted_Lead__c
   - CreatedDate
-  - Degree_Level__c
   - DoNotCall
-  - Employer__c
   - Ethnicity__c
-  - Expected_Graduate_Date__c
   - FirstName
   - Gender__c
   - HasOptedOutOfEmail
   - HasOptedOutOfFax
-  - Heard_About_Us__c
-  - Home_Phone__c
-  - Inquiry_Date__c
   - IsConverted
   - IsUnreadByOwner
   - LastModifiedDate
   - LastName
   - Lead_Website__c
   - Primary_Affiliation__c
-  - Program_Offered_Code__c
-  - Question__c
   - Race__c
-  - Receive_Texts__c
-  - Referral_Website__c
-  - Send_Printed_Info__c
   - Status
   - hed__Area_Of_Interest__c
   - hed__Birth_Date__c
@@ -1319,11 +1252,6 @@ Insert Lead:
   - hed__SMS_Opt_Out__c
   - hed__SSN__c
   - hed__Undergraduate_Major__c
-  - utm_campaign__c
-  - utm_content__c
-  - utm_medium__c
-  - utm_source__c
-  - utm_term__c
   lookups:
     Affiliated_Account__c:
       table: Account
@@ -1333,49 +1261,12 @@ Insert Lead:
       table: Contact
     ConvertedOpportunityId:
       table: Opportunity
-    High_School_or_College__c:
-      table: Account
-    Intended_Start_Term__c:
-      table: Academic_Term__c
-    Major_Program_2__c:
-      table: Program__c
-    Major_Program_3__c:
-      table: Program__c
-    Major_Program_4__c:
-      table: Program__c
-    Major_Program__c:
-      table: Program__c
+    Recruitment_Interest__c:
+      table: Plan__c
     Recruitment_Program__c:
       table: Program__c
-    St_Thomas_College_School__c:
-      table: Account
-Insert hed__Program_Enrollment__c:
-  sf_object: hed__Program_Enrollment__c
-  fields:
-  - CreatedDate
-  - LastModifiedDate
-  - hed__Admission_Date__c
-  - hed__Application_Submitted_Date__c
-  - hed__Class_Standing__c
-  - hed__Credits_Attempted__c
-  - hed__Credits_Earned__c
-  - hed__Eligible_to_Enroll__c
-  - hed__End_Date__c
-  - hed__Enrollment_Status__c
-  - hed__GPA__c
-  - hed__Graduation_Year__c
-  - hed__Start_Date__c
-  lookups:
-    hed__Account__c:
-      table: Account
-    hed__Affiliation__c:
-      table: hed__Affiliation__c
-    hed__Contact__c:
-      table: Contact
-    hed__Education_History__c:
-      table: hed__Education_History__c
-    hed__Program_Plan__c:
-      table: hed__Program_Plan__c
+    Term__c:
+      table: hed__Term__c
 Insert hed__Test_Score__c:
   sf_object: hed__Test_Score__c
   fields:
@@ -1403,17 +1294,13 @@ Insert Interaction__c:
   - Birthdate__c
   - Campaign_Member_Status__c
   - Campaign_Reference_ID__c
-  - Citizenship__c
-  - College_of_Interest__c
   - Constituent_ID__c
   - Contact_Title__c
   - CreatedDate
-  - Degree_Level__c
   - Email__c
   - Ethnicity__c
   - First_Name__c
   - Gender__c
-  - High_School_Graduation_Year__c
   - Home_Phone__c
   - Interaction_Source__c
   - Interaction_Status__c
@@ -1432,16 +1319,11 @@ Insert Interaction__c:
   - Opportunity_Stage__c
   - Primary_Affiliation__c
   - Race__c
-  - Receive_Texts__c
   - Salutation__c
   - University_Email__c
-  - Years_Attended__c
-  - utm_campaign__c
-  - utm_content__c
-  - utm_medium__c
-  - utm_source__c
-  - utm_term__c
   lookups:
+    Academic_Interest__c:
+      table: Plan__c
     Academic_Program__c:
       table: Program__c
     Additional_Campaign__c:
@@ -1452,11 +1334,13 @@ Insert Interaction__c:
       table: Campaign
     Contact__c:
       table: Contact
-    Intended_Start_Term__c:
-      table: Academic_Term__c
     Lead__c:
       table: Lead
     Opportunity__c:
       table: Opportunity
+    Recruitment_Interest__c:
+      table: Plan__c
     Recruitment_Program__c:
       table: Program__c
+    Term__c:
+      table: hed__Term__c

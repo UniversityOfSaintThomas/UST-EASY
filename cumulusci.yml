@@ -76,6 +76,14 @@ tasks:
       sql_path: datasets/dev5/data.sql
       inject_namespaces: False
 
+  load_prod_application_data:
+    description: 'Load data needed to start EASY applications'
+    class_path: cumulusci.tasks.bulkdata.load.LoadData
+    options:
+      mapping: datasets/prod/mapping.yml
+      sql_path: datasets/prod/data.sql
+      inject_namespaces: False
+
   configure_community:
     description: Deploys Network config for community for Development.
     class_path: cumulusci.tasks.salesforce.Deploy

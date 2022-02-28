@@ -81,7 +81,7 @@ tasks:
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
       mapping: datasets/prod/mapping.yml
-      sql_path: datasets/prod/data.sql
+      sql_path: datasets/dev5/data.sql
       inject_namespaces: False
 
   configure_community:
@@ -90,6 +90,14 @@ tasks:
     options:
       namespace_inject: $project_config.project__package__namespace
       path: unpackaged/config/network
+      unmanaged: True
+
+  configure_community_settings:
+    description: Deploys Network config for community for Development.
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      namespace_inject: $project_config.project__package__namespace
+      path: unpackaged/config/settings
       unmanaged: True
 
   deploy_site_config:
@@ -106,6 +114,14 @@ tasks:
     options:
       path: scripts/setup.cls
       apex: setUserRole();
+
+  activate_community:
+    description: 'Adds unpacked sharing rules for guest user access of EASY objects'
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      namespace_inject: $project_config.project__package__namespace
+      path: unpackaged/config/communities
+      unmanaged: True
 
   install_sharing_rules:
     description: 'Adds unpacked sharing rules for guest user access of EASY objects'
@@ -179,64 +195,68 @@ tasks:
         - record_type: Requirement_Item__c.Related_Object
           default: true
 
+  add_degree_piciklist:
+    description: "Adds more picklist items to the degree earned list of EDA."
+    class_path: cumulusci.tasks.metadata_etl.picklists.AddPicklistEntries
+    group: "EDA: Metadata"
+    ui_options:
+      add_relationship_type_values:
+        name: Add Relationship Type Picklist Values
+
+    options:
+      picklists: hed__Education_History__c.hed__Degree_Earned__c
+      entries:
+        - fullName: "None"
+          label: "None"
+        - fullName: "Associates"
+          label: "Associates"
+        - fullName: "Bachelors"
+          label: "Bachelors"
+        - fullName: "Masters"
+          label: "Masters"
+        - fullName: "Doctoral"
+          label: "Doctoral"
+        - fullName: "Certificate"
+          label: "Certificate"
+        - fullName: "Post Graduate Diploma"
+          label: "Post Graduate Diploma"
 flows:
   config_dev:
     steps:
       3:
         task: create_community
       4:
-        task: permission_guest_user
+        task: configure_community
+      4.5:
+        task: configure_community_settings
       5:
-        task: permission_admin_user
-      6:
         task: create_bulk_data_permission_set
+      6:
+        task: deploy_site_config
       7:
         task: set_easy_custom_settings
       8:
         task: set_hierarchy_custom_settings
       9:
         task: set_review_custom_settings
-      9.5:
+      10:
         task: update_admin_profile
-      10:
-        task: turn_off_duplicate_rules
       11:
-        task: load_application_data
+        task: turn_off_duplicate_rules
       12:
-        task: turn_on_duplicate_rules
+        task: load_application_data
       13:
-        task: configure_community
+        task: turn_on_duplicate_rules
       14:
-        task: deploy_site_config
-      15:
-        task: install_sharing_rules
-      16:
-        task: set_holding_ids
-      17:
-        task: set_user_user_role
-
-  set_up_new_org:
-    steps:
-      3:
-        task: create_community
-      4:
         task: permission_guest_user
-      5:
+      15:
         task: permission_admin_user
-      6:
-        task: create_bulk_data_permission_set
-      8:
-        task: set_hierarchy_custom_settings
-      10:
-        task: turn_off_duplicate_rules
-      11:
-        task: load_application_data
-      12:
-        task: turn_on_duplicate_rules
-      13:
-        task: configure_community
-      14:
-        task: deploy_site_config
+      16:
+        task: install_sharing_rules
+      17:
+        task: set_holding_ids
+      18:
+        task: set_user_user_role
 
 orgs:
   scratch:

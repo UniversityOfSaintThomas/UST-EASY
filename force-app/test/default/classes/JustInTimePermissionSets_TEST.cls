@@ -7,5 +7,6 @@
 private class JustInTimePermissionSets_TEST {
     @IsTest
     static void testBehavior() {
+        JustInTimePermissionSets.jitPermission(new List<JustInTimePermissionSets.userWithPermissionRequests>());
     }
 }

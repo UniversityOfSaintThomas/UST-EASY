@@ -3,6 +3,7 @@
     <fullName>Program_Integration_External_Id__c</fullName>
     <caseSensitive>false</caseSensitive>
     <defaultValue>&quot;Program__c&quot; &amp; TEXT(NOW()) &amp; MID($User.Id,6,5)</defaultValue>
+    <deprecated>false</deprecated>
     <description>Used for integration</description>
     <externalId>true</externalId>
     <inlineHelpText>Used for integration</inlineHelpText>

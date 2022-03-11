@@ -74,6 +74,8 @@ CREATE TABLE "Account" (
 	PRIMARY KEY (id)
 );
 INSERT INTO "Account" VALUES(4607,'','Account2019-12-1907:08:32H72m','','','','','false','','','Burnsville','100 Maple Island Rd','MN','United States','55306','44.717697','-93.276349','','','','2020-09-18T17:46:34.000Z','','false','','','','false','2022-02-09T22:25:37.000Z','Applicant Parent Account','01211000004VbhQAAS','','','','','','','','','true','false','false','','','','','','1','');
+INSERT INTO "Account" VALUES(4614,'','Account2019-12-1907:21:171fGm','','','','','false','','','','','','United States','','','','','','','2020-09-02T23:32:38.000Z','','false','','','','false','2020-09-17T16:16:41.000Z','Unknown College','01211000004VbhSAAS','','','','United States','','College','','','true','false','false','','','','','','','');
+INSERT INTO "Account" VALUES(10742,'','Account2019-12-1907:42:27H7CI','','','','','false','','','','','','United States','','','','','','','2020-09-02T23:35:23.000Z','','false','','','','false','2020-09-17T16:16:41.000Z','Unknown High School','01211000004VbhSAAS','','','','United States','','High School','','','true','false','false','','','','','','','');
 CREATE TABLE "Account_rt_mapping" (
 	record_type_id VARCHAR(18) NOT NULL,
 	developer_name VARCHAR(255),

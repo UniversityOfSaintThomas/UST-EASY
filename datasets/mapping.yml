@@ -2,16 +2,18 @@ Insert Academic_Term__c:
   sf_object: Academic_Term__c
   fields:
   - Academic_Term_Integration_External_ID__c
+  - Academic_Year_Code__c
   - Activate_Application_Date__c
   - Banner_Term_Code__c
   - CreatedDate
-  - Early_Decision_End_Date__c
-  - Early_Decision_Start_Date__c
   - End_Application_Date__c
+  - Financial_Aid_Processing_Year__c
   - Housing_End_Date__c
   - Housing_Start_Date__c
   - LastModifiedDate
   - Name
+  - Regular_Decision_End_Date__c
+  - Term_10th_Day__c
   - Term_End_Date__c
   - Term_Start_Date__c
 Insert Application_Control__c:
@@ -50,10 +52,6 @@ Insert Campaign:
   - Campaign_Reference_ID__c
   - IsActive
   - Name
-  lookups:
-    ParentId:
-      table: Campaign
-      after: Insert Campaign
 Insert Interaction_Mapping__c:
   sf_object: Interaction_Mapping__c
   fields:
@@ -295,7 +293,6 @@ Insert Account:
   - CEEB_Integration_Code__c
   - CIPC_Code__c
   - CreatedDate
-  - Credentialing_Identifier__c
   - Current_Parent__c
   - DLEV_Code__c
   - Email__c
@@ -309,14 +306,12 @@ Insert Account:
   - Sevis_Equivalent__c
   - ShippingCountry
   - Surrogate_ID__c
+  - Type
   - University_Banner_ID__c
   - University_Banner_PIDM__c
   - Valid_Major__c
   - Valid_Minor__c
-  - hed__Billing_Address_Inactive__c
   - hed__Billing_County__c
-  - hed__Credentialing_Email__c
-  - hed__School_Code__c
   - hed__Shipping_County__c
   lookups:
     ParentId:
@@ -354,15 +349,21 @@ Insert Program__c:
   - Active__c
   - Applicant_Type__c
   - Application_Fee_Amount__c
+  - Associated_Schools__c
+  - Banner_Major_Name__c
   - Banner_Program_Code__c
+  - Banner_Program_Name__c
   - CIP_Code__c
   - Career__c
   - Citizenship__c
+  - College_Code__c
   - Concentration_Code__c
+  - Concentration_Description__c
   - CreatedDate
   - Degree_Type__c
   - Degree__c
   - Delivery_Type__c
+  - Department_Code__c
   - Description__c
   - First_License__c
   - Generic_Filter_1__c
@@ -373,19 +374,26 @@ Insert Program__c:
   - Hide_Citizenship__c
   - Hide_Student_Type__c
   - Hide_from_Application__c
+  - Integration_Program_Code__c
   - LastModifiedDate
   - License_Area__c
   - Major_Code__c
   - Name
   - Number_of_Applications_Limit__c
   - Pre_Professional_Program__c
+  - Program_Areas_of_Interest__c
   - Program_Bucket__c
   - Program_Code__c
+  - Program_Degree_Code__c
+  - Program_Display__c
   - Program_Integration_External_Id__c
+  - Program_Keywords__c
+  - Program_Learning_Style__c
   - Program_Name_on_Application__c
   - Program_Offered_Name__c
   - Program_Record_Type__c
   - Program_Type__c
+  - Program_URL__c
   - RecordTypeId
   - Residency__c
   - STEM_Major__c
@@ -395,29 +403,35 @@ Insert Program__c:
   - STVMAJR_VALID_MINOR_IND__c
   - School_College__c
   - Student_Type__c
-  - UG_Integration_Program_Code__c
   lookups:
     Application_Control__c:
       table: Application_Control__c
     Department__c:
       table: Account
+    Effective_Term__c:
+      table: Academic_Term__c
     Recruitment_Program__c:
       table: Program__c
       after: Insert Program__c
-Insert hed__Academic_Certification__c:
-  sf_object: hed__Academic_Certification__c
+Insert hed__Course__c:
+  sf_object: hed__Course__c
   fields:
+  - Active__c
+  - Banner_Activity_Date__c
+  - College_Code__c
+  - Course_Key__c
+  - Course_Number__c
   - CreatedDate
+  - Effective_Term__c
   - LastModifiedDate
   - Name
-  - RecordTypeId
-  - hed__Academic_Level__c
-  - hed__Credentialing_Identifier__c
+  - Subject__c
+  - hed__Course_ID__c
+  - hed__Credit_Hours__c
   - hed__Description__c
-  - hed__Extended_Name__c
-  - hed__Field_Of_Study__c
+  - hed__Extended_Description__c
   lookups:
-    hed__Issuer__c:
+    hed__Account__c:
       table: Account
 Insert hed__Facility__c:
   sf_object: hed__Facility__c
@@ -445,8 +459,11 @@ Insert hed__Term__c:
   - Housing_Start_Date__c
   - LastModifiedDate
   - Name
+  - Term_Code__c
   - Term_End_Date__c
+  - Term_Friendly_Name__c
   - Term_Integration_External_Id__c
+  - Term_Key__c
   - Term_Start_Date__c
   - hed__End_Date__c
   - hed__Grading_Period_Sequence__c
@@ -860,7 +877,6 @@ Insert Contact:
   - Constituent_ID__c
   - Contact_Constituent_ID__c
   - CreatedDate
-  - Credentialing_Identifier__c
   - Deceased_Date__c
   - DoNotCall
   - FirstName
@@ -892,7 +908,6 @@ Insert Contact:
   - hed__Gender__c
   - hed__HIPAA_Detail__c
   - hed__HIPAA__c
-  - hed__Mailing_Address_Inactive__c
   - hed__Mailing_County__c
   - hed__Military_Background__c
   - hed__Military_Service__c
@@ -903,7 +918,6 @@ Insert Contact:
   - hed__Primary_Address_Type__c
   - hed__Race__c
   - hed__Religion__c
-  - hed__SMS_Opt_Out__c
   - hed__Secondary_Address_Type__c
   - hed__Social_Security_Number__c
   - hed__UniversityEmail__c
@@ -1013,10 +1027,6 @@ Insert Opportunity:
   - Opportunity_Key__c
   - RecordTypeId
   - StageName
-  - hed__Completed_FAFSA__c
-  - hed__Desired_Campus__c
-  - hed__Desired_Degree_Level__c
-  - hed__Living_Situation__c
   lookups:
     Academic_Interest__c:
       table: Plan__c
@@ -1039,8 +1049,6 @@ Insert Opportunity:
     Recruitment_Program__c:
       table: Program__c
     Term__c:
-      table: hed__Term__c
-    hed__Desired_Start_Term__c:
       table: hed__Term__c
 Insert Work_History__c:
   sf_object: Work_History__c
@@ -1090,7 +1098,6 @@ Insert hed__Address__c:
   - LastModifiedDate
   - hed__Address_Type__c
   - hed__Default_Address__c
-  - hed__Inactive__c
   - hed__Latest_End_Date__c
   - hed__Latest_Start_Date__c
   - hed__MailingCity__c
@@ -1126,8 +1133,6 @@ Insert hed__Affiliation__c:
   lookups:
     hed__Account__c:
       table: Account
-    hed__Contact__c:
-      table: Contact
 Insert hed__Education_History__c:
   sf_object: hed__Education_History__c
   fields:
@@ -1141,33 +1146,6 @@ Insert hed__Education_History__c:
   - RecordTypeId
   - Related_Object_JSON__c
   - User_Created__c
-  - hed__Class_Percentile__c
-  - hed__Class_Rank_Scale__c
-  - hed__Class_Rank_Type__c
-  - hed__Class_Rank__c
-  - hed__Class_Size__c
-  - hed__Credentialing_Identifier__c
-  - hed__Credits_Earned__c
-  - hed__Degree_Earned__c
-  - hed__Details__c
-  - hed__Education_History_JSON__c
-  - hed__Educational_Institution_Name__c
-  - hed__End_Date__c
-  - hed__GPA_Scale_Reporting__c
-  - hed__GPA_Scale_Type__c
-  - hed__GPA__c
-  - hed__Graduation_Date__c
-  - hed__Start_Date__c
-  - hed__Status__c
-  - hed__Verification_Status_Date__c
-  - hed__Verification_Status__c
-  lookups:
-    hed__Academic_Certification__c:
-      table: hed__Academic_Certification__c
-    hed__Account__c:
-      table: Account
-    hed__Contact__c:
-      table: Contact
 Insert hed__Test__c:
   sf_object: hed__Test__c
   fields:
@@ -1201,17 +1179,10 @@ Insert hed__Test__c:
   - Self_Reported_Test_Acknowledgement__c
   - Take_ACT_SAT_Times__c
   - User_Created__c
-  - hed__Credentialing_Identifier__c
-  - hed__Credits_Earned__c
   - hed__Date_Received__c
   - hed__Source__c
   - hed__Test_Date__c
   - hed__Test_Type__c
-  - hed__Verification_Status_Date__c
-  - hed__Verification_Status__c
-  lookups:
-    hed__Contact__c:
-      table: Contact
 Insert Lead:
   sf_object: Lead
   fields:
@@ -1235,23 +1206,6 @@ Insert Lead:
   - Primary_Affiliation__c
   - Race__c
   - Status
-  - hed__Area_Of_Interest__c
-  - hed__Birth_Date__c
-  - hed__Citizenship__c
-  - hed__Ethnicity__c
-  - hed__External_Id__c
-  - hed__GPA__c
-  - hed__Gender__c
-  - hed__Highest_Degree_Earned__c
-  - hed__Language__c
-  - hed__Most_Recent_School__c
-  - hed__Preferred_Enrollment_Date__c
-  - hed__Preferred_Enrollment_Status__c
-  - hed__Preferred_Teaching_Format__c
-  - hed__Recruitment_Stage__c
-  - hed__SMS_Opt_Out__c
-  - hed__SSN__c
-  - hed__Undergraduate_Major__c
   lookups:
     Affiliated_Account__c:
       table: Account

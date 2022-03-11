@@ -72,8 +72,8 @@ tasks:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/dev5/mapping.yml
-      sql_path: datasets/dev5/data.sql
+      mapping: datasets/dev22/mapping.yml
+      sql_path: datasets/dev22/data.sql
       inject_namespaces: False
 
   load_prod_application_data:
@@ -151,6 +151,12 @@ tasks:
     options:
       active: True
       api_names: Account.Standard_Account_Duplicate_Rule,Contact.Standard_Contact_Duplicate_Rule,Lead.Standard_Lead_Duplicate_Rule
+
+  create_fake_school_data:
+    description: Makes fake account data to mimic schools with Educaiton as industry
+    class_path: cumulusci.tasks.bulkdata.snowfakery.Snowfakery
+    options:
+      recipe: datasets/dev22/school_snowfakery_recipe.yml
 
   update_admin_profile:
     options:
@@ -245,6 +251,8 @@ flows:
         task: turn_off_duplicate_rules
       12:
         task: load_application_data
+      12.5:
+        task: create_fake_school_data
       13:
         task: turn_on_duplicate_rules
       14:

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recruitment_Interest__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>An internal lookup filtered by Record Type = Recruitment to connect Academic Interest records to a Recruitment Interest record. This field only appears in the Academic Interest page layout.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the Recruitment Interest related to the Academic Interest.</inlineHelpText>
+    <label>Recruitment Interest</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Plan__c.Type__c</field>
+            <operation>equals</operation>
+            <value>Recruitment</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Plan__c</referenceTo>
+    <relationshipLabel>Recruitment Interests</relationshipLabel>
+    <relationshipName>Academic_Interests</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

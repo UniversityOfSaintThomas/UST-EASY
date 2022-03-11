@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recruitment_Interest__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The marketable name for an official Academic Interest (or group of interests) that the individual is inquiring about. A lookup to Plan with a filter criteria of Record Type = Recruitment. Used in building the Opportunity Key for the Interaction Processor to determine whether to create a new Opportunity or update an existing Opportunity for a decentralized recruitment process.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The marketable name for an official Academic Interest (or group of interests) that the individual is inquiring about.</inlineHelpText>
+    <label>Recruitment Interest</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Plan__c.Type__c</field>
+            <operation>equals</operation>
+            <value>Recruitment</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Plan__c</referenceTo>
+    <relationshipLabel>Opportunities with Recruitment Interest</relationshipLabel>
+    <relationshipName>Recruitment_Interest_Opportunities</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

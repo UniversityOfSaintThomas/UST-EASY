@@ -30,6 +30,16 @@
         <default>false</default>
         <label>Non-Degree</label>
     </customValue>
+    <customValue>
+        <fullName>Law</fullName>
+        <default>false</default>
+        <label>Law</label>
+    </customValue>
+    <customValue>
+        <fullName>Professional (MDIV)</fullName>
+        <default>false</default>
+        <label>Professional (MDIV)</label>
+    </customValue>
     <description>Types of an applicant.</description>
     <masterLabel>Applicant Types</masterLabel>
     <sorted>false</sorted>

@@ -6,6 +6,7 @@
     <externalId>false</externalId>
     <label>Opportunity</label>
     <referenceTo>Opportunity</referenceTo>
+    <relationshipLabel>Interactions</relationshipLabel>
     <relationshipName>Interactions</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>

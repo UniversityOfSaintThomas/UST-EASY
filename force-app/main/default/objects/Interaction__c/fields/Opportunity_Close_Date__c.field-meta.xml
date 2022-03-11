@@ -3,7 +3,7 @@
     <fullName>Opportunity_Close_Date__c</fullName>
     <description>Set to the Start Date of the Term. If Term Start Date is blank, set to today&apos;s date.</description>
     <externalId>false</externalId>
-    <formula>TODAY()</formula>
+    <formula>IF( ISBLANK(Term__r.hed__Start_Date__c), TODAY(), Term__r.hed__Start_Date__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Opportunity Close Date</label>
     <required>false</required>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>First_Recruitment_Interest__c</fullName>
+    <description>Captures the first Recruitment Interest when the Opportunity record is created. This is set by the Opportunity: Set First Recruitment Interest workflow rule.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The first Recruitment Interest on the Opportunity.</inlineHelpText>
+    <label>First Recruitment Interest</label>
+    <length>100</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

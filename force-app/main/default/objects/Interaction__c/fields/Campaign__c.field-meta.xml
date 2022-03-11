@@ -7,6 +7,7 @@
     <inlineHelpText>The main campaign (event, marketing effort, etc.) connected to this Interaction. When the Campaign Member Status field is also set, a Campaign Member will be created for the individual.</inlineHelpText>
     <label>Campaign</label>
     <referenceTo>Campaign</referenceTo>
+    <relationshipLabel>Interactions</relationshipLabel>
     <relationshipName>Interactions</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>

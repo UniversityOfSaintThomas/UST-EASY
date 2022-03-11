@@ -3,19 +3,18 @@
     <fullName>Opportunity_Key__c</fullName>
     <description>The Interaction Processor adds the Contact ID to the beginning of this key to match on Opportunities. If this field is blank, no Opportunity will be created. Contact ID + this key should equal the Opportunity Key also updated through workflow.</description>
     <externalId>false</externalId>
-    <formula>/*The below formula allows for a centralized and decentralized recruitment model.*/
+    <formula>/*The below formula allows for a centralized and decentralized recruitment model.*/ 
 
-/*If the Academic Program Career = Undergraduate, or Academic Program is blank and the Recruitment Program Career = Undergraduate, this formula uses the centralized model (one Opportunity per Term)*/
+/*If both Academic Interest and Recruitment Interest are blank, the formula is blank, which means the Opportunity is missing important information and no Opportunity will be created.*/ IF(Academic_Interest__c + Recruitment_Interest__c = &quot;&quot;,&quot;&quot;,
 
-IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Undergraduate&quot;), AND(ISBLANK(Academic_Program__c), ISPICKVAL(Recruitment_Program__r.Career__c, &quot;Undergraduate&quot;))), &quot;.Undergraduate&quot;,
+/*If the Academic Interest Career = Undergraduate, or Academic Interest is blank and the Recruitment Interest Career = Undergraduate, this formula uses the centralized model (one Opportunity per Term)*/ 
+IF(OR(ISPICKVAL(Academic_Interest__r.Career__c, &quot;Undergraduate&quot;), AND(ISBLANK(Academic_Interest__c), ISPICKVAL(Recruitment_Interest__r.Career__c, &quot;Undergraduate&quot;))), &quot;.Undergraduate.&quot;+Term__r.Id, 
 
-/*If the Academic Program Career = Graduate, or Academic Program is blank and the Recruitment Program Career = Graduate, this formula uses the decentralized model (one Opportunity per Academic Program or Recruitment Program and Term)*/
+/*Otherwise, this formula uses the decentralized model (one Opportunity per Academic Interest or Recruitment Interest and Term)*/ 
+&quot;.Graduate.&quot; + 
 
-IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Graduate&quot;), AND(ISBLANK(Academic_Program__c), ISPICKVAL(Recruitment_Program__r.Career__c, &quot;Graduate&quot;))), &quot;.Graduate.&quot;+IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id,Academic_Program__r.Id), 
-
-/*Otherwise, this formula is blank and no Opportunity will be created or updated.*/
-
-&quot;&quot;))</formula>
+/*If there is no Academic Interest, the decentralized model adds the Recruitment Interest Id. Otherwise, the model uses the Recruitment Interest ID from the Academic Interest, or if there is none, the Academic Interest ID is used as a last resort. Most Academic Interests should have a Recruitment Interest ID to ensure a smooth transition from inquiry to application.*/ 
+IF(ISBLANK(Academic_Interest__r.Id), Recruitment_Interest__r.Id, IF(ISBLANK(Academic_Interest__r.Recruitment_Interest__c), Academic_Interest__r.Id, Academic_Interest__r.Recruitment_Interest__r.Id))+&quot;.&quot;+Term__r.Id))</formula>
     <label>Opportunity Key</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

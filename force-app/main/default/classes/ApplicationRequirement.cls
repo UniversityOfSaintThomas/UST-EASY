@@ -123,6 +123,7 @@ public class ApplicationRequirement {
 
             String query = 'SELECT ' + String.join(new List<String>(appFields), ',') + ' FROM Application__c WHERE Contact__c = :contactId AND Id = :applicationId';
 
+            System.debug(query);
             app = ((List<Application__c>) Database.query(query)).get(0);
             appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
         }

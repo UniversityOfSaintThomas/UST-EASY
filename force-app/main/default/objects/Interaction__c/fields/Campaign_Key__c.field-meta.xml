@@ -3,7 +3,7 @@
     <fullName>Campaign_Key__c</fullName>
     <description>Specifies the Campaign that should be connected to the Campaign Member created by this Interaction. If available, it uses the Interaction &quot;Campaign Reference ID&quot; field, otherwise it uses the &quot;Campaign Reference ID&quot; from the associated Campaign.</description>
     <externalId>false</externalId>
-    <formula>IF(ISBLANK(Campaign_Reference_ID__c), Campaign__r.Campaign_Key__c, Campaign_Reference_ID__c)</formula>
+    <formula>IF(ISBLANK(Campaign_Reference_ID__c), CASESAFEID(Campaign__c), Campaign_Reference_ID__c)</formula>
     <label>Campaign Key</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

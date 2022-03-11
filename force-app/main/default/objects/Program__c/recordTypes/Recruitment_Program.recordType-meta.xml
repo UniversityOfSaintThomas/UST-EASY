@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recruitment_Program</fullName>
+    <active>true</active>
+    <description>The marketing value of a degree or major</description>
+    <label>Recruitment Program</label>
+</RecordType>

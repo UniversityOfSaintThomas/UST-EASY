@@ -1,25 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Academic_Level__c</fullName>
+    <deprecated>false</deprecated>
+    <description>STVDLEV - Banner Degree Levels</description>
     <externalId>false</externalId>
-    <inlineHelpText>Academic level for this program</inlineHelpText>
+    <inlineHelpText>STVDLEV - Banner Degree Levels</inlineHelpText>
     <label>Academic Level</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Graduate</fullName>
+                <fullName>G</fullName>
                 <default>false</default>
                 <label>Graduate</label>
             </value>
             <value>
-                <fullName>Undergraduate</fullName>
+                <fullName>U</fullName>
                 <default>false</default>
                 <label>Undergraduate</label>
+            </value>
+            <value>
+                <fullName>N</fullName>
+                <default>false</default>
+                <label>Undergrad-No career (exc studs</label>
+            </value>
+            <value>
+                <fullName>C</fullName>
+                <default>false</default>
+                <label>Continuing Education</label>
+            </value>
+            <value>
+                <fullName>D</fullName>
+                <default>false</default>
+                <label>Graduate (Doctoral)</label>
+            </value>
+            <value>
+                <fullName>L</fullName>
+                <default>false</default>
+                <label>Law</label>
+            </value>
+            <value>
+                <fullName>O</fullName>
+                <default>false</default>
+                <label>Grad-No career (Grad exc studs</label>
+            </value>
+            <value>
+                <fullName>P</fullName>
+                <default>false</default>
+                <label>Professional (MDIV)</label>
+            </value>
+            <value>
+                <fullName>X</fullName>
+                <default>false</default>
+                <label>No Data</label>
             </value>
         </valueSetDefinition>
     </valueSet>

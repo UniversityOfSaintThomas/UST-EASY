@@ -10,7 +10,16 @@
         <default>false</default>
         <label>Applicant 25 or over</label>
     </customValue>
-    <description>Calculated using birthdate of applicant</description>
-    <masterLabel>Applicant Under 25</masterLabel>
+    <customValue>
+        <fullName>Generic Value 1</fullName>
+        <default>false</default>
+        <label>Generic Value 1</label>
+    </customValue>
+    <customValue>
+        <fullName>Generic Value 2</fullName>
+        <default>false</default>
+        <label>Generic Value 2</label>
+    </customValue>
+    <masterLabel>Generic Filter 2</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

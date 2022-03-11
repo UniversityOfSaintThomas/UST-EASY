@@ -6,9 +6,9 @@
         <label>College of Arts and Sciences</label>
     </customValue>
     <customValue>
-        <fullName>College of Health Professions</fullName>
+        <fullName>Morrison Family College of Health</fullName>
         <default>false</default>
-        <label>College of Health Professions</label>
+        <label>Morrison Family College of Health</label>
     </customValue>
     <customValue>
         <fullName>Graduate</fullName>
@@ -69,6 +69,11 @@
         <fullName>Dougherty Family College</fullName>
         <default>false</default>
         <label>Dougherty Family College</label>
+    </customValue>
+    <customValue>
+        <fullName>College of Health Professions</fullName>
+        <default>false</default>
+        <label>College of Health Professions</label>
     </customValue>
     <masterLabel>School / College</masterLabel>
     <sorted>false</sorted>

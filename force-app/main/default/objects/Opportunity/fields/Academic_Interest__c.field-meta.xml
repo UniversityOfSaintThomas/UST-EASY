@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Academic_Interest__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The official interest the individual applies for. A lookup to Plan with a filter criteria of Record Type = Academic.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The official interest the individual applies for.</inlineHelpText>
+    <label>Academic Interest</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Plan__c.Type__c</field>
+            <operation>equals</operation>
+            <value>Academic</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Plan__c</referenceTo>
+    <relationshipLabel>Opportunities with Academic Interest</relationshipLabel>
+    <relationshipName>Academic_Interest_Opportunities</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

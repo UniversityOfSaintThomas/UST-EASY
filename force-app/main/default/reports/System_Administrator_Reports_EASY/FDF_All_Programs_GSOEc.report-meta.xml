@@ -25,7 +25,7 @@
         <field>Program__c.Program_Major_Concentration__c</field>
     </columns>
     <columns>
-        <field>Program__c.UG_Integration_Program_Code__c</field>
+        <field>Program__c.Integration_Program_Code__c</field>
     </columns>
     <columns>
         <field>Program__c.Banner_Program_Code__c</field>

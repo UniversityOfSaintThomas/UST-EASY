@@ -1,0 +1,24 @@
+minimum_cumulusci_version: '3.53.0'
+project:
+    name: admissions-rfi
+    package:
+        name: admissions-rfi
+        api_version: '52.0'
+    git:
+    source_format: sfdx
+
+tasks:
+    robot:
+        options:
+            suites: robot/admissions-rfi/tests
+            options:
+                outputdir: robot/admissions-rfi/results
+
+    robot_testdoc:
+        options:
+            path: robot/admissions-rfi/tests
+            output: robot/admissions-rfi/doc/admissions-rfi_tests.html
+
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 75

@@ -1,0 +1,37 @@
+<template>
+  <lightning-record-edit-form 
+    fields={fields}
+    object-api-name={objectApiName}>
+    <lightning-messages></lightning-messages>
+
+    <div class="slds-grid slds-wrap">
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-input-field field-name="FirstName"></lightning-input-field>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-input-field field-name="LastName"></lightning-input-field>
+      </div>
+
+      <div class="slds-col slds-size_2-of-2">
+        <lightning-input-field field-name="Email"></lightning-input-field>
+      </div>
+
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-input-field field-name="Phone"></lightning-input-field>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-input-field field-name="MobilePhone"></lightning-input-field>
+      </div>
+
+      <div class="slds-col slds-size_2-of-2">
+        <lightning-input-field field-name="Company"></lightning-input-field>
+      </div>
+
+      <div class="slds-col slds-size_2-of-2 slds-align_absolute-center">
+        <div class="slds-var-m-top_medium">
+          <lightning-button variant="brand" type="submit" label="Submit Request"></lightning-button>
+        </div>
+      </div>
+    </div>
+  </lightning-record-edit-form>
+</template>

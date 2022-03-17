@@ -1,30 +1,25 @@
 <template>
-  <lightning-record-edit-form 
-    fields={fields}
-    object-api-name={objectApiName}>
+  <lightning-record-edit-form object-api-name={objectApiName}>
     <lightning-messages></lightning-messages>
 
     <div class="slds-grid slds-wrap">
-      <div class="slds-col slds-size_1-of-2">
-        <lightning-input-field field-name="FirstName"></lightning-input-field>
-      </div>
-      <div class="slds-col slds-size_1-of-2">
-        <lightning-input-field field-name="LastName"></lightning-input-field>
+      <div class="slds-col slds-size_2-of-2">
+        <lightning-input-field field-name={nameField}></lightning-input-field>
       </div>
 
       <div class="slds-col slds-size_2-of-2">
-        <lightning-input-field field-name="Email"></lightning-input-field>
+        <lightning-input-field field-name={emailField}></lightning-input-field>
       </div>
 
       <div class="slds-col slds-size_1-of-2">
-        <lightning-input-field field-name="Phone"></lightning-input-field>
+        <lightning-input-field field-name={phoneField}></lightning-input-field>
       </div>
-      <div class="slds-col slds-size_1-of-2">
+      <!-- <div class="slds-col slds-size_1-of-2">
         <lightning-input-field field-name="MobilePhone"></lightning-input-field>
-      </div>
+      </div> -->
 
       <div class="slds-col slds-size_2-of-2">
-        <lightning-input-field field-name="Company"></lightning-input-field>
+        <lightning-input-field field-name={companyField}></lightning-input-field>
       </div>
 
       <div class="slds-col slds-size_2-of-2 slds-align_absolute-center">

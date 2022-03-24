@@ -53,3 +53,17 @@ After creating the public Site, you should now be on the configuration page for 
 * Click the Full Name of the Site Guest User
 * Click the *Edit Assignments* button under the Permission Set Assignments section
 * Enable the Permission Set you created earlier and save
+
+### 5. Whitelist your domain(s)
+
+Setup > Security > CORS
+
+The domain that the component will be displayed on needs to be included in the list of allowed CORS rules. This is not the URL of the site we created, but rather the URL of the page that the form will be displayed on.
+
+## Resources
+
+* [Lightning Out](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.lightning_out)
+* [CumulusCI](https://cumulusci.readthedocs.io/en/latest/index.html)
+* [Lightning Design System](https://www.lightningdesignsystem.com/)
+* [Lightning Web Components](https://developer.salesforce.com/docs/component-library/overview/components)
+* [Salesforce CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference_top.htm)

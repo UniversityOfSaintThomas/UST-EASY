@@ -15,12 +15,15 @@ export default class RfiCmp extends LightningElement {
   companyField = COMPANY_FIELD
 
   loading = true
+  success = false
 
   handleLoad (event) {
     this.loading = false
   }
 
+  // Overriding handleSubmit to display our own submission message for now
+  // https://trailblazer.salesforce.com/issues_view?id=a1p3A000001GN1gQAG&title=community-guest-user-may-see-the-error-the-requested-resource-does-not-exist-while-creating-record-from-community-using-the-lightning-recordeditform
   handleSubmit (event) {
-
+    this.success = true
   }
 }

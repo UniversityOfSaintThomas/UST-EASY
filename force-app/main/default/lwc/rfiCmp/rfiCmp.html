@@ -1,8 +1,12 @@
 <template>
-  <lightning-record-edit-form object-api-name={objectApiName}>
-    <lightning-messages></lightning-messages>
+  <lightning-record-edit-form 
+    object-api-name={objectApiName} 
+    density="comfy"
+    onsubmit={handleSubmit}
+    onload={handleLoad}>
+    <!-- <lightning-messages></lightning-messages> -->
 
-    <div class="slds-grid slds-wrap">
+    <div class="slds-grid slds-wrap" if:false={loading}>
       <div class="slds-col slds-size_2-of-2">
         <lightning-input-field field-name={nameField}></lightning-input-field>
       </div>
@@ -14,9 +18,9 @@
       <div class="slds-col slds-size_1-of-2">
         <lightning-input-field field-name={phoneField}></lightning-input-field>
       </div>
-      <!-- <div class="slds-col slds-size_1-of-2">
-        <lightning-input-field field-name="MobilePhone"></lightning-input-field>
-      </div> -->
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-input-field field-name={mobilePhoneField}></lightning-input-field>
+      </div>
 
       <div class="slds-col slds-size_2-of-2">
         <lightning-input-field field-name={companyField}></lightning-input-field>
@@ -29,4 +33,9 @@
       </div>
     </div>
   </lightning-record-edit-form>
+
+  <lightning-spinner 
+    size="large" 
+    if:true={loading}>
+  </lightning-spinner>
 </template>

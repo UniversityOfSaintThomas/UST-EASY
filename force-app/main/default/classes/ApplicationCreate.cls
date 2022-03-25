@@ -28,6 +28,11 @@ public class ApplicationCreate {
     /* ******************************************************************************
     * @description Initialize the page - Sets up requirements
     ********************************************************************************/
+
+    public ApplicationCreate() {
+        appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
+    }
+
     public PageReference init() {
 
         // Exit if there is no Application Control to reference

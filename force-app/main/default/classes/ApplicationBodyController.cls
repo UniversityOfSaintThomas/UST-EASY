@@ -27,7 +27,7 @@ public with sharing class ApplicationBodyController {
         foundWidgets.leftWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
 
-        if (String.isNotBlank(applicationControlValue.Id)) {
+        if (applicationControlValue != null && String.isNotBlank(applicationControlValue.Id)) {
             try {
                 allPositionWidgets = [
                         SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,

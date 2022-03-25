@@ -54,6 +54,10 @@ public class ApplicationRegistration {
         appCreate.setup(firstGroup, lastGroup);
     }
 
+    public void testCookieKey() {
+        ApplicationUtilities.getCookieKey();
+    }
+
     /* ******************************************************************************
     * @description populates fields on the contact and application through the interactions object.
     ********************************************************************************/
@@ -156,6 +160,8 @@ public class ApplicationRegistration {
         }
         return null;
     }
+
+
 
     @RemoteAction
     public static List<SObject> lookupSearch(String sObj, String sObjFilter, String sObjNameField, String term) {

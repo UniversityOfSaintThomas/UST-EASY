@@ -6,6 +6,8 @@ Revision (s):
 *******************************************************************************/
 public class ApplicationProgressBar {
 
+    //public EASYApplicationInfo appInfo { get; set; }
+
     // public List<Requirement__c> reqs {get;set;}
     public Map<Id, RequirementWrapper> reqMap {
         get {
@@ -94,6 +96,9 @@ public class ApplicationProgressBar {
     * @description Initialize the page - Checks if requirements have been completed
     ********************************************************************************/
     public void start() {
+
+        EASYApplicationInfo appInfo = ApplicationUtilities.getApplicationInfo();
+
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
@@ -129,7 +134,7 @@ public class ApplicationProgressBar {
                 SELECT Id, Internal_Only__c, Name, Active__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
                 FROM Requirement__c
                 WHERE Application_Control__c = :appControl.Id
-                AND Active__c = :true
+                AND Active__c = TRUE
                 AND Show_on_Application_Creation__c = FALSE
                 ORDER BY Display_Order__c ASC NULLS LAST
         ]) {

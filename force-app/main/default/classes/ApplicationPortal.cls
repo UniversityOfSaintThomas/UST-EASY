@@ -6,43 +6,53 @@ Revision (s):
 *******************************************************************************/
 public class ApplicationPortal {
 
-    public Id contactId { get; set; }
     public Map<Id, Application__c> applicationsByIds { get; set; }
-    public Map<id, Application_Control__c> applicationControlsByIds { get; set; }
-    public List<Id> applicationOrder { get; set; }
-    public List<RequirementWrapper> rList { get; set; }
-    public Application__c currentApp { get; set; }
-
-    public Application_Control__c appControl {
-        get {
-            if (appControl == null) {
-                appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
-            }
-            return appControl;
-        }
-        set;
-    }
+    public Map<Id, Application_Control__c> appControlsByAppIds { get; set; }
+    public EASYApplicationInfo appInfo { get; set; }
+    public Map<Id, EASYApplicationInfo> appInfoMapByAppId { get; set; }
 
     public ApplicationPortal() {
-        contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
-        if (UserInfo.getUserType().equals('Standard')) {
-            contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
-        }
-        if (String.isNotBlank(contactId)) {
+        applicationsByIds = new Map<Id, Application__c>();
+        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfoMapByAppId = new Map<Id, EASYApplicationInfo>();
+
+        if (String.isNotBlank(appInfo.contactId)) {
+            //Get all the applications contact has
             applicationsByIds = new Map<Id, Application__c>([
-                    SELECT Id, Application_Control__c, Application_Control__r.Id
+                    SELECT Id, Intended_Program__c, Intended_Term_of_Entry__c, Intended_Program__r.Name,
+                            Intended_Program__r.Program_Name_on_Application__c, Application_Control__c, Contact__c
                     FROM Application__c
-                    WHERE Contact__c = :contactId
+                    WHERE Contact__c = :appInfo.contactId
                     //TODO: reinstate FUTURE in this query
                     //AND Intended_Term_of_Entry__r.Term_Status_Type__c = 'FUTURE'
                     ORDER BY Name
             ]);
 
-            //currentApp = applicationsByOrder[0];
-            //rList = checklistHelper.checklistRequirements(currentApp, contactId, appControl);
+            if (applicationsByIds.keySet().size() > 0) {
+                // add all applications controls that appear in applications to set
+                Set<Id> appControlIds = new Set<Id>();
+                for (Application__c app : applicationsByIds.values()) {
+                    appControlIds.add(app.Application_Control__c);
+                }
+                List<Id> appControlIdsList = new List<Id>(appControlIds);
 
-            //system.debug(JSON.serializePretty(rList));
+                //Get Application Controls for all apps
+                appControlsByAppIds = new Map<Id, Application_Control__c>([
+                        SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
+                                Arrow_Color__c, Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c,
+                                Logo_Static_Resource_Path__c, Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c,
+                                School_College__c, Degree_Levels__c
+                        FROM Application_Control__c
+                        WHERE Id IN :appControlIdsList
+                ]);
+
+                for (Application__c app : applicationsByIds.values()) {
+                    EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
+                    appInfoMapByAppId.put(app.Id,newAppInfo);
+                }
+            }
 
         }
+
     }
 }

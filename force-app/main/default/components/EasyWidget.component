@@ -4,7 +4,7 @@
 
 <apex:component id="EasyWidget">
     <apex:attribute name="widget" description="Widget to process" type="EASY_Widget__c" required="true"/>
-    <apex:attribute name="applicationControl" description="Current Application Type Id" type="Application_Control__c" required="true"/>
+    <apex:attribute name="appInfo" description="Wrapper with Application control and app information" required="true" type="EASYApplicationInfo"/>
     <apex:attribute name="applicationIdWidget" description="Current Application Id" type="String" required="false"/>
     <article class="slds-card slds-m-bottom_medium">
         <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">
@@ -26,7 +26,7 @@
             </apex:outputPanel>
             <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist' }">
-                <c:ApplicationChecklist applicationId="{!applicationIdWidget}" applicationControl="{!applicationControl.Id}"/>
+                <c:ApplicationChecklist appInfo="{!appInfo}"/>
             </apex:outputPanel>
         </div>
     </article>

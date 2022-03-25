@@ -473,7 +473,7 @@ public class ApplicationQuestionGroup {
                         query += ' AND ' + item.Related_List_Where_Clause__c;
                     }
 
-                    for (SObject obj : database.query(query)) {
+                    for (SObject obj : Database.query(query)) {
                         relatedObjectsMap.put(obj.Id, new SObjectWrapper(this, obj.Id, obj));
                     }
                 }
@@ -618,7 +618,7 @@ public class ApplicationQuestionGroup {
                     if (relatedObjects != null) {
                         for (SObjectWrapper objW : relatedObjects) {
                             if (objW.isDeleted == false && ((Boolean) objW.obj.get('User_Created__c')) == true && objW.isValid == true) {
-                                if(String.isNotBLank(item.Related_Object_Record_Type_ID__c)){
+                                if(String.isNotBlank(item.Related_Object_Record_Type_ID__c)){
                                     objW.obj.put('recordtypeid', item.Related_Object_Record_Type_ID__c);
                                 }
                                 if (objW.obj.Id != null) {

@@ -48,12 +48,14 @@
                             <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!placeholderUUID}">
 
                                 <apex:variable value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" var="readOnlyInput"/>
+                                <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="requiredField"/>
+                                <apex:variable value="{!IF(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c), readOnlyInput + ' requiredField', readOnlyInput)}" var="readOnlyInput"/>
 
                                 <!-- Label for input -->
                                 <apex:outputPanel rendered="{!question.fieldType != 'Address' && !ISBLANK(question.label) && question.fieldType != 'Checkbox'}" layout="none">
                                     <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
-                                        {!question.label}  (field type: {!question.fieldType} - 1st group)
-                                        <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
+                                        {!question.label}  (field type: {!question.fieldType} - 1st group, question required = {!question.question.Required__c}, app status = {!question.application.Application_Status__c})
+                                        <apex:outputPanel rendered="{!requiredField}" layout="none">
                                             <abbr class='slds-required' title='required'>* </abbr>
                                         </apex:outputPanel>
                                     </label>
@@ -177,12 +179,11 @@
                                 </apex:outputPanel>
 
                                 <apex:repeat value="{!['Street' = 'Street', 'City' = 'City', 'State/Province' = 'State/Province', 'Country' = 'Country', 'Postal Code' = 'Postal Code']}" var="inputType" rendered="{!question.fieldType == 'Address'}">
-                                    <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
                                     <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
                                         <!-- Label for input -->
                                         <apex:outputPanel rendered="{!question.fieldType = 'Address' && !ISBLANK(question.label)}" layout="none">
                                             <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
-                                                {!question.label}  {!inputType} (field type: {!question.fieldType})
+                                                {!question.label}  {!inputType} (field type: {!question.fieldType} - Address Group)
                                                 <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
                                                     <abbr class='slds-required' title='required'>* </abbr>
                                                 </apex:outputPanel>
@@ -352,7 +353,7 @@
                                 <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="block">
 
                                     <apex:outputPanel layout="block" rendered="{!!rr.isEditMode}">
-                                        <apex:outputLabel for="appReferenceField" styleClass="slds-text-body_regular" value="{!question.question.Label__c}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}"/>
+                                        <apex:outputLabel for="appReferenceField" styleClass="slds-text-body_regular" value="{!question.question.Label__c}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}"/>
                                         <apex:outputPanel layout="block" styleClass="slds-m-bottom_small" id="appReferenceField">
                                             <apex:outputField value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}" style="{!IF(rr.isEditMode,'display:none;','')}" rendered="{!question.question.Related_Object_Field__c != null && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
                                             <apex:outputField value="{!rr.obj[question.question.Related_Object_Field__c]}" rendered="{!!rr.isEditMode && question.question.Related_Object_Field__c != null && !group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
@@ -363,16 +364,17 @@
 
                                         <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
                                         <apex:variable value="{!IF(question.question.Id == null, 'label' + TEXT(placeholderUUID), question.question.id)}" var="qId"/>
+                                        <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="requiredField"/>
 
                                         <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" layout="block">
 
                                             <apex:variable value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" var="readOnlyInput"/>
 
                                             <!-- Label for input -->
-                                            <apex:outputPanel rendered="{!question.fieldType != 'Address'}">
+                                            <apex:outputPanel rendered="{!question.fieldType != 'Address' && question.fieldType != 'Checkbox'}" layout="none">>
                                                 <label class="slds-form-element__label this_label_1 slds-p-vertical_x-small slds-text-body_regular">
                                                     {!question.label}  (field type: {!question.fieldType} - 2nd group - Radio: {!question.radio})
-                                                    <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
+                                                    <apex:outputPanel rendered="{!requiredField}" layout="none">
                                                         <abbr class='slds-required' title='required'>* </abbr>
                                                     </apex:outputPanel>
                                                 </label>
@@ -539,49 +541,101 @@
                                             </apex:outputPanel>
 
 
-                                            <apex:outputPanel rendered="{!question.fieldType == 'Address'}">
-                                                HERE 12
-                                                <div class="form-group">
-                                                    <label for="street1">{!question.label} Street{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                                    <apex:inputField id="street1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','Street')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                                </div>
+                                            <apex:repeat value="{!['Street' = 'Street', 'City' = 'City', 'State/Province' = 'State/Province', 'Country' = 'Country', 'Postal Code' = 'Postal Code']}" var="inputType" rendered="{!question.fieldType == 'Address'}">
+                                                <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
+                                                    <!-- Label for input -->
+                                                    <apex:outputPanel rendered="{!question.fieldType = 'Address' && !ISBLANK(question.label)}" layout="none">
+                                                        <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
+                                                            {!question.label}  {!inputType} (field type: {!question.fieldType} - Address Group #2)
+                                                            <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
+                                                                <abbr class='slds-required' title='required'>* </abbr>
+                                                            </apex:outputPanel>
+                                                        </label>
+                                                    </apex:outputPanel>
 
-                                                <div class="form-group">
-                                                    <label for="city1">{!question.label} City{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                                    <apex:inputField id="city1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','City')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                                </div>
-                                                <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}">
-                                                    HERE 2
-                                                    <div class="form-group">
-                                                        <label for="state1">{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                                        <div class="statePicklist {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
-                                                            <apex:inputField id="state1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                                        </div>
-                                                    </div>
+                                                    <apex:outputPanel styleClass="slds-form-element__control" layout="block">
+
+                                                        <apex:inputField id="street" value="{!question.response.Street__c}" styleClass="slds-input {!readOnlyInput}" rendered="{!If(inputType = 'Street', true, false)}"/>
+
+                                                        <apex:inputField id="city" value="{!question.response.City__c}" styleClass="slds-input {!readOnlyInput}" rendered="{!If(inputType = 'City', true, false)}"/>
+
+                                                        <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}" layout="block">
+                                                            <apex:inputField id="state" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="slds-input {!readOnlyInput}" rendered="{!If(inputType = 'State/Province', true, false)}"/>
+                                                            <apex:inputField id="country1" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingCountryCode','MailingCountry')]}" styleClass="slds-input {!readOnlyInput}" rendered="{!If(inputType = 'Country', true, false)}"/>
+                                                        </apex:outputPanel>
+
+                                                        <apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}" layout="block">
+                                                            <apex:outputPanel styleClass="slds-select_container" rendered="{!If(inputType = 'Country', true, false)}" layout="block">
+                                                                <apex:inputField id="country" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingCountryCode','MailingCountry')]}" styleClass="slds-select {!readOnlyInput}"/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel styleClass="slds-select_container" rendered="{!If(inputType = 'State/Province', true, false)}" layout="block">
+                                                                <apex:inputField id="statePicklist" value="{!question.con[IF(question.stateAndCountryPicklistEnabled,'MailingStateCode','MailingState')]}" styleClass="slds-select {!readOnlyInput}"/>
+                                                            </apex:outputPanel>
+                                                        </apex:outputPanel>
+
+                                                        <apex:inputField id="postal" value="{!question.response.PostalCode__c}" styleClass="slds-input {!readOnlyInput}" rendered="{!If(inputType = 'Postal Code', true, false)}"/>
+
+                                                    </apex:outputPanel>
+
                                                 </apex:outputPanel>
-                                                <div class="form-group">
-                                                    HERE 3
-                                                    <label for="country1">{!question.label} Country{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                                    <apex:inputField id="country1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'CountryCode','Country'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                                </div>
 
-                                                <apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}">
-                                                    <div class="form-group">
-                                                        HERE 4
-                                                        <label for="state1Picklist">{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                                        <div class="statePicklist {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
-                                                            <apex:inputField id="state1Picklist1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                                        </div>
-                                                    </div>
+                                                <!-- Error/Help text Description -->
+                                                <apex:outputPanel layout="block" styleClass="slds-form-element__help">
+                                                    <apex:outputText value="{!question.helpText}" escape="false"/>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!!ISBLANK(question.helpText)}">
+                                                    <p class="help-block">
+                                                        <apex:outputText value="{!question.helpText}" escape="false"/>
+                                                    </p>
                                                 </apex:outputPanel>
 
-                                                <div class="form-group">
-                                                    <label for="postal1">{!question.label} Postal Code{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
-                                                    <apex:inputField id="postal1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','PostalCode')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                                </div>
+                                            </apex:repeat>
 
-                                            </apex:outputPanel>
 
+                                            <!--
+                                                                                   <apex:outputPanel rendered="{!question.fieldType == 'Address'}">
+                                                                                       HERE 12
+                                                                                       <div class="form-group">
+                                                                                           <label for="street1">{!question.label} Street{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
+                                                                                           <apex:inputField id="street1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','Street')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                                                                       </div>
+
+                                                                                       <div class="form-group">
+                                                                                           <label for="city1">{!question.label} City{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
+                                                                                           <apex:inputField id="city1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','City')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                                                                       </div>
+                                                                                       <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}">
+                                                                                           HERE 2
+                                                                                           <div class="form-group">
+                                                                                               <label for="state1">{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
+                                                                                               <div class="statePicklist {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
+                                                                                                   <apex:inputField id="state1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                                                                               </div>
+                                                                                           </div>
+                                                                                       </apex:outputPanel>
+                                                                                       <div class="form-group">
+                                                                                           HERE 3
+                                                                                           <label for="country1">{!question.label} Country{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
+                                                                                           <apex:inputField id="country1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'CountryCode','Country'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                                                                       </div>
+
+                                                                                       <apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}">
+                                                                                           <div class="form-group">
+                                                                                               HERE 4
+                                                                                               <label for="state1Picklist">{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
+                                                                                               <div class="statePicklist {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
+                                                                                                   <apex:inputField id="state1Picklist1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                                                                               </div>
+                                                                                           </div>
+                                                                                       </apex:outputPanel>
+
+                                                                                       <div class="form-group">
+                                                                                           <label for="postal1">{!question.label} Postal Code{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
+                                                                                           <apex:inputField id="postal1" value="{!rr.obj[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','PostalCode')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                                                                       </div>
+
+                                                                                   </apex:outputPanel>
+                                       -->
                                             <!-- Error Description -->
                                             <div class="slds-form-element__help" id="error-message-{!qId}">
                                                 <apex:outputText value="{!question.helpText}" escape="false"/>
@@ -652,18 +706,18 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'Address'}">
                                     <div class="form-group">
-                                        <label for="street1">{!question.label} Street{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="street1">{!question.label} Street{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputField id="street1" value="{!group.newReferenceObject[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','Street')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;"/>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="city1">{!question.label} City{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="city1">{!question.label} City{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputField id="city1" value="{!group.newReferenceObject[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','City')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
                                     </div>
 
                                     <apex:outputPanel rendered="{!!question.stateAndCountryPicklistEnabled}">
                                         <div class="form-group">
-                                            <label for="state1">{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                            <label for="state1">{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                             <div class="statePicklist {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
                                                 <apex:inputField id="state1" value="{!group.newReferenceObject[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
                                             </div>
@@ -671,13 +725,13 @@
                                     </apex:outputPanel>
 
                                     <div class="form-group">
-                                        <label for="country1">{!question.label} Country{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="country1">{!question.label} Country{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputField id="country1" value="{!group.newReferenceObject[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'CountryCode','Country'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
                                     </div>
 
                                     <apex:outputPanel rendered="{!question.stateAndCountryPicklistEnabled}">
                                         <div class="form-group">
-                                            <label for="state1Picklist">{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                            <label for="state1Picklist">{!question.label} State{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                             <div class="statePicklist {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}">
                                                 <apex:inputField id="state1Picklist" value="{!group.newReferenceObject[SUBSTITUTE(question.question.Related_Object_Field__c,'Address',IF(question.stateAndCountryPicklistEnabled,'StateCode','State'))]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
                                             </div>
@@ -685,7 +739,7 @@
                                     </apex:outputPanel>
 
                                     <div class="form-group">
-                                        <label for="postal1">{!question.label} Postal Code{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="postal1">{!question.label} Postal Code{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputField id="postal1" value="{!group.newReferenceObject[SUBSTITUTE(question.question.Related_Object_Field__c,'Address','PostalCode')]}" styleClass="form-control {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;"/>
                                     </div>
                                 </apex:outputPanel>
@@ -698,7 +752,7 @@
                                                 <apex:actionSupport event="onchange" reRender="newRelatedRecord"/>
                                             </apex:inputCheckbox>
                                         </label>
-                                        {!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}
+                                        {!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}
                                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
                                         </p>
@@ -708,7 +762,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'Currency'}">
                                     <div class="form-group">
-                                        <label for="CurrencyField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="CurrencyField">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><em class="glyphicon glyphicon-usd"></em></span>
                                             <apex:inputField id="CurrencyField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(group.newReferenceObject))}"/>
@@ -722,7 +776,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'Date'}">
                                     <div class="form-group">
-                                        <label for="DateField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="DateField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><em class="glyphicon glyphicon-calendar"></em></span>
                                             <apex:inputField id="DateField1" type="auto" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
@@ -736,7 +790,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'DateTime'}">
                                     <div class="form-group">
-                                        <label for="dateTimeField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="dateTimeField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><em class="glyphicon glyphicon-time"></em></span>
                                             <apex:inputField id="dateTimeField1" type="auto" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
@@ -750,7 +804,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'}">
                                     <div class="form-group">
-                                        <label for="numberField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="numberField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputField type="auto" id="numberField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
                                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
@@ -761,7 +815,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'Email'}">
                                     <div class="form-group">
-                                        <label for="field1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="field1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><em class="glyphicon glyphicon-envelope"></em></span>
                                             <apex:inputField id="field1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
@@ -774,7 +828,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'TextEncrypted'}">
                                     <div class="form-group">
-                                        <label for="textEncryptedField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="textEncryptedField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputSecret redisplay="true" id="textEncryptedField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" maxlength="{!if(question.length == null || question.length > 175, 175, question.length)}" styleClass="form-control {!question.question.Id} field-{!question.fieldType}{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#676767;font-weight:400;font-size:14px;height:36px;"/>
                                     </div>
                                     <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
@@ -785,7 +839,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}">
                                     <div class="form-group">
-                                        <label for="multiPicklistField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="multiPicklistField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:selectCheckboxes id="multiPicklistField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" layout="pageDirection" styleClass="selectCheckboxes {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;">
                                             <apex:selectOptions value="{!question.options}"/>
                                             <apex:actionSupport event="onchange" reRender="questionGroup"/>
@@ -798,7 +852,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'Percent'}">
                                     <div class="form-group">
-                                        <label for="percentField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="percentField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">%</span>
                                             <apex:inputField id="percentField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
@@ -812,7 +866,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'Phone'}">
                                     <div class="form-group">
-                                        <label for="phoneField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="phoneField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><em class="glyphicon glyphicon-earphone"></em></span>
                                             <apex:inputField id="phoneField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
@@ -840,7 +894,7 @@
 
                                 <apex:outputPanel rendered="{!(question.fieldType == 'Picklist' && question.radio) || question.fieldType == 'Radio'}">
                                     <div class="form-group">
-                                        <label for="radioField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="radioField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:selectRadio id="radioField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" layout="pageDirection" styleClass="selectRadio {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;">
                                             <apex:selectOptions value="{!question.options}"/>
                                             <apex:actionSupport event="onchange" reRender="questionGroup"/>
@@ -854,7 +908,7 @@
                                 {!question.fieldType}
                                 <apex:outputPanel rendered="{!question.fieldType == 'Reference'}">
                                     <div class="form-group">
-                                        <label for="referenceField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="referenceField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:outputPanel rendered="{!question.question.New_Reference_Field__c == false}">
                                             <input data-objtype="{!question.question.Lookup_Object__c}" data-objtypefilter="{!question.question.Lookup_Where_Clause__c}" data-objtypenamefield="{!question.question.Name_Field_API_Name__c}" placeholder="{!question.placeholder}" class="form-control bind-autocomplete" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
                                             <apex:inputHidden html-class="inputHidden" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}"/>
@@ -882,7 +936,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'Text'}">
                                     <div class="form-group">
-                                        <label for="textField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="textField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputField type="auto" id="textField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
                                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
@@ -893,7 +947,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'TextArea'}">
                                     <div class="form-group">
-                                        <label for="textAreaField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="textAreaField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputField id="textAreaField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;"/>
                                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
@@ -904,7 +958,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'LongTextArea'}">
                                     <div class="form-group">
-                                        <label for="longTextAreaField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="longTextAreaField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputField id="longTextAreaField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;resize:none;"/>
                                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>
@@ -915,7 +969,7 @@
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'URL'}">
                                     <div class="form-group">
-                                        <label for="urlField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c),'*','')}</label>
+                                        <label for="urlField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
                                         <apex:inputField id="urlField1" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}" styleClass="form-control {!question.question.Id} {!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:14px;height:36px;"/>
                                         <p class="help-block" style="{!IF(question.helpText != null && !ISBLANK(question.helpText), '', 'display:none;')}">
                                             <apex:outputText value="{!question.helpText}" escape="false"/>

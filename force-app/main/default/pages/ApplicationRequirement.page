@@ -19,11 +19,10 @@
                 }
             </script>
         </apex:define>
-
         <apex:define name="body">
-            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appControl="{!appControl}" applicationIdBody="{!urlAppId}">
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appControl="{!appControl}" applicationIdBody="{!appInfo.appId}" appInfo="{!appInfo}">
                 <c:ApplicationForm section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
-                                   requirementId="{!requirementId}"
+                                   requirementId="{!appInfo.requirementId}"
                                    reqs="{!reqs}"
                                    progress="{!progress}"
                                    isExternalUser="{!isExternalUser}">
@@ -37,6 +36,7 @@
                         <a href="javascript:;" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
                         <a href="javascript:;" class="slds-button slds-button_brand carousel__button--next">Next</a>
                     </div>
+                    <apex:outputText value="HERE: {!appInfo.appControl.URL_Parameter__c}" escape="true"/>
                 </c:ApplicationForm>
             </c:ApplicationBody>
         </apex:define>

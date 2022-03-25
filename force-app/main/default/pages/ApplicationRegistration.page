@@ -1,4 +1,4 @@
-<apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0">
+<apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0" action="{!testCookieKey}" >
     <apex:composition template="Capricorn2020">
         <apex:define name="scriptsHead">
             <c:ApplicationHead />

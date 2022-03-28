@@ -2,7 +2,7 @@
 <ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
     <folderShares>
         <accessLevel>Manage</accessLevel>
-        <sharedTo>dahl3702_heda@stthomas.edu</sharedTo>
+        <sharedTo>frie9974_heda@stthomas.edu</sharedTo>
         <sharedToType>User</sharedToType>
     </folderShares>
     <name>System Administrator Reports - EASY</name>

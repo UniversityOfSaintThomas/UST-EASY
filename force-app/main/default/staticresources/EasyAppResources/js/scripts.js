@@ -104,14 +104,13 @@ function findFileName(filePath) {
 }
 
 function adjustLabelsFor() {
-    document.querySelectorAll('.slds-input, .slds-select, .slds-checkbox input').forEach(inputFound => {
-        let inputWrapper = inputFound.closest('.slds-form-element');
-        let inputLabel = inputWrapper.querySelector('label');
-        let helpText = inputWrapper.querySelector('.slds-form-element__help');
+    document.querySelectorAll('.slds-input, .slds-select').forEach(inputFound => {
+        let inputWrapper = inputFound.closest('.slds-form-element'),
+            inputLabel = inputWrapper.querySelector('label'),
+            helpText = inputWrapper.querySelector('.slds-form-element__help');
+
         if (inputLabel) {
-            if (inputFound.getAttribute('id')) {
-                inputLabel.htmlFor = inputFound.getAttribute('id');
-            }
+            inputLabel.htmlFor = inputFound.getAttribute('id');
         }
         if (inputFound && helpText) {
             if (helpText) {
@@ -532,35 +531,25 @@ function activateCarousel() {
 
 /* Spinners on/off */
 function appHideLoadingSpinner() {
-    spinnerChange(false, "loadSpinner");
+    document.getElementById('loadSpinner').style.display = "none";
+    return true;
 }
 
 function appShowLoadingSpinner() {
-    spinnerChange(true, "loadSpinner");
+    document.getElementById('loadSpinner').style.display = "block";
+    return true;
 }
 
 function appShowConfirmation() {
-    spinnerChange(true, "confirmation");
+    document.getElementById("confirmation").style.display = "block";
 }
 
 function hideFormSpinner() {
-    spinnerChange(false, "form-spinner");
+    document.getElementById("form-spinner").style.display = 'none';
 }
 
 function showFormSpinner() {
-    spinnerChange(true, "form-spinner");
-}
-
-function spinnerChange(show, spinnerId) {
-    let spinner = document.getElementById(spinnerId);
-    if(spinner) {
-        if (show) {
-            document.getElementById(spinnerId).style.display = 'block';
-        } else {
-            document.getElementById(spinnerId).style.display = 'none';
-        }
-    }
-    return true;
+    document.getElementById("form-spinner").style.display = 'block';
 }
 
 /* Tooltip */

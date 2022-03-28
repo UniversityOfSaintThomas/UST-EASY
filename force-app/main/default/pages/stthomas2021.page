@@ -131,7 +131,6 @@
             </nav>
         </div>
     </footer>
-    <script src="{!URLFOR($Resource.summit__SummitEventsAssets, '/js/loading.js')}" type="text/javascript"></script>
     </body>
     </html>
 </apex:page>

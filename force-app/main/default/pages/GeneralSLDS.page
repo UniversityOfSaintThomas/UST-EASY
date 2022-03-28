@@ -16,7 +16,7 @@ Created by Thaddaeus Dahlberg on 2/15/2020.
         </title>
         <style>
             #loading .background {
-               /* background-image: url({!URLFOR($Resource.summit__SummitEventsAssets, '/img/loading-summit_events.gif')}) !important;*/
+                background-image: url({!URLFOR($Resource.EasyAppResources, '/img/loading-shield.gif')}) !important;
                 width: 160px;
                 height: 160px;
             }
@@ -39,7 +39,6 @@ Created by Thaddaeus Dahlberg on 2/15/2020.
             </div>
         </div>
     </div>
-    <script src="{!URLFOR($Resource.summit__SummitEventsAssets, '/js/loading.js')}" type="text/javascript"></script>
     </body>
     </html>
 </apex:page>

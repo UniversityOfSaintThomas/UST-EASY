@@ -108,7 +108,7 @@
     <picklistValues>
         <picklist>Degree_Type__c</picklist>
         <values>
-            <fullName>Associate</fullName>
+            <fullName>Associate%27s</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2238,15 +2238,11 @@
     <picklistValues>
         <picklist>Student_Type__c</picklist>
         <values>
-            <fullName>Graduate</fullName>
+            <fullName>Engineering</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Non-Degree</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Undergraduate</fullName>
+            <fullName>Software</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -72,8 +72,8 @@ tasks:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/dev22/mapping.yml
-      sql_path: datasets/dev22/data.sql
+      mapping: datasets/fdfdata/mapping.yml
+      sql_path: datasets/fdfdata/data.sql
       inject_namespaces: False
 
   load_prod_application_data:

@@ -4,8 +4,7 @@ Use of this source code is governed by a BSD Revised
 license that can be found in the LICENSE file.
 Created by Thaddaeus Dahlberg on 2/15/2020.
 -->
-
-<apex:page id="GeneralSLDS" sidebar="false" lightningStyleSheets="true" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false" docType="html-5">
+<apex:page id="GeneralSLDS" sidebar="false" lightningStyleSheets="true" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false" docType="html-5.0">
     <apex:slds />
     <html class="no-js" lang="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <head>

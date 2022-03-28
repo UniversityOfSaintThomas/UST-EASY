@@ -118,6 +118,13 @@ public class ApplicationUtilities {
             }
         }
 
+        if (!String.isBlank(appInfo.appControl.Template__c)) {
+            appInfo.template = appInfo.appControl.Template__c;
+        } else {
+            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+            appInfo.template = AppSettings.Default_Template__c;
+        }
+
         // Is user an external user
         appInfo.isExternalUser = isExternalUser();
 
@@ -166,11 +173,14 @@ public class ApplicationUtilities {
                     SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
                             Arrow_Color__c, Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c,
                             Logo_Static_Resource_Path__c, Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c,
-                            School_College__c, Degree_Levels__c FROM Application_Control__c WHERE Id = :acId];
+                            School_College__c, Degree_Levels__c, Template__c
+                    FROM Application_Control__c
+                    WHERE Id = :acId
+            ];
         } catch (Exception e) {
         }
 
-        for (Application_Control__c ac : [SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c, Arrow_Color__c, Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c, Logo_Static_Resource_Path__c, Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c FROM Application_Control__c WHERE Active__c = :true AND (URL_Parameter__c = :param OR Default__c = :true)]) {
+        for (Application_Control__c ac : [SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c, Arrow_Color__c, Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c, Logo_Static_Resource_Path__c, Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c, Template__c FROM Application_Control__c WHERE Active__c = :true AND (URL_Parameter__c = :param OR Default__c = :true)]) {
             if (ac.Default__c) {
                 defaultControl = ac;
             } else if (ac.URL_Parameter__c.equals(param)) {
@@ -290,7 +300,8 @@ public class ApplicationUtilities {
     }
 
     public String getTemplate(String templateName) {
-        List<String> namespaceTemplate = new List<String>{};
+        List<String> namespaceTemplate = new List<String>{
+        };
         if (String.isNotBlank(templateName)) {
             if (!namespaceTemplate.contains(templateName)) {
                 templateName = 'c__' + templateName;

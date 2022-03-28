@@ -10,11 +10,14 @@ public class ApplicationPortal {
     public Map<Id, Application_Control__c> appControlsByAppIds { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
     public Map<Id, EASYApplicationInfo> appInfoMapByAppId { get; set; }
+    public String template { get; set; }
 
     public ApplicationPortal() {
-        applicationsByIds = new Map<Id, Application__c>();
         appInfo = ApplicationUtilities.getApplicationInfo();
         appInfoMapByAppId = new Map<Id, EASYApplicationInfo>();
+
+        Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+        template = AppSettings.Default_Template__c;
 
         if (String.isNotBlank(appInfo.contactId)) {
             //Get all the applications contact has
@@ -41,14 +44,14 @@ public class ApplicationPortal {
                         SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
                                 Arrow_Color__c, Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c,
                                 Logo_Static_Resource_Path__c, Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c,
-                                School_College__c, Degree_Levels__c
+                                School_College__c, Degree_Levels__c, Template__c
                         FROM Application_Control__c
                         WHERE Id IN :appControlIdsList
                 ]);
 
                 for (Application__c app : applicationsByIds.values()) {
                     EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
-                    appInfoMapByAppId.put(app.Id,newAppInfo);
+                    appInfoMapByAppId.put(app.Id, newAppInfo);
                 }
             }
 

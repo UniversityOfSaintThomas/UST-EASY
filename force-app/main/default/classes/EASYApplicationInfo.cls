@@ -13,4 +13,5 @@ public with sharing class EASYApplicationInfo {
     public Application_Control__c appControl { get; set; }
     public Id nextRequirement { get; set; }
     public Id prevRequirement { get; set; }
+    public String template { get; set; }
 }

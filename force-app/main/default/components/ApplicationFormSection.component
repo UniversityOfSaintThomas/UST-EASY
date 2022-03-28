@@ -40,16 +40,15 @@
 
         <apex:outputPanel id="questionGroupWrapper" layout="block">
             <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
-                <apex:actionRegion >
+                <apex:actionRegion>
                     <apex:repeat value="{!group.questions}" var="question">
                         <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
                         <apex:outputPanel rendered="{!If(question.showQuestion, true, false)}" styleClass="slds-p-vertical_xxx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
 
                             <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!placeholderUUID}">
 
-                                <apex:variable value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" var="readOnlyInput"/>
-                                <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="requiredField"/>
-                                <apex:variable value="{!IF(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c), readOnlyInput + ' requiredField', readOnlyInput)}" var="readOnlyInput"/>
+                                <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                <apex:variable var="requiredField" value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" />
 
                                 <!-- Label for input -->
                                 <apex:outputPanel rendered="{!question.fieldType != 'Address' && !ISBLANK(question.label) && question.fieldType != 'Checkbox'}" layout="none">
@@ -332,7 +331,7 @@
             <apex:actionFunction name="rerenderTheTable" rerender="theTable" onComplete="pageLoadReRendered();"/>
             <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
 
-                <apex:pageMessages />
+                <apex:pageMessages/>
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
                     <p>You haven"t created any records yet. Click "New Record" to create one.</p>
@@ -691,7 +690,7 @@
 
             <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
 
-                <apex:pageMessages />
+                <apex:pageMessages/>
 
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                     {!question.showQuestion}

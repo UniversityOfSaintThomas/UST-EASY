@@ -21,7 +21,7 @@ public with sharing class ApplicationChecklistComponentController {
                     WHERE Id = :appInfoParam.appId
                     ORDER BY Name
             ];
-           return checklistHelper.checklistRequirements(app, appInfoParam.contactId, appInfoParam.appControlId);
+           return checklistHelper.checklistRequirements(app, appInfoParam);
         }
         return null;
 

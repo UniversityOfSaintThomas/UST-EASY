@@ -11,20 +11,15 @@ public with sharing class checklistHelper {
     public static Boolean allowWithdraw { get; set; }
     public static List<Requirement_Item__c> riList { get; set; }
     public static Decimal progress { get; set; }
+    public EASYApplicationInfo appInfo { get; set; }
 
-    public static List<RequirementWrapper> checklistRequirements(Application__c app, Id contactId, Id appControlId) {
+    public static List<RequirementWrapper> checklistRequirements(Application__c app, EASYApplicationInfo appInfo) {
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
 
-        Application_control__c appControl = [
-                SELECT Allow_Cancel_From__c, Allow_Withdraw_From__c, Allow_Submit_From__c, Submit_Status__c
-                FROM Application_Control__c
-                WHERE Id = :appControlId
-        ];
-
-        allowCancel = String.isNotBlank(appControl.Allow_Cancel_From__c) && new Set<String>(appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c);
-        allowWithdraw = String.isNotBlank(appControl.Allow_Withdraw_From__c) && new Set<String>(appControl.Allow_Withdraw_From__c.split(';')).contains(app.Application_Status__c);
+        allowCancel = String.isNotBlank(appInfo.appControl.Allow_Cancel_From__c) && new Set<String>(appInfo.appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c);
+        allowWithdraw = String.isNotBlank(appInfo.appControl.Allow_Withdraw_From__c) && new Set<String>(appInfo.appControl.Allow_Withdraw_From__c.split(';')).contains(app.Application_Status__c);
         reqMap = new Map<Id, RequirementWrapper>();
         Set<Id> reqIds = new Set<Id>();
         for (Requirement__c r : [
@@ -33,7 +28,7 @@ public with sharing class checklistHelper {
                         Residency__c, School_College__c, Student_Type__c, Generic_Filter_1__c, Generic_Filter_2__c,
                         Generic_Filter_3__c, Generic_Filter_4__c
                 FROM Requirement__c
-                WHERE Application_Control__c = :appControlId
+                WHERE Application_Control__c = :appInfo.appControlId
                 AND Active__c = :true
                 AND Show_on_Application_Creation__c = FALSE
                 ORDER BY Display_Order__c ASC NULLS LAST
@@ -138,12 +133,12 @@ public with sharing class checklistHelper {
             }
         }
 
-        if (appControl != null && String.isNotBlank(appControl.Allow_Submit_From__c)) {
-            if (!(new Set<String>(appControl.Allow_Submit_From__c.split(';'))).contains(app.Application_Status__c)) {
+        if (appInfo.appControl != null && String.isNotBlank(appInfo.appControl.Allow_Submit_From__c)) {
+            if (!(new Set<String>(appInfo.appControl.Allow_Submit_From__c.split(';'))).contains(app.Application_Status__c)) {
                 allowSubmit = false;
             }
 
-        } else if (appControl != null && String.isBlank(appControl.Allow_Submit_From__c) && String.isNotBlank(appControl.Submit_Status__c)) {
+        } else if (appInfo.appControl != null && String.isBlank(appInfo.appControl.Allow_Submit_From__c) && String.isNotBlank(appInfo.appControl.Submit_Status__c)) {
 
         } else {
             allowSubmit = false;

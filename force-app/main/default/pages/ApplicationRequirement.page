@@ -20,7 +20,7 @@
             </script>
         </apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appControl="{!appControl}" applicationIdBody="{!appInfo.appId}" appInfo="{!appInfo}">
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}">
                 <c:ApplicationForm section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
                                    requirementId="{!appInfo.requirementId}"
                                    reqs="{!reqs}"

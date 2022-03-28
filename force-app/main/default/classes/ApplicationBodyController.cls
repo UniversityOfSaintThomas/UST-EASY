@@ -5,9 +5,7 @@
 
 public with sharing class ApplicationBodyController {
 
-    public Application_Control__c applicationControlValue { set; get; }
-    public String applicationIdValue { get; set; }
-    public Id appContactId { get; set; }
+    public EASYApplicationInfo appInfoParam { get; set; }
 
     public ApplicationBodyController() {
     }
@@ -27,13 +25,13 @@ public with sharing class ApplicationBodyController {
         foundWidgets.leftWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
 
-        if (applicationControlValue != null && String.isNotBlank(applicationControlValue.Id)) {
+        if (appInfoParam.appControl != null && String.isNotBlank(appInfoParam.appControlId)) {
             try {
                 allPositionWidgets = [
                         SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
                                 Widget_Type__c, Sort_Order__c
                         FROM EASY_Widget__c
-                        WHERE Application_Control__c = :applicationControlValue.Id
+                        WHERE Application_Control__c = :appInfoParam.appControlId
                         WITH SECURITY_ENFORCED
                         ORDER BY Sort_Order__c
                 ];

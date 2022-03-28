@@ -1,7 +1,7 @@
 <apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!init}">
     <apex:composition template="{!template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead/>
+            <c:ApplicationHead />
         </apex:define>
         <apex:define name="body">
             {!template}
@@ -10,7 +10,7 @@
                 <apex:form id="theForm">
                     <div class="slds-grid slds-wrap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                            <apex:pageMessages/>
+                            <apex:pageMessages />
                             <apex:repeat value="{!applicationsByIds}" var="key">
                                 <apex:variable var="appId" value="{!key}"/>
                                 <apex:variable var="appInfo" value="{!appInfoMapByAppId[appId]}"/>

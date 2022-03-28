@@ -290,12 +290,7 @@ public class ApplicationUtilities {
     }
 
     public String getTemplate(String templateName) {
-        List<String> namespaceTemplate = new List<String>{
-                'GeneralSLDS',
-                'crowncollege2020',
-                'OPUSTemplate2018',
-                'CastorTemplate2017'
-        };
+        List<String> namespaceTemplate = new List<String>{};
         if (String.isNotBlank(templateName)) {
             if (!namespaceTemplate.contains(templateName)) {
                 templateName = 'c__' + templateName;

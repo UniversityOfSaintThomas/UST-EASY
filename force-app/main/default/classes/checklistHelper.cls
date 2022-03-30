@@ -137,6 +137,7 @@ public with sharing class checklistHelper {
         }
         progress = (complete / total) * 100;
 
+        JSON.serializePretty(reqMap.values());
         return reqMap.values();
     }
 

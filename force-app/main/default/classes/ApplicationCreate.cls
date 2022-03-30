@@ -145,23 +145,7 @@ public class ApplicationCreate {
                 groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
             }
         }
-        ApplicationQuestion dLQuestion;
 
-        // Create new Graduate specific application questions used to limit Program List
-        if (appControl.Academic_Level__c == 'Graduate') {
-
-
-            dLQuestion = new ApplicationQuestion(con, app, '', app, 'Degree_Type__c');
-            dLQuestion.addQuestionObject(new Question__c(Label__c = 'What type of degree are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Level', Picklist_Values__c = appControl.Degree_Levels__c));
-
-            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                    dLQuestion
-            }));
-
-        }
-
-
-        System.debug('dLQuestion: ' + dLQuestion);
 
         ApplicationQuestion programQuestion;
 
@@ -178,7 +162,6 @@ public class ApplicationCreate {
                     WHERE Hide_from_Application__c = :false
                     AND Active__c = :true
                     AND Application_Control__c = :appControl.Id
-                    //AND Degree__c = :degreeType
                     ORDER BY Name ASC
             ];
             // Original EASY query, that does not limit program list by application control

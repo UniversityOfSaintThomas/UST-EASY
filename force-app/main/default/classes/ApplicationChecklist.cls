@@ -17,6 +17,7 @@ public class ApplicationChecklist {
     public Boolean allowWithdraw { get; set; }
     public List<Requirement_Item__c> riList { get; set; }
     public Decimal progress { get; set; }
+    public EASYApplicationInfo appInfo {get;set;}
 
     public Application_Control__c appControl {
         get {
@@ -28,11 +29,15 @@ public class ApplicationChecklist {
         set;
     }
 
+    public ApplicationChecklist() {
+        appInfo = ApplicationUtilities.getApplicationInfo();
+    }
+
     /*******************************************************************************
     * @description Initialize the page - Checks if requirements have been completed
     ********************************************************************************/
     public void init() {
-
+        appInfo = ApplicationUtilities.getApplicationInfo();
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;

@@ -13,7 +13,7 @@ public class ApplicationCreate {
     public transient String additionalDataString { get; set; }
     public Set<String> contactFields { get; set; }
     public String degreeType { get; set; }
-    public Id academictermId { get; set; }
+    public EASYApplicationInfo appInfo {get;set;}
 
     public Application_Control__c appControl {
         get {
@@ -30,11 +30,11 @@ public class ApplicationCreate {
     ********************************************************************************/
 
     public ApplicationCreate() {
-        appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
+        appInfo = ApplicationUtilities.getApplicationInfo();
     }
 
     public PageReference init() {
-
+        appInfo = ApplicationUtilities.getApplicationInfo();
         // Exit if there is no Application Control to reference
         if (appControl == null) {
             return null;

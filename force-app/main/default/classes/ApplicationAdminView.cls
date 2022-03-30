@@ -13,6 +13,7 @@ public class ApplicationAdminView {
     public Set<Id> requirementIds { get; set; }
     public List<ApplicationRequirement> arLst { get; set; }
     public transient String additionalDataString { get; set; }
+    public EASYApplicationInfo appInfo {get;set;}
 
     public Contact con {
         get {
@@ -40,13 +41,14 @@ public class ApplicationAdminView {
     }
 
     public ApplicationAdminView() {
+        appInfo = ApplicationUtilities.getApplicationInfo();
     }
 
     /*******************************************************************************
     * @description Initialize the page - Creates ApplicationRequirement for each requirement that is applicible to this application
     ********************************************************************************/
     public void init() {
-
+        appInfo = ApplicationUtilities.getApplicationInfo();
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
         contactId = [
                 SELECT Contact__c

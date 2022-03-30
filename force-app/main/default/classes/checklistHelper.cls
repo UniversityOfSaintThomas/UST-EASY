@@ -31,7 +31,7 @@ public with sharing class checklistHelper {
                 WHERE Application_Control__c = :appInfo.appControlId
                 AND Active__c = :true
                 AND Show_on_Application_Creation__c = FALSE
-                ORDER BY Display_Order__c ASC NULLS LAST
+                ORDER BY Display_Order__c, Label__c ASC NULLS LAST
         ]) {
             if (ApplicationFilter.filter(app, r)) {
                 reqIds.add(r.Id);
@@ -154,6 +154,7 @@ public with sharing class checklistHelper {
         }
         progress = (complete / total) * 100;
 
+        JSON.serializePretty(reqMap.values());
         return reqMap.values();
     }
 }

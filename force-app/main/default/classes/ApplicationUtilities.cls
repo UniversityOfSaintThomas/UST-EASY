@@ -62,7 +62,6 @@ public class ApplicationUtilities {
         appInfo.requirementId = checkUpdateIds('requirementId', appInfo.requirementId);
 
         // Contact Id of Applicant
-        System.debug('USER TYPE: ' + UserInfo.getUserType());
         if (UserInfo.getUserType().equals('Standard') || UserInfo.getUserType().equals('CspLitePortal')) {
             try {
                 appInfo.contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
@@ -95,21 +94,21 @@ public class ApplicationUtilities {
 
         //Get a list of requirement ids
         List<Id> reqsIds = getRequirementIds(appInfo.appControlId);
-        System.debug('appControlId: ' + appInfo.appControlId + ' , ' + reqsIds);
         if (String.isBlank(appInfo.requirementId) && reqsIds.size() > 0) {
             appInfo.requirementId = reqsIds[0];
         }
-        Integer reqIndex = 0;
-        for (Integer i = 0; i < reqsIds.size(); i++) {
-            if (appInfo.requirementId == reqsIds.get(i)) {
-                reqIndex = i;
-            }
-        }
+
         if (reqsIds.size() > 0) {
+            Integer reqIndex = 0;
+            for (Integer i = 0; i < reqsIds.size(); i++) {
+                if (appInfo.requirementId == reqsIds.get(i)) {
+                    reqIndex = i;
+                }
+            }
             if (reqIndex == 0) {
                 appInfo.nextRequirement = reqsIds.get(reqIndex + 1);
                 appInfo.prevRequirement = null;
-            } else if (reqIndex == reqsIds.size() - 1) {
+            } else if (reqIndex == (reqsIds.size() - 1)) {
                 appInfo.nextRequirement = null;
                 appInfo.prevRequirement = reqsIds.get(reqIndex - 1);
             } else {
@@ -133,27 +132,35 @@ public class ApplicationUtilities {
 
         //Generate new cookie
         createEncryptedCookie(JSON.serialize(appInfo));
-
-        System.debug(JSON.serializePretty(appInfo));
         return appInfo;
     }
 
     public static List<Id> getRequirementIds(Id appControlId) {
         List<Id> reqsIds = new List<Id>();
         List<Requirement__c> reqs = [
-                SELECT Id, Application_Control__c, Active__c, Show_on_Application_Creation__c, Display_Order__c
+                SELECT Id, Application_Control__c, Active__c, Show_on_Application_Creation__c, Display_Order__c, Label__c
                 FROM Requirement__c
                 WHERE Application_Control__c = :appControlId
                 AND Active__c = TRUE
                 AND Show_on_Application_Creation__c = FALSE
-                ORDER BY Display_Order__c ASC NULLS LAST
+                ORDER BY Display_Order__c, Label__c ASC NULLS LAST
+
         ];
+
+//        for (Requirement_Item__c ri : riList) {
+//            if (ApplicationFilter.filter(app, ri)) {
+//                reqMap.get(ri.Requirement__c).reqItemMap.put(ri.Id, new RequirementItemWrapper(ri));
+//                riIds.add(ri.Id);
+//            }
+//        }
+
+        System.debug(JSON.serializePretty(reqs));
         for (Requirement__c r : reqs) {
             reqsIds.add(r.Id);
         }
+        System.debug(reqsIds);
         return reqsIds;
     }
-
 
     /* ******************************************************************************
     * @description Returns the application control based on urlParameter or the default one if no param is found.
@@ -180,7 +187,11 @@ public class ApplicationUtilities {
         } catch (Exception e) {
         }
 
-        for (Application_Control__c ac : [SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c, Arrow_Color__c, Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c, Logo_Static_Resource_Path__c, Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c, Template__c FROM Application_Control__c WHERE Active__c = :true AND (URL_Parameter__c = :param OR Default__c = :true)]) {
+        for (Application_Control__c ac : [
+                SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c, Arrow_Color__c,
+                        Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c, Logo_Static_Resource_Path__c,
+                        Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c,
+                        Template__c FROM Application_Control__c WHERE Active__c = :true AND (URL_Parameter__c = :param OR Default__c = :true)]) {
             if (ac.Default__c) {
                 defaultControl = ac;
             } else if (ac.URL_Parameter__c.equals(param)) {
@@ -200,36 +211,10 @@ public class ApplicationUtilities {
         Map<String, Map<String, Object>> additionalData;
     }
 
-    public static void alignQuestionResponsesWithQuestions(Id appControllerId, Id appId) {
-/*
-        //Finds any new questions and creates question response stubs. Used on page actions
-        Map<Id, Question__c> questions = new Map<Id, Question__c> ([SELECT Id, Requirement_Item__c FROM Question__c WHERE Application_Control_Id__c = :appControllerId]);
-        Map<Question__c, Question_Response__c> questionResponses = new Map<Question__c, Question_Response__c> ([SELECT Id, Question__r.Id FROM Question_Response__c WHERE Application__c = :appId]);
-        Map<Id, Requirement_Response__c> requirementResponseMap = new Map<Id, Requirement_Response__c> ([SELECT Id FROM Requirement_Response__c WHERE Application__c = :appId]);
-        List<Question_Response__c> newQuestionResponses = new List<Question_Response__c>();
-        List<Requirement_Response__c> newRequirementResponses = new List<Requirement_Response__c>();
-        for (Id key : questions.keySet()) {
-            if (!requirementResponseMap.containsKey(key)) {
-                Requirement_Response__c r = new Requirement_Response__c();
-                r.Application__c = appId;
-                r.Requirement_Item__c = questions.get(key).Requirement_Item__c;
-            }
-            if (!questionResponses.containsKey(key)) {
-                Question_Response__c qResponse = new Question_Response__c();
-                qResponse.Question__c = key;
-                //qResponse.Requirement_Response__c =
-            }
-
-
-        }
-        */
-
-    }
 
     public static String createEncryptedCookie(String stringToEncrypt) {
         String encodedCipherText = '';
         String key = getCookieKey();
-        System.debug(stringToEncrypt);
         if (String.isNotBlank(String.valueOf(key))) {
             Blob data = Blob.valueOf(stringToEncrypt);
             Blob encrypted = Crypto.encryptWithManagedIV('AES256', Blob.valueOf(key), data);
@@ -298,20 +283,6 @@ public class ApplicationUtilities {
         }
 
     }
-
-    public String getTemplate(String templateName) {
-        List<String> namespaceTemplate = new List<String>{
-        };
-        if (String.isNotBlank(templateName)) {
-            if (!namespaceTemplate.contains(templateName)) {
-                templateName = 'c__' + templateName;
-            }
-        } else {
-            templateName = 'GeneralSLDS';
-        }
-        return templateName;
-    }
-
 
     // Custom exception class for validation
     public class ApplicationException extends Exception {

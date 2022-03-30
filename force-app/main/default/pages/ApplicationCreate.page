@@ -17,11 +17,11 @@
                     );
                 }
             </script>
-            <c:ApplicationHead />
+            <c:ApplicationHead/>
         </apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="New Application" appControl="{!appControl}" loadingText="Building Your Application..." applicationIdBody="{!app.Id}">
-                <c:ApplicationForm section="{!section}" appControl="{!appControl}">
+            <c:ApplicationBody title="New Application" loadingText="Building Your Application..." appInfo="{!appInfo}">
+                <c:ApplicationForm section="{!section}" appInfo="{!appInfo}">
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
                             <button Class="btn btn-lg navButton left  createSlide" href="#myCarousel" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c}; float:left; margin: 10px;"

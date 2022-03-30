@@ -3,6 +3,7 @@
         <apex:param name="p1" assignTo="{!group.newReferenceObjectSelectedWrapper}" value=""/>
         <apex:param name="p2" assignTo="{!group.newReferenceObjectSelectedWrapperName}" value=""/>
     </apex:actionFunction>
+    <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true" />
     <apex:attribute name="group" description="The ApplicationQuestionGroup for this section" type="ApplicationQuestionGroup" required="true"/>
     <apex:attribute name="preventUpdates" description="" type="Boolean" default="false" required="false"/>
     <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true"/>
@@ -241,7 +242,7 @@
                 <apex:outputLabel styleClass="slds-form-element__label">Attachment</apex:outputLabel>
                 <div class="slds-form-element__control">
                     <apex:inputTextarea richText="true" id="ckEditor" styleClass="ckeditor slds-textarea" value="{!group.response.ValueTextEntry__c}" rendered="{!group.item.Allow_Text_Entry__c && !preventUpdates}"/>
-                    <script src="{!URLFOR($Resource.EasyAppResources, '/js/ckeditorConfig.js')}"/>
+                    <script src="{!URLFOR($Resource.EasyAppResources, '/js/ckeditorConfig.js')}"></script>
                 </div>
             </apex:outputPanel>
 
@@ -370,7 +371,7 @@
                                             <apex:variable value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" var="readOnlyInput"/>
 
                                             <!-- Label for input -->
-                                            <apex:outputPanel rendered="{!question.fieldType != 'Address' && question.fieldType != 'Checkbox'}" layout="none">>
+                                            <apex:outputPanel rendered="{!question.fieldType != 'Address' && question.fieldType != 'Checkbox'}" layout="none">
                                                 <label class="slds-form-element__label this_label_1 slds-p-vertical_x-small slds-text-body_regular">
                                                     {!question.label}  (field type: {!question.fieldType} - 2nd group - Radio: {!question.radio})
                                                     <apex:outputPanel rendered="{!requiredField}" layout="none">
@@ -489,7 +490,7 @@
                                                                     />
                                                                     <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right refRemoveButton" title="Remove selected option" style="display:none;">
                                                                         <svg class="slds-button__icon" aria-hidden="true">
-                                                                            <use xxmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                                                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
                                                                         </svg>
                                                                         <span class="slds-assistive-text">Remove selected option</span>
                                                                     </button>

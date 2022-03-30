@@ -14,6 +14,7 @@ public class ApplicationReview {
     public List<ApplicationRequirement> arLst {get;set;}
     public Application_Review__c review{get;set;}
     public Map<String,ApplicationQuestion> questionHolderMap{get;set;}
+    public EASYApplicationInfo appInfo {get;set;}
 
     public Application_Control__c appControl{
         get{
@@ -25,6 +26,7 @@ public class ApplicationReview {
     }
 
     public ApplicationReview(){
+        appInfo = ApplicationUtilities.getApplicationInfo();
         questionHolderMap = new Map<String,ApplicationQuestion>();
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
         contactId = [
@@ -42,7 +44,7 @@ public class ApplicationReview {
     * @description Initialize the page - Creates ApplicationRequirement for each requirement that is applicible to this application
     ********************************************************************************/
     public void init() {
-        
+        appInfo = ApplicationUtilities.getApplicationInfo();
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
 
         contactId = [

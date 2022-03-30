@@ -8,6 +8,7 @@ public class RelatedObjectReview {
     public Map<String, List<SObjectWrapper>> objWrappers{get;set;}
     public Map<String,Set<String>> objFieldMap{get;set;}
     public Map<String,String> objReferenceFieldMap{get;set;}
+    public EASYApplicationInfo appInfo {get;set;}
 
     public String createNewRecordId{get;set;}
     public String createNewRecordType{get;set;}
@@ -21,6 +22,7 @@ public class RelatedObjectReview {
         }set;
     }
     public RelatedObjectReview() {
+        appInfo = ApplicationUtilities.getApplicationInfo();
         objWrappers = new Map<String, List<SObjectWrapper>>();
         objFieldMap = new Map<String, Set<String>>();
         objReferenceFieldMap = new Map<String,String>();

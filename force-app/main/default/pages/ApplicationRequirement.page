@@ -21,11 +21,11 @@
         </apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}">
-                <c:ApplicationForm section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
-                                   requirementId="{!appInfo.requirementId}"
+                Next Id: {!nextReqId}, Previous ID: {!prevReqId}
+                <c:ApplicationForm section="{!section}" rendered="{!!isInvalid}" nextID="{!nextReqId}" prevId="{!prevReqId}"
                                    reqs="{!reqs}"
                                    progress="{!progress}"
-                                   isExternalUser="{!isExternalUser}">
+                                   appInfo="{!appInfo}">
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                         <apex:param name="p2" value="" assignTo="{!redirectPage}"/>

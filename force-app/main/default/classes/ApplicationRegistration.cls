@@ -10,12 +10,13 @@ public class ApplicationRegistration {
     private User loginUser { get; set; }
     private String loginPassword { get; set; }
     private String loginUrl { get; set; }
+    public EASYApplicationInfo appInfo {get;set;}
 
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
     ********************************************************************************/
     public ApplicationRegistration() {
-
+        appInfo = ApplicationUtilities.getApplicationInfo();
         // Initialize objects
         appCreate = new ApplicationCreate();
         interaction = new Interaction__c();

@@ -26,7 +26,7 @@
                 <apex:pageMessages />
             </apex:outputPanel>
             <apex:repeat value="{!arLst}" var="req">
-                <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appControl="{!appControl}" applicationIdBody="{!app.Id}">
+                <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}">
                     <div class="row" >
                         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
                             <div>
@@ -36,7 +36,7 @@
                                             <apex:variable var="itemCount" value="0"/>
                                             <apex:repeat value="{!req.section.groups}" var="g" rendered="{!req.section.groups != null && req.section.groups.size > 0}" >
                                                 <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
-                                                    <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appControl="{!appControl}"/>
+                                                    <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appControl="{!appControl}" appInfo="{!appInfo}"/>
                                                 </div>
                                                 <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
                                             </apex:repeat>

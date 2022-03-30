@@ -24,9 +24,6 @@ public class ApplicationRequirement {
     public Boolean ignoreExternalFilter { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
 
-    //Added by Chris 5-15
-    //public Id previousSectionID{get;set;}
-    //public Id nextSectionID{get;set;}
     public Boolean allowSubmit { get; set; }
     public transient String additionalDataString { get; set; }
     public String redirectPage { get; set; }
@@ -44,10 +41,10 @@ public class ApplicationRequirement {
 
     public ApplicationRequirement() {
         appInfo = ApplicationUtilities.getApplicationInfo();
+        System.debug(JSON.serializePretty(appInfo));
 
         allowSubmit = true;
         isExternalUser = false;
-
 
         items = [
                 SELECT Id, File_Types__c, Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Active__c, Required__c,
@@ -84,9 +81,9 @@ public class ApplicationRequirement {
 
             items = Database.query(itemQuery);*/
 
-/*
 
-        if ((String.isBlank(appInfo.appId) || app == null) && ApexPages.currentPage().getParameters().containsKey('applicationId')) {
+        System.debug(appInfo.appId);
+        if ((String.isBlank(appInfo.appId) || app == null)) {
 
             Set<String> appFields = new Set<String>{
                     'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c', 'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'application_control__c', 'generic_filter_1__c', 'generic_filter_2__c', 'generic_filter_3__c', 'generic_filter_4__c'
@@ -101,6 +98,7 @@ public class ApplicationRequirement {
 
             String query = 'SELECT ' + String.join(new List<String>(appFields), ',') + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
 
+            System.debug(query);
             app = ((List<Application__c>) Database.query(query)).get(0);
             appControl = appInfo.appControl;
         }
@@ -134,7 +132,6 @@ public class ApplicationRequirement {
                 con = ((List<Contact>) Database.query(query)).get(0);
             }
         }
-*/
 
         // Question Dependencies
         Map<Id, List<Question_Dependency__c>> dQuestions = new Map<Id, List<Question_Dependency__c>>();
@@ -335,7 +332,8 @@ public class ApplicationRequirement {
 
         }
 
-        if ((String.isBlank(appInfo.appId) || app == null) && ApexPages.currentPage().getParameters().containsKey('applicationId')) {
+        System.debug(appInfo.appId);
+        if ((String.isBlank(appInfo.appId) || app == null)) {
 
             Set<String> appFields = new Set<String>{
                     'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c', 'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'application_control__c', 'generic_filter_1__c', 'generic_filter_2__c', 'generic_filter_3__c', 'generic_filter_4__c'
@@ -585,97 +583,113 @@ public class ApplicationRequirement {
     * description: Saves question responses, requirement responses and the application. Takes the student back to the application checklist
     ******************************************************************************* */
     public PageReference submit() {
-        try {
-            Boolean hasError = false;
-            for (ApplicationQuestionGroup g : section.groups) {
-                if (g.relatedObject == true) {
-                    if (g.creatingNewRelatedRecord == true) {
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please finish editing all ' + (String.isBlank(g.item.Label__c) ? g.item.Name : g.item.Label__c) + ' records'));
-                        hasError = true;
-                    } else if (g.relatedObjects != null) {
-                        for (ApplicationQuestionGroup.SObjectWrapper sow : g.relatedObjects) {
-                            if (sow.isEditMode) {
-                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please finish editing all ' + (String.isBlank(g.item.Label__c) ? g.item.Name : g.item.Label__c) + ' records'));
+
+        Boolean hasError = false;
+        for (ApplicationQuestionGroup g : section.groups) {
+            if (g.relatedObject == true) {
+                if (g.creatingNewRelatedRecord == true) {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please finish editing all ' + (String.isBlank(g.item.Label__c) ? g.item.Name : g.item.Label__c) + ' records'));
+                    hasError = true;
+                } else if (g.relatedObjects != null) {
+                    for (ApplicationQuestionGroup.SObjectWrapper sow : g.relatedObjects) {
+                        if (sow.isEditMode) {
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please finish editing all ' + (String.isBlank(g.item.Label__c) ? g.item.Name : g.item.Label__c) + ' records'));
+                            hasError = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        transient Map<String, Object> additionalData;
+        if (String.isNotBlank(additionalDataString) && additionalDataString != '{}') {
+            additionalData = (Map<String, Object>) JSON.deserializeUntyped(additionalDataString);
+        }
+
+        for (ApplicationQuestionGroup g : section.groups) {
+            if (g.documentUpload == true) {
+                Map<String, Object> addData;
+                if (g.item != null && g.item.Id != null && additionalData != null && additionalData.containsKey(g.item.Id)) {
+                    addData = (Map<String, Object>) additionalData.get(g.item.Id);
+                }
+
+                if (addData != null && addData.containsKey('attData')) {
+                    Map<String, Object> attData = (Map<String, Object>) addData.get('attData');
+                    if (attData != null && attData.containsKey('fileName')) {
+                        String fileName = (String) attData.get('fileName');
+                        if (String.isNotBlank(fileName) && String.isNotBlank(g.item.File_Types__c)) {
+                            String ext = fileName.substringAfterLast('.').toUpperCase();
+                            Set<String> allowedTypes = new Set<String>(g.item.File_Types__c.toUpperCase().split(';'));
+                            if (!allowedTypes.contains(ext)) {
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'File type not allowed for ' + (String.isBlank(g.item.Label__c) ? g.item.Name : g.item.Label__c) + '. Allowed file types: ' + g.item.File_Types__c));
                                 hasError = true;
                             }
                         }
                     }
                 }
             }
+        }
 
-            transient Map<String, Object> additionalData;
-            if (String.isNotBlank(additionalDataString) && additionalDataString != '{}') {
-                additionalData = (Map<String, Object>) JSON.deserializeUntyped(additionalDataString);
+        if (hasError) {
+            return null;
+        }
+
+        section.processValues(additionalData);
+        List<Requirement_Response__c> rrLst = new List<Requirement_Response__c>();
+        for (ApplicationQuestionGroup aqg : section.groups) {
+            if (aqg.response != null && aqg.isEditable) {
+                aqg.response.Viewed__c = true;
+                rrLst.add(aqg.response);
             }
-
-            for (ApplicationQuestionGroup g : section.groups) {
-                if (g.documentUpload == true) {
-                    Map<String, Object> addData;
-                    if (g.item != null && g.item.Id != null && additionalData != null && additionalData.containsKey(g.item.Id)) {
-                        addData = (Map<String, Object>) additionalData.get(g.item.Id);
-                    }
-
-                    if (addData != null && addData.containsKey('attData')) {
-                        Map<String, Object> attData = (Map<String, Object>) addData.get('attData');
-                        if (attData != null && attData.containsKey('fileName')) {
-                            String fileName = (String) attData.get('fileName');
-                            if (String.isNotBlank(fileName) && String.isNotBlank(g.item.File_Types__c)) {
-                                String ext = fileName.substringAfterLast('.').toUpperCase();
-                                Set<String> allowedTypes = new Set<String>(g.item.File_Types__c.toUpperCase().split(';'));
-                                if (!allowedTypes.contains(ext)) {
-                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'File type not allowed for ' + (String.isBlank(g.item.Label__c) ? g.item.Name : g.item.Label__c) + '. Allowed file types: ' + g.item.File_Types__c));
-                                    hasError = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (hasError) {
-                return null;
-            }
-
-            section.processValues(additionalData);
-            List<Requirement_Response__c> rrLst = new List<Requirement_Response__c>();
-            for (ApplicationQuestionGroup aqg : section.groups) {
-                if (aqg.response != null && aqg.isEditable) {
-                    aqg.response.Viewed__c = true;
-                    rrLst.add(aqg.response);
-                }
-            }
-
+        }
+        try {
             upsert rrLst;
+        } catch (Exception ex) {
+            System.debug(ex.getMessage());
+        }
 
-            qResponses = new List<Question_Response__c>();
-            for (ApplicationQuestionGroup g : section.groups) {
-                if (g.questionGroup == true && g.questions != null && g.isEditable) {
-                    for (ApplicationQuestion q : g.questions) {
-                        if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null) {
+        qResponses = new List<Question_Response__c>();
+        for (ApplicationQuestionGroup g : section.groups) {
+            if (g.questionGroup == true && g.questions != null && g.isEditable) {
+                for (ApplicationQuestion q : g.questions) {
+                    if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null) {
 
-                            Question_Response__c qResp = q.response;
+                        Question_Response__c qResp = q.response;
 
-                            // Clone Question Response and apply ID if this is an external user
-                            // in order to get around the restriction of external users not being
-                            // able to edit objects.
-                            if (isExternalUser) {
-                                qResp = q.response.clone(false, true, false, false);
-                                qResp.Id = q.responseId;
-                            }
-
-                            qResponses.add(qResp);
+                        // Clone Question Response and apply ID if this is an external user
+                        // in order to get around the restriction of external users not being
+                        // able to edit objects.
+                        if (isExternalUser) {
+                            qResp = q.response.clone(false, true, false, false);
+                            qResp.Id = q.responseId;
                         }
+
+                        qResponses.add(qResp);
                     }
                 }
             }
+        }
 
+        try {
             upsert qResponses;
+        } catch (Exception ex) {
+            System.debug(ex.getMessage());
+        }
 
-            section.pushValuesToObjects();
+        section.pushValuesToObjects();
 
+        try {
             update app;
-
+        } catch (Exception ex) {
+            System.debug(ex.getMessage());
+        }
+        try {
             update con;
+        } catch (Exception ex) {
+            System.debug(ex.getMessage());
+        }
+
+        try {
 
             if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h')) && String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))) {
                 showSuccess = true;

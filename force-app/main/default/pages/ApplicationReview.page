@@ -3,8 +3,8 @@
      <apex:variable value="0" var="reqIndex"/>
     <div class="appBodyReview">
         <apex:repeat value="{!arLst}" var="req">
-            <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appControl="{!appControl}" applicationIdBody="{!app.Id}">
-                <c:ApplicationForm section="{!req.section}" hidePaging="true" preventUpdates="true" appControl="{!appControl}">
+            <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}">
+                <c:ApplicationForm section="{!req.section}" hidePaging="true" preventUpdates="true" appInfo="{!appInfo}">
                 </c:ApplicationForm>
             </c:ApplicationBody>
             <apex:variable var="reqIndex" value="{!VALUE(reqIndex) + 1}"/>

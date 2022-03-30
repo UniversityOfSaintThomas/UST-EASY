@@ -10,8 +10,24 @@
         <field>Program__c.Program_Integration_External_Id__c</field>
     </columns>
     <columns>
-        <field>CUST_CREATED_DATE</field>
+        <field>Program__c.Associated_Schools__c</field>
     </columns>
+    <columns>
+        <field>Program__c.Degree_Type__c</field>
+    </columns>
+    <columns>
+        <field>Program__c.Student_Type__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Program__c.Program_Record_Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Academic Program</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
     <format>Tabular</format>
     <name>Programs</name>
     <params>

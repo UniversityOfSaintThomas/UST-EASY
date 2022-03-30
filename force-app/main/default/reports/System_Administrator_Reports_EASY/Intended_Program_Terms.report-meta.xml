@@ -10,7 +10,10 @@
         <field>Intended_Program_Term__c$Intended_Program_Term_Integration_Ext_Id__c</field>
     </columns>
     <columns>
-        <field>Intended_Program_Term__c$CreatedDate</field>
+        <field>Intended_Program_Term__c$Degree_Type__c</field>
+    </columns>
+    <columns>
+        <field>Intended_Program_Term__c$Student_Type__c</field>
     </columns>
     <format>Tabular</format>
     <name>Intended Program Terms</name>

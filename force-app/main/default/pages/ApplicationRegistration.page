@@ -1,7 +1,7 @@
-<apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0" action="{!testCookieKey}" >
+<apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0">
     <apex:composition template="Capricorn2020">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead />
+            <c:ApplicationHead/>
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
                     Visualforce.remoting.Manager.invokeAction(
@@ -20,20 +20,30 @@
             </script>
         </apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="New Application" appInfo="{!appInfo}" loadingText="Building Your Application...">
-                <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}">
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                        <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="login();">
-                            <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
-                        </apex:actionFunction>
-                        <apex:actionFunction name="login" action="{!login}" oncomplete="appHideLoadingSpinner();"/>
-                        <a href="javascript:null;" class="slds-button slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">Back</a>
-                        <a href="javascript:null;" class="slds-button slds-button_brand carousel__button--prev">Back</a>
-                        <a href="javascript:null;" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
-                        <a href="javascript:null;" class="slds-button slds-button_brand carousel__button--next">Next</a>
-                    </div>
-                </c:ApplicationForm>
-            </c:ApplicationBody>
+            <apex:outputPanel layout="none" rendered="{!!cookieKeyPresent}">
+                <apex:form>
+                    <p>This is the first time you are running EASY and a unique encryption key must be generated for your org.</p>
+                    <p style="margin-bottom: 30px;">
+                        <apex:commandButton action="{!testCookieKey}" value="Click to generate encryption key" title="Click to generate encryption key"/>
+                    </p>
+                </apex:form>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!cookieKeyPresent}">
+                <c:ApplicationBody title="New Application" appInfo="{!appInfo}" loadingText="Building Your Application...">
+                    <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
+                            <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="login();">
+                                <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
+                            </apex:actionFunction>
+                            <apex:actionFunction name="login" action="{!login}" oncomplete="appHideLoadingSpinner();"/>
+                            <a href="javascript:null;" class="slds-button slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">Back</a>
+                            <a href="javascript:null;" class="slds-button slds-button_brand carousel__button--prev">Back</a>
+                            <a href="javascript:null;" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
+                            <a href="javascript:null;" class="slds-button slds-button_brand carousel__button--next">Next</a>
+                        </div>
+                    </c:ApplicationForm>
+                </c:ApplicationBody>
+            </apex:outputPanel>
         </apex:define>
     </apex:composition>
 </apex:page>

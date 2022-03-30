@@ -257,6 +257,14 @@ public class ApplicationUtilities {
         return '';
     }
 
+    public static Boolean cookieKeyPresent() {
+        Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+        if (String.isNotBlank(AppSettings.Cookie_Encryption_Key__c)) {
+            return true;
+        }
+        return false;
+    }
+
     public static String getCookieKey() {
         String key = '';
         Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
@@ -277,7 +285,11 @@ public class ApplicationUtilities {
                 Blob cryptoKey = Crypto.generateAesKey(256);
                 encryptionString = EncodingUtil.base64Encode(cryptoKey).substring(0, 32);
                 SummitEventsSettings.Cookie_Encryption_Key__c = encryptionString;
-                update SummitEventsSettings;
+                try {
+                    update SummitEventsSettings;
+                } catch(DmlException  ex) {
+
+                }
             }
             return encryptionString;
         }

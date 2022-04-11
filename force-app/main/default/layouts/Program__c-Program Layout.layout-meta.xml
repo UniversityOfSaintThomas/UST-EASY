@@ -324,6 +324,7 @@
         <fields>Academic_Term__c</fields>
         <fields>Activate_Application_Date__c</fields>
         <fields>End_Application_Date__c</fields>
+        <fields>Degree_Type__c</fields>
         <relatedList>Intended_Program_Term__c.Intended_Program__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -332,7 +333,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h75000000Ijkn</masterLabel>
+        <masterLabel>00h8A000003vtsQ</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

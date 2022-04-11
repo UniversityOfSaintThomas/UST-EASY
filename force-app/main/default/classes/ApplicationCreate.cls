@@ -145,7 +145,10 @@ public class ApplicationCreate {
                 groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
             }
         }
+        
+        ApplicationQuestion dLQuestion;
 
+        
 
         ApplicationQuestion programQuestion;
 
@@ -162,6 +165,7 @@ public class ApplicationCreate {
                     WHERE Hide_from_Application__c = :false
                     AND Active__c = :true
                     AND Application_Control__c = :appControl.Id
+                    //AND Degree__c = :degreeType
                     ORDER BY Name ASC
             ];
             // Original EASY query, that does not limit program list by application control
@@ -181,7 +185,7 @@ public class ApplicationCreate {
             //for (Academic_Term__c at : [SELECT Id, Name FROM Academic_Term__c WHERE Application_Status__c = :'Active' ORDER BY Activate_Application_Date__c ASC]) {
             //    termIds.add(at.Id);
             //    termNames.add(at.Name);
-            // }
+           // }
 
             // Get map of term names with id as key - updated by FDF 12/17/2021 to pull a unique list of Academic Terms that have an Intended Program Term for that Application Control
             List<Academic_Term__c> aTermList = new List<Academic_Term__c>();
@@ -189,19 +193,11 @@ public class ApplicationCreate {
             List<String> termNames = new List<String>();
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
+            AggregateResult[] at = [SELECT Academic_Term__r.Id, Academic_Term__r.Name FROM Intended_Program_Term__c WHERE Intended_Program__r.Application_Control__c = :appControl.Id AND Academic_Term__r.Application_Status__c = :'Active' GROUP BY Academic_Term__r.Id, Academic_Term__r.Name];
 
-            System.debug('APP CONT ID: ' + appControl.Id);
-            AggregateResult[] at = [
-                    SELECT Academic_Term__r.Id, Academic_Term__r.Name
-                    FROM Intended_Program_Term__c
-                    WHERE Intended_Program__r.Application_Control__c = :appControl.Id
-                    AND Academic_Term__r.Application_Status__c = 'Active'
-                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name
-            ];
-
-            for (AggregateResult ar : at) {
+            for(AggregateResult ar:at){
                 Academic_Term__c aTerm = new Academic_Term__c();
-                aTerm.Id = (Id) ar.get('Id');
+                aTerm.Id= (Id) ar.get('Id');
                 aTerm.Name = (String) ar.get('Name');
                 aTermList.add(aTerm);
 

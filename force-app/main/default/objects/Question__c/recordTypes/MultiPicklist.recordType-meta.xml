@@ -1998,11 +1998,7 @@
     <picklistValues>
         <picklist>Generic_Filter_2__c</picklist>
         <values>
-            <fullName>Applicant 25 or over</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Applicant under 25</fullName>
+            <fullName>Generic Value 3</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -37,6 +37,14 @@
                 <behavior>Edit</behavior>
                 <field>Admission_Plan__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Intended_Program_College_of_Interest__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Intended_Program_Applicant_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

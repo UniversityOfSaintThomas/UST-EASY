@@ -82,6 +82,16 @@
     </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Intended_Program_Applicant_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Intended_Program_College_of_Interest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Program__c.Program_Applicant_Type__c</field>
         <readable>true</readable>
@@ -91,6 +101,9 @@
         <field>Program__c.Program_College_of_Interest__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <layoutAssignments>
+        <layout>Application__c-Application Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Program__c-Program Layout</layout>
     </layoutAssignments>

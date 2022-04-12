@@ -251,8 +251,8 @@ flows:
         task: turn_off_duplicate_rules
       12:
         task: load_application_data
-      12.5:
-        task: create_fake_school_data
+#      12.5:
+#        task: create_fake_school_data
       13:
         task: turn_on_duplicate_rules
       14:

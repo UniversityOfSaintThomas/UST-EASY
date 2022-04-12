@@ -34,23 +34,15 @@
     <picklistValues>
         <picklist>Application_Status__c</picklist>
         <values>
-            <fullName>Cancelled</fullName>
+            <fullName>Admit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Decision Made</fullName>
+            <fullName>Complete App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Pending Additional Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Complete-Pending Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
+            <fullName>Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -58,23 +50,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Paid</fullName>
+            <fullName>Denied</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Waived</fullName>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Incomplete</fullName>
+            <fullName>Started App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Started</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Submitted</fullName>
+            <fullName>Submitted App</fullName>
             <default>false</default>
         </values>
         <values>
@@ -170,23 +158,15 @@
     <picklistValues>
         <picklist>Editable_Application_Status__c</picklist>
         <values>
-            <fullName>Cancelled</fullName>
+            <fullName>Admit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Decision Made</fullName>
+            <fullName>Complete App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Pending Additional Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Complete-Pending Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
+            <fullName>Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -194,23 +174,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Paid</fullName>
+            <fullName>Denied</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Waived</fullName>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Incomplete</fullName>
+            <fullName>Started App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Started</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Submitted</fullName>
+            <fullName>Submitted App</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2062,23 +2038,15 @@
     <picklistValues>
         <picklist>Required_Supporting_Documentation__c</picklist>
         <values>
-            <fullName>Cancelled</fullName>
+            <fullName>Admit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Decision Made</fullName>
+            <fullName>Complete App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Pending Additional Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Complete-Pending Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
+            <fullName>Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2086,23 +2054,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Paid</fullName>
+            <fullName>Denied</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Waived</fullName>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Incomplete</fullName>
+            <fullName>Started App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Started</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Submitted</fullName>
+            <fullName>Submitted App</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2113,23 +2077,15 @@
     <picklistValues>
         <picklist>Required__c</picklist>
         <values>
-            <fullName>Cancelled</fullName>
+            <fullName>Admit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Decision Made</fullName>
+            <fullName>Complete App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Pending Additional Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Complete-Pending Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
+            <fullName>Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2137,23 +2093,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Paid</fullName>
+            <fullName>Denied</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Waived</fullName>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Incomplete</fullName>
+            <fullName>Started App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Started</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Submitted</fullName>
+            <fullName>Submitted App</fullName>
             <default>false</default>
         </values>
         <values>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Needs_Item_s__c</fullName>
+    <description>Captures the items needed, based on the Decision Team</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Captures the items needed, based on the Decision Team</inlineHelpText>
+    <label>Needs Item(s)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>Application_Substatus__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Needs_Item_s</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Deny</controllingFieldValue>
+            <valueName>Recommended to DFC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Discipline</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Documents</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Grades</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Interview Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Interview Invited</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Interview Reviewed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Interview Scheduled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Pending English (INTL)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Test Scores</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

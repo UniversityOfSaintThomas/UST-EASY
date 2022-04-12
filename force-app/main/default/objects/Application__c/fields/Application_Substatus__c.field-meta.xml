@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Substatus__c</fullName>
+    <description>Used in conjunction with Application Status and Decision Team</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used in conjunction with Application Status and Decision Team</inlineHelpText>
+    <label>Application Substatus</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Application_Status__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Application_Substatus</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <controllingFieldValue>Deferred</controllingFieldValue>
+            <valueName>After Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <controllingFieldValue>Deferred</controllingFieldValue>
+            <valueName>After Confirm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Before Complete App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Before Decision</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>From Waitlist for Inst Acc</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>From Waitlist into Class</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Inactive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>NAR (Not Actively Recruting)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Prior to Interview</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Unsubscribe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Complete App</controllingFieldValue>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Started App</controllingFieldValue>
+            <controllingFieldValue>Submitted App</controllingFieldValue>
+            <valueName>Hold</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Complete App</controllingFieldValue>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <controllingFieldValue>Submitted App</controllingFieldValue>
+            <valueName>Needs Items</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Conditional</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Deny</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Provisional</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Waitlist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>With Concern</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Withdraw</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Deferred from Previous Term</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Exchange</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Full</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Manual Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Needs Review</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>On Appeal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Academic</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Appeal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Appeal Denied</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Disciplinary</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

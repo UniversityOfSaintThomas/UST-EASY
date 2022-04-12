@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Discipline</fullName>
+        <default>false</default>
+        <label>Discipline</label>
+    </customValue>
+    <customValue>
+        <fullName>Documents</fullName>
+        <default>false</default>
+        <label>Documents</label>
+    </customValue>
+    <customValue>
+        <fullName>Grades</fullName>
+        <default>false</default>
+        <label>Grades</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Pending English (INTL)</fullName>
+        <default>false</default>
+        <label>Pending English (INTL)</label>
+    </customValue>
+    <customValue>
+        <fullName>Test Scores</fullName>
+        <default>false</default>
+        <label>Test Scores</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Invited</fullName>
+        <default>false</default>
+        <label>Interview Invited</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Scheduled</fullName>
+        <default>false</default>
+        <label>Interview Scheduled</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Completed</fullName>
+        <default>false</default>
+        <label>Interview Completed</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Reviewed</fullName>
+        <default>false</default>
+        <label>Interview Reviewed</label>
+    </customValue>
+    <customValue>
+        <fullName>Recommended to DFC</fullName>
+        <default>false</default>
+        <label>Recommended to DFC</label>
+    </customValue>
+    <description>Used in conjunction with Application Substatus</description>
+    <masterLabel>Needs Item(s)</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

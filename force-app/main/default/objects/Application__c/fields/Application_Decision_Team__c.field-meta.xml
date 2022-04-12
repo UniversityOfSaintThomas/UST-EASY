@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Decision_Team__c</fullName>
+    <description>Used in conjunction with Application Status and Substatus</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used in conjunction with Application Status and Substatus</inlineHelpText>
+    <label>Application Decision Team</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Application_Substatus__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Decision_Team</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Provisional</controllingFieldValue>
+            <controllingFieldValue>Waitlist</controllingFieldValue>
+            <controllingFieldValue>Withdraw</controllingFieldValue>
+            <controllingFieldValue>Deny</controllingFieldValue>
+            <controllingFieldValue>Hold</controllingFieldValue>
+            <controllingFieldValue>Accept</controllingFieldValue>
+            <controllingFieldValue>Conditional</controllingFieldValue>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Committee I</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Provisional</controllingFieldValue>
+            <controllingFieldValue>Waitlist</controllingFieldValue>
+            <controllingFieldValue>Withdraw</controllingFieldValue>
+            <controllingFieldValue>Deny</controllingFieldValue>
+            <controllingFieldValue>Hold</controllingFieldValue>
+            <controllingFieldValue>Accept</controllingFieldValue>
+            <controllingFieldValue>Conditional</controllingFieldValue>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Committee II</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Provisional</controllingFieldValue>
+            <controllingFieldValue>Waitlist</controllingFieldValue>
+            <controllingFieldValue>Withdraw</controllingFieldValue>
+            <controllingFieldValue>Deny</controllingFieldValue>
+            <controllingFieldValue>Hold</controllingFieldValue>
+            <controllingFieldValue>Accept</controllingFieldValue>
+            <controllingFieldValue>Conditional</controllingFieldValue>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Committee III</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Provisional</controllingFieldValue>
+            <controllingFieldValue>Waitlist</controllingFieldValue>
+            <controllingFieldValue>Withdraw</controllingFieldValue>
+            <controllingFieldValue>Deny</controllingFieldValue>
+            <controllingFieldValue>Hold</controllingFieldValue>
+            <controllingFieldValue>Accept</controllingFieldValue>
+            <controllingFieldValue>Conditional</controllingFieldValue>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Counselor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Provisional</controllingFieldValue>
+            <controllingFieldValue>Waitlist</controllingFieldValue>
+            <controllingFieldValue>Withdraw</controllingFieldValue>
+            <controllingFieldValue>Deny</controllingFieldValue>
+            <controllingFieldValue>Hold</controllingFieldValue>
+            <controllingFieldValue>Accept</controllingFieldValue>
+            <controllingFieldValue>Conditional</controllingFieldValue>
+            <controllingFieldValue>Needs Items</controllingFieldValue>
+            <valueName>Program</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deny</controllingFieldValue>
+            <controllingFieldValue>Accept</controllingFieldValue>
+            <valueName>System (Auto Decision)</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Committee I</fullName>
+        <default>false</default>
+        <label>Committee I</label>
+    </customValue>
+    <customValue>
+        <fullName>Committee II</fullName>
+        <default>false</default>
+        <label>Committee II</label>
+    </customValue>
+    <customValue>
+        <fullName>Committee III</fullName>
+        <default>false</default>
+        <label>Committee III</label>
+    </customValue>
+    <customValue>
+        <fullName>Counselor</fullName>
+        <default>false</default>
+        <label>Counselor</label>
+    </customValue>
+    <customValue>
+        <fullName>Program</fullName>
+        <default>false</default>
+        <label>Program</label>
+    </customValue>
+    <customValue>
+        <fullName>System (Auto Decision)</fullName>
+        <default>false</default>
+        <label>System (Auto Decision)</label>
+    </customValue>
+    <description>Used in conjunction with some Application Statuses and Sub-statuses</description>
+    <masterLabel>Decision Team</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

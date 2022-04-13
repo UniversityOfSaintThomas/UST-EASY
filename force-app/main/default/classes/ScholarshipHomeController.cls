@@ -35,7 +35,8 @@ public class ScholarshipHomeController {
         }
         //getApplicantInfo();
         pageURL = ScholarshipSharedUtilities.setHistoryPage(scholarshipId);
-        return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplication, false, scholarshipId);
+        //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplication, false, scholarshipId);
+        return null;
     }
 
 }

@@ -296,6 +296,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Application__c.External_Appliction_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Application__c.First_License__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -337,6 +342,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Application__c.Intended_Program_Applicant_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Intended_Program_Application_Control__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Intended_Program_Codes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

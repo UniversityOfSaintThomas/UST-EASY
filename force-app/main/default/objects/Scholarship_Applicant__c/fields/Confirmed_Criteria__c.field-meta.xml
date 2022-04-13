@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Confirmed_Criteria__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Applicant has self-confirmed they meet the criteria of the scholarship.</description>
+    <externalId>false</externalId>
+    <label>Confirmed Criteria</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

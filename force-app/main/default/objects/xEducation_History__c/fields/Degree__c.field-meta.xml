@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Degree__c</fullName>
+    <externalId>false</externalId>
+    <label>Degree</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Doctoral</fullName>
+                <default>false</default>
+                <label>Doctoral</label>
+            </value>
+            <value>
+                <fullName>Masters</fullName>
+                <default>false</default>
+                <label>Masters</label>
+            </value>
+            <value>
+                <fullName>Certificate</fullName>
+                <default>false</default>
+                <label>Certificate</label>
+            </value>
+            <value>
+                <fullName>Bachelors</fullName>
+                <default>false</default>
+                <label>Bachelors</label>
+            </value>
+            <value>
+                <fullName>Associates</fullName>
+                <default>false</default>
+                <label>Associates</label>
+            </value>
+            <value>
+                <fullName>Post Graduate Diploma</fullName>
+                <default>false</default>
+                <label>Post Graduate Diploma</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

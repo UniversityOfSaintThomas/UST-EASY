@@ -2,5 +2,7 @@
  - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 3/14/2022.
  -->
 
-<apex:page id="thadExperiment" contentType="thadExperiment">
+<apex:page id="thadExperiment" contentType="thadExperiment" controller="thadExperiment" showHeader="false" lightningStyleSheets="true" standardStylesheets="false" cache="false">
+    Application ID FROM URL: {!applicationId}
+    {!JSONObjects}
 </apex:page>

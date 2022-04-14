@@ -4,11 +4,11 @@
     <apex:attribute name="preventUpdates" description="Set the page to output only" type="Boolean" default="false" required="false"/>
     <apex:attribute name="nextId" description="ApplicationSettings" type="Id" required="false"/>
     <apex:attribute name="prevId" description="ApplicationSettings" type="Id" required="false"/>
-    <apex:attribute name="reqs" description="All rquirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
+    <apex:attribute name="reqs" description="All requirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
     <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
     <apex:form id="theForm">
-        <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" reqs="{!reqs}" progress="{!progress}" appInfo="{!appInfo}"/>
+    <!-- <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" reqs="{!reqs}" progress="{!progress}" appInfo="{!appInfo}"/>-->
         <apex:outputPanel id="formPageMessages">
             <apex:pageMessages/>
         </apex:outputPanel>

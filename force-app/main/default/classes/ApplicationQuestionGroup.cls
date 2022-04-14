@@ -231,7 +231,6 @@ public class ApplicationQuestionGroup {
     * @description Saves the changes on a related object list item and  places it back into read only mode
     ********************************************************************************/
     public void enableConfirmMode() {
-        System.debug('selectedRelatedId: ' + selectedRelatedId);
         if (String.isNotBlank(selectedRelatedId) && relatedObjectsMap.containsKey(selectedRelatedId)) {
             relatedObjectsMap.get(selectedRelatedId).enableConfirmMode();
             selectedRelatedId = null;
@@ -254,7 +253,6 @@ public class ApplicationQuestionGroup {
     * @description Saves the related object row to allow a supporting document to be uploaded
     ********************************************************************************/
     public void relatedUpload() {
-        System.debug('RELATED');
         if (String.isNotBlank(selectedRelatedId) && relatedObjectsMap.containsKey(selectedRelatedId) && relatedObjectsMap.get(selectedRelatedId).isEditMode == false) {
             if (relatedObjectsMap.get(selectedRelatedId).obj.Id != null) {
             } else if (relatedObjectsMap.get(selectedRelatedId).obj.Id == null) {
@@ -307,8 +305,6 @@ public class ApplicationQuestionGroup {
             }
 
             relatedObjectsMap.put('new' + newIndex, new SObjectWrapper(this, 'new' + newIndex, sObj, true));
-            System.debug('new' + newIndex);
-            System.debug(sObj);
             newIndex++;
         }
     }
@@ -363,7 +359,6 @@ public class ApplicationQuestionGroup {
             }
         }
 
-        System.debug('item.RecordType.DeveloperName: ' + item.RecordType.DeveloperName);
         if (item.RecordType.DeveloperName.equals('Question_Group')) {
             questionGroup = true;
             documentUpload = false;
@@ -618,7 +613,7 @@ public class ApplicationQuestionGroup {
                     if (relatedObjects != null) {
                         for (SObjectWrapper objW : relatedObjects) {
                             if (objW.isDeleted == false && ((Boolean) objW.obj.get('User_Created__c')) == true && objW.isValid == true) {
-                                if(String.isNotBlank(item.Related_Object_Record_Type_ID__c)){
+                                if (String.isNotBlank(item.Related_Object_Record_Type_ID__c)) {
                                     objW.obj.put('recordtypeid', item.Related_Object_Record_Type_ID__c);
                                 }
                                 if (objW.obj.Id != null) {
@@ -704,7 +699,6 @@ public class ApplicationQuestionGroup {
                     if (attData.containsKey('fileName')) {
                         att.Title = (String) attData.get('fileName');
                     }
-                    System.debug('attData: ' + String.valueOf(attData));
                     if (attData.containsKey('data')) {
                         att.VersionData = EncodingUtil.base64Decode(((String) attData.get('data')).substringAfter(','));
                     }

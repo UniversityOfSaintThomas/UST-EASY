@@ -26,7 +26,7 @@ public class ApplicationRequirementPreview {
     }
 
     public ApplicationRequirementPreview() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         questionHolderMap = new Map<String, ApplicationQuestion>();
         app = new Application__c();
     }
@@ -35,7 +35,7 @@ public class ApplicationRequirementPreview {
 * @description Initialize the page - Creates ApplicationRequirement for each requirement that is applicible to this application
 ********************************************************************************/
     public void init() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         requirementId = ApexPages.currentPage().getParameters().get('Id');
         if (requirementId == null) {
             return;

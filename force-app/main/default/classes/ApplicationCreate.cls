@@ -30,11 +30,11 @@ public class ApplicationCreate {
     ********************************************************************************/
 
     public ApplicationCreate() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
     }
 
     public PageReference init() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         // Exit if there is no Application Control to reference
         if (appControl == null) {
             return null;
@@ -150,10 +150,20 @@ public class ApplicationCreate {
                 groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
             }
         }
-        
         ApplicationQuestion dLQuestion;
 
-        
+        // Create new Graduate specific application questions used to limit Program List
+        if (appControl.Academic_Level__c == 'Graduate') {
+
+
+            dLQuestion = new ApplicationQuestion(con, app, '', app, 'Degree_Type__c');
+            dLQuestion.addQuestionObject(new Question__c(Label__c = 'What type of degree are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Level', Picklist_Values__c = appControl.Degree_Levels__c));
+
+            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+                    dLQuestion
+            }));
+
+        }
 
         ApplicationQuestion programQuestion;
 
@@ -190,7 +200,7 @@ public class ApplicationCreate {
             //for (Academic_Term__c at : [SELECT Id, Name FROM Academic_Term__c WHERE Application_Status__c = :'Active' ORDER BY Activate_Application_Date__c ASC]) {
             //    termIds.add(at.Id);
             //    termNames.add(at.Name);
-           // }
+            // }
 
             // Get map of term names with id as key - updated by FDF 12/17/2021 to pull a unique list of Academic Terms that have an Intended Program Term for that Application Control
             List<Academic_Term__c> aTermList = new List<Academic_Term__c>();
@@ -198,11 +208,18 @@ public class ApplicationCreate {
             List<String> termNames = new List<String>();
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
-            AggregateResult[] at = [SELECT Academic_Term__r.Id, Academic_Term__r.Name FROM Intended_Program_Term__c WHERE Intended_Program__r.Application_Control__c = :appControl.Id AND Academic_Term__r.Application_Status__c = :'Active' GROUP BY Academic_Term__r.Id, Academic_Term__r.Name];
 
-            for(AggregateResult ar:at){
+            AggregateResult[] at = [
+                    SELECT Academic_Term__r.Id, Academic_Term__r.Name
+                    FROM Intended_Program_Term__c
+                    WHERE Intended_Program__r.Application_Control__c = :appControl.Id
+                    AND Academic_Term__r.Application_Status__c = 'Active'
+                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name
+            ];
+
+            for (AggregateResult ar : at) {
                 Academic_Term__c aTerm = new Academic_Term__c();
-                aTerm.Id= (Id) ar.get('Id');
+                aTerm.Id = (Id) ar.get('Id');
                 aTerm.Name = (String) ar.get('Name');
                 aTermList.add(aTerm);
 

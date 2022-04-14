@@ -30,14 +30,14 @@ public class ApplicationChecklist {
     }
 
     public ApplicationChecklist() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
     }
 
     /*******************************************************************************
     * @description Initialize the page - Checks if requirements have been completed
     ********************************************************************************/
     public void init() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;

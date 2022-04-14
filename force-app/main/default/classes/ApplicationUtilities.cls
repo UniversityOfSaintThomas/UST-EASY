@@ -4,6 +4,7 @@
 *******************************************************************************/
 public class ApplicationUtilities {
 
+    //Checks passed URL parameters with those in encrypted cookie. Uses URL if different.
     public static Id checkUpdateIds(String urlParameter, Id cookieId) {
         Id urlId = null;
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get(urlParameter))) {
@@ -35,13 +36,14 @@ public class ApplicationUtilities {
     }
 
     public static Boolean isExternalUser() {
-        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('h')) && String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))) {
-            return true;
+        // Is external may be guest user like recommender
+        if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h')) && String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))) {
+            return false;
         }
-        return false;
+        return true;
     }
 
-    public static EASYApplicationInfo getApplicationInfo() {
+    public static EASYApplicationInfo gatherApplicationInfo() {
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         appInfo.appControl = new Application_Control__c();
 
@@ -62,7 +64,7 @@ public class ApplicationUtilities {
         appInfo.requirementId = checkUpdateIds('requirementId', appInfo.requirementId);
 
         // Contact Id of Applicant
-        if (UserInfo.getUserType().equals('Standard') || UserInfo.getUserType().equals('CspLitePortal')) {
+        if (String.isNotBlank(UserInfo.getUserType())) {
             try {
                 appInfo.contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
             } catch (Exception ex) {
@@ -88,7 +90,10 @@ public class ApplicationUtilities {
 
         //Get application control from application type
         if (String.isNotBlank(appInfo.at)) {
-            appInfo.appControl = getApplicationControls(appInfo.at);
+            if(appInfo.appControl == null) {
+                appInfo.appControl = getApplicationControls(appInfo.at);
+            }
+
             appInfo.appControlId = appInfo.appControl.Id;
         }
 
@@ -154,11 +159,10 @@ public class ApplicationUtilities {
 //            }
 //        }
 
-        System.debug(JSON.serializePretty(reqs));
+       // System.debug(JSON.serializePretty(reqs));
         for (Requirement__c r : reqs) {
             reqsIds.add(r.Id);
         }
-        System.debug(reqsIds);
         return reqsIds;
     }
 
@@ -191,7 +195,10 @@ public class ApplicationUtilities {
                 SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c, Arrow_Color__c,
                         Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c, Logo_Static_Resource_Path__c,
                         Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c,
-                        Template__c FROM Application_Control__c WHERE Active__c = :true AND (URL_Parameter__c = :param OR Default__c = :true)]) {
+                        Template__c
+                FROM Application_Control__c
+                WHERE Active__c = :true AND (URL_Parameter__c = :param OR Default__c = :true)
+        ]) {
             if (ac.Default__c) {
                 defaultControl = ac;
             } else if (ac.URL_Parameter__c.equals(param)) {
@@ -287,7 +294,7 @@ public class ApplicationUtilities {
                 SummitEventsSettings.Cookie_Encryption_Key__c = encryptionString;
                 try {
                     update SummitEventsSettings;
-                } catch(DmlException  ex) {
+                } catch (DmlException ex) {
 
                 }
             }

@@ -26,7 +26,7 @@ public class ApplicationReview {
     }
 
     public ApplicationReview(){
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         questionHolderMap = new Map<String,ApplicationQuestion>();
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
         contactId = [
@@ -44,7 +44,7 @@ public class ApplicationReview {
     * @description Initialize the page - Creates ApplicationRequirement for each requirement that is applicible to this application
     ********************************************************************************/
     public void init() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
 
         contactId = [

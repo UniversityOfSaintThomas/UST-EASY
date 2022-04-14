@@ -31,7 +31,7 @@ public class RelatedDocumentUpload {
 	public transient String additionalDataString{get;set;}
 
 	public RelatedDocumentUpload() {
-		appInfo = ApplicationUtilities.getApplicationInfo();
+		appInfo = ApplicationUtilities.gatherApplicationInfo();
         success = false;
 		if(ApexPages.currentPage().getParameters().containsKey('Id')){
 			Id objId = ApexPages.currentPage().getParameters().get('Id');

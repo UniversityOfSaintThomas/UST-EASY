@@ -41,14 +41,14 @@ public class ApplicationAdminView {
     }
 
     public ApplicationAdminView() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
     }
 
     /*******************************************************************************
     * @description Initialize the page - Creates ApplicationRequirement for each requirement that is applicible to this application
     ********************************************************************************/
     public void init() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
         contactId = [
                 SELECT Contact__c
@@ -237,7 +237,6 @@ public class ApplicationAdminView {
                     if (aqg.questionGroup == true && aqg.questions != null) {
                         for (ApplicationQuestion q : aqg.questions) {
                             if (q.response != null) {
-                                System.debug(q.response);
                                 questionToResponseMap.put(q.response, aqg.response);
                                 qResponses.add(q.response);
                             }

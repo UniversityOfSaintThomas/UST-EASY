@@ -13,7 +13,7 @@ public class ApplicationPortal {
     public String template { get; set; }
 
     public ApplicationPortal() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         appInfoMapByAppId = new Map<Id, EASYApplicationInfo>();
 
         Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();

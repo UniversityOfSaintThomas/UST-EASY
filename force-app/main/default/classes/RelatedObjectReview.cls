@@ -22,7 +22,7 @@ public class RelatedObjectReview {
         }set;
     }
     public RelatedObjectReview() {
-        appInfo = ApplicationUtilities.getApplicationInfo();
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         objWrappers = new Map<String, List<SObjectWrapper>>();
         objFieldMap = new Map<String, Set<String>>();
         objReferenceFieldMap = new Map<String,String>();

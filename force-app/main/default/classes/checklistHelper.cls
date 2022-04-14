@@ -71,6 +71,8 @@ public with sharing class checklistHelper {
                 riIds.add(ri.Id);
             }
         }
+        Integer requirementItemHash = riLIst.hashCode();
+        System.debug(requirementItemHash);
 
         //checkRequirementCompletion(app.Id, app, contactId);
 
@@ -154,7 +156,6 @@ public with sharing class checklistHelper {
         }
         progress = (complete / total) * 100;
 
-        JSON.serializePretty(reqMap.values());
         return reqMap.values();
     }
 }

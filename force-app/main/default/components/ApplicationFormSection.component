@@ -45,16 +45,17 @@
                     <apex:repeat value="{!group.questions}" var="question">
                         <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
                         <apex:outputPanel rendered="{!If(question.showQuestion, true, false)}" styleClass="slds-p-vertical_xxx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-
                             <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!placeholderUUID}">
+
+                                {!question.dependentOptions}
 
                                 <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
                                 <apex:variable var="requiredField" value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" />
-
+                                <apex:variable var="questionLabel" value="{!question.label}"/>
                                 <!-- Label for input -->
                                 <apex:outputPanel rendered="{!question.fieldType != 'Address' && !ISBLANK(question.label) && question.fieldType != 'Checkbox'}" layout="none">
                                     <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
-                                        {!question.label}  (field type: {!question.fieldType} - 1st group, question required = {!question.question.Required__c}, app status = {!question.application.Application_Status__c})
+                                        {!questionLabel}  (field type: {!question.fieldType} - 1st group, question required = {!question.question.Required__c}, app status = {!question.application.Application_Status__c})
                                         <apex:outputPanel rendered="{!requiredField}" layout="none">
                                             <abbr class='slds-required' title='required'>* </abbr>
                                         </apex:outputPanel>
@@ -347,7 +348,7 @@
 
                     <apex:repeat value="{!group.relatedObjects}" var="rr">
                         <apex:outputPanel html-data-recid="{!rr.idx}" layout="block" styleClass=" record-id slds-card__body slds-card__body_inner">
-
+                            {!rr}
                             <apex:repeat value="{!group.questions}" var="question">
 
                                 <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="block">
@@ -373,7 +374,7 @@
                                             <!-- Label for input -->
                                             <apex:outputPanel rendered="{!question.fieldType != 'Address' && question.fieldType != 'Checkbox'}" layout="none">
                                                 <label class="slds-form-element__label this_label_1 slds-p-vertical_x-small slds-text-body_regular">
-                                                    {!question.label}  (field type: {!question.fieldType} - 2nd group - Radio: {!question.radio})
+                                                    {!question.label}  (field type: {!question.fieldType} - 2nd group - question required = {!question.question.Required__c}, app status = {!question.application.Application_Status__c})
                                                     <apex:outputPanel rendered="{!requiredField}" layout="none">
                                                         <abbr class='slds-required' title='required'>* </abbr>
                                                     </apex:outputPanel>
@@ -443,6 +444,7 @@
 
                                             <!--Plain Picklist - no radio -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element__control">
+                                                {!rr.obj[question.question.Related_Object_Field__c]}
                                                 <div class="slds-select_container">
                                                     <apex:selectList id="picklistField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" size="1" styleClass="slds-select {!qId} {!readOnlyInput}">
                                                         <apex:selectOptions value="{!question.options}"/>
@@ -450,6 +452,15 @@
                                                     </apex:selectList>
                                                 </div>
                                             </apex:outputPanel>
+
+                                            <!--Plain Picklist - no radio -->
+<!--                                            <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element__control">-->
+<!--                                                <div class="slds-select_container">-->
+<!--                                                    <apex:selectList id="picklistField" onchange="reRenderAllGroups();" value="{!question.response.ValueText__c}" size="1" styleClass="slds-select {!readOnlyInput}">-->
+<!--                                                        <apex:selectOptions value="{!question.options}"/>-->
+<!--                                                    </apex:selectList>-->
+<!--                                                </div>-->
+<!--                                            </apex:outputPanel>-->
 
                                             <!-- Picklist Radio -->
                                             <apex:outputPanel rendered="{!(question.fieldType == 'Picklist' && question.radio) || question.fieldType == 'Radio'}" layout="block" styleClass="slds-form-element__control">

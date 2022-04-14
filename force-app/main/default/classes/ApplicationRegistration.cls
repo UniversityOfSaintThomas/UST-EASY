@@ -12,14 +12,16 @@ public class ApplicationRegistration {
     private String loginUrl { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
     public Boolean cookieKeyPresent { get; set; }
+    public String userType {get;set;}
 
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
     ********************************************************************************/
     public ApplicationRegistration() {
+        userType = UserInfo.getUserType();
         cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
         if (cookieKeyPresent) {
-            appInfo = ApplicationUtilities.getApplicationInfo();
+            appInfo = ApplicationUtilities.gatherApplicationInfo();
 
             // Initialize objects
             appCreate = new ApplicationCreate();

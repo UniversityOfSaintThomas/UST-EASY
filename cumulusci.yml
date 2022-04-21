@@ -32,6 +32,7 @@ tasks:
       description: EASY application portal
       template: Build Your Own
       url_path_prefix: EASYApp
+      retries: 10
 
   permission_guest_user:
     description: 'Applies permission set to guest community guest user'
@@ -232,38 +233,38 @@ flows:
       3:
         task: create_community
       4:
-        task: configure_community
-      4.5:
-        task: configure_community_settings
-      5:
         task: create_bulk_data_permission_set
-      6:
-        task: deploy_site_config
-      7:
+      5:
         task: set_easy_custom_settings
-      8:
-        task: set_hierarchy_custom_settings
-      9:
-        task: set_review_custom_settings
-      10:
-        task: update_admin_profile
-      11:
+      6:
         task: turn_off_duplicate_rules
-      12:
+      7:
         task: load_application_data
-#      12.5:
-#        task: create_fake_school_data
-      13:
+      #      7.5:
+      #        task: create_fake_school_data
+      8:
         task: turn_on_duplicate_rules
-      14:
-        task: permission_guest_user
-      15:
-        task: permission_admin_user
-      16:
+      9:
+        task: update_admin_profile
+      10:
+        task: set_hierarchy_custom_settings
+      11:
         task: install_sharing_rules
+      12:
+        task: set_review_custom_settings
+      13:
+        task: configure_community
+      14:
+        task: configure_community_settings
+      15:
+        task: deploy_site_config
+      16:
+        task: permission_guest_user
       17:
-        task: set_holding_ids
+        task: permission_admin_user
       18:
+        task: set_holding_ids
+      19:
         task: set_user_user_role
 
 orgs:

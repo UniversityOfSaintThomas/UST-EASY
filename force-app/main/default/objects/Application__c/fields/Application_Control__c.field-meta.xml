@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Application Control</label>
     <referenceTo>Application_Control__c</referenceTo>
+    <relationshipLabel>Admissions Applications</relationshipLabel>
     <relationshipName>Applications</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

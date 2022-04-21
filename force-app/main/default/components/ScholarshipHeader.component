@@ -32,7 +32,11 @@
                         <a href="javascript:;"> Site Navigation</a>
                         </h3>
                         <ul class="castor-first-level-links">
-                            <li><apex:outputLink value="{!$Page.Capricorn2020}">Scholarship List</apex:outputLink></li> <!-- TODO: change this back to Page.ScholarshipHome when available. -->
+                            <!--<li><apex:outputLink value="{!$Page.Home_Page}">Home</apex:outputLink></li>-->
+                            <li><apex:outputLink value="{!$Page.ScholarshipHome}">Scholarship List</apex:outputLink></li>
+                            <!--<li><apex:outputLink value="{!$Page.MyProfile}">My Profile</apex:outputLink></li>-->
+                            <!--<li><apex:outputLink value="{!$Page.MyApplication}">My Applications</apex:outputLink></li>-->
+                            <li><apex:outputLink value="{!$Site.Prefix}/Portal_Site_Login" rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">{!$Label.site.login}</apex:outputLink></li>
                         </ul></li>
                     </ul>
                 </div>

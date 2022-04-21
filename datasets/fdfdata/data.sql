@@ -206,7 +206,7 @@ CREATE TABLE "Application_Control__c" (
 	"Submit_Status__c" VARCHAR(255), 
 	"Text_Color__c" VARCHAR(255), 
 	"URL_Parameter__c" VARCHAR(255), 
-	"Cancelled_Status__c" VARCHAR(255),
+	"Withdraw_Status__c" VARCHAR(255),
 	PRIMARY KEY (id)
 );
 INSERT INTO "Application_Control__c" VALUES(1,'','True','','Started App','Submitted App','Application_Control__c2020-01-0908:39:42DP0x','Started App','000000','ffffff','000000','Withdrawn','2020-08-24T14:54:25.000+0000','False','','False','2022-02-22T01:24:24.000+0000','000000','000000','','Logo','Saint Paul Seminary School of Divinity','The Saint Paul Seminary School of Divinity','Submitted App','000000','SPSSD','Withdrawn');

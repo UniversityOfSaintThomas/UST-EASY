@@ -117,8 +117,7 @@ CREATE TABLE "Account" (
 	"CEEB_Code__c" VARCHAR(255), 
 	"CEEB_Integration_Code__c" VARCHAR(255), 
 	"CIPC_Code__c" VARCHAR(255), 
-	"CreatedDate" VARCHAR(255), 
-	"Credentialing_Identifier__c" VARCHAR(255), 
+	"CreatedDate" VARCHAR(255),
 	"Current_Parent__c" VARCHAR(255), 
 	"DLEV_Code__c" VARCHAR(255), 
 	"Email__c" VARCHAR(255), 
@@ -145,28 +144,28 @@ CREATE TABLE "Account" (
 	"hed__Primary_Contact__c" VARCHAR(255), 
 	PRIMARY KEY (id)
 );
-INSERT INTO "Account" VALUES(402,'','Account2019-12-1907:21:171fGA','','','','','False','AS','STVCOLL-AS','','','','2019-07-23T17:38:27.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','College of Arts & Sciences','0128D0000007gXmQAI','','','','13','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(403,'','Account2019-12-1907:08:32H72m','','','','','False','','','','','','2020-09-18T17:46:34.000+0000','','False','','','','False','2022-03-30T02:18:10.000+0000','Applicant Parent Account','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','1','');
-INSERT INTO "Account" VALUES(404,'','Account2019-12-1907:42:27H7CI','','','','','False','','','','','','2020-09-02T23:35:23.000+0000','','False','','','','False','2022-03-30T02:18:10.000+0000','Unknown High School','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','2','');
-INSERT INTO "Account" VALUES(405,'','Account2019-12-1907:21:171fGm','','','','','False','','','','','','2020-09-02T23:32:38.000+0000','','False','','','','False','2022-03-30T02:18:10.000+0000','Unknown College','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','3','');
-INSERT INTO "Account" VALUES(406,'','Account2019-12-1907:21:171fGB','','','','','False','EC','STVCOLL-EC','','','','2019-07-23T17:38:27.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Continuing Education','0128D0000007gXmQAI','','','','7','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(407,'','Account2019-12-1907:21:171fGC','','','','','False','CP','STVCOLL-CP','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Coll Ed, Ldr, & Counsl CELC','0128D0000007gXmQAI','','','','17','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(408,'','Account2019-12-1907:21:171fGD','','','','','False','DC','STVCOLL-DC','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Dougherty Family College','0128D0000007gXmQAI','','','','18','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(409,'','Account2019-12-1907:21:171fGE','','','','','False','XC','STVCOLL-XC','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Exchange Schools','0128D0000007gXmQAI','','','','16','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(410,'','Account2019-12-1907:21:171fGF','','','','','False','SE','STVCOLL-SE','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Grad Prog in Software Eng','0128D0000007gXmQAI','','','','15','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(411,'','Account2019-12-1907:21:171fGG','','','','','False','00','STVCOLL-00','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','No College Designated','0128D0000007gXmQAI','','','','11','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(412,'','Account2019-12-1907:21:171fGH','','','','','False','NN','STVCOLL-NN','','','','2019-07-23T17:38:29.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','No College Designated','0128D0000007gXmQAI','','','','14','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(413,'','Account2019-12-1907:21:171fGI','','','','','False','99','STVCOLL-99','','','','2019-07-23T17:38:29.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Not used in standing','0128D0000007gXmQAI','','','','12','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(414,'','Account2019-12-1907:21:171fGJ','','','','','False','BU','STVCOLL-BU','','','','2019-07-23T17:38:29.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Opus College of Business','0128D0000007gXmQAI','','','','2','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(415,'','Account2019-12-1907:21:171fGK','','','','','False','OT','STVCOLL-OT','','','','2019-07-23T17:38:30.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Other','0128D0000007gXmQAI','','','','10','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(416,'','Account2019-12-1907:21:171fGL','','','','','False','CS','STVCOLL-CS','','','','2019-07-23T17:38:30.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Continuing Studies','0128D0000007gXmQAI','','','','1','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(417,'','Account2019-12-1907:21:171fGS','','','','','False','DV','STVCOLL-DV','','','','2019-07-23T17:38:30.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Divinity','0128D0000007gXmQAI','','','','6','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(418,'','Account2019-12-1907:21:171fGN','','','','','False','ET','STVCOLL-ET','','','','2019-07-23T17:38:31.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Engineering','0128D0000007gXmQAI','','','','9','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(419,'','Account2019-12-1907:21:171fGO','','','','','False','LW','STVCOLL-LW','','','','2019-07-23T17:38:31.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Law','0128D0000007gXmQAI','','','','8','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(420,'','Account2019-12-1907:21:171fGP','','','','','False','PS','STVCOLL-PS','','','','2019-07-23T17:38:32.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Prof Psychology','0128D0000007gXmQAI','','','','3','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(421,'','Account2019-12-1907:21:171fGQ','','','','','False','ED','STVCOLL-ED','','','','2019-07-23T17:38:32.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Education','0128D0000007gXmQAI','','','','5','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(422,'','Account2019-12-1907:21:171fGR','','','','','False','SW','STVCOLL-SW','','','','2019-07-23T17:38:32.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Social Work','0128D0000007gXmQAI','','','','4','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(423,'','Account2019-12-1907:21:171fGT','','','','','False','006110','STVSBGI-006110','','','','2019-07-23T17:48:32.000+0000','','False','','','','False','2021-11-23T17:21:59.000+0000','University of St Thomas','0128D0000007gXjQAI','','','','8254','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(402,'','Account2019-12-1907:21:171fGA','','','','','False','AS','STVCOLL-AS','','','','2019-07-23T17:38:27.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','College of Arts & Sciences','0128D0000007gXmQAI','','','','13','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(403,'','Account2019-12-1907:08:32H72m','','','','','False','','','','','','2020-09-18T17:46:34.000+0000','False','','','','False','2022-03-30T02:18:10.000+0000','Applicant Parent Account','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','1','');
+INSERT INTO "Account" VALUES(404,'','Account2019-12-1907:42:27H7CI','','','','','False','','','','','','2020-09-02T23:35:23.000+0000','False','','','','False','2022-03-30T02:18:10.000+0000','Unknown High School','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','2','');
+INSERT INTO "Account" VALUES(405,'','Account2019-12-1907:21:171fGm','','','','','False','','','','','','2020-09-02T23:32:38.000+0000','False','','','','False','2022-03-30T02:18:10.000+0000','Unknown College','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','3','');
+INSERT INTO "Account" VALUES(406,'','Account2019-12-1907:21:171fGB','','','','','False','EC','STVCOLL-EC','','','','2019-07-23T17:38:27.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Continuing Education','0128D0000007gXmQAI','','','','7','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(407,'','Account2019-12-1907:21:171fGC','','','','','False','CP','STVCOLL-CP','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Coll Ed, Ldr, & Counsl CELC','0128D0000007gXmQAI','','','','17','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(408,'','Account2019-12-1907:21:171fGD','','','','','False','DC','STVCOLL-DC','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Dougherty Family College','0128D0000007gXmQAI','','','','18','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(409,'','Account2019-12-1907:21:171fGE','','','','','False','XC','STVCOLL-XC','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Exchange Schools','0128D0000007gXmQAI','','','','16','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(410,'','Account2019-12-1907:21:171fGF','','','','','False','SE','STVCOLL-SE','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Grad Prog in Software Eng','0128D0000007gXmQAI','','','','15','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(411,'','Account2019-12-1907:21:171fGG','','','','','False','00','STVCOLL-00','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','No College Designated','0128D0000007gXmQAI','','','','11','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(412,'','Account2019-12-1907:21:171fGH','','','','','False','NN','STVCOLL-NN','','','','2019-07-23T17:38:29.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','No College Designated','0128D0000007gXmQAI','','','','14','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(413,'','Account2019-12-1907:21:171fGI','','','','','False','99','STVCOLL-99','','','','2019-07-23T17:38:29.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Not used in standing','0128D0000007gXmQAI','','','','12','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(414,'','Account2019-12-1907:21:171fGJ','','','','','False','BU','STVCOLL-BU','','','','2019-07-23T17:38:29.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Opus College of Business','0128D0000007gXmQAI','','','','2','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(415,'','Account2019-12-1907:21:171fGK','','','','','False','OT','STVCOLL-OT','','','','2019-07-23T17:38:30.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Other','0128D0000007gXmQAI','','','','10','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(416,'','Account2019-12-1907:21:171fGL','','','','','False','CS','STVCOLL-CS','','','','2019-07-23T17:38:30.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Continuing Studies','0128D0000007gXmQAI','','','','1','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(417,'','Account2019-12-1907:21:171fGS','','','','','False','DV','STVCOLL-DV','','','','2019-07-23T17:38:30.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Divinity','0128D0000007gXmQAI','','','','6','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(418,'','Account2019-12-1907:21:171fGN','','','','','False','ET','STVCOLL-ET','','','','2019-07-23T17:38:31.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Engineering','0128D0000007gXmQAI','','','','9','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(419,'','Account2019-12-1907:21:171fGO','','','','','False','LW','STVCOLL-LW','','','','2019-07-23T17:38:31.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Law','0128D0000007gXmQAI','','','','8','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(420,'','Account2019-12-1907:21:171fGP','','','','','False','PS','STVCOLL-PS','','','','2019-07-23T17:38:32.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Prof Psychology','0128D0000007gXmQAI','','','','3','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(421,'','Account2019-12-1907:21:171fGQ','','','','','False','ED','STVCOLL-ED','','','','2019-07-23T17:38:32.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Education','0128D0000007gXmQAI','','','','5','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(422,'','Account2019-12-1907:21:171fGR','','','','','False','SW','STVCOLL-SW','','','','2019-07-23T17:38:32.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Social Work','0128D0000007gXmQAI','','','','4','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(423,'','Account2019-12-1907:21:171fGT','','','','','False','006110','STVSBGI-006110','','','','2019-07-23T17:48:32.000+0000','False','','','','False','2021-11-23T17:21:59.000+0000','University of St Thomas','0128D0000007gXjQAI','','','','8254','','','True','False','False','','','','','','','');
 CREATE TABLE "Account_rt_mapping" (
 	record_type_id VARCHAR(18) NOT NULL, 
 	developer_name VARCHAR(255), 
@@ -294,32 +293,12 @@ CREATE TABLE "Application__c" (
 	PRIMARY KEY (id)
 );
 INSERT INTO "Application__c" VALUES(1,'','','','','','2022-04-11T18:19:25.000+0000','','','','','','','','','','','','','','2022-04-11T18:19:25.000+0000','','','','','','','False','','','','','','False','','1','485','');
-CREATE TABLE "Campaign" (
-	id INTEGER NOT NULL, 
-	"Campaign_Key__c" VARCHAR(255), 
-	"Campaign_Reference_ID__c" VARCHAR(255), 
-	"IsActive" VARCHAR(255), 
-	"Name" VARCHAR(255), 
-	"ParentId" VARCHAR(255), 
-	PRIMARY KEY (id)
-);
-CREATE TABLE "CampaignMember" (
-	id INTEGER NOT NULL, 
-	"Campaign_Member_Key__c" VARCHAR(255), 
-	"CreatedDate" VARCHAR(255), 
-	"LastModifiedDate" VARCHAR(255), 
-	"CampaignId" VARCHAR(255), 
-	"ContactId" VARCHAR(255), 
-	"LeadId" VARCHAR(255), 
-	PRIMARY KEY (id)
-);
 CREATE TABLE "Contact" (
 	id INTEGER NOT NULL, 
 	"Admissions_Mobile_Opt_In__c" VARCHAR(255), 
 	"Constituent_ID__c" VARCHAR(255), 
 	"Contact_Constituent_ID__c" VARCHAR(255), 
-	"CreatedDate" VARCHAR(255), 
-	"Credentialing_Identifier__c" VARCHAR(255), 
+	"CreatedDate" VARCHAR(255),
 	"Deceased_Date__c" VARCHAR(255), 
 	"DoNotCall" VARCHAR(255), 
 	"FirstName" VARCHAR(255), 
@@ -382,7 +361,7 @@ CREATE TABLE "Contact" (
 	"hed__Primary_Organization__c" VARCHAR(255), 
 	PRIMARY KEY (id)
 );
-INSERT INTO "Contact" VALUES(1,'','','','2022-04-11T18:19:14.000+0000','','','False','Test','False','False','','2022-04-11T18:19:17.000+0000','Contact','','farrah.friedrich+testcontact@gmail.com','','','','','','','False','False','False','','','False','False','False','False','False','','','','','','False','False','','','False','','','','Alternate Email','','','','False','','','','','','False','402','','','','','','','','','');
+INSERT INTO "Contact" VALUES(1,'','','','2022-04-11T18:19:14.000+0000','','False','Test','False','False','','2022-04-11T18:19:17.000+0000','Contact','','farrah.friedrich+testcontact@gmail.com','','','','','','','False','False','False','','','False','False','False','False','False','','','','','','False','False','','','False','','','','Alternate Email','','','','False','','','','','','False','402','','','','','','','','','');
 CREATE TABLE "EASY_Widget__c" (
 	id INTEGER NOT NULL, 
 	"CreatedDate" VARCHAR(255), 
@@ -396,31 +375,6 @@ CREATE TABLE "EASY_Widget__c" (
 	"Widget_Type__c" VARCHAR(255), 
 	"Application_Control__c" VARCHAR(255), 
 	PRIMARY KEY (id)
-);
-CREATE TABLE "Education_History__c" (
-	id INTEGER NOT NULL, 
-	"College_Courses_9th_Grade_On__c" VARCHAR(255), 
-	"CreatedDate" VARCHAR(255), 
-	"Degree__c" VARCHAR(255), 
-	"Diploma_GED_Earned_Date__c" VARCHAR(255), 
-	"Diploma_GED_Earned__c" VARCHAR(255), 
-	"End_Date__c" VARCHAR(255), 
-	"Holding_Name__c" VARCHAR(255), 
-	"LastModifiedDate" VARCHAR(255), 
-	"Most_Recent_College_in_US__c" VARCHAR(255), 
-	"Name" VARCHAR(255), 
-	"RecordTypeId" VARCHAR(255), 
-	"Related_Object_JSON__c" VARCHAR(255), 
-	"Start_Date__c" VARCHAR(255), 
-	"User_Created__c" VARCHAR(255), 
-	"Contact__c" VARCHAR(255), 
-	"Institution__c" VARCHAR(255), 
-	PRIMARY KEY (id)
-);
-CREATE TABLE "Education_History__c_rt_mapping" (
-	record_type_id VARCHAR(18) NOT NULL, 
-	developer_name VARCHAR(255), 
-	PRIMARY KEY (record_type_id)
 );
 CREATE TABLE "Family__c" (
 	id INTEGER NOT NULL, 
@@ -2540,94 +2494,6 @@ CREATE TABLE "Interaction__c" (
 	"Recruitment_Program__c" VARCHAR(255), 
 	"Term__c" VARCHAR(255), 
 	PRIMARY KEY (id)
-);
-CREATE TABLE "Lead" (
-	id INTEGER NOT NULL, 
-	"Admit_Type__c" VARCHAR(255), 
-	"Affiliation_Role__c" VARCHAR(255), 
-	"Birthdate__c" VARCHAR(255), 
-	"Company" VARCHAR(255), 
-	"Constituent_ID__c" VARCHAR(255), 
-	"CreatedDate" VARCHAR(255), 
-	"DoNotCall" VARCHAR(255), 
-	"Ethnicity__c" VARCHAR(255), 
-	"FirstName" VARCHAR(255), 
-	"Gender__c" VARCHAR(255), 
-	"HasOptedOutOfEmail" VARCHAR(255), 
-	"HasOptedOutOfFax" VARCHAR(255), 
-	"IsConverted" VARCHAR(255), 
-	"IsUnreadByOwner" VARCHAR(255), 
-	"LastModifiedDate" VARCHAR(255), 
-	"LastName" VARCHAR(255), 
-	"Lead_Website__c" VARCHAR(255), 
-	"Primary_Affiliation__c" VARCHAR(255), 
-	"Race__c" VARCHAR(255), 
-	"Status" VARCHAR(255), 
-	"hed__Area_Of_Interest__c" VARCHAR(255), 
-	"hed__Birth_Date__c" VARCHAR(255), 
-	"hed__Citizenship__c" VARCHAR(255), 
-	"hed__Ethnicity__c" VARCHAR(255), 
-	"hed__External_Id__c" VARCHAR(255), 
-	"hed__GPA__c" VARCHAR(255), 
-	"hed__Gender__c" VARCHAR(255), 
-	"hed__Highest_Degree_Earned__c" VARCHAR(255), 
-	"hed__Language__c" VARCHAR(255), 
-	"hed__Most_Recent_School__c" VARCHAR(255), 
-	"hed__Preferred_Enrollment_Date__c" VARCHAR(255), 
-	"hed__Preferred_Enrollment_Status__c" VARCHAR(255), 
-	"hed__Preferred_Teaching_Format__c" VARCHAR(255), 
-	"hed__Recruitment_Stage__c" VARCHAR(255), 
-	"hed__SMS_Opt_Out__c" VARCHAR(255), 
-	"hed__SSN__c" VARCHAR(255), 
-	"hed__Undergraduate_Major__c" VARCHAR(255), 
-	"Affiliated_Account__c" VARCHAR(255), 
-	"ConvertedAccountId" VARCHAR(255), 
-	"ConvertedContactId" VARCHAR(255), 
-	"ConvertedOpportunityId" VARCHAR(255), 
-	"Recruitment_Interest__c" VARCHAR(255), 
-	"Recruitment_Program__c" VARCHAR(255), 
-	"Term__c" VARCHAR(255), 
-	PRIMARY KEY (id)
-);
-CREATE TABLE "Opportunity" (
-	id INTEGER NOT NULL, 
-	"Admit_Type__c" VARCHAR(255), 
-	"Application_Number__c" VARCHAR(255), 
-	"Application_Submitted_Date__c" VARCHAR(255), 
-	"CloseDate" VARCHAR(255), 
-	"CreatedDate" VARCHAR(255), 
-	"First_Inquiry_Source__c" VARCHAR(255), 
-	"First_Recruitment_Interest__c" VARCHAR(255), 
-	"First_Recruitment_Program__c" VARCHAR(255), 
-	"Inquiry_Date__c" VARCHAR(255), 
-	"IsPrivate" VARCHAR(255), 
-	"LastModifiedDate" VARCHAR(255), 
-	"Name" VARCHAR(255), 
-	"Opportunity_Key__c" VARCHAR(255), 
-	"RecordTypeId" VARCHAR(255), 
-	"StageName" VARCHAR(255), 
-	"hed__Completed_FAFSA__c" VARCHAR(255), 
-	"hed__Desired_Campus__c" VARCHAR(255), 
-	"hed__Desired_Degree_Level__c" VARCHAR(255), 
-	"hed__Living_Situation__c" VARCHAR(255), 
-	"Academic_Interest__c" VARCHAR(255), 
-	"Academic_Program__c" VARCHAR(255), 
-	"AccountId" VARCHAR(255), 
-	"Affiliated_Account__c" VARCHAR(255), 
-	"CampaignId" VARCHAR(255), 
-	"ContactId" VARCHAR(255), 
-	"Contact__c" VARCHAR(255), 
-	"Last_Campaign_Source__c" VARCHAR(255), 
-	"Recruitment_Interest__c" VARCHAR(255), 
-	"Recruitment_Program__c" VARCHAR(255), 
-	"Term__c" VARCHAR(255), 
-	"hed__Desired_Start_Term__c" VARCHAR(255), 
-	PRIMARY KEY (id)
-);
-CREATE TABLE "Opportunity_rt_mapping" (
-	record_type_id VARCHAR(18) NOT NULL, 
-	developer_name VARCHAR(255), 
-	PRIMARY KEY (record_type_id)
 );
 CREATE TABLE "Plan__c" (
 	id INTEGER NOT NULL, 

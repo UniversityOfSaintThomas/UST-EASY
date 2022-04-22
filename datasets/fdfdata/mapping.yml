@@ -48,17 +48,6 @@ Insert Application_Control__c:
   - Text_Color__c
   - URL_Parameter__c
   - Withdraw_Status__c
-Insert Campaign:
-  sf_object: Campaign
-  fields:
-  - Campaign_Key__c
-  - Campaign_Reference_ID__c
-  - IsActive
-  - Name
-  lookups:
-    ParentId:
-      table: Campaign
-      after: Insert Campaign
 Insert Interaction_Mapping__c:
   sf_object: Interaction_Mapping__c
   fields:
@@ -293,7 +282,6 @@ Insert Account:
   - CEEB_Integration_Code__c
   - CIPC_Code__c
   - CreatedDate
-  - Credentialing_Identifier__c
   - Current_Parent__c
   - DLEV_Code__c
   - Email__c
@@ -878,21 +866,6 @@ Insert Question_Response__c:
       table: Question__c
     Requirement_Response__c:
       table: Requirement_Response__c
-Insert CampaignMember:
-  sf_object: CampaignMember
-  fields:
-  - Campaign_Member_Key__c
-  - CreatedDate
-  - LastModifiedDate
-  lookups:
-    CampaignId:
-      table: Campaign
-    ContactId:
-      table: Contact
-      after: Insert Contact
-    LeadId:
-      table: Lead
-      after: Insert Lead
 Insert Contact:
   sf_object: Contact
   fields:
@@ -900,7 +873,6 @@ Insert Contact:
   - Constituent_ID__c
   - Contact_Constituent_ID__c
   - CreatedDate
-  - Credentialing_Identifier__c
   - Deceased_Date__c
   - DoNotCall
   - FirstName
@@ -974,28 +946,6 @@ Insert Contact:
       table: hed__Language__c
     hed__Primary_Organization__c:
       table: Account
-Insert Education_History__c:
-  sf_object: Education_History__c
-  fields:
-  - College_Courses_9th_Grade_On__c
-  - CreatedDate
-  - Degree__c
-  - Diploma_GED_Earned_Date__c
-  - Diploma_GED_Earned__c
-  - End_Date__c
-  - Holding_Name__c
-  - LastModifiedDate
-  - Most_Recent_College_in_US__c
-  - Name
-  - RecordTypeId
-  - Related_Object_JSON__c
-  - Start_Date__c
-  - User_Created__c
-  lookups:
-    Contact__c:
-      table: Contact
-    Institution__c:
-      table: Account
 Insert Family__c:
   sf_object: Family__c
   fields:
@@ -1040,53 +990,6 @@ Insert Family__c:
       table: Application__c
     Contact__c:
       table: Contact
-Insert Opportunity:
-  sf_object: Opportunity
-  fields:
-  - Admit_Type__c
-  - Application_Number__c
-  - Application_Submitted_Date__c
-  - CloseDate
-  - CreatedDate
-  - First_Inquiry_Source__c
-  - First_Recruitment_Interest__c
-  - First_Recruitment_Program__c
-  - Inquiry_Date__c
-  - IsPrivate
-  - LastModifiedDate
-  - Name
-  - Opportunity_Key__c
-  - RecordTypeId
-  - StageName
-  - hed__Completed_FAFSA__c
-  - hed__Desired_Campus__c
-  - hed__Desired_Degree_Level__c
-  - hed__Living_Situation__c
-  lookups:
-    Academic_Interest__c:
-      table: Plan__c
-    Academic_Program__c:
-      table: Program__c
-    AccountId:
-      table: Account
-    Affiliated_Account__c:
-      table: Account
-    CampaignId:
-      table: Campaign
-    ContactId:
-      table: Contact
-    Contact__c:
-      table: Contact
-    Last_Campaign_Source__c:
-      table: Campaign
-    Recruitment_Interest__c:
-      table: Plan__c
-    Recruitment_Program__c:
-      table: Program__c
-    Term__c:
-      table: hed__Term__c
-    hed__Desired_Start_Term__c:
-      table: hed__Term__c
 Insert Work_History__c:
   sf_object: Work_History__c
   fields:
@@ -1257,61 +1160,6 @@ Insert hed__Test__c:
   lookups:
     hed__Contact__c:
       table: Contact
-Insert Lead:
-  sf_object: Lead
-  fields:
-  - Admit_Type__c
-  - Affiliation_Role__c
-  - Birthdate__c
-  - Company
-  - Constituent_ID__c
-  - CreatedDate
-  - DoNotCall
-  - Ethnicity__c
-  - FirstName
-  - Gender__c
-  - HasOptedOutOfEmail
-  - HasOptedOutOfFax
-  - IsConverted
-  - IsUnreadByOwner
-  - LastModifiedDate
-  - LastName
-  - Lead_Website__c
-  - Primary_Affiliation__c
-  - Race__c
-  - Status
-  - hed__Area_Of_Interest__c
-  - hed__Birth_Date__c
-  - hed__Citizenship__c
-  - hed__Ethnicity__c
-  - hed__External_Id__c
-  - hed__GPA__c
-  - hed__Gender__c
-  - hed__Highest_Degree_Earned__c
-  - hed__Language__c
-  - hed__Most_Recent_School__c
-  - hed__Preferred_Enrollment_Date__c
-  - hed__Preferred_Enrollment_Status__c
-  - hed__Preferred_Teaching_Format__c
-  - hed__Recruitment_Stage__c
-  - hed__SMS_Opt_Out__c
-  - hed__SSN__c
-  - hed__Undergraduate_Major__c
-  lookups:
-    Affiliated_Account__c:
-      table: Account
-    ConvertedAccountId:
-      table: Account
-    ConvertedContactId:
-      table: Contact
-    ConvertedOpportunityId:
-      table: Opportunity
-    Recruitment_Interest__c:
-      table: Plan__c
-    Recruitment_Program__c:
-      table: Program__c
-    Term__c:
-      table: hed__Term__c
 Insert hed__Test_Score__c:
   sf_object: hed__Test_Score__c
   fields:
@@ -1371,18 +1219,10 @@ Insert Interaction__c:
       table: Plan__c
     Academic_Program__c:
       table: Program__c
-    Additional_Campaign__c:
-      table: Campaign
     Affiliated_Account__c:
       table: Account
-    Campaign__c:
-      table: Campaign
     Contact__c:
       table: Contact
-    Lead__c:
-      table: Lead
-    Opportunity__c:
-      table: Opportunity
     Recruitment_Interest__c:
       table: Plan__c
     Recruitment_Program__c:

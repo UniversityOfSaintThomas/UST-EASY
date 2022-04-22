@@ -1,0 +1,11 @@
+1. In Programs: Undergraduate Freshman (Common App), update Application Control from "Undergraduate Freshman" to "Undergraduate Freshman Common App".
+
+2. In Programs: Undergraduate Freshman (Common App), clear out the Degree Type ("Bachelor's").
+
+3. In Intended Program Terms: [termcode] Undergraduage Freshman (Common App), clear out the Degree Type ("Bachelor's").
+
+4. Set up the Login Flow, following instructions in the USTEAST - Dev Scratch Org docx.
+
+5. Next, you need to finish the community setup. Go to the Community Site, Administration, Login & Registration, and set Account to Applicant Parent Account.
+
+6. ALSO set the profile to Customer Community User Login.

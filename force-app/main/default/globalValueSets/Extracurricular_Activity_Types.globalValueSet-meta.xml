@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Academic</fullName>
+        <default>false</default>
+        <label>Academic</label>
+    </customValue>
+    <customValue>
+        <fullName>Art</fullName>
+        <default>false</default>
+        <label>Art</label>
+    </customValue>
+    <customValue>
+        <fullName>Athletics: Club</fullName>
+        <default>false</default>
+        <label>Athletics: Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Athletics: JV/Varsity</fullName>
+        <default>false</default>
+        <label>Athletics: JV/Varsity</label>
+    </customValue>
+    <customValue>
+        <fullName>Career Oriented</fullName>
+        <default>false</default>
+        <label>Career Oriented</label>
+    </customValue>
+    <customValue>
+        <fullName>Community Service (Volunteer)</fullName>
+        <default>false</default>
+        <label>Community Service (Volunteer)</label>
+    </customValue>
+    <customValue>
+        <fullName>Computer/Technology</fullName>
+        <default>false</default>
+        <label>Computer/Technology</label>
+    </customValue>
+    <customValue>
+        <fullName>Cultural</fullName>
+        <default>false</default>
+        <label>Cultural</label>
+    </customValue>
+    <customValue>
+        <fullName>Dance</fullName>
+        <default>false</default>
+        <label>Dance</label>
+    </customValue>
+    <customValue>
+        <fullName>Debate/Speech</fullName>
+        <default>false</default>
+        <label>Debate/Speech</label>
+    </customValue>
+    <customValue>
+        <fullName>Environmental</fullName>
+        <default>false</default>
+        <label>Environmental</label>
+    </customValue>
+    <customValue>
+        <fullName>Family Responsibilities</fullName>
+        <default>false</default>
+        <label>Family Responsibilities</label>
+    </customValue>
+    <customValue>
+        <fullName>Foreign Exchange</fullName>
+        <default>false</default>
+        <label>Foreign Exchange</label>
+    </customValue>
+    <customValue>
+        <fullName>Foreign Language</fullName>
+        <default>false</default>
+        <label>Foreign Language</label>
+    </customValue>
+    <customValue>
+        <fullName>Internship</fullName>
+        <default>false</default>
+        <label>Internship</label>
+    </customValue>
+    <customValue>
+        <fullName>Journalism/Publication</fullName>
+        <default>false</default>
+        <label>Journalism/Publication</label>
+    </customValue>
+    <customValue>
+        <fullName>Junior R.O.T.C.</fullName>
+        <default>false</default>
+        <label>Junior R.O.T.C.</label>
+    </customValue>
+    <customValue>
+        <fullName>LGBT</fullName>
+        <default>false</default>
+        <label>LGBT</label>
+    </customValue>
+    <customValue>
+        <fullName>Music: Instrumental</fullName>
+        <default>false</default>
+        <label>Music: Instrumental</label>
+    </customValue>
+    <customValue>
+        <fullName>Music: Vocal</fullName>
+        <default>false</default>
+        <label>Music: Vocal</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Club/Activity</fullName>
+        <default>false</default>
+        <label>Other Club/Activity</label>
+    </customValue>
+    <customValue>
+        <fullName>Religious</fullName>
+        <default>false</default>
+        <label>Religious</label>
+    </customValue>
+    <customValue>
+        <fullName>Research</fullName>
+        <default>false</default>
+        <label>Research</label>
+    </customValue>
+    <customValue>
+        <fullName>Robotics</fullName>
+        <default>false</default>
+        <label>Robotics</label>
+    </customValue>
+    <customValue>
+        <fullName>School Spirit</fullName>
+        <default>false</default>
+        <label>School Spirit</label>
+    </customValue>
+    <customValue>
+        <fullName>Science/Math</fullName>
+        <default>false</default>
+        <label>Science/Math</label>
+    </customValue>
+    <customValue>
+        <fullName>Social Justice</fullName>
+        <default>false</default>
+        <label>Social Justice</label>
+    </customValue>
+    <customValue>
+        <fullName>Student Govt./Politics</fullName>
+        <default>false</default>
+        <label>Student Govt./Politics</label>
+    </customValue>
+    <customValue>
+        <fullName>Theater/Drama</fullName>
+        <default>false</default>
+        <label>Theater/Drama</label>
+    </customValue>
+    <customValue>
+        <fullName>Work (Paid)</fullName>
+        <default>false</default>
+        <label>Work (Paid)</label>
+    </customValue>
+    <masterLabel>Extracurricular Activity Types</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Men&apos;s Varsity Baseball</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Baseball</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Basketball</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Basketball</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Cross Country</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Cross Country</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Football</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Football</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Golf</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Golf</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Hockey</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Hockey</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Indoor Track and Field</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Indoor Track and Field</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Outdoor Track and Field</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Outdoor Track and Field</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Soccer</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Soccer</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Swimming and Diving</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Swimming and Diving</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Basketball</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Basketball</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Cross Country</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Cross Country</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Golf</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Golf</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Hockey</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Hockey</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Indoor Track and Field</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Indoor Track and Field</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Outdoor Track and Field</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Outdoor Track and Field</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Soccer</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Soccer</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Softball</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Softball</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Swimming and Diving</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Swimming and Diving</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Tennis</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Tennis</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Volleyball</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Volleyball</label>
+    </customValue>
+    <description>STVINTS</description>
+    <masterLabel>Varsity Sports</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

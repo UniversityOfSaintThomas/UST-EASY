@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Activity_Type__c</fullName>
+    <description>Used to capture an applicant&apos;s extra-academic activites</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used to capture an applicant&apos;s extra-academic activites</inlineHelpText>
+    <label>Activity Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Extracurricular_Activity_Types</valueSetName>
+    </valueSet>
+</CustomField>

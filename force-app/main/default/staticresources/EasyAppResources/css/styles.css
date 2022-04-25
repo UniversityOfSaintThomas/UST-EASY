@@ -41,6 +41,7 @@ div.slds-progress {
 .carousel__item {
     opacity: 0;
     position: absolute;
+    overflow: visible;
     top: 0;
     width: 100%;
     margin: auto;

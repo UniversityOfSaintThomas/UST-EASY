@@ -15,11 +15,6 @@
         <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
         <script>
             const previousRequirement = "{!prevId}", nextRequirement = "{!nextId}";
-
-            function reRenderAllGroups() {
-                showFormSpinner();
-                document.getElementById('{!$Component.reRenderGroups}').click();
-            }
         </script>
         <div class="{!if(hidePaging,'','carousel-wrapper slds-p-vertical_large slds-border_top slds-m-vertical_medium slds-border_bottom')}">
 

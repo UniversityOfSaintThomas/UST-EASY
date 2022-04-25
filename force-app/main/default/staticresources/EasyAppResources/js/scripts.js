@@ -15,6 +15,12 @@ function checkEnter(e) {
     return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
 }
 
+function reRenderAllGroups() {
+    showFormSpinner();
+    document.querySelector("[id$=reRenderGroups]").click();
+    //document.getElementById('{!$Component.reRenderGroups}').click();
+}
+
 function pageLoadReRendered() {
     document.querySelectorAll('.fieldNotEditable,.fieldNotEditable input,.fieldNotEditable select,.fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');

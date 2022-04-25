@@ -54,7 +54,7 @@ can be retrieved later via a sfdx command so if they get deleted it isn't the en
 Run the following command to creat a new version of your package.
 
 ```
-sfdx force:package:version:create -p USTEasy -d force-app --installationkeybypass --wait 10 -v EDA-PROD-DEV-HUB
+sfdx force:package:version:create -p UST-Easy -d force-app --installationkeybypass --wait 10 -v EDA-PROD-DEV-HUB
 ``` 
 -p : the name of the package
 

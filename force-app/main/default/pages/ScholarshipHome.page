@@ -12,6 +12,7 @@
                     <apex:repeat value="{!availableScholarships}" var="schol" id="scholarshipList">
                         <tr>
                             <td>
+                                1.
                                 <apex:commandLink value="{!schol.Name}" action="{!chooseScholarship}">
                                     <apex:param name="scholarshipID" value="{!schol.Scholarship_ID__c}" assignTo="{!scholarshipID}"/>
                                 </apex:commandLink>

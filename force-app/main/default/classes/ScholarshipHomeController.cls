@@ -14,10 +14,11 @@ public class ScholarshipHomeController {
     }
 
     public List<Scholarship__c> getAvailableScholarships() {
-        contactId = apexpages.currentpage().getparameters().get('cont');
+       /* contactId = apexpages.currentpage().getparameters().get('cont');
         System.debug('contactId:' + contactId);
-
         ScholarshipInfo = new Scholarship__c();
+        */
+
         List<Scholarship__c> availableScholarships = [
                 SELECT Name,Id,Scholarship_ID__c,Short_Description__c
                 FROM Scholarship__c

@@ -13,3 +13,5 @@
 7. You MAY need to modify Visualforce Pages: ScholarshipHome: Security to allow the Customer Community User Login profile to access.
 
 8. Register and log in. /EASYApp/CommunitiesSelfReg is a shortcut that may not require Steps 1-3 to be completed.
+
+9. Go to Setup >> Permission Sets >> UST Scholarship Applicant >> Manage Assignments >> Add Assignment and add the user you created in Step 8. Feels like this should be automatic! BUT IT AIN'T!

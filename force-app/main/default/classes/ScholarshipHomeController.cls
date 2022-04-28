@@ -6,19 +6,13 @@ public class ScholarshipHomeController {
     public Scholarship__c ScholarshipInfo { get; set; }
     public String scholarshipId { get; set; }
     public String pageURL { get; set; }
+    public Id userId { get; set; }
 
-    public Id contactId { get; set; }
     public ScholarshipHomeController() {
-        contactId = apexpages.currentpage().getparameters().get('cont');
-        System.debug('contactId:' + contactId);
+        userId = UserInfo.getUserId();
     }
 
     public List<Scholarship__c> getAvailableScholarships() {
-       /* contactId = apexpages.currentpage().getparameters().get('cont');
-        System.debug('contactId:' + contactId);
-        ScholarshipInfo = new Scholarship__c();
-        */
-
         List<Scholarship__c> availableScholarships = [
                 SELECT Name,Id,Scholarship_ID__c,Short_Description__c
                 FROM Scholarship__c

@@ -10,7 +10,8 @@
 
 6. ALSO set the profile to Customer Community User Login.
 
-7. You MAY need to modify Visualforce Pages: ScholarshipHome: Security to allow the Customer Community User Login profile to access.
+7. You MAY need to modify Visualforce Pages: ScholarshipHome: Security to allow the Customer Community User Login profile to access \
+    TODO: (OR: add this to the permissionset?)
 
 8. Register and log in. /EASYApp/CommunitiesSelfReg is a shortcut that may not require Steps 1-3 to be completed.
 

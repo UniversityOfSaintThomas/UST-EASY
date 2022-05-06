@@ -4,35 +4,60 @@
 
 public class ScholarshipApplicationPage1Controller {
     public String pageURL { get; set; }
+    public Scholarship__c scholarship { get; set; }
+    public Scholarship_Applicant__c scholarshipApplicant { get; set; }
 
     public PageReference sanityCheck() {
         String sId = ApexPages.currentPage().getParameters().get('sid');
-        Scholarship__c scholarship = null;
         String scholarshipId = null;
-        Scholarship_Applicant__c applicantInfo;
+        PageReference result = null;
 
         if (!String.isBlank(sId)) {
             scholarshipId = sId;
-            //ActiveApplicationId = PortalUtility.getActiveApplicationId();
-            scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
-            applicantInfo = ScholarshipSharedUtilities.getApplicantInfo(scholarshipId, ScholarshipSharedUtilities.getActiveContactId());
+            this.scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
+            this.scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(scholarshipId, ScholarshipSharedUtilities.getActiveContactId());
         }
         if (String.isEmpty(scholarshipId)) {
             return Page.ScholarshipHome.setRedirect(true);
         }
-        if (scholarship == null) {
+        if (this.scholarship == null) {
             return Page.ScholarshipHome.setRedirect(true);
         }
-/*
-        if (ScholarshipApplicant.Scholarship_Complete__c) {
-            return new PageReference('/applicantportal/ScholarshipApplicationComplete?sid=' + scholarshipId);
-            //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId);
-        }
-        Boolean scholarshipOpen = ScholarshipSharedUtilities.isScholarshipOpen(scholarship);
-        if (!scholarshipOpen || scholarshipClosed) {
-            return ScholarshipSharedUtilities.setSid(Page.ScholarshipClosed, false, scholarshipId);
-        }*/
 
-        return null;
+        if (this.scholarshipApplicant.Scholarship_Complete__c) {
+            result = new PageReference('/applicantportal/ScholarshipHome' + scholarshipId); // TODO: Temporary!
+            //return new PageReference('/applicantportal/ScholarshipApplicationComplete?sid=' + scholarshipId);
+            //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId);
+        } else {
+            Boolean scholarshipOpen = ScholarshipSharedUtilities.isScholarshipOpen(scholarship);
+            if (!scholarshipOpen) {
+                result = ScholarshipSharedUtilities.setSid(Page.ScholarshipHome, false, scholarshipId); // TODO: Temporary!
+                //return ScholarshipSharedUtilities.setSid(Page.ScholarshipClosed, false, scholarshipId);
+            }
+        }
+        return result;
+    }
+
+    public PageReference SaveCriteria() {
+        //Validate input
+        /*if (String.isEmpty(scholarshipApplicant.Application__c)) {
+            scholarshipApplicant.Application__c = ActiveApplicationId;
+        }*/
+        this.scholarshipApplicant.Scholarship__c = this.scholarship.Id;
+        this.scholarshipApplicant.Scholarship_Status__c = 'Started App';
+
+        if (this.scholarshipApplicant.Scholarship_Date_Started__c == null) {
+            this.scholarshipApplicant.Scholarship_Date_Started__c = Datetime.now();
+        }
+
+        try {
+            upsert this.scholarshipApplicant;
+        } catch (DmlException ex) {
+            ApexPages.addMessages(ex);
+        }
+        this.scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(this.scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
+        pageURL = ApexPages.currentPage().getUrl();
+        pageURL = ScholarshipSharedUtilities.setHistoryPage(this.scholarship.Id);
+        return ScholarshipSharedUtilities.setSid(Page.ScholarshipHome, false, this.scholarship.Id); // TODO: Should go to ScholarshipApplicationPage2.
     }
 }

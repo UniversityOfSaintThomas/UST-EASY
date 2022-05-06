@@ -57,8 +57,8 @@ public with sharing class ScholarshipSharedUtilities {
                              Essay_1_Uploaded_Orig_Filename__c, Essay_2_Uploaded_Orig_Filename__c, Scholarship_Date_Started__c, Scholarship_Date_Submitted__c,
                              Recommendation2_Request_Date__c, Recommendation_Request_Date__c
                      FROM Scholarship_Applicant__c
-                     WHERE /*Contact = :contactId
-                     AND*/ Scholarship__c = :scholarshipId
+                     WHERE Contact__c = :contactId
+                     AND Scholarship__c = :scholarshipId
             ];
 
             if (ScholarshipApplicants.size() > 0) {

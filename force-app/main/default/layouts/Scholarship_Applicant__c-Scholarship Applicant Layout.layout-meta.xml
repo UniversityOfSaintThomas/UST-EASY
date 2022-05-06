@@ -23,6 +23,10 @@
                 <behavior>Readonly</behavior>
                 <field>Scholarship_Description__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

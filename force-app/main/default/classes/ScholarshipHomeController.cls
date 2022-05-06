@@ -26,14 +26,14 @@ public class ScholarshipHomeController {
 
     public PageReference chooseScholarship() {
         //assignTo="{!scholarshipID}" sets scholarshipId as instance data
-        ScholarshipSharedUtilities.getScholarshipInfo(scholarshipId);
-        if (ScholarshipInfo == null) {
+        this.ScholarshipInfo = ScholarshipSharedUtilities.getScholarshipInfo(scholarshipId);
+        if (this.ScholarshipInfo == null) {
+            System.debug('Return null. :( ');
             return null;
         }
-        //getApplicantInfo();
         pageURL = ScholarshipSharedUtilities.setHistoryPage(scholarshipId);
-        //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplication, false, scholarshipId);
-        return null;
+        System.debug('It should redirect now.');
+        return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationPage1, true, scholarshipId);
     }
 
 }

@@ -8,11 +8,18 @@ public class ApplicationPortal {
 
     public Map<Id, Application__c> applicationsByIds { get; set; }
     public Map<Id, Application_Control__c> appControlsByAppIds { get; set; }
+    public Map<Id, List<RequirementWrapper>> checklistsByAppIds { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
     public Map<Id, EASYApplicationInfo> appInfoMapByAppId { get; set; }
     public String template { get; set; }
 
     public ApplicationPortal() {
+        if (appInfo == null) {
+            appInfo = ApplicationUtilities.gatherApplicationInfo();
+        }
+    }
+
+    public void init() {
         appInfo = ApplicationUtilities.gatherApplicationInfo();
         appInfoMapByAppId = new Map<Id, EASYApplicationInfo>();
 
@@ -23,7 +30,8 @@ public class ApplicationPortal {
             //Get all the applications contact has
             applicationsByIds = new Map<Id, Application__c>([
                     SELECT Id, Intended_Program__c, Intended_Term_of_Entry__c, Intended_Program__r.Name,
-                            Intended_Program__r.Program_Name_on_Application__c, Application_Control__c, Contact__c
+                            Intended_Program__r.Program_Name_on_Application__c, Application_Control__c, Contact__c, Application_Status__c,
+                            Citizenship__c
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     //TODO: reinstate FUTURE in this query
@@ -52,10 +60,10 @@ public class ApplicationPortal {
                 for (Application__c app : applicationsByIds.values()) {
                     EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
                     appInfoMapByAppId.put(app.Id, newAppInfo);
+                    checklistsByAppIds.put(app.Id, checklistHelper.checklistRequirements(app, newAppInfo));
                 }
             }
 
         }
-
     }
 }

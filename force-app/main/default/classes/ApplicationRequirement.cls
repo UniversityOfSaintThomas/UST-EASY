@@ -21,6 +21,7 @@ public class ApplicationRequirement {
     List<Requirement_Response__c> requirementResponses { get; set; }
     List<Question_Response__c> questionResponses { get; set; }
     List<Question_Dependency__c> questionDependencies { get; set; }
+    public List<RequirementWrapper> checklistItems { get; set; }
     public Boolean preventUpdates { get; set; }
     public List<Requirement_Response__c> newResponses { get; set; }
     public Boolean showSuccess { get; set; }
@@ -34,12 +35,13 @@ public class ApplicationRequirement {
     public String redirectPage { get; set; }
     public String userType { get; set; }
     public Boolean isStandardUser { get; set; }
+    public Integer requirementItemsHash { get; set; }
 
     public Application_Control__c appControl { get; set; }
 
     public ApplicationRequirement(Id requirementId, Application__c app, Boolean preventUpdates) {
         this();
-        appInfo = ApplicationUtilities.gatherApplicationInfo();
+        appInfo = this.appInfo;
         appInfo.requirementId = requirementId;
         ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
         this.preventUpdates = preventUpdates;
@@ -48,15 +50,18 @@ public class ApplicationRequirement {
 
     public ApplicationRequirement() {
         //Need to get appInfo on constructor to know which template to use
-        appInfo = ApplicationUtilities.gatherApplicationInfo();
+        if (appInfo == null) {
+            appInfo = ApplicationUtilities.gatherApplicationInfo();
+        }
     }
 
     public ApplicationRequirement(Id contactId, Id applicationId, Id requirementId, List<Requirement_Item__c> items, List<Requirement_Response__c> requirementResponses, List<Question_Response__c> questionResponses, List<Question_Dependency__c> questionDependencies) {
-        appInfo = ApplicationUtilities.gatherApplicationInfo();
+/*
+        appInfo = this.appInfo;
         appInfo.contactId = contactId;
         appInfo.appId = applicationId;
         appInfo.requirementId = requirementId;
-        ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
+        ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));*/
         this.items = items;
         this.requirementResponses = requirementResponses;
         this.questionResponses = questionResponses;
@@ -70,106 +75,35 @@ public class ApplicationRequirement {
     * @description Initializes the page - Pulls relevant requirement items, requirement responses, etc.
     ********************************************************************************/
     public void init() {
-
-        appInfo = ApplicationUtilities.gatherApplicationInfo();
+        if(appInfo == null || appInfo.appControlId == null) {
+            appInfo = ApplicationUtilities.gatherApplicationInfo();
+        }
         allowSubmit = true;
         isExternalUser = false;
         userType = String.valueOf(UserInfo.getUserType());
         isStandardUser = userType.equalsIgnoreCase('standard');
 
         if (queryItems == true) {
-
-            items = [
-                    SELECT Id, File_Types__c, Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Active__c, Required__c,
-                            Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Requirement__r.Label__c, Name, Label__c, Instructions__c, Intended_Program__c,
-                            Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
-                            Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Related_Object_Record_Type_ID__c,
-                            Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
-                            Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Internal_Only_Show_on_Checklist__c, (
-                            SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c,
-                                    Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c,
-                                    Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Contact_Field__c,
-                                    Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Editable_Application_Status__c, URL_Parameter__c, New_Reference_Field__c, Static_Text__c, Display_as_Picklist__c,
-                                    Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
-                            FROM Questions__r
-                            WHERE Active__c = TRUE
-                            ORDER BY Display_Order__c ASC NULLS LAST
-                    )
-                    FROM Requirement_Item__c
-                    WHERE Requirement__c = :appInfo.requirementId
-                    AND Requirement__r.Show_on_Application_Creation__c = FALSE
-                    AND Requirement__r.Active__c = TRUE
-                    AND Active__c = TRUE
-                    //If not standard user
-                    AND (
-                            (Internal_Only__c = :isStandardUser AND Requirement__r.Internal_Only__c = :isStandardUser)
-                            OR (
-                                    Internal_Only_Show_on_Checklist__c = :!isStandardUser AND Requirement__r.Internal_Only_Show_on_Checklist__c = :!isStandardUser
-                            )
-                    )
-                    ORDER BY Display_Order__c ASC NULLS LAST
-            ];
-
-
-
-
-
-
-/*
-            //TODO: Figure out how to get this into the plain query rather than have to build a string query
-            if (isExternalUser) {
-                itemQuery += ' AND Internal_Requirement_Item__c=\'' + appInfo.requirementId + '\'';
-            }
-
-*/
-
+            items = applicationHelper.getRequirementQuestions(new Set<Id>{appInfo.requirementId}, appInfo.isExternalUser);
         }
 
+        //Get the application values for this requirement
         if ((String.isBlank(appInfo.appId) || app == null)) {
-
-            Set<String> appFields = new Set<String>{
-                    'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c', 'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'application_control__c', 'generic_filter_1__c', 'generic_filter_2__c', 'generic_filter_3__c', 'generic_filter_4__c'
-            };
-            for (Requirement_Item__c ri : items) {
-                for (Question__c q : ri.Questions__r) {
-                    if (String.isNotBlank(q.Application_Field__c)) {
-                        appFields.add(q.Application_Field__c.toLowerCase());
-                    }
-                }
-            }
-
-            String query = 'SELECT ' + String.join(new List<String>(appFields), ',') + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
-
+            String query = applicationHelper.getApplicationFields(items);
+            query = 'SELECT ' + query + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
             app = ((List<Application__c>) Database.query(query)).get(0);
             appControl = appInfo.appControl;
         }
 
+        if (queryItems == true) {
+            checklistItems = checklistHelper.checklistRequirements(app, appInfo);
+        }
+
+        //Get needed values from Contact record
         if (con == null) {
-
-            // Loop over questions and get contact fields
-            Set<String> contactFields = new Set<String>{
-                    'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode'
-            };
-            if (Account.SObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode')) {
-                contactFields.addAll(new Set<String>{
-                        'mailingstatecode', 'mailingcountrycode', 'otherstatecode', 'othercountrycode'
-                });
-            } else {
-                contactFields.addAll(new Set<String>{
-                        'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'
-                });
-            }
-            for (Requirement_Item__c ri : items) {
-                for (Question__c q : ri.Questions__r) {
-                    if (String.isNotBlank(q.Contact_Field__c)) {
-                        contactFields.add(q.Contact_Field__c.toLowerCase());
-                    }
-                }
-            }
-
-            // Query for contact
-            String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = \'' + appInfo.contactId + '\'';
             if (appInfo.contactId != null) {
+                String query = applicationHelper.getApplicationContactFields(items);
+                query = 'SELECT ' + query + ' FROM Contact WHERE Id = \'' + appInfo.contactId + '\'';
                 con = ((List<Contact>) Database.query(query)).get(0);
             }
         }
@@ -186,6 +120,7 @@ public class ApplicationRequirement {
                     WHERE Question__r.Requirement_Item__r.Requirement__c = :appInfo.requirementId
             ];
         }
+
         for (Question_Dependency__c dq : questionDependencies) {
 
             if (!dQuestions.containsKey(dq.Question__c)) {
@@ -205,29 +140,13 @@ public class ApplicationRequirement {
 
         Map<Id, Requirement_Response__c> responses = new Map<Id, Requirement_Response__c>();
         Map<Id, List<Question_Response__c>> dResponses = new Map<Id, List<Question_Response__c>>();
+
         if (requirementResponses == null && String.isNotBlank(appInfo.appId)) {
-            requirementResponses = [
-                    SELECT Id, Requirement_Item__c, Requirement_Item__r.Internal_Only__c, ValueTextEntry__c, Fulfilled_On__c, Incomplete_Questions__c,
-                            Question_Group_Requirement_Fulfilled_On__c, HasDocument__c, Waive_Requirement__c, Document_Requirement_Fulfilled_On__c,
-                            Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c, Application__c, Application__r.Contact__c, External_Email__c,
-                            Hashcode__c, Send_Reminder__c, (
-                            SELECT Id, IsPopulated__c, PopulatedOn__c, Question__c, Question__r.Required__c,
-                                    ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c,
-                                    ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c,
-                                    ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c,
-                                    Requirement_Response__r.Has_Child_Requirement__c
-                            FROM Question_Responses__r
-                    ), (
-                            SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title
-                            FROM ContentDocumentLinks
-                    )
-                    FROM Requirement_Response__c
-                    WHERE Requirement_Item__r.Requirement__c = :appInfo.requirementId
-                    AND Application__c = :appInfo.appId
-            ];
+            requirementResponses = applicationHelper.getRequirementResponses(new Set<Id>{appInfo.requirementId}, appInfo.appId);
         } else if (requirementResponses == null) {
             requirementResponses = new List<Requirement_Response__c>();
         }
+        System.debug(requirementResponses);
 
         // Requirement Responses
         for (Requirement_Response__c r : requirementResponses) {
@@ -296,10 +215,12 @@ public class ApplicationRequirement {
                 relatedFieldDescribes.put(result.getName(), result.fields.getMap());
             }
         }
-
+/*
+        moved to checklist helper
         if (preventUpdates == false) {
             insert newResponses;
         }
+*/
 
         section = new ApplicationQuestionSection(con, app, riLst, dQuestions, responses, dResponses, relatedFieldDescribes);
 
@@ -318,6 +239,7 @@ public class ApplicationRequirement {
             }
         }
     }
+
 
     /* ******************************************************************************
     * description: Allows the student to lookup existing records for related objects

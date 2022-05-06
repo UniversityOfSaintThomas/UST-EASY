@@ -1,76 +1,48 @@
-<apex:component >
+<apex:component>
 
     <apex:attribute name="prevReqId" description="The previous requirement" type="String" required="false"/>
     <apex:attribute name="nextReqId" description="The next requirement" type="String" required="false"/>
     <apex:attribute name="reqs" description="All requirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
-    <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true" />
+    <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
+    <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="true"/>
 
-    <!--    <div class="progress" type="Integer">-->
-    <!--        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"-->
-    <!--             aria-valuemin="0" aria-valuemax="100" style="width:{!progress}%;">-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <apex:outputPanel rendered="{!($CurrentPage.Name == 'ApplicationRequirement' || $CurrentPage.Name == 'ApplicationChecklist') && !appInfo.isExternalUser}" layout="none">
+    <div class="slds-progress slds-p-vertical_x-small" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="max-width:109%">
+        <ol class="slds-progress__list">
+            <apex:variable value="{!0}" var="count"/>
+            <apex:variable value="{!0}" var="successCount"/>
+            <apex:repeat value="{!reqs}" var="r">
+                <apex:variable value="{!count+1}" var="count"/>
+                <apex:variable value="{!if(appInfo.requirementId == r.req.Id,'record','clear')}" var="progressIcon"/>
+                <apex:variable value="{!if(r.reqStatus && appInfo.requirementId != r.req.Id,'success',progressIcon)}" var="progressIcon"/>
+                <apex:variable value="{!if(r.reqStatus && appInfo.requirementId != r.req.Id,successCount + 1,successCount)}" var="successCount"/>
+                <li class="slds-progress__item {!IF(appInfo.requirementId == r.req.Id,IF(r.reqStatus,'slds-is-completed','slds-is-active'),'')}">
+                    <button
+                            onclick="appShowLoadingSpinner();location.href='{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!appInfo.appId}&contactId={!appInfo.contactId}&at={!appInfo.at}';return false;"
+                            class="slds-button slds-progress__marker {!IF(appInfo.requirementId == r.req.Id || r.reqStatus,'slds-button_icon slds-progress__marker_icon','')} aria-describedby-tooltip"
+                            aria-describedby="tooltip-{!r.req.Id}"
+                    >
+                        <apex:outputPanel rendered="{!progressIcon != 'clear'}" layout="none">
+                            <svg class="slds-button__icon slds-icon_small icon-Complete slds-is-animated">
+                                <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#' + progressIcon )}"/>
+                            </svg>
+                        </apex:outputPanel>
+                        <span class="slds-assistive-text">{!r.req.Name}</span>
+                    </button>
+                    <div class="slds-popover slds-popover_tooltip slds-fall-into-ground" role="tooltip" id="tooltip-{!r.req.Id}" style="position:absolute;">
+                        <div class="slds-popover__body" style="min-width:150px;">{!r.req.Name}</div>
+                    </div>
+                </li>
+            </apex:repeat>
+        </ol>
 
-        <div class="slds-progress slds-p-vertical_x-small" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <ol class="slds-progress__list">
-                <apex:repeat value="{!reqs}" var="r">
-                    <li class="slds-progress__item {!IF(appInfo.requirementId == r.req.Id,'',IF(r.reqStatus,'slds-is-completed',''))}">
-                        <!--"{!$Site.BaseUrl}/apex/ApplicationRequirement?requirementId={!r.req.Id}&applicationId={!app.Id}&contactId={!contactId}&at={!$CurrentPage.parameters.at}"-->
-                        <button
-                                onclick="appShowLoadingSpinner();redirect('{!r.req.Id}');return false;"
-                                class="slds-button slds-button_icon aria-describedby-tooltip {!IF(r.reqStatus,' slds-progress__marker_icon','slds-progress__marker_icon')} slds-progress__marker"
-                                aria-describedby="tooltip-{!r.req.Id}"
-                        >
-
-                            <apex:outputPanel rendered="{!r.reqStatus  && appInfo.requirementId != r.req.Id}" layout="none">
-                                <svg class="slds-button__icon slds-icon_small icon-Complete">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}"></use>
-                                </svg>
-                            </apex:outputPanel>
-
-                            <apex:outputPanel rendered="{!!r.reqStatus && appInfo.requirementId != r.req.Id && r.viewed}" layout="none">
-                                <svg class="slds-button__icon slds-icon_small icon-warn">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#clear')}"></use>
-                                </svg>
-                            </apex:outputPanel>
-
-                            <apex:outputPanel rendered="{!appInfo.requirementId == r.req.Id}" layout="none">
-                                <svg class="slds-button__icon slds-icon_small icon-CurrentPage">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#record')}"></use>
-                                </svg>
-                            </apex:outputPanel>
-
-                            <apex:outputPanel rendered="{!appInfo.requirementId != r.req.Id && !r.reqStatus && !r.viewed}" layout="none">
-                                <svg class="slds-button__icon slds-icon_small icon-not-Visited">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#record')}"></use>
-                                </svg>
-                            </apex:outputPanel>
-
-                            <span class="slds-assistive-text">{!r.req.Name}</span>
-
-                        </button>
-                        <div class="slds-popover slds-popover_tooltip slds-fall-into-ground" role="tooltip" id="tooltip-{!r.req.Id}" style="position:absolute;">
-                            <div class="slds-popover__body" style="min-width:150px;">{!r.req.Name}</div>
-                        </div>
-                    </li>
-                </apex:repeat>
-            </ol>
-
-            <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{!progress}" role="progressbar">
-		    <span class="slds-progress-bar__value" style="width:{!progress}%">
-		      <span class="slds-assistive-text">Progress: 0%</span>
-		    </span>
-            </div>
-
-
-            <!-- <apex:repeat value="{!reqs}" var="r" >
-             <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom" role="tooltip" id="step-{!r.req.Name}-tooltip" style="position:absolute;top:1rem;left:calc(50% + 6px);transform:translateX(-50%)">
-               <div class="slds-popover__body">{!r.req.Name}</div>
-             </div>
-           </apex:repeat>-->
+        <apex:variable var="progress" value="{!IF(!ISBLANK(count) && !ISBLANK(successCount),IF(successCount>0 && count > 0,successCount * 100 / count,0),0)}"/>
+        <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{!progress}" aria-label="Percentage of Application completed." role="progressbar">
+            <span class="slds-progress-bar__value" style="width:{!successCount * 100 / count}%">
+              <span class="slds-assistive-text">Progress: {!progress} </span>
+            </span>
         </div>
-    </apex:outputPanel>
-    <!--{!progress}% Complete-->
+
+    </div>
+
 </apex:component>

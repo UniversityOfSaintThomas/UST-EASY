@@ -1,4 +1,4 @@
-<apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0">
+<apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!init}">
     <apex:composition template="{!template}">
         <apex:define name="scriptsHead">
             <c:ApplicationHead/>
@@ -17,7 +17,10 @@
                                 <apex:variable var="currentApp" value="{!applicationsByIds[appId]}"/>
                                 <apex:variable var="currentAppControl" value="{!appControlsByAppIds[currentApp['Application_Control__c']]}"/>
                                 <apex:variable var="intendedProgram" value="{!currentApp['Intended_Program__r']}"/>
+                                <apex:variable var="currentChecklist" value="{!checklistsByAppIds[appId]}"/>
 
+                                <c:MultiApplicationChecklistWrapper appInfo="{!appInfoMapByAppId[appId]}"/>
+<!--
                                 <article class="slds-card">
                                     <div class="slds-card__header slds-grid">
                                         <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -50,10 +53,10 @@
                                         </header>
                                     </div>
                                     <div class="slds-card__body slds-card__body_inner">
-                                        <c:ApplicationChecklist appInfo="{!appInfo}"/>
+                                        <c:ApplicationChecklist appInfo="{!appInfo}" checklistItems="{!currentChecklist}"/>
                                     </div>
                                     <footer class="slds-card__footer"></footer>
-                                </article>
+                                </article>-->
                                 <!--
                                 <div class="slds-truncate" title="{!a.Application_Status__c}">
                                     {!a.Application_Status__c}

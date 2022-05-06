@@ -5,22 +5,38 @@
 public class ApplicationUtilities {
 
     //Checks passed URL parameters with those in encrypted cookie. Uses URL if different.
-    public static Id checkUpdateIds(String urlParameter, Id cookieId) {
+    public static String compareToCookie(String urlParameter, String cookieIdString, Boolean typeToId) {
         Id urlId = null;
+        Id cookieId = null;
+        String urlString = '';
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get(urlParameter))) {
-            try {
-                urlId = (Id) ApexPages.currentPage().getParameters().get(urlParameter);
-            } catch (Exception ex) {
+            if (typeToId) {
 
+                try {
+                    urlId = (Id) ApexPages.currentPage().getParameters().get(urlParameter);
+                    urlString = String.valueOf(urlId);
+                } catch (Exception ex) {
+                    urlString = '';
+                }
+
+                try {
+                    cookieId = (Id) cookieIdString;
+                    cookieIdString = String.valueOf(cookieId);
+                } catch (Exception ex) {
+                    cookieIdString = '';
+                }
+
+            } else {
+                urlString = ApexPages.currentPage().getParameters().get(urlParameter);
             }
         }
-        if (urlId != null && urlId != cookieId) {
-            return urlId;
+        if (urlString != cookieIdString && String.isNotBlank(urlString)) {
+            return urlString;
         }
-        return cookieId;
+        return cookieIdString;
     }
 
-    public static EasyApplicationInfo setApplicationInfo(Application_Control__c appControl, Application__c app) {
+    public static EASYApplicationInfo setApplicationInfo(Application_Control__c appControl, Application__c app) {
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         appInfo.appControl = appControl;
         appInfo.contactId = app.Contact__c;
@@ -46,22 +62,27 @@ public class ApplicationUtilities {
     public static EASYApplicationInfo gatherApplicationInfo() {
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         appInfo.appControl = new Application_Control__c();
+        EASYApplicationInfo oldInfo = new EASYApplicationInfo();
 
         // Get and decrypt cookie if it exist
         String testDecrypt = getDecryptCookie();
         if (String.isNotBlank(testDecrypt)) {
             try {
                 appInfo = (EASYApplicationInfo) JSON.deserialize(testDecrypt, EASYApplicationInfo.class);
+                oldInfo = appInfo;
             } catch (Exception e) {
                 System.debug(e.getMessage());
             }
         }
 
         // Get application Id from URL and check against cookie Id
-        appInfo.appId = checkUpdateIds('applicationId', appInfo.appId);
+        appInfo.appId = compareToCookie('applicationId', appInfo.appId, true);
 
         // Get requirement Id from URL anc check against cookie Id
-        appInfo.requirementId = checkUpdateIds('requirementId', appInfo.requirementId);
+        appInfo.requirementId = compareToCookie('requirementId', appInfo.requirementId, true);
+
+        // Get application type from URL and check against cookie Id
+        appInfo.at = compareToCookie('at', appInfo.at, false);
 
         // Contact Id of Applicant
         if (String.isNotBlank(UserInfo.getUserType())) {
@@ -70,100 +91,83 @@ public class ApplicationUtilities {
             } catch (Exception ex) {
 
             }
-        } else {
-            appInfo.contactId = checkUpdateIds('contactId', appInfo.contactId);
         }
+        appInfo.contactId = compareToCookie('contactId', appInfo.contactId, true);
 
-        // Get application type from URL and check against cookie Id
-        appInfo.at = checkUpdateIds('at', appInfo.requirementId);
-
-        // if Application type is blank than get it from appId
-        if (String.isBlank(appInfo.at) && String.isNotBlank(appInfo.appId)) {
-            //Get the application type from the application id
-            Application__c currentApp = [
-                    SELECT Id, Application_Control__r.URL_Parameter__c
-                    FROM Application__c
-                    WHERE Id = :appInfo.appId
-            ];
-            appInfo.at = currentApp.Application_Control__r.URL_Parameter__c;
-        }
-
-        //Get application control from application type
-        if (String.isNotBlank(appInfo.at)) {
-            if(appInfo.appControl == null) {
-                appInfo.appControl = getApplicationControls(appInfo.at);
+        //if(oldInfo.at != appInfo.at || oldInfo.contactId != appInfo.contactId || String.isBlank(appInfo.at) || String.isBlank(appInfo.contactId) ) {
+            // if Application type is blank than get it from appId
+            if (appInfo.appId != null) {
+                //Get the application type from the application id
+                Application__c currentApp = [
+                        SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id
+                        FROM Application__c
+                        WHERE Id = :appInfo.appId
+                ];
+                appInfo.at = currentApp.Application_Control__r.URL_Parameter__c;
+                appInfo.appControlId = currentApp.Application_Control__r.Id;
             }
 
-            appInfo.appControlId = appInfo.appControl.Id;
-        }
+            //Get application control from application type
+            if (appInfo.appControl == null) {
+                if (appInfo.appControlId != null) {
+                    appInfo.appControl = getApplicationControls(appInfo.appControlId);
+                }
 
-        //Get a list of requirement ids
-        List<Id> reqsIds = getRequirementIds(appInfo.appControlId);
-        if (String.isBlank(appInfo.requirementId) && reqsIds.size() > 0) {
-            appInfo.requirementId = reqsIds[0];
-        }
-
-        if (reqsIds.size() > 0) {
-            Integer reqIndex = 0;
-            for (Integer i = 0; i < reqsIds.size(); i++) {
-                if (appInfo.requirementId == reqsIds.get(i)) {
-                    reqIndex = i;
+               if (String.isNotBlank(appInfo.at)) {
+                    if (appInfo.appControl == null) {
+                        appInfo.appControl = getApplicationControls(appInfo.at);
+                    }
+                    appInfo.appControlId = appInfo.appControl.Id;
                 }
             }
-            if (reqIndex == 0) {
-                appInfo.nextRequirement = reqsIds.get(reqIndex + 1);
-                appInfo.prevRequirement = null;
-            } else if (reqIndex == (reqsIds.size() - 1)) {
-                appInfo.nextRequirement = null;
-                appInfo.prevRequirement = reqsIds.get(reqIndex - 1);
-            } else {
-                appInfo.nextRequirement = reqsIds.get(reqIndex + 1);
-                appInfo.prevRequirement = reqsIds.get(reqIndex - 1);
+
+            /*//Get a list of requirement ids
+            List<Id> reqsIds = getRequirementIds(appInfo.appControlId);
+            if (String.isBlank(appInfo.requirementId) && reqsIds.size() > 0) {
+                appInfo.requirementId = reqsIds[0];
             }
+
+            if (reqsIds.size() > 0) {
+                Integer reqIndex = 0;
+                for (Integer i = 0; i < reqsIds.size(); i++) {
+                    if (appInfo.requirementId == reqsIds.get(i)) {
+                        reqIndex = i;
+                    }
+                }
+                if (reqIndex == 0) {
+                    appInfo.nextRequirement = reqsIds.get(reqIndex + 1);
+                    appInfo.prevRequirement = null;
+                } else if (reqIndex == (reqsIds.size() - 1)) {
+                    appInfo.nextRequirement = null;
+                    appInfo.prevRequirement = reqsIds.get(reqIndex - 1);
+                } else {
+                    appInfo.nextRequirement = reqsIds.get(reqIndex + 1);
+                    appInfo.prevRequirement = reqsIds.get(reqIndex - 1);
+                }
+            }*/
+
+            if (!String.isBlank(appInfo.appControl.Template__c)) {
+                appInfo.template = appInfo.appControl.Template__c;
+            } else {
+                Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+                appInfo.template = AppSettings.Default_Template__c;
+            }
+
+            // Is user an external user
+            appInfo.isExternalUser = isExternalUser();
+
+            // Is user allowed to submit
+            appInfo.allowSubmit = true;
+
+            //Generate new cookie
+
+       // }
+
+        if (oldInfo != appInfo) {
+            createEncryptedCookie(JSON.serialize(appInfo));
         }
 
-        if (!String.isBlank(appInfo.appControl.Template__c)) {
-            appInfo.template = appInfo.appControl.Template__c;
-        } else {
-            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-            appInfo.template = AppSettings.Default_Template__c;
-        }
-
-        // Is user an external user
-        appInfo.isExternalUser = isExternalUser();
-
-        // Is user allowed to submit
-        appInfo.allowSubmit = true;
-
-        //Generate new cookie
-        createEncryptedCookie(JSON.serialize(appInfo));
         return appInfo;
-    }
-
-    public static List<Id> getRequirementIds(Id appControlId) {
-        List<Id> reqsIds = new List<Id>();
-        List<Requirement__c> reqs = [
-                SELECT Id, Application_Control__c, Active__c, Show_on_Application_Creation__c, Display_Order__c, Label__c
-                FROM Requirement__c
-                WHERE Application_Control__c = :appControlId
-                AND Active__c = TRUE
-                AND Show_on_Application_Creation__c = FALSE
-                ORDER BY Display_Order__c, Label__c ASC NULLS LAST
-
-        ];
-
-//        for (Requirement_Item__c ri : riList) {
-//            if (ApplicationFilter.filter(app, ri)) {
-//                reqMap.get(ri.Requirement__c).reqItemMap.put(ri.Id, new RequirementItemWrapper(ri));
-//                riIds.add(ri.Id);
-//            }
-//        }
-
-       // System.debug(JSON.serializePretty(reqs));
-        for (Requirement__c r : reqs) {
-            reqsIds.add(r.Id);
-        }
-        return reqsIds;
     }
 
     /* ******************************************************************************
@@ -205,6 +209,8 @@ public class ApplicationUtilities {
                 appControl = ac;
             }
         }
+
+        //System.debug('app control: ' + appControl);
 
         return appControl == null ? defaultControl : appControl;
     }

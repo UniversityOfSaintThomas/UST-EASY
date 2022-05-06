@@ -229,7 +229,7 @@ tasks:
 flows:
   config_dev:
     steps:
-      3:
+      1:
         task: create_community
       4:
         task: configure_community

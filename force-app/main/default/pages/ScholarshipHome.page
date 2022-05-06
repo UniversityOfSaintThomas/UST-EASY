@@ -6,7 +6,7 @@
             </script>
             <apex:form >
                 <h2>
-                    Available Scholarships for {!userId}
+                    Available Scholarships for {!firstNameLastName}
                 </h2>
                 <table> 
                     <apex:repeat value="{!availableScholarships}" var="schol" id="scholarshipList">

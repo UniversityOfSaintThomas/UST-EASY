@@ -4,6 +4,22 @@
 
 public with sharing class ScholarshipSharedUtilities {
 
+    public static Id getActiveUserId() {
+        return UserInfo.getUserId();
+    }
+
+    public static Id getActiveContactId() {
+        Id result = null;
+        Id userId = getActiveUserId();
+        if (userId != null) {
+            List<User> resultIds = [SELECT contactID FROM User Where Id = :userId];
+            if (resultIds.size() > 0) {
+                result = resultIds[0].ContactId;
+            }
+        }
+        return result;
+    }
+
     public static PageReference setSid(PageReference pageRef, Boolean redir, String scholarshipId) {
         if (!String.isEmpty(scholarshipId)) {
             pageRef.getParameters().put('sid', scholarshipId);
@@ -30,7 +46,7 @@ public with sharing class ScholarshipSharedUtilities {
         return scholarshipInfo;
     }
 
-    public Scholarship_Applicant__c getApplicantInfo(String scholarshipId, Id contactId) {
+    public static Scholarship_Applicant__c getApplicantInfo(String scholarshipId, Id contactId) {
         Scholarship_Applicant__c scholarshipApplicant;
         if (!String.isEmpty(scholarshipId)) {
             List<Scholarship_Applicant__c> ScholarshipApplicants = [
@@ -41,8 +57,8 @@ public with sharing class ScholarshipSharedUtilities {
                              Essay_1_Uploaded_Orig_Filename__c, Essay_2_Uploaded_Orig_Filename__c, Scholarship_Date_Started__c, Scholarship_Date_Submitted__c,
                              Recommendation2_Request_Date__c, Recommendation_Request_Date__c
                      FROM Scholarship_Applicant__c
-                     WHERE /*Application__c = :activeApplicationID
-                     AND */Scholarship__c = :scholarshipId
+                     WHERE /*Contact = :contactId
+                     AND*/ Scholarship__c = :scholarshipId
             ];
 
             if (ScholarshipApplicants.size() > 0) {

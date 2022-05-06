@@ -7,9 +7,11 @@ public class ScholarshipHomeController {
     public String scholarshipId { get; set; }
     public String pageURL { get; set; }
     public Id userId { get; set; }
+    public String firstNameLastName { get; set; }
 
     public ScholarshipHomeController() {
-        userId = UserInfo.getUserId();
+        this.userId = UserInfo.getUserId();
+        this.firstNameLastName = UserInfo.getFirstName() + ' ' + UserInfo.getLastName();
     }
 
     public List<Scholarship__c> getAvailableScholarships() {

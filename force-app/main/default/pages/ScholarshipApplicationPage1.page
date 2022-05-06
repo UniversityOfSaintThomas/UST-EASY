@@ -1,0 +1,7 @@
+<apex:page showHeader="false" sidebar="false" controller="ScholarshipApplicationPage1Controller" action="{!sanityCheck}">
+    <apex:composition template="ScholarshipTemplate">
+        <apex:define name="body">
+            Hello world. (See scratch notes for actual code here.)
+        </apex:define>
+    </apex:composition>
+</apex:page>

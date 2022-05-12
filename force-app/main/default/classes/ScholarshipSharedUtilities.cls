@@ -104,6 +104,53 @@ public with sharing class ScholarshipSharedUtilities {
         return recDate;
     }
 
+    public static void sendEmail(String rName, String EmailAddress, String Subject, String HTMLBodyText, String PlainBodyText, String sName) {
+        if (!String.isEmpty(EmailAddress)) {
+            // grab the email template
+            EmailTemplate emailTemplate = [select Id, Subject, HtmlValue, Body from EmailTemplate where Name = '2017 Scholarship Email Template' LIMIT 1];
+            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'admissions@stthomas.edu'];
+
+            String templateSubject = EmailTemplate.Subject;
+            templateSubject = templateSubject.replace('{!ScholarshipEmailSubject}', sName);
+
+            String htmlBody = emailTemplate.HtmlValue;
+            htmlBody = htmlBody.replace('{!ScholarshipEmailBody}', HTMLBodyText);
+
+            String plainBody = emailTemplate.Body;
+            plainBody = plainBody.replace('{!ScholarshipEmailBody}', PlainBodyText);
+
+            // Now create a new single email message object
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+
+            //Assign the addresses for the To and CC lists to the mail object.
+            mail.setToAddresses(new String[]{
+                    EmailAddress
+            });
+            // mail.setCcAddresses(ccAddresses);
+
+            // Specify the address used when the recipients reply to the email.
+            // mail.setTemplateId('00X30000001GLJj');
+            if (owea.size() > 0) {
+                mail.setOrgWideEmailAddressId(owea.get(0).Id);
+            }
+            mail.setSubject(Subject);
+            mail.setBccSender(false);
+
+            // Optionally append the salesforce.com email signature to the email.
+            // The email address of the user executing the Apex Code will be used.
+            mail.setUseSignature(false);
+
+            // Specify the text content of the email.
+            mail.setPlainTextBody(plainBody);
+            mail.setHtmlBody(htmlBody);
+
+            // Send the email you have created.
+            Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{
+                    mail
+            });
+        }
+    }
+
     public static boolean isScholarshipOpen(Scholarship__c scholarship) {
         boolean scholarshipOpen;
         if (scholarship.Open_Date__c <= adjustForCentralTime(Datetime.now()) && scholarship.Close_Date__c >= adjustForCentralTime(Datetime.now())) {

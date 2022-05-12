@@ -25,14 +25,12 @@ public class ScholarshipApplicationPage1Controller {
         }
 
         if (this.scholarshipApplicant.Scholarship_Complete__c) {
-            result = new PageReference('/applicantportal/ScholarshipHome' + scholarshipId); // TODO: Temporary!
-            //return new PageReference('/applicantportal/ScholarshipApplicationComplete?sid=' + scholarshipId);
-            //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId);
+            result = new PageReference('/applicantportal/ScholarshipApplicationComplete?sid=' + scholarshipId);
+            //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId); // This looks to me like it should work, but is commented out in the original, so I won't mess with it YET. -JJH
         } else {
             Boolean scholarshipOpen = ScholarshipSharedUtilities.isScholarshipOpen(scholarship);
             if (!scholarshipOpen) {
-                result = ScholarshipSharedUtilities.setSid(Page.ScholarshipHome, false, scholarshipId); // TODO: Temporary!
-                //return ScholarshipSharedUtilities.setSid(Page.ScholarshipClosed, false, scholarshipId);
+                result = ScholarshipSharedUtilities.setSid(Page.ScholarshipClosed, false, scholarshipId);
             }
         }
         return result;

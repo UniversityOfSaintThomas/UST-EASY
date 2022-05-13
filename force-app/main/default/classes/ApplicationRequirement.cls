@@ -35,9 +35,37 @@ public class ApplicationRequirement {
     public String redirectPage { get; set; }
     public String userType { get; set; }
     public Boolean isStandardUser { get; set; }
-    public Integer requirementItemsHash { get; set; }
 
     public Application_Control__c appControl { get; set; }
+
+    public Id nextReqId {
+        get {
+            if (nextReqId == null && ApexPages.currentPage().getParameters().containsKey('requirementId')) {
+                for (Integer i = 0; i < checklistItems.size() - 1; i++) {
+                    if (checklistItems[i].req.Id == ApexPages.currentPage().getParameters().get('requirementId')) {
+                        nextReqId = checklistItems[i + 1].req.Id;
+                        return nextReqId;
+                    }
+                }
+            }
+            return null;
+        }
+        set;
+    }
+    public Id prevReqId {
+        get {
+            if (prevReqId == null && ApexPages.currentPage().getParameters().containsKey('requirementId')) {
+                for (Integer i = 1; i < checklistItems.size(); i++) {
+                    if (checklistItems[i].req.Id == ApexPages.currentPage().getParameters().get('requirementId')) {
+                        prevReqId = checklistItems[i - 1].req.Id;
+                        return prevReqId;
+                    }
+                }
+            }
+            return null;
+        }
+        set;
+    }
 
     public ApplicationRequirement(Id requirementId, Application__c app, Boolean preventUpdates) {
         this();

@@ -256,7 +256,7 @@ public with sharing class checklistHelper {
 
         }
         if (newResponses.size() > 0) {
-            insert responses;
+            insert newResponses;
         }
 
         try {
@@ -297,4 +297,5 @@ public with sharing class checklistHelper {
         }
 
     }
+
 }

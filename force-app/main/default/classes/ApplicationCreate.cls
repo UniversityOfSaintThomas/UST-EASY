@@ -80,56 +80,14 @@ public class ApplicationCreate {
         }
 
         // Query for Requirement Items and Questions to display on Application Creation
-        items = [
-                SELECT Id, File_Types__c, Requirement__r.Application_Creation_Display_Order__c, Active__c, Required__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Name, Label__c,
-                        Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c,
-                        Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_Object_Record_Type_ID__c,
-                        Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Holding_Record_Id__c, Internal_Requirement_Item__c, Editable_Application_Status__c,
-                        Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
-                        Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (
-                        SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c,
-                                Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
-                                Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Name_Field_API_Name__c,
-                                Lookup_Object__c, Lookup_Where_Clause__c, New_Reference_Field__c, Contact_Field__c, Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Static_Text__c,
-                                URL_Parameter__c, Editable_Application_Status__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
-                        FROM Questions__r
-                        WHERE Active__c = :true
-                        ORDER BY Display_Order__c ASC NULLS LAST
-                )
-                FROM Requirement_Item__c
-                WHERE Requirement__r.Application_Control__c = :appControl.Id AND Requirement__r.Show_on_Application_Creation__c = :true
-                AND Requirement__r.Active__c = :true AND Active__c = :true
-                ORDER BY Display_Order__c ASC NULLS LAST
-        ];
-
+        items = applicationHelper.getRequirementQuestions(new Set<Id>{appInfo.requirementId}, appInfo.isExternalUser);
 
         // Query for contact if we have one
-        if (contactId != null) {
-
-            // Loop over questions and get contact fields
-            contactFields = new Set<String>();
-            for (Requirement_Item__c ri : items) {
-                for (Question__c q : ri.Questions__r) {
-                    if (String.isNotBlank(q.Contact_Field__c)) {
-                        contactFields.add(q.Contact_Field__c.toLowerCase());
-                    }
-                }
-            }
-            // Query for contact
-            if (!contactFields.isEmpty()) {
-                contactFields.addAll(new Set<String>{
-                        'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode'
-                });
-                if (Account.SObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode')) {
-                    contactFields.addAll(new Set<String>{
-                            'mailingstatecode', 'mailingcountrycode', 'otherstatecode', 'othercountrycode'
-                    });
-                } else {
-                    contactFields.addAll(new Set<String>{
-                            'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'
-                    });
-                }
-                String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
+        //Get needed values from Contact record
+        if (con == null) {
+            if (appInfo.contactId != null) {
+                String query = applicationHelper.getApplicationContactFields(items);
+                query = 'SELECT ' + query + ' FROM Contact WHERE Id = \'' + appInfo.contactId + '\'';
                 con = ((List<Contact>) Database.query(query)).get(0);
             }
         }
@@ -150,20 +108,8 @@ public class ApplicationCreate {
                 groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
             }
         }
+        
         ApplicationQuestion dLQuestion;
-
-        // Create new Graduate specific application questions used to limit Program List
-        if (appControl.Academic_Level__c == 'Graduate') {
-
-
-            dLQuestion = new ApplicationQuestion(con, app, '', app, 'Degree_Type__c');
-            dLQuestion.addQuestionObject(new Question__c(Label__c = 'What type of degree are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Level', Picklist_Values__c = appControl.Degree_Levels__c));
-
-            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                    dLQuestion
-            }));
-
-        }
 
         ApplicationQuestion programQuestion;
 
@@ -171,7 +117,7 @@ public class ApplicationCreate {
         if (!appControl.Hide_Term_Program__c) {
 
             // Get map of intended programs with id as key, and only for a specific Application Control
-            List<Program__c> progs = [
+            List<Program__c> programs = [
                     SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Degree__c,
                             Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c,
                             Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c,
@@ -186,12 +132,12 @@ public class ApplicationCreate {
             // Original EASY query, that does not limit program list by application control
             // List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Application_Control__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true  ORDER BY Name ASC];
 
-            intendedPrograms = new Map<Id, Program__c>(progs);
+            intendedPrograms = new Map<Id, Program__c>(programs);
 
             // Create new program question and add to list
             programQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Program__c');
             programQuestion.addQuestionObject(new Question__c(Label__c = 'What program are you applying to?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Program'));
-            programQuestion.addIntendedProgramFilteringList(progs);
+            programQuestion.addIntendedProgramFilteringList(programs);
 
 
             // Get map of term names with id as key
@@ -200,7 +146,7 @@ public class ApplicationCreate {
             //for (Academic_Term__c at : [SELECT Id, Name FROM Academic_Term__c WHERE Application_Status__c = :'Active' ORDER BY Activate_Application_Date__c ASC]) {
             //    termIds.add(at.Id);
             //    termNames.add(at.Name);
-            // }
+           // }
 
             // Get map of term names with id as key - updated by FDF 12/17/2021 to pull a unique list of Academic Terms that have an Intended Program Term for that Application Control
             List<Academic_Term__c> aTermList = new List<Academic_Term__c>();
@@ -208,18 +154,11 @@ public class ApplicationCreate {
             List<String> termNames = new List<String>();
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
+            AggregateResult[] at = [SELECT Academic_Term__r.Id, Academic_Term__r.Name FROM Intended_Program_Term__c WHERE Intended_Program__r.Application_Control__c = :appControl.Id AND Academic_Term__r.Application_Status__c = :'Active' GROUP BY Academic_Term__r.Id, Academic_Term__r.Name];
 
-            AggregateResult[] at = [
-                    SELECT Academic_Term__r.Id, Academic_Term__r.Name
-                    FROM Intended_Program_Term__c
-                    WHERE Intended_Program__r.Application_Control__c = :appControl.Id
-                    AND Academic_Term__r.Application_Status__c = 'Active'
-                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name
-            ];
-
-            for (AggregateResult ar : at) {
+            for(AggregateResult ar:at){
                 Academic_Term__c aTerm = new Academic_Term__c();
-                aTerm.Id = (Id) ar.get('Id');
+                aTerm.Id= (Id) ar.get('Id');
                 aTerm.Name = (String) ar.get('Name');
                 aTermList.add(aTerm);
 

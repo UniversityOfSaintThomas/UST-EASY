@@ -15,14 +15,15 @@ public with sharing class ScholarshipApplicationPage2Controller {
     public Datetime recommendRequestDate1 { get; set; }
     public Datetime recommendRequestDate2 { get; set; }
 
-
     public PageReference initialize() {
         String sId = ApexPages.currentPage().getParameters().get('sid');
+        System.debug('page2.initialize(): sID: ' + sId);
         String scholarshipId = null;
 
         if (!String.isBlank(sId)) {
             scholarshipId = sId;
             this.scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
+            System.debug('Ln26scholarship' + this.scholarship);
             this.applicant = ScholarshipSharedUtilities.getApplicantInfo(scholarshipId, ScholarshipSharedUtilities.getActiveContactId());
             essay1HasText = !String.isEmpty(this.applicant.Essay_1_Answer__c);
             essay2HasText = !String.isEmpty(this.applicant.Essay_2_Answer__c);
@@ -46,6 +47,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
         // Need a scholarship.
         } else if (this.scholarship == null) { // It's unclear whether this is reachable in practice, but I hesitate to change it.
+            System.debug('Ln50scholarship' + this.scholarship);
             result = Page.ScholarshipHome.setRedirect(true);
 
         // Need an applicant.
@@ -53,7 +55,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
             result = new PageReference('/applicantportal/ScholarshipApplicationComplete?sid=' + scholarshipId); //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId); // This looks to me like it should work, but is commented out in the original, so I won't mess with it YET. -JJH
 
         // Need scholarship to be open currently.
-        } else if (!ScholarshipSharedUtilities.isScholarshipOpen(scholarship)) {
+        } else if (!ScholarshipSharedUtilities.isScholarshipOpen(this.scholarship)) {
             result = ScholarshipSharedUtilities.setSid(Page.ScholarshipClosed, false, scholarshipId);
 
         // Okay, we're good. Return null and there will be no redirect out of here.
@@ -222,7 +224,14 @@ public with sharing class ScholarshipApplicationPage2Controller {
         } finally {
             String styledP = '<p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: rgb(85, 85, 85);font-family: Palatino Linotype, Georgia, serif;font-size: 16px;line-height: 150%;text-align: left;">';
             String cMessage = '<h2>Your scholarship application has been received!</h2>';
-            cMessage += styledP + ActiveApplication.EnrollmentrxRx__Applicant_First_Name__c + ' ' + ActiveApplication.EnrollmentrxRx__Applicant_Last_Name__c + ',</p>';
+
+            List<Contact> contactMatches = [select Id, Name, FirstName, LastName, Email from Contact where id = :this.applicant.Contact__c];
+            Contact applicantContactRecord = null;
+            for (Contact contact : contactMatches) {
+                applicantContactRecord = contact;
+            }
+
+            cMessage += styledP + applicantContactRecord.FirstName + ' ' + applicantContactRecord.LastName + ',</p>';
             cMessage += styledP + 'Your application to the ' + this.scholarship.Name + ' has been received.</p>';
             if (this.scholarship.Description__c != null) {
                 cMessage += styledP + '<strong>Scholarship Description</strong><br/>' + this.scholarship.Description__c + '</p>';
@@ -230,15 +239,15 @@ public with sharing class ScholarshipApplicationPage2Controller {
             if (this.scholarship.Review_Award_Process_Description__c != null) {
                 cMessage += styledP + '<strong>What happens next?</strong><br/>' + this.scholarship.Review_Award_Process_Description__c + '</p>';
             }
-            ScholarshipSharedUtilities.sendEmail(ActiveApplication.EnrollmentrxRx__Applicant_First_Name__c + ' ' + ActiveApplication.EnrollmentrxRx__Applicant_Last_Name__c, ActiveApplication.EnrollmentrxRx__Email_Address__c, 'University of St. Thomas Scholarship', cMessage, cMessage, this.scholarship.Name);
+            ScholarshipSharedUtilities.sendEmail(applicantContactRecord.FirstName + ' ' + applicantContactRecord.LastName, applicantContactRecord.Email, 'University of St. Thomas Scholarship', cMessage, cMessage, this.scholarship.Name);
         }
-        ScholarshipSharedUtilities.setHistoryPage(this.scholarship.Id);
-        return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, this.scholarship.Id);
+        ScholarshipSharedUtilities.setHistoryPage(this.scholarship.Scholarship_ID__c);
+        return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, this.scholarship.Scholarship_ID__c);
     }
 
     public PageReference GoCriteria() {
-        ScholarshipSharedUtilities.setHistoryPage(this.scholarship.Id);
-        return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationPage1, false, this.scholarship.Id);
+        ScholarshipSharedUtilities.setHistoryPage(this.scholarship.Scholarship_ID__c);
+        return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationPage1, false, this.scholarship.Scholarship_ID__c);
     }
 
     private string getFileExtension(String fn) {

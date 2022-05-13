@@ -41,6 +41,7 @@ public class ScholarshipApplicationPage1Controller {
         /*if (String.isEmpty(scholarshipApplicant.Application__c)) {
             scholarshipApplicant.Application__c = ActiveApplicationId;
         }*/
+        System.debug('SaveCriteria() starts.');
         this.scholarshipApplicant.Scholarship__c = this.scholarship.Id;
         this.scholarshipApplicant.Scholarship_Status__c = 'Started App';
 
@@ -53,9 +54,10 @@ public class ScholarshipApplicationPage1Controller {
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
         }
-        this.scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(this.scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
+        this.scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(this.scholarship.Scholarship_ID__c, ScholarshipSharedUtilities.getActiveContactId());
         pageURL = ApexPages.currentPage().getUrl();
-        pageURL = ScholarshipSharedUtilities.setHistoryPage(this.scholarship.Id);
-        return ScholarshipSharedUtilities.setSid(Page.ScholarshipHome, false, this.scholarship.Id); // TODO: Should go to ScholarshipApplicationPage2.
+        pageURL = ScholarshipSharedUtilities.setHistoryPage(this.scholarship.Scholarship_ID__c);
+        System.debug('SaveCriteria() ends.');
+        return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationPage2, false, this.scholarship.Scholarship_ID__c);
     }
 }

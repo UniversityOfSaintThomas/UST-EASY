@@ -398,6 +398,13 @@ function activateCarousel() {
         next = document.getElementsByClassName('carousel__button--next')[0],
         prev = document.getElementsByClassName('carousel__button--prev')[0];
 
+    //Fix for a bug that would deform wrapper making type invisible
+    Array.from(items).forEach(i => {
+        i.addEventListener('click', function (event) {
+            event.preventDefault();
+        })
+    });
+
     function setInitialClasses() {
         items[0].classList.add("active");
         if (totalItems === 2) {

@@ -72,18 +72,48 @@ public with sharing class applicationHelper {
     }
 
 
-    public static String getApplicationFields(EASYApplicationInfo appInfo, Set<Id> requirementIds, Boolean IsStandardUser) {
-        List<Requirement_Item__c> items = applicationHelper.getRequirementQuestions(new Set<Id>{appInfo.requirementId}, appInfo.isExternalUser);
-        return getApplicationFields(items);
+    public static Set<String> getStandardAppFields() {
+        return new Set<String>{
+                'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c',
+                'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'application_control__c',
+                'generic_filter_1__c', 'generic_filter_2__c', 'generic_filter_3__c', 'generic_filter_4__c', 'Intended_Program__r.Name',
+                'Intended_Program__r.Program_Name_on_Application__c', 'Intended_Term_of_Entry__r.Name',
+                'Intended_Term_of_Entry__r.Term_Status_Type__c'
+        };
+    }
+
+    public static String getAllItemApplicationFieldsByAppControlId(List<Id> appControlIds) {
+
+        List<String> appControlIds15 = new List<String>();
+        String fields = '';
+        Set<String> appFields = getStandardAppFields();
+
+        for (Id a: appControlIds) {
+            appControlIds15.add(a.to15());
+        }
+
+        List<Question__c> questions = [
+                SELECT Id, Application_Control_Id__c, Application_Field__c
+                FROM Question__c
+                WHERE Application_Control_Id__c IN :appControlIds15
+                AND Application_Field__c != NULL
+        ];
+
+        for (Question__c q : questions) {
+            if (String.isNotBlank(q.Application_Field__c)) {
+                appFields.add(q.Application_Field__c.toLowerCase());
+            }
+        }
+
+        fields = String.join(new List<String>(appFields), ',');
+
+        System.debug(fields);
+        return fields;
     }
 
     public static String getApplicationFields(List<Requirement_Item__c> items) {
         String fields;
-        Set<String> appFields = new Set<String>{
-                'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c',
-                'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'application_control__c',
-                'generic_filter_1__c', 'generic_filter_2__c', 'generic_filter_3__c', 'generic_filter_4__c'
-        };
+        Set<String> appFields = getStandardAppFields();
         for (Requirement_Item__c ri : items) {
             for (Question__c q : ri.Questions__r) {
                 if (String.isNotBlank(q.Application_Field__c)) {
@@ -92,6 +122,7 @@ public with sharing class applicationHelper {
             }
         }
         fields = String.join(new List<String>(appFields), ',');
+        System.debug(fields);
         return fields;
     }
 

@@ -28,10 +28,10 @@
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                     </apex:actionFunction>
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                        <a href="javascript:;" class="slds-button slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">Back</a>
-                        <a href="javascript:;" class="slds-button slds-button_brand carousel__button--prev">Back</a>
-                        <a href="javascript:;" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
-                        <a href="javascript:;" class="slds-button slds-button_brand carousel__button--next">Next</a>
+                        <a href="javascript:void(0)" class="slds-button slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">Back</a>
+                        <a href="javascript:void(0)" class="slds-button slds-button_brand carousel__button--prev">Back</a>
+                        <a href="javascript:void(0)" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
+                        <a href="javascript:void(0)" class="slds-button slds-button_brand carousel__button--next">Next</a>
                         <a class="slds-button slds-button_brand" href="{!$Site.BaseUrl}/apex/ApplicationPortal?contactId={!$CurrentPage.parameters.contactId}&at={!$CurrentPage.parameters.at}">Cancel</a>
                     </div>
 

@@ -19,8 +19,7 @@
                                 <apex:variable var="intendedProgram" value="{!currentApp['Intended_Program__r']}"/>
                                 <apex:variable var="currentChecklist" value="{!checklistsByAppIds[appId]}"/>
 
-                                <c:MultiApplicationChecklistWrapper appInfo="{!appInfoMapByAppId[appId]}"/>
-<!--
+<!--                                <c:MultiApplicationChecklistWrapper appInfo="{!appInfoMapByAppId[appId]}"/>-->
                                 <article class="slds-card">
                                     <div class="slds-card__header slds-grid">
                                         <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -56,12 +55,10 @@
                                         <c:ApplicationChecklist appInfo="{!appInfo}" checklistItems="{!currentChecklist}"/>
                                     </div>
                                     <footer class="slds-card__footer"></footer>
-                                </article>-->
-                                <!--
+                                </article>
                                 <div class="slds-truncate" title="{!a.Application_Status__c}">
                                     {!a.Application_Status__c}
                                 </div>
-                                -->
                                 <br/>
                             </apex:repeat>
                         </div>

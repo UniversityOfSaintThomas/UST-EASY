@@ -459,7 +459,9 @@ public class ApplicationQuestion {
                 if (fieldType.equals('Picklist')) options.add(new SelectOption('', '--None--'));
                 if (String.isNotBlank(question.Picklist_Values__c)) {
                     for (String str : question.Picklist_Values__c.split('\n')) {
-                        options.add(new SelectOption(str.trim(), str.trim()));
+                        if (String.isNotBlank(str)) {
+                            options.add(new SelectOption(str.trim(), str.trim()));
+                        }
                     }
                 }
             }
@@ -559,7 +561,9 @@ public class ApplicationQuestion {
                 }
                 if (String.isNotBlank(question.Picklist_Values__c)) {
                     for (String str : question.Picklist_Values__c.split('\n')) {
-                        options.add(new SelectOption(str.trim(), str.trim()));
+                        if (String.isNotBlank(str)) {
+                            options.add(new SelectOption(str.trim(), str.trim()));
+                        }
                     }
                 }
             }

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Related_Object__c</fullName>
-    <description>Related Object Name</description>
     <externalId>false</externalId>
-    <formula>TEXT(Requirement_Item__r.Related_List_Object__c)</formula>
-    <inlineHelpText>Related Object Name</inlineHelpText>
+    <formula>TEXT(Requirement_Item__r.Related_List_Object__c )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Related Object</label>
     <required>false</required>
     <trackTrending>false</trackTrending>

@@ -1852,6 +1852,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Question__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Requirement__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>

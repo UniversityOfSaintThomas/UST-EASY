@@ -266,6 +266,11 @@
             <field>Requirement_Item_Integration_Ext_Id__c</field>
             <table>Requirement_Item__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>File_Name_Prefix__c</field>
+            <table>Requirement_Item__c</table>
+        </columns>
         <masterLabel>Requirement Items</masterLabel>
     </sections>
 </ReportType>

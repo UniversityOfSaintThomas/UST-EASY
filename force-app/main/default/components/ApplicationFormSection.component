@@ -1,4 +1,4 @@
-<apex:component id="applicationFormSectionComponent" allowDML="true">
+<apex:component id="applicationFormSectionComponent">
     <apex:actionFunction name="setCreatingNewRelatedRecordAF{!group.item.Id}" action="{!groupNewRelatedRecord}" rerender="theSection" onComplete="pageLoadReRendered();">
         <apex:param name="p1" assignTo="{!group.newReferenceObjectSelectedWrapper}" value=""/>
         <apex:param name="p2" assignTo="{!group.newReferenceObjectSelectedWrapperName}" value=""/>
@@ -346,10 +346,9 @@
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size > 0}">
 
-
                     <apex:repeat value="{!group.relatedObjects}" var="rr">
                         <apex:outputPanel html-data-recid="{!rr.idx}" layout="block" styleClass=" record-id slds-card__body slds-card__body_inner">
-                            {!rr}
+
                             <apex:repeat value="{!group.questions}" var="question">
 
                                 <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="block">

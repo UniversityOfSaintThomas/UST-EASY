@@ -201,7 +201,7 @@ public class ApplicationUtilities {
                         Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c,
                         Template__c
                 FROM Application_Control__c
-                WHERE Active__c = :true AND (URL_Parameter__c = :param OR Default__c = :true)
+                WHERE Active__c = TRUE AND (URL_Parameter__c = :param OR Default__c = TRUE)
         ]) {
             if (ac.Default__c) {
                 defaultControl = ac;

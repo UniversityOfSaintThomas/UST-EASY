@@ -12,7 +12,7 @@ public class ApplicationRegistration {
     private String loginUrl { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
     public Boolean cookieKeyPresent { get; set; }
-    public String userType {get;set;}
+    public String userType { get; set; }
 
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
@@ -176,45 +176,41 @@ public class ApplicationRegistration {
 
     @RemoteAction
     public static List<SObject> lookupSearch(String sObj, String sObjFilter, String sObjNameField, String term) {
-        return new ActionWithSharing().lookupSearchWithSharing(sObj, sObjFilter, sObjNameField, term);
-    }
-    public with sharing class ActionWithSharing {
-        public List<SObject> lookupSearchWithSharing(String sObj, String sObjFilter, String sObjNameField, String term) {
-            if (Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()) {
-                if (String.isBlank(sObjNameField)) {
-                    sObjNameField = 'Name';
-                }
-                List<String> sObjNameFields = sObjNameField.split(',');
-
-                for (Integer x = 0; x < sObjNameFields.size(); x++) {
-                    sObjNameFields[x] = sObjNameFields[x].trim();
-                }
-
-                String fieldList = String.join(sObjNameFields, ', ');
-                String likeStatement = '';
-
-                for (String sField : sObjNameFields) {
-                    likeStatement += sField + ' LIKE \'%' + String.escapeSingleQuotes(term) + '%\' OR ';
-                }
-                likeStatement = ' ( ' + likeStatement.removeEnd(' OR ') + ' )';
-
-                String query = 'Select Id, ' + fieldList;
-                query += ' FROM ' + sObj;
-                query += ' WHERE ' + likeStatement;
-                if (String.isNotBlank(sObjFilter)) {
-                    query += ' AND (' + sObjFilter + ')';
-                }
-                query += ' ORDER BY ' + fieldList + ' ASC';
-                query += ' LIMIT 50';
-                System.debug(query);
-                try {
-                    return Database.query(query);
-                } catch (Exception e) {
-                    return new List<SObject>();
-                }
+        System.debug('obj: ' + sObj + ', filter: ' + sObjFilter + ', Obj Name: ' + sObjNameField + ', term: ' + term);
+        if (Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()) {
+            if (String.isBlank(sObjNameField)) {
+                sObjNameField = 'Name';
             }
-            return new List<SObject>();
+            List<String> sObjNameFields = sObjNameField.split(',');
+
+            for (Integer x = 0; x < sObjNameFields.size(); x++) {
+                sObjNameFields[x] = sObjNameFields[x].trim();
+            }
+
+            String fieldList = String.join(sObjNameFields, ', ');
+            String likeStatement = '';
+
+            for (String sField : sObjNameFields) {
+                likeStatement += sField + ' LIKE \'%' + String.escapeSingleQuotes(term) + '%\' OR ';
+            }
+            likeStatement = ' ( ' + likeStatement.removeEnd(' OR ') + ' )';
+
+            String query = 'Select Id, ' + fieldList;
+            query += ' FROM ' + sObj;
+            query += ' WHERE ' + likeStatement;
+            if (String.isNotBlank(sObjFilter)) {
+                query += ' AND (' + sObjFilter + ')';
+            }
+            query += ' ORDER BY ' + fieldList + ' ASC';
+            query += ' LIMIT 50';
+            System.debug(query);
+            try {
+                return Database.query(query);
+            } catch (Exception e) {
+                return new List<SObject>();
+            }
         }
+        return new List<SObject>();
     }
 
     private without sharing class crudToDo {

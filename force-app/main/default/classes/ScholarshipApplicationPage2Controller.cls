@@ -24,7 +24,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
             scholarshipId = sId;
             this.scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
             System.debug('Ln26scholarship' + this.scholarship);
-            this.applicant = ScholarshipSharedUtilities.getApplicantInfo(scholarshipId, ScholarshipSharedUtilities.getActiveContactId());
+            this.applicant = ScholarshipSharedUtilities.getApplicantInfo(this.scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
             essay1HasText = !String.isEmpty(this.applicant.Essay_1_Answer__c);
             essay2HasText = !String.isEmpty(this.applicant.Essay_2_Answer__c);
             if (this.applicant.Recommendation_Request_Date__c != null) {
@@ -50,7 +50,11 @@ public with sharing class ScholarshipApplicationPage2Controller {
             System.debug('Ln50scholarship' + this.scholarship);
             result = Page.ScholarshipHome.setRedirect(true);
 
-        // Need an applicant.
+        // Need an incomplete applicant.
+        } else if (this.applicant == null) {
+            result = Page.ScholarshipApplicationPage1.setRedirect(true);
+
+        // Need an incomplete application.
         } else if (this.applicant.Scholarship_Complete__c) {
             result = new PageReference('/applicantportal/ScholarshipApplicationComplete?sid=' + scholarshipId); //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId); // This looks to me like it should work, but is commented out in the original, so I won't mess with it YET. -JJH
 

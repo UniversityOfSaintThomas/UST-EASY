@@ -15,7 +15,7 @@ public class ScholarshipApplicationPage1Controller {
         if (!String.isBlank(sId)) {
             scholarshipId = sId;
             this.scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
-            this.scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(scholarshipId, ScholarshipSharedUtilities.getActiveContactId());
+            this.scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(this.scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
         }
         if (String.isEmpty(scholarshipId)) {
             return Page.ScholarshipHome.setRedirect(true);
@@ -48,13 +48,16 @@ public class ScholarshipApplicationPage1Controller {
         if (this.scholarshipApplicant.Scholarship_Date_Started__c == null) {
             this.scholarshipApplicant.Scholarship_Date_Started__c = Datetime.now();
         }
+        if (this.scholarshipApplicant.Contact__c == null) {
+            this.scholarshipApplicant.Contact__c = ScholarshipSharedUtilities.getActiveContactId();
+        }
 
         try {
             upsert this.scholarshipApplicant;
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
         }
-        this.scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(this.scholarship.Scholarship_ID__c, ScholarshipSharedUtilities.getActiveContactId());
+        this.scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(this.scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
         pageURL = ApexPages.currentPage().getUrl();
         pageURL = ScholarshipSharedUtilities.setHistoryPage(this.scholarship.Scholarship_ID__c);
         System.debug('SaveCriteria() ends.');

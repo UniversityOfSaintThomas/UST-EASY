@@ -1569,6 +1569,21 @@
         <field>Requirement__c.Viewing_Requirement__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>hed__Test__c.ACT_Composite_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>hed__Test__c.ACT_Composite_Score__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>hed__Test__c.Planned_Future_Test_Sittings__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Application Config Admin</label>
     <objectPermissions>

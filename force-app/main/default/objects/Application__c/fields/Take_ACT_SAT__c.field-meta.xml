@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Take_ACT_SAT__c</fullName>
-    <description>Applicant is self reporting test scores</description>
+    <description>Type of tests they are self reporting</description>
     <externalId>false</externalId>
-    <inlineHelpText>Applicant is self reporting test scores</inlineHelpText>
+    <inlineHelpText>Type of tests they are self reporting</inlineHelpText>
     <label>Take ACT/SAT</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
+    <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>I have taken the ACT/SAT and will share my scores below</fullName>
+                <fullName>ACT</fullName>
                 <default>false</default>
-                <label>I have taken the ACT/SAT and will share my scores below</label>
+                <label>ACT</label>
             </value>
             <value>
-                <fullName>I haven&apos;t taken the ACT or SAT yet, or have not received my scores</fullName>
+                <fullName>SAT</fullName>
                 <default>false</default>
-                <label>I haven&apos;t taken the ACT or SAT yet, or have not received my scores</label>
+                <label>SAT</label>
             </value>
         </valueSetDefinition>
     </valueSet>
+    <visibleLines>3</visibleLines>
 </CustomField>

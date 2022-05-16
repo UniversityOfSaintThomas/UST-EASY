@@ -39,6 +39,18 @@
     <columns>
         <field>Question__c$Picklist_Values__c</field>
     </columns>
+    <columns>
+        <field>Question__c$Application_Field__c</field>
+    </columns>
+    <columns>
+        <field>Question__c$Contact_Field__c</field>
+    </columns>
+    <columns>
+        <field>Question__c$Related_Object__c</field>
+    </columns>
+    <columns>
+        <field>Question__c$Related_Object_Field__c</field>
+    </columns>
     <filter>
         <criteriaItems>
             <column>Question__c$Name</column>

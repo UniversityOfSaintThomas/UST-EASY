@@ -291,6 +291,11 @@
             <field>Question_Integration_External_Id__c</field>
             <table>Question__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Related_Object__c</field>
+            <table>Question__c</table>
+        </columns>
         <masterLabel>Questions</masterLabel>
     </sections>
 </ReportType>

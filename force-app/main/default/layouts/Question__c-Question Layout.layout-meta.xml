@@ -69,6 +69,10 @@
                 <behavior>Readonly</behavior>
                 <field>Requirement_Item_Display_Order__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Related_Object__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

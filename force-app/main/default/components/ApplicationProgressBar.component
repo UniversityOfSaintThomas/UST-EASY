@@ -1,4 +1,4 @@
-<apex:component>
+<apex:component >
 
     <apex:attribute name="prevReqId" description="The previous requirement" type="String" required="false"/>
     <apex:attribute name="nextReqId" description="The next requirement" type="String" required="false"/>

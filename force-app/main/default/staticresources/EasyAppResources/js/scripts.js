@@ -363,12 +363,6 @@ function activateAutoComplete() {
             }
         });
 
-
-        // comboBox.addEventListener('focusout', (e) => {
-        //     console.log('focus out of combo box');
-        //     autoItem.classList.remove('slds-has-focus');
-        //     comboBox.classList.remove('slds-is-open');
-        // });
     });
 
 }

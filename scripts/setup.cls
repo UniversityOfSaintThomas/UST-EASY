@@ -161,6 +161,8 @@ private static void setEASYCustomSettings() {
         applicationSettings.Permission_Set_Id__c = easyCommunityPermissionSet[0].Id;
     }
 
+    applicationSettings.Default_Template__c = 'stthomas2021';
+
     upsert applicationSettings;
 }
 

@@ -28,7 +28,7 @@ $(document).ready(function() {
     (function(window, location) {
         var sid = getParameterByName('sid');
         if (!historyPage) {
-            historyPage =" /applicantportal/ScholarshipHome";
+            historyPage =" /EASYApp/ScholarshipHome";
             if (sid) {
                 historyPage += "?sid=" + sid;
             }

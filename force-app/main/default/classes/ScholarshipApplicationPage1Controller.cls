@@ -25,7 +25,7 @@ public class ScholarshipApplicationPage1Controller {
         }
 
         if (this.scholarshipApplicant.Scholarship_Complete__c) {
-            result = new PageReference('/applicantportal/ScholarshipApplicationComplete?sid=' + scholarshipId);
+            result = new PageReference('/ScholarshipApplicationComplete?sid=' + scholarshipId);
             //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId); // This looks to me like it should work, but is commented out in the original, so I won't mess with it YET. -JJH
         } else {
             Boolean scholarshipOpen = ScholarshipSharedUtilities.isScholarshipOpen(scholarship);

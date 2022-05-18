@@ -56,7 +56,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
         // Need an incomplete application.
         } else if (this.applicant.Scholarship_Complete__c) {
-            result = new PageReference('/applicantportal/ScholarshipApplicationComplete?sid=' + scholarshipId); //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId); // This looks to me like it should work, but is commented out in the original, so I won't mess with it YET. -JJH
+            result = new PageReference('/ScholarshipApplicationComplete?sid=' + scholarshipId); //return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId); // This looks to me like it should work, but is commented out in the original, so I won't mess with it YET. -JJH
 
         // Need scholarship to be open currently.
         } else if (!ScholarshipSharedUtilities.isScholarshipOpen(this.scholarship)) {

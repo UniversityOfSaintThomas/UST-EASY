@@ -1,5 +1,5 @@
 <apex:page showHeader="false" sidebar="false" controller="ScholarshipClosedController"  action="{!initialize}">
-    <apex:composition template="{!$Site.Template}">
+    <apex:composition template="ScholarshipTemplate">
         <apex:define name="body">
             <h2>
                 {!scholarship.Name}

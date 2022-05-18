@@ -109,48 +109,61 @@ public with sharing class ScholarshipSharedUtilities {
 
     public static void sendEmail(String rName, String EmailAddress, String Subject, String HTMLBodyText, String PlainBodyText, String sName) {
         if (!String.isEmpty(EmailAddress)) {
-            // grab the email template
-            EmailTemplate emailTemplate = [select Id, Subject, HtmlValue, Body from EmailTemplate where Name = '2017 Scholarship Email Template' LIMIT 1];
-            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'admissions@stthomas.edu'];
 
-            String templateSubject = EmailTemplate.Subject;
-            templateSubject = templateSubject.replace('{!ScholarshipEmailSubject}', sName);
+            /* grab the email template. Would be nice to make this admin-editable; see SummitEventsRegistration, lines 78-132 (after statuscheck). */
+            EmailTemplate[] emailTemplates = [select Id, Subject, HtmlValue, Body from EmailTemplate where Name = '2017 Scholarship Email Template' LIMIT 1];
+            EmailTemplate emailTemplate;
+            if (emailTemplates.size() > 0) {
+                emailTemplate = emailTemplates.get(0);
 
-            String htmlBody = emailTemplate.HtmlValue;
-            htmlBody = htmlBody.replace('{!ScholarshipEmailBody}', HTMLBodyText);
+                /* We are going to want this to be selectable. See SummitEventsLetterheadLookup.page in SummitEvents. */
+                OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'admissions@stthomas.edu'];
+                if (owea.size() == 0) {
+                    owea = [select Id from OrgWideEmailAddress where Address = 'jjheaney@stthomas.edu']; // Fallback for scratch environments.
+                }
 
-            String plainBody = emailTemplate.Body;
-            plainBody = plainBody.replace('{!ScholarshipEmailBody}', PlainBodyText);
+                String templateSubject = emailTemplate.Subject;
+                templateSubject = templateSubject.replace('{!ScholarshipEmailSubject}', sName);
 
-            // Now create a new single email message object
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                String htmlBody = emailTemplate.HtmlValue;
+                if (htmlBody != null) {
+                    htmlBody = htmlBody.replace('{!ScholarshipEmailBody}', HTMLBodyText);
+                }
+                String plainBody = emailTemplate.Body;
+                if (plainBody != null) {
+                    plainBody = plainBody.replace('{!ScholarshipEmailBody}', PlainBodyText);
+                }
 
-            //Assign the addresses for the To and CC lists to the mail object.
-            mail.setToAddresses(new String[]{
-                    EmailAddress
-            });
-            // mail.setCcAddresses(ccAddresses);
+                // Now create a new single email message object
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
-            // Specify the address used when the recipients reply to the email.
-            // mail.setTemplateId('00X30000001GLJj');
-            if (owea.size() > 0) {
-                mail.setOrgWideEmailAddressId(owea.get(0).Id);
+                //Assign the addresses for the To and CC lists to the mail object.
+                mail.setToAddresses(new String[]{
+                        EmailAddress
+                });
+                // mail.setCcAddresses(ccAddresses);
+
+                // Specify the address used when the recipients reply to the email.
+                // mail.setTemplateId('00X30000001GLJj');
+                if (owea.size() > 0) {
+                    mail.setOrgWideEmailAddressId(owea.get(0).Id);
+                }
+                mail.setSubject(Subject);
+                mail.setBccSender(false);
+
+                // Optionally append the salesforce.com email signature to the email.
+                // The email address of the user executing the Apex Code will be used.
+                mail.setUseSignature(false);
+
+                // Specify the text content of the email.
+                mail.setPlainTextBody(plainBody);
+                mail.setHtmlBody(htmlBody);
+
+                // Send the email you have created.
+                Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{
+                        mail
+                });
             }
-            mail.setSubject(Subject);
-            mail.setBccSender(false);
-
-            // Optionally append the salesforce.com email signature to the email.
-            // The email address of the user executing the Apex Code will be used.
-            mail.setUseSignature(false);
-
-            // Specify the text content of the email.
-            mail.setPlainTextBody(plainBody);
-            mail.setHtmlBody(htmlBody);
-
-            // Send the email you have created.
-            Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{
-                    mail
-            });
         }
     }
 
@@ -167,11 +180,11 @@ public with sharing class ScholarshipSharedUtilities {
     public static String setHistoryPage(String scholarshipId) {
         String cPage = ApexPages.currentPage().getUrl();
         String[] cPageSplit = cPage.split('\\?');
-        String historyURL = '/applicantportal/ScholarshipHome';
+        String historyURL = '/EASYApp/ScholarshipHome';
         if (cPageSplit.size() > 0) {
             historyURL = cPageSplit[0];
         }
-        historyURL = historyURL.replace('/apex/', '/applicantportal/');
+        historyURL = historyURL.replace('/apex/', '/EASYApp/');
         if (!String.isEmpty(scholarshipId)) {
             historyURL += '?sid=' + scholarshipId;
         }

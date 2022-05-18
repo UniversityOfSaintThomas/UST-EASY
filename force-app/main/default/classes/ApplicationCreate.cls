@@ -14,11 +14,13 @@ public class ApplicationCreate {
     public Set<String> contactFields { get; set; }
     public String degreeType { get; set; }
     public Id academictermId { get; set; }
+    public String appControlName { get; set; }
 
     public Application_Control__c appControl {
         get {
             if (appControl == null) {
                 appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
+                appControlName = appControl.Name;
             }
             return appControl;
         }

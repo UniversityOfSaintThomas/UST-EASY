@@ -4,23 +4,19 @@
     <description>This field shows whichever Value was entered.</description>
     <externalId>false</externalId>
     <formula>TRIM(
-IF(ValueCheckbox__c = TRUE, &quot;TRUE&quot;, &quot;&quot;) &amp; 
-TEXT(ValueCurrency__c) &amp;
-TEXT(ValueDate__c) &amp;
-TEXT(ValueDateTime__c) &amp;
-ValueEmail__c &amp;
-TEXT(ValueNumber__c) &amp; 
-TEXT(ValuePercent__c) &amp; 
-ValuePhone__c &amp;
-ValueText__c  &amp;
-LEFT(ValueTextArea__c,255) &amp; 
-ValueURL__c &amp; 
-Street__c &amp; &quot; &quot; &amp; 
-City__c	&amp;  &quot; &quot; &amp;
-State__c &amp;  &quot; &quot; &amp;
-Country__c &amp;  &quot; &quot; &amp;
-PostalCode__c
-)</formula>
+IF(ValueCheckbox__c = TRUE, &quot;TRUE&quot;, 
+IF( NOT(ISBLANK(TEXT(ValueCurrency__c))),TEXT(ValueCurrency__c),
+IF( NOT(ISBLANK(ValueEmail__c)),ValueEmail__c,
+IF( NOT(ISBLANK(TEXT(ValueNumber__c))),TEXT(ValueNumber__c),
+IF( NOT(ISBLANK(TEXT(ValuePercent__c))),TEXT(ValuePercent__c),
+IF( NOT(ISBLANK(ValuePhone__c)),ValuePhone__c,
+IF( NOT(ISBLANK(ValueText__c)),ValueText__c,
+IF( NOT(ISBLANK(LEFT(ValueTextArea__c,255))),LEFT(ValueTextArea__c,255),
+IF( NOT(ISBLANK(ValueURL__c)),ValueURL__c,
+IF( NOT(ISBLANK(Street__c)), (Street__c &amp; &quot; &quot; &amp; City__c &amp; &quot; &quot; &amp; State__c &amp; &quot; &quot; &amp; Country__c &amp; &quot; &quot; &amp; PostalCode__c), 
+IF( NOT(ISBLANK(TEXT(ValueDate__c))),TEXT(ValueDate__c), 
+IF( NOT(ISBLANK(TEXT(ValueDateTime__c))),TEXT(ValueDateTime__c),&quot;&quot; 
+)))))))))))))</formula>
     <inlineHelpText>This field shows whichever Value was entered.</inlineHelpText>
     <label>Question Response</label>
     <required>false</required>

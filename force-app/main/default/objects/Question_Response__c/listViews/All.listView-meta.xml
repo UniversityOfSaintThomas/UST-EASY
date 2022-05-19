@@ -3,6 +3,7 @@
     <fullName>All</fullName>
     <columns>OBJECT_ID</columns>
     <columns>NAME</columns>
+    <columns>Question_Response__c</columns>
     <columns>State__c</columns>
     <columns>Street__c</columns>
     <columns>City__c</columns>

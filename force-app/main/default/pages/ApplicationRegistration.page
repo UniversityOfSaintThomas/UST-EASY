@@ -21,7 +21,7 @@
         </apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="New Application" appControl="{!appCreate.appControl}" loadingText="Building Your Application...">
-                <c:ApplicationForm section="{!appCreate.section}" appControl="{!appCreate.appControl}">
+               <c:ApplicationForm section="{!appCreate.section}" appControl="{!appCreate.appControl}">
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                         <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="login();">
                             <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>

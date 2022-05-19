@@ -3,7 +3,7 @@
         <apex:param name="p1" assignTo="{!group.newReferenceObjectSelectedWrapper}" value=""/>
         <apex:param name="p2" assignTo="{!group.newReferenceObjectSelectedWrapperName}" value=""/>
     </apex:actionFunction>
-    <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
+    <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true" />
     <apex:attribute name="group" description="The ApplicationQuestionGroup for this section" type="ApplicationQuestionGroup" required="true"/>
     <apex:attribute name="preventUpdates" description="" type="Boolean" default="false" required="false"/>
     <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true"/>
@@ -41,23 +41,22 @@
 
         <apex:outputPanel id="questionGroupWrapper" layout="block">
             <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
-                <apex:actionRegion>
+                <apex:actionRegion >
                     <apex:repeat value="{!group.questions}" var="question">
-
                         <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
-                        <apex:variable var="fieldType" value="{!question.fieldType}"/>
-                        <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                        <apex:variable var="requiredField" value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}"/>
-                        <apex:variable var="questionLabel" value="{!question.label}"/>
-                        <apex:variable var="questionResponse" value="{!question.response.ValueText__c}"/>
-
                         <apex:outputPanel rendered="{!If(question.showQuestion, true, false)}" styleClass="slds-p-vertical_xxx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                            <apex:outputPanel styleClass="{!IF(fieldType != 'Address', 'slds-form-element field-'+ fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!placeholderUUID}">
+                            <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!placeholderUUID}">
+
+                                {!question.dependentOptions}
+
+                                <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                                <apex:variable var="requiredField" value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" />
+                                <apex:variable var="questionLabel" value="{!question.label}"/>
 
                                 <!-- Label for input -->
-                                <apex:outputPanel rendered="{!fieldType != 'Address' && !ISBLANK(questionLabel) && fieldType != 'Checkbox'}" layout="none">
+                                <apex:outputPanel rendered="{!question.fieldType != 'Address' && !ISBLANK(question.label) && question.fieldType != 'Checkbox'}" layout="none">
                                     <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
-                                        {!questionLabel}  (field type: {!fieldType} - 1st group, question required = {!question.question.Required__c}, app status = {!question.application.Application_Status__c})
+                                        {!questionLabel}  (field type: {!question.fieldType} - 1st group, question required = {!question.question.Required__c}, app status = {!question.application.Application_Status__c})
                                         <apex:outputPanel rendered="{!requiredField}" layout="none">
                                             <abbr class='slds-required' title='required'>* </abbr>
                                         </apex:outputPanel>
@@ -65,12 +64,12 @@
                                 </apex:outputPanel>
 
                                 <!--Text Box-->
-                                <apex:outputPanel rendered="{!fieldType == 'Text'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Text'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:inputField id="textField" styleClass="slds-input {!readOnlyInput}" value="{!question.response.ValueText__c}"/>
                                 </apex:outputPanel>
 
                                 <!--Email-->
-                                <apex:outputPanel rendered="{!fieldType == 'Email'}" layout="block" styleClass="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Email'}" layout="block" styleClass="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
                                     <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
                                         <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#email")}"></use>
                                     </svg>
@@ -79,12 +78,12 @@
                                 </apex:outputPanel>
 
                                 <!--Date Box-->
-                                <apex:outputPanel rendered="{!fieldType == 'Date'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Date'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:input id="DateField" type="date" value="{!question.dateValue}" styleClass="slds-input {!readOnlyInput}"/>
                                 </apex:outputPanel>
 
                                 <!--Plain Picklist - no radio -->
-                                <apex:outputPanel rendered="{!fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element__control">
                                     <div class="slds-select_container">
                                         <apex:selectList id="picklistField" onchange="reRenderAllGroups();" value="{!question.response.ValueText__c}" size="1" styleClass="slds-select {!readOnlyInput}">
                                             <apex:selectOptions value="{!question.options}"/>
@@ -93,7 +92,7 @@
                                 </apex:outputPanel>
 
                                 <!-- Multi Picklist -->
-                                <apex:outputPanel rendered="{!fieldType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
                                     <div class="slds-checkbox">
                                         <apex:selectCheckboxes id="multiPicklistField" onchange="reRenderAllGroups();" value="{!question.multiPicklistValues}" layout="pageDirection" styleClass="slds-tabled-checklist {!readOnlyInput}">
                                             <apex:selectOptions value="{!question.options}"/>
@@ -102,20 +101,20 @@
                                 </apex:outputPanel>
 
                                 <!-- Multi Checkbox -->
-                                <apex:outputPanel rendered="{!fieldType == 'Checkbox'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Checkbox'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:outputPanel layout="block" styleClass="slds-checkbox">
                                         <apex:inputCheckbox id="checkBoxField" onchange="reRenderAllGroups();" value="{!question.response.ValueCheckbox__c}" styleClass=" {!readOnlyInput}"/>
                                         <label class="slds-checkbox__label">
                                             <span class="slds-checkbox_faux"></span>
                                             <span class="slds-form-element__label">
-                                                {!questionLabel}  (field type: {!fieldType} - 1st group)
+                                                {!question.label}  (field type: {!question.fieldType} - 1st group)
                                             </span>
                                         </label>
                                     </apex:outputPanel>
                                 </apex:outputPanel>
 
                                 <!-- Reference -->
-                                <apex:outputPanel rendered="{!fieldType == 'Reference'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Reference'}" layout="block" styleClass="slds-form-element__control">
                                     <div class="slds-select_container">
                                         <apex:selectList id="referenceField" value="{!question.response.ValueText__c}" size="1" styleClass="slds-select {!readOnlyInput}">
                                             <apex:selectOptions value="{!question.options}"/>
@@ -125,68 +124,68 @@
                                 </apex:outputPanel>
 
                                 <!-- TextEncrypted -->
-                                <apex:outputPanel rendered="{!fieldType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
-                                    <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!question.textEncryptedValue}" styleClass="slds-input field-{!fieldType} {!readOnlyInput}"/>
+                                <apex:outputPanel rendered="{!question.fieldType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
+                                    <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!question.textEncryptedValue}" styleClass="slds-input field-{!question.fieldType} {!readOnlyInput}"/>
                                 </apex:outputPanel>
 
                                 <!-- Currency -->
-                                <apex:outputPanel rendered="{!fieldType == 'Currency'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Currency'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:inputField id="CurrencyField" value="{!question.response.ValueCurrency__c}" styleClass="slds-input {!readOnlyInput}" rendered="{!question.response != null}"/>
                                 </apex:outputPanel>
 
                                 <!-- Date Time -->
-                                <apex:outputPanel rendered="{!fieldType == 'DateTime'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'DateTime'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:input id="dateTimeField" type="datetime-local" value="{!question.datetimeValue}" styleClass="slds-input {!readOnlyInput}"/>
                                 </apex:outputPanel>
 
                                 <!-- Decimal Time -->
-                                <apex:outputPanel rendered="{!fieldType == 'Decimal' || fieldType == 'Integer' || fieldType == 'Number'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:inputField id="numberField" type="number" value="{!question.response.ValueNumber__c}" styleClass="slds-input {!readOnlyInput}"/>
                                 </apex:outputPanel>
 
                                 <!-- Percent -->
-                                <apex:outputPanel rendered="{!fieldType == 'Percent'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Percent'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:inputField id="percentField" value="{!question.response.ValuePercent__c}" styleClass="slds-input {!readOnlyInput}"/>
                                 </apex:outputPanel>
 
                                 <!-- Phone -->
-                                <apex:outputPanel rendered="{!fieldType == 'Phone'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:inputField id="phoneField" type="tel" styleClass="slds-input {!readOnlyInput}" value="{!question.response.ValuePhone__c}"/>
                                 </apex:outputPanel>
 
                                 <!-- Picklist Radio -->
-                                <apex:outputPanel rendered="{!(fieldType == 'Picklist' && question.radio) || fieldType == 'Radio'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!(question.fieldType == 'Picklist' && question.radio) || question.fieldType == 'Radio'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:selectRadio id="radioField" onchange="reRenderAllGroups();" value="{!question.response.ValueText__c}" layout="pageDirection" styleClass="slds-radio {!readOnlyInput}">
                                         <apex:selectOptions value="{!question.options}"/>
                                     </apex:selectRadio>
                                 </apex:outputPanel>
 
                                 <!-- TextArea -->
-                                <apex:outputPanel rendered="{!fieldType == 'TextArea'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'TextArea'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:inputField id="textAreaField" value="{!question.response.ValueTextArea__c}" styleClass="slds-input {!readOnlyInput}"/>
                                 </apex:outputPanel>
 
                                 <!-- LongTextArea -->
-                                <apex:outputPanel rendered="{!fieldType == 'LongTextArea'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'LongTextArea'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:inputTextarea rows="10" value="{!question.response.ValueLongTextArea__c}" styleClass="slds-textarea {!readOnlyInput}"/>
                                 </apex:outputPanel>
 
                                 <!-- URL -->
-                                <apex:outputPanel rendered="{!fieldType == 'URL'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'URL'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:inputField id="urlField" type="url" value="{!question.response.ValueURL__c}" styleClass="slds-input {!readOnlyInput}"/>
                                 </apex:outputPanel>
 
                                 <!-- Static -->
-                                <apex:outputPanel rendered="{!fieldType == 'Static'}" layout="block" styleClass="slds-form-element__control">
+                                <apex:outputPanel rendered="{!question.fieldType == 'Static'}" layout="block" styleClass="slds-form-element__control">
                                     <apex:outputText value="{!question.question.Static_Text__c}" escape="false"/>
                                 </apex:outputPanel>
 
-                                <apex:repeat value="{!['Street' = 'Street', 'City' = 'City', 'State/Province' = 'State/Province', 'Country' = 'Country', 'Postal Code' = 'Postal Code']}" var="inputType" rendered="{!fieldType == 'Address'}">
-                                    <apex:outputPanel styleClass="slds-form-element field-{!fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
+                                <apex:repeat value="{!['Street' = 'Street', 'City' = 'City', 'State/Province' = 'State/Province', 'Country' = 'Country', 'Postal Code' = 'Postal Code']}" var="inputType" rendered="{!question.fieldType == 'Address'}">
+                                    <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
                                         <!-- Label for input -->
-                                        <apex:outputPanel rendered="{!fieldType = 'Address' && !ISBLANK(questionLabel)}" layout="none">
+                                        <apex:outputPanel rendered="{!question.fieldType = 'Address' && !ISBLANK(question.label)}" layout="none">
                                             <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
-                                                {!questionLabel}  {!inputType} (field type: {!fieldType} - Address Group)
+                                                {!question.label}  {!inputType} (field type: {!question.fieldType} - Address Group)
                                                 <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
                                                     <abbr class='slds-required' title='required'>* </abbr>
                                                 </apex:outputPanel>
@@ -352,13 +351,6 @@
 
                             <apex:repeat value="{!group.questions}" var="question">
 
-                                <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
-                                <apex:variable var="fieldType" value="{!question.fieldType}"/>
-                                <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                <apex:variable var="requiredField" value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}"/>
-                                <apex:variable var="questionLabel" value="{!question.label}"/>
-
-
                                 <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="block">
 
                                     <apex:outputPanel layout="block" rendered="{!!rr.isEditMode}">
@@ -375,12 +367,12 @@
                                         <apex:variable value="{!IF(question.question.Id == null, 'label' + TEXT(placeholderUUID), question.question.id)}" var="qId"/>
                                         <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="requiredField"/>
 
-                                        <apex:outputPanel styleClass="slds-form-element field-{!fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" layout="block">
+                                        <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" layout="block">
 
                                             <apex:variable value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" var="readOnlyInput"/>
 
                                             <!-- Label for input -->
-                                            <apex:outputPanel rendered="{!fieldType != 'Address' && fieldType != 'Checkbox'}" layout="none">
+                                            <apex:outputPanel rendered="{!question.fieldType != 'Address' && question.fieldType != 'Checkbox'}" layout="none">
                                                 <label class="slds-form-element__label this_label_1 slds-p-vertical_x-small slds-text-body_regular">
                                                     {!question.label}  (field type: {!question.fieldType} - 2nd group - question required = {!question.question.Required__c}, app status = {!question.application.Application_Status__c})
                                                     <apex:outputPanel rendered="{!requiredField}" layout="none">
@@ -390,34 +382,34 @@
                                             </apex:outputPanel>
 
                                             <!-- Multi Checkbox -->
-                                            <apex:outputPanel rendered="{!fieldType == 'Checkbox'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Checkbox'}" layout="block" styleClass="slds-form-element__control">
                                                 <div class="slds-checkbox">
                                                     <apex:inputCheckbox id="checkBoxField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass=" {!qId} {!readOnlyInput}"/>
                                                 </div>
                                             </apex:outputPanel>
 
                                             <!-- Currency -->
-                                            <apex:outputPanel rendered="{!fieldType == 'Currency'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Currency'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputField id="CurrencyField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}" rendered="{!NOT(ISBLANK(question.question.Related_Object_Field__c)) && NOT(ISBLANK(rr.obj))}"/>
                                             </apex:outputPanel>
 
                                             <!--Date Box-->
-                                            <apex:outputPanel rendered="{!fieldType == 'Date'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Date'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputField id="DateField1" type="date" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- Date Time -->
-                                            <apex:outputPanel rendered="{!fieldType == 'DateTime'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'DateTime'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputField id="dateTimeField1" type="datetime-local" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- Decimal -->
-                                            <apex:outputPanel rendered="{!fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Decimal' || question.fieldType == 'Integer' || question.fieldType == 'Number'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputField id="numberField1" type="number" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!--Email-->
-                                            <apex:outputPanel rendered="{!fieldType == 'Email'}" layout="block" styleClass="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Email'}" layout="block" styleClass="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
                                                 <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
                                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#email")}"></use>
                                                 </svg>
@@ -426,12 +418,12 @@
                                             </apex:outputPanel>
 
                                             <!-- TextEncrypted -->
-                                            <apex:outputPanel rendered="{!fieldType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} field-{!question.fieldType} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- Multi Picklist -->
-                                            <apex:outputPanel rendered="{!fieldType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
                                                 <div class="slds-checkbox">
                                                     <apex:selectCheckboxes id="multiPicklistField1" value="{!rr.multiPicklistValues[question.question.Related_Object_Field__c].multiPicklistValues}" layout="pageDirection" styleClass="slds-tabled-checklist {!readOnlyInput}">
                                                         <apex:selectOptions value="{!question.options}"/>
@@ -441,17 +433,17 @@
                                             </apex:outputPanel>
 
                                             <!-- Percent -->
-                                            <apex:outputPanel rendered="{!fieldType == 'Percent'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Percent'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputField id="percentField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- Phone -->
-                                            <apex:outputPanel rendered="{!fieldType == 'Phone'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Phone'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputField id="phoneField1" type="tel" styleClass="slds-input {!qId} {!readOnlyInput}" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
                                             </apex:outputPanel>
 
                                             <!--Plain Picklist - no radio -->
-                                            <apex:outputPanel rendered="{!fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element__control">
                                                 {!rr.obj[question.question.Related_Object_Field__c]}
                                                 <div class="slds-select_container">
                                                     <apex:selectList id="picklistField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" size="1" styleClass="slds-select {!qId} {!readOnlyInput}">
@@ -462,7 +454,7 @@
                                             </apex:outputPanel>
 
                                             <!-- Picklist Radio -->
-                                            <apex:outputPanel rendered="{!(fieldType == 'Picklist' && question.radio) || fieldType == 'Radio'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!(question.fieldType == 'Picklist' && question.radio) || question.fieldType == 'Radio'}" layout="block" styleClass="slds-form-element__control">
                                                 <div class="slds-form-element__control">
                                                     <div class="slds-radio_button-group">
                                                         <apex:variable var="num" value="{!0}"/>
@@ -480,7 +472,7 @@
                                                 </div>
                                             </apex:outputPanel>
 
-                                            <apex:outputPanel rendered="{!fieldType == 'Reference'}" layout="block" styleClass="referenceLookup">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Reference'}" layout="block" styleClass="referenceLookup">
                                                 <!-- HERE 26-->
                                                 <apex:outputPanel rendered="{!question.question.New_Reference_Field__c == false}" layout="block">
                                                     <div class="slds-form-element__control">
@@ -526,37 +518,37 @@
                                             </apex:outputPanel>
 
                                             <!-- Static -->
-                                            <apex:outputPanel rendered="{!fieldType == 'Static'}" layout="block" styleClass="slds-text-body_regular slds-p-vertical_small">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Static'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:outputText value="{!question.question.Static_Text__c}" escape="false"/>
                                             </apex:outputPanel>
 
                                             <!--Text Box-->
-                                            <apex:outputPanel rendered="{!fieldType == 'Text'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'Text'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputField id="textField1" styleClass="slds-input {!qId} {!readOnlyInput}" value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
                                             </apex:outputPanel>
 
                                             <!-- TextArea -->
-                                            <apex:outputPanel rendered="{!fieldType == 'TextArea'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'TextArea'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputField id="textAreaField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- LongTextArea -->
-                                            <apex:outputPanel rendered="{!fieldType == 'LongTextArea'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'LongTextArea'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputTextarea rows="10" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-textarea {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
                                             <!-- URL -->
-                                            <apex:outputPanel rendered="{!fieldType == 'URL'}" layout="block" styleClass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!question.fieldType == 'URL'}" layout="block" styleClass="slds-form-element__control">
                                                 <apex:inputField id="urlField1" type="url" value="{!rr.obj[question.question.Related_Object_Field__c]}" styleClass="slds-input {!qId} {!readOnlyInput}"/>
                                             </apex:outputPanel>
 
 
-                                            <apex:repeat value="{!['Street' = 'Street', 'City' = 'City', 'State/Province' = 'State/Province', 'Country' = 'Country', 'Postal Code' = 'Postal Code']}" var="inputType" rendered="{!fieldType == 'Address'}">
-                                                <apex:outputPanel styleClass="slds-form-element field-{!fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
+                                            <apex:repeat value="{!['Street' = 'Street', 'City' = 'City', 'State/Province' = 'State/Province', 'Country' = 'Country', 'Postal Code' = 'Postal Code']}" var="inputType" rendered="{!question.fieldType == 'Address'}">
+                                                <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
                                                     <!-- Label for input -->
-                                                    <apex:outputPanel rendered="{!fieldType = 'Address' && !ISBLANK(question.label)}" layout="none">
+                                                    <apex:outputPanel rendered="{!question.fieldType = 'Address' && !ISBLANK(question.label)}" layout="none">
                                                         <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
-                                                            {!question.label}  {!inputType} (field type: {!fieldType} - Address Group #2)
+                                                            {!question.label}  {!inputType} (field type: {!question.fieldType} - Address Group #2)
                                                             <apex:outputPanel rendered="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c)}" layout="none">
                                                                 <abbr class='slds-required' title='required'>* </abbr>
                                                             </apex:outputPanel>

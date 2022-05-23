@@ -1,0 +1,12 @@
+You recently attempted an action in {!Community_Name}.
+            Action: {!Action}
+
+            Browser: {!Browser}
+            Operating System: {!Operating_System}
+            Username: {!Receiving_User.Username}
+
+            To ensure your account's security, we must verify your identity. Enter the following code where prompted by {!Community_Name}.
+
+            Verification Code: {!Verification_Code}
+
+            If you didn't attempt this action in {!Community_Name}, or you don't recognize this browser or operating system, contact your {!Community_Name} administrator.

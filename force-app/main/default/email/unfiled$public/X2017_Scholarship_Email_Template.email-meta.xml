@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Scholarship email template for UST Scholarships</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>2017 Scholarship Email Template</name>
+    <style>none</style>
+    <subject>{!ScholarshipEmailSubject}</subject>
+    <textOnly>University of St. Thomas
+
+{!ScholarshipEmailBody}
+
+
+Admissions Office
+admissions@stthomas.edu
+p   1(651) 962-6150
+1-800-328-6819, Ext. 2-6150
+f   1(651) 962-6160
+
+University of St. Thomas | First Year | Transfer Students | First-Year International
+@AdmissionsAtUST | #GoTommies
+
+University of St. Thomas
+
+2115 Summit Ave. - St. Paul, MN 55105 - USA</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

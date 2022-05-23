@@ -8,6 +8,17 @@ public with sharing class ScholarshipSharedUtilities {
         return UserInfo.getUserId();
     }
 
+    public static Contact getContactRecord(Id contactId) { // TODO: Really should expand this to include more/all fields.
+        Contact result = null;
+        if (contactId != null) {
+            List<Contact> resultIds = [SELECT FirstName, LastName FROM Contact Where Id = :contactId];
+            if (resultIds.size() > 0) {
+                result = resultIds[0];
+            }
+        }
+        return result;
+    }
+
     public static Id getActiveContactId() {
         Id result = null;
         Id userId = getActiveUserId();

@@ -31,12 +31,13 @@ function pageLoadReRendered() {
     // SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
     document.querySelectorAll('.slds-summary-detail').forEach(item => {
         item.querySelector("button.slds-button").addEventListener('click', function (e) {
+            e.preventDefault();
             let content = item.querySelector('.slds-summary-detail__content');
-            item.classList.remove('slds-is-open')
             if (content.style.display === 'none') {
                 item.classList.add('slds-is-open')
                 content.style.display = 'block';
             } else {
+                item.classList.remove('slds-is-open')
                 content.style.display = 'none';
             }
         });

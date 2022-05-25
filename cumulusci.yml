@@ -76,6 +76,14 @@ tasks:
       sql_path: datasets/fdfdata/data.sql
       inject_namespaces: False
 
+  load_scholarship_test_data:
+    description: 'Load test data associated with EASY scholarships'
+    class_path: cumulusci.tasks.bulkdata.load.LoadData
+    options:
+      mapping: datasets/scholarships/scholarships-mapping.yml
+      sql_path: datasets/scholarships/scholarships-data.sql
+      inject_namespaces: False
+
   load_prod_application_data:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
@@ -301,6 +309,8 @@ flows:
         task: set_holding_ids
       18:
         task: set_user_user_role
+      19:
+        task: load_scholarship_test_data
 
 orgs:
   scratch:

@@ -102,7 +102,8 @@ public class ApplicationRequirement {
     /*******************************************************************************
     * @description Initializes the page - Pulls relevant requirement items, requirement responses, etc.
     ********************************************************************************/
-    public void init() {
+    public PageReference init() {
+
         if(appInfo == null || appInfo.appControlId == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
@@ -110,6 +111,10 @@ public class ApplicationRequirement {
         isExternalUser = false;
         userType = String.valueOf(UserInfo.getUserType());
         isStandardUser = userType.equalsIgnoreCase('standard');
+        if(userType.equalsIgnoreCase('guest')) {
+            String startUrl = System.currentPageReference().getParameters().get('startURL');
+            return new PageReference(Site.getPathPrefix() + '/SiteLogin?startURL=' + EncodingUtil.urlEncode(startURL, 'UTF-8'));
+        }
 
         if (queryItems == true) {
             items = applicationHelper.getRequirementQuestions(new Set<Id>{appInfo.requirementId}, appInfo.isExternalUser);
@@ -266,6 +271,7 @@ public class ApplicationRequirement {
                 }
             }
         }
+        return null;
     }
 
 

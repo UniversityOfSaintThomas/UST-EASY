@@ -40,7 +40,6 @@
 
         <apex:actionFunction name="sendTheReminder{!group.item.Id}" action="{!group.sendReminder}" reRender="none"/>
 
-
         <apex:outputPanel id="questionGroupWrapper" layout="block">
             <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
             <apex:actionRegion>
@@ -445,7 +444,6 @@
 
                                             <!--Plain Picklist - no radio -->
                                             <apex:outputPanel rendered="{!question.fieldType == 'Picklist' && !question.radio}" layout="block" styleClass="slds-form-element__control">
-                                                {!rr.obj[question.question.Related_Object_Field__c]}
                                                 <div class="slds-select_container">
                                                     <apex:selectList id="picklistField1" value="{!rr.obj[question.question.Related_Object_Field__c]}" size="1" styleClass="slds-select {!qId} {!readOnlyInput}">
                                                         <apex:selectOptions value="{!question.options}"/>
@@ -894,7 +892,6 @@
                                     </div>
                                 </apex:outputPanel>
 
-
                                 <apex:outputPanel rendered="{!(question.fieldType == 'Picklist' && question.radio) || question.fieldType == 'Radio'}">
                                     <div class="form-group">
                                         <label for="radioField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
@@ -908,7 +905,6 @@
                                     </div>
                                 </apex:outputPanel>
 
-                                {!question.fieldType}
                                 <apex:outputPanel rendered="{!question.fieldType == 'Reference'}">
                                     <div class="form-group">
                                         <label for="referenceField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
@@ -926,15 +922,13 @@
                                     </div>
                                 </apex:outputPanel>
 
-
                                 <apex:outputPanel rendered="{!question.fieldType == 'Static'}">
                                     <div class="form-group">
                                         <label for="field" rendered="{!NOT(ISBLANK(question.label))}">{!question.label}</label>
                                         <p>
                                             <apex:outputText value="{!question.question.Static_Text__c}" escape="false"/>
                                         </p>
-                                    </div>
-                                </apex:outputPanel>
+                                    </div></apex:outputPanel>
 
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'Text'}">
@@ -947,7 +941,6 @@
                                     </div>
                                 </apex:outputPanel>
 
-
                                 <apex:outputPanel rendered="{!question.fieldType == 'TextArea'}">
                                     <div class="form-group">
                                         <label for="textAreaField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
@@ -958,7 +951,6 @@
                                     </div>
                                 </apex:outputPanel>
 
-
                                 <apex:outputPanel rendered="{!question.fieldType == 'LongTextArea'}">
                                     <div class="form-group">
                                         <label for="longTextAreaField1">{!question.label}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}</label>
@@ -968,7 +960,6 @@
                                         </p>
                                     </div>
                                 </apex:outputPanel>
-
 
                                 <apex:outputPanel rendered="{!question.fieldType == 'URL'}">
                                     <div class="form-group">

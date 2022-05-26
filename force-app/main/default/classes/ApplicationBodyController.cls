@@ -6,6 +6,7 @@
 public with sharing class ApplicationBodyController {
 
     public EASYApplicationInfo appInfoParam { get; set; }
+    public String currentPageName {get;set;}
 
     public ApplicationBodyController() {
     }
@@ -15,6 +16,8 @@ public with sharing class ApplicationBodyController {
         public List<EASY_Widget__c> rightWidgets { get; set; }
         public List<EASY_Widget__c> bottomWidgets { get; set; }
         public List<EASY_Widget__c> leftWidgets { get; set; }
+        public List<EASY_Widget__c> contentTopWidgets { get; set; }
+        public List<EASY_Widget__c> contentBottomWidgets { get; set; }
     }
 
     public allWidgets getWidgets() {
@@ -23,6 +26,8 @@ public with sharing class ApplicationBodyController {
         foundWidgets.rightWidgets = new List<EASY_Widget__c>();
         foundWidgets.bottomWidgets = new List<EASY_Widget__c>();
         foundWidgets.leftWidgets = new List<EASY_Widget__c>();
+        foundWidgets.contentTopWidgets = new List<EASY_Widget__c>();
+        foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
 
         if (appInfoParam.appControl != null && String.isNotBlank(appInfoParam.appControlId)) {
@@ -41,7 +46,6 @@ public with sharing class ApplicationBodyController {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
             }
 
-
             for (EASY_Widget__c widget : allPositionWidgets) {
                 switch on widget.Widget_Screen_Location__c.toLowerCase() {
                     when 'left' {
@@ -55,6 +59,12 @@ public with sharing class ApplicationBodyController {
                     }
                     when 'bottom' {
                         foundWidgets.bottomWidgets.add(widget);
+                    }
+                    when 'content top' {
+                        foundWidgets.contentTopWidgets.add(widget);
+                    }
+                    when 'content bottom' {
+                        foundWidgets.contentTopWidgets.add(widget);
                     }
                 }
             }

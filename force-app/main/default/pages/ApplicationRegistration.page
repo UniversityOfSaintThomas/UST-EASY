@@ -33,7 +33,6 @@
 
 
             <apex:outputPanel layout="none" rendered="{!cookieKeyPresent}">
-                {!userType}
                 <c:ApplicationBody title="New Application" appInfo="{!appInfo}" loadingText="Building Your Application...">
                     <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}">
                         <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">

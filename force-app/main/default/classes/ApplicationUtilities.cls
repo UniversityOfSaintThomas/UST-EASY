@@ -45,8 +45,6 @@ public class ApplicationUtilities {
         appInfo.appId = app.Id;
         appInfo.isExternalUser = isExternalUser();
         appInfo.allowSubmit = true;
-        appInfo.nextRequirement = null;
-        appInfo.prevRequirement = null;
         appInfo.requirementId = null;
         return appInfo;
     }
@@ -95,73 +93,46 @@ public class ApplicationUtilities {
         appInfo.contactId = compareToCookie('contactId', appInfo.contactId, true);
 
         //if(oldInfo.at != appInfo.at || oldInfo.contactId != appInfo.contactId || String.isBlank(appInfo.at) || String.isBlank(appInfo.contactId) ) {
-            // if Application type is blank than get it from appId
-            if (appInfo.appId != null) {
-                //Get the application type from the application id
-                Application__c currentApp = [
-                        SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id
-                        FROM Application__c
-                        WHERE Id = :appInfo.appId
-                ];
-                appInfo.at = currentApp.Application_Control__r.URL_Parameter__c;
-                appInfo.appControlId = currentApp.Application_Control__r.Id;
-            }
+        // if Application type is blank than get it from appId
+        if (String.isNotBlank(appInfo.appId)) {
+            //Get the application type from the application id
+            Application__c currentApp = [
+                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id
+                    FROM Application__c
+                    WHERE Id = :appInfo.appId
+            ];
+            appInfo.at = currentApp.Application_Control__r.URL_Parameter__c;
+            appInfo.appControlId = currentApp.Application_Control__r.Id;
+        }
 
-            //Get application control from application type
+
+        if (String.isBlank(appInfo.appControlId)) {
+            appInfo.appControl = getApplicationControls(appInfo.appControlId);
+        }
+
+        if (String.isNotBlank(appInfo.at) && String.isBlank(appInfo.appControlId)) {
             if (appInfo.appControl == null) {
-                if (appInfo.appControlId != null) {
-                    appInfo.appControl = getApplicationControls(appInfo.appControlId);
-                }
-
-               if (String.isNotBlank(appInfo.at)) {
-                    if (appInfo.appControl == null) {
-                        appInfo.appControl = getApplicationControls(appInfo.at);
-                    }
-                    appInfo.appControlId = appInfo.appControl.Id;
-                }
+                appInfo.appControl = getApplicationControls(appInfo.at);
             }
+            appInfo.appControlId = appInfo.appControl.Id;
+        }
 
-            /*//Get a list of requirement ids
-            List<Id> reqsIds = getRequirementIds(appInfo.appControlId);
-            if (String.isBlank(appInfo.requirementId) && reqsIds.size() > 0) {
-                appInfo.requirementId = reqsIds[0];
-            }
+        if (!String.isBlank(appInfo.appControl.Template__c)) {
+            appInfo.template = appInfo.appControl.Template__c;
+        } else {
+            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+            appInfo.template = AppSettings.Default_Template__c;
+        }
 
-            if (reqsIds.size() > 0) {
-                Integer reqIndex = 0;
-                for (Integer i = 0; i < reqsIds.size(); i++) {
-                    if (appInfo.requirementId == reqsIds.get(i)) {
-                        reqIndex = i;
-                    }
-                }
-                if (reqIndex == 0) {
-                    appInfo.nextRequirement = reqsIds.get(reqIndex + 1);
-                    appInfo.prevRequirement = null;
-                } else if (reqIndex == (reqsIds.size() - 1)) {
-                    appInfo.nextRequirement = null;
-                    appInfo.prevRequirement = reqsIds.get(reqIndex - 1);
-                } else {
-                    appInfo.nextRequirement = reqsIds.get(reqIndex + 1);
-                    appInfo.prevRequirement = reqsIds.get(reqIndex - 1);
-                }
-            }*/
+        // Is user an external user
+        appInfo.isExternalUser = isExternalUser();
 
-            if (!String.isBlank(appInfo.appControl.Template__c)) {
-                appInfo.template = appInfo.appControl.Template__c;
-            } else {
-                Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-                appInfo.template = AppSettings.Default_Template__c;
-            }
+        // Is user allowed to submit
+        appInfo.allowSubmit = true;
 
-            // Is user an external user
-            appInfo.isExternalUser = isExternalUser();
+        //Generate new cookie
 
-            // Is user allowed to submit
-            appInfo.allowSubmit = true;
-
-            //Generate new cookie
-
-       // }
+        // }
 
         if (oldInfo != appInfo) {
             createEncryptedCookie(JSON.serialize(appInfo));
@@ -181,7 +152,6 @@ public class ApplicationUtilities {
         if (String.isBlank(param)) {
             param = '';
         }
-
         try {
             Id acId = Id.valueOf(param);
             return [
@@ -201,7 +171,8 @@ public class ApplicationUtilities {
                         Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c,
                         Template__c
                 FROM Application_Control__c
-                WHERE Active__c = TRUE AND (URL_Parameter__c = :param OR Default__c = TRUE)
+                WHERE Active__c = TRUE
+                AND (URL_Parameter__c = :param OR Default__c = TRUE)
         ]) {
             if (ac.Default__c) {
                 defaultControl = ac;

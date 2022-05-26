@@ -15,7 +15,7 @@ public class ApplicationQuestionGroup {
     public String newReferenceObjectSelectedWrapper { get; set; }
     public String newReferenceObjectSelectedWrapperName { get; set; }
     public Requirement_Item__c item { get; set; }
-    public Boolean isInternal { get {return item != null && (item.Internal_Only__c || item.Requirement__r.Internal_Only__c) && !UserInfo.getUserType().equals('Standard');} }
+    public Boolean isInternal { get {return item != null && (item.Internal_Only__c || item.Requirement__r.Internal_Only__c) && !UserInfo.getUserType().equals('Standard');} set; }
     public ContentVersion att { get; set; }
     private Id oldAttId;
     public ContentDocumentLink oldAttLink { get; set; }
@@ -359,8 +359,9 @@ public class ApplicationQuestionGroup {
             }
         }
 
+        questionGroup = true;
+
         if (item.RecordType.DeveloperName.equals('Question_Group')) {
-            questionGroup = true;
             documentUpload = false;
             relatedObject = false;
             externalResponse = false;

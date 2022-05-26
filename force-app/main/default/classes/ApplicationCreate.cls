@@ -13,46 +13,30 @@ public class ApplicationCreate {
     public transient String additionalDataString { get; set; }
     public Set<String> contactFields { get; set; }
     public String degreeType { get; set; }
-    public EASYApplicationInfo appInfo {get;set;}
-
-    public Application_Control__c appControl {
-        get {
-            if (appControl == null) {
-                appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
-            }
-            return appControl;
-        }
-        set;
-    }
+    public EASYApplicationInfo appInfo { get; set; }
+    public String template { get; set; }
 
     /* ******************************************************************************
     * @description Initialize the page - Sets up requirements
     ********************************************************************************/
 
     public ApplicationCreate() {
-        appInfo = ApplicationUtilities.gatherApplicationInfo();
+        if (appInfo == null) {
+            appInfo = ApplicationUtilities.gatherApplicationInfo();
+        }
+        Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+        template = AppSettings.Default_Template__c;
     }
 
     public PageReference init() {
         appInfo = ApplicationUtilities.gatherApplicationInfo();
         // Exit if there is no Application Control to reference
-        if (appControl == null) {
+        if (appInfo.appControl == null) {
             return null;
-        }
-        // Get contact id from user or URL parameter if standard user
-        contactId = [
-                SELECT Id, ContactId
-                FROM User
-                WHERE Id = :UserInfo.getUserId()
-        ].ContactId;
-
-        if (UserInfo.getUserType().equals('Standard')) {
-            contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
         }
 
         setup(null, null); // Do setup of all objects
-
-        app.Contact__c = contactId; // Assign contact to application
+        app.Contact__c = appInfo.contactId; // Assign contact to application
 
         // Take user straight to checklist if we don't want to ask any questions
         if (section.groups.isEmpty()) {
@@ -69,7 +53,9 @@ public class ApplicationCreate {
 
         // Initialize contact and application
         con = new Contact();
-        app = new Application__c(Application_Control__c = appControl.Id, Application_Status__c = appControl.Application_Start_Status__c);
+        app = new Application__c(Application_Control__c = appInfo.appControlId, Application_Status__c = appInfo.appControl.Application_Start_Status__c);
+        System.debug(JSON.serializePretty(app));
+        appInfo.appId = app.id;
 
         // List of question groups to display
         List<ApplicationQuestionGroup> groups = new List<ApplicationQuestionGroup>();
@@ -80,14 +66,45 @@ public class ApplicationCreate {
         }
 
         // Query for Requirement Items and Questions to display on Application Creation
-        items = applicationHelper.getRequirementQuestions(new Set<Id>{appInfo.requirementId}, appInfo.isExternalUser);
-
+        items = [
+                SELECT Id, File_Types__c, Requirement__r.Application_Creation_Display_Order__c, Active__c, Required__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Name, Label__c,
+                        Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c,
+                        Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_Object_Record_Type_ID__c,
+                        Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Holding_Record_Id__c, Internal_Requirement_Item__c, Editable_Application_Status__c,
+                        Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
+                        Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (
+                        SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c,
+                                Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
+                                Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Name_Field_API_Name__c,
+                                Lookup_Object__c, Lookup_Where_Clause__c, New_Reference_Field__c, Contact_Field__c, Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Static_Text__c,
+                                URL_Parameter__c, Editable_Application_Status__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                        FROM Questions__r
+                        WHERE Active__c = TRUE
+                        ORDER BY Display_Order__c ASC NULLS LAST
+                )
+                FROM Requirement_Item__c
+                WHERE Requirement__r.Application_Control__c = :appInfo.appControlId
+                AND Requirement__r.Show_on_Application_Creation__c = TRUE
+                AND Requirement__r.Active__c = TRUE AND Active__c = TRUE
+                ORDER BY Display_Order__c ASC NULLS LAST
+        ];
+        System.debug(JSON.serializePretty(appInfo));
+        System.debug(Json.serializePretty(items));
         // Query for contact if we have one
-        //Get needed values from Contact record
-        if (con == null) {
-            if (appInfo.contactId != null) {
-                String query = applicationHelper.getApplicationContactFields(items);
-                query = 'SELECT ' + query + ' FROM Contact WHERE Id = \'' + appInfo.contactId + '\'';
+        if (contactId != null) {
+
+            // Loop over questions and get contact fields
+            contactFields = new Set<String>();
+            for (Requirement_Item__c ri : items) {
+                for (Question__c q : ri.Questions__r) {
+                    if (String.isNotBlank(q.Contact_Field__c)) {
+                        contactFields.add(q.Contact_Field__c.toLowerCase());
+                    }
+                }
+            }
+            // Query for contact
+            if (!contactFields.isEmpty()) {
+                String query = 'SELECT ' + ApplicationHelper.getApplicationContactFields(items) + ' FROM Contact WHERE Id = :contactId';
                 con = ((List<Contact>) Database.query(query)).get(0);
             }
         }
@@ -108,13 +125,13 @@ public class ApplicationCreate {
                 groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
             }
         }
-        
+
         ApplicationQuestion dLQuestion;
 
         ApplicationQuestion programQuestion;
 
         // Add term and program questions if not hidden
-        if (!appControl.Hide_Term_Program__c) {
+        if (!appInfo.appControl.Hide_Term_Program__c) {
 
             // Get map of intended programs with id as key, and only for a specific Application Control
             List<Program__c> programs = [
@@ -125,7 +142,7 @@ public class ApplicationCreate {
                     FROM Program__c
                     WHERE Hide_from_Application__c = :false
                     AND Active__c = :true
-                    AND Application_Control__c = :appControl.Id
+                    AND Application_Control__c = :appInfo.appControlId
                     //AND Degree__c = :degreeType
                     ORDER BY Name ASC
             ];
@@ -146,7 +163,7 @@ public class ApplicationCreate {
             //for (Academic_Term__c at : [SELECT Id, Name FROM Academic_Term__c WHERE Application_Status__c = :'Active' ORDER BY Activate_Application_Date__c ASC]) {
             //    termIds.add(at.Id);
             //    termNames.add(at.Name);
-           // }
+            // }
 
             // Get map of term names with id as key - updated by FDF 12/17/2021 to pull a unique list of Academic Terms that have an Intended Program Term for that Application Control
             List<Academic_Term__c> aTermList = new List<Academic_Term__c>();
@@ -154,11 +171,17 @@ public class ApplicationCreate {
             List<String> termNames = new List<String>();
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
-            AggregateResult[] at = [SELECT Academic_Term__r.Id, Academic_Term__r.Name FROM Intended_Program_Term__c WHERE Intended_Program__r.Application_Control__c = :appControl.Id AND Academic_Term__r.Application_Status__c = :'Active' GROUP BY Academic_Term__r.Id, Academic_Term__r.Name];
+            AggregateResult[] at = [
+                    SELECT Academic_Term__r.Id, Academic_Term__r.Name
+                    FROM Intended_Program_Term__c
+                    WHERE Intended_Program__r.Application_Control__c = :appInfo.appControlId
+                    AND Academic_Term__r.Application_Status__c = :'Active'
+                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name
+            ];
 
-            for(AggregateResult ar:at){
+            for (AggregateResult ar : at) {
                 Academic_Term__c aTerm = new Academic_Term__c();
-                aTerm.Id= (Id) ar.get('Id');
+                aTerm.Id = (Id) ar.get('Id');
                 aTerm.Name = (String) ar.get('Name');
                 aTermList.add(aTerm);
 
@@ -189,7 +212,7 @@ public class ApplicationCreate {
         for (Question_Dependency__c dq : [
                 SELECT Id, Question__c, Controlling_Question__c, Value__c, ValueCheckbox__c, RecordType.DeveloperName
                 FROM Question_Dependency__c
-                WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appControl.Id
+                WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appInfo.appControlId
                 AND Question__r.Requirement_Item__r.Requirement__r.Show_on_Application_Creation__c = :true
         ]) {
 
@@ -286,7 +309,7 @@ public class ApplicationCreate {
         section.pushValuesToObjects();
 
         // Check to see if term/program are valid if not hidden
-        if (!appControl.Hide_Term_Program__c) {
+        if (!appInfo.appControl.Hide_Term_Program__c) {
 
             // Throw exception if invalid program was selected
             String programError = 'The selected program is not available.';
@@ -402,49 +425,44 @@ public class ApplicationCreate {
 
         upsert qResponses; // Insert question responses
         // Return URL for checklist page for new application
-        return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
+        return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appInfo.appControl.URL_Parameter__c) ? '' : ('&at=' + appInfo.appControl.URL_Parameter__c));
     }
 
     @RemoteAction
     public static List<SObject> lookupSearch(String sObj, String sObjFilter, String sObjNameField, String term) {
-        return new ActionWithSharing().lookupSearchWithSharing(sObj, sObjFilter, sObjNameField, term);
-    }
-    public with sharing class ActionWithSharing {
-        public List<SObject> lookupSearchWithSharing(String sObj, String sObjFilter, String sObjNameField, String term) {
-            if (Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()) {
-                if (String.isBlank(sObjNameField)) {
-                    sObjNameField = 'Name';
-                }
-                List<String> sObjNameFields = sObjNameField.split(',');
-
-                for (Integer x = 0; x < sObjNameFields.size(); x++) {
-                    sObjNameFields[x] = sObjNameFields[x].trim();
-                }
-
-                String fieldList = String.join(sObjNameFields, ', ');
-                String likeStatement = '';
-
-                for (String sField : sObjNameFields) {
-                    likeStatement += sField + ' LIKE \'%' + String.escapeSingleQuotes(term) + '%\' OR ';
-                }
-                likeStatement = ' ( ' + likeStatement.removeEnd(' OR ') + ' )';
-
-                String query = 'Select Id, ' + fieldList;
-                query += ' FROM ' + sObj;
-                query += ' WHERE ' + likeStatement;
-                if (String.isNotBlank(sObjFilter)) {
-                    query += ' AND (' + sObjFilter + ')';
-                }
-                query += ' ORDER BY ' + fieldList + ' ASC';
-                query += ' LIMIT 50';
-                System.debug(query);
-                try {
-                    return Database.query(query);
-                } catch (Exception e) {
-                    return new List<SObject>();
-                }
+        if (Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()) {
+            if (String.isBlank(sObjNameField)) {
+                sObjNameField = 'Name';
             }
-            return new List<SObject>();
+            List<String> sObjNameFields = sObjNameField.split(',');
+
+            for (Integer x = 0; x < sObjNameFields.size(); x++) {
+                sObjNameFields[x] = sObjNameFields[x].trim();
+            }
+
+            String fieldList = String.join(sObjNameFields, ', ');
+            String likeStatement = '';
+
+            for (String sField : sObjNameFields) {
+                likeStatement += sField + ' LIKE \'%' + String.escapeSingleQuotes(term) + '%\' OR ';
+            }
+            likeStatement = ' ( ' + likeStatement.removeEnd(' OR ') + ' )';
+
+            String query = 'Select Id, ' + fieldList;
+            query += ' FROM ' + sObj;
+            query += ' WHERE ' + likeStatement;
+            if (String.isNotBlank(sObjFilter)) {
+                query += ' AND (' + sObjFilter + ')';
+            }
+            query += ' ORDER BY ' + fieldList + ' ASC';
+            query += ' LIMIT 50';
+            System.debug(query);
+            try {
+                return Database.query(query);
+            } catch (Exception e) {
+                return new List<SObject>();
+            }
         }
+        return new List<SObject>();
     }
 }

@@ -27,7 +27,6 @@ public class ApplicationQuestionGroup {
     public Boolean externalResponse { get; set; }
     private Integer newIndex;
     public Requirement_Response__c response { get; set; }
-    public String tempUniqueId { get; set; }
 
     public String instructions {
         get {
@@ -156,8 +155,10 @@ public class ApplicationQuestionGroup {
         public void enableEditMode() {
             isEditMode = true;
         }
+
         public void enableViewMode() {
-            if (!checkValid() && obj.Id == null) {
+            String errorFound = checkValid();
+            if (String.isNotBlank(errorFound) && obj.Id == null) {
                 aqg.selectedRelatedId = idx;
                 aqg.enableDeleteMode();
             } else {
@@ -167,38 +168,60 @@ public class ApplicationQuestionGroup {
             }
         }
         public void enableConfirmMode() {
-
-            if (checkValid()) {
+            String errorFound = checkValid();
+            if (String.isBlank(errorFound)) {
                 isEditMode = false;
                 sobjClone = obj.clone(true, true, true, true);
             } else {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Required Fields Missing'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ' Required Fields Missing ' + errorFound));
             }
         }
-        public Boolean checkValid() {
 
-            Boolean valid = true;
+        public String checkValid() {
+
+            String returnedError = '';
             for (ApplicationQuestion question : aqg.questions) {
 
                 if (!question.getShowQuestion(obj)) {
                     continue;
                 }
 
-                try {
-                    if (String.isNotBlank(question.question.Related_Object_Field__c) && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && obj.get(question.question.Related_Object_Field__c) == '') {
-                        valid = false;
+                if (question.fieldType.equalsIgnoreCase('Address')
+                        && (question.application != null && String.isNotBlank(question.question.Required__c)
+                        && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c))
+                        && String.isNotBlank(question.question.Related_Object_Field__c)) {
+
+                    for (String addressField : new Set<String>{
+                            'City__c', 'Country__c', 'PostalCode__c', 'State__c', 'Street__c'
+                    }) {
+                        System.debug(addressField + ' -- ' + obj.get(addressField));
+                        if (String.isBlank((String) obj.get(addressField))) {
+                            if (String.isNotBlank(returnedError)) {
+                                returnedError += ' ,';
+                            }
+                            returnedError += question.label + ' ' + addressField.removeEnd('__c');
+                        }
+                    }
+                    //returnedError += 'Address in play';
+                } else {
+                    try {
+                        if (String.isNotBlank(question.question.Related_Object_Field__c)
+                                && (question.application != null && String.isNotBlank(question.question.Required__c)
+                                && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c))
+                                && obj.get(question.question.Related_Object_Field__c) == '') {
+                            returnedError += question.label;
+                        }
+
+                    } catch (Exception e) {
                     }
 
-                } catch (Exception e) {
-                }
-
-                if (String.isNotBlank(question.question.Related_Object_Field__c) && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && obj.get(question.question.Related_Object_Field__c) == null) {
-                    valid = false;
+                    if (String.isNotBlank(question.question.Related_Object_Field__c) && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && obj.get(question.question.Related_Object_Field__c) == null) {
+                        returnedError += question.label;
+                    }
                 }
             }
 
-            isValid = valid;
-            return valid;
+            return returnedError;
         }
     }
 
@@ -339,14 +362,14 @@ public class ApplicationQuestionGroup {
     }
 
     public ApplicationQuestionGroup(Contact con, Application__c app, Requirement_Item__c item, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response, List<Question_Response__c> dResponses, Map<String, Schema.SObjectField> sObjectFields) {
-        init(con, app, item, dQuestions, response, dResponses, sObjectFields, false);
+        initApplicationQuestionGroup(con, app, item, dQuestions, response, dResponses, sObjectFields, false);
     }
 
     public ApplicationQuestionGroup(Contact con, Application__c app, Requirement_Item__c item, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response, List<Question_Response__c> dResponses, Map<String, Schema.SObjectField> sObjectFields, Boolean isAppCreate) {
-        init(con, app, item, dQuestions, response, dResponses, sObjectFields, isAppCreate);
+        initApplicationQuestionGroup(con, app, item, dQuestions, response, dResponses, sObjectFields, isAppCreate);
     }
 
-    private void init(Contact con, Application__c app, Requirement_Item__c item, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response, List<Question_Response__c> dResponses, Map<String, Schema.SObjectField> sObjectFields, Boolean isAppCreate) {
+    private void initApplicationQuestionGroup(Contact con, Application__c app, Requirement_Item__c item, Map<Id, List<Question_Dependency__c>> dQuestions, Requirement_Response__c response, List<Question_Response__c> dResponses, Map<String, Schema.SObjectField> sObjectFields, Boolean isAppCreate) {
         creatingNewRelatedRecord = false;
         this.item = item;
         this.response = response;
@@ -359,9 +382,8 @@ public class ApplicationQuestionGroup {
             }
         }
 
-        questionGroup = true;
-
         if (item.RecordType.DeveloperName.equals('Question_Group')) {
+            questionGroup = true;
             documentUpload = false;
             relatedObject = false;
             externalResponse = false;
@@ -449,6 +471,8 @@ public class ApplicationQuestionGroup {
                 Set<String> fieldsSet = new Set<String>{
                         'id', 'user_created__c', 'holding_name__c'
                 };
+
+
                 for (Question__c q : item.Questions__r) {
                     if (q != null && String.isNotBlank(q.Related_Object_Field__c) && !q.New_Reference_Field__c && q.Active__c) {
                         fieldsSet.add(q.Related_Object_Field__c.toLowerCase());
@@ -457,6 +481,12 @@ public class ApplicationQuestionGroup {
                         }
                         if (fieldResultMap.containsKey(q.Related_Object_Field__c.toLowerCase()) && (Boolean) fieldResultMap.get(q.Related_Object_Field__c.toLowerCase()).get('isReference') && q.Related_Object_Field__c.endsWith('__c')) {
                             fieldsSet.add(q.Related_Object_Field__c.substring(0, q.Related_Object_Field__c.length() - 1) + 'r.Name');
+                        }
+                        //Address record type requires split out fields
+                        if (q.RecordType.Name.equalsIgnoreCase('Address')) {
+                            fieldsSet.addAll(new Set<String>{
+                                    'City__c', 'Country__c', 'PostalCode__c', 'State__c', 'Street__c'
+                            });
                         }
                     }
                 }

@@ -552,7 +552,6 @@ function appShowConfirmation() {
 }
 
 function hideFormSpinner() {
-    console.log('hiding load spinner');
     document.getElementById("form-spinner").style.display = 'none';
 }
 

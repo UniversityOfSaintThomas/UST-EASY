@@ -45,13 +45,12 @@
             <apex:actionRegion>
                 <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
                     <apex:repeat value="{!group.questions}" var="question">
+                        <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
+                        <apex:variable var="requiredField" value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}"/>
+                        <apex:variable var="questionLabel" value="{!question.label}"/>
+
                         <apex:outputPanel rendered="{!If(question.showQuestion, true, false)}" styleClass="slds-p-vertical_xxx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
                             <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!placeholderUUID}">
-
-                                <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                                <apex:variable var="requiredField" value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}"/>
-                                <apex:variable var="questionLabel" value="{!question.label}"/>
-
                                 <!-- Label for input -->
                                 <apex:outputPanel rendered="{!question.fieldType != 'Address' && !ISBLANK(question.label) && question.fieldType != 'Checkbox'}" layout="none">
                                     <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
@@ -351,15 +350,22 @@
 
                             <apex:repeat value="{!group.questions}" var="question">
 
-                                <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="block">
+                                <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="none">
 
                                     <!--THIS DISPLAYS WHEN RECORD HAS BEEN ENTERED -->
-                                    <apex:outputPanel layout="block" rendered="{!!rr.isEditMode}">
-                                        <apex:outputLabel for="appReferenceField" styleClass="slds-text-body_regular" value="{!question.question.Label__c}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}"/>
-<!--                                        <apex:outputPanel layout="block" styleClass="slds-m-bottom_small" id="appReferenceField">-->
-                                            {!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}
-                                            {!rr.obj[question.question.Related_Object_Field__c]}
-<!--                                        </apex:outputPanel>-->
+                                    <apex:outputPanel layout="none" rendered="{!!rr.isEditMode}">
+                                        <dl class="slds-list_horizontal slds-wrap slds-border_bottom slds-p-vertical_x-small">
+                                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}">
+                                                {!question.question.Label__c}{!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}
+                                            </dt>
+                                            <dd class="slds-item_detail slds-truncate" title="Description for first label">
+                                                <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address'}"/>
+                                                <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Address'}">
+                                                    {!rr.obj['Street__c']},
+                                                    {!rr.obj['City__c']}, {!rr.obj['State__c']} {!rr.obj['PostalCode__c']} {!rr.obj['Country__c']}
+                                                </apex:outputPanel>
+                                            </dd>
+                                        </dl>
                                     </apex:outputPanel>
 
                                     <apex:outputPanel id="editQuestion" rendered="{!rr.isEditMode}" layout="block" styleClass="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12">

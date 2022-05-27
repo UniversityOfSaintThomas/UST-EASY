@@ -22,6 +22,7 @@ OR IGNORE STEPS 1-3 AND JUST DO STEP 8B INSTEAD
 10. Recommender letters won't send until Classic Salesforce Email Template "2017 Scholarship Email Template" has been set up as an Unified Public Classic Email Template.
     TODO: Verify this added correctly.
 
+11. Comment the sharing rules "sharedTo" field back in and deploy their metadata. (And then comment them back out again before rebuilding the org next time!)
 
 meta of ScholarshipClosed and ScholarshipRecommender, applied automatically by SF for unknown reasons:
 
@@ -37,3 +38,24 @@ meta of ScholarshipClosed and ScholarshipRecommender, applied automatically by S
         <namespace>hed</namespace>
     </packageVersions>
 </ApexPage>
+
+Scholarship_Applicant__c.sharingRules-meta.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingGuestRules>
+        <fullName>Scholarship_Recommender</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>People asked to recommend a student need to access to Scholarship and Scholarship Applicant objects so they can write their recommendations. See related permission sets.</description>
+        <label>Scholarship Recommender</label>
+        <sharedTo>
+            <guestUser>EASY_Applicant_Portal</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>Scholarship__c</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
+    </sharingGuestRules>
+</SharingRules>

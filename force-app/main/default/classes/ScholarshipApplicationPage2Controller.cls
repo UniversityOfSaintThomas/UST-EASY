@@ -72,9 +72,12 @@ public with sharing class ScholarshipApplicationPage2Controller {
     private boolean uploadEssay(Attachment essay, Integer essayNum, String filename) {
         boolean result;
 
-        String ext = getFileExtension(Essay1Filename);
+        String ext = getFileExtension(filename);
+        System.debug('ext/essay:' + ext + '::' + essay + '::' + essay.Id);
         essay.OwnerId = UserInfo.getUserId();
+        System.debug('essay.ParentId BEFORE:' + essay.ParentId);
         essay.ParentId = this.applicant.Id; // the record the file is attached to
+        System.debug('essay.ParentId AFTER:' + essay.ParentId);
         essay.IsPrivate = false;
         essay.name = 'Essay' + essayNum + ext;
         essay.Description = 'Essay ' + essayNum + ' Upload. Original Filename was ' + filename;
@@ -255,7 +258,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
     }
 
     private string getFileExtension(String fn) {
-        if (fn.contains('.')) {
+        if (fn != null && fn.contains('.')) {
             fn = fn.substring(fn.lastIndexOf('.'), fn.length());
             return fn;
         }

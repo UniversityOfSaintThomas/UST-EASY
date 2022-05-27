@@ -13,7 +13,7 @@
                 <apex:outputPanel layout="block" styleClass="row" rendered="{!IF(ISNULL(scholarship.Name) , false , true)}">
                     <div class="column">
                         <h2>
-                            {!scholarship.Name} for {!scholarshipApplicant.Contact__c}
+                            {!scholarship.Name}
                         </h2>
                     </div>
                 </apex:outputPanel>

@@ -75,15 +75,18 @@ public with sharing class ScholarshipApplicationPage2Controller {
         String ext = getFileExtension(filename);
         System.debug('ext/essay:' + ext + '::' + essay + '::' + essay.Id);
         essay.OwnerId = UserInfo.getUserId();
+        System.debug('applicant.Id BEFORE:' + this.applicant.Id);
         System.debug('essay.ParentId BEFORE:' + essay.ParentId);
-        essay.ParentId = this.applicant.Id; // the record the file is attached to
+        if (essay.ParentId != this.applicant.Id) { // If user deletes and re-uploads, and it tries writing this field, it will find it already written, then explode. This SHOULD therefore only pass on first upload, but it COULD in theory pass if the second uploader somehow doesn't have the same applicant ID as the first uploader. That will still cause it to explode, and rightly so.
+            essay.ParentId = this.applicant.Id; // the scholarship applicant record the file is attached to
+        }
         System.debug('essay.ParentId AFTER:' + essay.ParentId);
         essay.IsPrivate = false;
         essay.name = 'Essay' + essayNum + ext;
         essay.Description = 'Essay ' + essayNum + ' Upload. Original Filename was ' + filename;
 
         try {
-            insert essay;
+            upsert essay;
 
             // I'm sure these field names can be accessed programmatically at some point, but for now we're just doing
             // straight adaptation from the original code until it's working! Until then, I know, kinda grody. -JJH

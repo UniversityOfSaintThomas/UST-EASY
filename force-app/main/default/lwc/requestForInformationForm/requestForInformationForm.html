@@ -12,7 +12,7 @@
             </lightning-spinner>
         </template>
 
-        <div slot="title" class="slds-text-align_center">{program_type} Request for Information</div>
+        <h2 slot="title" style="text-align: center;">{program_type} Request for Information</h2>
 
         <!-- BEGIN FORM -->
         <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium">
@@ -36,10 +36,10 @@
             <!-- ROW 3 -->
             <div class="slds-grid slds-gutters_large">
                 <div class="slds-col slds-size_1-of-2">
-                    <lightning-input type="tel" label="Home Phone"></lightning-input>
+                    <lightning-input type="tel" label="Home Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"></lightning-input>
                 </div>
                 <div class="slds-col slds-size_1-of-2">
-                    <lightning-input type="tel" label="Mobile Phone"></lightning-input>
+                    <lightning-input type="tel" label="Mobile Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"></lightning-input>
                 </div>
             </div>  
         </div>

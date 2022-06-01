@@ -13,6 +13,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     @wire(CurrentPageReference)
     pageRef(result) {
+        console.log('here');
         if (result.data && result.data.length != 0) {
             console.log(JSON.stringify(result.data));
         }

@@ -14,30 +14,35 @@
 
         <h2 slot="title" class="slds-text-align_center">{program_type} Request for Information</h2>
 
-        <lightning-layout>
+        <!-- BEGIN FORM -->
+        <div class="slds-grid slds-grid_vertical">
             <!-- ROW 1 -->
-            <lightning-layout horizontal-align="space">
-                <lightning-layout-item>
+            <div class="slds-grid slds-grid_align-space">
+                <div class="slds-col">
                     <lightning-input type="text" label="First Name"></lightning-input>
-                </lightning-layout-item>
-                <lightning-layout-item>
+                </div>
+                <div class="slds-col">
                     <lightning-input type="text" label="Last Name"></lightning-input>
-                </lightning-layout-item>
-            </lightning-layout>
+                </div>
+            </div>
+
             <!-- ROW 2 -->
-            <lightning-layout-item>
-                <lightning-input type="email" label="Email"></lightning-input>
-            </lightning-layout-item>
+            <div class="slds-grid slds-grid_align-space">
+                <div class="slds-col">
+                    <lightning-input type="email" label="Email"></lightning-input>
+                </div>
+            </div>    
+            
             <!-- ROW 3 -->
-            <lightning-layout horizontal-align="space">
-                <lightning-layout-item>
+            <div class="slds-grid slds-grid_align-space">
+                <div class="slds-col">
                     <lightning-input type="tel" label="Home Phone"></lightning-input>
-                </lightning-layout-item>
-                <lightning-layout-item>
+                </div>
+                <div class="slds-col">
                     <lightning-input type="tel" label="Mobile Phone"></lightning-input>
-                </lightning-layout-item>
-            </lightning-layout>
-        </lightning-layout>
+                </div>
+            </div>  
+        </div>
 
     </lightning-card>
 </template>

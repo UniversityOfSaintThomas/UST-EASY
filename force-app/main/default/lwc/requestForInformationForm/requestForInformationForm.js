@@ -32,9 +32,10 @@ export default class RequestForInformationForm extends LightningElement {
 
     @wire(CurrentPageReference)
     pageRef(result) {
+        this.program_type = 'Undergraduate';
         if (result.data) {
             // TO DO
-            this.program_type = 'Undergraduate';
+            this.program_type = 'Undergraduate'
         }
     }
 

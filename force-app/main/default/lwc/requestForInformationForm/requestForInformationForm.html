@@ -5,6 +5,39 @@
 -->
 <template>
     <lightning-card>
-        <h2 slot="title">{PROGRAM_TYPE} Request for Information</h2>
+        <template if:true={show_spinner}>
+            <lightning-spinner
+                alternative-text="Loading" 
+                size="medium">
+            </lightning-spinner>
+        </template>
+
+        <h2 slot="title" class="slds-text-align_center">{program_type} Request for Information</h2>
+
+        <lightning-layout>
+            <!-- ROW 1 -->
+            <lightning-layout horizontal-align="space">
+                <lightning-layout-item>
+                    <lightning-input type="text" label="First Name"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-input type="text" label="Last Name"></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+            <!-- ROW 2 -->
+            <lightning-layout-item>
+                <lightning-input type="email" label="Email"></lightning-input>
+            </lightning-layout-item>
+            <!-- ROW 3 -->
+            <lightning-layout horizontal-align="space">
+                <lightning-layout-item>
+                    <lightning-input type="tel" label="Home Phone"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-input type="tel" label="Mobile Phone"></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout>
+
     </lightning-card>
 </template>

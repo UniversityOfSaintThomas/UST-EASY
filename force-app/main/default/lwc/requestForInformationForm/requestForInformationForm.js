@@ -55,7 +55,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     @wire(getObjectInfo, {objectApiName: LEAD_OBJECT})
     object_info(info) {
-        console.log(JSON.stringify(info));
+        console.log(JSON.stringify(info.data.defaultRecordTypeId));
     }
     
 

@@ -21,7 +21,7 @@ import LEAD_ADDRESS from '@salesforce/schema/Lead.Address';
 // import LEAD_STATE from '@salesforce/schema/Lead.State__c';
 
 //controller
-import getAcademicPrograms from '@salesforce/apex/c/requestForInformationFormController.getAcademicPrograms';
+import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
 
 export default class RequestForInformationForm extends LightningElement {
     @track program_type;

@@ -2,16 +2,21 @@ Insert Academic_Term__c:
   sf_object: Academic_Term__c
   fields:
   - Academic_Term_Integration_External_ID__c
+  - Academic_Year_Code__c
   - Activate_Application_Date__c
   - Banner_Term_Code__c
   - CreatedDate
+  - Early_Action_End_Date__c
   - Early_Decision_End_Date__c
   - Early_Decision_Start_Date__c
   - End_Application_Date__c
+  - Financial_Aid_Processing_Year__c
   - Housing_End_Date__c
   - Housing_Start_Date__c
   - LastModifiedDate
   - Name
+  - Regular_Decision_End_Date__c
+  - Term_10th_Day__c
   - Term_End_Date__c
   - Term_Start_Date__c
 Insert Application_Control__c:
@@ -284,13 +289,6 @@ Insert Account:
   - Aid_Eligibility__c
   - Banner_Code__c
   - Banner_Key__c
-  - BillingCity
-  - BillingStreet
-  - BillingState
-  - BillingCountry
-  - BillingPostalCode
-  - BillingLatitude
-  - BillingLongitude
   - CEEB_Code__c
   - CEEB_Integration_Code__c
   - CIPC_Code__c
@@ -307,9 +305,7 @@ Insert Account:
   - School_Geographic_Area__c
   - School_Type_Code__c
   - Sevis_Equivalent__c
-  - ShippingCountry
   - Surrogate_ID__c
-  - Type
   - University_Banner_ID__c
   - University_Banner_PIDM__c
   - Valid_Major__c
@@ -355,15 +351,21 @@ Insert Program__c:
   - Active__c
   - Applicant_Type__c
   - Application_Fee_Amount__c
+  - Associated_Schools__c
+  - Banner_Major_Name__c
   - Banner_Program_Code__c
+  - Banner_Program_Name__c
   - CIP_Code__c
   - Career__c
   - Citizenship__c
+  - College_Code__c
   - Concentration_Code__c
+  - Concentration_Description__c
   - CreatedDate
   - Degree_Type__c
   - Degree__c
   - Delivery_Type__c
+  - Department_Code__c
   - Description__c
   - First_License__c
   - Generic_Filter_1__c
@@ -374,19 +376,26 @@ Insert Program__c:
   - Hide_Citizenship__c
   - Hide_Student_Type__c
   - Hide_from_Application__c
+  - Integration_Program_Code__c
   - LastModifiedDate
   - License_Area__c
   - Major_Code__c
   - Name
   - Number_of_Applications_Limit__c
   - Pre_Professional_Program__c
+  - Program_Areas_of_Interest__c
   - Program_Bucket__c
   - Program_Code__c
+  - Program_Degree_Code__c
+  - Program_Display__c
   - Program_Integration_External_Id__c
+  - Program_Keywords__c
+  - Program_Learning_Style__c
   - Program_Name_on_Application__c
   - Program_Offered_Name__c
   - Program_Record_Type__c
   - Program_Type__c
+  - Program_URL__c
   - RecordTypeId
   - Residency__c
   - STEM_Major__c
@@ -396,12 +405,13 @@ Insert Program__c:
   - STVMAJR_VALID_MINOR_IND__c
   - School_College__c
   - Student_Type__c
-  - UG_Integration_Program_Code__c
   lookups:
     Application_Control__c:
       table: Application_Control__c
     Department__c:
       table: Account
+    Effective_Term__c:
+      table: Academic_Term__c
     Recruitment_Program__c:
       table: Program__c
       after: Insert Program__c
@@ -418,6 +428,31 @@ Insert hed__Academic_Certification__c:
   - hed__Extended_Name__c
   - hed__Field_Of_Study__c
   lookups:
+    hed__Issuer__c:
+      table: Account
+Insert hed__Course__c:
+  sf_object: hed__Course__c
+  fields:
+  - Active__c
+  - Banner_Activity_Date__c
+  - College_Code__c
+  - Course_Key__c
+  - Course_Number__c
+  - CreatedDate
+  - Effective_Term__c
+  - LastModifiedDate
+  - Name
+  - Subject__c
+  - hed__Academic_Level__c
+  - hed__Course_ID__c
+  - hed__Credentialing_Identifier__c
+  - hed__Credit_Hours__c
+  - hed__Description__c
+  - hed__Extended_Description__c
+  - hed__Subject__c
+  lookups:
+    hed__Account__c:
+      table: Account
     hed__Issuer__c:
       table: Account
 Insert hed__Facility__c:
@@ -446,8 +481,11 @@ Insert hed__Term__c:
   - Housing_Start_Date__c
   - LastModifiedDate
   - Name
+  - Term_Code__c
   - Term_End_Date__c
+  - Term_Friendly_Name__c
   - Term_Integration_External_Id__c
+  - Term_Key__c
   - Term_Start_Date__c
   - hed__End_Date__c
   - hed__Grading_Period_Sequence__c
@@ -847,6 +885,8 @@ Insert CampaignMember:
   - CreatedDate
   - LastModifiedDate
   lookups:
+    CampaignId:
+      table: Campaign
     ContactId:
       table: Contact
       after: Insert Contact
@@ -856,6 +896,7 @@ Insert CampaignMember:
 Insert Contact:
   sf_object: Contact
   fields:
+  - Admissions_Mobile_Opt_In__c
   - Constituent_ID__c
   - Contact_Constituent_ID__c
   - CreatedDate
@@ -868,6 +909,7 @@ Insert Contact:
   - Job_Title__c
   - LastModifiedDate
   - LastName
+  - Preferred_First_Name__c
   - hed__AlternateEmail__c
   - hed__Chosen_Full_Name__c
   - hed__Citizenship_Status__c
@@ -914,7 +956,11 @@ Insert Contact:
       table: Account
     Primary_Academic_Program__c:
       table: Account
+    Primary_Department__c:
+      table: Account
     Primary_Educational_Institution__c:
+      table: Account
+    Primary_Sports_Organization__c:
       table: Account
     ReportsToId:
       table: Contact
@@ -1025,6 +1071,8 @@ Insert Opportunity:
       table: Account
     Affiliated_Account__c:
       table: Account
+    CampaignId:
+      table: Campaign
     ContactId:
       table: Contact
     Contact__c:

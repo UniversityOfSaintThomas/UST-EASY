@@ -33,7 +33,6 @@
                     </lightning-input>
                 </div>
             </div>
-
             <!-- ROW 2 -->
             <div class="slds-grid slds-gutters_large">
                 <div class="slds-col">
@@ -46,7 +45,6 @@
                     </lightning-input>
                 </div>
             </div>    
-            
             <!-- ROW 3 -->
             <div class="slds-grid slds-gutters_large">
                 <div class="slds-col slds-size_1-of-2">
@@ -66,6 +64,43 @@
                         pattern={phone_pattern}
                         message-when-pattern-mismatch={invalid_phone_message}>
                     </lightning-input>
+                </div>
+            </div>  
+            <!-- ROW 4 -->
+            <div class="slds-grid slds-gutters_large">
+                <div class="slds-col">
+                    <lightning-input 
+                        type="text" 
+                        label="Address 1" 
+                        aria-label="Address 1">
+                    </lightning-input>
+                </div>
+            </div>
+            <!-- ROW 5 -->
+            <div class="slds-grid slds-gutters_large">
+                <div class="slds-col">
+                    <lightning-input 
+                        type="text" 
+                        label="Address 2" 
+                        aria-label="Address 2">
+                    </lightning-input>
+                </div>
+            </div>  
+            <!-- ROW 6 -->
+            <div class="slds-grid slds-gutters_large">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input 
+                        type="text" 
+                        label="City" 
+                        aria-label="City">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-combobox
+                        label="State" 
+                        options={state_options}
+                        aria-label="State">
+                    </lightning-combobox>
                 </div>
             </div>  
         </div>

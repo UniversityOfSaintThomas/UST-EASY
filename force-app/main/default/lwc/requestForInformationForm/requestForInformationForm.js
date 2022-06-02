@@ -45,4 +45,12 @@ export default class RequestForInformationForm extends LightningElement {
         }
     }
 
+    get state_options() {
+        return [
+            { label: 'MN', value: 'MN' },
+            { label: 'NY', value: 'NY' },
+            { label: 'WA', value: 'WA' },
+        ];
+    }
+
 }

@@ -30,6 +30,12 @@ export default class RequestForInformationForm extends LightningElement {
     mobile_phone = LEAD_MOBILE_PHONE;
     address = LEAD_ADDRESS;
 
+    phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
+    email_pattern = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
+
+    invalid_phone_message = 'Phone # must match format: 000-000-0000';
+    invalid_email_message = 'Email must match format: example@site.com';
+
     @wire(CurrentPageReference)
     pageRef(result) {
         this.program_type = 'Undergraduate';

@@ -15,31 +15,57 @@
         <div class="slds-text-heading_medium" style="text-align: center"><b>{program_type} Request for Information</b></div>
 
         <!-- BEGIN FORM -->
-        <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium">
+        <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
             <!-- ROW 1 -->
             <div class="slds-grid slds-gutters_large">
                 <div class="slds-col slds-size_1-of-2">
-                    <lightning-input type="text" label="First Name"></lightning-input>
+                    <lightning-input 
+                        type="text" 
+                        label="First Name" 
+                        aria-label="First Name">
+                    </lightning-input>
                 </div>
                 <div class="slds-col slds-size_1-of-2">
-                    <lightning-input type="text" label="Last Name"></lightning-input>
+                    <lightning-input 
+                        type="text" 
+                        label="Last Name" 
+                        aria-label="Last Name">
+                    </lightning-input>
                 </div>
             </div>
 
             <!-- ROW 2 -->
             <div class="slds-grid slds-gutters_large">
                 <div class="slds-col">
-                    <lightning-input type="email" label="Email"></lightning-input>
+                    <lightning-input 
+                        type="email" 
+                        label="Email" 
+                        aria-label="Email" 
+                        pattern={email_pattern}
+                        message-when-pattern-mismatch={invalid_email_message}>
+                    </lightning-input>
                 </div>
             </div>    
             
             <!-- ROW 3 -->
             <div class="slds-grid slds-gutters_large">
                 <div class="slds-col slds-size_1-of-2">
-                    <lightning-input type="tel" label="Home Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"></lightning-input>
+                    <lightning-input 
+                        type="tel" 
+                        label="Home Phone" 
+                        aria-label="Home Phone" 
+                        pattern={phone_pattern}
+                        message-when-pattern-mismatch={invalid_phone_message}>
+                    </lightning-input>
                 </div>
                 <div class="slds-col slds-size_1-of-2">
-                    <lightning-input type="tel" label="Mobile Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"></lightning-input>
+                    <lightning-input 
+                        type="tel" 
+                        label="Mobile Phone" 
+                        aria-label="Mobile Phone" 
+                        pattern={phone_pattern}
+                        message-when-pattern-mismatch={invalid_phone_message}>
+                    </lightning-input>
                 </div>
             </div>  
         </div>

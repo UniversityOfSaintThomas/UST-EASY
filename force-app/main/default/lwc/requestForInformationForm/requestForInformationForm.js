@@ -19,7 +19,6 @@ import LEAD_EMAIL from '@salesforce/schema/Lead.Email';
 import LEAD_HOME_PHONE from '@salesforce/schema/Lead.Phone';
 import LEAD_MOBILE_PHONE from '@salesforce/schema/Lead.MobilePhone';
 import LEAD_ADDRESS from '@salesforce/schema/Lead.Address';
-// import LEAD_STATE from '@salesforce/schema/Lead.State__c';
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
@@ -62,6 +61,11 @@ export default class RequestForInformationForm extends LightningElement {
     email_pattern = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
     invalid_phone_message = 'Phone # must match format: 000-000-0000';
     invalid_email_message = 'Email must match format: example@site.com';
+
+    @wire(getRFIController, {rfi_controller_name: '$rfi_controller'})
+    rfi_controller(controller) {
+        console.log(JSON.stringify(controller));
+    }
 
     onChange(event) {
         switch (event.target.label) {

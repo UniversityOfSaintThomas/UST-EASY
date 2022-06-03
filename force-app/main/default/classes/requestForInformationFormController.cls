@@ -12,7 +12,7 @@ public with sharing class requestForInformationFormController {
             ];
             return rfi_controller;
         } catch (Exception e) {
-            throw new AuraHandledException('RFI Controller not found: ' + e.getMessage());
+            throw new AuraHandledException(rfi_controller_name + ' not found: ' + e.getMessage());
         }
     }
 

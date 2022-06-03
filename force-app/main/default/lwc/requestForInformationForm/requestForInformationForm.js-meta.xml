@@ -7,7 +7,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__HomePage">
-            <property name="rfi_controller" required="true" label="RFI Controller Name" type="String"/>
+            <property name="rfi_controller" required="true" label="RFI Controller Name" type="String" default="All Fields RFI Controller"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

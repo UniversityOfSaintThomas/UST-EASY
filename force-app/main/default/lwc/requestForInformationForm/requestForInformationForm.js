@@ -54,7 +54,7 @@ export default class RequestForInformationForm extends LightningElement {
     invalid_email_message = 'Email must match format: example@site.com';
 
     @wire(CurrentPageReference)
-    pageRef(result) {
+    page_ref(result) {
         this.program_type = 'Undergraduate';
         if (result) {
             console.log(JSON.stringify(result));
@@ -73,10 +73,42 @@ export default class RequestForInformationForm extends LightningElement {
     // }
 
     onChange(event) {
-        
+        switch (event.target.label) {
+            case 'First Name':
+                this.record_input.FirstName = event.target.value;
+                break;
+            case 'Last Name':
+                this.record_input.LastName = event.target.value;
+                break;
+            case 'Email':
+                this.record_input.Email = event.target.value;
+                break;
+            case 'Home Phone':
+                this.record_input.Phone = event.target.value;
+                break;
+            case 'Mobile Phone':
+                this.record_input.MobilePhone = event.target.value;
+                break;
+            case 'Street':
+                this.record_input.Street = event.target.value;
+                break;
+            case 'City':
+                this.record_input.City = event.target.value;
+                break;
+            case 'State':
+                this.record_input.State = event.target.value;
+                break;
+            case 'Zip Code':
+                this.record_input.PostalCode = event.target.value;
+                break;
+            case 'Country':
+                this.record_input.Country = event.target.value;
+                break;
+        }
+        console.log(JSON.stringify(event.target.label));
     }
 
-    get state_options() {
+    get stateOptions() {
         return [
             { label: 'MN', value: 'MN' },
             { label: 'NY', value: 'NY' },
@@ -84,7 +116,7 @@ export default class RequestForInformationForm extends LightningElement {
         ];
     }
 
-    get country_options() {
+    get countryOptions() {
         return [
             { label: 'United Status', value: 'United Status' },
             { label: 'Albania', value: 'Albania' },

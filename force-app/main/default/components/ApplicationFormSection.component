@@ -42,7 +42,7 @@
 
         <apex:outputPanel id="questionGroupWrapper" layout="block">
             <apex:variable value="{!placeholderUUID+1}" var="placeholderUUID"/>
-            <apex:actionRegion>
+            <apex:actionRegion >
                 <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
                     <apex:repeat value="{!group.questions}" var="question">
                         <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
@@ -333,7 +333,7 @@
             <apex:actionFunction name="rerenderTheTable" rerender="theTable" onComplete="pageLoadReRendered();"/>
             <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
                     <p>You haven"t created any records yet. Click "New Record" to create one.</p>
@@ -652,9 +652,10 @@
 
             </apex:outputPanel>
 
+
             <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
 

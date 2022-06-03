@@ -61,6 +61,9 @@ public class ApplicationQuestionSection {
 
         Map<Id, ApplicationQuestion> qMap = new Map<Id, ApplicationQuestion>();
         for (ApplicationQuestionGroup g : groups) {
+            if (g.relatedObject == null) {
+                g.relatedObject = false;
+            }
             if ((g.questionGroup || g.relatedObject) && g.questions != null && g.item != null) {
                 for (ApplicationQuestion aq : g.questions) {
                     if (aq.question != null) {

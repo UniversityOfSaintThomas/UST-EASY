@@ -15,6 +15,7 @@ public class ApplicationCreate {
     public String degreeType { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
     public String template { get; set; }
+    public Application_Control__c appControl { get; set; }
 
     /* ******************************************************************************
     * @description Initialize the page - Sets up requirements
@@ -24,16 +25,20 @@ public class ApplicationCreate {
         if (appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
+        System.debug(JSON.serializePretty(appInfo));
+        appControl = appInfo.appControl;
         Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
         template = AppSettings.Default_Template__c;
     }
 
     public PageReference init() {
         appInfo = ApplicationUtilities.gatherApplicationInfo();
+        appControl = appInfo.appControl;
         // Exit if there is no Application Control to reference
         if (appInfo.appControl == null) {
             return null;
         }
+
 
         setup(null, null); // Do setup of all objects
         app.Contact__c = appInfo.contactId; // Assign contact to application
@@ -54,7 +59,6 @@ public class ApplicationCreate {
         // Initialize contact and application
         con = new Contact();
         app = new Application__c(Application_Control__c = appInfo.appControlId, Application_Status__c = appInfo.appControl.Application_Start_Status__c);
-        System.debug(JSON.serializePretty(app));
         appInfo.appId = app.id;
 
         // List of question groups to display
@@ -88,8 +92,6 @@ public class ApplicationCreate {
                 AND Requirement__r.Active__c = TRUE AND Active__c = TRUE
                 ORDER BY Display_Order__c ASC NULLS LAST
         ];
-        System.debug(JSON.serializePretty(appInfo));
-        System.debug(Json.serializePretty(items));
         // Query for contact if we have one
         if (contactId != null) {
 
@@ -456,7 +458,6 @@ public class ApplicationCreate {
             }
             query += ' ORDER BY ' + fieldList + ' ASC';
             query += ' LIMIT 50';
-            System.debug(query);
             try {
                 return Database.query(query);
             } catch (Exception e) {

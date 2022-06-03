@@ -44,6 +44,9 @@ export default class RequestForInformationForm extends LightningElement {
         }
     }
 
+    address1;
+    address2;
+
     state_picklist_values;
     country_picklist_values;
 
@@ -89,8 +92,11 @@ export default class RequestForInformationForm extends LightningElement {
             case 'Mobile Phone':
                 this.record_input.MobilePhone = event.target.value;
                 break;
-            case 'Street':
-                this.record_input.Street = event.target.value;
+            case 'Address 1':
+                this.address1 = event.target.value;
+                break;
+            case 'Address 2':
+                this.address2 = event.target.value; // combine two address fields into Street before submit
                 break;
             case 'City':
                 this.record_input.City = event.target.value;
@@ -118,7 +124,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     get countryOptions() {
         return [
-            { label: 'United Status', value: 'United Status' },
+            { label: 'United States', value: 'United States' },
             { label: 'Albania', value: 'Albania' },
             { label: 'Colombia', value: 'Colombia' },
             { label: 'Cambodia', value: 'Cambodia' },

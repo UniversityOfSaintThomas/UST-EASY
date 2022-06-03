@@ -72,6 +72,10 @@ export default class RequestForInformationForm extends LightningElement {
     //     this.state_picklist_values = values;
     // }
 
+    onChange(event) {
+        
+    }
+
     get state_options() {
         return [
             { label: 'MN', value: 'MN' },

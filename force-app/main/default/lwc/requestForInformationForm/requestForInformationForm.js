@@ -11,6 +11,7 @@ import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 
 import LEAD_OBJECT from '@salesforce/schema/Lead';
+
 //fields
 import LEAD_FIRST_NAME from '@salesforce/schema/Lead.FirstName';
 import LEAD_LAST_NAME from '@salesforce/schema/Lead.LastName';
@@ -27,15 +28,24 @@ export default class RequestForInformationForm extends LightningElement {
     @track program_type;
     @track show_spinner = false;
 
-    //fields
-    first_name = LEAD_FIRST_NAME;
-    last_name = LEAD_LAST_NAME;
-    email = LEAD_EMAIL;
-    home_phone = LEAD_HOME_PHONE;
-    mobile_phone = LEAD_MOBILE_PHONE;
-    address = LEAD_ADDRESS;
+    record_input = {
+        'apiName': 'Account',
+        'fields': {
+          'FirstName': '',
+          'LastName': '',
+          'Email': '',
+          'Phone': '',
+          'MobilePhone': '',
+          'Street': '',
+          'City': '',
+          'State': '',
+          'PostalCode': '',
+          'Country': ''
+        }
+    }
 
     state_picklist_values;
+    country_picklist_values;
 
     //regex
     phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
@@ -57,7 +67,6 @@ export default class RequestForInformationForm extends LightningElement {
         console.log(JSON.stringify(info.data));
     }
     
-
     // @wire(getPicklistValues, {recordTypeId: , fieldApiName: LEAD_STATE})
     // picklist_values(values) {
     //     this.state_picklist_values = values;
@@ -68,6 +77,17 @@ export default class RequestForInformationForm extends LightningElement {
             { label: 'MN', value: 'MN' },
             { label: 'NY', value: 'NY' },
             { label: 'WA', value: 'WA' },
+        ];
+    }
+
+    get country_options() {
+        return [
+            { label: 'United Status', value: 'United Status' },
+            { label: 'Albania', value: 'Albania' },
+            { label: 'Colombia', value: 'Colombia' },
+            { label: 'Cambodia', value: 'Cambodia' },
+            { label: 'Yemen', value: 'Yemen' },
+            { label: 'Burkina Faso', value: 'Burkina Faso' },
         ];
     }
 

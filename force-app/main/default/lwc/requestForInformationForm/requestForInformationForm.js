@@ -105,7 +105,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.Country = event.target.value;
                 break;
         }
-        console.log(JSON.stringify(event.target.label));
+        console.log(JSON.stringify(event.target.value));
     }
 
     get stateOptions() {

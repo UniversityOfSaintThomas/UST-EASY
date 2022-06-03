@@ -10,8 +10,25 @@ public with sharing class ScholarshipApplicationPage2Controller {
     public boolean essay2HasText { get; set; }
     public String essay1Filename { get; set; }
     public String essay2Filename { get; set; }
-    public Attachment essay1 { get {if (essay1 == null) essay1 = new Attachment(); return essay1;} set; }
-    public Attachment essay2 { get {if (essay2 == null) essay2 = new Attachment(); return essay2;} set; }
+    public Attachment essay1 {
+        get {
+            System.debug('essay1.get:' + essay1);
+            if (essay1 == null) {
+                System.debug('essay1GENERATE');
+                essay1 = new Attachment();
+            }
+            return essay1;
+        }
+        set; }
+    public Attachment essay2 {
+        get {
+            System.debug('essay2.get:' + essay2);
+            if (essay2 == null) {
+                System.debug('essay2GENERATE');
+                essay2 = new Attachment();
+            }
+            return essay2;}
+        set; }
     public Datetime recommendRequestDate1 { get; set; }
     public Datetime recommendRequestDate2 { get; set; }
 
@@ -73,6 +90,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
         boolean result;
 
         String ext = getFileExtension(filename);
+        essay.Id = null;
         System.debug('ext/essay:' + ext + '::' + essay + '::' + essay.Id);
         essay.OwnerId = UserInfo.getUserId();
         System.debug('applicant.Id BEFORE:' + this.applicant.Id);
@@ -86,7 +104,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
         essay.Description = 'Essay ' + essayNum + ' Upload. Original Filename was ' + filename;
 
         try {
-            upsert essay;
+            insert essay;
 
             // I'm sure these field names can be accessed programmatically at some point, but for now we're just doing
             // straight adaptation from the original code until it's working! Until then, I know, kinda grody. -JJH

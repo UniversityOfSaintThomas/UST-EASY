@@ -4,7 +4,8 @@ project:
     package:
         name: admissions-rfi
         api_version: '52.0'
-    git:
+    dependencies:
+        - github: 'https://github.com/SalesforceFoundation/EDA'
     source_format: sfdx
 
 tasks:

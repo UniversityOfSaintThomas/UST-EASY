@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Club Sailing</fullName>
+        <default>false</default>
+        <label>Club Sailing</label>
+    </customValue>
+    <customValue>
+        <fullName>Club Tennis</fullName>
+        <default>false</default>
+        <label>Club Tennis</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Badminton</fullName>
+        <default>false</default>
+        <label>Intramural Badminton</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Basketball</fullName>
+        <default>false</default>
+        <label>Intramural Basketball</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Bean Bags (Cornhole)</fullName>
+        <default>false</default>
+        <label>Intramural Bean Bags (Cornhole)</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Dodgeball</fullName>
+        <default>false</default>
+        <label>Intramural Dodgeball</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Floor Hockey</fullName>
+        <default>false</default>
+        <label>Intramural Floor Hockey</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Football</fullName>
+        <default>false</default>
+        <label>Intramural Football</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Frisbee Golf</fullName>
+        <default>false</default>
+        <label>Intramural Frisbee Golf</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Racquetball</fullName>
+        <default>false</default>
+        <label>Intramural Racquetball</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Soccer</fullName>
+        <default>false</default>
+        <label>Intramural Soccer</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Softball</fullName>
+        <default>false</default>
+        <label>Intramural Softball</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Tennis</fullName>
+        <default>false</default>
+        <label>Intramural Tennis</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Ultimate Frisbee</fullName>
+        <default>false</default>
+        <label>Intramural Ultimate Frisbee</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Volleyball</fullName>
+        <default>false</default>
+        <label>Intramural Volleyball</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Club Baseball</fullName>
+        <default>false</default>
+        <label>Men&apos;s Club Baseball</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Club Hockey</fullName>
+        <default>false</default>
+        <label>Men&apos;s Club Hockey</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Club Soccer</fullName>
+        <default>false</default>
+        <label>Men&apos;s Club Soccer</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Club Volleyball</fullName>
+        <default>false</default>
+        <label>Men&apos;s Club Volleyball</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Lacrosse</fullName>
+        <default>false</default>
+        <label>Men&apos;s Lacrosse</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Rugby</fullName>
+        <default>false</default>
+        <label>Men&apos;s Rugby</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Ultimate Frisbee Club</fullName>
+        <default>false</default>
+        <label>Men&apos;s Ultimate Frisbee Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Rowing</fullName>
+        <default>false</default>
+        <label>Rowing</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Club Soccer</fullName>
+        <default>false</default>
+        <label>Women&apos;s Club Soccer</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Club Volleyball</fullName>
+        <default>false</default>
+        <label>Women&apos;s Club Volleyball</label>
+    </customValue>
+    <customValue>
+        <fullName>Women&apos;s Lacrosse</fullName>
+        <default>false</default>
+        <label>Women&apos;s Lacrosse</label>
+    </customValue>
+    <description>STVINTS</description>
+    <masterLabel>Intramural/Club Sports</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CEEB_Integration_Code__c</fullName>
+    <description>Institution CEEB Code for integration</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Institution CEEB Code for integration</inlineHelpText>
+    <label>CEEB Integration Code</label>
+    <length>6</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

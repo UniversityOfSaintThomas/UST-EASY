@@ -22,9 +22,11 @@ import LEAD_ADDRESS from '@salesforce/schema/Lead.Address';
 // import LEAD_STATE from '@salesforce/schema/Lead.State__c';
 
 //controller
+import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
 import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
 
 export default class RequestForInformationForm extends LightningElement {
+    @api rfi_controller;
     @track program_type;
     @track show_spinner = false;
 
@@ -36,11 +38,16 @@ export default class RequestForInformationForm extends LightningElement {
           'Email': '',
           'Phone': '',
           'MobilePhone': '',
+          'hed__SMS_Opt_Out__c': '',
           'Street': '',
           'City': '',
           'State': '',
           'PostalCode': '',
-          'Country': ''
+          'Country': '',
+          'Recruitment_Program__c': '',
+          'Affiliated_Account__c': '',
+          'Term__c': '',
+          'Birthdate__c': ''
         }
     }
 
@@ -55,25 +62,6 @@ export default class RequestForInformationForm extends LightningElement {
     email_pattern = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
     invalid_phone_message = 'Phone # must match format: 000-000-0000';
     invalid_email_message = 'Email must match format: example@site.com';
-
-    @wire(CurrentPageReference)
-    page_ref(result) {
-        this.program_type = 'Undergraduate';
-        if (result) {
-            console.log(JSON.stringify(result));
-            // TO DO : parse URL to get 'Undergraduate', 'Graduate', etc
-        }
-    }
-
-    @wire(getObjectInfo, { objectApiName: LEAD_OBJECT })
-    object_info(info) {
-        console.log(JSON.stringify(info.data));
-    }
-    
-    // @wire(getPicklistValues, {recordTypeId: , fieldApiName: LEAD_STATE})
-    // picklist_values(values) {
-    //     this.state_picklist_values = values;
-    // }
 
     onChange(event) {
         switch (event.target.label) {

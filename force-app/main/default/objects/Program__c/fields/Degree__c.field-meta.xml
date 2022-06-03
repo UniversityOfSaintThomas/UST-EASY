@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Degree__c</fullName>
+    <deprecated>false</deprecated>
+    <externalId>false</externalId>
+    <inlineHelpText>The degree of this program (Ex: BS, BA, etc.)</inlineHelpText>
+    <label>Degree</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Associate&apos;s Degree Program</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Associate&apos;s Degree Program</label>
+            </value>
+            <value>
+                <fullName>Associate of Arts</fullName>
+                <default>false</default>
+                <label>Associate of Arts</label>
+            </value>
+            <value>
+                <fullName>BA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BA</label>
+            </value>
+            <value>
+                <fullName>Bachelor&apos;s Degree Program</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bachelor&apos;s Degree Program</label>
+            </value>
+            <value>
+                <fullName>Bachelor of Arts</fullName>
+                <default>false</default>
+                <label>Bachelor of Arts</label>
+            </value>
+            <value>
+                <fullName>Bachelor of Music</fullName>
+                <default>false</default>
+                <label>Bachelor of Music</label>
+            </value>
+            <value>
+                <fullName>Bachelor of Science</fullName>
+                <default>false</default>
+                <label>Bachelor of Science</label>
+            </value>
+            <value>
+                <fullName>BS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BS</label>
+            </value>
+            <value>
+                <fullName>BS Civil Engineering</fullName>
+                <default>false</default>
+                <label>BS Civil Engineering</label>
+            </value>
+            <value>
+                <fullName>BS in Computer Engineering</fullName>
+                <default>false</default>
+                <label>BS in Computer Engineering</label>
+            </value>
+            <value>
+                <fullName>BS in Electrical Engineering</fullName>
+                <default>false</default>
+                <label>BS in Electrical Engineering</label>
+            </value>
+            <value>
+                <fullName>BS in Mechanical Engineering</fullName>
+                <default>false</default>
+                <label>BS in Mechanical Engineering</label>
+            </value>
+            <value>
+                <fullName>BS in Nursing</fullName>
+                <default>false</default>
+                <label>BS in Nursing</label>
+            </value>
+            <value>
+                <fullName>Certificate</fullName>
+                <default>false</default>
+                <label>Certificate</label>
+            </value>
+            <value>
+                <fullName>Doctorate</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Doctorate</label>
+            </value>
+            <value>
+                <fullName>Doctor of Education</fullName>
+                <default>false</default>
+                <label>Doctor of Education</label>
+            </value>
+            <value>
+                <fullName>Doctor of Psychology</fullName>
+                <default>false</default>
+                <label>Doctor of Psychology</label>
+            </value>
+            <value>
+                <fullName>Doctor of Social Work</fullName>
+                <default>false</default>
+                <label>Doctor of Social Work</label>
+            </value>
+            <value>
+                <fullName>Education Specialist</fullName>
+                <default>false</default>
+                <label>Education Specialist</label>
+            </value>
+            <value>
+                <fullName>Juris Doctor</fullName>
+                <default>false</default>
+                <label>Juris Doctor</label>
+            </value>
+            <value>
+                <fullName>Legum Magister</fullName>
+                <default>false</default>
+                <label>Legum Magister</label>
+            </value>
+            <value>
+                <fullName>Licensure</fullName>
+                <default>false</default>
+                <label>Licensure</label>
+            </value>
+            <value>
+                <fullName>MA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MA</label>
+            </value>
+            <value>
+                <fullName>Master of Arts</fullName>
+                <default>false</default>
+                <label>Master of Arts</label>
+            </value>
+            <value>
+                <fullName>Master of Arts in Teaching</fullName>
+                <default>false</default>
+                <label>Master of Arts in Teaching</label>
+            </value>
+            <value>
+                <fullName>Master of Business Administration</fullName>
+                <default>false</default>
+                <label>Master of Business Administration</label>
+            </value>
+            <value>
+                <fullName>Master of Business Communication</fullName>
+                <default>false</default>
+                <label>Master of Business Communication</label>
+            </value>
+            <value>
+                <fullName>Master of Divinity</fullName>
+                <default>false</default>
+                <label>Master of Divinity</label>
+            </value>
+            <value>
+                <fullName>Master of Laws (LLM)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Master of Laws (LLM)</label>
+            </value>
+            <value>
+                <fullName>Master of Science</fullName>
+                <default>false</default>
+                <label>Master of Science</label>
+            </value>
+            <value>
+                <fullName>Master of Science in Nursing</fullName>
+                <default>false</default>
+                <label>Master of Science in Nursing</label>
+            </value>
+            <value>
+                <fullName>Master of Social Work</fullName>
+                <default>false</default>
+                <label>Master of Social Work</label>
+            </value>
+            <value>
+                <fullName>Master of Software Design and Development</fullName>
+                <default>false</default>
+                <label>Master of Software Design and Development</label>
+            </value>
+            <value>
+                <fullName>Master of Software Systems</fullName>
+                <default>false</default>
+                <label>Master of Software Systems</label>
+            </value>
+            <value>
+                <fullName>Master of Studies in Law</fullName>
+                <default>false</default>
+                <label>Master of Studies in Law</label>
+            </value>
+            <value>
+                <fullName>MBA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MBA</label>
+            </value>
+            <value>
+                <fullName>MS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>MS</label>
+            </value>
+            <value>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+                <label>Non-Degree</label>
+            </value>
+            <value>
+                <fullName>Post-Masters Certificate</fullName>
+                <default>false</default>
+                <label>Post-Masters Certificate</label>
+            </value>
+            <value>
+                <fullName>Post-Secondary Certificate</fullName>
+                <default>false</default>
+                <label>Post-Secondary Certificate</label>
+            </value>
+            <value>
+                <fullName>Pre-Professional Program</fullName>
+                <default>false</default>
+                <label>Pre-Professional Program</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

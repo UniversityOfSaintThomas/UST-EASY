@@ -5,4 +5,9 @@
     <targets>
         <target>lightning__HomePage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning_HomePage">
+            <property name="rfi_controller" required="true" label="RFI Controller Name" type="String"/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

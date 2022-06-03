@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Program_Type__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The type of Program such as a Major, Minor, etc.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select a Program Type for the Program.</inlineHelpText>
+    <label>Program Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Major</fullName>
+                <default>false</default>
+                <label>Major</label>
+            </value>
+            <value>
+                <fullName>Minor</fullName>
+                <default>false</default>
+                <label>Minor</label>
+            </value>
+            <value>
+                <fullName>Certificate</fullName>
+                <default>false</default>
+                <label>Certificate</label>
+            </value>
+            <value>
+                <fullName>Pre-Professional</fullName>
+                <default>false</default>
+                <label>Pre-Professional</label>
+            </value>
+            <value>
+                <fullName>STEM</fullName>
+                <default>false</default>
+                <label>STEM</label>
+            </value>
+            <value>
+                <fullName>Major Concentration</fullName>
+                <default>false</default>
+                <label>Major Concentration</label>
+            </value>
+            <value>
+                <fullName>Co-Major</fullName>
+                <default>false</default>
+                <label>Co-Major</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

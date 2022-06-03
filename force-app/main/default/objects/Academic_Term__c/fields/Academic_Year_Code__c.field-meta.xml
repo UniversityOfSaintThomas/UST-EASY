@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Academic_Year_Code__c</fullName>
+    <description>STVTERM_ACYR_CODE</description>
+    <externalId>false</externalId>
+    <inlineHelpText>STVTERM_ACYR_CODE</inlineHelpText>
+    <label>Academic Year Code</label>
+    <length>4</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

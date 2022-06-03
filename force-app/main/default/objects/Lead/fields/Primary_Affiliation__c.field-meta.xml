@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Affiliation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Tracks whether the Affiliated Account is considered primary, used in the Interaction process.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check if the affiliation to the organizational account should be considered primary after Lead convert.</inlineHelpText>
+    <label>Primary Affiliation</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

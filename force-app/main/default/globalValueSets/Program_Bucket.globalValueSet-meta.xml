@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Education Leadership</fullName>
+        <default>false</default>
+        <label>Education Leadership</label>
+    </customValue>
+    <customValue>
+        <fullName>Special Education</fullName>
+        <default>false</default>
+        <label>Special Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Teacher Education</fullName>
+        <default>false</default>
+        <label>Teacher Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Non-Degree</fullName>
+        <default>false</default>
+        <label>Non-Degree</label>
+    </customValue>
+    <customValue>
+        <fullName>Master&apos;s</fullName>
+        <default>false</default>
+        <label>Master&apos;s</label>
+    </customValue>
+    <customValue>
+        <fullName>Certificate</fullName>
+        <default>false</default>
+        <label>Certificate</label>
+    </customValue>
+    <description>Use this for graduate schools to limit Programs that will appear to the applicant when creating an application.</description>
+    <masterLabel>Program Bucket</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

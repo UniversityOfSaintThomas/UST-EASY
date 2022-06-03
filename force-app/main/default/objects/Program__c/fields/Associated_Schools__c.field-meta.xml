@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Associated_Schools__c</fullName>
+    <description>Use this field for associating a program to mutliple schools/colleges for www.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Use this field for associating a program to mutliple schools/colleges for www.</inlineHelpText>
+    <label>Associated Schools</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>School_College</valueSetName>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

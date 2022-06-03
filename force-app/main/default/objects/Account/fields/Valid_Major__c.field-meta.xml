@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Major__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>STVMAJR_VALID_MAJOR_IND</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Banner Valid Major Indicator</inlineHelpText>
+    <label>Valid Major</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

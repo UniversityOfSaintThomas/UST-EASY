@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Program_Display__c</fullName>
+    <description>Use this field to determine where it should be available for API&apos;s to www.stthomas.edu</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Use this field to determine where it should be available for API&apos;s to www.stthomas.edu</inlineHelpText>
+    <label>Program Display</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Program Finder</fullName>
+                <default>false</default>
+                <label>Program Finder</label>
+            </value>
+            <value>
+                <fullName>RFI</fullName>
+                <default>false</default>
+                <label>RFI</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

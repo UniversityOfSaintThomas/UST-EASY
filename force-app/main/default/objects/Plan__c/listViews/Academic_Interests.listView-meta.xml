@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Academic_Interests</fullName>
+    <columns>NAME</columns>
+    <columns>Career__c</columns>
+    <columns>Department__c</columns>
+    <columns>Active__c</columns>
+    <columns>Plan_Code__c</columns>
+    <columns>Recruitment_Interest__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Type__c</field>
+        <operation>equals</operation>
+        <value>Academic</value>
+    </filters>
+    <label>Academic Interests</label>
+</ListView>

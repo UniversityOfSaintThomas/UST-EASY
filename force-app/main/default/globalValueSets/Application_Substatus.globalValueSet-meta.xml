@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Academic</fullName>
+        <default>false</default>
+        <label>Academic</label>
+    </customValue>
+    <customValue>
+        <fullName>Accept</fullName>
+        <default>false</default>
+        <label>Accept</label>
+    </customValue>
+    <customValue>
+        <fullName>After Accept</fullName>
+        <default>false</default>
+        <label>After Accept</label>
+    </customValue>
+    <customValue>
+        <fullName>After Confirm</fullName>
+        <default>false</default>
+        <label>After Confirm</label>
+    </customValue>
+    <customValue>
+        <fullName>Appeal</fullName>
+        <default>false</default>
+        <label>Appeal</label>
+    </customValue>
+    <customValue>
+        <fullName>Appeal Denied</fullName>
+        <default>false</default>
+        <label>Appeal Denied</label>
+    </customValue>
+    <customValue>
+        <fullName>Before Complete App</fullName>
+        <default>false</default>
+        <label>Before Complete App</label>
+    </customValue>
+    <customValue>
+        <fullName>Before Decision</fullName>
+        <default>false</default>
+        <label>Before Decision</label>
+    </customValue>
+    <customValue>
+        <fullName>Conditional</fullName>
+        <default>false</default>
+        <label>Conditional</label>
+    </customValue>
+    <customValue>
+        <fullName>Deferred from Previous Term</fullName>
+        <default>false</default>
+        <label>Deferred from Previous Term</label>
+    </customValue>
+    <customValue>
+        <fullName>Deny</fullName>
+        <default>false</default>
+        <label>Deny</label>
+    </customValue>
+    <customValue>
+        <fullName>Disciplinary</fullName>
+        <default>false</default>
+        <label>Disciplinary</label>
+    </customValue>
+    <customValue>
+        <fullName>Exchange</fullName>
+        <default>false</default>
+        <label>Exchange</label>
+    </customValue>
+    <customValue>
+        <fullName>From Waitlist for Inst Acc</fullName>
+        <default>false</default>
+        <label>From Waitlist for Inst Acc</label>
+    </customValue>
+    <customValue>
+        <fullName>From Waitlist into Class</fullName>
+        <default>false</default>
+        <label>From Waitlist into Class</label>
+    </customValue>
+    <customValue>
+        <fullName>Full</fullName>
+        <default>false</default>
+        <label>Full</label>
+    </customValue>
+    <customValue>
+        <fullName>Hold</fullName>
+        <default>false</default>
+        <label>Hold</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive</fullName>
+        <default>false</default>
+        <label>Inactive</label>
+    </customValue>
+    <customValue>
+        <fullName>Incomplete</fullName>
+        <default>false</default>
+        <label>Incomplete</label>
+    </customValue>
+    <customValue>
+        <fullName>Needs Items</fullName>
+        <default>false</default>
+        <label>Needs Items</label>
+    </customValue>
+    <customValue>
+        <fullName>Needs Review</fullName>
+        <default>false</default>
+        <label>Needs Review</label>
+    </customValue>
+    <customValue>
+        <fullName>On Appeal</fullName>
+        <default>false</default>
+        <label>On Appeal</label>
+    </customValue>
+    <customValue>
+        <fullName>Prior to Interview</fullName>
+        <default>false</default>
+        <label>Prior to Interview</label>
+    </customValue>
+    <customValue>
+        <fullName>Provisional</fullName>
+        <default>false</default>
+        <label>Provisional</label>
+    </customValue>
+    <customValue>
+        <fullName>Unsubscribe</fullName>
+        <default>false</default>
+        <label>Unsubscribe</label>
+    </customValue>
+    <customValue>
+        <fullName>Waitlist</fullName>
+        <default>false</default>
+        <label>Waitlist</label>
+    </customValue>
+    <customValue>
+        <fullName>With Concern</fullName>
+        <default>false</default>
+        <label>With Concern</label>
+    </customValue>
+    <customValue>
+        <fullName>Withdraw</fullName>
+        <default>false</default>
+        <label>Withdraw</label>
+    </customValue>
+    <customValue>
+        <fullName>NAR (Not Actively Recruting)</fullName>
+        <default>false</default>
+        <label>NAR (Not Actively Recruting)</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual Update</fullName>
+        <default>false</default>
+        <label>Manual Update</label>
+    </customValue>
+    <description>Used in conjunction with Application Status</description>
+    <masterLabel>Application Substatus</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

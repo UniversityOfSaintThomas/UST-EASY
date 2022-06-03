@@ -6,7 +6,7 @@
         <target>lightning__HomePage</target>
     </targets>
     <targetConfigs>
-        <targetConfig targets="lightning_HomePage">
+        <targetConfig targets="lightning__HomePage">
             <property name="rfi_controller" required="true" label="RFI Controller Name" type="String"/>
         </targetConfig>
     </targetConfigs>

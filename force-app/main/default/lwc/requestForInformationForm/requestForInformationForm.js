@@ -25,7 +25,7 @@ import getRFIController from '@salesforce/apex/requestForInformationFormControll
 import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
 
 export default class RequestForInformationForm extends LightningElement {
-    @api _rfi_controller;
+    @api rfi_controller;
     @track program_type;
     @track show_spinner = false;
 
@@ -62,7 +62,7 @@ export default class RequestForInformationForm extends LightningElement {
     invalid_phone_message = 'Phone # must match format: 000-000-0000';
     invalid_email_message = 'Email must match format: example@site.com';
 
-    @wire(getRFIController, {rfi_controller_name: '$rfi_controller'})
+    @wire(getRFIController, {rfi_controller_name: this._rfi_controller})
     rfi_controller(controller) {
         console.log(JSON.stringify(controller));
     }

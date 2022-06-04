@@ -64,7 +64,8 @@ export default class RequestForInformationForm extends LightningElement {
 
     @wire(getRFIController, {rfi_controller_name: '$rfi_controller'})
     rfi(controller) {
-        console.log(JSON.stringify(controller));
+        console.log('here');
+        console.log(JSON.stringify(controller.data.fields.Applicant_Type__c));
     }
 
     onChange(event) {

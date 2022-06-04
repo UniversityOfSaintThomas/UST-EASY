@@ -62,8 +62,8 @@ export default class RequestForInformationForm extends LightningElement {
     invalid_phone_message = 'Phone # must match format: 000-000-0000';
     invalid_email_message = 'Email must match format: example@site.com';
 
-    @wire(getRFIController, {rfi_controller_name: this._rfi_controller})
-    rfi_controller(controller) {
+    @wire(getRFIController, {rfi_controller_name: '$rfi_controller'})
+    rfi(controller) {
         console.log(JSON.stringify(controller));
     }
 

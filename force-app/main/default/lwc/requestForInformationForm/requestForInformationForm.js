@@ -25,7 +25,7 @@ import getRFIController from '@salesforce/apex/requestForInformationFormControll
 import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
 
 export default class RequestForInformationForm extends LightningElement {
-    @api rfi_controller;
+    @api _rfi_controller;
     @track program_type;
     @track show_spinner = false;
 

@@ -105,6 +105,8 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case 'I would like to receive text messages':
                 this.record_input.hed__SMS_Opt_Out__c = event.target.checked;
+            case 'Birthdate':
+                this.record_input.Birthdate__c = event.target.value;
         }
         console.log(JSON.stringify(event.target.value));
     }

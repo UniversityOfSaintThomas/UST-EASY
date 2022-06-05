@@ -3,16 +3,17 @@ public without sharing class requestForInformationFormController {
     @AuraEnabled(cacheable=true)
     public static RFI_Controller__c getRFIController(String rfi_controller_name){
         try {
-            List<RFI_Controller__c> rfi_controller = [
+            System.debug('name: ' + rfi_controller_name);
+            RFI_Controller__c rfi_controller = [
                 SELECT 
                     Id,
                     Applicant_Type__c, 
                     Fields_to_Display__c 
                 FROM RFI_Controller__c 
                 WHERE Name =: rfi_controller_name
+                LIMIT 1
             ];
-            System.debug('rfi controller: ' + rfi_controller);
-            return rfi_controller[0];
+            return rfi_controller;
         } catch (Exception e) {
             throw new AuraHandledException(rfi_controller_name + ' not found: ' + e.getMessage());
         }

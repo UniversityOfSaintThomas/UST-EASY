@@ -64,7 +64,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     @wire(getRFIController, {rfi_controller_name: '$rfi_controller'})
     rfi(controller) {
-        console.log('here');
+        console.log(JSON.stringify(controller.data));
         console.log(JSON.stringify(controller));
     }
 
@@ -103,6 +103,8 @@ export default class RequestForInformationForm extends LightningElement {
             case 'Country':
                 this.record_input.Country = event.target.value;
                 break;
+            case 'I would like to receive text messages':
+                this.record_input.hed__SMS_Opt_Out__c = event.target.checked;
         }
         console.log(JSON.stringify(event.target.value));
     }

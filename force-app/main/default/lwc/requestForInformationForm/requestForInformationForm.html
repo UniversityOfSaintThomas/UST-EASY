@@ -153,6 +153,45 @@
                     </div>
                 </div>
             </template>
+            <!-- ROW 6 -->
+            <template if:true={show_high_school}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <template if:false={manually_enter_high_school}>
+                            <div onkeyup={handleSearch}>
+                                <lightning-input 
+                                    type="search" 
+                                    label={high_school_search_label}
+                                    aria-label="High School Attended"
+                                    placeholder="Begin typing your school name">
+                                </lightning-input>
+                            </div>
+                            <lightning-combobox
+                                label={high_school_search_results_label}
+                                options={high_school_picklist_values}
+                                aria-label="High School Attended Search Results"
+                                onchange={onChange}>
+                            </lightning-combobox>
+                        </template>
+                        <template if:true={manually_enter_high_school}>
+                            <lightning-input 
+                                type="text" 
+                                label={high_school_search_label}
+                                aria-label="High School Attended"
+                                onchange={onChange}>
+                            </lightning-input>
+                        </template>
+                        <div class="slds-p-top_xx-small">
+                            <lightning-input 
+                                type="checkbox" 
+                                label={high_school_not_found_label}
+                                aria-label="I can't find my High School"
+                                onchange={onChange}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </template>
             <!-- ROW 7 -->
             <template if:true={show_address_fields}>
                 <div class="slds-grid slds-gutters_medium">

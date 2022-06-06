@@ -1,7 +1,7 @@
 /**
  * author: nicole.b@digitalmass.com
  * created-date: 2022-06-01
- * last-modified: 2022-06-01
+ * last-modified: 2022-06-06
  */
 
 //built-ins
@@ -21,13 +21,14 @@ export default class RequestForInformationForm extends LightningElement {
     @api rfi_controller;
     academic_level = 'Undergraduate';
     applicant_type = 'Undergraduate';
-    fields_to_display;
+    fields_to_display; //use to determine which fields on form to display
 
     // lead info
     lead_default_record_type;
 
-    //program__c info
-    program_id_to_name_map;
+    // maps to use on submit (need to populate lookup field with id)
+    program_id_to_name_map; // for Recruitment_Program__c
+    account_id_to_name_map; // for Affiliated_Account__c
 
     //front-end display
     @track show_spinner = false;
@@ -40,29 +41,29 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_email = true;
     @track show_birthdate = true;
     @track show_academic_term = true;
+    @track show_high_school = true;
+    @track manually_enter_high_school = false;
 
     record_input = {
         'apiName': 'Lead',
         'fields': {
-          'FirstName': '',
-          'LastName': '',
-          'Email': '',
-          'Phone': '',
-          'MobilePhone': '',
-          'hed__SMS_Opt_Out__c': '',
-          'Street': '',
-          'City': '',
-          'State': '',
-          'PostalCode': '',
-          'Country': '',
-          'Recruitment_Program__c': '',
-          'Affiliated_Account__c': '',
-          'Term__c': '',
-          'Birthdate__c': '',
-          'hed__Citizenship__c': '',
-          'Admit_Type__c': '',
-          'Recruitment_Program__c': '',
-          'hed__Preferred_Enrollment_Date__c': ''
+            'Admit_Type__c': '',
+            'hed__Citizenship__c': '',
+            'Recruitment_Program__c': '', //lookup
+            'FirstName': '',
+            'LastName': '',
+            'Email': '',
+            'Phone': '',
+            'MobilePhone': '',
+            'hed__SMS_Opt_Out__c': '',
+            'Birthdate__c': '',
+            'hed__Preferred_Enrollment_Date__c': '',
+            'Street': '',
+            'City': '',
+            'State': '',
+            'PostalCode': '',
+            'Country': '',
+            'Affiliated_Account__c': '' //lookup
         }
     }
 
@@ -84,10 +85,9 @@ export default class RequestForInformationForm extends LightningElement {
     zipcode_label = 'Zip Code';
     country_label = 'Country';
     academic_term_label = 'Expected Start Term at St. Thomas';
-
-
-    address1;
-    address2;
+    high_school_search_label = 'High School Attended';
+    high_school_search_results_label = 'High School Attended Search Results';
+    high_school_not_found_label = 'I can\'t find my High School';
 
     //picklist values
     @track state_picklist_values;
@@ -96,6 +96,13 @@ export default class RequestForInformationForm extends LightningElement {
     @track admit_type_picklist_values;
     @track academic_interest_picklist_values;
     @track academic_term_picklist_values;
+    @track high_school_picklist_values; // populate via SOSL
+
+
+    //intermediate values
+    high_school_search_term;
+    address1; //concat w/ address 2 before submit (address combined field only has one 'Street' label)
+    address2;
 
     //regex
     phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
@@ -211,10 +218,26 @@ export default class RequestForInformationForm extends LightningElement {
             case this.academic_term_label:
                 this.record_input.hed__Preferred_Enrollment_Date__c = event.target.value;
                 break;
+            case this.high_school_search_results_label:
+                this.record_input.Affiliated_Account__c = event.target.value;
+                break;
+            case this.high_school_not_found_label:
+                this.manually_enter_high_school = event.target.checked;
+                break;
+            case this.high_school_search_label:
+                this.record_input.Affiliated_Account__c = event.target.value;
+                break;
             default:
                 break;
         }
         console.log(JSON.stringify(event.target.value));
+    }
+
+    handleSearch(event) {
+        this.high_school_search_term = event.target.label;
+        console.log(this.high_school_search_term);
+        //search via SOSL
+        //set high school picklist values
     }
 
     get stateOptions() {

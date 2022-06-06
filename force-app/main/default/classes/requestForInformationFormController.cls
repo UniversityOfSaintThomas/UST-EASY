@@ -5,8 +5,7 @@ public without sharing class requestForInformationFormController {
         try {
             System.debug('name: ' + rfi_controller_name);
             RFI_Controller__c rfi_controller = [
-                SELECT 
-                    Id,
+                SELECT
                     Applicant_Type__c, 
                     Fields_to_Display__c 
                 FROM RFI_Controller__c 
@@ -20,7 +19,23 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<String> getAcademicPrograms(String academic_level) {
-        return new List<String>();
+    public static Map<Id, Program__c> getAcademicPrograms(String academic_level) {
+        try {
+            Id recruitment_record_type_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Recruitment_Program').getRecordTypeId();
+            Map<Id, Program__c> programs = new Map<Id, Program__c>([
+                SELECT
+                    Name
+                FROM Program__c
+                WHERE RecordTypeId =: recruitment_record_type_id
+                AND Academic_Level__c =: academic_level
+                AND Program_Display__c INCLUDES ('RFI')
+                AND Active__c = true
+                AND (Program_Type__c = 'Major'
+                    OR Program_Type__c = 'Pre-Professional')
+            ]);
+            return programs;
+        } catch (Exception e) {
+            throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
+        }
     }
 }

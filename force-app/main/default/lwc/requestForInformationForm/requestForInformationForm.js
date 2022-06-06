@@ -94,6 +94,7 @@ export default class RequestForInformationForm extends LightningElement {
     @wire(getAcademicPrograms, { academic_level: '$academic_level'})
     academic_programs(result) {
         if (result.data) {
+            console.log('academic programs');
             console.log(JSON.stringify(result.data));
         } else {
             console.log(result.error);

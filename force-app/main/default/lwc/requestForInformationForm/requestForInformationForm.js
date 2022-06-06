@@ -166,7 +166,7 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     onChange(event) {
-        switch (String.valueOf(event.target.label)) {
+        switch (event.target.label) {
             case this.first_name_label:
                 this.record_input.FirstName = event.target.value;
                 break;

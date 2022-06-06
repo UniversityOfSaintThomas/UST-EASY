@@ -231,6 +231,7 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
         }
         console.log(JSON.stringify(event.target.value));
+        console.log(JSON.stringify(event.target.checked));
     }
 
     handleSearch(event) {

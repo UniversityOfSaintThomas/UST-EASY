@@ -19,6 +19,7 @@ import LEAD_EMAIL from '@salesforce/schema/Lead.Email';
 import LEAD_HOME_PHONE from '@salesforce/schema/Lead.Phone';
 import LEAD_MOBILE_PHONE from '@salesforce/schema/Lead.MobilePhone';
 import LEAD_ADDRESS from '@salesforce/schema/Lead.Address';
+import LEAD_CITIZENSHIP from '@salesforce/schema/Lead.hed__Citizenship__c';
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
@@ -26,6 +27,7 @@ import getAcademicPrograms from '@salesforce/apex/requestForInformationFormContr
 
 export default class RequestForInformationForm extends LightningElement {
     @api rfi_controller;
+    lead_default_record_type;
     @track program_type;
     @track show_spinner = false;
 
@@ -46,7 +48,8 @@ export default class RequestForInformationForm extends LightningElement {
           'Recruitment_Program__c': '',
           'Affiliated_Account__c': '',
           'Term__c': '',
-          'Birthdate__c': ''
+          'Birthdate__c': '',
+          'hed__Citizenship__c': ''
         }
     }
 
@@ -55,6 +58,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     state_picklist_values;
     country_picklist_values;
+    citizenship_picklist_values;
 
     //regex
     phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
@@ -66,6 +70,18 @@ export default class RequestForInformationForm extends LightningElement {
     rfi(controller) {
         console.log(JSON.stringify(controller.data));
         console.log(JSON.stringify(controller));
+    }
+
+    @wire(getObjectInfo, { objectApiName: LEAD_OBJECT })
+    object_info(result) {
+        console.log('record type:' + JSON.stringify(result.data.defaultRecordTypeId));
+        this.lead_default_record_type = result.data.defaultRecordTypeId;
+    }
+
+    @wire(getPicklistValues, { recordTypeId: this.lead_default_record_type, fieldApiName: LEAD_CITIZENSHIP })
+    picklist_values(result) {
+        console.log('picklists: ' + JSON.stringify(result.data));
+        this.citizenship_picklist_values = result.data;
     }
 
     onChange(event) {
@@ -107,6 +123,8 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.hed__SMS_Opt_Out__c = event.target.checked;
             case 'Birthdate':
                 this.record_input.Birthdate__c = event.target.value;
+            case 'Citizenship':
+                this.record_input.hed__Citizenship__c = event.target.value;
         }
         console.log(JSON.stringify(event.target.value));
     }

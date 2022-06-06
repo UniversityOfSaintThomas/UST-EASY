@@ -16,6 +16,16 @@
 
         <!-- BEGIN FORM -->
         <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
+            <div class="slds-grid slds-gutters_medium">
+                <div class="slds-col">
+                    <lightning-combobox
+                        label="Citizenship" 
+                        options={citizenship_picklist_values}
+                        aria-label="Citizenship"
+                        onchange={onChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
             <!-- ROW 1 -->
             <div class="slds-grid slds-gutters_medium">
                 <div class="slds-col slds-size_1-of-2">

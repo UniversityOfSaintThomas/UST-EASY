@@ -22,7 +22,10 @@ export default class RequestForInformationForm extends LightningElement {
     applicant_type = 'Undergraduate';
     fields_to_display;
 
+    // lead info
     lead_default_record_type;
+
+    //front-end display
     @track show_spinner = false;
 
     record_input = {
@@ -49,6 +52,25 @@ export default class RequestForInformationForm extends LightningElement {
         }
     }
 
+    //field labels
+    admit_type_label = 'I will apply to St. Thomas as a';
+    citizenship_label = 'Citizenship';
+    academic_interest_label = 'Academic Interest';
+    first_name_label = 'First Name';
+    last_name_label = 'Last Name';
+    email_label = 'Email';
+    home_phone_label = 'Home Phone';
+    mobile_phone_label = 'Mobile Phone';
+    text_messages_label = 'I would like to receive text messages';
+    birthdate_label = 'Birthdate';
+    address1_label = 'Address 1';
+    address2_label = 'Address 2';
+    city_label = 'City';
+    state_label = 'State';
+    zipcode_label = 'Zip Code';
+    country_label = 'Country';
+
+
     address1;
     address2;
 
@@ -56,7 +78,8 @@ export default class RequestForInformationForm extends LightningElement {
     state_picklist_values;
     country_picklist_values;
     citizenship_picklist_values;
-    admit_type_picklist_values;getPicklistValuesByRecordType
+    admit_type_picklist_values;
+    academic_interest_picklist_values;
 
     //regex
     phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
@@ -102,50 +125,57 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     onChange(event) {
-        switch (event.target.label) {
-            case 'First Name':
+        switch (String.valueOf(event.target.label)) {
+            case this.first_name_label:
                 this.record_input.FirstName = event.target.value;
                 break;
-            case 'Last Name':
+            case this.last_name_label:
                 this.record_input.LastName = event.target.value;
                 break;
-            case 'Email':
+            case this.email_label:
                 this.record_input.Email = event.target.value;
                 break;
-            case 'Home Phone':
+            case this.home_phone_label:
                 this.record_input.Phone = event.target.value;
                 break;
-            case 'Mobile Phone':
+            case this.mobile_phone_label:
                 this.record_input.MobilePhone = event.target.value;
                 break;
-            case 'Address 1':
+            case this.address1_label:
                 this.address1 = event.target.value;
                 break;
-            case 'Address 2':
+            case this.address2_label:
                 this.address2 = event.target.value; // combine two address fields into Street before submit
                 break;
-            case 'City':
+            case this.city_label:
                 this.record_input.City = event.target.value;
                 break;
-            case 'State':
+            case this.state_label:
                 this.record_input.State = event.target.value;
                 break;
-            case 'Zip Code':
+            case this.zipcode_label:
                 this.record_input.PostalCode = event.target.value;
                 break;
-            case 'Country':
+            case this.country_label:
                 this.record_input.Country = event.target.value;
                 break;
-            case 'I would like to receive text messages':
+            case this.text_messages_label:
                 this.record_input.hed__SMS_Opt_Out__c = event.target.checked;
-            case 'Birthdate':
+                break;
+            case this.birthdate_label:
                 this.record_input.Birthdate__c = event.target.value;
-            case 'Citizenship':
+                break;
+            case this.citizenship_label:
                 this.record_input.hed__Citizenship__c = event.target.value;
-            case 'I will to St. Thomas as a':
+                break;
+            case this.admit_type_label:
                 this.record_input.Admit_Type__c = event.target.value;
-            case 'Academic Interest':
+                break;
+            case this.academic_interest_label:
                 this.record_input.Recruitment_Program__c = event.target.value;
+                break;
+            default:
+                break;
         }
         console.log(JSON.stringify(event.target.value));
     }

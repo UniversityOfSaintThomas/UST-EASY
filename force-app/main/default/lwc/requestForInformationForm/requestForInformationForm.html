@@ -20,7 +20,7 @@
             <div class="slds-grid slds-gutters_medium">
                 <div class="slds-col">
                     <lightning-combobox
-                        label="I will to St. Thomas as a" 
+                        label={admit_type_label}
                         options={admit_type_picklist_values}
                         aria-label="Admit Type"
                         onchange={onChange}>
@@ -31,7 +31,7 @@
             <div class="slds-grid slds-gutters_medium">
                 <div class="slds-col">
                     <lightning-combobox
-                        label="Citizenship" 
+                        label={citizenship_label}
                         options={citizenship_picklist_values}
                         aria-label="Citizenship"
                         onchange={onChange}>
@@ -42,7 +42,7 @@
             <div class="slds-grid slds-gutters_medium">
                 <div class="slds-col">
                     <lightning-combobox
-                        label="Academic Interest" 
+                        label={academic_interest_label}
                         options={academic_interest_picklist_values}
                         aria-label="Academic Interest"
                         onchange={onChange}>
@@ -54,7 +54,7 @@
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-input 
                         type="text" 
-                        label="First Name" 
+                        label={first_name_label}
                         aria-label="First Name"
                         onchange={onChange}>
                     </lightning-input>
@@ -62,7 +62,7 @@
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-input 
                         type="text" 
-                        label="Last Name" 
+                        label={last_name_label}
                         aria-label="Last Name"
                         onchange={onChange}>
                     </lightning-input>
@@ -73,7 +73,7 @@
                 <div class="slds-col">
                     <lightning-input 
                         type="email" 
-                        label="Email" 
+                        label={email_label}
                         aria-label="Email" 
                         pattern={email_pattern}
                         message-when-pattern-mismatch={invalid_email_message}
@@ -86,7 +86,7 @@
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-input 
                         type="tel" 
-                        label="Home Phone" 
+                        label={home_phone_label}
                         aria-label="Home Phone" 
                         pattern={phone_pattern}
                         message-when-pattern-mismatch={invalid_phone_message}
@@ -96,7 +96,7 @@
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-input 
                         type="tel" 
-                        label="Mobile Phone" 
+                        label={mobile_phone_label}
                         aria-label="Mobile Phone" 
                         pattern={phone_pattern}
                         message-when-pattern-mismatch={invalid_phone_message}
@@ -109,7 +109,7 @@
                 <div class="slds-col">
                     <lightning-input 
                         type="checkbox" 
-                        label="I would like to receive text messages" 
+                        label={text_messages_label}
                         aria-label="Opt-in to text messages"
                         onchange={onChange}>
                     </lightning-input>
@@ -120,7 +120,7 @@
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-input 
                         type="date" 
-                        label="Birthdate" 
+                        label={birthdate_label}
                         aria-label="Birthdate"
                         onchange={onChange}>
                     </lightning-input>
@@ -131,7 +131,7 @@
                 <div class="slds-col">
                     <lightning-input 
                         type="text" 
-                        label="Address 1" 
+                        label={address1_label}
                         aria-label="Address 1"
                         onchange={onChange}>
                     </lightning-input>
@@ -142,7 +142,7 @@
                 <div class="slds-col">
                     <lightning-input 
                         type="text" 
-                        label="Address 2" 
+                        label={address2_label}
                         aria-label="Address 2"
                         onchange={onChange}> 
                     </lightning-input>
@@ -153,14 +153,14 @@
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-input 
                         type="text" 
-                        label="City" 
+                        label={city_label}
                         aria-label="City"
                         onchange={onChange}>
                     </lightning-input>
                 </div>
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-combobox
-                        label="State" 
+                        label={state_label} 
                         options={stateOptions}
                         aria-label="State"
                         placeholder="Select a state..."
@@ -173,14 +173,14 @@
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-input 
                         type="text" 
-                        label="Zip Code" 
+                        label={zipcode_label}
                         aria-label="Zip Code"
                         onchange={onChange}>
                     </lightning-input>
                 </div>
                 <div class="slds-col slds-size_1-of-2">
                     <lightning-combobox
-                        label="Country" 
+                        label={country_label}
                         options={country_picklist_values}
                         aria-label="Country"
                         placeholder="Select a country..."

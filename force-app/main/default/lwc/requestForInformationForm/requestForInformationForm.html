@@ -17,177 +17,206 @@
         <!-- BEGIN FORM -->
         <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
             <!-- ROW 0 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col">
-                    <lightning-combobox
-                        label={admit_type_label}
-                        options={admit_type_picklist_values}
-                        aria-label="Admit Type"
-                        onchange={onChange}>
-                    </lightning-combobox>
+            <template if:true={show_admit_type}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <lightning-combobox
+                            label={admit_type_label}
+                            options={admit_type_picklist_values}
+                            aria-label="Admit Type"
+                            onchange={onChange}>
+                        </lightning-combobox>
+                    </div>
                 </div>
-            </div>
+            </template>
             <!-- ROW 1 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col">
-                    <lightning-combobox
-                        label={citizenship_label}
-                        options={citizenship_picklist_values}
-                        aria-label="Citizenship"
-                        onchange={onChange}>
-                    </lightning-combobox>
+            <template if:true={show_citizenship}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <lightning-combobox
+                            label={citizenship_label}
+                            options={citizenship_picklist_values}
+                            aria-label="Citizenship"
+                            onchange={onChange}>
+                        </lightning-combobox>
+                    </div>
                 </div>
-            </div>
+            </template>
             <!-- ROW 2 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col">
-                    <lightning-combobox
-                        label={academic_interest_label}
-                        options={academic_interest_picklist_values}
-                        aria-label="Academic Interest"
-                        onchange={onChange}>
-                    </lightning-combobox>
+            <template if:true={show_academic_interest}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <lightning-combobox
+                            label={academic_interest_label}
+                            options={academic_interest_picklist_values}
+                            aria-label="Academic Interest"
+                            onchange={onChange}>
+                        </lightning-combobox>
+                    </div>
                 </div>
-            </div>
+            </template>
             <!-- ROW 2 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input 
-                        type="text" 
-                        label={first_name_label}
-                        aria-label="First Name"
-                        onchange={onChange}>
-                    </lightning-input>
+            <template if:true={show_name_fields}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="text" 
+                            label={first_name_label}
+                            aria-label="First Name"
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="text" 
+                            label={last_name_label}
+                            aria-label="Last Name"
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
                 </div>
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input 
-                        type="text" 
-                        label={last_name_label}
-                        aria-label="Last Name"
-                        onchange={onChange}>
-                    </lightning-input>
-                </div>
-            </div>
+            </template>
             <!-- ROW 3 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col">
-                    <lightning-input 
-                        type="email" 
-                        label={email_label}
-                        aria-label="Email" 
-                        pattern={email_pattern}
-                        message-when-pattern-mismatch={invalid_email_message}
-                        onchange={onChange}>
-                    </lightning-input>
-                </div>
-            </div>    
+            <template if:true={show_email}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <lightning-input 
+                            type="email" 
+                            label={email_label}
+                            aria-label="Email" 
+                            pattern={email_pattern}
+                            message-when-pattern-mismatch={invalid_email_message}
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                </div>  
+            </template>  
             <!-- ROW 4 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input 
-                        type="tel" 
-                        label={home_phone_label}
-                        aria-label="Home Phone" 
-                        pattern={phone_pattern}
-                        message-when-pattern-mismatch={invalid_phone_message}
-                        onchange={onChange}>
-                    </lightning-input>
-                </div>
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input 
-                        type="tel" 
-                        label={mobile_phone_label}
-                        aria-label="Mobile Phone" 
-                        pattern={phone_pattern}
-                        message-when-pattern-mismatch={invalid_phone_message}
-                        onchange={onChange}>
-                    </lightning-input>
-                </div>
-            </div>  
+            <template if:true={show_phone_fields}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="tel" 
+                            label={home_phone_label}
+                            aria-label="Home Phone" 
+                            pattern={phone_pattern}
+                            message-when-pattern-mismatch={invalid_phone_message}
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="tel" 
+                            label={mobile_phone_label}
+                            aria-label="Mobile Phone" 
+                            pattern={phone_pattern}
+                            message-when-pattern-mismatch={invalid_phone_message}
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                </div> 
             <!-- ROW 5 -->
-            <div class="slds-grid slds-gutters_medium slds-p-top_xx-small">
-                <div class="slds-col">
-                    <lightning-input 
-                        type="checkbox" 
-                        label={text_messages_label}
-                        aria-label="Opt-in to text messages"
-                        onchange={onChange}>
-                    </lightning-input>
+                <div class="slds-grid slds-gutters_medium slds-p-top_xx-small">
+                    <div class="slds-col">
+                        <lightning-input 
+                            type="checkbox" 
+                            label={text_messages_label}
+                            aria-label="Opt-in to text messages"
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
                 </div>
-            </div>
+            </template> 
             <!-- ROW 6 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input 
-                        type="date" 
-                        label={birthdate_label}
-                        aria-label="Birthdate"
-                        onchange={onChange}>
-                    </lightning-input>
+            <template if:true={show_birthdate}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <lightning-input 
+                            type="date" 
+                            label={birthdate_label}
+                            aria-label="Birthdate"
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
                 </div>
-            </div>
+            </template>
+            <!-- ROW 6 -->
+            <template if:true={show_academic_term}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <lightning-combobox
+                            label={academic_term_label}
+                            options={academic_term_picklist_values}
+                            aria-label="Academic Term"
+                            onchange={onChange}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </template>
             <!-- ROW 7 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col">
-                    <lightning-input 
-                        type="text" 
-                        label={address1_label}
-                        aria-label="Address 1"
-                        onchange={onChange}>
-                    </lightning-input>
+            <template if:true={show_address_fields}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <lightning-input 
+                            type="text" 
+                            label={address1_label}
+                            aria-label="Address 1"
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
                 </div>
-            </div>
-            <!-- ROW 8 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col">
-                    <lightning-input 
-                        type="text" 
-                        label={address2_label}
-                        aria-label="Address 2"
-                        onchange={onChange}> 
-                    </lightning-input>
-                </div>
-            </div>  
-            <!-- ROW 9 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input 
-                        type="text" 
-                        label={city_label}
-                        aria-label="City"
-                        onchange={onChange}>
-                    </lightning-input>
-                </div>
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-combobox
-                        label={state_label} 
-                        options={stateOptions}
-                        aria-label="State"
-                        placeholder="Select a state..."
-                        onchange={onChange}>
-                    </lightning-combobox>
-                </div>
-            </div>  
-            <!-- ROW 10 -->
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-input 
-                        type="text" 
-                        label={zipcode_label}
-                        aria-label="Zip Code"
-                        onchange={onChange}>
-                    </lightning-input>
-                </div>
-                <div class="slds-col slds-size_1-of-2">
-                    <lightning-combobox
-                        label={country_label}
-                        options={country_picklist_values}
-                        aria-label="Country"
-                        placeholder="Select a country..."
-                        onchange={onChange}>
-                    </lightning-combobox>
-                </div>
-            </div> 
+                <!-- ROW 8 -->
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <lightning-input 
+                            type="text" 
+                            label={address2_label}
+                            aria-label="Address 2"
+                            onchange={onChange}> 
+                        </lightning-input>
+                    </div>
+                </div>  
+                <!-- ROW 9 -->
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="text" 
+                            label={city_label}
+                            aria-label="City"
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox
+                            label={state_label} 
+                            options={stateOptions}
+                            aria-label="State"
+                            placeholder="Select a state..."
+                            onchange={onChange}>
+                        </lightning-combobox>
+                    </div>
+                </div>  
+                <!-- ROW 10 -->
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input 
+                            type="text" 
+                            label={zipcode_label}
+                            aria-label="Zip Code"
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox
+                            label={country_label}
+                            options={country_picklist_values}
+                            aria-label="Country"
+                            placeholder="Select a country..."
+                            onchange={onChange}>
+                        </lightning-combobox>
+                    </div>
+                </div> 
+            </template>
         </div>
 
         <div class="slds-m-left_medium slds-m-top_medium">

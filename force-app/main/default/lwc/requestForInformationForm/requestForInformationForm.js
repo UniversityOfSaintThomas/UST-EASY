@@ -14,6 +14,7 @@ import LEAD_OBJECT from '@salesforce/schema/Lead';
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
 import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
+import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
 
 export default class RequestForInformationForm extends LightningElement {
     // RFI controller info
@@ -25,8 +26,20 @@ export default class RequestForInformationForm extends LightningElement {
     // lead info
     lead_default_record_type;
 
+    //program__c info
+    program_id_to_name_map;
+
     //front-end display
     @track show_spinner = false;
+    @track show_name_fields = true;
+    @track show_phone_fields = true;
+    @track show_address_fields = true;
+    @track show_admit_type = true;
+    @track show_citizenship = true;
+    @track show_academic_interest = true;
+    @track show_email = true;
+    @track show_birthdate = true;
+    @track show_academic_term = true;
 
     record_input = {
         'apiName': 'Lead',
@@ -48,7 +61,8 @@ export default class RequestForInformationForm extends LightningElement {
           'Birthdate__c': '',
           'hed__Citizenship__c': '',
           'Admit_Type__c': '',
-          'Recruitment_Program__c': ''
+          'Recruitment_Program__c': '',
+          'hed__Preferred_Enrollment_Date__c': ''
         }
     }
 
@@ -69,17 +83,19 @@ export default class RequestForInformationForm extends LightningElement {
     state_label = 'State';
     zipcode_label = 'Zip Code';
     country_label = 'Country';
+    academic_term_label = 'Expected Start Term at St. Thomas';
 
 
     address1;
     address2;
 
     //picklist values
-    state_picklist_values;
-    country_picklist_values;
-    citizenship_picklist_values;
-    admit_type_picklist_values;
-    academic_interest_picklist_values;
+    @track state_picklist_values;
+    @track country_picklist_values;
+    @track citizenship_picklist_values;
+    @track admit_type_picklist_values;
+    @track academic_interest_picklist_values;
+    @track academic_term_picklist_values;
 
     //regex
     phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
@@ -88,6 +104,7 @@ export default class RequestForInformationForm extends LightningElement {
     @wire(getRFIController, { rfi_controller_name: '$rfi_controller' })
     rfi(result) {
         if (result.data) {
+            console.log('controller');
             console.log(JSON.stringify(result.data));
         } else {
             console.log(result.error);
@@ -119,6 +136,23 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             console.log('academic programs');
             console.log(JSON.stringify(result.data));
+            this.program_id_to_name_map = result.data;
+            if (result.data.length != 0) {
+                console.log('success!')
+            }
+        } else {
+            console.log(result.error);
+        }
+    }
+
+    @wire(getAcademicTerms)
+    academic_terms(result) {
+        if (result.data) {
+            console.log('academic terms');
+            console.log(JSON.stringify(result.data));
+            if (result.data.length != 0) {
+                this.academic_terms_picklist_values = result.data;
+            }
         } else {
             console.log(result.error);
         }
@@ -173,6 +207,9 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.academic_interest_label:
                 this.record_input.Recruitment_Program__c = event.target.value;
+                break;
+            case this.academic_term_label:
+                this.record_input.hed__Preferred_Enrollment_Date__c = event.target.value;
                 break;
             default:
                 break;

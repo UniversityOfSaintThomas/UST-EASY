@@ -38,4 +38,25 @@ public without sharing class requestForInformationFormController {
             throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<String> getAcademicTerms() {
+        try {
+            Date today = System.today();
+            List<Academic_Term__c> terms = [
+                SELECT
+                    Name
+                FROM Academic_Term__c
+                WHERE End_Application_Date__c >=: today
+            ];
+
+            List<String> term_names = new List<String>();
+            for (Academic_Term__c term : terms) {
+                term_names.add(term.Name);
+            }
+            return term_names;
+        } catch (Exception e) {
+            throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
+        }
+    }
 }

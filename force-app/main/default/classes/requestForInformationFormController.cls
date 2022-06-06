@@ -20,7 +20,7 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<String> getAcademicPrograms() {
+    public static List<String> getAcademicPrograms(String academic_level) {
         return new List<String>();
     }
 }

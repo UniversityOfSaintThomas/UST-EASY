@@ -7,21 +7,22 @@
 //built-ins
 import { LightningElement, api, track, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
 
 import LEAD_OBJECT from '@salesforce/schema/Lead';
-
-//fields
-import LEAD_CITIZENSHIP from '@salesforce/schema/Lead.hed__Citizenship__c';
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
 import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
 
 export default class RequestForInformationForm extends LightningElement {
+    // RFI controller info
     @api rfi_controller;
+    academic_level = 'Undergraduate';
+    applicant_type = 'Undergraduate';
+    fields_to_display;
+
     lead_default_record_type;
-    @track program_type;
     @track show_spinner = false;
 
     record_input = {
@@ -42,22 +43,26 @@ export default class RequestForInformationForm extends LightningElement {
           'Affiliated_Account__c': '',
           'Term__c': '',
           'Birthdate__c': '',
-          'hed__Citizenship__c': ''
+          'hed__Citizenship__c': '',
+          'Admit_Type__c': '',
+          'Recruitment_Program__c': ''
         }
     }
 
     address1;
     address2;
 
+    //picklist values
     state_picklist_values;
     country_picklist_values;
     citizenship_picklist_values;
+    admit_type_picklist_values;getPicklistValuesByRecordType
 
     //regex
     phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
     invalid_phone_message = 'Phone # must match format: 000-000-0000';
 
-    @wire(getRFIController, {rfi_controller_name: '$rfi_controller'})
+    @wire(getRFIController, { rfi_controller_name: '$rfi_controller' })
     rfi(result) {
         if (result.data) {
             console.log(JSON.stringify(result.data));
@@ -75,11 +80,21 @@ export default class RequestForInformationForm extends LightningElement {
         }
     }
 
-    @wire(getPicklistValues, { recordTypeId: '$lead_default_record_type', fieldApiName: LEAD_CITIZENSHIP })
+    @wire(getPicklistValuesByRecordType, { objectApiName: LEAD_OBJECT, recordTypeId: '$lead_default_record_type' })
     picklist_values(result) {
         if (result.data) {
-            console.log('picklists: ' + JSON.stringify(result.data.values));
-            this.citizenship_picklist_values = result.data.values;
+            this.citizenship_picklist_values = result.data.picklistFieldValues.hed__Citizenship__c.values;
+            this.country_picklist_values = result.data.picklistFieldValues.hed__Citizenship__c.values;
+            this.admit_type_picklist_values = result.data.picklistFieldValues.Admit_Type__c.values;
+        } else {
+            console.log(result.error);
+        }
+    }
+
+    @wire(getAcademicPrograms, { academic_level: '$academic_level'})
+    academic_programs(result) {
+        if (result.data) {
+            console.log(JSON.stringify(result.data));
         } else {
             console.log(result.error);
         }
@@ -126,6 +141,10 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.Birthdate__c = event.target.value;
             case 'Citizenship':
                 this.record_input.hed__Citizenship__c = event.target.value;
+            case 'I will to St. Thomas as a':
+                this.record_input.Admit_Type__c = event.target.value;
+            case 'Academic Interest':
+                this.record_input.Recruitment_Program__c = event.target.value;
         }
         console.log(JSON.stringify(event.target.value));
     }
@@ -135,17 +154,6 @@ export default class RequestForInformationForm extends LightningElement {
             { label: 'MN', value: 'MN' },
             { label: 'NY', value: 'NY' },
             { label: 'WA', value: 'WA' },
-        ];
-    }
-
-    get countryOptions() {
-        return [
-            { label: 'United States', value: 'United States' },
-            { label: 'Albania', value: 'Albania' },
-            { label: 'Colombia', value: 'Colombia' },
-            { label: 'Cambodia', value: 'Cambodia' },
-            { label: 'Yemen', value: 'Yemen' },
-            { label: 'Burkina Faso', value: 'Burkina Faso' },
         ];
     }
 

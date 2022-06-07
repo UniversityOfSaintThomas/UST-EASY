@@ -14,13 +14,13 @@ import LEAD_OBJECT from '@salesforce/schema/Lead';
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
 import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
-import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
+// import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
 
 export default class RequestForInformationForm extends LightningElement {
     // RFI controller info
-    @api rfi_controller;
-    academic_level = 'Undergraduate';
-    applicant_type = 'Undergraduate';
+    @api rfi_controller = 'RFI Controller 0000'; // doesn't work on homepages, takes this preset value - ticket logged w/ Salesforce
+    academic_level;
+    applicant_type;
     fields_to_display; //use to determine which fields on form to display
 
     // lead info
@@ -58,6 +58,7 @@ export default class RequestForInformationForm extends LightningElement {
             'hed__SMS_Opt_Out__c': '',
             'Birthdate__c': '',
             'hed__Preferred_Enrollment_Date__c': '',
+            'Term__c': '',
             'Street': '',
             'City': '',
             'State': '',
@@ -110,13 +111,52 @@ export default class RequestForInformationForm extends LightningElement {
 
     @wire(getRFIController, { rfi_controller_name: '$rfi_controller' })
     rfi(result) {
+        this.show_spinner = true;
         if (result.data) {
-            console.log('controller');
-            console.log(JSON.stringify(result.data));
+            if (result.data.length != 0) {
+                console.log('controller');
+                console.log(JSON.stringify(result.data));
+                this.academic_level = result.data.Academic_Level__c;
+                console.log('academic level: ' + this.academic_level);
+                this.applicant_type = result.data.Applicant_Type__c;
+                this.fields_to_display = result.data.Fields_to_Display__c;
+                if (this.academic_level != undefined) {
+                    getAcademicPrograms({academic_level: this.academic_level})
+                    .then((programs) => {
+                        this.program_id_to_name_map = programs;
+                        console.log(JSON.stringify(programs));
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Error retreiving Academic Programs',
+                                message: error.body.message,
+                                variant: 'error'
+                            })
+                        )
+                    });
+                }
+                this.show_spinner = false;
+            }
         } else {
             console.log(result.error);
+            this.show_spinner = false;
         }
     }
+
+        // @wire(getAcademicTerms)
+    // academic_terms(result) {
+    //     if (result.data) {
+    //         console.log('academic terms');
+    //         console.log(JSON.stringify(result.data));
+    //         if (result.data.length != 0) {
+    //             this.academic_terms_picklist_values = result.data;
+    //         }
+    //     } else {
+    //         console.log(result.error);
+    //     }
+    // }
 
     @wire(getObjectInfo, { objectApiName: LEAD_OBJECT })
     object_info(result) {
@@ -133,33 +173,6 @@ export default class RequestForInformationForm extends LightningElement {
             this.citizenship_picklist_values = result.data.picklistFieldValues.hed__Citizenship__c.values;
             this.country_picklist_values = result.data.picklistFieldValues.hed__Citizenship__c.values;
             this.admit_type_picklist_values = result.data.picklistFieldValues.Admit_Type__c.values;
-        } else {
-            console.log(result.error);
-        }
-    }
-
-    @wire(getAcademicPrograms, { academic_level: '$academic_level'})
-    academic_programs(result) {
-        if (result.data) {
-            console.log('academic programs');
-            console.log(JSON.stringify(result.data));
-            this.program_id_to_name_map = result.data;
-            if (result.data.length != 0) {
-                console.log('success!')
-            }
-        } else {
-            console.log(result.error);
-        }
-    }
-
-    @wire(getAcademicTerms)
-    academic_terms(result) {
-        if (result.data) {
-            console.log('academic terms');
-            console.log(JSON.stringify(result.data));
-            if (result.data.length != 0) {
-                this.academic_terms_picklist_values = result.data;
-            }
         } else {
             console.log(result.error);
         }
@@ -236,7 +249,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     handleSearch(event) {
         this.high_school_search_term = event.target.label;
-        console.log(this.high_school_search_term);
+        console.log(JSON.stringify(this.high_school_search_term));
         //search via SOSL
         //set high school picklist values
     }

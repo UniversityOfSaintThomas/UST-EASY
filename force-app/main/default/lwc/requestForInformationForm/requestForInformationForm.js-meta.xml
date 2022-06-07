@@ -3,11 +3,12 @@
     <apiVersion>54.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
+        <target>lightning__RecordPage</target>
         <target>lightning__HomePage</target>
     </targets>
     <targetConfigs>
-        <targetConfig targets="lightning__HomePage">
-            <property name="rfi_controller" required="true" label="RFI Controller Name" type="String" default="All Fields RFI Controller"/>
+        <targetConfig targets="lightning__RecordPage, lightning__HomePage">
+            <property label="RFI Controller Name" name="rfi_controller" type="String"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

@@ -3,18 +3,17 @@ public without sharing class requestForInformationFormController {
     @AuraEnabled(cacheable=true)
     public static RFI_Controller__c getRFIController(String rfi_controller_name){
         try {
-            System.debug('name: ' + rfi_controller_name);
-            RFI_Controller__c rfi_controller = [
+            return [
                 SELECT
                     Applicant_Type__c, 
+                    Academic_Level__c,
                     Fields_to_Display__c 
                 FROM RFI_Controller__c 
                 WHERE Name =: rfi_controller_name
                 LIMIT 1
             ];
-            return rfi_controller;
         } catch (Exception e) {
-            throw new AuraHandledException(rfi_controller_name + ' not found: ' + e.getMessage());
+            throw new AuraHandledException('Error retrieving RFI Controller: ' + e.getMessage());
         }
     }
 
@@ -39,24 +38,19 @@ public without sharing class requestForInformationFormController {
         }
     }
 
-    @AuraEnabled(cacheable=true)
-    public static List<String> getAcademicTerms() {
-        try {
-            Date today = System.today();
-            List<Academic_Term__c> terms = [
-                SELECT
-                    Name
-                FROM Academic_Term__c
-                WHERE End_Application_Date__c >=: today
-            ];
-
-            List<String> term_names = new List<String>();
-            for (Academic_Term__c term : terms) {
-                term_names.add(term.Name);
-            }
-            return term_names;
-        } catch (Exception e) {
-            throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
-        }
-    }
+    // @AuraEnabled(cacheable=true)
+    // public static Map<Id, hed__Term__c> getAcademicTerms() {
+    //     try {
+    //         Date today = System.today();
+    //         Map<Id, hed__Term__c> terms = new Map<Id, hed__Term__c>([
+    //             SELECT
+    //                 Name
+    //             FROM hed__Term__c
+    //             WHERE End_Application_Date__c >=: today
+    //         ]);
+    //         return terms;
+    //     } catch (Exception e) {
+    //         throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
+    //     }
+    // }
 }

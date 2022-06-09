@@ -158,20 +158,13 @@
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <template if:false={manually_enter_high_school}>
-                            <div onkeyup={handleSearch}>
                                 <lightning-input 
-                                    type="search" 
+                                    type="text" 
                                     label={high_school_search_label}
                                     aria-label="High School Attended"
-                                    placeholder="Begin typing your school name">
+                                    placeholder="Search"
+                                    onclick={handleOpenModal}>
                                 </lightning-input>
-                            </div>
-                            <lightning-combobox
-                                label={high_school_search_results_label}
-                                options={high_school_picklist_values}
-                                aria-label="High School Attended Search Results"
-                                onchange={onChange}>
-                            </lightning-combobox>
                         </template>
                         <template if:true={manually_enter_high_school}>
                             <lightning-input 
@@ -258,6 +251,42 @@
                 </div> 
             </template>
         </div>
+
+        
+
+        <template if:true={modal_open}>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open slds-modal_medium">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse slds-modal__close" title="Close" onclick={s}>
+                            <lightning-icon icon-name="utility:close" size="medium" variant="inverse">
+                            </lightning-icon>
+                        </button>
+                        <div class="slds-box">
+                            <h1 slot="title" class="slds-modal__title slds-hyphenate"><b>High School Search</b></h1>
+                        </div>
+                    </header>
+                    <div class="slds-modal__content slds-p-top_medium" id="modal-content-id-1">
+                        <template if:true={show_academic_term}>
+                            <div class="slds-grid slds-gutters_medium">
+                                <div class="slds-col">
+                                    <div onkeyup={handleSearch}>
+                                        <lightning-input 
+                                            type="search" 
+                                            label={high_school_search_modal_label}
+                                            aria-label="High School Attended"
+                                            placeholder="Search"
+                                            variant="label-hidden">
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+        </template>
 
         <div class="slds-m-left_medium slds-m-top_medium">
             <lightning-button 

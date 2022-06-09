@@ -16,6 +16,7 @@ import LEAD_OBJECT from '@salesforce/schema/Lead';
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
 import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
 import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
+import searchHighSchools from '@salesforce/apex/requestForInformationFormController.searchHighSchools';
 
 export default class RequestForInformationForm extends LightningElement {
     // RFI controller info
@@ -34,6 +35,10 @@ export default class RequestForInformationForm extends LightningElement {
 
     //front-end display
     @track show_spinner = false;
+    @track manually_enter_high_school = false;
+    @track modal_open = false;
+
+    //RFI controller determined booleans
     @track show_name_fields = true;
     @track show_phone_fields = true;
     @track show_address_fields = true;
@@ -44,7 +49,6 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_birthdate = true;
     @track show_academic_term = true;
     @track show_high_school = true;
-    @track manually_enter_high_school = false;
 
     record_input = {
         'apiName': 'Lead',
@@ -90,8 +94,8 @@ export default class RequestForInformationForm extends LightningElement {
     country_label = 'Country';
     academic_term_label = 'Expected Start Term at St. Thomas';
     high_school_search_label = 'High School Attended';
-    high_school_search_results_label = 'High School Attended Search Results';
     high_school_not_found_label = 'I can\'t find my High School';
+    high_school_search_modal_label = 'High School Search'
 
     //picklist values
     @track state_picklist_values;
@@ -127,7 +131,7 @@ export default class RequestForInformationForm extends LightningElement {
                         var values = [];
                         for (const program in programs) {
                             values.push(
-                                {label: programs[program].Name, value: programs[program].Name}
+                                {label: programs[program].Name, value: programs[program].Id}
                             );
                         }
                         this.academic_interest_picklist_values = values;
@@ -159,7 +163,7 @@ export default class RequestForInformationForm extends LightningElement {
                 var values = [];
                 for (const term in result.data) {
                     values.push(
-                        {label: result.data[term].Name, value: result.data[term].Name}
+                        {label: result.data[term].Name, value: result.data[term].Id}
                     );
                 }
                 console.log('academic terms: ' + JSON.stringify(values));
@@ -243,14 +247,8 @@ export default class RequestForInformationForm extends LightningElement {
             case this.academic_term_label:
                 this.record_input.Term__c = event.target.value; // set hed__Preferred_Enrollment_Date__c before submit (get Start Date on Term__c)
                 break;
-            case this.high_school_search_results_label:
-                this.record_input.Affiliated_Account__c = event.target.value;
-                break;
             case this.high_school_not_found_label:
                 this.manually_enter_high_school = event.target.checked;
-                break;
-            case this.high_school_search_label:
-                this.record_input.Affiliated_Account__c = event.target.value;
                 break;
             default:
                 break;
@@ -260,10 +258,40 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     handleSearch(event) {
-        this.high_school_search_term = event.target.label;
-        console.log(JSON.stringify(this.high_school_search_term));
-        //search via SOSL
-        //set high school picklist values
+        searchHighSchools({ search_term : event.target.value})
+        .then((high_schools) => {
+            console.log(JSON.stringify(high_schools));
+            if (high_schools.length != 0) {
+                this.account_id_to_name_map = high_schools;
+                var values = [];
+                for (const school in high_schools) {
+                    values.push(
+                        {label: high_schools[school].Name, value: high_schools[school].Id}
+                    );
+                }
+                console.log('high school: ' + JSON.stringify(values));
+                this.high_school_search_results = values;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error retreiving High Schools',
+                    message: error.body.message,
+                    variant: 'error'
+                })
+            )
+        });
+    }
+
+    handleOpenModal() {
+        this.modal_open = true;
+    }
+
+    handleCloseModal() {
+        this.model_open = false;
+        console.log(this.model_open);
     }
 
     get stateOptions() {

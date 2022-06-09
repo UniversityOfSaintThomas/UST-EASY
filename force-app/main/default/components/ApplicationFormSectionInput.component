@@ -7,7 +7,6 @@
     <apex:attribute name="responseObject" description="" type="SObject"/>
     <apex:attribute name="questionWrapper" description="" type="ApplicationQuestion"/>
     <apex:attribute name="fieldAPI" description="" type="String"/>
-    <apex:attribute name="questionInputValue" description="" type="SObject" required="false"/>
     <apex:attribute name="inputType" description="" type="String" required="true"/>
     <apex:attribute name="isReadOnly" description="" type="Boolean" required="false" default="false"/>
     <apex:attribute name="isRequired" description="" type="Boolean" required="false" default="false"/>

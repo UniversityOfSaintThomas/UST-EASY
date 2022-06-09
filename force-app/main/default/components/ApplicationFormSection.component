@@ -48,9 +48,6 @@
                 <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
                     <apex:repeat value="{!group.questions}" var="question">
                         <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
-                        <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                        <apex:variable var="requiredField" value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}"/>
-                        <apex:variable var="questionLabel" value="{!question.label}"/>
 
                         <apex:outputPanel rendered="{!If(question.showQuestion, true, false)}" styleClass="slds-p-vertical_small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
                             <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
@@ -59,7 +56,7 @@
                                         responseObject="{!question.response}"
                                         questionWrapper="{!question}"
                                         fieldAPI="{!question.defaultFieldName}"
-                                        inputLabel="{!questionLabel}"
+                                        inputLabel="{!question.label}"
                                         inputType="{!question.fieldType}"
                                         isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
                                         isRequired="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}"
@@ -94,6 +91,7 @@
 
         <!-- UPLOAD DOCUMENT  -->
         <apex:outputPanel rendered="{!group.documentUpload && !group.isInternal}" layout="none">
+            <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
             <c:ApplicationFormSectionInputUpload
                     responseObject="{!group.response['ValueTextEntry__c']}"
                     isEditable="{!group.isEditable}"
@@ -107,7 +105,7 @@
 
         <!-- CREATE RELATED OBJECT RECORD -->
         <apex:outputPanel rendered="{!group.relatedObject && !group.isInternal}" layout="block" styleClass="slds-card">
-
+            <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
             <apex:outputPanel styleClass="slds-card__header slds-grid" layout="block">
                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
                     <div class="slds-media__figure">
@@ -149,7 +147,7 @@
                         <apex:outputPanel html-data-recid="{!rr.idx}" layout="block" styleClass=" record-id slds-card__body slds-card__body_inner">
 
                             <apex:repeat value="{!group.questions}" var="question">
-
+                                <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
                                 <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="none">
 
                                     <!--THIS DISPLAYS WHEN RECORD HAS BEEN ENTERED -->
@@ -172,13 +170,9 @@
 
                                         <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
                                         <apex:variable value="{!IF(question.question.Id == null, 'label' + TEXT(itemNumber), question.question.id)}" var="qId"/>
-                                        <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="requiredField"/>
 
                                         <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" layout="block">
 
-                                            <apex:variable value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}" var="readOnlyInput"/>
-                                            {!rr.obj}
-                                            {!rr.obj[question.question.Related_Object_Field__c]}
                                             <c:ApplicationFormSectionInput
                                                     responseObject="{!rr.obj}"
                                                     questionWrapper="{!question}"
@@ -248,11 +242,7 @@
                 <apex:pageMessages/>
 
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
-                    <apex:variable var="readOnlyInput" value="{!if(question.isEditable && group.isEditable && !preventUpdates,'','fieldNotEditable')}"/>
-                    <apex:variable var="requiredField" value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}"/>
-                    <apex:variable var="questionLabel" value="{!question.label}"/>
-                    <apex:variable var="questionValue" value="{!group.newReferenceObject[question.question.Related_Object_Field__c]}}"/>
-
+                    <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
                     <apex:outputPanel rendered="{!question.showQuestion}" styleClass="slds-p-vertical_xxx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
                         <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
 

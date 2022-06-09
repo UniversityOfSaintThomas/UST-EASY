@@ -8,6 +8,7 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
+import { ShowToastEvent } from 'lightning/uiRecordApi';
 
 import LEAD_OBJECT from '@salesforce/schema/Lead';
 
@@ -95,7 +96,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track country_picklist_values;
     @track citizenship_picklist_values;
     @track admit_type_picklist_values;
-    @track academic_interest_picklist_values;
+    @track academic_interest_picklist_values = [];
     @track academic_term_picklist_values;
     @track high_school_picklist_values; // populate via SOSL
 
@@ -114,17 +115,20 @@ export default class RequestForInformationForm extends LightningElement {
         this.show_spinner = true;
         if (result.data) {
             if (result.data.length != 0) {
-                console.log('controller');
-                console.log(JSON.stringify(result.data));
                 this.academic_level = result.data.Academic_Level__c;
-                console.log('academic level: ' + this.academic_level);
                 this.applicant_type = result.data.Applicant_Type__c;
                 this.fields_to_display = result.data.Fields_to_Display__c;
                 if (this.academic_level != undefined) {
                     getAcademicPrograms({academic_level: this.academic_level})
                     .then((programs) => {
                         this.program_id_to_name_map = programs;
-                        console.log(JSON.stringify(programs));
+                        var values = [];
+                        for (const program in programs) {
+                            values.push(
+                                {label: programs[program].Name, value: programs[program].Name}
+                            );
+                        }
+                        this.academic_interest_picklist_values = values;
                     })
                     .catch(error => {
                         console.log(error);

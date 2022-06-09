@@ -15,7 +15,7 @@ import LEAD_OBJECT from '@salesforce/schema/Lead';
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
 import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
-// import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
+import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
 
 export default class RequestForInformationForm extends LightningElement {
     // RFI controller info
@@ -29,6 +29,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     // maps to use on submit (need to populate lookup field with id)
     program_id_to_name_map; // for Recruitment_Program__c
+    term_id_to_name_map; // for Term__c
     account_id_to_name_map; // for Affiliated_Account__c
 
     //front-end display
@@ -65,7 +66,8 @@ export default class RequestForInformationForm extends LightningElement {
             'State': '',
             'PostalCode': '',
             'Country': '',
-            'Affiliated_Account__c': '' //lookup
+            'Affiliated_Account__c': '', //lookup
+            'Term__c': '' //lookup
         }
     }
 
@@ -149,18 +151,24 @@ export default class RequestForInformationForm extends LightningElement {
         }
     }
 
-        // @wire(getAcademicTerms)
-    // academic_terms(result) {
-    //     if (result.data) {
-    //         console.log('academic terms');
-    //         console.log(JSON.stringify(result.data));
-    //         if (result.data.length != 0) {
-    //             this.academic_terms_picklist_values = result.data;
-    //         }
-    //     } else {
-    //         console.log(result.error);
-    //     }
-    // }
+    @wire(getAcademicTerms)
+    academic_terms(result) {
+        if (result.data) {
+            if (result.data.length != 0) {
+                this.term_id_to_name_map = result.data;
+                var values = [];
+                for (const term in result.data) {
+                    values.push(
+                        {label: result.data[term].Name, value: result.data[term].Name}
+                    );
+                }
+                console.log('academic terms: ' + JSON.stringify(values));
+                this.academic_term_picklist_values = values;
+            }
+        } else {
+            console.log(result.error);
+        }
+    }
 
     @wire(getObjectInfo, { objectApiName: LEAD_OBJECT })
     object_info(result) {
@@ -233,7 +241,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.Recruitment_Program__c = event.target.value;
                 break;
             case this.academic_term_label:
-                this.record_input.hed__Preferred_Enrollment_Date__c = event.target.value;
+                this.record_input.Term__c = event.target.value; // set hed__Preferred_Enrollment_Date__c before submit (get Start Date on Term__c)
                 break;
             case this.high_school_search_results_label:
                 this.record_input.Affiliated_Account__c = event.target.value;

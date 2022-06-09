@@ -38,19 +38,20 @@ public without sharing class requestForInformationFormController {
         }
     }
 
-    // @AuraEnabled(cacheable=true)
-    // public static Map<Id, hed__Term__c> getAcademicTerms() {
-    //     try {
-    //         Date today = System.today();
-    //         Map<Id, hed__Term__c> terms = new Map<Id, hed__Term__c>([
-    //             SELECT
-    //                 Name
-    //             FROM hed__Term__c
-    //             WHERE End_Application_Date__c >=: today
-    //         ]);
-    //         return terms;
-    //     } catch (Exception e) {
-    //         throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
-    //     }
-    // }
+    @AuraEnabled(cacheable=true)
+    public static Map<Id, hed__Term__c> getAcademicTerms() {
+        try {
+            Date today = System.today();
+            Map<Id, hed__Term__c> terms = new Map<Id, hed__Term__c>([
+                SELECT
+                    Id,
+                    Name
+                FROM hed__Term__c
+                WHERE End_Application_Date__c >=: today
+            ]);
+            return terms;
+        } catch (Exception e) {
+            throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
+        }
+    }
 }

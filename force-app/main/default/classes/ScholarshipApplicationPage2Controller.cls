@@ -12,9 +12,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
     public String essay2Filename { get; set; }
     public Attachment essay1 {
         get {
-            System.debug('essay1.get:' + essay1);
             if (essay1 == null) {
-                System.debug('essay1GENERATE');
                 essay1 = new Attachment();
             }
             return essay1;
@@ -22,9 +20,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
         set; }
     public Attachment essay2 {
         get {
-            System.debug('essay2.get:' + essay2);
             if (essay2 == null) {
-                System.debug('essay2GENERATE');
+                System.debug('essay2 generated');
                 essay2 = new Attachment();
             }
             return essay2;}
@@ -34,13 +31,11 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
     public PageReference initialize() {
         String sId = ApexPages.currentPage().getParameters().get('sid');
-        System.debug('page2.initialize(): sID: ' + sId);
         String scholarshipId = null;
 
         if (!String.isBlank(sId)) {
             scholarshipId = sId;
             this.scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
-            System.debug('Ln26scholarship' + this.scholarship);
             this.applicant = ScholarshipSharedUtilities.getApplicantInfo(this.scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
             essay1HasText = !String.isEmpty(this.applicant.Essay_1_Answer__c);
             essay2HasText = !String.isEmpty(this.applicant.Essay_2_Answer__c);
@@ -64,7 +59,6 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
         // Need a scholarship.
         } else if (this.scholarship == null) { // It's unclear whether this is reachable in practice, but I hesitate to change it.
-            System.debug('Ln50scholarship' + this.scholarship);
             result = Page.ScholarshipHome.setRedirect(true);
 
         // Need an incomplete applicant.
@@ -90,18 +84,23 @@ public with sharing class ScholarshipApplicationPage2Controller {
         boolean result;
 
         String ext = getFileExtension(filename);
+
         essay.Id = null;
-        System.debug('ext/essay:' + ext + '::' + essay + '::' + essay.Id);
         essay.OwnerId = UserInfo.getUserId();
-        System.debug('applicant.Id BEFORE:' + this.applicant.Id);
-        System.debug('essay.ParentId BEFORE:' + essay.ParentId);
         if (essay.ParentId != this.applicant.Id) { // If user deletes and re-uploads, and it tries writing this field, it will find it already written, then explode. This SHOULD therefore only pass on first upload, but it COULD in theory pass if the second uploader somehow doesn't have the same applicant ID as the first uploader. That will still cause it to explode, and rightly so.
             essay.ParentId = this.applicant.Id; // the scholarship applicant record the file is attached to
         }
-        System.debug('essay.ParentId AFTER:' + essay.ParentId);
         essay.IsPrivate = false;
         essay.name = 'Essay' + essayNum + ext;
         essay.Description = 'Essay ' + essayNum + ' Upload. Original Filename was ' + filename;
+
+        /*
+        String essayName = 'Essay' + essayNum + ext;
+        String essayDescription = 'Essay ' + essayNum + ' Upload. Original Filename was ' + filename;
+        Attachment essayQuick = new Attachment(Id = null, OwnerId = UserInfo.getUserId(), IsPrivate = false, name = essayName, Description = essayDescription );
+        if (essayQuick.ParentId != this.applicant.Id) { // If user deletes and re-uploads, and it tries writing this field, it will find it already written, then explode. This SHOULD therefore only pass on first upload, but it COULD in theory pass if the second uploader somehow doesn't have the same applicant ID as the first uploader. That will still cause it to explode, and rightly so.
+            essayQuick.ParentId = this.applicant.Id; // the scholarship applicant record the file is attached to
+        }*/
 
         try {
             insert essay;
@@ -121,13 +120,14 @@ public with sharing class ScholarshipApplicationPage2Controller {
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error uploading essay' + essayNum + ' attachment'));
             result = false;
         } finally {
+            essay.Body = null; // If you don't explicitly erase the body, the Viewstate will crash (if the body is more than ~215KB). (Viewstate says 170KB but must be applying compression of some kind.)
             essay = new Attachment();
         }
 
         if (result == true) {
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, 'Essay ' + essayNum + ' uploaded successfully'));
         }
-        return result;
+        return null;
     }
 
     public PageReference UploadEssay1() {

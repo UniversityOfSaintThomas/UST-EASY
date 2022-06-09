@@ -296,6 +296,11 @@
             <field>Related_Object__c</field>
             <table>Question__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Assistive_Text__c</field>
+            <table>Question__c</table>
+        </columns>
         <masterLabel>Questions</masterLabel>
     </sections>
 </ReportType>

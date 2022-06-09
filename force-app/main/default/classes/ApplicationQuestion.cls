@@ -26,11 +26,33 @@ public class ApplicationQuestion {
             Schema.DisplayType.URL => 'URL'
     };
 
+    public static final Map<String, String> fieldDefaultAPINames = new Map<String, String>{
+            'Address' => 'Address',
+            'Checkbox' => 'ValueCheckbox__c',
+            'Currency' => 'ValueCurrency__c',
+            'Date' => 'ValueDate__c',
+            'DateTime' => 'ValueDateTime__c',
+            'Decimal' => 'ValueNumber__c',
+            'Email' => 'ValueEmail__c',
+            'TextEncrypted' => 'ValueTextEncrypted__c',
+            'Integer' => 'ValueNumber__c',
+            'MultiPicklist' => 'multiPicklistValues',
+            'Percent' => 'ValuePercent__c',
+            'Phone' => 'ValuePhone__c',
+            'Picklist' => 'ValueText__c',
+            'Reference' => 'ValueText__c',
+            'Text' => 'ValueText__c',
+            'TextArea' => 'ValueTextArea__c',
+            'URL' => 'ValueURL__c'
+    };
+
+
     public String fieldType { get {return tableBased ? question.RecordType.DeveloperName : fieldTypes.get(displayType);} }
 
     public String label { get; private set; }
     public SObject obj { get; set; }
     public String fieldName { get; set; }
+    public String defaultFieldName { get {return String.isBlank(fieldDefaultAPINames.get(fieldType)) ? 'ValueText__c' : fieldDefaultAPINames.get(fieldType);} }
     public String value;
     public Boolean checkboxValue;
     public Decimal decimalValue;
@@ -108,6 +130,7 @@ public class ApplicationQuestion {
     public Question_Response__c response { get; set; }
     public Id responseId { get; set; }
     public String helpText { get; set; }
+    public String assistiveText { get; set; }
 
     public Contact contact { get; set; }
     public Application__c application { get; set; }
@@ -450,6 +473,8 @@ public class ApplicationQuestion {
 
         this.helpText = question.Help_Text__c;
 
+        this.assistiveText = question.Assistive_Text__c;
+
         populateContactFieldOnResponse();
 
         this.con = new Contact();
@@ -552,6 +577,7 @@ public class ApplicationQuestion {
         this.placeholder = question.Placeholder__c;
         this.label = question.Label__c;
         this.helpText = question.Help_Text__c;
+        this.assistiveText = question.Assistive_Text__c;
 
         if (String.isNotBlank(fieldType)) {
             if (fieldType.contains('Picklist') || fieldType.equals('Radio')) {
@@ -745,6 +771,8 @@ public class ApplicationQuestion {
         return null;
     }
 
+
+
     // Writes a string to the response based on the questions type
     public void writeResponse(String resp) {
         try {
@@ -754,7 +782,7 @@ public class ApplicationQuestion {
             } else if (fieldType.equals('Currency')) {
                 response.ValueCurrency__c = Double.valueOf(resp);
             } else if (fieldType.equals('Date')) {
-                response.ValueDate__c = Date.valueOf(resp);
+                response.ValueDate__c = Date.valueOf(Date.valueOf(resp));
             } else if (fieldType.equals('DateTime')) {
                 response.ValueDateTime__c = Datetime.valueOfGmt(resp);
             } else if (fieldType.equals('Email')) {
@@ -782,6 +810,7 @@ public class ApplicationQuestion {
             }
             response.IsPopulated__c = true;
         } catch (Exception e) {
+
         }
     }
 

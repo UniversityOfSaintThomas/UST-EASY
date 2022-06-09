@@ -81,7 +81,8 @@ public class ApplicationCreate {
                                 Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
                                 Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Name_Field_API_Name__c,
                                 Lookup_Object__c, Lookup_Where_Clause__c, New_Reference_Field__c, Contact_Field__c, Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Static_Text__c,
-                                URL_Parameter__c, Editable_Application_Status__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                                URL_Parameter__c, Editable_Application_Status__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Assistive_Text__c,
+                                Related_Object__c
                         FROM Questions__r
                         WHERE Active__c = TRUE
                         ORDER BY Display_Order__c ASC NULLS LAST

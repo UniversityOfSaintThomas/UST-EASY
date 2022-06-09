@@ -1,0 +1,56 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 6/9/2022.
+ -->
+
+<apex:component id="ApplicationFormSectionInputReference">
+    <apex:attribute name="inputType" description="" type="String" required="true"/>
+    <apex:attribute name="questionWrapper" description="" type="ApplicationQuestion"/>
+    <apex:attribute name="responseObject" description="" type="SObject"/>
+    <apex:attribute name="fieldAPI" description="" type="String"/>
+    <apex:attribute name="itemId" description="" type="Id" required="false"/>
+
+    <apex:outputPanel rendered="{!inputType == 'Reference'}" layout="block" styleClass="referenceLookup">
+        <!-- HERE 26-->
+        <apex:outputPanel rendered="{!questionWrapper['question']['New_Reference_Field__c'] == false}" layout="block">
+            <div class="slds-form-element__control">
+                <div class="slds-combobox_container">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox"
+                         data-objtype="{!questionWrapper['question']['Lookup_Object__c']}"
+                         data-objtypefilter="{!questionWrapper['question']['Lookup_Where_Clause__c']}"
+                         data-objtypenamefield="{!questionWrapper['question']['Name_Field_API_Name__c']}"
+                         data-listicon="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#account')}"
+                         data-groupitemid="{!itemId}"
+                    >
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                            <apex:inputText value="{!responseObject['Holding_Name__c']}"
+                                            id="combobox"
+                                            styleClass="bind-autocomplete slds-input slds-combobox__input"
+                                            html-autocomplete="off" html-role="textbox" html-aria-autocomplete="list"
+                            />
+                            <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right refRemoveButton" title="Remove selected option" style="display:none;">
+                                <svg class="slds-button__icon" aria-hidden="true">
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                </svg>
+                                <span class="slds-assistive-text">Remove selected option</span>
+                            </button>
+                            <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right refMagGlass">
+                                                                          <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default " aria-hidden="true">
+                                                                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                                                                          </svg>
+                                                                    </span>
+                        </div>
+                        <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            </ul>
+                        </div>
+                    </div>
+                    <apex:inputHidden html-class="inputHidden" value="{!responseObject[fieldAPI]}"/>
+                </div>
+            </div>
+
+        </apex:outputPanel>
+
+        <apex:inputField value="{!responseObject[fieldAPI]}" styleClass="form-control" rendered="{!questionWrapper['question']['New_Reference_Field__c'] == true}"/>
+
+    </apex:outputPanel>
+</apex:component>

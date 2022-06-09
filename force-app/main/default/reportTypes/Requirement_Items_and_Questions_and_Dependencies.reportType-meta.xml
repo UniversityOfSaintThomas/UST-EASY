@@ -507,6 +507,11 @@
             <field>Related_Object__c</field>
             <table>Requirement_Item__c.Questions__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Assistive_Text__c</field>
+            <table>Requirement_Item__c.Questions__r</table>
+        </columns>
         <masterLabel>Questions</masterLabel>
     </sections>
     <sections>

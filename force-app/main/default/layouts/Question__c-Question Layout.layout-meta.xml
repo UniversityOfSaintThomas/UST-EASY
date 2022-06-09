@@ -73,6 +73,10 @@
                 <behavior>Readonly</behavior>
                 <field>Related_Object__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Assistive_Text__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

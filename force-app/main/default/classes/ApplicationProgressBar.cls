@@ -155,18 +155,19 @@ public class ApplicationProgressBar {
         Set<Id> riIds = new Set<Id>();
         Set<Id> reqIdsToKeep = new Set<Id>();
         riList = [
-                SELECT Id, File_Types__c, Required__c,Requirement__c, Internal_Only__c, Active__c, Required_Number_of_Children__c, Requirement__r.Name, Name,
+                SELECT Id, File_Types__c, Required__c, Requirement__c, Internal_Only__c, Active__c, Required_Number_of_Children__c, Requirement__r.Name, Name,
                         Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c,
                         Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_Object_Record_Type_ID__c,
                         Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Internal_Requirement_Item__c,
                         Editable_Application_Status__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c, Generic_Filter_1__c,
                         Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (
-                        SELECT Id, Active__c,Hardcoded_Value__c,Required__c, Label__c,
+                        SELECT Id, Active__c, Hardcoded_Value__c, Required__c, Label__c,
                                 Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c,
                                 School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c,
                                 Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Contact_Field__c,
-                                Application_Field__c, External_Email_Field__c, Editable_Application_Status__c, New_Reference_Field__c, URL_Parameter__c,Static_Text__c,
-                                Name_Field_API_Name__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                                Application_Field__c, External_Email_Field__c, Editable_Application_Status__c, New_Reference_Field__c, URL_Parameter__c, Static_Text__c,
+                                Name_Field_API_Name__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
+                                Assistive_Text__c, Related_Object__c
                         FROM Questions__r
                         ORDER BY Display_Order__c ASC NULLS LAST
                 )
@@ -227,9 +228,9 @@ public class ApplicationProgressBar {
 
         checkRequirementCompletion();
         for (Requirement_Response__c rr : [
-                SELECT Id, Requirement_Item__r.Required__c,Has_Child_Requirement__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,
-                        Requirement_Item__r.Requirement__c,Incomplete_Questions__c, HasDocument__c, Waive_Requirement__c, Send_Reminder__c,External_Email__c,
-                        Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c
+                SELECT Id, Requirement_Item__r.Required__c, Has_Child_Requirement__c, Requirement_Item__c, Requirement_Item__r.RecordType.DeveloperName,
+                        Requirement_Item__r.Requirement__c, Incomplete_Questions__c, HasDocument__c, Waive_Requirement__c, Send_Reminder__c, External_Email__c,
+                        Viewed__c, Requirement_Item__r.Viewing_Requirement_Formula__c
                 FROM Requirement_Response__c
                 WHERE Application__c = :applicationId
                 AND Requirement_Item__r.Requirement__c IN :reqIds
@@ -320,14 +321,15 @@ public class ApplicationProgressBar {
         //Requirement Responses
         Map<Id, List<Requirement_Response__c>> rrMap = new Map<Id, List<Requirement_Response__c>>();
         for (Requirement_Response__c rr : [
-                SELECT Id, Requirement_Item__r.Requirement__c,Requirement_Item__c,ValueTextEntry__c, Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c,
-                        HasDocument__c, Waive_Requirement__c, Application__c,Application__r.Contact__c,External_Email__c,Hashcode__c,Send_Reminder__c,Viewed__c,
+                SELECT Id, Requirement_Item__r.Requirement__c, Requirement_Item__c, ValueTextEntry__c, Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c,
+                        HasDocument__c, Waive_Requirement__c, Application__c, Application__r.Contact__c, External_Email__c, Hashcode__c, Send_Reminder__c, Viewed__c,
                         Document_Requirement_Fulfilled_On__c, (
                         SELECT Id, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c,
-                        ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c,
-                        ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c, PopulatedOn__c,
-                        IsPopulated__c
-                FROM Question_Responses__r), (
+                                ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c,
+                                ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c, PopulatedOn__c,
+                                IsPopulated__c
+                        FROM Question_Responses__r
+                ), (
                         SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title
                         FROM ContentDocumentLinks
                 )
@@ -346,7 +348,7 @@ public class ApplicationProgressBar {
         Map<Id, Id> qdReqMap = new Map<Id, Id>(); //Maps Question Dependencies to their original Requirement
         Map<Id, List<Question_Dependency__c>> qdMap = new Map<Id, List<Question_Dependency__c>>();
         for (Question_Dependency__c qd : [
-                SELECT Id, Question__c, Question__r.Required__c, Question__r.Requirement_Item__c,Question__r.Requirement_Item__r.Requirement__c,
+                SELECT Id, Question__c, Question__r.Required__c, Question__r.Requirement_Item__c, Question__r.Requirement_Item__r.Requirement__c,
                         Controlling_Question__c, Controlling_Question__r.Requirement_Item__r.Requirement__c, Value__c, ValueCheckbox__c, RecordType.DeveloperName
                 FROM Question_Dependency__c
                 WHERE Question__r.Requirement_Item__r.Requirement__c IN :requirementIds
@@ -363,7 +365,7 @@ public class ApplicationProgressBar {
 
         //Question responses
         Map<Id, List<Question_Response__c>> qrMap = new Map<Id, List<Question_Response__c>>();
-        for (Question_Response__c qr : [SELECT Id, Question__r.Requirement_Item__r.Requirement__c,Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c FROM Question_Response__c WHERE Question__c IN :questionItemSet AND Requirement_Response__r.Application__c = :applicationId]) {
+        for (Question_Response__c qr : [SELECT Id, Question__r.Requirement_Item__r.Requirement__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c FROM Question_Response__c WHERE Question__c IN :questionItemSet AND Requirement_Response__r.Application__c = :applicationId]) {
             if (!qrMap.containsKey(qdReqMap.get(qr.Question__c))) {
                 qrMap.put(qdReqMap.get(qr.Question__c), new List<Question_Response__c>());
             }

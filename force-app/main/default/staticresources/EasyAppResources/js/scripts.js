@@ -18,7 +18,6 @@ function checkEnter(e) {
 function reRenderAllGroups() {
     showFormSpinner();
     document.querySelector("[id$=reRenderGroups]").click();
-    //document.getElementById('{!$Component.reRenderGroups}').click();
 }
 
 function pageLoadReRendered() {
@@ -51,6 +50,7 @@ function pageLoadReRendered() {
     });
     adjustLabelsFor();
     radioCheckBox();
+    checkbox();
     activateAutoComplete();
     hideFormSpinner();
     activateTooltips();
@@ -111,7 +111,7 @@ function findFileName(filePath) {
 }
 
 function adjustLabelsFor() {
-    document.querySelectorAll('.slds-input, .slds-select').forEach(inputFound => {
+    document.querySelectorAll('.slds-input, .slds-select, .slds-radio').forEach(inputFound => {
         let inputWrapper = inputFound.closest('.slds-form-element'),
             inputLabel = inputWrapper.querySelector('label'),
             helpText = inputWrapper.querySelector('.slds-form-element__help');
@@ -119,13 +119,26 @@ function adjustLabelsFor() {
         if (inputLabel) {
             inputLabel.htmlFor = inputFound.getAttribute('id');
         }
+
+        if (inputFound.classList.contains('validateCurrency')
+            || inputFound.classList.contains('validateCurrency')
+            || inputFound.classList.contains('validateNumber')
+            || inputFound.classList.contains('validateDecimal')
+            || inputFound.classList.contains('validatePercent')
+            || inputFound.classList.contains('validateInteger')
+        ) {
+            inputFound.type = 'number';
+            if (!inputFound.classList.contains('validateInteger')) {
+                inputFound.step = 'any';
+            }
+        }
+
         if (inputFound && helpText) {
             if (helpText) {
                 inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
                 inputFound.setAttribute('aria-invalid', 'false');
             }
             if (inputWrapper.dataset.placeholder) {
-                field.setAttribute('placeholder', placeholders[inputId])
                 inputFound.setAttribute('placeholder', inputWrapper.dataset.placeholder);
             }
             if (inputWrapper.dataset.maxlength) {
@@ -145,8 +158,19 @@ function radioCheckBox() {
             radioButton.addEventListener('click', (e) => {
                 showFormSpinner();
                 radioGroupValue.value = radioButton.dataset.radiovalue;
-                rerenderTheTable();
+                if(radioButton.rerenderGroup) {
+                    rerenderTheTable();
+                }
             })
+        });
+    });
+}
+
+function checkbox() {
+    document.querySelectorAll('.slds-checkbox.single-checkbox').forEach(cb => {
+        cb.addEventListener('click', (e) => {
+            let cbInput = cb.querySelector('input');
+            cbInput.click();
         });
     });
 }

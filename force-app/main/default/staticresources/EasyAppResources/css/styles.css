@@ -2,17 +2,40 @@
     background-color: #fff;
     opacity: .5;
 }
-.slds-scope .slds-spinner_brand::before, .slds-scope .slds-spinner_brand::after, .slds-scope .slds-spinner_brand *::before, .slds-scope .slds-spinner_brand *::after{
-    background-color: #9E28B5!important;
+
+.slds-scope .slds-spinner_brand::before, .slds-scope .slds-spinner_brand::after, .slds-scope .slds-spinner_brand *::before, .slds-scope .slds-spinner_brand *::after {
+    background-color: #9E28B5 !important;
 }
+
 .slds-scope .slds-button_brand {
     background-color: #9E28B5;
     border-color: #9E28B5;
 }
-.slds-scope label.slds-text-body_regular {
-    font-size: 1.1em;
+.slds-scope label.slds-text-body_regular, .slds-scope .slds-text-body_regular, .slds-scope label.slds-radio_button__label {
+    font-size: 1.2em;
     font-weight: 400;
 }
+
+.slds-scope .slds-text-body_regular {
+    margin-top: .2em;
+}
+
+.slds-scope .slds-form-element__help {
+    display: none;
+}
+
+.slds-scope label.slds-radio_button__label {
+    margin-right: 0
+}
+
+.slds-scope .slds-has-error .slds-form-element__help {
+    display: block;
+}
+
+.slds-scope label.slds-text-body_regular {
+    margin-top: .2em;
+}
+
 .slds-checkbox .slds-tabled-checklist td [type=checkbox] {
     width: 15px;
     height: 15px;
@@ -20,24 +43,29 @@
     margin: 2px 7px 2px 2px;
     float: left;
 }
+
 div.slds-progress {
     padding-top: 30px;
     padding-bottom: 30px;
 }
+
 /* Carousel styles */
 .carousel-wrapper {
     overflow: hidden;
     width: 100%;
     margin: auto;
 }
+
 .carousel-wrapper * {
     box-sizing: border-box;
 }
+
 .carousel {
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
 }
+
 .carousel__item {
     opacity: 0;
     position: absolute;
@@ -48,6 +76,7 @@ div.slds-progress {
     z-index: 100;
     transition: transform .5s, opacity .5s, z-index .5s;
 }
+
 .carousel__item.initial,
 .carousel__item.active {
     opacity: 1;
@@ -63,6 +92,7 @@ div.slds-progress {
 .carousel__item.prev {
     transform: translateX(-100%);
 }
+
 /*Loading image*/
 #loadSpinner {
     display: none;
@@ -78,6 +108,7 @@ div.slds-progress {
     position: fixed;
     cursor: wait;
 }
+
 #loading {
     position: absolute;
     top: 50%;
@@ -88,6 +119,7 @@ div.slds-progress {
     font-size: 1.25rem;
     margin-bottom: 5px;
 }
+
 #loading .background {
     width: 105px;
     height: 125px;
@@ -100,9 +132,11 @@ div.slds-progress {
     -o-animation: loadspin 2s ease-in-out infinite; /* Opera 12+ */
     animation: loadspin 2s ease-in-out infinite; /* IE 10+, Fx 29+ */
 }
+
 #loading span {
     font-size: 1em;
 }
+
 @-webkit-keyframes loadspin {
     75% {
         -webkit-transform: rotateY(360deg);
@@ -115,6 +149,7 @@ div.slds-progress {
         transform: rotateY(360deg);
     }
 }
+
 @-moz-keyframes loadspin {
     75% {
         -webkit-transform: rotateY(360deg);
@@ -127,6 +162,7 @@ div.slds-progress {
         transform: rotateY(360deg);
     }
 }
+
 @-o-keyframes loadspin {
     75% {
         -webkit-transform: rotateY(360deg);
@@ -139,6 +175,7 @@ div.slds-progress {
         transform: rotateY(360deg);
     }
 }
+
 @keyframes loadspin {
     75% {
         -webkit-transform: rotateY(360deg);

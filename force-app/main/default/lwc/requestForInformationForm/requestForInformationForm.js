@@ -37,6 +37,8 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_spinner = false;
     @track manually_enter_high_school = false;
     @track modal_open = false;
+    @track high_school_data = false;
+    @track high_school_attended_value = '';
 
     //RFI controller determined booleans
     @track show_name_fields = true;
@@ -95,7 +97,9 @@ export default class RequestForInformationForm extends LightningElement {
     academic_term_label = 'Expected Start Term at St. Thomas';
     high_school_search_label = 'High School Attended';
     high_school_not_found_label = 'I can\'t find my High School';
-    high_school_search_modal_label = 'High School Search'
+    high_school_search_modal_label = 'High School Search';
+    high_school_datatable_name = 'High School Datatable';
+    confirm_button_label = 'Confirm';
 
     //picklist values
     @track state_picklist_values;
@@ -104,7 +108,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track admit_type_picklist_values;
     @track academic_interest_picklist_values = [];
     @track academic_term_picklist_values;
-    @track high_school_picklist_values; // populate via SOSL
+    @track high_school_search_results; // populate via SOSL
 
 
     //intermediate values
@@ -115,6 +119,11 @@ export default class RequestForInformationForm extends LightningElement {
     //regex
     phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
     invalid_phone_message = 'Phone # must match format: 000-000-0000';
+
+    //datatable columns
+    high_school_columns = [
+        { label: 'Name', fieldName: 'name', type: 'text' },
+    ];
 
     @wire(getRFIController, { rfi_controller_name: '$rfi_controller' })
     rfi(result) {
@@ -195,6 +204,7 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     onChange(event) {
+        console.log(JSON.stringify(event.target.label));
         switch (event.target.label) {
             case this.first_name_label:
                 this.record_input.FirstName = event.target.value;
@@ -209,10 +219,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.Phone = event.target.value;
                 break;
             case this.mobile_phone_label:
-                this.record_input.MobilePhone = event.target.value;
-                break;
-            case this.address1_label:
-                this.address1 = event.target.value;
+                this.record_input.MobilePhone = event.targenull
                 break;
             case this.address2_label:
                 this.address2 = event.target.value; // combine two address fields into Street before submit
@@ -250,26 +257,31 @@ export default class RequestForInformationForm extends LightningElement {
             case this.high_school_not_found_label:
                 this.manually_enter_high_school = event.target.checked;
                 break;
+            case this.confirm_button_label:
+                var selected_row = this.template.querySelector('lightning-datatable').getSelectedRows(); 
+                this.record_input.Affiliated_Account__c = selected_row.target.Id;
+                console.log(selected_row.target);
+                console.log(selected_row.target.Id);
+                this.high_school_attended_value = selected_row.target.Name;
+                break;
             default:
                 break;
         }
-        console.log(JSON.stringify(event.target.value));
-        console.log(JSON.stringify(event.target.checked));
+        console.log(JSON.stringify(this.record_input));
     }
 
     handleSearch(event) {
         searchHighSchools({ search_term : event.target.value})
         .then((high_schools) => {
-            console.log(JSON.stringify(high_schools));
             if (high_schools.length != 0) {
+                this.high_school_data = true;
                 this.account_id_to_name_map = high_schools;
                 var values = [];
                 for (const school in high_schools) {
                     values.push(
-                        {label: high_schools[school].Name, value: high_schools[school].Id}
+                        {name: high_schools[school].Name, id: high_schools[school].Id}
                     );
                 }
-                console.log('high school: ' + JSON.stringify(values));
                 this.high_school_search_results = values;
             }
         })
@@ -285,13 +297,26 @@ export default class RequestForInformationForm extends LightningElement {
         });
     }
 
-    handleOpenModal() {
-        this.modal_open = true;
-    }
+    handleModal(event) {
+        console.log(JSON.stringify(event.target.tagName));
+        if (event.target.tagName == 'LIGHTNING-ICON') {
+            this.modal_open = false;
+            this.high_school_search_results = null;
+            this.high_school_data = false;
+            this.record_input.Affiliated_Account__c = null;
+        } else if (event.target.tagName == "LIGHTNING-BUTTON") {
+            this.modal_open = false;
+            this.high_school_search_results = null;
+            this.high_school_data = false;
+        } else {
+            this.modal_open = true;
+        }
+    }   
 
-    handleCloseModal() {
-        this.model_open = false;
-        console.log(this.model_open);
+    get setDataTableHeight() {
+        if (this.high_school_search_results.length > 6) {
+            return "height: 210px"
+        }
     }
 
     get stateOptions() {

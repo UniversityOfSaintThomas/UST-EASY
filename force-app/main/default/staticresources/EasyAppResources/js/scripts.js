@@ -15,9 +15,15 @@ function checkEnter(e) {
     return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
 }
 
-function reRenderAllGroups() {
-    showFormSpinner();
-    document.querySelector("[id$=reRenderGroups]").click();
+function reRenderAllGroups(rerenderName) {
+    if (rerenderName && rerenderName != 'none') {
+        showFormSpinner();
+        if (rerenderName === 'rerenderTheTable') {
+            rerenderTheTable();
+        } else {
+            document.querySelector("[id$=reRenderGroups]").click();
+        }
+    }
 }
 
 function pageLoadReRendered() {
@@ -42,19 +48,24 @@ function pageLoadReRendered() {
         });
     });
 
-    let allPhones = document.querySelectorAll('.validPhone');
+    // Validates phone numbers on change
+    let allPhones = document.querySelectorAll('.validatePhone');
     allPhones.forEach(function (ph) {
         ph.addEventListener('change', function (e) {
             formatPhone(ph);
         });
     });
+
+    //Arranging Visualforce inputs to achieve SLDS accessiblity
     adjustLabelsFor();
     radioCheckBox();
     checkbox();
     activateAutoComplete();
-    hideFormSpinner();
     activateTooltips();
     fileUploadAreas();
+
+    //Hide the form spinner if it is active
+    hideFormSpinner();
 }
 
 function fileUploadAreas() {
@@ -156,11 +167,8 @@ function radioCheckBox() {
         });
         document.querySelectorAll('.slds-radio_button').forEach(radioButton => {
             radioButton.addEventListener('click', (e) => {
-                showFormSpinner();
                 radioGroupValue.value = radioButton.dataset.radiovalue;
-                if(radioButton.rerenderGroup) {
-                    rerenderTheTable();
-                }
+                reRenderAllGroups(radioButton.dataset.rerendergroup);
             })
         });
     });

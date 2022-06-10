@@ -180,7 +180,7 @@ public class RelatedObjectReview {
                     }
                     q.Picklist_Values__c = String.join(options,'\n');
                 }
-                relatedObjMap.put(s,new ApplicationQuestion(relatedSObj,q,null));
+                relatedObjMap.put(s, new ApplicationQuestion(relatedSObj, q, null, null));
             }
             fieldKeys = '';
             for(String s : relatedObjMap.keySet()){

@@ -16,7 +16,7 @@
     <apex:attribute name="itemId" description="" type="Id" required="false"/>
     <apex:attribute name="isRadio" description="" type="Boolean" required="false" default="false"/>
     <apex:attribute name="inputOptions" description="" type="SelectOption" required="false"/>
-    <apex:attribute name="rerenderGroup" description="" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="rerenderGroup" description="" type="String" required="false" default="none"/>
     <apex:attribute name="itemNumber" description="iterating number of current displayed questions" type="Integer" required="false"/>
 
 
@@ -49,7 +49,7 @@
         </svg>
         <apex:inputField type="email" id="emailField" styleClass="slds-input validate{!inputType}" value="{!responseObject[fieldAPI]}" rendered="{!!isRequired}"/>
         <apex:inputField type="email" id="emailFieldRequired" styleClass="slds-input validate{!inputType}" value="{!responseObject[fieldAPI]}" rendered="{!isRequired}" required="true"/>
-        <apex:commandLink styleClass="btn-lightning" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder{!itemId}();" oncomplete="appHideLoadingSpinner();pageLoadReRendered();" reRender="none" rendered="{!!preventUpdates && isEditable && isExternalEmail}"/>
+        <apex:commandLink styleClass="btn-lightning" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder{!itemId}();" reRender="none" rendered="{!!preventUpdates && isEditable && isExternalEmail}"/>
     </apex:outputPanel>
 
     <!--Date Box-->
@@ -61,7 +61,7 @@
     <!--Plain Picklist - no radio -->
     <apex:outputPanel rendered="{!inputType == 'Picklist' && !isRadio}" layout="block" styleClass="slds-form-element__control">
         <div class="slds-select_container">
-            <apex:selectList id="picklistField" onchange="if({!rerenderGroup}){reRenderAllGroups();}" value="{!responseObject[fieldAPI]}" size="1" styleClass="slds-select validate{!inputType}">
+            <apex:selectList id="picklistField" value="{!responseObject[fieldAPI]}" size="1" styleClass="slds-select validate{!inputType}" onChange="reRenderAllGroups('{!rerenderGroup}')">
                 <apex:selectOptions value="{!inputOptions}"/>
             </apex:selectList>
         </div>
@@ -70,7 +70,7 @@
     <!-- Multi Picklist -->
     <apex:outputPanel rendered="{!inputType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
         <div class="slds-checkbox">
-            <apex:selectCheckboxes id="multiPicklistField" onchange="if({!rerenderGroup}){reRenderAllGroups();}" value="{!questionWrapper[fieldAPI]}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType}">
+            <apex:selectCheckboxes id="multiPicklistField" value="{!questionWrapper[fieldAPI]}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType}" onChange="reRenderAllGroups('{!rerenderGroup}')">
                 <apex:selectOptions value="{!inputOptions}"/>
             </apex:selectCheckboxes>
         </div>
@@ -79,7 +79,7 @@
     <!-- Checkbox -->
     <apex:outputPanel rendered="{!inputType == 'Checkbox'}" layout="block" styleClass="slds-form-element__control">
         <apex:outputPanel layout="block" styleClass="slds-checkbox single-checkbox validate{!inputType}">
-            <apex:inputCheckbox id="checkBoxField" onchange="if({!rerenderGroup}){reRenderAllGroups();}" value="{!responseObject[fieldAPI]}"/>
+            <apex:inputCheckbox id="checkBoxField" value="{!responseObject[fieldAPI]}" onChange="reRenderAllGroups('{!rerenderGroup}')"/>
             <label class="slds-checkbox__label">
                 <span class="slds-checkbox_faux"></span>
                 <span class="slds-form-element__label">
@@ -133,7 +133,7 @@
                 <apex:variable var="num" value="{!0}"/>
                 <apex:repeat var="radioQuestion" value="{!inputOptions}">
                     <apex:variable var="num" value="{!num + 1}"/>
-                    <span class="slds-button slds-radio_button" data-radiovalue="{!radioQuestion.value}" data-rerenderGroup="{!rerenderGroup}">
+                    <span class="slds-button slds-radio_button" data-radiovalue="{!radioQuestion.value}" data-rerendergroup="{!rerenderGroup}">
                         <input type="radio" name="radio-group-{!itemNumber}" id="radio-group-{!itemNumber}-{!num}" value="{!radioQuestion.value}" class="faux-radio-value"/>
                         <label class="slds-radio_button__label this" for="radio-group-{!itemNumber}-{!num}">
                           <span class="slds-radio_faux">{!radioQuestion.label}</span>

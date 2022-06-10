@@ -382,6 +382,23 @@ public class ApplicationQuestionGroup {
             }
         }
 
+        //Find out which ids have dependent questions under them
+        List<id> questionIds = new List<Id>();
+        for (Question__c q : item.Questions__r) {
+            questionIds.add(q.Id);
+        }
+
+        List<Question_Dependency__c> questionsWithDependentLookup = [
+                SELECT Controlling_Question__c
+                FROM Question_Dependency__c
+                WHERE Controlling_Question__c IN :questionIds
+        ];
+
+        Set<Id> hasDependentQuestionId = new Set<Id>();
+        for (Question_Dependency__c qd : questionsWithDependentLookup) {
+            hasDependentQuestionId.add(qd.Controlling_Question__c);
+        }
+
         if (item.RecordType.DeveloperName.equals('Question_Group')) {
             questionGroup = true;
             documentUpload = false;
@@ -389,15 +406,22 @@ public class ApplicationQuestionGroup {
             externalResponse = false;
 
             questions = new List<ApplicationQuestion>();
+
             for (Question__c q : item.Questions__r) {
                 if (isAppCreate && String.isNotBlank(q.Contact_Field__c)) {
                     ApplicationQuestion aq = new ApplicationQuestion(con, app, q.Label__c, con, q.Contact_Field__c);
                     aq.addQuestionObject(q);
                     aq.populateContactFieldOnResponse();
+                    if (hasDependentQuestionId.contains(q.Id)) {
+                        aq.hasDependentQuestions = true;
+                    }
                     questions.add(aq);
                 } else if (isAppCreate && String.isNotBlank(q.Application_Field__c)) {
                     ApplicationQuestion aq = new ApplicationQuestion(con, app, q.Label__c, app, q.Application_Field__c);
                     aq.addQuestionObject(q);
+                    if (hasDependentQuestionId.contains(q.Id)) {
+                        aq.hasDependentQuestions = true;
+                    }
                     questions.add(aq);
                 } else {
                     if (!qResponses.containsKey(q.Id) && response != null && q.RecordType.DeveloperName != 'Static') {
@@ -406,11 +430,14 @@ public class ApplicationQuestionGroup {
                         qResponses.put(q.Id, new Question_Response__c(Question__c = q.Id));
                     }
 
-                    ApplicationQuestion aq = new ApplicationQuestion(String.isNotBlank(q.Contact_Field__c) ? (SObject) con : (SObject) app, q, qResponses.get(q.Id));
+                    ApplicationQuestion aq = new ApplicationQuestion(String.isNotBlank(q.Contact_Field__c) ? (SObject) con : (SObject) app, q, qResponses.get(q.Id), null);
                     if (aq.application == null) {
                         aq.application = app;
                     }
                     aq.setRequirementResponse(response);
+                    if (hasDependentQuestionId.contains(q.Id)) {
+                        aq.hasDependentQuestions = true;
+                    }
                     questions.add(aq);
                 }
             }
@@ -448,13 +475,20 @@ public class ApplicationQuestionGroup {
             externalResponse = false;
 
             questions = new List<ApplicationQuestion>();
+
             relatedReferenceQuestions = new List<ApplicationQuestion>();
             Map<Id, ApplicationQuestion> qMap = new Map<Id, ApplicationQuestion>();
+
             for (Question__c q : item.Questions__r) {
+                Boolean hasQuestionDependencies = false;
+                if (hasDependentQuestionId.contains(q.Id)) {
+                    hasQuestionDependencies = true;
+                }
                 if (!q.New_Reference_Field__c) {
-                    questions.add(new ApplicationQuestion(app, q, null));
+                    questions.add(new ApplicationQuestion(app, q, null, hasQuestionDependencies));
+
                 } else {
-                    relatedReferenceQuestions.add(new ApplicationQuestion(app, q, null));
+                    relatedReferenceQuestions.add(new ApplicationQuestion(app, q, null, hasQuestionDependencies));
                     relatedReferenceQuestions.get(relatedReferenceQuestions.size() - 1).showRelatedLabel(true);
                 }
             }
@@ -475,6 +509,7 @@ public class ApplicationQuestionGroup {
 
                 for (Question__c q : item.Questions__r) {
                     if (q != null && String.isNotBlank(q.Related_Object_Field__c) && !q.New_Reference_Field__c && q.Active__c) {
+
                         fieldsSet.add(q.Related_Object_Field__c.toLowerCase());
                         if (String.isNotBlank(q.Lookup_Object__c)) {
                             newReferenceObjectType = q.Lookup_Object__c;
@@ -514,7 +549,7 @@ public class ApplicationQuestionGroup {
 
             if (dResponses != null) {
                 for (Question_Response__c qr : dResponses) {
-                    qMap.put(qr.Question__c, new ApplicationQuestion(app, new Question__c(Active__c = true, Id = qr.Question__c), qr));
+                    qMap.put(qr.Question__c, new ApplicationQuestion(app, new Question__c(Active__c = true, Id = qr.Question__c), qr, null));
                 }
             } else if (relatedObject) {
                 for (ApplicationQuestion aq : questions) {

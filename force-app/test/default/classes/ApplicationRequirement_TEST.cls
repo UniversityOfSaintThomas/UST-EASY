@@ -413,8 +413,8 @@ public class ApplicationRequirement_TEST {
         new ApplicationQuestion(new Contact(), new Application__c(), 'test', new Account(), 'Name', Schema.DisplayType.STRING, true);
         new ApplicationQuestion(new Contact(), new Application__c(), 'test', new Account(), 'Name');
         new ApplicationQuestion(new Contact(), new Application__c(), 'test', new Account(), 'Name', 'test');
-        new ApplicationQuestion(new Account(), new Question__c(Length__c = 100), new Question_Response__c());
-        new ApplicationQuestion(new Application__c(), new Question__c(Application_Field__c = 'Student_Type__c', Hardcoded_Value__c = 'Test'), new Question_Response__c());
+        new ApplicationQuestion(new Account(), new Question__c(Length__c = 100), new Question_Response__c(), null);
+        new ApplicationQuestion(new Application__c(), new Question__c(Application_Field__c = 'Student_Type__c', Hardcoded_Value__c = 'Test'), new Question_Response__c(), null);
         ApplicationQuestion q1 = new ApplicationQuestion(new Contact(), new Application__c(), 'test', new Account(), 'Industry', Schema.DisplayType.PICKLIST, true);
         ApplicationQuestion q2 = new ApplicationQuestion(new Contact(), new Application__c(), 'test', new Account(), 'Industry', Schema.DisplayType.MULTIPICKLIST, true);
         ApplicationQuestion q3 = new ApplicationQuestion(new Contact(), new Application__c(), 'test', new Contact(), 'MailingAddress', Schema.DisplayType.ADDRESS, true);

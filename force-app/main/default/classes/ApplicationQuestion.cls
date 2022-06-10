@@ -59,6 +59,7 @@ public class ApplicationQuestion {
     public Datetime datetimeValue;
     public Date dateValue;
     public String textEncryptedValue;
+    public Boolean hasDependentQuestions { get; set; }
     public Integer integerValue;
     public String placeholder { get; set; }
     public Integer length { get; set; }
@@ -433,10 +434,9 @@ public class ApplicationQuestion {
             }
         }
     }
-    public ApplicationQuestion(SObject obj, Question__c question, Question_Response__c response) {
-
+    public ApplicationQuestion(SObject obj, Question__c question, Question_Response__c response, Boolean hasQuestionDependencies) {
+        this.hasDependentQuestions = hasQuestionDependencies;
         this.response = response;
-
         if (obj != null && obj.getSObjectType() == Schema.getGlobalDescribe().get('Contact')) {
             this.contact = (Contact) obj;
             if (String.isNotBlank(question.Contact_Field__c)) {
@@ -460,6 +460,7 @@ public class ApplicationQuestion {
         }
 
         this.question = question;
+
         this.tableBased = true;
 
         if (question.Length__c == null || (question.Length__c > 255 && !fieldType.equals('LongTextArea'))) {
@@ -770,7 +771,6 @@ public class ApplicationQuestion {
         }
         return null;
     }
-
 
 
     // Writes a string to the response based on the questions type

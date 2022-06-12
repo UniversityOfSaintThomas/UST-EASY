@@ -171,7 +171,18 @@
     <c:ApplicationFormSectionInputAddress responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" inputType="{!inputType}"/>
 
     <!-- Reference Question -->
-    <c:ApplicationFormSectionInputReference responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" itemId="{!itemId}" inputType="{!inputType}" fieldAPI="{!fieldAPI}"/>
+    <apex:outputPanel layout="none" rendered="{!!questionWrapper['question']['Display_As_Picklist__c'] && inputType == 'Reference' && $CurrentPage.Name != 'ApplicationRegistration'}">
+        <c:ApplicationFormSectionInputReference responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" itemId="{!itemId}" inputType="{!inputType}" fieldAPI="{!fieldAPI}"/>
+    </apex:outputPanel>
+
+    <!-- Reference Question as Picklist -->
+    <apex:outputPanel layout="none" rendered="{!(questionWrapper['question']['Display_As_Picklist__c'] || $CurrentPage.Name == 'ApplicationRegistration')  && inputType == 'Reference'}">
+        <div class="slds-select_container">
+            <apex:selectList id="referenceField" value="{!responseObject[fieldAPI]}" size="1" styleClass="slds-select" onChange="reRenderAllGroups('{!rerenderGroup}')">
+                <apex:selectOptions value="{!inputOptions}"/>
+            </apex:selectList>
+        </div>
+    </apex:outputPanel>
 
 
 </apex:component>

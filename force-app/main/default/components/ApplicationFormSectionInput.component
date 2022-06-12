@@ -61,7 +61,7 @@
     <!--Plain Picklist - no radio -->
     <apex:outputPanel rendered="{!inputType == 'Picklist' && !isRadio}" layout="block" styleClass="slds-form-element__control">
         <div class="slds-select_container">
-            <apex:selectList id="picklistField" value="{!responseObject[fieldAPI]}" size="1" styleClass="slds-select validate{!inputType}" onChange="reRenderAllGroups('{!rerenderGroup}')">
+            <apex:selectList id="picklistField" value="{!responseObject[fieldAPI]}" size="1" styleClass="slds-select validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" onChange="reRenderAllGroups('{!rerenderGroup}')">
                 <apex:selectOptions value="{!inputOptions}"/>
             </apex:selectList>
         </div>
@@ -70,7 +70,7 @@
     <!-- Multi Picklist -->
     <apex:outputPanel rendered="{!inputType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
         <div class="slds-checkbox">
-            <apex:selectCheckboxes id="multiPicklistField" value="{!questionWrapper[fieldAPI]}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType}" onChange="reRenderAllGroups('{!rerenderGroup}')">
+            <apex:selectCheckboxes id="multiPicklistField" value="{!questionWrapper[fieldAPI]}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" onChange="reRenderAllGroups('{!rerenderGroup}')">
                 <apex:selectOptions value="{!inputOptions}"/>
             </apex:selectCheckboxes>
         </div>
@@ -91,32 +91,38 @@
 
     <!-- TextEncrypted -->
     <apex:outputPanel rendered="{!inputType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!!isRequired}"/>
+        <apex:inputSecret redisplay="true" id="textEncryptedFieldRequired" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!isRequired}" required="true"/>
     </apex:outputPanel>
 
     <!-- Currency -->
     <apex:outputPanel rendered="{!inputType == 'Currency'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputField html-min="0.00" html-step="0.01" id="CurrencyField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+        <apex:inputField html-min="0.00" html-step="0.01" id="CurrencyField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!!isRequired}"/>
+        <apex:inputField html-min="0.00" html-step="0.01" id="CurrencyFieldRequired" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!isRequired}" required="true"/>
     </apex:outputPanel>
 
     <!-- Date Time -->
     <apex:outputPanel rendered="{!inputType == 'DateTime'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputField id="dateTimeField" type="datetime-local" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+        <apex:inputField id="dateTimeField" type="datetime-local" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!!isRequired}"/>
+        <apex:inputField id="dateTimeFieldRequired" type="datetime-local" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!isRequired}" required="true"/>
     </apex:outputPanel>
 
     <!-- Decimal -->
     <apex:outputPanel rendered="{!inputType == 'Decimal' || inputType == 'Integer' || inputType == 'Number'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputText id="numberField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+        <apex:inputText id="numberField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!!isRequired}"/>
+        <apex:inputText id="numberFieldRequired" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!isRequired}" required="true"/>
     </apex:outputPanel>
 
     <!-- Percent -->
     <apex:outputPanel rendered="{!inputType == 'Percent'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputText id="percentField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+        <apex:inputText id="percentField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!!isRequired}"/>
+        <apex:inputText id="percentFieldRequired" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}" rendered="{!isRequired}" required="true"/>
     </apex:outputPanel>
 
     <!-- Phone -->
     <apex:outputPanel rendered="{!inputType == 'Phone'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputField id="phoneField" type="tel" value="{!responseObject[fieldAPI]}" styleClass="slds-input  validate{!inputType}" html-pattern="[0-9-+ ().]+"/>
+        <apex:inputField id="phoneField" type="tel" value="{!responseObject[fieldAPI]}" styleClass="slds-input  validate{!inputType}" html-pattern="[0-9-+ ().]+" rendered="{!!isRequired}"/>
+        <apex:inputField id="phoneFieldRequired" type="tel" value="{!responseObject[fieldAPI]}" styleClass="slds-input  validate{!inputType}" html-pattern="[0-9-+ ().]+" rendered="{!isRequired}" required="true"/>
     </apex:outputPanel>
 
     <!--    &lt;!&ndash; Picklist Radio &ndash;&gt;-->
@@ -147,17 +153,20 @@
 
     <!-- TextArea -->
     <apex:outputPanel rendered="{!inputType == 'TextArea'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputField id="textAreaField" value="{!responseObject[fieldAPI]}" styleClass="slds-textarea validate{!inputType}"/>
+        <apex:inputField id="textAreaField" value="{!responseObject[fieldAPI]}" styleClass="slds-textarea validate{!inputType}" rendered="{!!isRequired}"/>
+        <apex:inputField id="textAreaFieldRequired" value="{!responseObject[fieldAPI]}" styleClass="slds-textarea validate{!inputType}" rendered="{!isRequired}" required="true"/>
     </apex:outputPanel>
 
     <!-- LongTextArea -->
     <apex:outputPanel rendered="{!inputType == 'LongTextArea'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputTextarea rows="10" value="{!responseObject[fieldAPI]}" styleClass="slds-textarea validate{!inputType}"/>
+        <apex:inputTextarea id="textAreaFieldLong" rows="10" value="{!responseObject[fieldAPI]}" styleClass="slds-textarea validate{!inputType}" rendered="{!!isRequired}"/>
+        <apex:inputTextarea id="textAreaFieldLongRequired" rows="10" value="{!responseObject[fieldAPI]}" styleClass="slds-textarea validate{!inputType}" rendered="{!isRequired}" required="true"/>
     </apex:outputPanel>
 
     <!-- URL -->
     <apex:outputPanel rendered="{!inputType == 'URL'}" layout="block" styleClass="slds-form-element__control">
         <apex:inputField id="urlField" type="url" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+        <apex:inputField id="urlFieldRequired" type="url" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
     </apex:outputPanel>
 
     <!-- Static -->

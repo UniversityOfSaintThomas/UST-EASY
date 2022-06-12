@@ -42,7 +42,6 @@ public with sharing class applicationHelper {
                         itemQuery += ' AND Internal_Requirement_Item__c=\'' + appInfo.requirementId + '\'';
                     }
                 */
-                WITH SECURITY_ENFORCED
                 ORDER BY Display_Order__c ASC NULLS LAST
         ];
         return requirementItems;

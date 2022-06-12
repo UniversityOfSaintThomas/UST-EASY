@@ -13,7 +13,7 @@
         <script>
             const previousRequirement = "{!prevId}", nextRequirement = "{!nextId}";
         </script>
-        <div class="slds-p-vertical_large slds-border_top slds-m-vertical_medium slds-border_bottom">
+        <div class="slds-p-vertical_medium slds-border_top slds-border_bottom">
             <div class="{!if(hidePaging,'','carousel-wrapper')}">
 
                 <div class="{!if(hidePaging,'','carousel')}">

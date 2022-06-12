@@ -46,7 +46,7 @@
 
         <apex:outputPanel id="questionGroupWrapper" layout="block">
 
-            <apex:actionRegion>
+            <apex:actionRegion >
 
                 <!-- REGULAR GROUP QUESTIONS - questionGroup -->
                 <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
@@ -56,8 +56,7 @@
                         <apex:outputPanel rendered="{!If(question.showQuestion, true, false)}" styleClass="slds-p-vertical_small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
                             <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
 
-                                <c:ApplicationFormSectionInput
-                                        responseObject="{!question.response}"
+                                <c:ApplicationFormSectionInput responseObject="{!question.response}"
                                         questionWrapper="{!question}"
                                         fieldAPI="{!question.defaultFieldName}"
                                         inputLabel="{!question.label}"
@@ -96,8 +95,7 @@
         <!-- UPLOAD DOCUMENT - REQUIREMENT ITEM LEVEL -->
         <apex:outputPanel rendered="{!group.documentUpload && !group.isInternal}" layout="none">
             <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
-            <c:ApplicationFormSectionInputUpload
-                    responseObject="{!group.response['ValueTextEntry__c']}"
+            <c:ApplicationFormSectionInputUpload responseObject="{!group.response['ValueTextEntry__c']}"
                     isEditable="{!group.isEditable}"
                     preventUpdates="{!preventUpdates}"
                     allowTextEntry="{!group.item.Allow_Text_Entry__c}"
@@ -134,7 +132,7 @@
             <!-- CREATE REFERENCE RECORD -->
             <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
                     <p>You haven"t created any records yet. Click "New Record" to create one.</p>
@@ -176,8 +174,7 @@
 
                                         <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" layout="block">
                                             Has dependent question - {!question.hasDependentQuestions}
-                                            <c:ApplicationFormSectionInput
-                                                    responseObject="{!rr.obj}"
+                                            <c:ApplicationFormSectionInput responseObject="{!rr.obj}"
                                                     questionWrapper="{!question}"
                                                     fieldAPI="{!question.question.Related_Object_Field__c}"
                                                     inputLabel="{!question.label}"
@@ -242,7 +239,7 @@
             <!-- CREATE NEW RELATED RECORD -->
             <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                     <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
@@ -250,8 +247,7 @@
                         <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
 
                             Has dependent question - {!question.hasDependentQuestions}
-                            <c:ApplicationFormSectionInput
-                                    responseObject="{!group.newReferenceObject}"
+                            <c:ApplicationFormSectionInput responseObject="{!group.newReferenceObject}"
                                     questionWrapper="{!question}"
                                     fieldAPI="{!question.question.Related_Object_Field__c}"
                                     inputLabel="{!question.label}"

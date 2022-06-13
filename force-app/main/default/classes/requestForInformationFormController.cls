@@ -5,7 +5,6 @@ public without sharing class requestForInformationFormController {
         try {
             return [
                 SELECT
-                    Applicant_Type__c, 
                     Academic_Level__c,
                     Fields_to_Display__c 
                 FROM RFI_Controller__c 
@@ -67,6 +66,24 @@ public without sharing class requestForInformationFormController {
                     }
                 }
             return high_school_map;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static String getAcademicLevelValue(String api_name){
+        try {
+            String level = '';
+            Schema.DescribeFieldResult describe_result = RFI_Controller__c.Academic_Level__c.getDescribe();
+            List<Schema.PicklistEntry> values = describe_result.getPicklistValues();
+            for(Schema.PicklistEntry value : values) {
+                System.debug(value);
+                if (value.getValue() == api_name) {
+                    return value.getLabel();
+                }
+            }
+            return level;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

@@ -17,12 +17,13 @@ import getRFIController from '@salesforce/apex/requestForInformationFormControll
 import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
 import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
 import searchHighSchools from '@salesforce/apex/requestForInformationFormController.searchHighSchools';
+import getAcademicLevelValue from '@salesforce/apex/requestForInformationFormController.getAcademicLevelValue';
 
 export default class RequestForInformationForm extends LightningElement {
     // RFI controller info
     @api rfi_controller = 'RFI Controller 0001';
     academic_level;
-    applicant_type;
+    academic_level_api;
     fields_to_display; //use to determine which fields on form to display
 
     // lead info
@@ -41,16 +42,16 @@ export default class RequestForInformationForm extends LightningElement {
     @track high_school_attended_value;
 
     //RFI controller determined booleans
-    @track show_name_fields = true;
-    @track show_phone_fields = true;
-    @track show_address_fields = true;
-    @track show_admit_type = true;
-    @track show_citizenship = true;
-    @track show_academic_interest = true;
-    @track show_email = true;
-    @track show_birthdate = true;
-    @track show_academic_term = true;
-    @track show_high_school = true;
+    @track show_name_fields = false;
+    @track show_phone_fields = false;
+    @track show_address_fields = false;
+    @track show_admit_type = false;
+    @track show_citizenship = false;
+    @track show_academic_interest = false;
+    @track show_email = false;
+    @track show_birthdate = false;
+    @track show_academic_term = false;
+    @track show_high_school = false;
 
     record_input = {
         'apiName': 'Lead',
@@ -106,7 +107,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track country_picklist_values;
     @track citizenship_picklist_values;
     @track admit_type_picklist_values;
-    @track academic_interest_picklist_values = [];
+    @track academic_level_picklist_values;
     @track academic_term_picklist_values;
     @track high_school_search_results; // populate via SOSL
 
@@ -128,15 +129,19 @@ export default class RequestForInformationForm extends LightningElement {
     rfi(result) {
         if (result.data) {
             if (result.data.length != 0) {
-                this.academic_level = result.data.Academic_Level__c;
-                this.applicant_type = result.data.Applicant_Type__c;
+                this.academic_level_api = result.data.Academic_Level__c;
+                console.log(this.academic_level_api);
+                getAcademicLevelValue({api_name : result.data.Academic_Level__c})
+                .then((level) => {
+                    this.academic_level = level;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
                 this.fields_to_display = result.data.Fields_to_Display__c;
-                console.log(this.fields_to_display);
-                for (const field in this.fields_to_display) {
-                    continue;
-                }
-                if (this.academic_level != undefined) {
-                    getAcademicPrograms({academic_level: this.academic_level})
+                this.handleFieldsToDisplay();
+                if (this.academic_level_api != undefined) {
+                    getAcademicPrograms({academic_level: this.academic_level_api})
                     .then((programs) => {
                         console.log(JSON.stringify(programs));
                         this.program_id_to_name_map = programs;
@@ -164,6 +169,44 @@ export default class RequestForInformationForm extends LightningElement {
         } else {
             console.log(result.error);
             this.show_spinner = false;
+        }
+    }
+
+    handleFieldsToDisplay() {
+        var fields = this.fields_to_display.split(';');
+        for (const field of fields) {
+            switch (field) {
+                case 'Name fields':
+                    this.show_name_fields = true;
+                    break;
+                case 'Phone fields':
+                    this.show_phone_fields = true;
+                    break;
+                case 'Address fields':
+                    this.show_address_fields = true;
+                    break;
+                case 'Academic Interest':
+                    this.show_academic_interest = true;
+                    break;
+                case 'Academic Term':
+                    this.show_academic_term = true;
+                    break;
+                case 'High School Attended':
+                    this.show_high_school = true;
+                    break;
+                case 'Birthdate':
+                    this.show_birthdate = true;
+                    break;
+                case 'Email':
+                    this.show_email = true;
+                    break;
+                case 'Admit Type':
+                    this.show_admit_type = true;
+                    break;
+                case 'Citizenship':
+                    this.show_citizenship = true;
+                    break;
+            }
         }
     }
 
@@ -275,7 +318,8 @@ export default class RequestForInformationForm extends LightningElement {
         if (JSON.stringify(event.target.value).length > 4) {
             searchHighSchools({ search_term : event.target.value})
             .then((high_schools) => {
-                if (high_schools.length > 2) {
+                console.log(JSON.stringify(high_schools));
+                if (Object.keys(high_schools).length != 0) {
                     this.high_school_data = true;
                     this.account_id_to_name_map = high_schools;
                     var values = [];
@@ -304,7 +348,6 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     handleModal(event) {
-        console.log(JSON.stringify(event.target.tagName));
         if (event.target.tagName == 'LIGHTNING-ICON') { // x button at top of modal
             this.modal_open = false;
             this.high_school_search_results = null;

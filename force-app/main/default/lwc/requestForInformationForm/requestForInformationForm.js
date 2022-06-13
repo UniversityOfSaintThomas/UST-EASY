@@ -20,7 +20,7 @@ import searchHighSchools from '@salesforce/apex/requestForInformationFormControl
 
 export default class RequestForInformationForm extends LightningElement {
     // RFI controller info
-    @api rfi_controller = 'RFI Controller 0001'; // doesn't work on homepages, takes this preset value - ticket logged w/ Salesforce
+    @api rfi_controller = 'RFI Controller 0001';
     academic_level;
     applicant_type;
     fields_to_display; //use to determine which fields on form to display
@@ -34,7 +34,7 @@ export default class RequestForInformationForm extends LightningElement {
     account_id_to_name_map; // for Affiliated_Account__c
 
     //front-end display
-    @track show_spinner = false;
+    @track show_spinner = true;
     @track manually_enter_high_school = false;
     @track modal_open = false;
     @track high_school_data = false;
@@ -126,12 +126,15 @@ export default class RequestForInformationForm extends LightningElement {
 
     @wire(getRFIController, { rfi_controller_name: '$rfi_controller' })
     rfi(result) {
-        this.show_spinner = true;
         if (result.data) {
             if (result.data.length != 0) {
                 this.academic_level = result.data.Academic_Level__c;
                 this.applicant_type = result.data.Applicant_Type__c;
                 this.fields_to_display = result.data.Fields_to_Display__c;
+                console.log(this.fields_to_display);
+                for (const field in this.fields_to_display) {
+                    continue;
+                }
                 if (this.academic_level != undefined) {
                     getAcademicPrograms({academic_level: this.academic_level})
                     .then((programs) => {
@@ -175,7 +178,6 @@ export default class RequestForInformationForm extends LightningElement {
                         {label: result.data[term].Name, value: result.data[term].Id}
                     );
                 }
-                console.log('academic terms: ' + JSON.stringify(values));
                 this.academic_term_picklist_values = values;
             }
         } else {
@@ -273,7 +275,7 @@ export default class RequestForInformationForm extends LightningElement {
         if (JSON.stringify(event.target.value).length > 4) {
             searchHighSchools({ search_term : event.target.value})
             .then((high_schools) => {
-                if (high_schools.length != 0) {
+                if (high_schools.length > 2) {
                     this.high_school_data = true;
                     this.account_id_to_name_map = high_schools;
                     var values = [];

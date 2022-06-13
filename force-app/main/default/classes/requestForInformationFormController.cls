@@ -6,7 +6,8 @@ public without sharing class requestForInformationFormController {
             return [
                 SELECT
                     Academic_Level__c,
-                    Fields_to_Display__c 
+                    Applicant_Status__c,
+                    Fields_to_Display__c
                 FROM RFI_Controller__c 
                 WHERE Name =: rfi_controller_name
                 LIMIT 1
@@ -78,7 +79,6 @@ public without sharing class requestForInformationFormController {
             Schema.DescribeFieldResult describe_result = RFI_Controller__c.Academic_Level__c.getDescribe();
             List<Schema.PicklistEntry> values = describe_result.getPicklistValues();
             for(Schema.PicklistEntry value : values) {
-                System.debug(value);
                 if (value.getValue() == api_name) {
                     return value.getLabel();
                 }

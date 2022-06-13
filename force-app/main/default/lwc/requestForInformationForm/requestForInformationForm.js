@@ -24,6 +24,7 @@ export default class RequestForInformationForm extends LightningElement {
     @api rfi_controller = 'RFI Controller 0001';
     academic_level;
     academic_level_api;
+    applicant_status;
     fields_to_display; //use to determine which fields on form to display
 
     // lead info
@@ -130,6 +131,7 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             if (result.data.length != 0) {
                 this.academic_level_api = result.data.Academic_Level__c;
+                this.applicant_status = result.data.Applicant_Status__c;
                 console.log(this.academic_level_api);
                 getAcademicLevelValue({api_name : result.data.Academic_Level__c})
                 .then((level) => {

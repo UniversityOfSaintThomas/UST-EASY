@@ -59,7 +59,6 @@ public without sharing class requestForInformationFormController {
     public static Map<Id, Account> searchHighSchools(String search_term){
         try {
             Map<Id, Account> high_school_map = new Map<Id, Account>();
-            if (search_term.length() > 2) {
                 Id educational_record_type = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
                 List<List<Account>> high_schools = [FIND :search_term IN NAME FIELDS RETURNING Account(Id, Name WHERE RecordTypeId =: educational_record_type ORDER BY Name)];
                 for (List<Account> account_list : high_schools) {
@@ -67,7 +66,6 @@ public without sharing class requestForInformationFormController {
                         high_school_map.put(high_school.Id, high_school);
                     }
                 }
-            }
             return high_school_map;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

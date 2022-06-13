@@ -20,7 +20,7 @@ import searchHighSchools from '@salesforce/apex/requestForInformationFormControl
 
 export default class RequestForInformationForm extends LightningElement {
     // RFI controller info
-    @api rfi_controller = 'RFI Controller 0000'; // doesn't work on homepages, takes this preset value - ticket logged w/ Salesforce
+    @api rfi_controller = 'RFI Controller 0001'; // doesn't work on homepages, takes this preset value - ticket logged w/ Salesforce
     academic_level;
     applicant_type;
     fields_to_display; //use to determine which fields on form to display
@@ -28,7 +28,7 @@ export default class RequestForInformationForm extends LightningElement {
     // lead info
     lead_default_record_type;
 
-    // maps to use on submit (need to populate lookup field with id)
+    // maps to populate picklists, where label is name and value is id of object
     program_id_to_name_map; // for Recruitment_Program__c
     term_id_to_name_map; // for Term__c
     account_id_to_name_map; // for Affiliated_Account__c
@@ -38,7 +38,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track manually_enter_high_school = false;
     @track modal_open = false;
     @track high_school_data = false;
-    @track high_school_attended_value = '';
+    @track high_school_attended_value;
 
     //RFI controller determined booleans
     @track show_name_fields = true;
@@ -112,7 +112,6 @@ export default class RequestForInformationForm extends LightningElement {
 
 
     //intermediate values
-    high_school_search_term;
     address1; //concat w/ address 2 before submit (address combined field only has one 'Street' label)
     address2;
 
@@ -136,6 +135,7 @@ export default class RequestForInformationForm extends LightningElement {
                 if (this.academic_level != undefined) {
                     getAcademicPrograms({academic_level: this.academic_level})
                     .then((programs) => {
+                        console.log(JSON.stringify(programs));
                         this.program_id_to_name_map = programs;
                         var values = [];
                         for (const program in programs) {
@@ -204,7 +204,6 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     onChange(event) {
-        console.log(JSON.stringify(event.target.label));
         switch (event.target.label) {
             case this.first_name_label:
                 this.record_input.FirstName = event.target.value;
@@ -257,57 +256,64 @@ export default class RequestForInformationForm extends LightningElement {
             case this.high_school_not_found_label:
                 this.manually_enter_high_school = event.target.checked;
                 break;
-            case this.confirm_button_label:
-                var selected_row = this.template.querySelector('lightning-datatable').getSelectedRows(); 
-                this.record_input.Affiliated_Account__c = selected_row.target.Id;
-                console.log(selected_row.target);
-                console.log(selected_row.target.Id);
-                this.high_school_attended_value = selected_row.target.Name;
-                break;
             default:
                 break;
         }
+
+        if (event.target.name == this.high_school_datatable_name) {
+            var selected_row = this.template.querySelector('lightning-datatable').getSelectedRows();
+            this.record_input.Affiliated_Account__c = selected_row[0].account_id;
+            //this.high_school_attended_value = selected_row[0].name;
+        }
+
         console.log(JSON.stringify(this.record_input));
     }
 
     handleSearch(event) {
-        searchHighSchools({ search_term : event.target.value})
-        .then((high_schools) => {
-            if (high_schools.length != 0) {
-                this.high_school_data = true;
-                this.account_id_to_name_map = high_schools;
-                var values = [];
-                for (const school in high_schools) {
-                    values.push(
-                        {name: high_schools[school].Name, id: high_schools[school].Id}
-                    );
+        if (JSON.stringify(event.target.value).length > 4) {
+            searchHighSchools({ search_term : event.target.value})
+            .then((high_schools) => {
+                if (high_schools.length != 0) {
+                    this.high_school_data = true;
+                    this.account_id_to_name_map = high_schools;
+                    var values = [];
+                    for (const school in high_schools) {
+                        values.push(
+                            {name: high_schools[school].Name, account_id: high_schools[school].Id}
+                        );
+                    }
+                    this.high_school_search_results = values;
                 }
-                this.high_school_search_results = values;
-            }
-        })
-        .catch(error => {
-            console.log(error);
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error retreiving High Schools',
-                    message: error.body.message,
-                    variant: 'error'
-                })
-            )
-        });
+            })
+            .catch(error => {
+                console.log(error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error retreiving High Schools',
+                        message: error.body.message,
+                        variant: 'error'
+                    })
+                )
+            });
+        } else {
+            this.high_school_search_results = null;
+            this.high_school_data = false;
+        }
     }
 
     handleModal(event) {
         console.log(JSON.stringify(event.target.tagName));
-        if (event.target.tagName == 'LIGHTNING-ICON') {
+        if (event.target.tagName == 'LIGHTNING-ICON') { // x button at top of modal
             this.modal_open = false;
             this.high_school_search_results = null;
             this.high_school_data = false;
             this.record_input.Affiliated_Account__c = null;
-        } else if (event.target.tagName == "LIGHTNING-BUTTON") {
+            this.high_school_attended_value = null;
+        } else if (event.target.tagName == "LIGHTNING-BUTTON") { // confirm button
             this.modal_open = false;
             this.high_school_search_results = null;
             this.high_school_data = false;
+            this.high_school_attended_value = this.account_id_to_name_map[this.record_input.Affiliated_Account__c].Name;
         } else {
             this.modal_open = true;
         }

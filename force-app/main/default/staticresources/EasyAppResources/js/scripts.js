@@ -48,6 +48,10 @@ function pageLoadReRendered() {
         });
     });
 
+    document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
+        item.required = true;
+    });
+
     // Validates phone numbers on change
     let allPhones = document.querySelectorAll('.validatePhone');
     allPhones.forEach(function (ph) {
@@ -410,7 +414,13 @@ function activateAutoComplete() {
 function navigateRequirementGroup(redirectTo) {
     appShowLoadingSpinner();
     if (redirectTo === 'forwards') {
-        performDocUploadSave(nextRequirement);
+        if (checkForm()) {
+
+            performDocUploadSave(nextRequirement);
+        } else {
+            appHideLoadingSpinner();
+            hideFormSpinner();
+        }
     } else if (redirectTo === 'back') {
         performDocUploadSave(previousRequirement);
     } else {
@@ -614,6 +624,68 @@ function activateTooltips() {
         item.addEventListener('mouseleave', function (e) {
             toolTipElement.classList.remove('slds-rise-from-ground');
             toolTipElement.classList.add('slds-fall-into-ground');
+        });
+    });
+}
+
+//Validation for the page
+function checkForm() {
+
+    var error_count = 0;
+    var emailReg = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
+        let inputWrap = item.closest('.slds-form-element');
+        let inputRequired = inputWrap.classList.contains('slds-is-required');
+        if (item) {
+            let inputType = '';
+            if (item.type) {
+                inputType = item.type.toLowerCase();
+            }
+
+            if (inputRequired && !item.value) {
+                inputWrap.classList.add("slds-has-error");
+                inputWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+                    errorHelp.style.display = "block"
+                });
+                addErrorFixerListener(item, inputWrap, 'change');
+                error_count++;
+            }
+            if (inputType == 'email' && inputRequired || inputType == 'email' && item.value) {
+                if (!emailReg.test(item.value)) {
+                    inputWrap.classList.add("slds-has-error");
+                    addErrorFixerListener(item, inputWrap, 'change');
+                    error_count++;
+                }
+            }
+        }
+    });
+
+    document.querySelectorAll(".selectableOL").forEach(sel => {
+        let selWrap = sel.closest('.slds-form-element');
+        let hiddenData = document.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
+        if (selWrap.classList.contains("slds-is-required")) {
+            if (!document.getElementById(hiddenData).value) {
+                selWrap.classList.add("slds-has-error");
+                addErrorFixerListener(selWrap, selWrap, 'click');
+                error_count++;
+            }
+        }
+    });
+
+    if (error_count > 0) {
+        let foundErrors = document.querySelectorAll(".slds-has-error");
+        window.scrollTo(0, foundErrors[0].offsetTop);
+        return false;
+    }
+    return true;
+}
+
+function addErrorFixerListener(inpt, wrp, evtType) {
+    inpt.addEventListener(evtType, (e) => {
+        wrp.classList.remove("slds-has-error");
+        wrp.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+            errorHelp.style.display = "none";
         });
     });
 }

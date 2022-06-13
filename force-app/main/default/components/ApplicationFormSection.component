@@ -53,7 +53,7 @@
                         <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
                         <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="isRequired"/>
                         <apex:outputPanel rendered="{!If(question.showQuestion, true, false)}" styleClass="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                            <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'isRequired', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
+                            <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
 
                                 <c:ApplicationFormSectionInput
                                         responseObject="{!question.response}"
@@ -168,11 +168,11 @@
                                     </apex:outputPanel>
 
                                     <apex:outputPanel id="editQuestion" rendered="{!rr.isEditMode}" layout="block" styleClass="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-
+                                        <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="isRequired"/>
                                         <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
                                         <apex:variable value="{!IF(question.question.Id == null, 'label' + TEXT(itemNumber), question.question.id)}" var="qId"/>
 
-                                        <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" layout="block">
+                                        <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" layout="block">
                                             Has dependent question - {!question.hasDependentQuestions}
                                             <c:ApplicationFormSectionInput responseObject="{!rr.obj}"
                                                                            questionWrapper="{!question}"
@@ -180,7 +180,7 @@
                                                                            inputLabel="{!question.label}"
                                                                            inputType="{!question.fieldType}"
                                                                            isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
-                                                                           isRequired="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}"
+                                                                           isRequired="{!isRequired}"
                                                                            isEditable="{!question.isEditable}"
                                                                            isExternalEmail="{!question.question.External_Email_Field__c}"
                                                                            itemId="{!group.item.Id}"
@@ -243,17 +243,17 @@
 
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                     <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
+                    <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="isRequired"/>
                     <apex:outputPanel rendered="{!question.showQuestion}" styleClass="slds-p-vertical_xxx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                        <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
+                        <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
 
-                            Has dependent question - {!question.hasDependentQuestions}
                             <c:ApplicationFormSectionInput responseObject="{!group.newReferenceObject}"
                                                            questionWrapper="{!question}"
                                                            fieldAPI="{!question.question.Related_Object_Field__c}"
                                                            inputLabel="{!question.label}"
                                                            inputType="{!question.fieldType}"
                                                            isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
-                                                           isRequired="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}"
+                                                           isRequired="{!isRequired}"
                                                            isEditable="{!question.isEditable}"
                                                            isExternalEmail="{!question.question.External_Email_Field__c}"
                                                            itemId="{!group.item.Id}"

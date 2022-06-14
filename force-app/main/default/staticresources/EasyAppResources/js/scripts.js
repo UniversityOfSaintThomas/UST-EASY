@@ -56,7 +56,7 @@ function pageLoadReRendered() {
     let allPhones = document.querySelectorAll('.validatePhone');
     allPhones.forEach(function (ph) {
         ph.addEventListener('change', function (e) {
-            formatPhone(ph);
+            formatPhoneOnEnter(ph);
         });
     });
 
@@ -71,6 +71,7 @@ function pageLoadReRendered() {
     //Hide the form spinner if it is active
     hideFormSpinner();
 }
+
 
 function fileUploadAreas() {
 
@@ -258,22 +259,33 @@ function getAsText(readFile, respId) {
     });
 }
 
-function formatPhone(phone) {
-    let internationalNum = false;
-    let inValue = phone.value;
-    if (inValue.startsWith("+")) {
-        internationalNum = true;
-    }
-    let digits = inValue.replace(/\D/g, '');
-    if (internationalNum) {
-        if (digits.startsWith("0")) {
-            digits = digits.substring(1);
-        }
-        phone.value = "+" + digits;
-    } else {
-        phone.value = digits.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
-    }
+function formatPhoneOnEnter(input, event) {
+    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
+    input.value = input.value.replace(phoneRegex, '');
 }
+
+function formatPhone(formatPone) {
+    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
+    formatPone.value = input.value.replace(phoneRegex, '');
+    console.log(formatPone)
+}
+
+// function formatPhone(phone) {
+//     let internationalNum = false;
+//     let inValue = phone.value;
+//     if (inValue.startsWith("+")) {
+//         internationalNum = true;
+//     }
+//     let digits = inValue.replace(/\D/g, '');
+//     if (internationalNum) {
+//         if (digits.startsWith("0")) {
+//             digits = digits.substring(1);
+//         }
+//         phone.value = "+" + digits;
+//     } else {
+//         phone.value = digits.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+//     }
+// }
 
 
 function activateAutoComplete() {

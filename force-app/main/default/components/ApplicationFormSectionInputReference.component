@@ -10,7 +10,7 @@
     <apex:attribute name="itemId" description="" type="Id" required="false"/>
 
     <apex:outputPanel rendered="{!inputType == 'Reference'}" layout="block" styleClass="referenceLookup">
-        <!-- HERE 26-->
+
         <apex:outputPanel rendered="{!questionWrapper['question']['New_Reference_Field__c'] == false}" layout="block">
             <div class="slds-form-element__control">
                 <div class="slds-combobox_container">
@@ -34,10 +34,10 @@
                                 <span class="slds-assistive-text">Remove selected option</span>
                             </button>
                             <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right refMagGlass">
-                                                                          <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default " aria-hidden="true">
-                                                                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
-                                                                          </svg>
-                                                                    </span>
+                                  <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default " aria-hidden="true">
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                                  </svg>
+                            </span>
                         </div>
                         <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
                             <ul class="slds-listbox slds-listbox_vertical" role="presentation">

@@ -361,9 +361,11 @@ export default class RequestForInformationForm extends LightningElement {
     handleSubmit() {
         createRecord(this.record_input)
         .then(() => {
+            // redirect
             console.log('Success!');
         })
         .catch(error => {
+            // TO DO: determine what should happen if duplicate is found - update?
             console.log(error);
             this.dispatchEvent(
                 new ShowToastEvent({

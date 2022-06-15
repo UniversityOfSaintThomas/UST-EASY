@@ -300,7 +300,15 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.last_name_label:
                 this.record_input.fields.LastName = event.target.value;
-                break;record_default
+                break;
+            case this.email_label:
+                this.record_input.fields.Email = event.target.value;
+                break;
+            case this.home_phone_label:
+                this.record_input.fields.Phone = event.target.value;
+                break;
+            case this.mobile_phone_label:
+                this.record_input.fields.MobilePhone = event.target.value;
                 break;
             case this.address1_label:
                 this.address1 = event.target.value;
@@ -393,6 +401,7 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input = generateRecordInputForCreate(result.data.record);
             this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
             this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100);
+            this.record_input.fields.LeadSource = 'Web';
             console.log(this.record_input);
         } else {
             console.log(result.error);

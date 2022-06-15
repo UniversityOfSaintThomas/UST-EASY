@@ -175,7 +175,6 @@ public class ApplicationRegistration {
 
     @RemoteAction
     public static List<SObject> lookupSearch(String sObj, String sObjFilter, String sObjNameField, String term) {
-        System.debug('obj: ' + sObj + ', filter: ' + sObjFilter + ', Obj Name: ' + sObjNameField + ', term: ' + term);
         if (Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()) {
             if (String.isBlank(sObjNameField)) {
                 sObjNameField = 'Name';

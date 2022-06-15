@@ -104,20 +104,22 @@ public class ApplicationRequirement {
     ********************************************************************************/
     public PageReference init() {
 
-        if(appInfo == null || appInfo.appControlId == null) {
+        if (appInfo == null || appInfo.appControlId == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
         allowSubmit = true;
         isExternalUser = false;
         userType = String.valueOf(UserInfo.getUserType());
         isStandardUser = userType.equalsIgnoreCase('standard');
-        if(userType.equalsIgnoreCase('guest')) {
+        if (userType.equalsIgnoreCase('guest')) {
             String startUrl = System.currentPageReference().getParameters().get('startURL');
             return new PageReference(Site.getPathPrefix() + '/SiteLogin?startURL=' + EncodingUtil.urlEncode(startURL, 'UTF-8'));
         }
 
         if (queryItems == true) {
-            items = applicationHelper.getRequirementQuestions(new Set<Id>{appInfo.requirementId}, appInfo.isExternalUser);
+            items = applicationHelper.getRequirementQuestions(new Set<Id>{
+                    appInfo.requirementId
+            }, appInfo.isExternalUser);
         }
 
         //Get the application values for this requirement
@@ -175,7 +177,9 @@ public class ApplicationRequirement {
         Map<Id, List<Question_Response__c>> dResponses = new Map<Id, List<Question_Response__c>>();
 
         if (requirementResponses == null && String.isNotBlank(appInfo.appId)) {
-            requirementResponses = applicationHelper.getRequirementResponses(new Set<Id>{appInfo.requirementId}, appInfo.appId);
+            requirementResponses = applicationHelper.getRequirementResponses(new Set<Id>{
+                    appInfo.requirementId
+            }, appInfo.appId);
         } else if (requirementResponses == null) {
             requirementResponses = new List<Requirement_Response__c>();
         }
@@ -311,10 +315,11 @@ public class ApplicationRequirement {
                 }
                 query += ' ORDER BY ' + fieldList + ' ASC';
                 query += ' LIMIT 50';
-
                 try {
-                    return Database.query(query);
+                    List<SObject> lookupResults = Database.query(query);
+                    return lookupResults;
                 } catch (Exception e) {
+                    System.debug(e.getMessage());
                     return new List<SObject>();
                 }
             }

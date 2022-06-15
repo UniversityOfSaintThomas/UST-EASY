@@ -25,7 +25,6 @@ public class ApplicationCreate {
         if (appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
-        System.debug(JSON.serializePretty(appInfo));
         appControl = appInfo.appControl;
         Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
         template = AppSettings.Default_Template__c;

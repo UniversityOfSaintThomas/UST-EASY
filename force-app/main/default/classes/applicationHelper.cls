@@ -106,7 +106,6 @@ public with sharing class applicationHelper {
 
         fields = String.join(new List<String>(appFields), ',');
 
-        System.debug(fields);
         return fields;
     }
 
@@ -121,7 +120,6 @@ public with sharing class applicationHelper {
             }
         }
         fields = String.join(new List<String>(appFields), ',');
-        System.debug(fields);
         return fields;
     }
 

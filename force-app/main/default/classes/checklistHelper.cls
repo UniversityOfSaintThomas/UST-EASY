@@ -45,9 +45,6 @@ public with sharing class checklistHelper {
         Set<Id> riIds = new Set<Id>();
         riList = applicationHelper.getRequirementQuestions(reqIds, appInfo.isExternalUser);
 
-        System.debug(String.valueOf(System.hashCode(riList)));
-
-
         for (Requirement_Item__c ri : riList) {
             if (ApplicationFilter.filter(app, ri)) {
                 reqMap.get(ri.Requirement__c).reqItemMap.put(ri.Id, new RequirementItemWrapper(ri));

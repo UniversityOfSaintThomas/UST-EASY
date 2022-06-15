@@ -53,7 +53,6 @@ public class RelatedDocumentUpload {
 	public void submit(){
 		transient Map<String,Object> additionalDataMap;
 		transient ContentVersion att = new ContentVersion();
-		System.debug(additionalDataString);
 		if(String.isNotBlank(additionalDataString)){
 			additionalDataMap = (Map<String,Object>)JSON.deserializeUntyped(additionalDataString);
 		} 

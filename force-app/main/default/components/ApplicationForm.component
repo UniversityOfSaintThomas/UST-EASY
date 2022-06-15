@@ -10,6 +10,8 @@
             <apex:pageMessages />
         </apex:outputPanel>
         <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
+        <apex:commandLink id="reRenderTheTable" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.theTable}"/>
+
         <script>
             const previousRequirement = "{!prevId}", nextRequirement = "{!nextId}";
         </script>

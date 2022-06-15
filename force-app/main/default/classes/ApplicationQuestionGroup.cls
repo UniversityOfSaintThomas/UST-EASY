@@ -194,7 +194,6 @@ public class ApplicationQuestionGroup {
                     for (String addressField : new Set<String>{
                             'City__c', 'Country__c', 'PostalCode__c', 'State__c', 'Street__c'
                     }) {
-                        System.debug(addressField + ' -- ' + obj.get(addressField));
                         if (String.isBlank((String) obj.get(addressField))) {
                             if (String.isNotBlank(returnedError)) {
                                 returnedError += ' ,';

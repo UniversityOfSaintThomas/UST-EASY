@@ -11,6 +11,7 @@
                             if (event.status) {
                                 callback(result, originObjId)
                             } else if (event.type === 'exception') {
+                                console.log(event.errors)
                             } else {
                             }
                         },

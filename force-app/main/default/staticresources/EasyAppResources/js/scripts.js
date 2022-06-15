@@ -19,7 +19,7 @@ function reRenderAllGroups(rerenderName) {
     if (rerenderName && rerenderName != 'none') {
         showFormSpinner();
         if (rerenderName === 'rerenderTheTable') {
-            rerenderTheTable();
+            document.querySelector("[id$=reRenderTheTable]").click();
         } else {
             document.querySelector("[id$=reRenderGroups]").click();
         }
@@ -342,6 +342,7 @@ function activateAutoComplete() {
         }
 
         function lookupResultsFormatter(data, originObjId) {
+            console.log(JSON.stringify(data));
             let outputList = ''
             let fieldNames = comboBox.dataset.objtypenamefield.replace(' ', '').split(',');
             data.forEach(result => {

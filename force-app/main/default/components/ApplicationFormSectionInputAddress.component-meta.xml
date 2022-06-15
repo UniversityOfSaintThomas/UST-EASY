@@ -2,4 +2,9 @@
 <ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <label>ApplicationFormSectionInputAddress</label>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>120</minorNumber>
+        <namespace>hed</namespace>
+    </packageVersions>
 </ApexComponent>

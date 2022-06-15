@@ -169,10 +169,10 @@
                                 </lightning-input>
                             </div>
                             <template if:true={high_school_data}>
-                                <div class="slds-scrollable_y slds-p-bottom_xx-small" style="height:120px">
+                                <div class="slds-scrollable_y slds-p-bottom_xx-small" style="max-height:120px; max-width: inherit">
                                     <lightning-datatable
                                         hide-table-header
-                                        column-widths-mode="fixed"
+                                        column-widths-mode="auto"
                                         data={high_school_search_results}
                                         columns={high_school_columns}
                                         key-field="id"

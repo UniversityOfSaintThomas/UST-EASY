@@ -8,7 +8,7 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
-import { ShowToastEvent, createRecord, generateRecordInputForCreate, getRecordCreateDefaults, getRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent, createRecord, generateRecordInputForCreate, getRecordCreateDefaults } from 'lightning/uiRecordApi';
 
 // lead object and fields
 import LEAD_OBJECT from '@salesforce/schema/Lead';
@@ -27,7 +27,7 @@ import LEAD_STREET from '@salesforce/schema/Lead.Street';
 import LEAD_CITY from '@salesforce/schema/Lead.City';
 import LEAD_STATE from '@salesforce/schema/Lead.State';
 import LEAD_POSTAL_CODE from '@salesforce/schema/Lead.PostalCode';
-import LEAD_Country from '@salesforce/schema/Lead.Country';
+import LEAD_COUNTRY from '@salesforce/schema/Lead.Country';
 import LEAD_ACCOUNT from '@salesforce/schema/Lead.Affiliated_Account__c';
 
 //controller
@@ -53,8 +53,14 @@ const OPTIONAL_FIELDS = [
     LEAD_CITY,
     LEAD_STATE,
     LEAD_POSTAL_CODE,
-    LEAD_Country,
+    LEAD_COUNTRY,
     LEAD_ACCOUNT
+]
+
+const lookup_fields = [
+    'Affiliated_Account__r',
+    'Recruitment_Program__r',
+    'Term__r'
 ]
 
 export default class RequestForInformationForm extends LightningElement {
@@ -91,32 +97,6 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_high_school = false;
 
     record_input; // used in createRecord - stores user enter form information
-
-    // record_input = {
-    //     'apiName': 'Lead',
-    //     'fields': {
-    //         'Admit_Type__c': '',
-    //         'hed__Citizenship__c': '',
-    //         'Recruitment_Program__c': '', //lookup - id
-    //         'FirstName': '',
-    //         'LastName': '',
-    //         'Email': '',
-    //         'Phone': '',
-    //         'MobilePhone': '',
-    //         'hed__SMS_Opt_Out__c': true,
-    //         'Birthdate__c': '',
-    //         'hed__Preferred_Enrollment_Date__c': '',
-    //         'Street': '',
-    //         'City': '',
-    //         'State': '',
-    //         'PostalCode': '',
-    //         'Country': '',
-    //         'Affiliated_Account__c': '', //lookup - id
-    //         'Term__c': '', //lookup - id
-    //         'Company': 'Unknown',
-    //         'Status': 'Open - Not Contacted'
-    //     }
-    // }
 
     //field labels
     admit_type_label = 'I will apply to St. Thomas as a';
@@ -398,10 +378,18 @@ export default class RequestForInformationForm extends LightningElement {
     @wire(getRecordCreateDefaults, { objectApiName: LEAD_OBJECT, optionalFields: OPTIONAL_FIELDS})
     output(result) {
         if (result.data) {
+            console.log(result.data);
             this.record_input = generateRecordInputForCreate(result.data.record);
             this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
-            this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100);
+            this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100); // TO DO: determine what this should be
             this.record_input.fields.LeadSource = 'Web';
+            // relationship lookup fields throwing error on insert, so removing
+            for (const relationship_name of lookup_fields) {
+                delete this.record_input.fields[relationship_name];
+            }
+            // delete this.record_input.fields.Affiliated_Account__r;
+            // delete this.record_input.fields.Recruitment_Program__r;
+            // delete this.record_input.fields.Term__r;
             console.log(this.record_input);
         } else {
             console.log(result.error);

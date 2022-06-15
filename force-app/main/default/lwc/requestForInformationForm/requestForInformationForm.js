@@ -8,9 +8,27 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
-import { ShowToastEvent } from 'lightning/uiRecordApi';
+import { ShowToastEvent, createRecord, generateRecordInputForCreate, getRecordCreateDefaults, getRecord } from 'lightning/uiRecordApi';
 
+// lead object and fields
 import LEAD_OBJECT from '@salesforce/schema/Lead';
+import LEAD_FIRST_NAME from '@salesforce/schema/Lead.FirstName';
+import LEAD_ADMIT_TYPE from '@salesforce/schema/Lead.Admit_Type__c';
+import LEAD_CITIZENSHIP from '@salesforce/schema/Lead.hed__Citizenship__c';
+import LEAD_RECRUITMENT_PROGRAM from '@salesforce/schema/Lead.Recruitment_Program__c';
+import LEAD_EMAIL from '@salesforce/schema/Lead.Email';
+import LEAD_PHONE from '@salesforce/schema/Lead.Phone';
+import LEAD_MOBILE_PHONE from '@salesforce/schema/Lead.MobilePhone';
+import LEAD_SMS_OPT_OUT from '@salesforce/schema/Lead.hed__SMS_Opt_Out__c';
+import LEAD_BIRTHDATE from '@salesforce/schema/Lead.Birthdate__c';
+import LEAD_PREFERRED_ENROLLMENT from '@salesforce/schema/Lead.hed__Preferred_Enrollment_Date__c';
+import LEAD_TERM from '@salesforce/schema/Lead.Term__c';
+import LEAD_STREET from '@salesforce/schema/Lead.Street';
+import LEAD_CITY from '@salesforce/schema/Lead.City';
+import LEAD_STATE from '@salesforce/schema/Lead.State';
+import LEAD_POSTAL_CODE from '@salesforce/schema/Lead.PostalCode';
+import LEAD_Country from '@salesforce/schema/Lead.Country';
+import LEAD_ACCOUNT from '@salesforce/schema/Lead.Affiliated_Account__c';
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
@@ -18,6 +36,26 @@ import getAcademicPrograms from '@salesforce/apex/requestForInformationFormContr
 import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
 import searchHighSchools from '@salesforce/apex/requestForInformationFormController.searchHighSchools';
 import getAcademicLevelValue from '@salesforce/apex/requestForInformationFormController.getAcademicLevelValue';
+
+const OPTIONAL_FIELDS = [
+    LEAD_FIRST_NAME,
+    LEAD_ADMIT_TYPE,
+    LEAD_CITIZENSHIP,
+    LEAD_RECRUITMENT_PROGRAM,
+    LEAD_EMAIL,
+    LEAD_PHONE,
+    LEAD_MOBILE_PHONE,
+    LEAD_SMS_OPT_OUT,
+    LEAD_BIRTHDATE,
+    LEAD_PREFERRED_ENROLLMENT,
+    LEAD_TERM,
+    LEAD_STREET,
+    LEAD_CITY,
+    LEAD_STATE,
+    LEAD_POSTAL_CODE,
+    LEAD_Country,
+    LEAD_ACCOUNT
+]
 
 export default class RequestForInformationForm extends LightningElement {
     // RFI controller info
@@ -38,9 +76,7 @@ export default class RequestForInformationForm extends LightningElement {
     //front-end display
     @track show_spinner = true;
     @track manually_enter_high_school = false;
-    @track modal_open = false;
     @track high_school_data = false;
-    @track high_school_attended_value;
 
     //RFI controller determined booleans
     @track show_name_fields = false;
@@ -54,30 +90,33 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_academic_term = false;
     @track show_high_school = false;
 
-    record_input = {
-        'apiName': 'Lead',
-        'fields': {
-            'Admit_Type__c': '',
-            'hed__Citizenship__c': '',
-            'Recruitment_Program__c': '', //lookup
-            'FirstName': '',
-            'LastName': '',
-            'Email': '',
-            'Phone': '',
-            'MobilePhone': '',
-            'hed__SMS_Opt_Out__c': '',
-            'Birthdate__c': '',
-            'hed__Preferred_Enrollment_Date__c': '',
-            'Term__c': '',
-            'Street': '',
-            'City': '',
-            'State': '',
-            'PostalCode': '',
-            'Country': '',
-            'Affiliated_Account__c': '', //lookup
-            'Term__c': '' //lookup
-        }
-    }
+    record_input; // used in createRecord - stores user enter form information
+
+    // record_input = {
+    //     'apiName': 'Lead',
+    //     'fields': {
+    //         'Admit_Type__c': '',
+    //         'hed__Citizenship__c': '',
+    //         'Recruitment_Program__c': '', //lookup - id
+    //         'FirstName': '',
+    //         'LastName': '',
+    //         'Email': '',
+    //         'Phone': '',
+    //         'MobilePhone': '',
+    //         'hed__SMS_Opt_Out__c': true,
+    //         'Birthdate__c': '',
+    //         'hed__Preferred_Enrollment_Date__c': '',
+    //         'Street': '',
+    //         'City': '',
+    //         'State': '',
+    //         'PostalCode': '',
+    //         'Country': '',
+    //         'Affiliated_Account__c': '', //lookup - id
+    //         'Term__c': '', //lookup - id
+    //         'Company': 'Unknown',
+    //         'Status': 'Open - Not Contacted'
+    //     }
+    // }
 
     //field labels
     admit_type_label = 'I will apply to St. Thomas as a';
@@ -99,9 +138,7 @@ export default class RequestForInformationForm extends LightningElement {
     academic_term_label = 'Expected Start Term at St. Thomas';
     high_school_search_label = 'High School Attended';
     high_school_not_found_label = 'I can\'t find my High School';
-    high_school_search_modal_label = 'High School Search';
     high_school_datatable_name = 'High School Datatable';
-    confirm_button_label = 'Confirm';
 
     //picklist values
     @track state_picklist_values;
@@ -116,14 +153,18 @@ export default class RequestForInformationForm extends LightningElement {
     //intermediate values
     address1; //concat w/ address 2 before submit (address combined field only has one 'Street' label)
     address2;
+    new_account; // used to create new account high school not found
 
     //regex
     phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
     invalid_phone_message = 'Phone # must match format: 000-000-0000';
 
-    //datatable columns
+    //high school datatable columns
     high_school_columns = [
         { label: 'Name', fieldName: 'name', type: 'text' },
+        { label: 'Address', fieldName: 'address', type: 'text', 
+            cellAttributes: { class: 'slds-text-color_weak' }
+        }
     ];
 
     @wire(getRFIController, { rfi_controller_name: '$rfi_controller' })
@@ -132,7 +173,10 @@ export default class RequestForInformationForm extends LightningElement {
             if (result.data.length != 0) {
                 this.academic_level_api = result.data.Academic_Level__c;
                 this.applicant_status = result.data.Applicant_Status__c;
-                console.log(this.academic_level_api);
+                this.fields_to_display = result.data.Fields_to_Display__c;
+                // sets boolean values for front-end display i.e. which fields on are form
+                this.handleFieldsToDisplay();
+                //gets value/label of picklist by api name to use in form title
                 getAcademicLevelValue({api_name : result.data.Academic_Level__c})
                 .then((level) => {
                     this.academic_level = level;
@@ -140,12 +184,10 @@ export default class RequestForInformationForm extends LightningElement {
                 .catch(error => {
                     console.log(error);
                 });
-                this.fields_to_display = result.data.Fields_to_Display__c;
-                this.handleFieldsToDisplay();
                 if (this.academic_level_api != undefined) {
+                    // gets programs based on academic level
                     getAcademicPrograms({academic_level: this.academic_level_api})
                     .then((programs) => {
-                        console.log(JSON.stringify(programs));
                         this.program_id_to_name_map = programs;
                         var values = [];
                         for (const program in programs) {
@@ -174,6 +216,7 @@ export default class RequestForInformationForm extends LightningElement {
         }
     }
 
+    // used Fields_to_Display__c field on RFI_Controller__c to determine which fields to display on form
     handleFieldsToDisplay() {
         var fields = this.fields_to_display.split(';');
         for (const field of fields) {
@@ -253,81 +296,124 @@ export default class RequestForInformationForm extends LightningElement {
     onChange(event) {
         switch (event.target.label) {
             case this.first_name_label:
-                this.record_input.FirstName = event.target.value;
+                this.record_input.fields.FirstName = event.target.value;
                 break;
             case this.last_name_label:
-                this.record_input.LastName = event.target.value;
+                this.record_input.fields.LastName = event.target.value;
+                break;record_default
                 break;
-            case this.email_label:
-                this.record_input.Email = event.target.value;
-                break;
-            case this.home_phone_label:
-                this.record_input.Phone = event.target.value;
-                break;
-            case this.mobile_phone_label:
-                this.record_input.MobilePhone = event.targenull
+            case this.address1_label:
+                this.address1 = event.target.value;
                 break;
             case this.address2_label:
-                this.address2 = event.target.value; // combine two address fields into Street before submit
+                this.address2 = event.target.value;
+                if (this.address1 != null) {
+                    this.record_input.fields.Street = this.address1 + ' ' + this.address2;
+                }
                 break;
             case this.city_label:
-                this.record_input.City = event.target.value;
+                this.record_input.fields.City = event.target.value;
                 break;
             case this.state_label:
-                this.record_input.State = event.target.value;
+                this.record_input.fields.State = event.target.value;
                 break;
             case this.zipcode_label:
-                this.record_input.PostalCode = event.target.value;
+                this.record_input.fields.PostalCode = event.target.value;
                 break;
             case this.country_label:
-                this.record_input.Country = event.target.value;
+                this.record_input.fields.Country = event.target.value;
                 break;
             case this.text_messages_label:
-                this.record_input.hed__SMS_Opt_Out__c = event.target.checked;
+                if (event.target.checked) {
+                    this.record_input.fields.hed__SMS_Opt_Out__c = false;
+                } else {
+                    this.record_input.fields.hed__SMS_Opt_Out__c = true;
+                }
                 break;
             case this.birthdate_label:
-                this.record_input.Birthdate__c = event.target.value;
+                this.record_input.fields.Birthdate__c = event.target.value;
                 break;
             case this.citizenship_label:
-                this.record_input.hed__Citizenship__c = event.target.value;
+                this.record_input.fields.hed__Citizenship__c = event.target.value;
                 break;
             case this.admit_type_label:
-                this.record_input.Admit_Type__c = event.target.value;
+                this.record_input.fields.Admit_Type__c = event.target.value;
                 break;
             case this.academic_interest_label:
-                this.record_input.Recruitment_Program__c = event.target.value;
+                this.record_input.fields.Recruitment_Program__c = event.target.value;
                 break;
             case this.academic_term_label:
-                this.record_input.Term__c = event.target.value; // set hed__Preferred_Enrollment_Date__c before submit (get Start Date on Term__c)
+                this.record_input.fields.Term__c = event.target.value; 
+                this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].hed__Start_Date__c;
                 break;
             case this.high_school_not_found_label:
                 this.manually_enter_high_school = event.target.checked;
+                if (event.target.checked) {
+                    this.record_input.fields.Affiliated_Account__c = '';
+                    this.high_school_search_results = null;
+                    this.high_school_data = false;
+                } else {
+                    this.new_account = null;
+                }
                 break;
+            case this.high_school_search_label:
+                this.new_account = event.target.value;
             default:
                 break;
         }
 
         if (event.target.name == this.high_school_datatable_name) {
             var selected_row = this.template.querySelector('lightning-datatable').getSelectedRows();
-            this.record_input.Affiliated_Account__c = selected_row[0].account_id;
-            //this.high_school_attended_value = selected_row[0].name;
+            this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
+            this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
+        console.log(this.record_input);
+    }
 
-        console.log(JSON.stringify(this.record_input));
+    handleSubmit() {
+        createRecord(this.record_input)
+        .then(() => {
+            console.log('Success!');
+        })
+        .catch(error => {
+            console.log(error);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error creating lead.',
+                    message: error.body.message,
+                    variant: 'error'
+                })
+            )
+        });
+    }
+
+    @wire(getRecordCreateDefaults, { objectApiName: LEAD_OBJECT, optionalFields: OPTIONAL_FIELDS})
+    output(result) {
+        if (result.data) {
+            this.record_input = generateRecordInputForCreate(result.data.record);
+            this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
+            this.record_input.Company = 'Random Company ' + Math.floor(Math.random() * 100);
+            console.log(this.record_input);
+        } else {
+            console.log(result.error);
+        }
     }
 
     handleSearch(event) {
         if (JSON.stringify(event.target.value).length > 4) {
-            searchHighSchools({ search_term : event.target.value})
+            searchHighSchools({ search_term : event.target.value })
             .then((high_schools) => {
-                console.log(JSON.stringify(high_schools));
                 if (Object.keys(high_schools).length != 0) {
                     this.high_school_data = true;
                     this.account_id_to_name_map = high_schools;
                     var values = [];
                     for (const school in high_schools) {
                         values.push(
-                            {name: high_schools[school].Name, account_id: high_schools[school].Id}
+                            {   
+                                name: high_schools[school].Name, 
+                                account_id: high_schools[school].Id, 
+                                address: high_schools[school].ShippingCity + ', ' + high_schools[school].ShippingState
+                            }
                         );
                     }
                     this.high_school_search_results = values;
@@ -347,24 +433,7 @@ export default class RequestForInformationForm extends LightningElement {
             this.high_school_search_results = null;
             this.high_school_data = false;
         }
-    }
-
-    handleModal(event) {
-        if (event.target.tagName == 'LIGHTNING-ICON') { // x button at top of modal
-            this.modal_open = false;
-            this.high_school_search_results = null;
-            this.high_school_data = false;
-            this.record_input.Affiliated_Account__c = null;
-            this.high_school_attended_value = null;
-        } else if (event.target.tagName == "LIGHTNING-BUTTON") { // confirm button
-            this.modal_open = false;
-            this.high_school_search_results = null;
-            this.high_school_data = false;
-            this.high_school_attended_value = this.account_id_to_name_map[this.record_input.Affiliated_Account__c].Name;
-        } else {
-            this.modal_open = true;
-        }
-    }   
+    } 
 
     get setDataTableHeight() {
         if (this.high_school_search_results.length > 6) {

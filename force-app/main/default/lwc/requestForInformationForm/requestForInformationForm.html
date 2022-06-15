@@ -158,15 +158,32 @@
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <template if:false={manually_enter_high_school}>
+                            <div>
                                 <lightning-input 
-                                    type="text" 
+                                    type="search" 
                                     label={high_school_search_label}
                                     aria-label="High School Attended"
-                                    placeholder="Search"
-                                    onclick={handleModal}
-                                    value={high_school_attended_value}>
+                                    placeholder="Begin typing..."
+                                    onchange={handleSearch}
+                                    data-id="high_school">
                                 </lightning-input>
+                            </div>
+                            <template if:true={high_school_data}>
+                                <div class="slds-scrollable_y slds-p-bottom_xx-small" style="height:120px">
+                                    <lightning-datatable
+                                        hide-table-header
+                                        column-widths-mode="fixed"
+                                        data={high_school_search_results}
+                                        columns={high_school_columns}
+                                        key-field="id"
+                                        max-row-selection="1"
+                                        onrowselection={onChange}
+                                        name={high_school_datatable_name}>
+                                    </lightning-datatable>
+                                </div>
+                            </template>
                         </template>
+
                         <template if:true={manually_enter_high_school}>
                             <lightning-input 
                                 type="text" 
@@ -253,67 +270,12 @@
             </template>
         </div>
 
-        
-
-        <template if:true={modal_open}>
-            <div class="slds-backdrop slds-backdrop_open"></div>
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open slds-modal_medium">
-                <div class="slds-modal__container">
-                    <header class="slds-modal__header">
-                        <button name="Close" class="slds-button slds-button_icon slds-button_icon-inverse slds-modal__close" title="Close" onclick={handleModal}>
-                            <lightning-icon icon-name="utility:close" size="small" variant="inverse">
-                            </lightning-icon>
-                        </button>
-                    </header>
-                    <div class="slds-modal__content slds-p-top_medium" id="modal-content-id-1">
-                        <div class="slds-p-top_small slds-m-left_small slds-m-right_small slds-p-bottom_small">
-                            <lightning-input 
-                                type="search" 
-                                label={high_school_search_modal_label}
-                                aria-label="High School Attended"
-                                placeholder="Select a school..."
-                                variant="label-hidden"
-                                onchange={handleSearch}>
-                            </lightning-input>
-                        </div>
-                        <template if:true={high_school_data}>
-                            <div class="slds-scrollable_y" style="height:210px">
-                                <lightning-datatable
-                                    hide-table-header
-                                    data={high_school_search_results}
-                                    columns={high_school_columns}
-                                    key-field="id"
-                                    max-row-selection="1"
-                                    onrowselection={onChange}
-                                    name={high_school_datatable_name}>
-                                </lightning-datatable>
-                            </div>
-                        </template>
-                        <template if:false={high_school_data}>
-                            <h3 style="text-align:center"><b>No results found.</b></h3>
-                        </template>
-                        <template if:true={high_school_data}>
-                            <footer class="slds-modal__footer">
-                                <lightning-button 
-                                    variant="brand" 
-                                    label={confirm_button_label} 
-                                    title="Confirm Selection" 
-                                    aria-label="Confirm Selection" 
-                                    onclick={handleModal} 
-                                    class="slds-m-left_x-small">
-                                </lightning-button>
-                            </footer>
-                        </template>
-                    </div>
-                </div>
-            </section>
-        </template>
-
         <div class="slds-m-left_medium slds-m-top_medium">
             <lightning-button 
                 variant="brand" 
-                label="Submit Request" 
-                title="Submit request">
+                label="Submit" 
+                title="Submit"
+                onclick={handleSubmit}>
             </lightning-button>
         </div>
 

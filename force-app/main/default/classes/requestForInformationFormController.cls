@@ -45,7 +45,8 @@ public without sharing class requestForInformationFormController {
             Map<Id, hed__Term__c> terms = new Map<Id, hed__Term__c>([
                 SELECT
                     Id,
-                    Name
+                    Name,
+                    hed__Start_Date__c
                 FROM hed__Term__c
                 WHERE End_Application_Date__c >=: today
             ]);
@@ -60,7 +61,7 @@ public without sharing class requestForInformationFormController {
         try {
             Map<Id, Account> high_school_map = new Map<Id, Account>();
                 Id educational_record_type = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-                List<List<Account>> high_schools = [FIND :search_term IN NAME FIELDS RETURNING Account(Id, Name WHERE RecordTypeId =: educational_record_type ORDER BY Name)];
+                List<List<Account>> high_schools = [FIND :search_term IN NAME FIELDS RETURNING Account(Id, Name, ShippingCity, ShippingState WHERE RecordTypeId =: educational_record_type ORDER BY Name)];
                 for (List<Account> account_list : high_schools) {
                     for (Account high_school : account_list) {
                         high_school_map.put(high_school.Id, high_school);

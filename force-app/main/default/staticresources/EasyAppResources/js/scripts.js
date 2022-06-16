@@ -644,8 +644,11 @@ function activateTooltips() {
 //Validation for the page
 function checkForm() {
 
-    var error_count = 0;
-    var emailReg = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    let theForm = document.querySelector('form');
+    theForm.reportValidity();
+
+    let error_count = 0;
+    let emailReg = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
         let inputWrap = item.closest('.slds-form-element');
@@ -664,7 +667,7 @@ function checkForm() {
                 addErrorFixerListener(item, inputWrap, 'change');
                 error_count++;
             }
-            if (inputType == 'email' && inputRequired || inputType == 'email' && item.value) {
+            if (inputType === 'email' && inputRequired || inputType === 'email' && item.value) {
                 if (!emailReg.test(item.value)) {
                     inputWrap.classList.add("slds-has-error");
                     addErrorFixerListener(item, inputWrap, 'change');
@@ -695,7 +698,7 @@ function checkForm() {
 }
 
 function addErrorFixerListener(inpt, wrp, evtType) {
-    inpt.addEventListener(evtType, (e) => {
+    inpt.addEventListener(evtType, () => {
         wrp.classList.remove("slds-has-error");
         wrp.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
             errorHelp.style.display = "none";

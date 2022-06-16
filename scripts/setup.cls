@@ -1,5 +1,6 @@
 private static void setHoldingIds() {
 
+
     List<RecordType> highSchoolRecordType = [
             SELECT Id, Name, SobjectType
             FROM RecordType
@@ -64,6 +65,7 @@ private static void setHoldingIds() {
         updateItems.add(rItem);
     }
 
+    //Language holding values updated
     List<hed__Language__c> languageHolders = [
             SELECT Id, Name
             FROM hed__Language__c

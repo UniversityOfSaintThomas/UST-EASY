@@ -9,23 +9,6 @@ ready(() => {
     activateCarousel();
 });
 
-function checkEnter(e) {
-    e = e || event;
-    let txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
-    return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
-}
-
-function reRenderAllGroups(rerenderName) {
-    if (rerenderName && rerenderName != 'none') {
-        showFormSpinner();
-        if (rerenderName === 'rerenderTheTable') {
-            document.querySelector("[id$=reRenderTheTable]").click();
-        } else {
-            document.querySelector("[id$=reRenderGroups]").click();
-        }
-    }
-}
-
 function pageLoadReRendered() {
     document.querySelectorAll('.fieldNotEditable,.fieldNotEditable input,.fieldNotEditable select,.fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
@@ -52,16 +35,9 @@ function pageLoadReRendered() {
         item.required = true;
     });
 
-    // Validates phone numbers on change
-    let allPhones = document.querySelectorAll('.validatePhone');
-    allPhones.forEach(function (ph) {
-        ph.addEventListener('change', function (e) {
-            formatPhoneOnEnter(ph);
-        });
-    });
-
     //Arranging Visualforce inputs to achieve SLDS accessiblity
     adjustLabelsFor();
+    textValidations();
     radioCheckBox();
     checkbox();
     activateAutoComplete();
@@ -70,6 +46,40 @@ function pageLoadReRendered() {
 
     //Hide the form spinner if it is active
     hideFormSpinner();
+}
+
+function checkEnter(e) {
+    e = e || event;
+    let txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
+    return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
+}
+
+function reRenderAllGroups(rerenderName) {
+    if (rerenderName && rerenderName != 'none') {
+        showFormSpinner();
+        if (rerenderName === 'rerenderTheTable') {
+            document.querySelector("[id$=reRenderTheTable]").click();
+        } else {
+            document.querySelector("[id$=reRenderGroups]").click();
+        }
+    }
+}
+
+function textValidations() {
+    let allPhones = document.querySelectorAll('.validatePhone');
+
+    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
+    const phoneIllegals = /[^\d+-/(/)]/;
+
+    allPhones.forEach(function (phone) {
+        phone.addEventListener('change', function () {
+            phone.value = phone.value.replace(phoneRegex, '');
+        });
+        phone.addEventListener('keyup', function () {
+            phone.value = phone.value.replace(phoneIllegals, '');
+        })
+    });
+
 }
 
 

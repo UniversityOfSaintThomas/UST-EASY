@@ -1,5 +1,45 @@
 public without sharing class requestForInformationFormController {
 
+    // @author : andrew.d@digitalmass.com
+    @AuraEnabled
+    public static void createLead(String record,String objectApiName){
+        try {
+            SObject sobj;
+            Map<String,SObjectField> fieldMap;
+            AuraHandledException error;
+            Map<String,Object> objMap = (Map<String,Object>) JSON.deserializeUntyped(record);
+            System.debug(objMap);
+            sobj = objMap.get('Id') == null ? (SObject) Schema.describeSObjects(new List<String>{objectApiName})[0].getSObjectType().newSObject() : (SObject) ((Id) objMap.get('Id')).getSobjectType().newSObject();
+            fieldMap = sobj.getSObjectType().getDescribe().fields.getMap();
+            for(String field : objMap.keySet()){
+                Schema.SObjectField sObjField = fieldMap.get(field);
+                if(sObjField == null){
+                    continue;
+                }
+                if(objMap.get(field) == null){
+                    sobj.put(field,null);
+                }else{
+                    switch on sObjField.getDescribe().getType().name().toLowerCase(){
+                        when 'date'{
+                            sobj.put(field,Date.valueOf((String)objMap.get(field)));
+                        }when 'datetime'{
+                            sobj.put(field,Datetime.valueOf(((String)objMap.get(field)).replace('T', ' ').replace('Z', '')));
+                        }when else{
+                            sobj.put(field,objMap.get(field));
+                        }
+                    }
+                }
+            }
+            if(objMap.get('Id') == null){
+                insert sobj;
+            }else{
+                update sobj;
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException('Error creating lead: ' + e.getMessage());
+        }
+    }
+
     @AuraEnabled(cacheable=true)
     public static RFI_Controller__c getRFIController(String rfi_controller_name){
         try {
@@ -7,7 +47,8 @@ public without sharing class requestForInformationFormController {
                 SELECT
                     Academic_Level__c,
                     Applicant_Status__c,
-                    Fields_to_Display__c
+                    Fields_to_Display__c,
+                    Required_Fields__c
                 FROM RFI_Controller__c 
                 WHERE Name =: rfi_controller_name
                 LIMIT 1
@@ -85,6 +126,31 @@ public without sharing class requestForInformationFormController {
                 }
             }
             return level;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static String getOwnerId(){
+        try {
+            return [SELECT Id FROM User WHERE Username = 'guest@fake.com' LIMIT 1].Id;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static String createAccount(String account_name){
+        try {
+            String account_id = '';
+            if (account_name != null && account_name != '') {
+                Id educational_record_type = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
+                Account new_account = new Account(RecordTypeId = educational_record_type, Name = account_name, OwnerId = getOwnerId());
+                insert new_account;
+                account_id = new_account.Id;
+            }
+            return account_id;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

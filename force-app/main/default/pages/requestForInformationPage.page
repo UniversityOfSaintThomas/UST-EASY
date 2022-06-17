@@ -1,17 +1,16 @@
 <apex:page showHeader="false" standardStylesheets="false">
-    <script src="https://power-innovation-5156-dev-ed.lightning.force.com/lightning/lightning.out.js">
-    <script/>
+    <apex:includeLightning/>
     <div id="component" />
     <script>
         $Lightning.use("c:requestForInformationApp", function() {
             $Lightning.createComponent(
-                "c:requestForInformation",
+                "c:requestForInformationForm",
                 {},
                 "component",
                 function(cmp) {
                     console.log('LWC Component Created.');
                 }
             );
-        }, "power-innovation-5156-dev-ed.lightning.force.com");
+        });
     </script>
 </apex:page>

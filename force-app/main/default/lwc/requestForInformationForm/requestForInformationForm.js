@@ -8,9 +8,11 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
-import { ShowToastEvent, createRecord, generateRecordInputForCreate, getRecordCreateDefaults } from 'lightning/uiRecordApi';
+import { generateRecordInputForCreate, getRecordCreateDefaults } from 'lightning/uiRecordApi';
+import isGuest from '@salesforce/user/isGuest';
 
 // lead object and fields
+// FIELD SET
 import LEAD_OBJECT from '@salesforce/schema/Lead';
 import LEAD_FIRST_NAME from '@salesforce/schema/Lead.FirstName';
 import LEAD_ADMIT_TYPE from '@salesforce/schema/Lead.Admit_Type__c';
@@ -36,6 +38,9 @@ import getAcademicPrograms from '@salesforce/apex/requestForInformationFormContr
 import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
 import searchHighSchools from '@salesforce/apex/requestForInformationFormController.searchHighSchools';
 import getAcademicLevelValue from '@salesforce/apex/requestForInformationFormController.getAcademicLevelValue';
+import getOwnerId from '@salesforce/apex/requestForInformationFormController.getOwnerId';
+import createLead from '@salesforce/apex/requestForInformationFormController.createLead';
+import createAccount from '@salesforce/apex/requestForInformationFormController.createAccount';
 
 const OPTIONAL_FIELDS = [
     LEAD_FIRST_NAME,
@@ -70,6 +75,7 @@ export default class RequestForInformationForm extends LightningElement {
     academic_level_api;
     applicant_status;
     fields_to_display; //use to determine which fields on form to display
+    required_fields; //used for validating input
 
     // lead info
     lead_default_record_type;
@@ -83,6 +89,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_spinner = true;
     @track manually_enter_high_school = false;
     @track high_school_data = false;
+    @track show_error_message = false;
 
     //RFI controller determined booleans
     @track show_name_fields = false;
@@ -95,6 +102,18 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_birthdate = false;
     @track show_academic_term = false;
     @track show_high_school = false;
+
+    // required fields
+    @track name_fields_required = false;
+    @track phone_fields_required = false;
+    @track address_fields_required = false;
+    @track admit_type_required = false;
+    @track citizenship_required = false;
+    @track academic_interest_required = false;
+    @track email_required = false;
+    @track birthdate_required = false;
+    @track academic_term_required = false;
+    @track high_school_required = false;
 
     record_input; // used in createRecord - stores user enter form information
 
@@ -129,15 +148,11 @@ export default class RequestForInformationForm extends LightningElement {
     @track academic_term_picklist_values;
     @track high_school_search_results; // populate via SOSL
 
-
     //intermediate values
-    address1; //concat w/ address 2 before submit (address combined field only has one 'Street' label)
+    address1;
     address2;
     new_account; // used to create new account high school not found
-
-    //regex
-    phone_pattern = '[0-9]{3}-[0-9]{3}-[0-9]{4}';
-    invalid_phone_message = 'Phone # must match format: 000-000-0000';
+    new_account_id;
 
     //high school datatable columns
     high_school_columns = [
@@ -149,13 +164,16 @@ export default class RequestForInformationForm extends LightningElement {
 
     @wire(getRFIController, { rfi_controller_name: '$rfi_controller' })
     rfi(result) {
+        console.log('Guest? : ' + isGuest);
         if (result.data) {
             if (result.data.length != 0) {
                 this.academic_level_api = result.data.Academic_Level__c;
                 this.applicant_status = result.data.Applicant_Status__c;
                 this.fields_to_display = result.data.Fields_to_Display__c;
-                // sets boolean values for front-end display i.e. which fields on are form
+                this.required_fields = result.data.Required_Fields__c;
+                // sets boolean values for front-end display i.e. which fields on are form, which are required
                 this.handleFieldsToDisplay();
+                this.handleRequiredFields();
                 //gets value/label of picklist by api name to use in form title
                 getAcademicLevelValue({api_name : result.data.Academic_Level__c})
                 .then((level) => {
@@ -179,13 +197,6 @@ export default class RequestForInformationForm extends LightningElement {
                     })
                     .catch(error => {
                         console.log(error);
-                        this.dispatchEvent(
-                            new ShowToastEvent({
-                                title: 'Error retreiving Academic Programs',
-                                message: error.body.message,
-                                variant: 'error'
-                            })
-                        )
                     });
                 }
                 this.show_spinner = false;
@@ -201,9 +212,6 @@ export default class RequestForInformationForm extends LightningElement {
         var fields = this.fields_to_display.split(';');
         for (const field of fields) {
             switch (field) {
-                case 'Name fields':
-                    this.show_name_fields = true;
-                    break;
                 case 'Phone fields':
                     this.show_phone_fields = true;
                     break;
@@ -230,6 +238,41 @@ export default class RequestForInformationForm extends LightningElement {
                     break;
                 case 'Citizenship':
                     this.show_citizenship = true;
+                    break;
+            }
+        }
+    }
+
+    handleRequiredFields() {
+        var fields = this.fields_to_display.split(';');
+        for (const field of fields) {
+            switch (field) {
+                case 'Phone fields':
+                    this.phone_fields_required = true;
+                    break;
+                case 'Address fields':
+                    this.address_fields_required = true;
+                    break;
+                case 'Academic Interest':
+                    this.academic_interest_required = true;
+                    break;
+                case 'Academic Term':
+                    this.academic_term_required = true;
+                    break;
+                case 'High School Attended':
+                    this.high_school_required = true;
+                    break;
+                case 'Birthdate':
+                    this.birthdate_required = true;
+                    break;
+                case 'Email':
+                    this.email_required = true;
+                    break;
+                case 'Admit Type':
+                    this.admit_type_required = true;
+                    break;
+                case 'Citizenship':
+                    this.citizenship_required = true;
                     break;
             }
         }
@@ -295,9 +338,6 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.address2_label:
                 this.address2 = event.target.value;
-                if (this.address1 != null) {
-                    this.record_input.fields.Street = this.address1 + ' ' + this.address2;
-                }
                 break;
             case this.city_label:
                 this.record_input.fields.City = event.target.value;
@@ -355,26 +395,89 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
             this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
-        console.log(this.record_input);
     }
 
     handleSubmit() {
-        createRecord(this.record_input)
-        .then(() => {
-            // redirect
-            console.log('Success!');
-        })
-        .catch(error => {
-            // TO DO: determine what should happen if duplicate is found - update?
-            console.log(error);
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error creating lead.',
-                    message: error.body.message,
-                    variant: 'error'
+        if (this.validateInput()) {
+            this.show_spinner = true;
+            this.handleStreetAddress();
+            createAccount({ account_name : this.new_account}) 
+            .then(account_id => {
+                if (account_id != '') {
+                    this.record_input.fields.Affiliated_Account__c = account_id;
+                }
+                console.log(this.record_input);
+                createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
+                .then(() => {
+                    // redirect
+                    console.log('Success!');
+                    this.show_spinner = false;
                 })
-            )
-        });
+                .catch(error => {
+                    console.log(error);
+                    this.show_spinner = false;
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                this.show_spinner = false;
+            });
+        }
+    }
+
+    validateInput() {
+        let valid_input_fields = this.validateInputFields();
+        let valid_picklist_fields = this.validatePicklistFields();
+        if (valid_input_fields && valid_picklist_fields) {
+            this.show_error_message = false;
+            return true;
+        } else {
+            this.show_error_message = true;
+            return false;
+        }
+    }
+
+    //https://developer.salesforce.com/docs/component-library/bundle/lightning-input/documentation
+    validateInputFields() {
+        const allValid = [
+            ...this.template.querySelectorAll('lightning-input'),
+        ].reduce((validSoFar, inputCmp) => {
+            inputCmp.reportValidity();
+            return validSoFar && inputCmp.checkValidity();
+        }, true);
+
+        if (allValid) {
+            console.log('Fields good to go!');
+            return true;
+        } else {
+            console.log('Missing fields.');
+            return false;
+        }
+    }
+
+    validatePicklistFields() {
+        const allValid = [
+            ...this.template.querySelectorAll('lightning-combobox'),
+        ].reduce((validSoFar, inputCmp) => {
+            inputCmp.reportValidity();
+            return validSoFar && inputCmp.checkValidity();
+        }, true);
+
+        if (allValid) {
+            console.log('Comboboxes good to go!');
+            return true;
+        } else {
+            console.log('Missing comboboxes.');
+            return false;
+        }
+    }
+
+    handleStreetAddress() {
+        if (this.address1 != '' && this.address2 != '') {
+            this.record_input.fields.Street = this.address1 + ', ' + this.address2;
+        } else if (this.address1 != '' && this.address2 == '') {
+            this.record_input.fields.Street = this.address1;
+        }
     }
 
     @wire(getRecordCreateDefaults, { objectApiName: LEAD_OBJECT, optionalFields: OPTIONAL_FIELDS})
@@ -385,13 +488,17 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
             this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100); // TO DO: determine what this should be
             this.record_input.fields.LeadSource = 'Web';
+            getOwnerId()
+            .then(ownerId => {
+                this.record_input.fields.OwnerId = ownerId;
+            })
+            .catch((error) => {
+                this.record_input.fields.OwnerId = null;
+            })
             // relationship lookup fields throwing error on insert, so removing
             for (const relationship_name of lookup_fields) {
-                delete this.record_input.fields[relationship_name];
+                delete this.record_input.fields[relationship_name];         
             }
-            // delete this.record_input.fields.Affiliated_Account__r;
-            // delete this.record_input.fields.Recruitment_Program__r;
-            // delete this.record_input.fields.Term__r;
             console.log(this.record_input);
         } else {
             console.log(result.error);
@@ -407,11 +514,17 @@ export default class RequestForInformationForm extends LightningElement {
                     this.account_id_to_name_map = high_schools;
                     var values = [];
                     for (const school in high_schools) {
+                        var address_info;
+                        if (high_schools[school].ShippingCity == null || high_schools[school].ShippingState == null) {
+                            address_info = 'Unknown';
+                        } else {
+                            address_info = high_schools[school].ShippingCity + ', ' + high_schools[school].ShippingState;
+                        }
                         values.push(
                             {   
                                 name: high_schools[school].Name, 
                                 account_id: high_schools[school].Id, 
-                                address: high_schools[school].ShippingCity + ', ' + high_schools[school].ShippingState
+                                address: address_info
                             }
                         );
                     }
@@ -420,13 +533,6 @@ export default class RequestForInformationForm extends LightningElement {
             })
             .catch(error => {
                 console.log(error);
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error retreiving High Schools',
-                        message: error.body.message,
-                        variant: 'error'
-                    })
-                )
             });
         } else {
             this.high_school_search_results = null;
@@ -434,12 +540,7 @@ export default class RequestForInformationForm extends LightningElement {
         }
     } 
 
-    get setDataTableHeight() {
-        if (this.high_school_search_results.length > 6) {
-            return "height: 210px"
-        }
-    }
-
+    // global value set?
     get stateOptions() {
         return [
             { label: 'MN', value: 'MN' },

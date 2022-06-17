@@ -6,10 +6,9 @@ public without sharing class requestForInformationFormController {
         try {
             SObject sobj;
             Map<String,SObjectField> fieldMap;
-            AuraHandledException error;
             Map<String,Object> objMap = (Map<String,Object>) JSON.deserializeUntyped(record);
             System.debug(objMap);
-            sobj = objMap.get('Id') == null ? (SObject) Schema.describeSObjects(new List<String>{objectApiName})[0].getSObjectType().newSObject() : (SObject) ((Id) objMap.get('Id')).getSobjectType().newSObject();
+            sobj = (SObject) Schema.describeSObjects(new List<String>{objectApiName})[0].getSObjectType().newSObject();
             fieldMap = sobj.getSObjectType().getDescribe().fields.getMap();
             for(String field : objMap.keySet()){
                 Schema.SObjectField sObjField = fieldMap.get(field);
@@ -30,11 +29,10 @@ public without sharing class requestForInformationFormController {
                     }
                 }
             }
-            if(objMap.get('Id') == null){
-                insert sobj;
-            }else{
-                update sobj;
-            }
+
+            Database.DMLOptions dml = new Database.DMLOptions(); 
+            dml.DuplicateRuleHeader.allowSave = false;
+            Database.SaveResult result = Database.insert(sobj, dml);
         } catch (Exception e) {
             throw new AuraHandledException('Error creating lead: ' + e.getMessage());
         }

@@ -168,7 +168,7 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             if (result.data.length != 0) {
                 this.academic_level_api = result.data.Academic_Level__c;
-                this.applicant_status = result.data.Applicant_Status__c;
+                this.applicant_status = '(' + result.data.Applicant_Status__c + ')';
                 this.fields_to_display = result.data.Fields_to_Display__c;
                 this.required_fields = result.data.Required_Fields__c;
                 // sets boolean values for front-end display i.e. which fields on are form, which are required
@@ -244,7 +244,7 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     handleRequiredFields() {
-        var fields = this.fields_to_display.split(';');
+        var fields = this.required_fields.split(';');
         for (const field of fields) {
             switch (field) {
                 case 'Phone fields':

@@ -17,12 +17,12 @@
         <!-- BEGIN FORM -->
         <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
             <!-- ROW 0 -->
-            <template if:true={show_admit_type}>
+            <template if:true={show_fields.Admit_Type}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <lightning-combobox
-                            required={admit_type_required}
-                            label={admit_type_label}
+                            required={require_fields.Admit_Type}
+                            label={field_labels.admit_type_label}
                             options={admit_type_picklist_values}
                             aria-label="Admit Type"
                             onchange={onChange}>
@@ -31,12 +31,12 @@
                 </div>
             </template>
             <!-- ROW 1 -->
-            <template if:true={show_citizenship}>
+            <template if:true={show_fields.Citizenship}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <lightning-combobox
-                            required={citizenship_required}
-                            label={citizenship_label}
+                            required={require_fields.Citizenship}
+                            label={field_labels.citizenship_label}
                             options={citizenship_picklist_values}
                             aria-label="Citizenship"
                             onchange={onChange}>
@@ -45,12 +45,12 @@
                 </div>
             </template>
             <!-- ROW 2 -->
-            <template if:true={show_academic_interest}>
+            <template if:true={show_fields.Academic_Interest}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <lightning-combobox
-                            required={academic_interest_required}
-                            label={academic_interest_label}
+                            required={require_fields.Academic_Interest}
+                            label={field_labels.academic_interest_label}
                             options={academic_interest_picklist_values}
                             aria-label="Academic Interest"
                             onchange={onChange}>
@@ -64,7 +64,7 @@
                     <lightning-input 
                         required="true"
                         type="text" 
-                        label={first_name_label}
+                        label={field_labels.first_name_label}
                         aria-label="First Name"
                         onchange={onChange}>
                     </lightning-input>
@@ -73,20 +73,20 @@
                     <lightning-input 
                         required="true"
                         type="text" 
-                        label={last_name_label}
+                        label={field_labels.last_name_label}
                         aria-label="Last Name"
                         onchange={onChange}>
                     </lightning-input>
                 </div>
             </div>
             <!-- ROW 3 -->
-            <template if:true={show_email}>
+            <template if:true={show_fields.Email}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <lightning-input 
-                            required={email_required}
+                            required={require_fields.Email}
                             type="email" 
-                            label={email_label}
+                            label={field_labels.email_label}
                             aria-label="Email" 
                             pattern={email_pattern}
                             message-when-pattern-mismatch={invalid_email_message}
@@ -96,21 +96,22 @@
                 </div>  
             </template>  
             <!-- ROW 4 -->
-            <template if:true={show_phone_fields}>
+            <template if:true={show_fields.Phone_fields}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-input
+                            required={require_fields.Phone_fields}
                             type="tel" 
-                            label={home_phone_label}
+                            label={field_labels.home_phone_label}
                             aria-label="Home Phone"
                             onchange={onChange}>
                         </lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-input 
-                            required={phone_fields_required}
+                            required={require_fields.Phone_fields}
                             type="tel" 
-                            label={mobile_phone_label}
+                            label={field_labels.mobile_phone_label}
                             aria-label="Mobile Phone"
                             onchange={onChange}>
                         </lightning-input>
@@ -121,7 +122,7 @@
                     <div class="slds-col">
                         <lightning-input 
                             type="checkbox" 
-                            label={text_messages_label}
+                            label={field_labels.text_messages_label}
                             aria-label="Opt-in to text messages"
                             onchange={onChange}>
                         </lightning-input>
@@ -129,13 +130,13 @@
                 </div>
             </template> 
             <!-- ROW 6 -->
-            <template if:true={show_birthdate}>
+            <template if:true={show_fields.Birthdate}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <lightning-input 
-                            required={birthdate_required}
+                            required={require_fields.Birthdate}
                             type="date" 
-                            label={birthdate_label}
+                            label={field_labels.birthdate_label}
                             aria-label="Birthdate"
                             onchange={onChange}>
                         </lightning-input>
@@ -143,12 +144,12 @@
                 </div>
             </template>
             <!-- ROW 6 -->
-            <template if:true={show_academic_term}>
+            <template if:true={show_fields.Academic_Term}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <lightning-combobox
-                            required={academic_term_required}
-                            label={academic_term_label}
+                            required={require_fields.Academic_Term}
+                            label={field_labels.academic_term_label}
                             options={academic_term_picklist_values}
                             aria-label="Academic Term"
                             onchange={onChange}>
@@ -157,15 +158,15 @@
                 </div>
             </template>
             <!-- ROW 6 -->
-            <template if:true={show_high_school}>
+            <template if:true={show_fields.High_School_Attended}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <template if:false={manually_enter_high_school}>
                             <div>
                                 <lightning-input 
-                                    required={high_school_required}
+                                    required={require_fields.High_School_Attended}
                                     type="search" 
-                                    label={high_school_search_label}
+                                    label={field_labels.high_school_search_label}
                                     aria-label="High School Attended"
                                     placeholder="Begin typing..."
                                     onchange={handleSearch}
@@ -182,7 +183,7 @@
                                         key-field="id"
                                         max-row-selection="1"
                                         onrowselection={onChange}
-                                        name={high_school_datatable_name}>
+                                        name={field_labels.high_school_datatable_name}>
                                     </lightning-datatable>
                                 </div>
                             </template>
@@ -190,9 +191,9 @@
 
                         <template if:true={manually_enter_high_school}>
                             <lightning-input 
-                                required={high_school_required}
+                                required={require_fields.High_School_Attended}
                                 type="text" 
-                                label={high_school_search_label}
+                                label={field_labels.high_school_search_label}
                                 aria-label="High School Attended"
                                 onchange={onChange}
                                 placeholder="Enter High School name">
@@ -201,7 +202,7 @@
                         <div class="slds-p-top_xx-small">
                             <lightning-input 
                                 type="checkbox" 
-                                label={high_school_not_found_label}
+                                label={field_labels.high_school_not_found_label}
                                 aria-label="I can't find my High School"
                                 onchange={onChange}>
                             </lightning-input>
@@ -210,13 +211,13 @@
                 </div>
             </template>
             <!-- ROW 7 -->
-            <template if:true={show_address_fields}>
+            <template if:true={show_fields.Address_fields}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <lightning-input 
-                            required={address_fields_required}
+                            required={require_fields.Address_fields}
                             type="text" 
-                            label={address1_label}
+                            label={field_labels.address1_label}
                             aria-label="Address 1"
                             onchange={onChange}>
                         </lightning-input>
@@ -227,7 +228,7 @@
                     <div class="slds-col">
                         <lightning-input
                             type="text" 
-                            label={address2_label}
+                            label={field_labels.address2_label}
                             aria-label="Address 2"
                             onchange={onChange}> 
                         </lightning-input>
@@ -237,17 +238,17 @@
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-input 
-                            required={address_fields_required}
+                            required={require_fields.Address_fields}
                             type="text" 
-                            label={city_label}
+                            label={field_labels.city_label}
                             aria-label="City"
                             onchange={onChange}>
                         </lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-combobox
-                            required={address_fields_required}
-                            label={state_label} 
+                            required={require_fields.Address_fields}
+                            label={field_labels.state_label} 
                             options={stateOptions}
                             aria-label="State"
                             placeholder="Select a state..."
@@ -259,17 +260,17 @@
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-input 
-                            required={address_fields_required}
+                            required={require_fields.Address_fields}
                             type="text" 
-                            label={zipcode_label}
+                            label={field_labels.zipcode_label}
                             aria-label="Zip Code"
                             onchange={onChange}>
                         </lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-combobox
-                            required={address_fields_required}
-                            label={country_label}
+                            required={require_fields.Address_fields}
+                            label={field_labels.country_label}
                             options={country_picklist_values}
                             aria-label="Country"
                             placeholder="Select a country..."

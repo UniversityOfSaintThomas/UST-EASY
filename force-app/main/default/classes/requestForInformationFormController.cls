@@ -46,7 +46,8 @@ public without sharing class requestForInformationFormController {
                     Academic_Level__c,
                     Applicant_Status__c,
                     Fields_to_Display__c,
-                    Required_Fields__c
+                    Required_Fields__c,
+                    Lead_Owner__c
                 FROM RFI_Controller__c 
                 WHERE Name =: rfi_controller_name
                 LIMIT 1
@@ -100,7 +101,7 @@ public without sharing class requestForInformationFormController {
         try {
             Map<Id, Account> high_school_map = new Map<Id, Account>();
                 Id educational_record_type = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-                List<List<Account>> high_schools = [FIND :search_term IN NAME FIELDS RETURNING Account(Id, Name, ShippingCity, ShippingState WHERE RecordTypeId =: educational_record_type ORDER BY Name)];
+                List<List<Account>> high_schools = [FIND :search_term IN NAME FIELDS RETURNING Account(Id, Name, ShippingCity, ShippingState, ShippingCountry WHERE RecordTypeId =: educational_record_type ORDER BY Name)];
                 for (List<Account> account_list : high_schools) {
                     for (Account high_school : account_list) {
                         high_school_map.put(high_school.Id, high_school);
@@ -130,21 +131,12 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled
-    public static String getOwnerId(){
-        try {
-            return [SELECT Id FROM User WHERE Username = 'guest@fake.com' LIMIT 1].Id;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-
-    @AuraEnabled
-    public static String createAccount(String account_name){
+    public static String createAccount(String account_name, String owner_id){
         try {
             String account_id = '';
             if (account_name != null && account_name != '') {
                 Id educational_record_type = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-                Account new_account = new Account(RecordTypeId = educational_record_type, Name = account_name, OwnerId = getOwnerId());
+                Account new_account = new Account(RecordTypeId = educational_record_type, Name = account_name, OwnerId = owner_id);
                 insert new_account;
                 account_id = new_account.Id;
             }

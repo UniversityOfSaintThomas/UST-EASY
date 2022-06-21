@@ -168,12 +168,12 @@
     <c:ApplicationFormSectionInputAddress responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" inputType="{!inputType}"/>
 
     <!-- Reference Question -->
-    <apex:outputPanel layout="none" rendered="{!!questionWrapper['question']['Display_As_Picklist__c'] && inputType == 'Reference' && $CurrentPage.Name != 'ApplicationRegistration'}">
+    <apex:outputPanel layout="none" rendered="{!!questionWrapper['question']['Display_As_Picklist__c'] && inputType == 'Reference' && $CurrentPage.Name != 'ApplicationRegistration' && $CurrentPage.Name != 'ApplicationCreate'}">
         <c:ApplicationFormSectionInputReference responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" itemId="{!itemId}" inputType="{!inputType}" fieldAPI="{!fieldAPI}"/>
     </apex:outputPanel>
 
     <!-- Reference Question as Picklist -->
-    <apex:outputPanel layout="none" rendered="{!(questionWrapper['question']['Display_As_Picklist__c'] || $CurrentPage.Name == 'ApplicationRegistration')  && inputType == 'Reference'}">
+    <apex:outputPanel layout="none" rendered="{!(questionWrapper['question']['Display_As_Picklist__c'] || $CurrentPage.Name == 'ApplicationRegistration' || $CurrentPage.Name == 'ApplicationCreate')  && inputType == 'Reference'}">
         <div class="slds-select_container">
             <apex:selectList id="referenceField" value="{!responseObject[fieldAPI]}" size="1" styleClass="slds-select" onChange="reRenderAllGroups('{!rerenderGroup}')">
                 <apex:selectOptions value="{!inputOptions}"/>

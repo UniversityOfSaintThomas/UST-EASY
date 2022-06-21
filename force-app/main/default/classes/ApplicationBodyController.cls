@@ -6,7 +6,8 @@
 public with sharing class ApplicationBodyController {
 
     public EASYApplicationInfo appInfoParam { get; set; }
-    public String currentPageName {get;set;}
+    public String currentPageName { get; set; }
+    public Boolean skipWidgetsPages { get; set; }
 
     public ApplicationBodyController() {
     }
@@ -21,6 +22,7 @@ public with sharing class ApplicationBodyController {
     }
 
     public allWidgets getWidgets() {
+        currentPageName = getVFPageName();
         allWidgets foundWidgets = new allWidgets();
         foundWidgets.topWidgets = new List<EASY_Widget__c>();
         foundWidgets.rightWidgets = new List<EASY_Widget__c>();
@@ -31,6 +33,12 @@ public with sharing class ApplicationBodyController {
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
 
         if (appInfoParam.appControl != null && String.isNotBlank(appInfoParam.appControlId)) {
+
+            skipWidgetsPages = false;
+            if (currentPageName.equalsIgnoreCase('ApplicationPortal') || currentPageName.equalsIgnoreCase('ApplicationCreate') || currentPageName.equalsIgnoreCase('ApplicationRegistration')) {
+                skipWidgetsPages = true;
+            }
+
             try {
                 allPositionWidgets = [
                         SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
@@ -47,24 +55,26 @@ public with sharing class ApplicationBodyController {
             }
 
             for (EASY_Widget__c widget : allPositionWidgets) {
-                switch on widget.Widget_Screen_Location__c.toLowerCase() {
-                    when 'left' {
-                        foundWidgets.leftWidgets.add(widget);
-                    }
-                    when 'right' {
-                        foundWidgets.rightWidgets.add(widget);
-                    }
-                    when 'top' {
-                        foundWidgets.topWidgets.add(widget);
-                    }
-                    when 'bottom' {
-                        foundWidgets.bottomWidgets.add(widget);
-                    }
-                    when 'content top' {
-                        foundWidgets.contentTopWidgets.add(widget);
-                    }
-                    when 'content bottom' {
-                        foundWidgets.contentTopWidgets.add(widget);
+                if (!skipWidgetsPages && !widget.Widget_Type__c.equalsIgnoreCase('Application Checklist') || !skipWidgetsPages && !widget.Widget_Type__c.equalsIgnoreCase('Progress Bar')) {
+                    switch on widget.Widget_Screen_Location__c.toLowerCase() {
+                        when 'left' {
+                            foundWidgets.leftWidgets.add(widget);
+                        }
+                        when 'right' {
+                            foundWidgets.rightWidgets.add(widget);
+                        }
+                        when 'top' {
+                            foundWidgets.topWidgets.add(widget);
+                        }
+                        when 'bottom' {
+                            foundWidgets.bottomWidgets.add(widget);
+                        }
+                        when 'content top' {
+                            foundWidgets.contentTopWidgets.add(widget);
+                        }
+                        when 'content bottom' {
+                            foundWidgets.contentTopWidgets.add(widget);
+                        }
                     }
                 }
             }
@@ -72,5 +82,13 @@ public with sharing class ApplicationBodyController {
         return foundWidgets;
     }
 
+    public string getVFPageName() {
+        String pageName = ApexPages.CurrentPage().getUrl();
+        pageName = pageName.replaceFirst('/apex/', '');
+        pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');
+        string[] pageNameExtra = pageName.split('%3F', 0);
+        pageName = pageNameExtra[0];
+        return pageName;
+    }
 
 }

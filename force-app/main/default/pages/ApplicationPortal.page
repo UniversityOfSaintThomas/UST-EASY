@@ -6,15 +6,17 @@
         <apex:define name="body">
             <c:ApplicationBody title="Application Portal" appInfo="{!appInfo}">
                 <apex:form id="theForm">
-                    <div class="slds-grid slds-wrap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                            <apex:pageMessages/>
-                            <apex:repeat value="{!applicationsByIds}" var="key">
-                                <apex:variable var="thisAppInfo" value="{!appInfoMapByAppId[key]}"/>
-                                <apex:variable var="thisApp" value="{!applicationsByIds[key]}"/>
-                                <apex:variable var="thisAppControl" value="{!thisAppInfo.appControl}"/>
-                                <apex:variable var="thisIntendedProgram" value="{!thisApp.Intended_Program__r}"/>
-                                <apex:variable var="thisChecklist" value="{!checklistsByAppIds[key]}"/>
+                    <div class="slds-grid slds-wrap {!IF(applicationMapSize >= 2, ' slds-gutters','')}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <apex:pageMessages/>
+                        <apex:variable var="checklistStyle" value="{!IF(applicationMapSize == 2, ' slds-large-size_6-of-12', ' slds-large-size_12-of-12')}"/>
+                        <apex:variable var="checklistStyle" value="{!IF(applicationMapSize == 3, ' slds-large-size_4-of-12', checklistStyle)}"/>
+                        <apex:repeat value="{!applicationsByIds}" var="key">
+                            <apex:variable var="thisAppInfo" value="{!appInfoMapByAppId[key]}"/>
+                            <apex:variable var="thisApp" value="{!applicationsByIds[key]}"/>
+                            <apex:variable var="thisAppControl" value="{!thisAppInfo.appControl}"/>
+                            <apex:variable var="thisIntendedProgram" value="{!thisApp.Intended_Program__r}"/>
+                            <apex:variable var="thisChecklist" value="{!checklistsByAppIds[key]}"/>
+                            <div class="slds-col slds-size_1-of-1{!checklistStyle}">
                                 <article class="slds-card">
                                     <div class="slds-card__header slds-grid">
                                         <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -38,7 +40,7 @@
                                                                 {!IF(ISBLANK(thisIntendedProgram.Program_Name_on_Application__c), thisIntendedProgram.Name, thisIntendedProgram.Program_Name_on_Application__c)}
                                                              </apex:outputPanel>
                                                                 <apex:outputPanel layout="none" rendered="{!!thisAppControl.Hide_Term_Program__c}">
-                                                                    ( <a target="_self" href="{!$Site.BaseUrl}/apex/ApplicationChecklist?applicationId={!key}&contactId={!thisAppInfo.contactId}&at={!thisAppControl.URL_Parameter__c}">{!thisAppControl.Id}</a> )
+                                                                    ( {!key} )
                                                                 </apex:outputPanel>
                                                             </span>
                                                     </a>
@@ -52,17 +54,18 @@
                                     <footer class="slds-card__footer"></footer>
                                 </article>
                                 <div class="slds-truncate" title="{!thisApp.Application_Status__c}">
-                                    {!thisAPp.Application_Status__c}
+                                    {!thisApp.Application_Status__c}
                                 </div>
                                 <br/>
-                            </apex:repeat>
-                        </div>
+                            </div>
+                        </apex:repeat>
                         <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_x-large">
                             <button class="slds-button slds-button_neutral slds-button_dual-stateful" aria-live="assertive" href="{!$Site.BaseUrl}/apex/ApplicationCreate?contactId={!appInfo.contactId}&at={!appInfo.at}">
                                 <a href="{!$Site.BaseUrl}/apex/ApplicationCreate?contactId={!appInfo.contactId}&at={!appInfo.at}">
                                     <svg class="slds-button__icon slds-button__icon_small slds-button__icon_left" aria-hidden="true">
-                                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>
-                                    </svg>New Application
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>
+                                    </svg>
+                                    New Application
                                 </a>
                             </button>
                         </div>

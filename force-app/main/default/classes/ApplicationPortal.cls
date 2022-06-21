@@ -7,6 +7,7 @@ Revision (s):
 public class ApplicationPortal {
 
     public Map<Id, Application__c> applicationsByIds { get; set; }
+    public Integer applicationMapSize { get; set; }
     public Map<Id, Application_Control__c> appControlsByAppIds { get; set; }
     public Map<Id, List<RequirementWrapper>> checklistsByAppIds { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
@@ -47,6 +48,7 @@ public class ApplicationPortal {
             String query = 'SELECT ' + appFields + ' FROM Application__c WHERE Contact__c = \'' + contactId + '\''; //+ '\' AND Application_Control__r.Id IN :appControlIdsList';
 
             applicationsByIds = new Map<Id, Application__c>((List<Application__c>) Database.query(query));
+            applicationMapSize = applicationsByIds.size();
 
             for (Application__c app : applicationsByIds.values()) {
                 EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);

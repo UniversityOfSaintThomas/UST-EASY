@@ -10,48 +10,64 @@ public class ApplicationRegistration {
     private User loginUser { get; set; }
     private String loginPassword { get; set; }
     private String loginUrl { get; set; }
+    public EASYApplicationInfo appInfo { get; set; }
+    public Boolean cookieKeyPresent { get; set; }
+    public String userType { get; set; }
 
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
     ********************************************************************************/
     public ApplicationRegistration() {
+        userType = UserInfo.getUserType();
+        cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
+        if (cookieKeyPresent) {
+            appInfo = ApplicationUtilities.gatherApplicationInfo();
 
-        // Initialize objects
-        appCreate = new ApplicationCreate();
-        interaction = new Interaction__c();
-        extraFields = new Interaction__c();
+            // Initialize objects
+            appCreate = new ApplicationCreate();
+            interaction = new Interaction__c();
+            extraFields = new Interaction__c();
 
-        // Exit if there is no Application Control to reference
-        if (appCreate.appControl == null) {
-            return;
+            // Exit if there is no Application Control to reference
+            if (appCreate.appControl == null) {
+                return;
+            }
+
+            // Create questions for first name, middle name, last name, email, password, and password confirmation
+            ApplicationQuestion firstName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'First_Name__c');
+            firstName.addQuestionObject(new Question__c(Label__c = 'First Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
+
+            ApplicationQuestion middleName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Middle_Name__c');
+            middleName.addQuestionObject(new Question__c(Label__c = 'Middle Name', Active__c = true));
+
+            ApplicationQuestion lastName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Last_Name__c');
+            lastName.addQuestionObject(new Question__c(Label__c = 'Last Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
+            ApplicationQuestion email = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Email__c');
+            email.addQuestionObject(new Question__c(Label__c = 'Email', Required__c = appCreate.app.Application_Status__c, Active__c = true));
+            ApplicationQuestion portalPassword = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'Last_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
+            portalPassword.addQuestionObject(new Question__c(Label__c = 'What password would you like to use for saving your application?', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
+            ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'First_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
+            portalPasswordConfirmation.addQuestionObject(new Question__c(Label__c = 'Please enter your password again.', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
+
+            // Create question groups
+            ApplicationQuestionGroup firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+                    firstName, middleName, lastName, email
+            });
+            ApplicationQuestionGroup lastGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+                    portalPassword, portalPasswordConfirmation
+            });
+
+            // Setup other questions
+            appCreate.setup(firstGroup, lastGroup);
         }
+    }
 
-        // Create questions for first name, middle name, last name, email, password, and password confirmation
-        ApplicationQuestion firstName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'First_Name__c');
-        firstName.addQuestionObject(new Question__c(Label__c = 'First Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
-
-        ApplicationQuestion middleName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Middle_Name__c');
-        middleName.addQuestionObject(new Question__c(Label__c = 'Middle Name', Active__c = true));
-
-        ApplicationQuestion lastName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Last_Name__c');
-        lastName.addQuestionObject(new Question__c(Label__c = 'Last Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
-        ApplicationQuestion email = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Email__c');
-        email.addQuestionObject(new Question__c(Label__c = 'Email', Required__c = appCreate.app.Application_Status__c, Active__c = true));
-        ApplicationQuestion portalPassword = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'Last_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
-        portalPassword.addQuestionObject(new Question__c(Label__c = 'What password would you like to use for saving your application?', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
-        ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'First_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
-        portalPasswordConfirmation.addQuestionObject(new Question__c(Label__c = 'Please enter your password again.', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
-
-        // Create question groups
-        ApplicationQuestionGroup firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                firstName, middleName, lastName, email
-        });
-        ApplicationQuestionGroup lastGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                portalPassword, portalPasswordConfirmation
-        });
-
-        // Setup other questions
-        appCreate.setup(firstGroup, lastGroup);
+    public PageReference testCookieKey() {
+        ApplicationUtilities.getCookieKey();
+        PageReference pageRef = ApexPages.CurrentPage();
+        ApexPages.currentPage().getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
+        pageRef.setRedirect(true);
+        return pageRef;
     }
 
     /* ******************************************************************************
@@ -150,54 +166,49 @@ public class ApplicationRegistration {
     }
 
     public PageReference login() {
-        System.debug(loginUrl);
         if (String.isNotBlank(loginUrl)) {
             return Site.login(loginUser.Username, loginPassword, loginUrl);
         }
         return null;
     }
 
+
     @RemoteAction
     public static List<SObject> lookupSearch(String sObj, String sObjFilter, String sObjNameField, String term) {
-        return new ActionWithSharing().lookupSearchWithSharing(sObj, sObjFilter, sObjNameField, term);
-    }
-    public with sharing class ActionWithSharing {
-        public List<SObject> lookupSearchWithSharing(String sObj, String sObjFilter, String sObjNameField, String term) {
-            if (Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()) {
-                if (String.isBlank(sObjNameField)) {
-                    sObjNameField = 'Name';
-                }
-                List<String> sObjNameFields = sObjNameField.split(',');
-
-                for (Integer x = 0; x < sObjNameFields.size(); x++) {
-                    sObjNameFields[x] = sObjNameFields[x].trim();
-                }
-
-                String fieldList = String.join(sObjNameFields, ', ');
-                String likeStatement = '';
-
-                for (String sField : sObjNameFields) {
-                    likeStatement += sField + ' LIKE \'%' + String.escapeSingleQuotes(term) + '%\' OR ';
-                }
-                likeStatement = ' ( ' + likeStatement.removeEnd(' OR ') + ' )';
-
-                String query = 'Select Id, ' + fieldList;
-                query += ' FROM ' + sObj;
-                query += ' WHERE ' + likeStatement;
-                if (String.isNotBlank(sObjFilter)) {
-                    query += ' AND (' + sObjFilter + ')';
-                }
-                query += ' ORDER BY ' + fieldList + ' ASC';
-                query += ' LIMIT 50';
-                System.debug(query);
-                try {
-                    return Database.query(query);
-                } catch (Exception e) {
-                    return new List<SObject>();
-                }
+        if (Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()) {
+            if (String.isBlank(sObjNameField)) {
+                sObjNameField = 'Name';
             }
-            return new List<SObject>();
+            List<String> sObjNameFields = sObjNameField.split(',');
+
+            for (Integer x = 0; x < sObjNameFields.size(); x++) {
+                sObjNameFields[x] = sObjNameFields[x].trim();
+            }
+
+            String fieldList = String.join(sObjNameFields, ', ');
+            String likeStatement = '';
+
+            for (String sField : sObjNameFields) {
+                likeStatement += sField + ' LIKE \'%' + String.escapeSingleQuotes(term) + '%\' OR ';
+            }
+            likeStatement = ' ( ' + likeStatement.removeEnd(' OR ') + ' )';
+
+            String query = 'Select Id, ' + fieldList;
+            query += ' FROM ' + sObj;
+            query += ' WHERE ' + likeStatement;
+            if (String.isNotBlank(sObjFilter)) {
+                query += ' AND (' + sObjFilter + ')';
+            }
+            query += ' ORDER BY ' + fieldList + ' ASC';
+            query += ' LIMIT 50';
+            System.debug(query);
+            try {
+                return Database.query(query);
+            } catch (Exception e) {
+                return new List<SObject>();
+            }
         }
+        return new List<SObject>();
     }
 
     private without sharing class crudToDo {

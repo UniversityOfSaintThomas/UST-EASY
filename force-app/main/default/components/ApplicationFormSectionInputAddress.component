@@ -1,0 +1,47 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 6/9/2022.
+ -->
+
+<apex:component id="ApplicationFormSectionInputAddress">
+    <apex:attribute name="responseObject" description="" type="SObject"/>
+    <apex:attribute name="questionWrapper" description="" type="ApplicationQuestion"/>
+    <apex:attribute name="inputType" description="" type="String" required="true"/>
+
+    <apex:repeat value="{!['Street' = 'Street', 'City' = 'City', 'State/Province' = 'State/Province', 'Country' = 'Country', 'Postal Code' = 'Postal Code']}" var="inputAddressType" rendered="{!inputType == 'Address'}">
+        <apex:outputPanel styleClass="slds-form-element validate{!inputType}}">
+
+            <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
+                {!inputAddressType}
+                <apex:outputPanel layout="none">
+                    <abbr class='slds-required' title='required'>* </abbr>
+                </apex:outputPanel>
+            </label>
+
+            <apex:outputPanel styleClass="slds-form-element__control slds-is-required" layout="block">
+
+                <apex:inputField id="street" value="{!responseObject['Street__c']}" styleClass="slds-input" rendered="{!If(inputAddressType == 'Street', true, false)}"/>
+
+                <apex:inputField id="city" value="{!responseObject['City__c']}" styleClass="slds-input" rendered="{!If(inputAddressType == 'City', true, false)}"/>
+
+                <apex:outputPanel rendered="{!!questionWrapper.stateAndCountryPicklistEnabled}" layout="block">
+                    <apex:inputField id="state" value="{!questionWrapper['con']['MailingState']}" styleClass="slds-input" rendered="{!If(inputAddressType == 'State/Province', true, false)}"/>
+                    <apex:inputField id="country1" value="{!questionWrapper['con']['MailingCountry']}" styleClass="slds-input" rendered="{!If(inputAddressType == 'Country', true, false)}"/>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!questionWrapper.stateAndCountryPicklistEnabled}" layout="block">
+                    <apex:outputPanel styleClass="slds-select_container" rendered="{!If(inputType == 'Country', true, false)}" layout="block">
+                        <apex:inputField id="country" value="{!questionWrapper['con']['MailingCountryCode']}" styleClass="slds-select"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleClass="slds-select_container" rendered="{!If(inputAddressType == 'State/Province', true, false)}" layout="block">
+                        <apex:inputField id="statePicklist" value="{!questionWrapper['con']['MailingStateCode']}" styleClass="slds-select"/>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+
+                <apex:inputField id="postal" value="{!responseObject['PostalCode__c']}" styleClass="slds-input" rendered="{!If(inputAddressType == 'Postal Code', true, false)}"/>
+
+            </apex:outputPanel>
+
+        </apex:outputPanel>
+
+    </apex:repeat>
+</apex:component>

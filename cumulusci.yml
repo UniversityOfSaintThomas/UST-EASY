@@ -201,6 +201,12 @@ tasks:
         - record_type: Requirement_Item__c.Question_Group
         - record_type: Requirement_Item__c.Related_Object
           default: true
+        - record_type: Family__c.Parent_Guardian
+          default: true
+        - record_type: Family__c.Sibling
+        - record_type: Family__c.UST_Alumni_Family
+        - record_type: Family__c.UST_Employee_Family
+
 
   add_degree_piciklist:
     description: "Adds more picklist items to the degree earned list of EDA."

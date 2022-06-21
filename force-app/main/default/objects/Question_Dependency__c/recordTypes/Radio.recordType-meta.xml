@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Radio</fullName>
+    <active>true</active>
+    <description>Radio dependency</description>
+    <label>Radio</label>
+    <picklistValues>
+        <picklist>ValueCheckbox__c</picklist>
+        <values>
+            <fullName>False</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>True</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>

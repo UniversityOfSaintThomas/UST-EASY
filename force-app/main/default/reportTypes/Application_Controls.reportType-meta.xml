@@ -141,6 +141,11 @@
             <field>Application_Control_External_ID__c</field>
             <table>Application_Control__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Template__c</field>
+            <table>Application_Control__c</table>
+        </columns>
         <masterLabel>Application Controls</masterLabel>
     </sections>
 </ReportType>

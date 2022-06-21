@@ -10,6 +10,7 @@ public class RelatedDocumentUpload {
     public String fileTypes {get;set;}
     public Set<String> allowedExtensions {get;set;}
     public Boolean success {get;set;}
+	public EASYApplicationInfo appInfo {get;set;}
 	public String objName{
 		get{
 			if(obj != null){
@@ -30,6 +31,7 @@ public class RelatedDocumentUpload {
 	public transient String additionalDataString{get;set;}
 
 	public RelatedDocumentUpload() {
+		appInfo = ApplicationUtilities.gatherApplicationInfo();
         success = false;
 		if(ApexPages.currentPage().getParameters().containsKey('Id')){
 			Id objId = ApexPages.currentPage().getParameters().get('Id');
@@ -51,7 +53,6 @@ public class RelatedDocumentUpload {
 	public void submit(){
 		transient Map<String,Object> additionalDataMap;
 		transient ContentVersion att = new ContentVersion();
-		System.debug(additionalDataString);
 		if(String.isNotBlank(additionalDataString)){
 			additionalDataMap = (Map<String,Object>)JSON.deserializeUntyped(additionalDataString);
 		} 

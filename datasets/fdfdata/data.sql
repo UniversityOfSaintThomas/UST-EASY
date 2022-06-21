@@ -117,7 +117,8 @@ CREATE TABLE "Account" (
 	"CEEB_Code__c" VARCHAR(255), 
 	"CEEB_Integration_Code__c" VARCHAR(255), 
 	"CIPC_Code__c" VARCHAR(255), 
-	"CreatedDate" VARCHAR(255),
+	"CreatedDate" VARCHAR(255), 
+	"Credentialing_Identifier__c" VARCHAR(255), 
 	"Current_Parent__c" VARCHAR(255), 
 	"DLEV_Code__c" VARCHAR(255), 
 	"Email__c" VARCHAR(255), 
@@ -144,28 +145,28 @@ CREATE TABLE "Account" (
 	"hed__Primary_Contact__c" VARCHAR(255), 
 	PRIMARY KEY (id)
 );
-INSERT INTO "Account" VALUES(402,'','Account2019-12-1907:21:171fGA','','','','','False','AS','STVCOLL-AS','','','','2019-07-23T17:38:27.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','College of Arts & Sciences','0128D0000007gXmQAI','','','','13','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(403,'','Account2019-12-1907:08:32H72m','','','','','False','','','','','','2020-09-18T17:46:34.000+0000','False','','','','False','2022-03-30T02:18:10.000+0000','Applicant Parent Account','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','1','');
-INSERT INTO "Account" VALUES(404,'','Account2019-12-1907:42:27H7CI','','','','','False','','','','','','2020-09-02T23:35:23.000+0000','False','','','','False','2022-03-30T02:18:10.000+0000','Unknown High School','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','2','');
-INSERT INTO "Account" VALUES(405,'','Account2019-12-1907:21:171fGm','','','','','False','','','','','','2020-09-02T23:32:38.000+0000','False','','','','False','2022-03-30T02:18:10.000+0000','Unknown College','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','3','');
-INSERT INTO "Account" VALUES(406,'','Account2019-12-1907:21:171fGB','','','','','False','EC','STVCOLL-EC','','','','2019-07-23T17:38:27.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Continuing Education','0128D0000007gXmQAI','','','','7','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(407,'','Account2019-12-1907:21:171fGC','','','','','False','CP','STVCOLL-CP','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Coll Ed, Ldr, & Counsl CELC','0128D0000007gXmQAI','','','','17','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(408,'','Account2019-12-1907:21:171fGD','','','','','False','DC','STVCOLL-DC','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Dougherty Family College','0128D0000007gXmQAI','','','','18','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(409,'','Account2019-12-1907:21:171fGE','','','','','False','XC','STVCOLL-XC','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Exchange Schools','0128D0000007gXmQAI','','','','16','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(410,'','Account2019-12-1907:21:171fGF','','','','','False','SE','STVCOLL-SE','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Grad Prog in Software Eng','0128D0000007gXmQAI','','','','15','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(411,'','Account2019-12-1907:21:171fGG','','','','','False','00','STVCOLL-00','','','','2019-07-23T17:38:28.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','No College Designated','0128D0000007gXmQAI','','','','11','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(412,'','Account2019-12-1907:21:171fGH','','','','','False','NN','STVCOLL-NN','','','','2019-07-23T17:38:29.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','No College Designated','0128D0000007gXmQAI','','','','14','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(413,'','Account2019-12-1907:21:171fGI','','','','','False','99','STVCOLL-99','','','','2019-07-23T17:38:29.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Not used in standing','0128D0000007gXmQAI','','','','12','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(414,'','Account2019-12-1907:21:171fGJ','','','','','False','BU','STVCOLL-BU','','','','2019-07-23T17:38:29.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Opus College of Business','0128D0000007gXmQAI','','','','2','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(415,'','Account2019-12-1907:21:171fGK','','','','','False','OT','STVCOLL-OT','','','','2019-07-23T17:38:30.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','Other','0128D0000007gXmQAI','','','','10','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(416,'','Account2019-12-1907:21:171fGL','','','','','False','CS','STVCOLL-CS','','','','2019-07-23T17:38:30.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Continuing Studies','0128D0000007gXmQAI','','','','1','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(417,'','Account2019-12-1907:21:171fGS','','','','','False','DV','STVCOLL-DV','','','','2019-07-23T17:38:30.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Divinity','0128D0000007gXmQAI','','','','6','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(418,'','Account2019-12-1907:21:171fGN','','','','','False','ET','STVCOLL-ET','','','','2019-07-23T17:38:31.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Engineering','0128D0000007gXmQAI','','','','9','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(419,'','Account2019-12-1907:21:171fGO','','','','','False','LW','STVCOLL-LW','','','','2019-07-23T17:38:31.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Law','0128D0000007gXmQAI','','','','8','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(420,'','Account2019-12-1907:21:171fGP','','','','','False','PS','STVCOLL-PS','','','','2019-07-23T17:38:32.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Prof Psychology','0128D0000007gXmQAI','','','','3','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(421,'','Account2019-12-1907:21:171fGQ','','','','','False','ED','STVCOLL-ED','','','','2019-07-23T17:38:32.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Education','0128D0000007gXmQAI','','','','5','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(422,'','Account2019-12-1907:21:171fGR','','','','','False','SW','STVCOLL-SW','','','','2019-07-23T17:38:32.000+0000','False','','','','False','2020-05-18T19:00:57.000+0000','School of Social Work','0128D0000007gXmQAI','','','','4','','','True','False','False','','','','','','','');
-INSERT INTO "Account" VALUES(423,'','Account2019-12-1907:21:171fGT','','','','','False','006110','STVSBGI-006110','','','','2019-07-23T17:48:32.000+0000','False','','','','False','2021-11-23T17:21:59.000+0000','University of St Thomas','0128D0000007gXjQAI','','','','8254','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(402,'','Account2019-12-1907:21:171fGA','','','','','False','AS','STVCOLL-AS','','','','2019-07-23T17:38:27.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','College of Arts & Sciences','0128D0000007gXmQAI','','','','13','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(403,'','Account2019-12-1907:08:32H72m','','','','','False','','','','','','2020-09-18T17:46:34.000+0000','','False','','','','False','2022-03-30T02:18:10.000+0000','Applicant Parent Account','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','1','');
+INSERT INTO "Account" VALUES(404,'','Account2019-12-1907:42:27H7CI','','','','','False','','','','','','2020-09-02T23:35:23.000+0000','','False','','','','False','2022-03-30T02:18:10.000+0000','Unknown High School','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','2','');
+INSERT INTO "Account" VALUES(405,'','Account2019-12-1907:21:171fGm','','','','','False','','','','','','2020-09-02T23:32:38.000+0000','','False','','','','False','2022-03-30T02:18:10.000+0000','Unknown College','0128D0000007gXhQAI','','','','','','','True','False','False','','','','','','3','');
+INSERT INTO "Account" VALUES(406,'','Account2019-12-1907:21:171fGB','','','','','False','EC','STVCOLL-EC','','','','2019-07-23T17:38:27.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Continuing Education','0128D0000007gXmQAI','','','','7','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(407,'','Account2019-12-1907:21:171fGC','','','','','False','CP','STVCOLL-CP','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Coll Ed, Ldr, & Counsl CELC','0128D0000007gXmQAI','','','','17','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(408,'','Account2019-12-1907:21:171fGD','','','','','False','DC','STVCOLL-DC','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Dougherty Family College','0128D0000007gXmQAI','','','','18','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(409,'','Account2019-12-1907:21:171fGE','','','','','False','XC','STVCOLL-XC','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Exchange Schools','0128D0000007gXmQAI','','','','16','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(410,'','Account2019-12-1907:21:171fGF','','','','','False','SE','STVCOLL-SE','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Grad Prog in Software Eng','0128D0000007gXmQAI','','','','15','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(411,'','Account2019-12-1907:21:171fGG','','','','','False','00','STVCOLL-00','','','','2019-07-23T17:38:28.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','No College Designated','0128D0000007gXmQAI','','','','11','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(412,'','Account2019-12-1907:21:171fGH','','','','','False','NN','STVCOLL-NN','','','','2019-07-23T17:38:29.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','No College Designated','0128D0000007gXmQAI','','','','14','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(413,'','Account2019-12-1907:21:171fGI','','','','','False','99','STVCOLL-99','','','','2019-07-23T17:38:29.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Not used in standing','0128D0000007gXmQAI','','','','12','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(414,'','Account2019-12-1907:21:171fGJ','','','','','False','BU','STVCOLL-BU','','','','2019-07-23T17:38:29.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Opus College of Business','0128D0000007gXmQAI','','','','2','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(415,'','Account2019-12-1907:21:171fGK','','','','','False','OT','STVCOLL-OT','','','','2019-07-23T17:38:30.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','Other','0128D0000007gXmQAI','','','','10','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(416,'','Account2019-12-1907:21:171fGL','','','','','False','CS','STVCOLL-CS','','','','2019-07-23T17:38:30.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Continuing Studies','0128D0000007gXmQAI','','','','1','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(417,'','Account2019-12-1907:21:171fGS','','','','','False','DV','STVCOLL-DV','','','','2019-07-23T17:38:30.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Divinity','0128D0000007gXmQAI','','','','6','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(418,'','Account2019-12-1907:21:171fGN','','','','','False','ET','STVCOLL-ET','','','','2019-07-23T17:38:31.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Engineering','0128D0000007gXmQAI','','','','9','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(419,'','Account2019-12-1907:21:171fGO','','','','','False','LW','STVCOLL-LW','','','','2019-07-23T17:38:31.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Law','0128D0000007gXmQAI','','','','8','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(420,'','Account2019-12-1907:21:171fGP','','','','','False','PS','STVCOLL-PS','','','','2019-07-23T17:38:32.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Prof Psychology','0128D0000007gXmQAI','','','','3','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(421,'','Account2019-12-1907:21:171fGQ','','','','','False','ED','STVCOLL-ED','','','','2019-07-23T17:38:32.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Education','0128D0000007gXmQAI','','','','5','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(422,'','Account2019-12-1907:21:171fGR','','','','','False','SW','STVCOLL-SW','','','','2019-07-23T17:38:32.000+0000','','False','','','','False','2020-05-18T19:00:57.000+0000','School of Social Work','0128D0000007gXmQAI','','','','4','','','True','False','False','','','','','','','');
+INSERT INTO "Account" VALUES(423,'','Account2019-12-1907:21:171fGT','','','','','False','006110','STVSBGI-006110','','','','2019-07-23T17:48:32.000+0000','','False','','','','False','2021-11-23T17:21:59.000+0000','University of St Thomas','0128D0000007gXjQAI','','','','8254','','','True','False','False','','','','','','','');
 CREATE TABLE "Account_rt_mapping" (
 	record_type_id VARCHAR(18) NOT NULL, 
 	developer_name VARCHAR(255), 
@@ -223,7 +224,7 @@ INSERT INTO "Application_Control__c" VALUES(7,'','True','','Started App','Submit
 INSERT INTO "Application_Control__c" VALUES(8,'Undergraduate','True','Started App','Started App','Started App;Submitted App','Application_Control__c2020-01-0908:40:39D3OD','Started App','000000','ffffff','000000','Withdrawn','2020-08-24T14:54:25.000+0000','True','','False','2022-04-11T22:20:42.000+0000','000000','000000','','Logo','Undergraduate Freshman','Undergraduate','Submitted App','000000','UGFR','Withdrawn');
 INSERT INTO "Application_Control__c" VALUES(9,'Graduate','True','','Started App','Submitted App','Application_Control__c2022-01-0908:48:17DP0s','Started App','000000','ffffff','000000','Withdrawn','2022-02-22T01:39:59.000+0000','False','','False','2022-02-22T01:40:56.000+0000','000000','000000','','Logo','Graduate Morrison Family College of Health','Morrison Family College of Health','Submitted App','000000','GMFH','Withdrawn');
 INSERT INTO "Application_Control__c" VALUES(10,'','True','Started App','Started App','Started App;Submitted App','Application_Control__c2022-01-0908:22:53DP0E','Started App','000000','ffffff','000000','Withdrawn','2022-02-21T22:18:52.000+0000','False','','False','2022-02-22T01:24:48.000+0000','000000','000000','','Logo','Undergraduate Transfer Common App','Undergraduate','Submitted App','000000','UGTRCA','Withdrawn');
-INSERT INTO "Application_Control__c" VALUES(11,'Undergraduate','True','Started App','Started App','Started App;Submitted App','Application_Control__c2022-01-0908:40:39D3OD','Started App','000000','ffffff','000000','Withdrawn','2022-02-21T22:18:29.000+0000','True','Level 1
+INSERT INTO "Application_Control__c" VALUES(11,'Undergraduate','True','Started App','Started App','Started App;Submitted App','Application_Control__c2022-01-0908:40:39D3OD','Started App','000000','ffffff','000000','Withdrawn','2022-02-21T22:18:29.000+0000','False','Level 1
 
 Level 2','False','2022-02-21T22:18:29.000+0000','000000','000000','','Logo','Undergraduate Freshman Common App','Undergraduate','Submitted App','000000','UGFRCA','Withdrawn');
 INSERT INTO "Application_Control__c" VALUES(12,'','True','','Started App','Submitted App','Application_Control__c2020-01-0906:12:25Duvl','Started App','000000','ffffff','000000','Withdrawn','2020-08-24T14:54:25.000+0000','False','','False','2022-02-22T01:24:54.000+0000','000000','000000','','Logo','Undergraduate Transfer DFC','Undergraduate','Submitted App','000000','UGTRDFC','Withdrawn');
@@ -293,12 +294,32 @@ CREATE TABLE "Application__c" (
 	PRIMARY KEY (id)
 );
 INSERT INTO "Application__c" VALUES(1,'','','','','','2022-04-11T18:19:25.000+0000','','','','','','','','','','','','','','2022-04-11T18:19:25.000+0000','','','','','','','False','','','','','','False','','1','485','');
+CREATE TABLE "Campaign" (
+	id INTEGER NOT NULL, 
+	"Campaign_Key__c" VARCHAR(255), 
+	"Campaign_Reference_ID__c" VARCHAR(255), 
+	"IsActive" VARCHAR(255), 
+	"Name" VARCHAR(255), 
+	"ParentId" VARCHAR(255), 
+	PRIMARY KEY (id)
+);
+CREATE TABLE "CampaignMember" (
+	id INTEGER NOT NULL, 
+	"Campaign_Member_Key__c" VARCHAR(255), 
+	"CreatedDate" VARCHAR(255), 
+	"LastModifiedDate" VARCHAR(255), 
+	"CampaignId" VARCHAR(255), 
+	"ContactId" VARCHAR(255), 
+	"LeadId" VARCHAR(255), 
+	PRIMARY KEY (id)
+);
 CREATE TABLE "Contact" (
 	id INTEGER NOT NULL, 
 	"Admissions_Mobile_Opt_In__c" VARCHAR(255), 
 	"Constituent_ID__c" VARCHAR(255), 
 	"Contact_Constituent_ID__c" VARCHAR(255), 
-	"CreatedDate" VARCHAR(255),
+	"CreatedDate" VARCHAR(255), 
+	"Credentialing_Identifier__c" VARCHAR(255), 
 	"Deceased_Date__c" VARCHAR(255), 
 	"DoNotCall" VARCHAR(255), 
 	"FirstName" VARCHAR(255), 
@@ -361,7 +382,7 @@ CREATE TABLE "Contact" (
 	"hed__Primary_Organization__c" VARCHAR(255), 
 	PRIMARY KEY (id)
 );
-INSERT INTO "Contact" VALUES(1,'','','','2022-04-11T18:19:14.000+0000','','False','Test','False','False','','2022-04-11T18:19:17.000+0000','Contact','','farrah.friedrich+testcontact@gmail.com','','','','','','','False','False','False','','','False','False','False','False','False','','','','','','False','False','','','False','','','','Alternate Email','','','','False','','','','','','False','402','','','','','','','','','');
+INSERT INTO "Contact" VALUES(1,'','','','2022-04-11T18:19:14.000+0000','','','False','Test','False','False','','2022-04-11T18:19:17.000+0000','Contact','','farrah.friedrich+testcontact@gmail.com','','','','','','','False','False','False','','','False','False','False','False','False','','','','','','False','False','','','False','','','','Alternate Email','','','','False','','','','','','False','402','','','','','','','','','');
 CREATE TABLE "EASY_Widget__c" (
 	id INTEGER NOT NULL, 
 	"CreatedDate" VARCHAR(255), 
@@ -375,6 +396,31 @@ CREATE TABLE "EASY_Widget__c" (
 	"Widget_Type__c" VARCHAR(255), 
 	"Application_Control__c" VARCHAR(255), 
 	PRIMARY KEY (id)
+);
+CREATE TABLE "Education_History__c" (
+	id INTEGER NOT NULL, 
+	"College_Courses_9th_Grade_On__c" VARCHAR(255), 
+	"CreatedDate" VARCHAR(255), 
+	"Degree__c" VARCHAR(255), 
+	"Diploma_GED_Earned_Date__c" VARCHAR(255), 
+	"Diploma_GED_Earned__c" VARCHAR(255), 
+	"End_Date__c" VARCHAR(255), 
+	"Holding_Name__c" VARCHAR(255), 
+	"LastModifiedDate" VARCHAR(255), 
+	"Most_Recent_College_in_US__c" VARCHAR(255), 
+	"Name" VARCHAR(255), 
+	"RecordTypeId" VARCHAR(255), 
+	"Related_Object_JSON__c" VARCHAR(255), 
+	"Start_Date__c" VARCHAR(255), 
+	"User_Created__c" VARCHAR(255), 
+	"Contact__c" VARCHAR(255), 
+	"Institution__c" VARCHAR(255), 
+	PRIMARY KEY (id)
+);
+CREATE TABLE "Education_History__c_rt_mapping" (
+	record_type_id VARCHAR(18) NOT NULL, 
+	developer_name VARCHAR(255), 
+	PRIMARY KEY (record_type_id)
 );
 CREATE TABLE "Family__c" (
 	id INTEGER NOT NULL, 
@@ -2494,6 +2540,94 @@ CREATE TABLE "Interaction__c" (
 	"Recruitment_Program__c" VARCHAR(255), 
 	"Term__c" VARCHAR(255), 
 	PRIMARY KEY (id)
+);
+CREATE TABLE "Lead" (
+	id INTEGER NOT NULL, 
+	"Admit_Type__c" VARCHAR(255), 
+	"Affiliation_Role__c" VARCHAR(255), 
+	"Birthdate__c" VARCHAR(255), 
+	"Company" VARCHAR(255), 
+	"Constituent_ID__c" VARCHAR(255), 
+	"CreatedDate" VARCHAR(255), 
+	"DoNotCall" VARCHAR(255), 
+	"Ethnicity__c" VARCHAR(255), 
+	"FirstName" VARCHAR(255), 
+	"Gender__c" VARCHAR(255), 
+	"HasOptedOutOfEmail" VARCHAR(255), 
+	"HasOptedOutOfFax" VARCHAR(255), 
+	"IsConverted" VARCHAR(255), 
+	"IsUnreadByOwner" VARCHAR(255), 
+	"LastModifiedDate" VARCHAR(255), 
+	"LastName" VARCHAR(255), 
+	"Lead_Website__c" VARCHAR(255), 
+	"Primary_Affiliation__c" VARCHAR(255), 
+	"Race__c" VARCHAR(255), 
+	"Status" VARCHAR(255), 
+	"hed__Area_Of_Interest__c" VARCHAR(255), 
+	"hed__Birth_Date__c" VARCHAR(255), 
+	"hed__Citizenship__c" VARCHAR(255), 
+	"hed__Ethnicity__c" VARCHAR(255), 
+	"hed__External_Id__c" VARCHAR(255), 
+	"hed__GPA__c" VARCHAR(255), 
+	"hed__Gender__c" VARCHAR(255), 
+	"hed__Highest_Degree_Earned__c" VARCHAR(255), 
+	"hed__Language__c" VARCHAR(255), 
+	"hed__Most_Recent_School__c" VARCHAR(255), 
+	"hed__Preferred_Enrollment_Date__c" VARCHAR(255), 
+	"hed__Preferred_Enrollment_Status__c" VARCHAR(255), 
+	"hed__Preferred_Teaching_Format__c" VARCHAR(255), 
+	"hed__Recruitment_Stage__c" VARCHAR(255), 
+	"hed__SMS_Opt_Out__c" VARCHAR(255), 
+	"hed__SSN__c" VARCHAR(255), 
+	"hed__Undergraduate_Major__c" VARCHAR(255), 
+	"Affiliated_Account__c" VARCHAR(255), 
+	"ConvertedAccountId" VARCHAR(255), 
+	"ConvertedContactId" VARCHAR(255), 
+	"ConvertedOpportunityId" VARCHAR(255), 
+	"Recruitment_Interest__c" VARCHAR(255), 
+	"Recruitment_Program__c" VARCHAR(255), 
+	"Term__c" VARCHAR(255), 
+	PRIMARY KEY (id)
+);
+CREATE TABLE "Opportunity" (
+	id INTEGER NOT NULL, 
+	"Admit_Type__c" VARCHAR(255), 
+	"Application_Number__c" VARCHAR(255), 
+	"Application_Submitted_Date__c" VARCHAR(255), 
+	"CloseDate" VARCHAR(255), 
+	"CreatedDate" VARCHAR(255), 
+	"First_Inquiry_Source__c" VARCHAR(255), 
+	"First_Recruitment_Interest__c" VARCHAR(255), 
+	"First_Recruitment_Program__c" VARCHAR(255), 
+	"Inquiry_Date__c" VARCHAR(255), 
+	"IsPrivate" VARCHAR(255), 
+	"LastModifiedDate" VARCHAR(255), 
+	"Name" VARCHAR(255), 
+	"Opportunity_Key__c" VARCHAR(255), 
+	"RecordTypeId" VARCHAR(255), 
+	"StageName" VARCHAR(255), 
+	"hed__Completed_FAFSA__c" VARCHAR(255), 
+	"hed__Desired_Campus__c" VARCHAR(255), 
+	"hed__Desired_Degree_Level__c" VARCHAR(255), 
+	"hed__Living_Situation__c" VARCHAR(255), 
+	"Academic_Interest__c" VARCHAR(255), 
+	"Academic_Program__c" VARCHAR(255), 
+	"AccountId" VARCHAR(255), 
+	"Affiliated_Account__c" VARCHAR(255), 
+	"CampaignId" VARCHAR(255), 
+	"ContactId" VARCHAR(255), 
+	"Contact__c" VARCHAR(255), 
+	"Last_Campaign_Source__c" VARCHAR(255), 
+	"Recruitment_Interest__c" VARCHAR(255), 
+	"Recruitment_Program__c" VARCHAR(255), 
+	"Term__c" VARCHAR(255), 
+	"hed__Desired_Start_Term__c" VARCHAR(255), 
+	PRIMARY KEY (id)
+);
+CREATE TABLE "Opportunity_rt_mapping" (
+	record_type_id VARCHAR(18) NOT NULL, 
+	developer_name VARCHAR(255), 
+	PRIMARY KEY (record_type_id)
 );
 CREATE TABLE "Plan__c" (
 	id INTEGER NOT NULL, 
@@ -12241,15 +12375,15 @@ INSERT INTO "Requirement_Item__c" VALUES(7,'True','False','True','','Started App
 INSERT INTO "Requirement_Item__c" VALUES(8,'True','False','True','','Started App','','2021-03-11T17:46:41.000+0000','','','3.0','True','True','Started App','','','','','','','Essay 3 Text Here','','False','False','Writing Sample','2021-03-11T17:46:41.000+0000','','Upload Essay 2(GLAW)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:180','','','','True','','','5');
 INSERT INTO "Requirement_Item__c" VALUES(9,'True','False','True','','Started App','','2021-03-11T17:46:41.000+0000','','','3.0','True','True','Started App','','','','','','','Essay 3 Text Here','','False','False','Writing Sample','2021-03-11T17:46:41.000+0000','','Upload Essay 3 (GLAW)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:188','','','','True','','','5');
 INSERT INTO "Requirement_Item__c" VALUES(10,'True','False','False','','Started App','','2021-03-11T17:46:41.000+0000','','','1.0','True','True','Started App','','','','','','','Upload Resume','','False','False','Upload Resume','2021-03-11T17:46:41.000+0000','','Upload Resume(GLAW)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:196','','','','True','','','5');
-INSERT INTO "Requirement_Item__c" VALUES(11,'False','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','Please upload a document to answer the following essay question(s). File must be a MS Word (.doc or .docx), Rich Text Format (.rtf), Text (.txt) or PDF (.pdf) document, and not exceed 4 MB. Please be advised, PDF file format uploads are strongly recommend','','False','False','Writing Sample','2021-03-11T17:46:39.000+0000','','Essay 3 (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:84','','','','True','','','5');
-INSERT INTO "Requirement_Item__c" VALUES(12,'False','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','Please upload a document to answer the following essay question(s). File must be a MS Word (.doc or .docx), Rich Text Format (.rtf), Text (.txt) or PDF (.pdf) document, and not exceed 4 MB. Please be advised, PDF file format uploads are strongly recommend','','False','False','Personal Statement','2021-03-11T17:46:39.000+0000','','Essay 1 (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:68','','','','True','','','5');
+INSERT INTO "Requirement_Item__c" VALUES(11,'True','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','Please upload a document to answer the following essay question(s). File must be a MS Word (.doc or .docx), Rich Text Format (.rtf), Text (.txt) or PDF (.pdf) document, and not exceed 4 MB. Please be advised, PDF file format uploads are strongly recommend','','False','False','Writing Sample','2021-03-11T17:46:39.000+0000','','Essay 3 (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:84','','','','True','','','5');
+INSERT INTO "Requirement_Item__c" VALUES(12,'True','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','Please upload a document to answer the following essay question(s). File must be a MS Word (.doc or .docx), Rich Text Format (.rtf), Text (.txt) or PDF (.pdf) document, and not exceed 4 MB. Please be advised, PDF file format uploads are strongly recommend','','False','False','Personal Statement','2021-03-11T17:46:39.000+0000','','Essay 1 (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:68','','','','True','','','5');
 INSERT INTO "Requirement_Item__c" VALUES(13,'True','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','Additional Information','2021-03-11T17:46:39.000+0000','','Addtional Information(GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:44','','','','True','','','6');
 INSERT INTO "Requirement_Item__c" VALUES(14,'True','False','False','','Started App','','2021-03-11T17:46:41.000+0000','','','2.0','True','True','Started App','','','','','','','Did you learn about the University of St. Thomas from any of the following sources or individuals? Check all that apply and enter name (if applicable).','','False','False','How did you hear about us?','2021-03-11T17:46:41.000+0000','','Source(GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:156','','','','True','','','6');
 INSERT INTO "Requirement_Item__c" VALUES(15,'True','False','False','','Started App','','2021-03-11T17:46:40.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','About You','2021-03-11T17:46:40.000+0000','','PreApp Questions (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:140','','','','True','','','9');
 INSERT INTO "Requirement_Item__c" VALUES(16,'True','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','2.0','True','True','Started App','','','','','','','','','False','False','Address','2021-03-11T17:46:39.000+0000','','Address (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:36','','','','True','','','10');
 INSERT INTO "Requirement_Item__c" VALUES(17,'True','False','False','','Started App','','2021-03-11T17:46:40.000+0000','','','3.0','True','True','Started App','','','','','','','','','False','False','Phone Numbers','2021-03-11T17:46:40.000+0000','','Phone Numbers (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:132','','','','True','','','10');
 INSERT INTO "Requirement_Item__c" VALUES(18,'True','False','False','','Started App','','2021-03-11T17:46:40.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','Profile','2021-03-11T17:46:40.000+0000','','Profile (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:148','','','','True','','','10');
-INSERT INTO "Requirement_Item__c" VALUES(19,'False','False','False','','Started App','International','2021-03-11T17:46:40.000+0000','','','3.0','True','True','Started App','','','','','','a0J8A000009YxFiUAK','','','False','False','Language','2022-04-09T01:07:38.000+0000','','Language(GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:116','','','','True','','','11');
+INSERT INTO "Requirement_Item__c" VALUES(19,'True','False','False','','Started App','International','2021-03-11T17:46:40.000+0000','','','3.0','True','True','Started App','','','','','','a0J8A000009YxFiUAK','','','False','False','Language','2022-04-09T01:07:38.000+0000','','Language(GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:116','','','','True','','','11');
 INSERT INTO "Requirement_Item__c" VALUES(20,'True','False','False','','Started App','International','2021-03-11T17:46:40.000+0000','','','4.0','True','True','Started App','','','','','','','Upload a copy of your passport','','False','False','Upload a copy of your passport','2021-03-11T17:46:40.000+0000','','Passport(GLAW)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:124','','','','True','','','11');
 INSERT INTO "Requirement_Item__c" VALUES(21,'True','False','False','','Started App','International','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','International Information','2021-03-11T17:46:39.000+0000','','International Student Info(GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:100','','','','True','','','11');
 INSERT INTO "Requirement_Item__c" VALUES(22,'True','False','False','','Started App','International','2021-03-11T17:46:39.000+0000','','','2.0','True','True','Started App','','','','','','a0J8A000009YxFiUAK','','','False','False','Language Proficiency','2022-04-09T01:07:38.000+0000','','Language Proficiency (GLAW)','','','0128A000002zOPSQA2','hed__Contact__c','Contact','hed__Contact_Language__c','','','','','','Requirement_Item__z2021-03-1408:47:108','','','','True','','','11');
@@ -12259,7 +12393,7 @@ INSERT INTO "Requirement_Item__c" VALUES(25,'True','False','False','','Started A
 INSERT INTO "Requirement_Item__c" VALUES(26,'True','False','False','','Started App','','2021-03-11T17:46:34.000+0000','','','2.0','True','True','Started App','','','','','','','','','False','False','Address','2021-05-11T17:00:16.000+0000','','Item Address (GOCB)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:37','','','','True','','','93');
 INSERT INTO "Requirement_Item__c" VALUES(27,'True','False','False','','Started App','','2021-03-11T17:46:41.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','Test, Skills, and Proficiency','2021-03-11T17:46:41.000+0000','','Test Skills Proficiency (GLAW)','','','0128A000002zOPSQA2','hed__Contact__c','Contact','hed__Test__c','','','','','','Requirement_Item__z2021-03-1408:47:164','','','','True','','','14');
 INSERT INTO "Requirement_Item__c" VALUES(28,'True','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','Fellowships','2021-03-11T17:46:39.000+0000','','Fellowships (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:92','','','','True','','','16');
-INSERT INTO "Requirement_Item__c" VALUES(29,'False','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','Please upload a document to answer the following essay question(s). File must be a MS Word (.doc or .docx), Rich Text Format (.rtf), Text (.txt) or PDF (.pdf) document, and not exceed 4 MB. Please be advised, PDF file format uploads are strongly recommend','','False','False','Writing Sample','2021-03-11T17:46:39.000+0000','','Essay 2 (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:76','','','','True','','','5');
+INSERT INTO "Requirement_Item__c" VALUES(29,'True','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','Please upload a document to answer the following essay question(s). File must be a MS Word (.doc or .docx), Rich Text Format (.rtf), Text (.txt) or PDF (.pdf) document, and not exceed 4 MB. Please be advised, PDF file format uploads are strongly recommend','','False','False','Writing Sample','2021-03-11T17:46:39.000+0000','','Essay 2 (GLAW)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:76','','','','True','','','5');
 INSERT INTO "Requirement_Item__c" VALUES(30,'True','False','False','','','','2021-05-06T22:08:31.000+0000','','','2.0','True','True','','','','','','','0011900000ztJmi','','','False','False','Parent/Guardian Information','2021-05-07T20:12:35.000+0000','','Parent Guardian Information (UGFR)','','','0128A000002zOPSQA2','Application__c','Application','Family__c','','01219000000WERZ','','','','Requirement_Item__c2021-05-06 22:05:08Z00000','','','','True','','','18');
 INSERT INTO "Requirement_Item__c" VALUES(31,'True','False','False','','','','2020-09-17T16:07:03.000+0000','','','1.0','True','True','','','','','','','','','','False','False','Household','2021-04-29T20:32:41.000+0000','','Household (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2020-1-1506:38:315X2H','','','','True','','','18');
 INSERT INTO "Requirement_Item__c" VALUES(32,'True','False','True','','','','2020-09-17T16:07:03.000+0000','','','3.0','True','True','','','','','','','','Submitting an essay is a chance to write directly to the committee reviewing your application and it gives you a chance to help us get to know you better. Essays demonstrate your ability to write clearly and concisely on a selected topic and distinguish yourself in your own voice. <i>Essays are recommended, but not required. </i> </br></br>
@@ -12283,15 +12417,15 @@ INSERT INTO "Requirement_Item__c" VALUES(40,'True','False','False','','','','202
 INSERT INTO "Requirement_Item__c" VALUES(41,'True','False','False','','','','2021-05-07T22:11:27.000+0000','','','1.0','True','True','','','','','','','','Please affirm the following before you submit your application (check boxes below).','','False','False','Digital Consent and Submit','2021-05-07T22:11:27.000+0000','','Digital Consent and Submit (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-05-07 22:10:44Z00000','','','','True','','','23');
 INSERT INTO "Requirement_Item__c" VALUES(42,'True','False','False','','Started App','International','2021-03-11T17:46:35.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','International Information','2021-03-11T17:46:35.000+0000','','International Student Info(GOCB)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:101','','','','True','','','94');
 INSERT INTO "Requirement_Item__c" VALUES(43,'True','False','False','','Started App','International','2021-03-11T17:46:35.000+0000','','','2.0','True','True','Started App','','','','','','a0J8A000009YxFiUAK','','','False','False','Language Proficiency','2022-04-09T01:07:38.000+0000','','Language Proficiency (GOCB)','','','0128A000002zOPSQA2','hed__Contact__c','Contact','hed__Contact_Language__c','','','','','','Requirement_Item__z2021-03-1408:47:109','','','','True','','','94');
-INSERT INTO "Requirement_Item__c" VALUES(44,'False','False','False','','Started App','International','2021-03-11T17:46:35.000+0000','','','3.0','True','True','Started App','','','','','','a0J8A000009YxFiUAK','','','False','False','Language','2022-04-09T01:07:38.000+0000','','Language(GOCB)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:117','','','','True','','','94');
+INSERT INTO "Requirement_Item__c" VALUES(44,'True','False','False','','Started App','International','2021-03-11T17:46:35.000+0000','','','3.0','True','True','Started App','','','','','','a0J8A000009YxFiUAK','','','False','False','Language','2022-04-09T01:07:38.000+0000','','Language(GOCB)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:117','','','','True','','','94');
 INSERT INTO "Requirement_Item__c" VALUES(45,'True','False','False','','Started App','International','2021-03-11T17:46:35.000+0000','','','4.0','True','True','Started App','','','','','','','Upload a copy of your passport','','False','False','Upload a copy of your passport','2021-03-11T17:46:35.000+0000','','Passport(GOCB)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:125','','','','True','','','94');
-INSERT INTO "Requirement_Item__c" VALUES(46,'False','False','False','','','','2021-05-07T17:44:12.000+0000','','','4.0','True','True','','','','','','','0011900000ztNIt','','','False','False','Sibling Information','2021-05-12T20:38:01.000+0000','','Sibling Information (UGFR)','','','0128A000002zOPSQA2','Application__c','Application','Family__c','','01219000000WERe','','','','Requirement_Item__c2021-05-06 22:09:08Z00000','','','','True','','','24');
+INSERT INTO "Requirement_Item__c" VALUES(46,'True','False','False','','','','2021-05-07T17:44:12.000+0000','','','4.0','True','True','','','','','','','0011900000ztNIt','','','False','False','Sibling Information','2021-05-12T20:38:01.000+0000','','Sibling Information (UGFR)','','','0128A000002zOPSQA2','Application__c','Application','Family__c','','01219000000WERe','','','','Requirement_Item__c2021-05-06 22:09:08Z00000','','','','True','','','24');
 INSERT INTO "Requirement_Item__c" VALUES(47,'True','False','False','','','','2021-05-07T18:21:14.000+0000','','','3.0','True','True','','','','','','','','','','False','False','Siblings','2021-05-12T20:38:18.000+0000','','Siblings (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-1-1506:38:315XXH','','','','True','','','24');
 INSERT INTO "Requirement_Item__c" VALUES(48,'True','False','False','','Started App','','2021-02-11T22:17:21.000+0000','','','4.0','True','True','Started App','','','','','','a1I1900000TmWIG','Please fill out the information below.','','False','False','Recommender Information','2021-02-16T20:02:15.000+0000','1.0','Recommender Info (UGFR)','','','0128A000002zOPSQA2','Application__c','Application','Recommendation__c','','','1.0','','Started App','Requirement_Item__c2021-02-11 22:09:21Z00000','','','','True','','','25');
 INSERT INTO "Requirement_Item__c" VALUES(49,'True','False','False','','Started App','','2021-03-11T17:46:39.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','Employment History','2021-03-11T17:46:39.000+0000','','Employment History','','','0128A000002zOPSQA2','Contact__c','Contact','Work_History__c','','','','','','Requirement_Item__z2021-03-1408:47:60','','','','True','','','17');
 INSERT INTO "Requirement_Item__c" VALUES(50,'True','False','False','','','','2020-09-17T16:07:03.000+0000','','','2.0','True','True','','','','','','','','','','False','False','Address','2020-09-17T16:19:42.000+0000','','Address(UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2019-12-1307:56:035Mfr','','','','True','','','29');
 INSERT INTO "Requirement_Item__c" VALUES(51,'True','False','False','','','','2020-09-17T16:07:03.000+0000','','','1.0','True','True','','','','','','','','','','False','False','About You','2020-09-17T16:19:42.000+0000','','PreApp Questions (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2020-1-2106:51:375d2B','','','','True','','','30');
-INSERT INTO "Requirement_Item__c" VALUES(52,'False','False','False','','','International','2020-09-17T16:07:03.000+0000','','','1.0','True','True','','','','','','','','','','False','False','International High School','2020-09-22T18:25:53.000+0000','','International High School (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2019-12-1308:32:515Mg6','','','','True','','','31');
+INSERT INTO "Requirement_Item__c" VALUES(52,'True','False','False','','','International','2020-09-17T16:07:03.000+0000','','','1.0','True','True','','','','','','','','','','False','False','International High School','2020-09-22T18:25:53.000+0000','','International High School (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2019-12-1308:32:515Mg6','','','','True','','','31');
 INSERT INTO "Requirement_Item__c" VALUES(53,'True','False','False','','Started App','','2020-09-17T16:07:03.000+0000','','','1.0','True','True','Started App','','','','','','0018A00000laz8bQAA','','','False','False','High School','2022-04-09T01:07:38.000+0000','1.0','High School(UGFR)','','','0128A000002zOPSQA2','hed__Contact__c','Contact','hed__Education_History__c','(RecordTypeId=''0128A000002zOPUQA2'')','0128A000002zOPUQA2','1.0','','','Requirement_Item__c2019-12-1306:17:295Mg1','','','','True','','','31');
 INSERT INTO "Requirement_Item__c" VALUES(54,'True','False','False','','Started App','','2020-09-17T16:07:03.000+0000','','','4.0','True','True','Started App','','','','','','','Upload Resume','','False','False','Upload Resume','2020-09-22T18:24:24.000+0000','','Upload Resume(UGFR)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__c2020-1-1508:34:155WtZ','','','','True','','','31');
 INSERT INTO "Requirement_Item__c" VALUES(55,'True','False','False','','Started App','','2020-09-17T16:07:03.000+0000','','','2.0','True','True','Started App','','','','','','','List all courses you are taking this academic year.','','False','False','Current Courses','2020-09-22T18:24:06.000+0000','','Current Courses(UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2020-1-1507:17:245Wtj','','','','True','','','31');
@@ -12302,12 +12436,12 @@ INSERT INTO "Requirement_Item__c" VALUES(58,'True','False','False','','','','202
 INSERT INTO "Requirement_Item__c" VALUES(59,'True','False','False','','','','2020-12-15T22:22:43.000+0000','','','2.0','True','True','','','','','','','','Please confirm your information below.','','False','False','Recommender Information (for Recommender)','2022-04-09T01:06:32.000+0000','','Recommender Information (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2020-12-15 22:21:19Z00000','','','','True','','60','25');
 INSERT INTO "Requirement_Item__c" VALUES(60,'True','False','False','','','','2020-12-15T22:01:24.000+0000','','','1.0','True','True','','','','','','','','Please fill out the information below.','','False','False','Request Recommendation','2021-02-11T22:48:02.000+0000','','Request Recommendation (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2020-12-15 22:00:20Z00000','','','','True','','','25');
 INSERT INTO "Requirement_Item__c" VALUES(61,'True','False','True','','','','2020-12-15T22:32:09.000+0000','','','3.0','True','True','','PDF;DOC;TXT','','','','','','Please provide a recommendation by typing directly into the box below, or uploading it.','','False','False','Letter Upload (for Recommender)','2022-04-09T01:06:32.000+0000','','Letter of Recommendation (UGFR)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__c2020-12-15 22:30:48Z00000','','','','True','','59','25');
-INSERT INTO "Requirement_Item__c" VALUES(62,'False','False','False','','','International','2020-09-17T16:07:03.000+0000','','','5.0','True','True','','','','','','','','Upload a copy of your passport','','False','False','Upload a copy of your passport','2021-04-22T16:49:28.000+0000','','Passport(UGFR)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__c2020-1-2108:25:335czC','','','','True','','','26');
+INSERT INTO "Requirement_Item__c" VALUES(62,'True','False','False','','','International','2020-09-17T16:07:03.000+0000','','','5.0','True','True','','','','','','','','Upload a copy of your passport','','False','False','Upload a copy of your passport','2021-04-22T16:49:28.000+0000','','Passport(UGFR)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__c2020-1-2108:25:335czC','','','','True','','','26');
 INSERT INTO "Requirement_Item__c" VALUES(63,'True','False','False','','Started App','International','2020-09-17T16:07:03.000+0000','','','3.0','True','True','Started App','','','','','','a0J8A000009YxFiUAK','','','False','False','Language Proficiency','2022-04-09T01:07:38.000+0000','','Language Proficiency (UGFR)','','','0128A000002zOPSQA2','hed__Contact__c','Contact','hed__Contact_Language__c','','','','','','Requirement_Item__c2020-1-2307:05:025fVr','','','','True','','','26');
 INSERT INTO "Requirement_Item__c" VALUES(64,'True','False','False','','','International','2020-09-17T16:07:03.000+0000','','','4.0','True','True','','','','','','','','','','False','False','International Information','2020-09-17T16:19:42.000+0000','','International Student Info(UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2020-1-2108:35:525cyJ','','','','True','','','26');
 INSERT INTO "Requirement_Item__c" VALUES(65,'True','False','False','','Started App','','2020-09-17T16:07:03.000+0000','','','2.0','True','True','Started App','','','','','','0018A00000laz8cQAA','','','False','False','College/University Information','2022-04-09T01:07:38.000+0000','','College/University Information (UGFR)','','','0128A000002zOPSQA2','hed__Contact__c','Contact','hed__Education_History__c','(RecordTypeId=''0128A000002zOPTQA2'')','0128A000002zOPTQA2','','','','Requirement_Item__c2020-1-2207:19:045drr','','','','True','','','27');
 INSERT INTO "Requirement_Item__c" VALUES(66,'True','False','False','','','','2020-09-17T16:07:03.000+0000','','','1.0','True','True','','','','','Apply With Standardized Test','','','','','False','False','Self-Reported Test Scores','2021-03-12T22:05:08.000+0000','1.0','Self-Reported Scores (UGFR)','','','0128A000002zOPSQA2','hed__Contact__c','Contact','hed__Test__c','','','','','','Requirement_Item__c2020-1-2806:40:485jK5','','','','True','','','28');
-INSERT INTO "Requirement_Item__c" VALUES(67,'False','False','False','','','','2020-09-17T16:07:03.000+0000','','','1.0','True','True','','','','','','','','','','False','False','Acknowledgements','2020-09-17T16:19:42.000+0000','','Self Reported Scores Pre Questions (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2020-1-2808:15:035jDT','','','','True','','','28');
+INSERT INTO "Requirement_Item__c" VALUES(67,'True','False','False','','','','2020-09-17T16:07:03.000+0000','','','1.0','True','True','','','','','','','','','','False','False','Acknowledgements','2020-09-17T16:19:42.000+0000','','Self Reported Scores Pre Questions (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2020-1-2808:15:035jDT','','','','True','','','28');
 INSERT INTO "Requirement_Item__c" VALUES(68,'True','False','False','','','','2020-09-17T16:07:03.000+0000','','','1.0','True','True','','','','','','','','','','False','False','Profile','2021-04-22T16:00:29.000+0000','','Profile (UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2019-12-1606:12:085NE2','','','','True','','','29');
 INSERT INTO "Requirement_Item__c" VALUES(69,'True','False','False','','','','2020-09-17T16:07:03.000+0000','','','3.0','True','True','','','','','','','','','','False','False','Phone Numbers','2020-09-17T16:19:42.000+0000','','Phone Numbers(UGFR)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2019-12-1307:42:585Mfw','','','','True','','','29');
 INSERT INTO "Requirement_Item__c" VALUES(70,'True','False','False','','','','2021-05-05T20:31:26.000+0000','','','3.0','True','True','','','','','','','','','','False','False','Phone Numbers','2021-05-05T20:31:26.000+0000','','Phone Numbers(DFC)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2019-12-1307:42:l585Mfw','','','','True','','','113');
@@ -12318,14 +12452,14 @@ INSERT INTO "Requirement_Item__c" VALUES(74,'True','False','False','','Started A
 INSERT INTO "Requirement_Item__c" VALUES(75,'True','False','False','','','','2021-02-18T17:01:00.000+0000','','','2.0','True','True','','','','','','','','Current Address','','False','False','Current Address','2021-02-18T18:56:00.000+0000','','Current Address (GSOE)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-02-18 17:00:07Z00000','','','','True','','','47');
 INSERT INTO "Requirement_Item__c" VALUES(76,'True','False','False','','','','2021-02-18T18:43:51.000+0000','','','1.0','True','True','','','','','','','','','','False','False','Contact Information','2021-02-18T18:55:53.000+0000','','Contact Information (GSOE)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-02-18 18:43:22Z00000','','','','True','','','47');
 INSERT INTO "Requirement_Item__c" VALUES(77,'True','False','False','','','','2021-02-18T17:09:33.000+0000','','','3.0','True','True','','','','','','','','','','False','False','Demographic Info','2021-02-18T18:56:13.000+0000','','Demographic Info (GSOE)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-02-18 17:09:09Z00000','','','','True','','','47');
-INSERT INTO "Requirement_Item__c" VALUES(78,'False','False','False','','','International','2021-03-09T22:59:53.000+0000','','','3.0','True','True','','','','','','','a0J8A000009YxFiUAK','','','False','False','Language','2022-04-09T01:07:38.000+0000','','Language(GCAS)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-03-1408:47:31','','','','True','','','57');
+INSERT INTO "Requirement_Item__c" VALUES(78,'True','False','False','','','International','2021-03-09T22:59:53.000+0000','','','3.0','True','True','','','','','','','a0J8A000009YxFiUAK','','','False','False','Language','2022-04-09T01:07:38.000+0000','','Language(GCAS)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-03-1408:47:31','','','','True','','','57');
 INSERT INTO "Requirement_Item__c" VALUES(79,'True','False','False','','','','2021-03-09T22:59:53.000+0000','','','2.0','True','True','','','','','','','','Did you learn about the University of St. Thomas from any of the following sources or individuals? Check all that apply and enter name (if applicable).','','False','False','How did you hear about us?','2021-03-09T22:59:53.000+0000','','Source(GCAS)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-03-1408:47:28','','','','True','','','52');
 INSERT INTO "Requirement_Item__c" VALUES(80,'True','False','False','','','','2021-03-09T22:59:53.000+0000','','','1.0','True','True','','','','','','','','','','False','False','Additional Information','2021-03-09T22:59:53.000+0000','','Addtional Information(GCAS)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-03-1408:47:27','','','','True','','','52');
 INSERT INTO "Requirement_Item__c" VALUES(81,'True','False','False','','','','2021-03-09T23:04:37.000+0000','','','1.0','True','True','','','','','','','','','','False','False','Fellowships','2021-03-09T23:04:37.000+0000','','Fellowships (GCAS)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-3-2208:24:385dmm89','','','','True','','','54');
 INSERT INTO "Requirement_Item__c" VALUES(82,'True','False','False','','','','2021-03-09T22:59:54.000+0000','','','1.0','True','True','','','','','','','','','','False','False','Profile','2021-03-09T22:59:54.000+0000','','Profile (GCAS)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-03-1408:47:43','','','','True','','','56');
 INSERT INTO "Requirement_Item__c" VALUES(83,'True','False','False','','','','2021-03-09T22:59:54.000+0000','','','2.0','True','True','','','','','','','','','','False','False','Address','2021-03-09T22:59:54.000+0000','','Address (GCAS)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-03-1408:47:41','','','','True','','','56');
 INSERT INTO "Requirement_Item__c" VALUES(84,'True','False','False','','','','2021-03-09T22:59:54.000+0000','','','3.0','True','True','','','','','','','','','','False','False','Phone Numbers','2021-03-09T22:59:54.000+0000','','Phone Numbers (GCAS)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-03-1408:47:42','','','','True','','','56');
-INSERT INTO "Requirement_Item__c" VALUES(85,'False','False','False','','Started App','','2021-03-11T17:46:34.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','Academic Supplemental','2021-05-12T14:14:54.000+0000','','QGroup: Academic Supplemental (GOCB)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:29','','','','True','','','96');
+INSERT INTO "Requirement_Item__c" VALUES(85,'True','False','False','','Started App','','2021-03-11T17:46:34.000+0000','','','1.0','True','True','Started App','','','','','','','','','False','False','Academic Supplemental','2021-05-12T14:14:54.000+0000','','QGroup: Academic Supplemental (GOCB)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__z2021-03-1408:47:29','','','','True','','','96');
 INSERT INTO "Requirement_Item__c" VALUES(86,'True','False','True','','','International','2021-03-09T22:59:53.000+0000','','','4.0','True','True','','','','','','','','Upload a copy of your passport','','False','False','Upload a copy of your passport','2021-03-09T22:59:53.000+0000','','Passport(GCAS)','','','0128A000002zOPQQA2','','','','','','','','','Requirement_Item__c2021-03-1408:47:32','','','','True','','','57');
 INSERT INTO "Requirement_Item__c" VALUES(87,'True','False','False','','','International','2021-03-09T22:59:53.000+0000','','','1.0','True','True','','','','','','','','','','False','False','International Information','2021-03-09T22:59:53.000+0000','','International Student Info(GCAS)','','','0128A000002zOPRQA2','','','','','','','','','Requirement_Item__c2021-03-1408:47:29','','','','True','','','57');
 INSERT INTO "Requirement_Item__c" VALUES(88,'True','False','False','','Started App','International','2021-03-09T22:59:53.000+0000','','','2.0','True','True','Started App','','','','','','a0J8A000009YxFiUAK','','','False','False','Language Proficiency','2022-04-09T01:07:38.000+0000','','Language Proficiency (GCAS)','','','0128A000002zOPSQA2','hed__Contact__c','Contact','hed__Contact_Language__c','','','','','','Requirement_Item__c2021-03-1408:47:30','','','','True','','','57');

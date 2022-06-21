@@ -75,9 +75,7 @@ global with sharing class JustInTimePermissionSets {
             }
         }
 
-        System.debug('IS UPDATABLE: ' + PermissionSetAssignment.SObjectType.getDescribe().isUpdateable());
         if (permissionsToInsert.size() > 0) {
-            System.debug('PERMISSIONS TO SET: ' + JSON.serializePretty(permissionsToInsert));
             try {
                 upsert permissionsToInsert;
             } catch (Exception e) {

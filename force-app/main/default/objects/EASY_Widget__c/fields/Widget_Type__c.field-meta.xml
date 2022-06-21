@@ -22,6 +22,11 @@
                 <default>false</default>
                 <label>Application Checklist</label>
             </value>
+            <value>
+                <fullName>Progress Bar</fullName>
+                <default>false</default>
+                <label>Progress Bar</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -1,5 +1,6 @@
 private static void setHoldingIds() {
 
+
     List<RecordType> highSchoolRecordType = [
             SELECT Id, Name, SobjectType
             FROM RecordType
@@ -9,13 +10,8 @@ private static void setHoldingIds() {
 
     Id highSchoolRecordTypeId = Schema.SObjectType.hed__Education_History__c.getRecordTypeInfosByName().get('High School').getRecordTypeId();
     Id collegeRecordTypeId = Schema.SObjectType.hed__Education_History__c.getRecordTypeInfosByName().get('College').getRecordTypeId();
-
-    List<RecordType> collegeRecordType = [
-            SELECT Id, Name, SobjectType
-            FROM RecordType
-            WHERE SobjectType = 'hed__Education_History__c'
-            AND Name LIKE 'College'
-    ];
+    Id familyParentRecordTypeId = Schema.SObjectType.Family__c.getRecordTypeInfosByName().get('Parent/Guardian').getRecordTypeId();
+    Id familySiblingRecordTypeId = Schema.SObjectType.Family__c.getRecordTypeInfosByName().get('Sibling').getRecordTypeId();
 
     List<Account> collegeHolders = [
             SELECT Id, Name
@@ -46,9 +42,7 @@ private static void setHoldingIds() {
         if (collegeHolders.size() > 0) {
             rItem.Holding_Record_Id__c = collegeHolders[0].Id;
         }
-        if (collegeRecordType.size() > 0) {
-            rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + collegeRecordType[0].Id + '\')';
-        }
+        rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + collegeRecordTypeId + '\')';
         rItem.Related_Object_Record_Type_ID__c = collegeRecordTypeId;
         updateItems.add(rItem);
     }
@@ -57,13 +51,13 @@ private static void setHoldingIds() {
         if (highSchoolHolders.size() > 0) {
             rItem.Holding_Record_Id__c = highSchoolHolders[0].Id;
         }
-        if (highSchoolRecordType.size() > 0) {
-            rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + highSchoolRecordType[0].Id + '\')';
-        }
+        rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + highSchoolRecordTypeId + '\')';
+
         rItem.Related_Object_Record_Type_ID__c = highSchoolRecordTypeId;
         updateItems.add(rItem);
     }
 
+    //Language holding values updated
     List<hed__Language__c> languageHolders = [
             SELECT Id, Name
             FROM hed__Language__c
@@ -83,9 +77,35 @@ private static void setHoldingIds() {
         }
     }
 
+    List<Application__c> testApplication = [SELECT Id, Contact__r.Name FROM Application__c WHERE Contact__r.Name = 'Test Contact'];
+
+    Family__c familyHolderSibling = new Family__c(Holding_Name__c = 'Unknown Sibling Account', First_Name__c = 'Unknown', Last_Name__c = 'Sibling Account', RecordTypeId = familySiblingRecordTypeId, Application__c = testApplication[0].Id);
+    insert familyHolderSibling;
+    Family__c familyHolderParent = new Family__c(Holding_Name__c = 'Unknown Parent Account', First_Name__c = 'Unknown', Last_Name__c = 'Parent Account', RecordTypeId = familyParentRecordTypeId, Application__c = testApplication[0].Id);
+    insert familyHolderParent;
+
+    for (Requirement_Item__c familyRequirement : [
+            SELECT Id, Name, RecordType.Name, Holding_Record_Id__c, Related_Object_Record_Type_ID__c
+            FROM Requirement_Item__c
+            WHERE RecordType.Name = 'Related Object'
+            AND (Name LIKE '%Parent%%Guardian%'
+            OR Name LIKE '%Sibling%')
+    ]) {
+        if (familyRequirement.Name.contains('Sibling')) {
+            familyRequirement.Related_Object_Record_Type_ID__c = familySiblingRecordTypeId;
+            familyRequirement.Holding_Record_Id__c = familyHolderSibling.RecordTypeId;
+        } else {
+            familyRequirement.Related_Object_Record_Type_ID__c = familyParentRecordTypeId;
+            familyRequirement.Holding_Record_Id__c = familyHolderParent.RecordTypeId;
+        }
+        updateItems.add(familyRequirement);
+    }
+
     if (updateItems.size() > 0) {
         update updateItems;
     }
+
+
 }
 
 private static void permissionGuestUser() {
@@ -160,6 +180,8 @@ private static void setEASYCustomSettings() {
     if (easyCommunityPermissionSet.size() > 0) {
         applicationSettings.Permission_Set_Id__c = easyCommunityPermissionSet[0].Id;
     }
+
+    applicationSettings.Default_Template__c = 'stthomas2021';
 
     upsert applicationSettings;
 }

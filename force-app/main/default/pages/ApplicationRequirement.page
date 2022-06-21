@@ -1,7 +1,7 @@
-<apex:page controller="ApplicationRequirement" extensions="ApplicationProgressBar" action="{!init}" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0">
-    <apex:composition template="Capricorn2020">
+<apex:page controller="ApplicationRequirement" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0" action="{!init}">
+    <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead />
+            <c:ApplicationHead/>
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
                     Visualforce.remoting.Manager.invokeAction(
@@ -11,6 +11,7 @@
                             if (event.status) {
                                 callback(result, originObjId)
                             } else if (event.type === 'exception') {
+                                console.log(event.errors)
                             } else {
                             }
                         },
@@ -19,23 +20,53 @@
                 }
             </script>
         </apex:define>
-
         <apex:define name="body">
-            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appControl="{!appControl}" applicationIdBody="{!urlAppId}">
-                <c:ApplicationForm section="{!section}" rendered="{!!isInvalid}" appControl="{!appControl}" nextID="{!nextReqId}" prevId="{!prevReqId}"
-                                   requirementId="{!requirementId}"
-                                   reqs="{!reqs}"
-                                   progress="{!progress}"
-                                   isExternalUser="{!isExternalUser}">
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}">
+                <c:ApplicationForm section="{!section}" rendered="{!!isInvalid}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}">
+
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                         <apex:param name="p2" value="" assignTo="{!redirectPage}"/>
                     </apex:actionFunction>
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                        <a href="javascript:;" class="slds-button slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">Back</a>
-                        <a href="javascript:;" class="slds-button slds-button_brand carousel__button--prev">Back</a>
-                        <a href="javascript:;" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
-                        <a href="javascript:;" class="slds-button slds-button_brand carousel__button--next">Next</a>
+
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
+
+                        <a href="javascript:void(0)" class="slds-button slds-p-horizontal_medium slds-p-vertical_xxx-small slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">
+                            <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#arrow_left")}"></use>
+                            </svg>
+                            Previous Section
+                        </a>
+
+                        <a href="javascript:void(0)" class="slds-button slds-p-horizontal_medium slds-p-vertical_xxx-small slds-m-top_xxx-small slds-button_brand carousel__button--prev">
+                            <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#back")}"></use>
+                            </svg>
+                            Back
+                        </a>
+
+                        <a href="javascript:void(0)" class="slds-button slds-p-horizontal_medium slds-p-vertical_xxx-small slds-button_brand slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">
+                            Save and Continue
+                            <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                                <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
+                            </svg>
+                        </a>
+
+                        <a href="javascript:void(0)" class="slds-button slds-p-horizontal_medium slds-p-vertical_xxx-small slds-button_brand carousel__button--next">
+                            Next
+                            <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                                <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#forward")}"></use>
+                            </svg>
+                        </a>
+
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
+                        <a href="{!$Site.BaseUrl}/apex/ApplicationPortal" class="slds-button slds-button_neutral slds-p-horizontal_medium slds-p-vertical_xxx-small">
+                            <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#shortcuts")}"></use>
+                            </svg>
+                            Return to Application Portal
+                        </a>
                     </div>
                 </c:ApplicationForm>
             </c:ApplicationBody>

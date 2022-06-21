@@ -26,17 +26,40 @@ public class ApplicationQuestion {
             Schema.DisplayType.URL => 'URL'
     };
 
+    public static final Map<String, String> fieldDefaultAPINames = new Map<String, String>{
+            'Address' => 'Address',
+            'Checkbox' => 'ValueCheckbox__c',
+            'Currency' => 'ValueCurrency__c',
+            'Date' => 'ValueDate__c',
+            'DateTime' => 'ValueDateTime__c',
+            'Decimal' => 'ValueNumber__c',
+            'Email' => 'ValueEmail__c',
+            'TextEncrypted' => 'ValueTextEncrypted__c',
+            'Integer' => 'ValueNumber__c',
+            'MultiPicklist' => 'multiPicklistValues',
+            'Percent' => 'ValuePercent__c',
+            'Phone' => 'ValuePhone__c',
+            'Picklist' => 'ValueText__c',
+            'Reference' => 'ValueText__c',
+            'Text' => 'ValueText__c',
+            'TextArea' => 'ValueTextArea__c',
+            'URL' => 'ValueURL__c'
+    };
+
+
     public String fieldType { get {return tableBased ? question.RecordType.DeveloperName : fieldTypes.get(displayType);} }
 
     public String label { get; private set; }
     public SObject obj { get; set; }
     public String fieldName { get; set; }
+    public String defaultFieldName { get {return String.isBlank(fieldDefaultAPINames.get(fieldType)) ? 'ValueText__c' : fieldDefaultAPINames.get(fieldType);} }
     public String value;
     public Boolean checkboxValue;
     public Decimal decimalValue;
     public Datetime datetimeValue;
     public Date dateValue;
     public String textEncryptedValue;
+    public Boolean hasDependentQuestions { get; set; }
     public Integer integerValue;
     public String placeholder { get; set; }
     public Integer length { get; set; }
@@ -108,6 +131,7 @@ public class ApplicationQuestion {
     public Question_Response__c response { get; set; }
     public Id responseId { get; set; }
     public String helpText { get; set; }
+    public String assistiveText { get; set; }
 
     public Contact contact { get; set; }
     public Application__c application { get; set; }
@@ -215,6 +239,7 @@ public class ApplicationQuestion {
 
     public Boolean getShowQuestion(SObject obj) {
 
+
         if (dependencyCalculated) {
             return showQuestion;
         }
@@ -228,6 +253,7 @@ public class ApplicationQuestion {
             return returnShowQuestion(true, obj);
         }
         Boolean satisfied;
+
         if (controllingResponses == null) {
             controllingResponses = new Map<Id, Object>();
         }
@@ -237,6 +263,9 @@ public class ApplicationQuestion {
             satisfied = true;
 
             for (Question_Dependency__c qd : dQuestions) {
+
+                System.debug(String.valueOf(resp));
+                System.debug(qd.Value__c);
 
                 if (controllingQuestions.containsKey(qd.Controlling_Question__c)) {
 
@@ -255,6 +284,10 @@ public class ApplicationQuestion {
                     } else if (qd.RecordType.DeveloperName.equals('Picklist') && (String.isBlank(String.valueOf(resp)) || !qd.Value__c.equals((String) resp))) {
                         satisfied = false;
                         break;
+                    } else if (qd.RecordType.DeveloperName.equals('Radio') && (String.isBlank(String.valueOf(resp)) || !qd.Value__c.equals((String) resp))) {
+                        System.debug('Radio detected -- 1');
+                        satisfied = false;
+                        break;
                     } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
 
                         if (String.isNotBlank(String.valueOf(resp)) && String.isNotBlank(qd.Value__c)) {
@@ -262,6 +295,7 @@ public class ApplicationQuestion {
                             Set<String> multiItems = new Set<String>(((String) resp).split(';'));
 
                             Boolean foundValue = false;
+
                             for (String controlItem : qd.Value__c.split(';')) {
                                 if (multiItems.contains(controlItem)) {
                                     foundValue = true;
@@ -288,6 +322,9 @@ public class ApplicationQuestion {
 
             for (Question_Dependency__c qd : dQuestions) {
 
+                System.debug(String.valueOf(resp));
+                System.debug(qd.Value__c);
+
                 if (!controllingQuestions.containsKey(qd.Controlling_Question__c)) {
                     satisfied = true;
                     break;
@@ -306,6 +343,11 @@ public class ApplicationQuestion {
                     satisfied = true;
                     break;
                 } else if (qd.RecordType.DeveloperName.equals('Picklist') && String.isNotBlank(String.valueOf(resp)) && qd.Value__c.equals((String) resp)) {
+                    satisfied = true;
+                    break;
+                } else if (qd.RecordType.DeveloperName.equals('Radio') && String.isNotBlank(String.valueOf(resp)) && qd.Value__c.equals((String) resp)) {
+                    System.debug(String.valueOf(resp) + ' ? ' + qd.Value__c);
+                    System.debug('Radio detected -- 2');
                     satisfied = true;
                     break;
                 } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
@@ -410,10 +452,9 @@ public class ApplicationQuestion {
             }
         }
     }
-    public ApplicationQuestion(SObject obj, Question__c question, Question_Response__c response) {
-
+    public ApplicationQuestion(SObject obj, Question__c question, Question_Response__c response, Boolean hasQuestionDependencies) {
+        this.hasDependentQuestions = hasQuestionDependencies;
         this.response = response;
-
         if (obj != null && obj.getSObjectType() == Schema.getGlobalDescribe().get('Contact')) {
             this.contact = (Contact) obj;
             if (String.isNotBlank(question.Contact_Field__c)) {
@@ -437,6 +478,7 @@ public class ApplicationQuestion {
         }
 
         this.question = question;
+
         this.tableBased = true;
 
         if (question.Length__c == null || (question.Length__c > 255 && !fieldType.equals('LongTextArea'))) {
@@ -450,6 +492,8 @@ public class ApplicationQuestion {
 
         this.helpText = question.Help_Text__c;
 
+        this.assistiveText = question.Assistive_Text__c;
+
         populateContactFieldOnResponse();
 
         this.con = new Contact();
@@ -459,7 +503,9 @@ public class ApplicationQuestion {
                 if (fieldType.equals('Picklist')) options.add(new SelectOption('', '--None--'));
                 if (String.isNotBlank(question.Picklist_Values__c)) {
                     for (String str : question.Picklist_Values__c.split('\n')) {
-                        options.add(new SelectOption(str.trim(), str.trim()));
+                        if (String.isNotBlank(str)) {
+                            options.add(new SelectOption(str.trim(), str.trim()));
+                        }
                     }
                 }
             }
@@ -550,6 +596,7 @@ public class ApplicationQuestion {
         this.placeholder = question.Placeholder__c;
         this.label = question.Label__c;
         this.helpText = question.Help_Text__c;
+        this.assistiveText = question.Assistive_Text__c;
 
         if (String.isNotBlank(fieldType)) {
             if (fieldType.contains('Picklist') || fieldType.equals('Radio')) {
@@ -559,7 +606,9 @@ public class ApplicationQuestion {
                 }
                 if (String.isNotBlank(question.Picklist_Values__c)) {
                     for (String str : question.Picklist_Values__c.split('\n')) {
-                        options.add(new SelectOption(str.trim(), str.trim()));
+                        if (String.isNotBlank(str)) {
+                            options.add(new SelectOption(str.trim(), str.trim()));
+                        }
                     }
                 }
             }
@@ -741,6 +790,7 @@ public class ApplicationQuestion {
         return null;
     }
 
+
     // Writes a string to the response based on the questions type
     public void writeResponse(String resp) {
         try {
@@ -750,7 +800,7 @@ public class ApplicationQuestion {
             } else if (fieldType.equals('Currency')) {
                 response.ValueCurrency__c = Double.valueOf(resp);
             } else if (fieldType.equals('Date')) {
-                response.ValueDate__c = Date.valueOf(resp);
+                response.ValueDate__c = Date.valueOf(Date.valueOf(resp));
             } else if (fieldType.equals('DateTime')) {
                 response.ValueDateTime__c = Datetime.valueOfGmt(resp);
             } else if (fieldType.equals('Email')) {
@@ -778,6 +828,7 @@ public class ApplicationQuestion {
             }
             response.IsPopulated__c = true;
         } catch (Exception e) {
+
         }
     }
 

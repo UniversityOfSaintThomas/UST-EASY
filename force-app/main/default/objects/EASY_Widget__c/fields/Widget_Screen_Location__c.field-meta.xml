@@ -32,6 +32,16 @@
                 <default>false</default>
                 <label>Right</label>
             </value>
+            <value>
+                <fullName>Content Top</fullName>
+                <default>false</default>
+                <label>Content Top</label>
+            </value>
+            <value>
+                <fullName>Content Bottom</fullName>
+                <default>false</default>
+                <label>Content Bottom</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

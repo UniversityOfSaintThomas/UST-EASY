@@ -2,44 +2,38 @@
     <apex:attribute name="section" description="ApplicationQuestionSection for this page" type="ApplicationQuestionSection" required="false"/>
     <apex:attribute name="hidePaging" description="Hide carousel paging" type="Boolean" default="false" required="false"/>
     <apex:attribute name="preventUpdates" description="Set the page to output only" type="Boolean" default="false" required="false"/>
-    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true"/>
     <apex:attribute name="nextId" description="ApplicationSettings" type="Id" required="false"/>
     <apex:attribute name="prevId" description="ApplicationSettings" type="Id" required="false"/>
-    <apex:attribute name="requirementId" description="Current requirement" type="String" required="false"/>
-    <apex:attribute name="reqs" description="All rquirements which need to be completed for this application" type="RequirementWrapper[]" required="false"/>
-    <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
-    <apex:attribute name="isExternalUser" description="Boolean that is true if this is an external user" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
     <apex:form id="theForm">
-        <c:ApplicationProgressBar prevReqId="{!prevId}" nextReqId="{!nextId}" requirementId="{!requirementId}" reqs="{!reqs}" progress="{!progress}" isExternalUser="{!isExternalUser}"/>
         <apex:outputPanel id="formPageMessages">
             <apex:pageMessages />
         </apex:outputPanel>
         <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
+        <apex:commandLink id="reRenderTheTable" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.theTable}"/>
+
         <script>
             const previousRequirement = "{!prevId}", nextRequirement = "{!nextId}";
-
-            function reRenderAllGroups() {
-                showFormSpinner();
-                document.getElementById('{!$Component.reRenderGroups}').click();
-            }
         </script>
-        <div class="{!if(hidePaging,'','carousel-wrapper slds-p-vertical_large slds-border_top slds-m-vertical_medium slds-border_bottom')}">
+        <div class="slds-p-vertical_medium slds-border_top slds-border_bottom">
+            <div class="{!if(hidePaging,'','carousel-wrapper')}">
 
-            <div class="{!if(hidePaging,'','carousel')}">
-                <apex:variable var="itemCount" value="0"/>
-                <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-backdrop_open slds-backdrop" id="form-spinner">
-                    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
-                        <span class="slds-assistive-text">Loading</span>
-                        <div class="slds-spinner__dot-a"></div>
-                        <div class="slds-spinner__dot-b"></div>
-                    </div>
-                </section>
-                <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}">
-                    <div class="carousel__item {!IF(VALUE(itemCount) == 0,'initial','')} slide-{!itemCount}">
-                        <c:ApplicationFormSection id="theFormSectionComponent" groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appControl="{!appControl}"/>
-                    </div>
-                    <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
-                </apex:repeat>
+                <div class="{!if(hidePaging,'','carousel')}" data-carousel-size="{!section.groups.size}">
+                    <apex:variable var="itemCount" value="0"/>
+                    <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-backdrop_open slds-backdrop" id="form-spinner">
+                        <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                            <span class="slds-assistive-text">Loading</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </section>
+                    <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}" >
+                        <div class="carousel__item{!IF(VALUE(itemCount) == 0,' active','')}{!IF(VALUE(itemCount) == 1,' next','')}{!IF(VALUE(itemCount) == (section.groups.size - 1) && section.groups.size > 2,' prev','')} slide-{!itemCount}" data-slide="{!itemCount}">
+                            <c:ApplicationFormSection id="theFormSectionComponent" groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appControl="{!appInfo.appControl}" appInfo="{!appInfo}"/>
+                        </div>
+                        <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
+                    </apex:repeat>
+                </div>
             </div>
         </div>
         <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">

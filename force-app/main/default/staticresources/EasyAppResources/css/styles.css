@@ -10,12 +10,35 @@
 .slds-scope .slds-button_brand {
     background-color: #9E28B5;
     border-color: #9E28B5;
-    border-color: #9E28B5;
+}
+
+.slds-scope label.slds-text-body_regular, .slds-scope .slds-text-body_regular, .slds-scope label.slds-radio_button__label, .slds-scope label {
+    font-size: 1.2em;
+    font-weight: 400;
+}
+
+.slds-checkbox .slds-tabled-checklist td [type=checkbox] {
+    margin: 5px 7px 2px 2px !important;
+}
+
+.slds-scope .slds-text-body_regular {
+    margin-top: .2em;
+}
+
+.slds-scope .slds-form-element__help {
+    display: none;
+}
+
+.slds-scope label.slds-radio_button__label {
+    margin-right: 0
+}
+
+.slds-scope .slds-has-error .slds-form-element__help {
+    display: block;
 }
 
 .slds-scope label.slds-text-body_regular {
-    font-size: 1.1em;
-    font-weight: 400;
+    margin-top: .2em;
 }
 
 .slds-checkbox .slds-tabled-checklist td [type=checkbox] {
@@ -24,10 +47,6 @@
     position: relative;
     margin: 2px 7px 2px 2px;
     float: left;
-}
-
-.slds-checkbox {
-    margin-top: 10px;
 }
 
 div.slds-progress {
@@ -55,6 +74,7 @@ div.slds-progress {
 .carousel__item {
     opacity: 0;
     position: absolute;
+    overflow: visible;
     top: 0;
     width: 100%;
     margin: auto;

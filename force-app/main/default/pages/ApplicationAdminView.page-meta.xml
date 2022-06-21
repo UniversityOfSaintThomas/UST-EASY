@@ -6,7 +6,7 @@
     <label>ApplicationAdminView</label>
     <packageVersions>
         <majorNumber>1</majorNumber>
-        <minorNumber>118</minorNumber>
+        <minorNumber>119</minorNumber>
         <namespace>hed</namespace>
     </packageVersions>
 </ApexPage>

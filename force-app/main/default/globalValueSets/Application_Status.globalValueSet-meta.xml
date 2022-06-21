@@ -46,28 +46,10 @@
         <label>Withdrawn</label>
     </customValue>
     <customValue>
-        <fullName>Deposit Waived</fullName>
+        <fullName>Incomplete</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Deposit Waived</label>
-    </customValue>
-    <customValue>
-        <fullName>Cancelled</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Cancelled</label>
-    </customValue>
-    <customValue>
-        <fullName>Complete-Pending Additional Review</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Complete-Pending Additional Review</label>
-    </customValue>
-    <customValue>
-        <fullName>Complete-Decision Made</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Complete-Decision Made</label>
+        <label>Incomplete</label>
     </customValue>
     <customValue>
         <fullName>Deposit Paid</fullName>
@@ -76,10 +58,28 @@
         <label>Deposit Paid</label>
     </customValue>
     <customValue>
-        <fullName>Incomplete</fullName>
+        <fullName>Complete-Decision Made</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Incomplete</label>
+        <label>Complete-Decision Made</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Pending Additional Review</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Pending Additional Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cancelled</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Waived</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Deposit Waived</label>
     </customValue>
     <customValue>
         <fullName>Complete-Pending Review</fullName>

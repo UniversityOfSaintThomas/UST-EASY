@@ -41,7 +41,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.Type</field>
+        <field>Account.CEEB_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.CEEB_Integration_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.hed__Billing_Address_Inactive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.hed__Billing_County__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2925,6 +2940,10 @@
         <apexPage>ApplicationRequirement</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <recordTypeVisibilities>
+        <recordType>Account.Academic_Program</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.Educational_Institution</recordType>
         <visible>true</visible>

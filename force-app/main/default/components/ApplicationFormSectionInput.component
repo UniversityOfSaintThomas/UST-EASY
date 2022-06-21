@@ -160,7 +160,7 @@
     <!-- Static -->
     <apex:outputPanel rendered="{!inputType == 'Static'}" layout="block" styleClass="slds-text-body_regular validate{!inputType}">
         <p>
-            {!questionWrapper['question']['Static_Text__c']}
+            <apex:outputText value="{!questionWrapper['question']['Static_Text__c']}" escape="false"/>
         </p>
     </apex:outputPanel>
 

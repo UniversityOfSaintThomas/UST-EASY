@@ -55,7 +55,7 @@ function checkEnter(e) {
 }
 
 function reRenderAllGroups(rerenderName) {
-    if (rerenderName && rerenderName != 'none') {
+    if (rerenderName && rerenderName !== 'none') {
         showFormSpinner();
         if (rerenderName === 'rerenderTheTable') {
             document.querySelector("[id$=reRenderTheTable]").click();
@@ -65,24 +65,6 @@ function reRenderAllGroups(rerenderName) {
     }
 }
 
-function textValidations() {
-    let allPhones = document.querySelectorAll('.validatePhone');
-
-    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
-    const phoneIllegals = /[^\d+-/(/)]/;
-
-    allPhones.forEach(function (phone) {
-        phone.addEventListener('change', function () {
-            phone.value = phone.value.replace(phoneRegex, '');
-        });
-        phone.addEventListener('keyup', function () {
-            phone.value = phone.value.replace(phoneIllegals, '');
-        })
-    });
-
-}
-
-
 function fileUploadAreas() {
 
     document.querySelectorAll('.slds-file-selector__dropzone').forEach(upload => {
@@ -91,34 +73,34 @@ function fileUploadAreas() {
         let currentFile = fileCard.querySelector('.currentlySelectedFile');
 
         ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(evt => {
-            upload.addEventListener(evt, function (e) {
+            upload.addEventListener(evt, function () {
                 e.preventDefault();
                 e.stopPropagation();
             });
         });
 
         ['dragover', 'dragenter'].forEach(evt => {
-            upload.addEventListener(evt, function (e) {
+            upload.addEventListener(evt, function () {
                 upload.classList.add('slds-has-drag-over');
             });
         });
 
         ['dragleave', 'dragend', 'drop'].forEach(evt => {
-            upload.addEventListener(evt, function (e) {
+            upload.addEventListener(evt, function () {
                 upload.classList.remove('slds-has-drag-over');
             });
         });
 
-        upload.addEventListener('drop', function (e) {
+        upload.addEventListener('drop', function () {
             fileInput.files = e.dataTransfer.files;
             currentFile.innerHTML = findFileName(fileInput.value);
         });
 
-        upload.addEventListener('click', function (e) {
+        upload.addEventListener('click', function () {
             fileInput.click();
         });
 
-        fileInput.addEventListener('change', function (e) {
+        fileInput.addEventListener('change', function () {
             console.log('file change detected');
             currentFile.innerHTML = findFileName(fileInput.value);
         });
@@ -146,19 +128,6 @@ function adjustLabelsFor() {
             inputLabel.htmlFor = inputFound.getAttribute('id');
         }
 
-        if (inputFound.classList.contains('validateCurrency')
-            || inputFound.classList.contains('validateCurrency')
-            || inputFound.classList.contains('validateNumber')
-            || inputFound.classList.contains('validateDecimal')
-            || inputFound.classList.contains('validatePercent')
-            || inputFound.classList.contains('validateInteger')
-        ) {
-            inputFound.type = 'number';
-            if (!inputFound.classList.contains('validateInteger')) {
-                inputFound.step = 'any';
-            }
-        }
-
         if (inputFound && helpText) {
             if (helpText) {
                 inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
@@ -181,7 +150,7 @@ function radioCheckBox() {
             faux.checked = faux.value === radioGroupValue.value;
         });
         document.querySelectorAll('.slds-radio_button').forEach(radioButton => {
-            radioButton.addEventListener('click', (e) => {
+            radioButton.addEventListener('click', () => {
                 radioGroupValue.value = radioButton.dataset.radiovalue;
                 reRenderAllGroups(radioButton.dataset.rerendergroup);
             })
@@ -191,7 +160,7 @@ function radioCheckBox() {
 
 function checkbox() {
     document.querySelectorAll('.slds-checkbox.single-checkbox').forEach(cb => {
-        cb.addEventListener('click', (e) => {
+        cb.addEventListener('click', () => {
             let cbInput = cb.querySelector('input');
             cbInput.click();
         });
@@ -268,34 +237,6 @@ function getAsText(readFile, respId) {
         reader.readAsDataURL(readFile);
     });
 }
-
-function formatPhoneOnEnter(input, event) {
-    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
-    input.value = input.value.replace(phoneRegex, '');
-}
-
-function formatPhone(formatPone) {
-    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
-    formatPone.value = input.value.replace(phoneRegex, '');
-    console.log(formatPone)
-}
-
-// function formatPhone(phone) {
-//     let internationalNum = false;
-//     let inValue = phone.value;
-//     if (inValue.startsWith("+")) {
-//         internationalNum = true;
-//     }
-//     let digits = inValue.replace(/\D/g, '');
-//     if (internationalNum) {
-//         if (digits.startsWith("0")) {
-//             digits = digits.substring(1);
-//         }
-//         phone.value = "+" + digits;
-//     } else {
-//         phone.value = digits.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
-//     }
-// }
 
 
 function activateAutoComplete() {
@@ -387,7 +328,7 @@ function activateAutoComplete() {
             resultList.insertAdjacentHTML("beforeend", outputList);
 
             resultList.querySelectorAll('li').forEach(refItem => {
-                refItem.addEventListener('click', function (e) {
+                refItem.addEventListener('click', function () {
                     if (refItem.dataset.title === '**createnew**') {
                         if (typeof window['setCreatingNewRelatedRecordAF' + groupId] === "function" && recordId && resultId) {
                             window['setCreatingNewRelatedRecordAF' + groupId](recordId, resultId)
@@ -406,7 +347,7 @@ function activateAutoComplete() {
             refValueAdded();
         }
 
-        autoItem.addEventListener('focusin', (e) => {
+        autoItem.addEventListener('focusin', () => {
             autoItem.classList.add('slds-has-focus');
             comboBox.classList.add('slds-is-open');
         });
@@ -416,7 +357,7 @@ function activateAutoComplete() {
             refValueRemoved();
         });
 
-        autoItem.addEventListener('keyup', (e) => {
+        autoItem.addEventListener('keyup', () => {
             let searchTerm = autoItem.value;
             if (objectType && objectTypeFilter && objectTypeNameField && searchTerm.length > 2) {
                 lookupSearchJS(objectType, objectTypeFilter, objectTypeNameField, searchTerm, lookupResultsFormatter, originObjId);
@@ -452,10 +393,9 @@ function navigateRequirementGroup(redirectTo) {
 }
 
 /* Carousel Script */
-function activateCarousel() {
+function activateCarousel(slideMoveTo) {
     // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
-    const itemClassName = "carousel__item";
-    let items = document.getElementsByClassName(itemClassName),
+    let items = document.getElementsByClassName("carousel__item"),
         totalItems = items.length,
         slide = 0,
         moving = true,
@@ -463,16 +403,6 @@ function activateCarousel() {
         saveAndGoBack = document.getElementById('saveAndGoBack'),
         next = document.getElementsByClassName('carousel__button--next')[0],
         prev = document.getElementsByClassName('carousel__button--prev')[0];
-
-    function setInitialClasses() {
-        items[0].classList.add("active");
-        if (totalItems === 2) {
-            items[1].classList.add("next");
-        } else if (totalItems > 2) {
-            items[totalItems - 1].classList.add("prev");
-            items[1].classList.add("next");
-        }
-    }
 
     // Set click events to navigation buttons
     function setEventListeners() {
@@ -499,21 +429,13 @@ function activateCarousel() {
         }, 500);
     }
 
-    function moveCarouselTo(slide) {
+    let moveCarouselTo = function (slide) {
         if (!moving) {
             disableInteraction();
             let newPrevious = slide - 1,
-                newNext = slide + 1,
-                oldPrevious = slide - 2,
-                oldNext = slide + 2;
+                newNext = slide + 1;
 
             if (totalItems > 1) {
-
-                if (newPrevious <= 0) {
-                    oldPrevious = (totalItems - 1);
-                } else if (newNext >= (totalItems - 1)) {
-                    oldNext = 0;
-                }
 
                 if (slide === 0) {
                     prev.style.display = "none";
@@ -521,19 +443,14 @@ function activateCarousel() {
                         saveAndGoBack.style.display = 'inline-flex';
                     }
                     newPrevious = (totalItems - 1);
-                    oldPrevious = (totalItems - 2);
-                    oldNext = (slide + 1);
                 } else if (slide === 1) {
                     saveAndGoBack.style.display = "none"
                     newPrevious = 0;
-                    oldPrevious = (totalItems - 1);
-                    oldNext = (slide + 1);
                 } else if (slide === (totalItems - 1)) {
                     newPrevious = (slide - 1);
                     newNext = 0;
-                    oldNext = 1;
                 }
-
+                console.log(slide + 1 + ' = ' + totalItems);
                 if (slide + 1 === totalItems || totalItems === 1) {
                     saveAndAdvance.style.display = "inline-flex"
                     next.style.display = "none"
@@ -542,33 +459,31 @@ function activateCarousel() {
                     next.style.display = "inline-flex"
                 }
 
-
                 if (slide > 0) {
                     prev.style.display = "inline-flex"
                 } else {
                     prev.style.display = "none"
                 }
 
-                items[oldPrevious].className = itemClassName;
-                if (items[oldPrevious]) {
-                    items[oldPrevious].className = itemClassName;
-                }
-                if (items[oldNext]) {
-                    items[oldNext].className = itemClassName;
+                for (let i = 0; i < items.length; i++) {
+                    items[i].classList.remove('prev');
+                    items[i].classList.remove('next');
+                    items[i].classList.remove('active');
                 }
                 if (items[newPrevious]) {
-                    items[newPrevious].className = itemClassName + " prev";
+                    items[newPrevious].classList.add("prev");
                 }
                 if (items[slide]) {
-                    items[slide].className = itemClassName + " active";
+                    items[slide].classList.add("active");
                 }
                 if (items[newNext]) {
-                    items[newNext].className = itemClassName + " next";
+                    items[newNext].classList.add("next");
                 }
 
             }
         }
     }
+
 
     function moveNext() {
         if (!moving) {
@@ -593,12 +508,18 @@ function activateCarousel() {
     }
 
     function initCarousel() {
-        setInitialClasses();
         setEventListeners();
         moving = false;
     }
 
     initCarousel();
+
+    if (slideMoveTo) {
+        if (!moving) {
+            moveCarouselTo(parseInt(slideMoveTo));
+        }
+    }
+
 }
 
 /* Spinners on/off */
@@ -644,45 +565,28 @@ function activateTooltips() {
             toolTipElement.style.left = leftPosition + 'px';
             toolTipElement.style.top = topPosition + 'px';
         });
-        item.addEventListener('mouseleave', function (e) {
+        item.addEventListener('mouseleave', function () {
             toolTipElement.classList.remove('slds-rise-from-ground');
             toolTipElement.classList.add('slds-fall-into-ground');
         });
     });
 }
 
-//Validation for the page
+//Validate form elements on submit
+
 function checkForm() {
 
-    let theForm = document.querySelector('form');
-    theForm.reportValidity();
+    // let theForm = document.querySelector('form');
+    // theForm.reportValidity();
 
     let error_count = 0;
-    let emailReg = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
+    //Required input check
     document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
-        let inputWrap = item.closest('.slds-form-element');
-        let inputRequired = inputWrap.classList.contains('slds-is-required');
         if (item) {
-            let inputType = '';
-            if (item.type) {
-                inputType = item.type.toLowerCase();
-            }
-
-            if (inputRequired && !item.value) {
-                inputWrap.classList.add("slds-has-error");
-                inputWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-                    errorHelp.style.display = "block"
-                });
-                addErrorFixerListener(item, inputWrap, 'change');
+            if (!item.value) {
+                activateErrorState(item, 'change')
                 error_count++;
-            }
-            if (inputType === 'email' && inputRequired || inputType === 'email' && item.value) {
-                if (!emailReg.test(item.value)) {
-                    inputWrap.classList.add("slds-has-error");
-                    addErrorFixerListener(item, inputWrap, 'change');
-                    error_count++;
-                }
             }
         }
     });
@@ -692,27 +596,116 @@ function checkForm() {
         let hiddenData = document.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
         if (selWrap.classList.contains("slds-is-required")) {
             if (!document.getElementById(hiddenData).value) {
-                selWrap.classList.add("slds-has-error");
-                addErrorFixerListener(selWrap, selWrap, 'click');
+                activateErrorState(sel, 'click')
                 error_count++;
             }
         }
     });
 
+    error_count = error_count + textValidations(true);
+
+    let carousel;
     if (error_count > 0) {
-        let foundErrors = document.querySelectorAll(".slds-has-error");
-        window.scrollTo(0, foundErrors[0].offsetTop);
+        let foundErrors = document.querySelector(".slds-has-error");
+        if (foundErrors) {
+            let carouselItem = foundErrors.closest('.carousel__item');
+            activateCarousel(carouselItem.dataset.slide);
+        }
+        //window.scrollTo(0, foundErrors[0].offsetTop);
         return false;
     }
+
     return true;
 }
 
-function addErrorFixerListener(inpt, wrp, evtType) {
-    inpt.addEventListener(evtType, () => {
-        wrp.classList.remove("slds-has-error");
-        wrp.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+function formatPhoneOnEnter(input, event) {
+    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
+    input.value = input.value.replace(phoneRegex, '');
+}
+
+function formatPhone(formatPone) {
+    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
+    formatPone.value = input.value.replace(phoneRegex, '');
+    console.log(formatPone)
+}
+
+
+//Input validations
+function textValidations(checkFormValidate) {
+    let errorCount = 0;
+    let allPhones = document.querySelectorAll('.validatePhone');
+    let allDecimals = document.querySelectorAll('.validateDecimal, .validateNumber, .validatePercent');
+    let allIntegers = document.querySelectorAll('.validateInteger');
+    let allSSN = document.querySelectorAll('.validateSSN');
+    let allNameOnlyCharacters = document.querySelectorAll('.validateName');
+    let allEmails = document.querySelectorAll('.validateEmail');
+
+    const emailReg = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    const internationalPhone = /^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/;
+    const phoneIllegals = /[^\d+-/(/)]/;
+    const numbersOnly = /[^\d-]/;
+    const numberDecimalOnly = /[^\d-.]/;
+    const phoneMatch = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
+    const phoneFormatted = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+    allPhones.forEach(function (phone) {
+        phone.addEventListener('change, blur', function () {
+            let initialPhone = phone.value;
+            let isInternational = false;
+            if (initialPhone.value.startsWith('+') || initialPHone.value.startsWith('0')) {
+                isInternational = true;
+            }
+            let cleaned = ('' + phone.input).replace(/\D/g, '');
+            let match = cleaned.match(phoneMatch);
+            if (match) {
+                let intlCode = (match[1] ? '+1 ' : '');
+                phone.value = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+            }
+        });
+        phone.addEventListener('keyup', function () {
+            phone.value = phone.value.replace(phoneIllegals, '');
+        })
+        if (checkFormValidate) {
+            if (!phone.value.match(phoneFormatted)) {
+                activateErrorState(phone, 'change');
+                errorCount++;
+            }
+        }
+    });
+
+    allDecimals.forEach(function (num) {
+        num.addEventListener('keyup, change', function () {
+            num.value = num.value.replace(numberDecimalOnly, '');
+        });
+        if (checkFormValidate && !num.match(numberDecimalOnly)) {
+            activateErrorState(num, 'change');
+            errorCount++;
+        }
+    });
+
+    allIntegers.forEach(function (num) {
+        num.addEventListener('keyup, change', function () {
+            num.value = num.value.replace(numbersOnly, '');
+        });
+        if (checkFormValidate && !num.match(numbersOnly)) {
+            activateErrorState(num, 'change');
+            errorCount++;
+        }
+    });
+
+    return errorCount;
+}
+
+function activateErrorState(errorInput, eventType) {
+    let errorWrap = errorInput.closest('.slds-form-element');
+    errorWrap.classList.add("slds-has-error");
+    errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+        errorHelp.style.display = "block"
+    });
+    errorInput.addEventListener(eventType, () => {
+        errorWrap.classList.remove("slds-has-error");
+        errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
             errorHelp.style.display = "none";
         });
     });
 }
-

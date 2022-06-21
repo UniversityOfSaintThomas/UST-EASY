@@ -11,9 +11,14 @@
     background-color: #9E28B5;
     border-color: #9E28B5;
 }
-.slds-scope label.slds-text-body_regular, .slds-scope .slds-text-body_regular, .slds-scope label.slds-radio_button__label {
+
+.slds-scope label.slds-text-body_regular, .slds-scope .slds-text-body_regular, .slds-scope label.slds-radio_button__label, .slds-scope label {
     font-size: 1.2em;
     font-weight: 400;
+}
+
+.slds-checkbox .slds-tabled-checklist td [type=checkbox] {
+    margin: 5px 7px 2px 2px !important;
 }
 
 .slds-scope .slds-text-body_regular {

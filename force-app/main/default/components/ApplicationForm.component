@@ -18,7 +18,7 @@
         <div class="slds-p-vertical_medium slds-border_top slds-border_bottom">
             <div class="{!if(hidePaging,'','carousel-wrapper')}">
 
-                <div class="{!if(hidePaging,'','carousel')}">
+                <div class="{!if(hidePaging,'','carousel')}" data-carousel-size="{!section.groups.size}">
                     <apex:variable var="itemCount" value="0"/>
                     <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-backdrop_open slds-backdrop" id="form-spinner">
                         <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
@@ -27,8 +27,8 @@
                             <div class="slds-spinner__dot-b"></div>
                         </div>
                     </section>
-                    <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}">
-                        <div class="carousel__item {!IF(VALUE(itemCount) == 0,'initial','')} slide-{!itemCount}">
+                    <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}" >
+                        <div class="carousel__item{!IF(VALUE(itemCount) == 0,' active','')}{!IF(VALUE(itemCount) == 1,' next','')}{!IF(VALUE(itemCount) == (section.groups.size - 1) && section.groups.size > 2,' prev','')} slide-{!itemCount}" data-slide="{!itemCount}">
                             <c:ApplicationFormSection id="theFormSectionComponent" groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appControl="{!appInfo.appControl}" appInfo="{!appInfo}"/>
                         </div>
                         <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>

@@ -10,7 +10,7 @@ private static void setHoldingIds() {
 
     Id highSchoolRecordTypeId = Schema.SObjectType.hed__Education_History__c.getRecordTypeInfosByName().get('High School').getRecordTypeId();
     Id collegeRecordTypeId = Schema.SObjectType.hed__Education_History__c.getRecordTypeInfosByName().get('College').getRecordTypeId();
-    Id familyParentRecordTypeId = Schema.SObjectType.Family__c.getRecordTypeInfosByName().get('Parent_Guardian').getRecordTypeId();
+    Id familyParentRecordTypeId = Schema.SObjectType.Family__c.getRecordTypeInfosByName().get('Parent/Guardian').getRecordTypeId();
     Id familySiblingRecordTypeId = Schema.SObjectType.Family__c.getRecordTypeInfosByName().get('Sibling').getRecordTypeId();
 
     List<Account> collegeHolders = [
@@ -42,9 +42,7 @@ private static void setHoldingIds() {
         if (collegeHolders.size() > 0) {
             rItem.Holding_Record_Id__c = collegeHolders[0].Id;
         }
-        if (collegeRecordType.size() > 0) {
-            rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + collegeRecordTypeId + '\')';
-        }
+        rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + collegeRecordTypeId + '\')';
         rItem.Related_Object_Record_Type_ID__c = collegeRecordTypeId;
         updateItems.add(rItem);
     }
@@ -53,9 +51,8 @@ private static void setHoldingIds() {
         if (highSchoolHolders.size() > 0) {
             rItem.Holding_Record_Id__c = highSchoolHolders[0].Id;
         }
-        if (highSchoolRecordType.size() > 0) {
-            rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + highSchoolRecordTypeId + '\')';
-        }
+        rItem.Related_List_Where_Clause__c = '(RecordTypeId=\'' + highSchoolRecordTypeId + '\')';
+
         rItem.Related_Object_Record_Type_ID__c = highSchoolRecordTypeId;
         updateItems.add(rItem);
     }

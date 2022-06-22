@@ -51,7 +51,7 @@ public class ApplicationCreate {
     }
 
     /*******************************************************************************
-    * @description 
+    * @description
     ********************************************************************************/
     public void setup(ApplicationQuestionGroup firstGroup, ApplicationQuestionGroup lastGroup) {
 

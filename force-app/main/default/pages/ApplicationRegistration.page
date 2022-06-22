@@ -1,5 +1,5 @@
 <apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0" >
-    <apex:composition template="Capricorn2020">
+    <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
             <c:ApplicationHead />
             <script>

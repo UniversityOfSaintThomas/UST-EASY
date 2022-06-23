@@ -257,6 +257,7 @@ function activateAutoComplete() {
 
     document.querySelectorAll('.bind-autocomplete').forEach(autoItem => {
 
+
         let originObjId = autoItem.id;
         let comboBoxContainer = autoItem.closest('.slds-combobox_container');
         let hiddenInput = comboBoxContainer.querySelector('.inputHidden');
@@ -371,7 +372,7 @@ function activateAutoComplete() {
 
         autoItem.addEventListener('keyup', () => {
             let searchTerm = autoItem.value;
-            if (objectType && objectTypeFilter && objectTypeNameField && searchTerm.length > 2) {
+            if (objectType && objectTypeNameField && searchTerm.length > 2) {
                 lookupSearchJS(objectType, objectTypeFilter, objectTypeNameField, searchTerm, lookupResultsFormatter, originObjId);
             }
         });

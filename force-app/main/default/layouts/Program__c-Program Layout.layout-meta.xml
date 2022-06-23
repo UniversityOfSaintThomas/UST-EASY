@@ -327,26 +327,6 @@
         <fields>Degree_Type__c</fields>
         <relatedList>Intended_Program_Term__c.Intended_Program__c</relatedList>
     </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Intended_Program__c</fields>
-        <relatedList>Application__c.Major_1__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Intended_Program__c</fields>
-        <relatedList>Application__c.Major_2__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Intended_Program__c</fields>
-        <relatedList>Application__c.Major_3__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Intended_Program__c</fields>
-        <relatedList>Application__c.Pre_Professional_Program__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

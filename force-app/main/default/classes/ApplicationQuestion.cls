@@ -72,7 +72,7 @@ public class ApplicationQuestion {
     public ApplicationQuestionSection section { private get; set; }
 
     /*******************************************************************************
-    * @description Returns the list of selct options for picklists/multiselect picklists and radios. For Intended Programs we also filter out programs that should not be shown.
+    * @description Returns the list of select options for picklists/multiselect picklists and radios. For Intended Programs we also filter out programs that should not be shown.
     ********************************************************************************/
     public List<SelectOption> options {
         get {
@@ -452,6 +452,7 @@ public class ApplicationQuestion {
             }
         }
     }
+
     public ApplicationQuestion(SObject obj, Question__c question, Question_Response__c response, Boolean hasQuestionDependencies) {
         this.hasDependentQuestions = hasQuestionDependencies;
         this.response = response;

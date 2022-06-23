@@ -537,6 +537,8 @@ public class ApplicationQuestionGroup {
                         relatedObjectsMap.put(obj.Id, new SObjectWrapper(this, obj.Id, obj));
                     }
                 }
+
+                System.debug(relatedObject);
             }
         }
     }

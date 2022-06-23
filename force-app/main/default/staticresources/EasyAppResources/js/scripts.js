@@ -10,32 +10,28 @@ ready(() => {
 });
 
 function pageLoadReRendered() {
-    document.querySelectorAll('.fieldNotEditable,.fieldNotEditable input,.fieldNotEditable select,.fieldNotEditable textarea').forEach(field => {
+    //Disable fields that are set to not be editable
+    document.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
     });
 
     document.querySelector('form').onkeypress = checkEnter;
 
-    // SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
-    document.querySelectorAll('.slds-summary-detail').forEach(item => {
-        item.querySelector("button.slds-button").addEventListener('click', function (e) {
-            e.preventDefault();
-            let content = item.querySelector('.slds-summary-detail__content');
-            if (content.style.display === 'none') {
-                item.classList.add('slds-is-open')
-                content.style.display = 'block';
-            } else {
-                item.classList.remove('slds-is-open')
-                content.style.display = 'none';
-            }
-        });
-    });
-
+    //Make sure inputs are typed with HTML5 standards
     document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
         item.required = true;
     });
 
-    //Arranging Visualforce inputs to achieve SLDS accessiblity
+    document.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber").forEach(item => {
+        item.type = "number";
+    });
+
+    document.querySelectorAll(".validatePhone").forEach(item => {
+        item.type = "tel";
+    });
+
+    //Arranging Visualforce inputs to achieve SLDS accessibility
+    summaryDetail();
     adjustLabelsFor();
     textValidations();
     radioCheckBox();
@@ -54,6 +50,7 @@ function checkEnter(e) {
     return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
 }
 
+//Clicks buttons that save data and re-renders action areas
 function reRenderAllGroups(rerenderName) {
     if (rerenderName && rerenderName !== 'none') {
         showFormSpinner();
@@ -65,6 +62,24 @@ function reRenderAllGroups(rerenderName) {
     }
 }
 
+// SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
+function summaryDetail() {
+    document.querySelectorAll('.slds-summary-detail').forEach(item => {
+        item.querySelector("button.slds-button").addEventListener('click', function (e) {
+            e.preventDefault();
+            let content = item.querySelector('.slds-summary-detail__content');
+            if (content.style.display === 'none') {
+                item.classList.add('slds-is-open')
+                content.style.display = 'block';
+            } else {
+                item.classList.remove('slds-is-open')
+                content.style.display = 'none';
+            }
+        });
+    });
+}
+
+//Creates droppable file upload areas
 function fileUploadAreas() {
 
     document.querySelectorAll('.slds-file-selector__dropzone').forEach(upload => {
@@ -101,7 +116,6 @@ function fileUploadAreas() {
         });
 
         fileInput.addEventListener('change', function () {
-            console.log('file change detected');
             currentFile.innerHTML = findFileName(fileInput.value);
         });
     })
@@ -118,6 +132,7 @@ function findFileName(filePath) {
     return filePath;
 }
 
+//Makes sure all labels have id associations to the inputs
 function adjustLabelsFor() {
     document.querySelectorAll('.slds-input, .slds-select, .slds-radio').forEach(inputFound => {
         let inputWrapper = inputFound.closest('.slds-form-element'),
@@ -143,6 +158,7 @@ function adjustLabelsFor() {
     });
 }
 
+//SLDS Radio Group Button https://www.lightningdesignsystem.com/components/radio-button-group
 function radioCheckBox() {
     document.querySelectorAll('.slds-radio_button-group').forEach(radioGroup => {
         let radioGroupValue = radioGroup.querySelector("[id$='radioField1']");
@@ -158,6 +174,7 @@ function radioCheckBox() {
     });
 }
 
+// SLDS Checkbox https://www.lightningdesignsystem.com/components/checkbox/
 function checkbox() {
     document.querySelectorAll('.slds-checkbox.single-checkbox').forEach(cb => {
         cb.addEventListener('click', () => {
@@ -202,9 +219,7 @@ function performDocUploadSave(redirectTo) {
     ensureRichTextContent();
 
     document.querySelectorAll('.docUploadInput').forEach(function (docUpload, idx) {
-        console.log(docUpload.files);
         if (docUpload.files) {
-            console.log(docUpload.files[0]);
             let fbody = docUpload.files[0];
             if (fbody) {
                 docUploadPromiseArr.push(getAsText(fbody, docUpload.getAttribute('data-respid')));
@@ -218,7 +233,6 @@ function performDocUploadSave(redirectTo) {
         docUploads.forEach(function (docUpload) {
             docUploadObj[docUpload.itemId] = {"attData": docUpload};
         });
-        console.log(JSON.stringify(docUploadObj));
         saveWithDocs(JSON.stringify(docUploadObj), redirectTo);
     }).catch(function () {
     });
@@ -293,7 +307,6 @@ function activateAutoComplete() {
         }
 
         function lookupResultsFormatter(data, originObjId) {
-            console.log(JSON.stringify(data));
             let outputList = ''
             let fieldNames = comboBox.dataset.objtypenamefield.replace(' ', '').split(',');
             data.forEach(result => {
@@ -332,7 +345,6 @@ function activateAutoComplete() {
                     if (refItem.dataset.title === '**createnew**') {
                         if (typeof window['setCreatingNewRelatedRecordAF' + groupId] === "function" && recordId && resultId) {
                             window['setCreatingNewRelatedRecordAF' + groupId](recordId, resultId)
-                            console.log('result function called!');
                         }
                     } else {
                         hiddenInput.value = refItem.dataset.resultid;
@@ -371,9 +383,7 @@ function activateAutoComplete() {
         //     comboBox.classList.remove('slds-is-open');
         // });
     });
-
 }
-
 
 function navigateRequirementGroup(redirectTo) {
     appShowLoadingSpinner();
@@ -450,7 +460,6 @@ function activateCarousel(slideMoveTo) {
                     newPrevious = (slide - 1);
                     newNext = 0;
                 }
-                console.log(slide + 1 + ' = ' + totalItems);
                 if (slide + 1 === totalItems || totalItems === 1) {
                     saveAndAdvance.style.display = "inline-flex"
                     next.style.display = "none"
@@ -618,17 +627,18 @@ function checkForm() {
     return true;
 }
 
-function formatPhoneOnEnter(input, event) {
-    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
-    input.value = input.value.replace(phoneRegex, '');
-}
-
-function formatPhone(formatPone) {
-    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
-    formatPone.value = input.value.replace(phoneRegex, '');
-    console.log(formatPone)
-}
-
+//
+// function formatPhoneOnEnter(input, event) {
+//     const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
+//     input.value = input.value.replace(phoneRegex, '');
+// }
+//
+// function formatPhone(formatPone) {
+//     const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
+//     formatPone.value = input.value.replace(phoneRegex, '');
+//     console.log(formatPone)
+// }
+//
 
 //Input validations
 function textValidations(checkFormValidate) {
@@ -639,59 +649,80 @@ function textValidations(checkFormValidate) {
     let allSSN = document.querySelectorAll('.validateSSN');
     let allNameOnlyCharacters = document.querySelectorAll('.validateName');
     let allEmails = document.querySelectorAll('.validateEmail');
+    let allUrls = document.querySelectorAll('.validateURL');
 
-    const emailReg = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    const internationalPhone = /^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/;
-    const phoneIllegals = /[^\d+-/(/)]/;
-    const numbersOnly = /[^\d-]/;
-    const numberDecimalOnly = /[^\d-.]/;
-    const phoneMatch = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
-    const phoneFormatted = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    const re_email = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    const re_url = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/;
+    const re_number = /[^\d-]/;
+    const re_decimal = /[^\d-.]/;
+    const re_phoneIllegals = /[^\d+-/(/)]/;
+    const re_phoneFormat = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
+    const re_phone = /[\d+\-\(\) ]/;
 
+    //Format and validate phone numbers
     allPhones.forEach(function (phone) {
-        phone.addEventListener('change, blur', function () {
-            let initialPhone = phone.value;
-            let isInternational = false;
-            if (initialPhone.value.startsWith('+') || initialPHone.value.startsWith('0')) {
-                isInternational = true;
-            }
-            let cleaned = ('' + phone.input).replace(/\D/g, '');
-            let match = cleaned.match(phoneMatch);
+
+        //format directly after input
+        phone.addEventListener('change', function () {
+            let phoneValue = String(phone.value);
+            let cleaned = phoneValue.replace(/\D/g, "");
+            let match = cleaned.match(re_phoneFormat);
             if (match) {
-                let intlCode = (match[1] ? '+1 ' : '');
-                phone.value = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+                let intlCode = match[1] ? "+1 " : "";
+                phoneValue = [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join(
+                    ""
+                );
             }
         });
+
+        //Don't allow anything but phone number characters on key-up
         phone.addEventListener('keyup', function () {
-            phone.value = phone.value.replace(phoneIllegals, '');
+            phone.value = phone.value.replace(re_phoneIllegals, '');
         })
+
+        //Check if the final phone number matches correctly before submit
         if (checkFormValidate) {
-            if (!phone.value.match(phoneFormatted)) {
+            if (!phone.value.match(re_phone)) {
                 activateErrorState(phone, 'change');
                 errorCount++;
             }
         }
+
     });
 
+    //Decimal Validation
     allDecimals.forEach(function (num) {
         num.addEventListener('keyup, change', function () {
-            num.value = num.value.replace(numberDecimalOnly, '');
+            num.value = num.value.replace(re_decimal, '');
         });
-        if (checkFormValidate && !num.match(numberDecimalOnly)) {
+        if (checkFormValidate && !num.value.match(re_decimal)) {
             activateErrorState(num, 'change');
             errorCount++;
         }
     });
 
+    //Integer validation
     allIntegers.forEach(function (num) {
         num.addEventListener('keyup, change', function () {
-            num.value = num.value.replace(numbersOnly, '');
+            num.value = num.value.replace(re_number, '');
         });
-        if (checkFormValidate && !num.match(numbersOnly)) {
+        if (checkFormValidate && !num.value.match(re_number)) {
             activateErrorState(num, 'change');
             errorCount++;
         }
     });
+
+    //URL validation
+    allUrls.forEach(function (inputUrl) {
+        inputUrl.value = inputUrl.value.replace(' ', '').trim();
+        if(!inputUrl.value.startsWith('http')) {
+            inputUrl.value = 'https://' + inputUrl.value;
+        }
+        if (checkFormValidate && !inputUrl.value.match(re_url)) {
+            activateErrorState(inputUrl, 'change');
+            errorCount++;
+        }
+    })
 
     return errorCount;
 }

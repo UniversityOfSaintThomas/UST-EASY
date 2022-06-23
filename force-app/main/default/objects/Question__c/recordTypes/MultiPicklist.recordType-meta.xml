@@ -81,6 +81,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>U%2ES%2E Citizen</fullName>
             <default>false</default>
         </values>

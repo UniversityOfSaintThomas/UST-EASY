@@ -4,10 +4,11 @@
 
 <apex:component id="ApplicationFormSectionInput">
     <apex:attribute name="inputLabel" description="" type="String" required="false"/>
-    <apex:attribute name="responseObject" description="" type="SObject"/>
-    <apex:attribute name="questionWrapper" description="" type="ApplicationQuestion"/>
-    <apex:attribute name="fieldAPI" description="" type="String"/>
-    <apex:attribute name="inputType" description="" type="String" required="true"/>
+    <apex:attribute name="multiPicklist" description="" type="List" required="false"/>
+    <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
+    <apex:attribute name="questionWrapper" description="" type="ApplicationQuestion" required="false"/>
+    <apex:attribute name="fieldAPI" description="" type="String" required="false"/>
+    <apex:attribute name="inputType" description="" type="String" required="false"/>
     <apex:attribute name="isReadOnly" description="" type="Boolean" required="false" default="false"/>
     <apex:attribute name="isRequired" description="" type="Boolean" required="false" default="false"/>
     <apex:attribute name="preventUpdates" description="" type="Boolean" required="false"/>
@@ -18,7 +19,7 @@
     <apex:attribute name="inputOptions" description="" type="SelectOption" required="false"/>
     <apex:attribute name="rerenderGroup" description="" type="String" required="false" default="none"/>
     <apex:attribute name="itemNumber" description="iterating number of current displayed questions" type="Integer" required="false"/>
-
+    <apex:attribute name="relatedRecords" description="Is part of a related records question" type="Boolean" required="false" default="false"/>
 
     <apex:outputPanel rendered="{!inputType != 'Address' && !ISBLANK(inputLabel) && inputType != 'Checkbox'}" layout="none">
         <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
@@ -67,7 +68,10 @@
     <!-- Multi Picklist -->
     <apex:outputPanel rendered="{!inputType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
         <div class="slds-checkbox">
-            <apex:selectCheckboxes id="multiPicklistField" value="{!questionWrapper[fieldAPI]}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" onChange="reRenderAllGroups('{!rerenderGroup}')">
+            <apex:selectCheckboxes id="multiPicklistFieldRelated" value="{!multiPicklist}" rendered="{!relatedRecords}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" onChange="reRenderAllGroups('{!rerenderGroup}')">
+                <apex:selectOptions value="{!inputOptions}"/>
+            </apex:selectCheckboxes>
+            <apex:selectCheckboxes id="multiPicklistField" value="{!questionWrapper[fieldAPI]}" rendered="{!!relatedRecords}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" onChange="reRenderAllGroups('{!rerenderGroup}')">
                 <apex:selectOptions value="{!inputOptions}"/>
             </apex:selectCheckboxes>
         </div>
@@ -112,16 +116,12 @@
     </apex:outputPanel>
 
     <!-- Phone -->
-    <apex:outputPanel rendered="{!inputType == 'Phone'}" layout="block" styleClass="slds-form-element__control">
+    <apex:outputPanel rendered="{!inputType == 'Phone'}" layout="block" styleClass="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+        <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
+            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#call")}"></use>
+        </svg>
         <apex:inputField id="phoneField" type="tel" value="{!responseObject[fieldAPI]}" styleClass="slds-input  validate{!inputType}" html-pattern="[0-9-+ ().]+"/>
     </apex:outputPanel>
-
-    <!--    &lt;!&ndash; Picklist Radio &ndash;&gt;-->
-    <!--    <apex:outputPanel rendered="{!(inputType == 'Picklist' && isRadio) || inputType == 'Radio'}" layout="block" styleClass="slds-form-element__control">-->
-    <!--        <apex:selectRadio value="{!responseObject[fieldAPI]}" styleClass="validate{!inputType}">-->
-    <!--            <apex:selectOptions value="{!inputOptions}"/>-->
-    <!--        </apex:selectRadio>-->
-    <!--    </apex:outputPanel>-->
 
     <!-- Picklist Radio -->
     <apex:outputPanel rendered="{!(inputType == 'Picklist' && isRadio) || inputType == 'Radio'}" layout="block" styleClass="slds-form-element__control">

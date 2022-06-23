@@ -12,7 +12,7 @@
             </lightning-spinner>
         </template>
 
-        <div class="slds-text-heading_medium" style="text-align: center"><b>{academic_level} {applicant_status} Request for Information</b></div>
+        <div class="slds-text-heading_medium" style="text-align: center"><b>{academic_level} Request for Information {school_college}</b></div>
 
         <!-- BEGIN FORM -->
         <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
@@ -55,6 +55,20 @@
                             aria-label="Academic Interest"
                             onchange={onChange}>
                         </lightning-combobox>
+                    </div>
+                </div>
+            </template>
+            <!-- ROW 6 -->
+            <template if:true={show_fields.Title}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input 
+                            required={require_fields.Title}
+                            type="text" 
+                            label={field_labels.title_label}
+                            aria-label="Title"
+                            onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </div>
             </template>
@@ -138,6 +152,20 @@
                             type="date" 
                             label={field_labels.birthdate_label}
                             aria-label="Birthdate"
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </template>
+            <!-- ROW 6 -->
+            <template if:true={show_fields.Employer}>
+                <div class="slds-grid slds-gutters_medium">
+                    <div class="slds-col">
+                        <lightning-input 
+                            required={require_fields.Employer}
+                            type="text" 
+                            label={field_labels.employer_label}
+                            aria-label="Employer"
                             onchange={onChange}>
                         </lightning-input>
                     </div>
@@ -293,6 +321,6 @@
                 </div>
             </div>
         </div> 
-
     </lightning-card>
 </template>
+

@@ -13,8 +13,9 @@ import { generateRecordInputForCreate, getRecordCreateDefaults } from 'lightning
 // lead object and fields
 import LEAD_OBJECT from '@salesforce/schema/Lead';
 import LEAD_FIRST_NAME from '@salesforce/schema/Lead.FirstName';
+import LEAD_TITLE from '@salesforce/schema/Lead.Title';
 import LEAD_ADMIT_TYPE from '@salesforce/schema/Lead.Admit_Type__c';
-import LEAD_CITIZENSHIP from '@salesforce/schema/Lead.hed__Citizenship__c';
+import LEAD_CITIZENSHIP from '@salesforce/schema/Lead.Citizenship__c';
 import LEAD_RECRUITMENT_PROGRAM from '@salesforce/schema/Lead.Recruitment_Program__c';
 import LEAD_EMAIL from '@salesforce/schema/Lead.Email';
 import LEAD_PHONE from '@salesforce/schema/Lead.Phone';
@@ -38,9 +39,11 @@ import searchHighSchools from '@salesforce/apex/requestForInformationFormControl
 import getAcademicLevelValue from '@salesforce/apex/requestForInformationFormController.getAcademicLevelValue';
 import createLead from '@salesforce/apex/requestForInformationFormController.createLead';
 import createAccount from '@salesforce/apex/requestForInformationFormController.createAccount';
+import getPresetValues from '@salesforce/apex/requestForInformationFormController.getPresetValues';
 
-const OPTIONAL_FIELDS = [
+const ADDITIONAL_FIELDS = [
     LEAD_FIRST_NAME,
+    LEAD_TITLE,
     LEAD_ADMIT_TYPE,
     LEAD_CITIZENSHIP,
     LEAD_RECRUITMENT_PROGRAM,
@@ -67,15 +70,16 @@ const lookup_fields = [
 
 export default class RequestForInformationForm extends LightningElement {
     // RFI controller info
-    @api rfi_controller = 'RFI Controller 0001';
+    @api rfi_controller = 'RFI Controller 0000';
     academic_level;
     academic_level_api;
-    applicant_status;
+    school_college;
     fields_to_display; //use to determine which fields on form to display
     required_fields; //used for validating input
 
     // lead info
     lead_default_record_type;
+    all_lead_field_api_names = [];
 
     // maps to populate picklists, where label is name and value is id of object
     program_id_to_name_map; // for Recruitment_Program__c
@@ -97,7 +101,9 @@ export default class RequestForInformationForm extends LightningElement {
         'Citizenship' : false,
         'Email' : false,
         'High_School_Attended' : false,
-        'Phone_fields' : false
+        'Phone_fields' : false,
+        'Employer': false,
+        'Title': false
     }
 
     @track require_fields = {
@@ -109,10 +115,12 @@ export default class RequestForInformationForm extends LightningElement {
         'Citizenship' : false,
         'Email' : false,
         'High_School_Attended' : false,
-        'Phone_fields' : false
+        'Phone_fields' : false,
+        'Employer': false,
+        'Title': false
     }
 
-    record_input; // used in createRecord - stores user enter form information
+    record_input; // stores user enter form information
 
     //field labels
     field_labels = {
@@ -135,7 +143,9 @@ export default class RequestForInformationForm extends LightningElement {
         'academic_term_label' : 'Expected Start Term at St. Thomas',
         'high_school_search_label' : 'High School Attended',
         'high_school_not_found_label' : 'I can\'t find my High School',
-        'high_school_datatable_name' : 'High School Datatable'
+        'high_school_datatable_name' : 'High School Datatable',
+        'employer_label': 'Employer',
+        'title_label': 'Title'
     }
 
     //picklist values
@@ -166,7 +176,11 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             if (result.data.length != 0) {
                 this.academic_level_api = result.data.Academic_Level__c;
-                this.applicant_status = '(' + result.data.Applicant_Status__c + ')';
+                if (result.data.School_College__c.length 
+                    && result.data.School_College__c != 'Graduate' 
+                    && result.data.School_College__c != 'Undergraduate') {
+                        this.school_college = 'from the ' + result.data.School_College__c;
+                }
                 this.fields_to_display = result.data.Fields_to_Display__c;
                 this.required_fields = result.data.Required_Fields__c;
                 this.lead_owner = result.data.Lead_Owner__c;
@@ -245,6 +259,10 @@ export default class RequestForInformationForm extends LightningElement {
     object_info(result) {
         if (result.data) {
             this.lead_default_record_type = result.data.defaultRecordTypeId;
+            var fields = new Map(Object.entries(result.data.fields));
+            for (const field of fields) {
+                this.all_lead_field_api_names.push(field[0]);
+            }
         } else {
             console.log(result.error);
         }
@@ -253,7 +271,7 @@ export default class RequestForInformationForm extends LightningElement {
     @wire(getPicklistValuesByRecordType, { objectApiName: LEAD_OBJECT, recordTypeId: '$lead_default_record_type' })
     picklist_values(result) {
         if (result.data) {
-            this.citizenship_picklist_values = result.data.picklistFieldValues.hed__Citizenship__c.values;
+            this.citizenship_picklist_values = result.data.picklistFieldValues.Citizenship__c.values;
             this.country_picklist_values = result.data.picklistFieldValues.hed__Citizenship__c.values;
             this.admit_type_picklist_values = result.data.picklistFieldValues.Admit_Type__c.values;
         } else {
@@ -262,8 +280,6 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     onChange(event) {
-        console.log(event.target.label);
-        console.log(event.target.name);
         switch (event.target.label) {
             case this.field_labels.first_name_label:
                 this.record_input.fields.FirstName = event.target.value;
@@ -309,7 +325,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.Birthdate__c = event.target.value;
                 break;
             case this.field_labels.citizenship_label:
-                this.record_input.fields.hed__Citizenship__c = event.target.value;
+                this.record_input.fields.Citizenship__c = event.target.value;
                 break;
             case this.field_labels.admit_type_label:
                 this.record_input.fields.Admit_Type__c = event.target.value;
@@ -333,17 +349,22 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.high_school_search_label:
                 this.new_account = event.target.value;
+                break;
+            case this.field_labels.employer_label:
+                this.record_input.fields.Company = event.target.value;
+                break;
+            case this.field_labels.title_label:
+                this.record_input.fields.Title = event.target.value;
+                break;
             default:
                 break;
         }
 
         if (event.target.name == this.field_labels.high_school_datatable_name) {
-            console.log('here');
             var selected_row = this.template.querySelector('lightning-datatable').getSelectedRows();
             this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
             this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
-        console.log(this.record_input);
     }
 
     handleSubmit() {
@@ -351,14 +372,11 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.OwnerId = this.lead_owner;
             this.show_spinner = true;
             this.handleStreetAddress();
-            console.log('entered high school: ' + this.new_account);
             createAccount({ account_name : this.new_account, owner_id: this.lead_owner}) 
             .then(account_id => {
-                console.log(account_id);
                 if (account_id != '') {
                     this.record_input.fields.Affiliated_Account__c = account_id;
                 }
-                console.log(this.record_input);
                 createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
                 .then(() => {
                     // redirect
@@ -430,14 +448,23 @@ export default class RequestForInformationForm extends LightningElement {
         }
     }
 
-    @wire(getRecordCreateDefaults, { objectApiName: LEAD_OBJECT, optionalFields: OPTIONAL_FIELDS})
+    @wire(getRecordCreateDefaults, { objectApiName: LEAD_OBJECT, optionalFields: ADDITIONAL_FIELDS})
     output(result) {
         if (result.data) {
-            console.log(result.data);
             this.record_input = generateRecordInputForCreate(result.data.record);
             this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
             this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100); // TO DO: determine what this should be
-            this.record_input.fields.LeadSource = 'Web';
+            getPresetValues({rfi_controller_name : this.rfi_controller})
+            .then(preset_values => {
+                for (const preset_value of preset_values) {
+                    if (this.all_lead_field_api_names.includes(preset_value.Field_API_Name__c)) {
+                        this.record_input.fields[preset_value.Field_API_Name__c] = preset_value.Value__c;
+                    }
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
             // relationship lookup fields throwing error on insert, so removing
             for (const relationship_name of lookup_fields) {
                 delete this.record_input.fields[relationship_name];         
@@ -446,6 +473,11 @@ export default class RequestForInformationForm extends LightningElement {
         } else {
             console.log(result.error);
         }
+    }
+
+    @wire(getObjectInfo)
+    all(result) {
+        console.log(result.data);
     }
 
     handleSearch(event) {
@@ -458,12 +490,12 @@ export default class RequestForInformationForm extends LightningElement {
                     var values = [];
                     for (const school in high_schools) {
                         var address_info;
-                        if (high_schools[school].ShippingCity != null && high_schools[school].ShippingState != null) {
-                            address_info = high_schools[school].ShippingCity + ', ' + high_schools[school].ShippingState;
-                        } else if (high_schools[school].ShippingCity != null && high_schools[school].ShippingCountry != null) {
-                            address_info = high_schools[school].ShippingCity + ', ' + high_schools[school].ShippingCountry;
-                        } else if (high_schools[school].ShippingCountry != null) {
-                            address_info = high_schools[school].ShippingCountry;
+                        if (high_schools[school].BillingCity != null && high_schools[school].BillingState != null) {
+                            address_info = high_schools[school].BillingCity + ', ' + high_schools[school].BillingState;
+                        } else if (high_schools[school].BillingCity != null && high_schools[school].BillingCountry != null) {
+                            address_info = high_schools[school].BillingCity + ', ' + high_schools[school].BillingCountry;
+                        } else if (high_schools[school].BillingCountry != null) {
+                            address_info = high_schools[school].BillingCountry;
                         } else {
                             address_info = 'Unknown';
                         }
@@ -487,13 +519,68 @@ export default class RequestForInformationForm extends LightningElement {
         }
     } 
 
-    // global value set?
+    // can't query for global value sets -- would need to be a field
     get stateOptions() {
         return [
+            { label: 'AL', value: 'AL' },
+            { label: 'AK', value: 'AK' },
+            { label: 'AS', value: 'AS' },
+            { label: 'AZ', value: 'AZ' },
+            { label: 'AR', value: 'AR' },
+            { label: 'CA', value: 'CA' },
+            { label: 'CO', value: 'CO' },
+            { label: 'CT', value: 'CT' },
+            { label: 'DE', value: 'DE' },
+            { label: 'DC', value: 'DC' },
+            { label: 'FM', value: 'FM' },
+            { label: 'FL', value: 'FL' },
+            { label: 'GA', value: 'GA' },
+            { label: 'GU', value: 'GU' },
+            { label: 'HI', value: 'HI' },
+            { label: 'ID', value: 'ID' },
+            { label: 'IL', value: 'IL' },
+            { label: 'IN', value: 'IN' },
+            { label: 'IA', value: 'IA' },
+            { label: 'KS', value: 'KS' },
+            { label: 'KY', value: 'KY' },
+            { label: 'LA', value: 'LA' },
+            { label: 'ME', value: 'ME' },
+            { label: 'MH', value: 'MH' },
+            { label: 'MD', value: 'MD' },
+            { label: 'MA', value: 'MA' },
+            { label: 'MI', value: 'MI' },
             { label: 'MN', value: 'MN' },
+            { label: 'MS', value: 'MS' },
+            { label: 'MO', value: 'MO' },
+            { label: 'MT', value: 'MT' },
+            { label: 'NE', value: 'NE' },
+            { label: 'NV', value: 'NV' },
+            { label: 'NH', value: 'NH' },
+            { label: 'NJ', value: 'NJ' },
+            { label: 'NM', value: 'NM' },
             { label: 'NY', value: 'NY' },
+            { label: 'NC', value: 'NC' },
+            { label: 'ND', value: 'ND' },
+            { label: 'MP', value: 'MP' },
+            { label: 'OH', value: 'OH' },
+            { label: 'OK', value: 'OK' },
+            { label: 'OR', value: 'OR' },
+            { label: 'PW', value: 'PW' },
+            { label: 'PA', value: 'PA' },
+            { label: 'PR', value: 'PR' },
+            { label: 'RI', value: 'RI' },
+            { label: 'SC', value: 'SC' },
+            { label: 'SD', value: 'SD' },
+            { label: 'TN', value: 'TN' },
+            { label: 'TX', value: 'TX' },
+            { label: 'UT', value: 'UT' },
+            { label: 'VT', value: 'VT' },
+            { label: 'VI', value: 'VI' },
+            { label: 'VA', value: 'VA' },
             { label: 'WA', value: 'WA' },
+            { label: 'WV', value: 'WV' },
+            { label: 'WI', value: 'WI' },
+            { label: 'WY', value: 'WY' }
         ];
     }
-
 }

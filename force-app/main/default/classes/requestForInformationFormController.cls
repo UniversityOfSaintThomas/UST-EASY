@@ -1,6 +1,5 @@
 public without sharing class requestForInformationFormController {
 
-    // @author : andrew.d@digitalmass.com
     @AuraEnabled
     public static void createLead(String record,String objectApiName){
         try {
@@ -44,7 +43,7 @@ public without sharing class requestForInformationFormController {
             return [
                 SELECT
                     Academic_Level__c,
-                    Applicant_Status__c,
+                    School_College__c,
                     Fields_to_Display__c,
                     Required_Fields__c,
                     Lead_Owner__c
@@ -96,12 +95,24 @@ public without sharing class requestForInformationFormController {
         }
     }
 
+    // TO DO: change to BillingState and BillingCity
+    // AND Type = 'High School'
     @AuraEnabled
     public static Map<Id, Account> searchHighSchools(String search_term){
         try {
             Map<Id, Account> high_school_map = new Map<Id, Account>();
-                Id educational_record_type = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-                List<List<Account>> high_schools = [FIND :search_term IN NAME FIELDS RETURNING Account(Id, Name, ShippingCity, ShippingState, ShippingCountry WHERE RecordTypeId =: educational_record_type ORDER BY Name)];
+                List<List<Account>> high_schools = [
+                    FIND :search_term 
+                    IN NAME FIELDS 
+                    RETURNING Account(
+                                    Id, 
+                                    Name, 
+                                    BillingCity, 
+                                    BillingState, 
+                                    BillingCountry 
+                                WHERE Type =: 'High School' 
+                                ORDER BY Name
+                )];
                 for (List<Account> account_list : high_schools) {
                     for (Account high_school : account_list) {
                         high_school_map.put(high_school.Id, high_school);
@@ -135,12 +146,22 @@ public without sharing class requestForInformationFormController {
         try {
             String account_id = '';
             if (account_name != null && account_name != '') {
-                Id educational_record_type = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-                Account new_account = new Account(RecordTypeId = educational_record_type, Name = account_name, OwnerId = owner_id);
+                Account new_account = new Account(Type = 'High School', Name = account_name, OwnerId = owner_id);
                 insert new_account;
                 account_id = new_account.Id;
             }
             return account_id;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static List<Lead_Preset_Value__mdt> getPresetValues(String rfi_controller_name){
+        try {
+            List<Lead_Preset_Value__mdt> preset_values = new List<Lead_Preset_Value__mdt>();
+            preset_values = [SELECT Field_API_Name__c, Value__c FROM Lead_Preset_Value__mdt WHERE RFI_Controller_Name__c =: rfi_controller_name];
+            return preset_values;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

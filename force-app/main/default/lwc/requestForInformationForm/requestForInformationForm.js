@@ -73,7 +73,9 @@ export default class RequestForInformationForm extends LightningElement {
     @api rfi_controller = 'RFI Controller 0000';
     academic_level;
     academic_level_api;
+    school_college_title;
     school_college;
+    citizenship_type;
     fields_to_display; //use to determine which fields on form to display
     required_fields; //used for validating input
 
@@ -155,6 +157,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track admit_type_picklist_values;
     @track academic_level_picklist_values;
     @track academic_term_picklist_values;
+    @track academic_interest_picklist_values;
     @track high_school_search_results; // populate via SOSL
 
     //intermediate values
@@ -179,8 +182,10 @@ export default class RequestForInformationForm extends LightningElement {
                 if (result.data.School_College__c.length 
                     && result.data.School_College__c != 'Graduate' 
                     && result.data.School_College__c != 'Undergraduate') {
-                        this.school_college = 'from the ' + result.data.School_College__c;
+                        this.school_college_title = 'from the ' + result.data.School_College__c;
                 }
+                this.school_college = result.data.School_College__c;
+                this.citizenship_type = result.data.Citizenship_Type__c;
                 this.fields_to_display = result.data.Fields_to_Display__c;
                 this.required_fields = result.data.Required_Fields__c;
                 this.lead_owner = result.data.Lead_Owner__c;
@@ -197,7 +202,7 @@ export default class RequestForInformationForm extends LightningElement {
                 });
                 if (this.academic_level_api != undefined) {
                     // gets programs based on academic level
-                    getAcademicPrograms({academic_level: this.academic_level_api})
+                    getAcademicPrograms({academic_level: this.academic_level_api, school_college: this.school_college, citizenship_type: this.citizenship_type})
                     .then((programs) => {
                         this.program_id_to_name_map = programs;
                         var values = [];
@@ -207,6 +212,7 @@ export default class RequestForInformationForm extends LightningElement {
                             );
                         }
                         this.academic_interest_picklist_values = values;
+                        console.log(this.academic_interest_picklist_values);
                     })
                     .catch(error => {
                         console.log(error);
@@ -508,6 +514,7 @@ export default class RequestForInformationForm extends LightningElement {
                         );
                     }
                     this.high_school_search_results = values;
+                    //this.addEventListeners();
                 }
             })
             .catch(error => {
@@ -518,6 +525,14 @@ export default class RequestForInformationForm extends LightningElement {
             this.high_school_data = false;
         }
     } 
+
+    // addEventListeners() {
+    //     var rows = this.template.querySelectorAll('lightning-datatable_table');
+    //     console.log(JSON.stringify(rows));
+    //     for (const row of rows) {
+    //         row.addEventListener('click', (e)=>{console.log(e.target.data-col-key-value)});
+    //     }
+    // }
 
     // can't query for global value sets -- would need to be a field
     get stateOptions() {

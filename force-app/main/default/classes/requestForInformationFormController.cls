@@ -37,6 +37,21 @@ public without sharing class requestForInformationFormController {
         }
     }
 
+    @AuraEnabled
+    public static String createAccount(String account_name, String owner_id){
+        try {
+            String account_id = '';
+            if (!String.isBlank(account_name)) {
+                Account new_account = new Account(Type = 'High School', Name = account_name, OwnerId = owner_id);
+                insert new_account;
+                account_id = new_account.Id;
+            }
+            return account_id;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
     @AuraEnabled(cacheable=true)
     public static RFI_Controller__c getRFIController(String rfi_controller_name){
         try {
@@ -44,6 +59,7 @@ public without sharing class requestForInformationFormController {
                 SELECT
                     Academic_Level__c,
                     School_College__c,
+                    Citizenship_Type__c,
                     Fields_to_Display__c,
                     Required_Fields__c,
                     Lead_Owner__c
@@ -57,21 +73,28 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static Map<Id, Program__c> getAcademicPrograms(String academic_level) {
+    public static Map<Id, Program__c> getAcademicPrograms(String academic_level, String school_college, String citizenship_type) {
         try {
             Id recruitment_record_type_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Recruitment_Program').getRecordTypeId();
-            Map<Id, Program__c> programs = new Map<Id, Program__c>([
-                SELECT
-                    Name
-                FROM Program__c
-                WHERE RecordTypeId =: recruitment_record_type_id
-                AND Academic_Level__c =: academic_level
-                AND Program_Display__c INCLUDES ('RFI')
-                AND Active__c = true
-                AND (Program_Type__c = 'Major'
-                    OR Program_Type__c = 'Pre-Professional')
-            ]);
-            return programs;
+            String query_string = 
+                'SELECT ' + 
+                    'Name ' +
+                'FROM Program__c ' +
+                'WHERE RecordTypeId = \'' + recruitment_record_type_id + '\' ' +
+                'AND Academic_Level__c = \'' + academic_level + '\' ' +
+                'AND Program_Display__c INCLUDES (\'RFI\') ' +
+                'AND Active__c = true ' +
+                'AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\')';
+            
+            if (!String.isBlank(school_college)) {
+                query_string += ' AND (Associated_Schools__c INCLUDES (\'' + school_college + '\') OR School_College__c = \'' + school_college + '\')';
+            }
+            if (!String.isBlank(citizenship_type)) {
+                query_string += ' AND Citizenship__c = \'' + citizenship_type + '\'';
+            }
+            System.debug('%% query string: ' + query_string);
+            List<Program__c> programs = Database.query(query_string);
+            return new Map<Id, Program__c>(programs);
         } catch (Exception e) {
             throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
         }
@@ -136,21 +159,6 @@ public without sharing class requestForInformationFormController {
                 }
             }
             return level;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-
-    @AuraEnabled
-    public static String createAccount(String account_name, String owner_id){
-        try {
-            String account_id = '';
-            if (account_name != null && account_name != '') {
-                Account new_account = new Account(Type = 'High School', Name = account_name, OwnerId = owner_id);
-                insert new_account;
-                account_id = new_account.Id;
-            }
-            return account_id;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

@@ -72,8 +72,10 @@
                                 />
 
                                 <!-- Question Assistive Text -->
-                                <apex:outputPanel layout="block" rendered="{!!ISBLANK(question.assistiveText)}" styleClass="slds-form-element__help">
-                                    {!question.assistiveText}
+                                <apex:outputPanel layout="none" rendered="{!!ISBLANK(question.assistiveText)}">
+                                    <div class="slds-form-element__help">
+                                        {!question.assistiveText}
+                                    </div>
                                 </apex:outputPanel>
 
                                 <!-- Question Help Text -->

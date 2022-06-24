@@ -1,15 +1,16 @@
 <apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!init}">
     <apex:composition template="{!template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead/>
+            <c:ApplicationHead />
         </apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="Application Portal" appInfo="{!appInfo}">
                 <apex:form id="theForm">
-                    <div class="slds-grid slds-wrap {!IF(applicationMapSize >= 2, ' slds-gutters','')}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <apex:pageMessages/>
-                        <apex:variable var="checklistStyle" value="{!IF(applicationMapSize == 2, ' slds-large-size_6-of-12', ' slds-large-size_12-of-12')}"/>
-                        <apex:variable var="checklistStyle" value="{!IF(applicationMapSize == 3, ' slds-large-size_4-of-12', checklistStyle)}"/>
+                    <apex:variable var="howManyApps" value="{!IF(!ISBLANK(applicationMapSize), applicationMapSize, 0)}"/>
+                    <div class="slds-grid slds-wrap {!IF(howManyApps >= 2, ' slds-gutters','')}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <apex:pageMessages />
+                        <apex:variable var="checklistStyle" value="{!IF(howManyApps == 2, ' slds-large-size_6-of-12', ' slds-large-size_12-of-12')}"/>
+                        <apex:variable var="checklistStyle" value="{!IF(howManyApps == 3, ' slds-large-size_4-of-12', checklistStyle)}"/>
                         <apex:repeat value="{!applicationsByIds}" var="key">
                             <apex:variable var="thisAppInfo" value="{!appInfoMapByAppId[key]}"/>
                             <apex:variable var="thisApp" value="{!applicationsByIds[key]}"/>

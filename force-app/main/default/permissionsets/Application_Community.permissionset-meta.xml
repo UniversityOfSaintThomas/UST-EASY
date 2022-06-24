@@ -1186,6 +1186,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Question__c.Additional_Field_Validation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Question__c.Applicant_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2943,6 +2948,22 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ApplicationRequirement</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>Exception</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>GeneralSLDS</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>Unauthorized</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>stthomas2021</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <recordTypeVisibilities>

@@ -130,10 +130,6 @@ public class ApplicationUtilities {
         // Is user allowed to submit
         appInfo.allowSubmit = true;
 
-        //Generate new cookie
-
-        // }
-
         if (oldInfo != appInfo) {
             createEncryptedCookie(JSON.serialize(appInfo));
         }

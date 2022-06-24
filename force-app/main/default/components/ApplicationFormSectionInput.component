@@ -97,7 +97,7 @@
 
     <!-- Currency -->
     <apex:outputPanel rendered="{!inputType == 'Currency'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputField html-min="0.00" html-step="0.01" id="CurrencyField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+        <apex:inputField id="CurrencyField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
     </apex:outputPanel>
 
     <!-- Date Time -->

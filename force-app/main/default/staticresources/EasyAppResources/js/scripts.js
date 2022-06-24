@@ -22,7 +22,7 @@ function pageLoadReRendered() {
         item.required = true;
     });
 
-    document.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber").forEach(item => {
+    document.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent").forEach(item => {
         item.type = "number";
     });
 
@@ -543,10 +543,6 @@ function appShowLoadingSpinner() {
     return true;
 }
 
-function appShowConfirmation() {
-    document.getElementById("confirmation").style.display = "block";
-}
-
 function hideFormSpinner() {
     document.getElementById("form-spinner").style.display = 'none';
 }
@@ -583,74 +579,34 @@ function activateTooltips() {
 }
 
 //Validate form elements on submit
-
 function checkForm() {
-
     // let theForm = document.querySelector('form');
     // theForm.reportValidity();
-
     let error_count = 0;
-
-    //Required input check
-    document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
-        if (item) {
-            if (!item.value) {
-                activateErrorState(item, 'change')
-                error_count++;
-            }
-        }
-    });
-
-    document.querySelectorAll(".selectableOL").forEach(sel => {
-        let selWrap = sel.closest('.slds-form-element');
-        let hiddenData = document.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
-        if (selWrap.classList.contains("slds-is-required")) {
-            if (!document.getElementById(hiddenData).value) {
-                activateErrorState(sel, 'click')
-                error_count++;
-            }
-        }
-    });
 
     error_count = error_count + textValidations(true);
 
-    let carousel;
     if (error_count > 0) {
         let foundErrors = document.querySelector(".slds-has-error");
         if (foundErrors) {
             let carouselItem = foundErrors.closest('.carousel__item');
             activateCarousel(carouselItem.dataset.slide);
         }
-        //window.scrollTo(0, foundErrors[0].offsetTop);
+        window.scrollTo(0, 0);
         return false;
     }
-
     return true;
 }
 
-//
-// function formatPhoneOnEnter(input, event) {
-//     const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
-//     input.value = input.value.replace(phoneRegex, '');
-// }
-//
-// function formatPhone(formatPone) {
-//     const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
-//     formatPone.value = input.value.replace(phoneRegex, '');
-//     console.log(formatPone)
-// }
-//
-
 //Input validations
 function textValidations(checkFormValidate) {
-    let errorCount = 0;
+    let errors = 0;
     let allPhones = document.querySelectorAll('.validatePhone');
-    let allDecimals = document.querySelectorAll('.validateDecimal, .validateNumber, .validatePercent');
-    let allIntegers = document.querySelectorAll('.validateInteger');
     let allSSN = document.querySelectorAll('.validateSSN');
-    let allNameOnlyCharacters = document.querySelectorAll('.validateName');
+    let allNamCharacters = document.querySelectorAll('.validateName');
     let allEmails = document.querySelectorAll('.validateEmail');
     let allUrls = document.querySelectorAll('.validateURL');
+    let allRequiredInputs = document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select");
 
     const re_email = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     const re_url = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/;
@@ -659,9 +615,32 @@ function textValidations(checkFormValidate) {
     const re_phoneIllegals = /[^\d+-/(/)]/;
     const re_phoneFormat = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
     const re_phone = /[\d+\-\(\) ]/;
+    const re_ssnIllegals = /[^\d+-]/;
+    const re_nameIllegals = /[\d\(\)@#$,]/;
+
+    //Required input check
+    if (checkFormValidate) {
+        allRequiredInputs.forEach(item => {
+            if (item) {
+                if (!item.value) {
+                    activateErrorState(item, 'change')
+                }
+            }
+        });
+
+        document.querySelectorAll(".selectableOL").forEach(sel => {
+            let selWrap = sel.closest('.slds-form-element');
+            let hiddenData = document.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
+            if (selWrap.classList.contains("slds-is-required")) {
+                if (!document.getElementById(hiddenData).value) {
+                    activateErrorState(sel, 'click')
+                }
+            }
+        });
+    }
 
     //Format and validate phone numbers
-    allPhones.forEach(function (phone) {
+    allPhones.forEach(phone => {
 
         //format directly after input
         phone.addEventListener('change', function () {
@@ -670,9 +649,7 @@ function textValidations(checkFormValidate) {
             let match = cleaned.match(re_phoneFormat);
             if (match) {
                 let intlCode = match[1] ? "+1 " : "";
-                phoneValue = [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join(
-                    ""
-                );
+                phone.value = [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join("");
             }
         });
 
@@ -685,59 +662,68 @@ function textValidations(checkFormValidate) {
         if (checkFormValidate) {
             if (!phone.value.match(re_phone)) {
                 activateErrorState(phone, 'change');
-                errorCount++;
             }
         }
 
     });
 
-    //Decimal Validation
-    allDecimals.forEach(function (num) {
-        num.addEventListener('keyup, change', function () {
-            num.value = num.value.replace(re_decimal, '');
-        });
-        if (checkFormValidate && !num.value.match(re_decimal)) {
-            activateErrorState(num, 'change');
-            errorCount++;
+    allNamCharacters.forEach(nameInput => {
+        //Don't allow anything but phone number characters on key-up
+        nameInput.addEventListener('keyup', function () {
+            nameInput.value = nameInput.value.replace(re_nameIllegals, '');
+        })
+
+        if (checkFormValidate) {
+            nameInput.value = nameInput.value.replace(re_nameIllegals, '');
         }
     });
 
-    //Integer validation
-    allIntegers.forEach(function (num) {
-        num.addEventListener('keyup, change', function () {
-            num.value = num.value.replace(re_number, '');
-        });
-        if (checkFormValidate && !num.value.match(re_number)) {
-            activateErrorState(num, 'change');
-            errorCount++;
+    //Social Security Validation
+    allSSN.forEach(ssn => {
+        ssn.addEventListener('keyup', function () {
+            ssn.value = ssn.value.replace(re_ssnIllegals, '');
+        })
+
+        if (checkFormValidate && !snn.value.match(re_email)) {
+            activateErrorState(ssn, 'change');
+        }
+    });
+
+    //Email Validation
+    allEmails.forEach(email => {
+        if (checkFormValidate && !email.value.match(re_email)) {
+            activateErrorState(email, 'change');
         }
     });
 
     //URL validation
-    allUrls.forEach(function (inputUrl) {
+    allUrls.forEach(inputUrl => {
         inputUrl.value = inputUrl.value.replace(' ', '').trim();
-        if(!inputUrl.value.startsWith('http')) {
-            inputUrl.value = 'https://' + inputUrl.value;
-        }
-        if (checkFormValidate && !inputUrl.value.match(re_url)) {
-            activateErrorState(inputUrl, 'change');
-            errorCount++;
+        if(inputUrl.value) {
+            if (!inputUrl.value.startsWith('http')) {
+                inputUrl.value = 'https://' + inputUrl.value;
+            }
+            if (checkFormValidate && !inputUrl.value.match(re_url)) {
+                activateErrorState(inputUrl, 'change');
+            }
         }
     })
 
-    return errorCount;
-}
-
-function activateErrorState(errorInput, eventType) {
-    let errorWrap = errorInput.closest('.slds-form-element');
-    errorWrap.classList.add("slds-has-error");
-    errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-        errorHelp.style.display = "block"
-    });
-    errorInput.addEventListener(eventType, () => {
-        errorWrap.classList.remove("slds-has-error");
+    function activateErrorState(errorInput, eventType) {
+        let errorWrap = errorInput.closest('.slds-form-element');
+        errorWrap.classList.add("slds-has-error");
         errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-            errorHelp.style.display = "none";
+            errorHelp.style.display = "block"
         });
-    });
+        errorInput.addEventListener(eventType, () => {
+            errorWrap.classList.remove("slds-has-error");
+            errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+                errorHelp.style.display = "none";
+            });
+        });
+
+        errors++;
+    }
+
+    return errors;
 }

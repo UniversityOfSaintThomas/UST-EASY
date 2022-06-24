@@ -141,19 +141,18 @@ function adjustLabelsFor() {
 
         if (inputLabel) {
             inputLabel.htmlFor = inputFound.getAttribute('id');
-        }
-
-        if (inputFound && helpText) {
-            if (helpText) {
-                inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
-                inputFound.setAttribute('aria-invalid', 'false');
-            }
             if (inputWrapper.dataset.placeholder) {
                 inputFound.setAttribute('placeholder', inputWrapper.dataset.placeholder);
             }
             if (inputWrapper.dataset.maxlength) {
+                console.log('maxlength found ' + inputWrapper.dataset.maxlength);
                 inputFound.setAttribute('maxlength', inputWrapper.dataset.maxlength);
             }
+        }
+
+        if (inputFound && helpText) {
+            inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
+            inputFound.setAttribute('aria-invalid', 'false');
         }
     });
 }
@@ -615,6 +614,7 @@ function textValidations(checkFormValidate) {
     const re_phoneIllegals = /[^\d+-/(/)]/;
     const re_phoneFormat = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
     const re_phone = /[\d+\-\(\) ]/;
+    const re_snnFormat = /(\d{3})(\d{2})(\d{4})$/;
     const re_ssnIllegals = /[^\d+-]/;
     const re_nameIllegals = /[\d\(\)@#$,]/;
 
@@ -644,8 +644,7 @@ function textValidations(checkFormValidate) {
 
         //format directly after input
         phone.addEventListener('change', function () {
-            let phoneValue = String(phone.value);
-            let cleaned = phoneValue.replace(/\D/g, "");
+            let cleaned = String(phone.value).replace(/\D/g, "");
             let match = cleaned.match(re_phoneFormat);
             if (match) {
                 let intlCode = match[1] ? "+1 " : "";
@@ -684,7 +683,19 @@ function textValidations(checkFormValidate) {
             ssn.value = ssn.value.replace(re_ssnIllegals, '');
         })
 
-        if (checkFormValidate && !snn.value.match(re_email)) {
+        ssn.addEventListener('change', function () {
+            let cleaned = String(ssn.value).replace(/\D/g, "");
+            if (cleaned.length === 9 ) {
+                let match = cleaned.match(re_snnFormat);
+                if (match) {
+                    ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
+                }
+            } else {
+                activateErrorState(ssn,'change');
+            }
+        });
+
+        if (checkFormValidate && !ssn.value.match(re_email)) {
             activateErrorState(ssn, 'change');
         }
     });
@@ -699,7 +710,7 @@ function textValidations(checkFormValidate) {
     //URL validation
     allUrls.forEach(inputUrl => {
         inputUrl.value = inputUrl.value.replace(' ', '').trim();
-        if(inputUrl.value) {
+        if (inputUrl.value) {
             if (!inputUrl.value.startsWith('http')) {
                 inputUrl.value = 'https://' + inputUrl.value;
             }

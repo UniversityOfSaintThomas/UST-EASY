@@ -127,6 +127,16 @@ public class ApplicationQuestion {
             }
         }
     }
+    public String additionalValidation {
+        get {
+            if(String.isNotBlank(question.Additional_Field_Validation__c)) {
+                return question.Additional_Field_Validation__c;
+            }
+            return '';
+        }
+        set;
+    }
+
     private Boolean tableBased { get; set; }
     public Question_Response__c response { get; set; }
     public Id responseId { get; set; }

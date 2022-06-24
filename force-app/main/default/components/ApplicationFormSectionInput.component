@@ -31,7 +31,7 @@
     </apex:outputPanel>
 
     <!-- Static for Address label -->
-    <apex:outputPanel rendered="{!inputType == 'Address'}" layout="block" styleClass="slds-text-body_regular validate{!inputType}">
+    <apex:outputPanel rendered="{!inputType == 'Address'}" layout="block" styleClass="slds-text-body_regular validate{!inputType} ">
         <p>
             {!inputLabel}
         </p>
@@ -39,7 +39,7 @@
 
     <!-- Text -->
     <apex:outputPanel rendered="{!inputType == 'Text'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputText id="textField" styleClass="slds-input validate{!inputType}" value="{!responseObject[fieldAPI]}"/>
+        <apex:inputText id="textField" styleClass="slds-input validate{!inputType} {!questionWrapper['additionalValidation']}" value="{!responseObject[fieldAPI]}"/>
     </apex:outputPanel>
 
     <!-- Email -->

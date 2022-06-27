@@ -29,6 +29,7 @@ public without sharing class requestForInformationFormController {
                 }
             }
 
+            System.debug(sobj);
             Database.DMLOptions dml = new Database.DMLOptions(); 
             dml.DuplicateRuleHeader.allowSave = false;
             Database.SaveResult result = Database.insert(sobj, dml);
@@ -76,26 +77,27 @@ public without sharing class requestForInformationFormController {
     public static Map<Id, Program__c> getAcademicPrograms(String academic_level, String school_college, String citizenship_type) {
         try {
             Id recruitment_record_type_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Recruitment_Program').getRecordTypeId();
-            String certificate_programs = '';
-            if (academic_level != 'U') { // TO DO: make more specific
-                certificate_programs = ' OR Program_Type__c = \'Certificate\'';
-            }
             String query_string = 
                 'SELECT ' + 
-                    'Name ' +
+                    'Name, ' +
+                    'Degree__c ' +
                 'FROM Program__c ' +
                 'WHERE RecordTypeId = \'' + recruitment_record_type_id + '\' ' +
                 'AND Academic_Level__c = \'' + academic_level + '\' ' +
                 'AND Program_Display__c INCLUDES (\'RFI\') ' +
-                'AND Active__c = true ' +
-                'AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\'' + certificate_programs + ')';
-            
+                'AND Active__c = true ';
+
+            if (school_college == 'Undergraduate') {
+                query_string += 'AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\')';
+            }
             if (!String.isBlank(school_college)) {
-                query_string += ' AND (Associated_Schools__c INCLUDES (\'' + school_college + '\') OR School_College__c = \'' + school_college + '\')';
+                query_string += ' AND ((Associated_Schools__c INCLUDES (\'' + school_college + '\') OR School_College__c = \'' + school_college + '\')' +
+                                        'OR (Associated_Schools__c = \'\' AND School_College__c = \'\'))';
             }
             if (!String.isBlank(citizenship_type)) {
-                query_string += ' AND Citizenship__c = \'' + citizenship_type + '\'';
+                query_string += ' AND (Citizenship__c = \'' + citizenship_type + '\' OR Citizenship__c = \'\')';
             }
+            query_string += ' ORDER BY Degree__c';
             System.debug('%% query string: ' + query_string);
             List<Program__c> programs = Database.query(query_string);
             return new Map<Id, Program__c>(programs);

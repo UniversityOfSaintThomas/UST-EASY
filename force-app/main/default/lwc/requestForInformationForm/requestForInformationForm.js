@@ -214,7 +214,7 @@ export default class RequestForInformationForm extends LightningElement {
                         var values = [];
                         for (const program in programs) {
                             values.push(
-                                {label: programs[program].Name, value: programs[program].Id}
+                                {label: programs[program].Name, value: programs[program].Id, description: programs[program].Degree__c}
                             );
                         }
                         this.academic_interest_picklist_values = values;

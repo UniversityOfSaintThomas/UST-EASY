@@ -92,6 +92,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_spinner = true;
     @track manually_enter_high_school = false;
     @track high_school_data = false;
+    @track show_address_3 = false;
 
     //RFI controller determined booleans
     @track show_fields = {
@@ -138,6 +139,7 @@ export default class RequestForInformationForm extends LightningElement {
         'birthdate_label' : 'Birthdate',
         'address1_label' : 'Address 1',
         'address2_label' : 'Address 2',
+        'address3_label' : 'Address 3',
         'city_label' : 'City',
         'state_label' : 'State',
         'zipcode_label' : 'Zip Code',
@@ -163,6 +165,7 @@ export default class RequestForInformationForm extends LightningElement {
     //intermediate values
     address1;
     address2;
+    address3;
     new_account; // used to create new account high school not found
     new_account_id;
 
@@ -185,6 +188,9 @@ export default class RequestForInformationForm extends LightningElement {
                         this.school_college_title = 'from the ' + result.data.School_College__c;
                 }
                 this.school_college = result.data.School_College__c;
+                if (this.school_college == 'School of Law') {
+                    this.show_address_3 = true;
+                }
                 this.citizenship_type = result.data.Citizenship_Type__c;
                 this.fields_to_display = result.data.Fields_to_Display__c;
                 this.required_fields = result.data.Required_Fields__c;
@@ -212,7 +218,6 @@ export default class RequestForInformationForm extends LightningElement {
                             );
                         }
                         this.academic_interest_picklist_values = values;
-                        console.log(this.academic_interest_picklist_values);
                     })
                     .catch(error => {
                         console.log(error);
@@ -308,6 +313,9 @@ export default class RequestForInformationForm extends LightningElement {
             case this.field_labels.address2_label:
                 this.address2 = event.target.value;
                 break;
+            case this.field_labels.address3_label:
+                this.address3 = event.target.value;
+                break;
             case this.field_labels.city_label:
                 this.record_input.fields.City = event.target.value;
                 break;
@@ -371,6 +379,8 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
             this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
+
+        console.log(this.record_input);
     }
 
     handleSubmit() {
@@ -447,9 +457,11 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     handleStreetAddress() {
-        if (this.address1 != '' && this.address2 != '' && this.address1 != undefined && this.address2 != undefined) {
+        if (Boolean(this.address1) && Boolean(this.address2) && Boolean(this.address3)) {
+            this.record_input.fields.Street = this.address1 + ', ' + this.address2 + ', ' + this.address3;
+        } else if (Boolean(this.address1) && Boolean(this.address2)) {
             this.record_input.fields.Street = this.address1 + ', ' + this.address2;
-        } else if (this.address1 != '' && this.address1 != undefined && (this.address2 == '' || this.address2 == undefined)) {
+        } else if (Boolean(this.address1)) {
             this.record_input.fields.Street = this.address1;
         }
     }
@@ -481,11 +493,6 @@ export default class RequestForInformationForm extends LightningElement {
         }
     }
 
-    @wire(getObjectInfo)
-    all(result) {
-        console.log(result.data);
-    }
-
     handleSearch(event) {
         if (JSON.stringify(event.target.value).length > 4) {
             searchHighSchools({ search_term : event.target.value })
@@ -514,7 +521,6 @@ export default class RequestForInformationForm extends LightningElement {
                         );
                     }
                     this.high_school_search_results = values;
-                    //this.addEventListeners();
                 }
             })
             .catch(error => {
@@ -525,14 +531,6 @@ export default class RequestForInformationForm extends LightningElement {
             this.high_school_data = false;
         }
     } 
-
-    // addEventListeners() {
-    //     var rows = this.template.querySelectorAll('lightning-datatable_table');
-    //     console.log(JSON.stringify(rows));
-    //     for (const row of rows) {
-    //         row.addEventListener('click', (e)=>{console.log(e.target.data-col-key-value)});
-    //     }
-    // }
 
     // can't query for global value sets -- would need to be a field
     get stateOptions() {

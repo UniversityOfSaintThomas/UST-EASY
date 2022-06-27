@@ -12,7 +12,7 @@
             </lightning-spinner>
         </template>
 
-        <div class="slds-text-heading_medium" style="text-align: center"><b>{academic_level} Request for Information {school_college}</b></div>
+        <div class="slds-text-heading_medium" style="text-align: center"><b>{academic_level} Request for Information {school_college_title}</b></div>
 
         <!-- BEGIN FORM -->
         <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
@@ -202,7 +202,7 @@
                                 </lightning-input>
                             </div>
                             <template if:true={high_school_data}>
-                                <div class="slds-scrollable_y slds-p-bottom_xx-small" style="max-height:120px; max-width: inherit">
+                                <div class="slds-scrollable_y slds-p-bottom_xx-small" style="max-height:120px">
                                     <lightning-datatable
                                         hide-table-header
                                         column-widths-mode="fixed"
@@ -262,6 +262,19 @@
                         </lightning-input>
                     </div>
                 </div>  
+                    <!-- ROW 8 -->
+                <template if:true={show_address_3}>
+                    <div class="slds-grid slds-gutters_medium">
+                        <div class="slds-col">
+                            <lightning-input
+                                type="text" 
+                                label={field_labels.address3_label}
+                                aria-label="Address 3"
+                                onchange={onChange}> 
+                            </lightning-input>
+                        </div>
+                    </div> 
+                </template>
                 <!-- ROW 9 -->
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col slds-size_1-of-2">
@@ -323,4 +336,3 @@
         </div> 
     </lightning-card>
 </template>
-

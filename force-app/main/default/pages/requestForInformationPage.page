@@ -1,5 +1,5 @@
 <apex:page showHeader="false" standardStylesheets="false">
-    <apex:includeLightning/>
+    <apex:includeLightning />
     <div id="component" />
     <script>
         $Lightning.use("c:requestForInformationApp", function() {

@@ -76,6 +76,10 @@ public without sharing class requestForInformationFormController {
     public static Map<Id, Program__c> getAcademicPrograms(String academic_level, String school_college, String citizenship_type) {
         try {
             Id recruitment_record_type_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Recruitment_Program').getRecordTypeId();
+            String certificate_programs = '';
+            if (academic_level != 'U') { // TO DO: make more specific
+                certificate_programs = ' OR Program_Type__c = \'Certificate\'';
+            }
             String query_string = 
                 'SELECT ' + 
                     'Name ' +
@@ -84,7 +88,7 @@ public without sharing class requestForInformationFormController {
                 'AND Academic_Level__c = \'' + academic_level + '\' ' +
                 'AND Program_Display__c INCLUDES (\'RFI\') ' +
                 'AND Active__c = true ' +
-                'AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\')';
+                'AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\'' + certificate_programs + ')';
             
             if (!String.isBlank(school_college)) {
                 query_string += ' AND (Associated_Schools__c INCLUDES (\'' + school_college + '\') OR School_College__c = \'' + school_college + '\')';

@@ -613,6 +613,7 @@ function textValidations(checkFormValidate) {
     const re_phoneIllegals = /[^\d+-/(/)]/;
     const re_phoneFormat = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
     const re_phone = /[\d+\-\(\) ]/;
+    const re_snn = /^\d{3}-\d{2}-\d{4}$/;
     const re_snnFormat = /(\d{3})(\d{2})(\d{4})$/;
     const re_ssnIllegals = /[^\d+-]/;
     const re_nameIllegals = /[\d\(\)@#$,]/;
@@ -694,7 +695,7 @@ function textValidations(checkFormValidate) {
             }
         });
 
-        if (checkFormValidate && !ssn.value.match(re_email)) {
+        if (checkFormValidate && !ssn.value.match(re_snn)) {
             activateErrorState(ssn, 'change');
         }
     });

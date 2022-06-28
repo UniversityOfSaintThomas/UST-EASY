@@ -21,7 +21,7 @@
                         <div>
                             <div class="slds-summary-detail__title">
                                 <h3 class="slds-text-heading_small">
-                                    <apex:commandLink action="{!goToRequirement}">
+                                    <apex:commandLink action="{!goToRequirement}" onClick="appShowLoadingSpinner();">
                                         <apex:param name="nextRequirementId" value="{!r.req.Id}" assignTo="{!nextRequirementId}"/>
                                         <apex:param name="nextAt" value="{!appInfoParam.at}" assignTo="{!nextAt}"/>
                                         <apex:param name="nextAppId" value="{!appInfoParam.appId}" assignTo="{!nextAppId}"/>

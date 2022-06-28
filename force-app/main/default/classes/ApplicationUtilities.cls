@@ -4,38 +4,6 @@
 *******************************************************************************/
 public class ApplicationUtilities {
 
-    //Checks passed URL parameters with those in encrypted cookie. Uses URL if different.
-    public static String compareToCookie(String urlParameter, String cookieIdString, Boolean typeToId) {
-        Id urlId = null;
-        Id cookieId = null;
-        String urlString = '';
-        if (String.isNotBlank(ApexPages.currentPage().getParameters().get(urlParameter))) {
-            if (typeToId) {
-
-                try {
-                    urlId = (Id) ApexPages.currentPage().getParameters().get(urlParameter);
-                    urlString = String.valueOf(urlId);
-                } catch (Exception ex) {
-                    urlString = '';
-                }
-
-                try {
-                    cookieId = (Id) cookieIdString;
-                    cookieIdString = String.valueOf(cookieId);
-                } catch (Exception ex) {
-                    cookieIdString = '';
-                }
-
-            } else {
-                urlString = ApexPages.currentPage().getParameters().get(urlParameter);
-            }
-        }
-        if (urlString != cookieIdString && String.isNotBlank(urlString)) {
-            return urlString;
-        }
-        return cookieIdString;
-    }
-
     public static EASYApplicationInfo setApplicationInfo(Application_Control__c appControl, Application__c app) {
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         appInfo.appControl = appControl;
@@ -75,14 +43,12 @@ public class ApplicationUtilities {
 
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         appInfo.appControl = new Application_Control__c();
-        EASYApplicationInfo oldInfo = new EASYApplicationInfo();
 
         // Get and decrypt cookie if it exist
         String testDecrypt = getDecryptCookie();
         if (String.isNotBlank(testDecrypt)) {
             try {
                 appInfo = (EASYApplicationInfo) JSON.deserialize(testDecrypt, EASYApplicationInfo.class);
-                oldInfo = appInfo;
             } catch (Exception e) {
                 appInfo = new EASYApplicationInfo();
             }
@@ -91,16 +57,13 @@ public class ApplicationUtilities {
             appInfo.contactId = getAppContactId();
         }
 
-        if(String.isBlank(appInfo.template)) {
-            if (!String.isBlank(appInfo.appControl.Template__c)) {
-                appInfo.template = appInfo.appControl.Template__c;
-            } else {
-                Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-                appInfo.template = AppSettings.Default_Template__c;
-            }
+        if (String.isNotBlank(appInfo.appControl.Template__c)) {
+            appInfo.template = appInfo.appControl.Template__c;
+        } else {
+            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+            appInfo.template = AppSettings.Default_Template__c;
         }
 
-        System.debug(appInfo);
         return appInfo;
     }
 
@@ -140,62 +103,6 @@ public class ApplicationUtilities {
             appInfo.appControlId = currentApp.Application_Control__r.Id;
         }
         return appINfo;
-    }
-
-    public static EASYApplicationInfo setAppInfoContext(EASYApplicationInfo appInfo) {
-
-        appInfo.contactId = getAppContactId();
-
-        // Get application type from URL and check against cookie Id
-        appInfo.at = compareToCookie('at', appInfo.at, false);
-
-        // Get application Id from URL and check against cookie Id
-        appInfo.appId = compareToCookie('applicationId', appInfo.appId, true);
-
-        // Get requirement Id from URL anc check against cookie Id
-        appInfo.requirementId = compareToCookie('requirementId', appInfo.requirementId, true);
-
-        //if(oldInfo.at != appInfo.at || oldInfo.contactId != appInfo.contactId || String.isBlank(appInfo.at) || String.isBlank(appInfo.contactId) ) {
-        // if Application type is blank than get it from appId
-        if (String.isNotBlank(appInfo.appId)) {
-            //Get the application type from the application id
-            Application__c currentApp = [
-                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id
-                    FROM Application__c
-                    WHERE Id = :appInfo.appId
-            ];
-            appInfo.at = currentApp.Application_Control__r.URL_Parameter__c;
-            appInfo.appControlId = currentApp.Application_Control__r.Id;
-        }
-
-        if (String.isBlank(appInfo.appControlId)) {
-            appInfo.appControl = getApplicationControls(appInfo.appControlId);
-        }
-
-        if (String.isNotBlank(appInfo.at) && String.isBlank(appInfo.appControlId)) {
-            if (appInfo.appControl == null) {
-                appInfo.appControl = getApplicationControls(appInfo.at);
-            }
-            appInfo.appControlId = appInfo.appControl.Id;
-        }
-
-        if (!String.isBlank(appInfo.appControl.Template__c)) {
-            appInfo.template = appInfo.appControl.Template__c;
-        } else {
-            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-            appInfo.template = AppSettings.Default_Template__c;
-        }
-
-        // Is user an external user
-        appInfo.isExternalUser = isExternalUser();
-
-        // Is user allowed to submit
-        appInfo.allowSubmit = true;
-
-//        if (oldInfo != appInfo) {
-//            createEncryptedCookie(JSON.serialize(appInfo));
-//        }
-        return appInfo;
     }
 
     /* ******************************************************************************

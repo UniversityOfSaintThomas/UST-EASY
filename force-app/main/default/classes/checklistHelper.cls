@@ -20,6 +20,7 @@ public with sharing class checklistHelper {
 
         allowCancel = String.isNotBlank(appInfo.appControl.Allow_Cancel_From__c) && new Set<String>(appInfo.appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c);
         allowWithdraw = String.isNotBlank(appInfo.appControl.Allow_Withdraw_From__c) && new Set<String>(appInfo.appControl.Allow_Withdraw_From__c.split(';')).contains(app.Application_Status__c);
+
         reqMap = new Map<Id, RequirementWrapper>();
         Set<Id> reqIds = new Set<Id>();
         for (Requirement__c r : [

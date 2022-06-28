@@ -6,6 +6,7 @@
 public with sharing class applicationHelper {
 
     public static List<Requirement_Item__c> getRequirementQuestions(Set<Id> requirementIds, Boolean IsStandardUser) {
+
         List<Requirement_Item__c> requirementItems = new List<Requirement_Item__c>();
         requirementItems = [
                 SELECT Id, File_Types__c, Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Active__c, Required__c,

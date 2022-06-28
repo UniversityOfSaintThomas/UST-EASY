@@ -18,18 +18,25 @@ public with sharing class ApplicationChecklistComponentController {
         //set the cookie with current appInfo and new requirement;
         EASYApplicationInfo nextAppInfo;
 
-        if(appInfoParam.at != nextAt) {
+        if (appInfoParam.at != nextAt) {
             nextAppInfo = ApplicationUtilities.setApplicationInfo(nextAt, nextAppId, nextContactId);
         } else {
             nextAppInfo = appInfoParam;
         }
 
-        if(nextAppInfo.appId != nextAppId) {
+        if (nextAppInfo.appId != nextAppId) {
             nextAppInfo.appId = nextAppId;
         }
 
         nextAppInfo.requirementId = nextRequirementId;
-        System.debug(JSON.serializePretty(nextAppInfo));
+        System.debug(JSON.serializePretty(JSON.serializePretty(nextAppInfo)));
+        if (String.isNotBlank(nextAppInfo.appControl.Template__c)) {
+            nextAppInfo.template = nextAppInfo.appControl.Template__c;
+        } else {
+            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+            nextAppInfo.template = AppSettings.Default_Template__c;
+        }
+        System.debug('TEMPLATE: ' + nextAppInfo.template);
         ApplicationUtilities.createEncryptedCookie(JSON.serialize(nextAppInfo));
 
         PageReference requirementPage = Page.ApplicationRequirement;

@@ -26,7 +26,6 @@ public class ApplicationRequirement {
     public List<Requirement_Response__c> newResponses { get; set; }
     public Boolean showSuccess { get; set; }
     public Boolean isInvalid { get; set; }
-    public Boolean isExternalUser { get; set; }
     public Boolean ignoreExternalFilter { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
 
@@ -109,11 +108,13 @@ public class ApplicationRequirement {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
 
-        //appInfo = ApplicationUtilities.setAppInfoContext(appInfo);
-
+        if (appInfo.appControl == null) {
+            PageReference portalPage = Page.ApplicationPortal;
+            return portalPage;
+        }
 
         allowSubmit = true;
-        isExternalUser = appInfo.isExternalUser;
+        //isExternalUser = appInfo.isExternalUser;
         userType = String.valueOf(UserInfo.getUserType());
         isStandardUser = userType.equalsIgnoreCase('standard');
         if (userType.equalsIgnoreCase('guest')) {
@@ -267,7 +268,7 @@ public class ApplicationRequirement {
 
         // Clone Question Response records and store ID if this is an external user
         // in order to get around restriction of external users being able to edit objects
-        if (isExternalUser) {
+        if (appInfo.isExternalUser) {
             for (ApplicationQuestionGroup aqg : section.groups) {
                 if (aqg.questionGroup && aqg.questions != null) {
                     for (ApplicationQuestion aq : aqg.questions) {
@@ -416,7 +417,7 @@ public class ApplicationRequirement {
                         // Clone Question Response and apply ID if this is an external user
                         // in order to get around the restriction of external users not being
                         // able to edit objects.
-                        if (isExternalUser) {
+                        if (appInfo.isExternalUser) {
                             qResp = q.response.clone(false, true, false, false);
                             qResp.Id = q.responseId;
                         }

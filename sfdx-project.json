@@ -4,7 +4,7 @@
             "path": "force-app",
             "package": "UST-Easy",
             "versionName": "June 2022",
-            "versionNumber": "0.18.0.NEXT",
+            "versionNumber": "0.19.0.NEXT",
             "default": true
         },
         {
@@ -30,6 +30,7 @@
         "UST-Easy@0.15.0-1": "04t4P000002KnQQQA0",
         "UST-Easy@0.16.0-1": "04t4P000002KnQVQA0",
         "UST-Easy@0.17.0-1": "04t4P000002KnQaQAK",
-        "UST-Easy@0.18.0-1": "04t4P000002KnQfQAK"
+        "UST-Easy@0.18.0-1": "04t4P000002KnQfQAK",
+        "UST-Easy@0.19.0-1": "04t4P000002KnQpQAK"
     }
 }

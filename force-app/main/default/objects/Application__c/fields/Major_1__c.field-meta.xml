@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Major_1__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Selected on the application</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Selected on the application</inlineHelpText>
+    <label>Major 1</label>
+    <referenceTo>Program__c</referenceTo>
+    <relationshipLabel>Admissions Applications (Program)</relationshipLabel>
+    <relationshipName>Admissions_Applications</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

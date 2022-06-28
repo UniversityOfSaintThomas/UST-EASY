@@ -146,6 +146,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>true</enableFeeds>
@@ -165,7 +166,11 @@
     </nameField>
     <pluralLabel>Admissions Applications</pluralLabel>
     <searchLayouts>
+        <customTabListAdditionalFields>Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Application_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Intended_Term_of_Entry__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Intended_Program__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
         <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Application_Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Intended_Term_of_Entry__c</searchResultsAdditionalFields>

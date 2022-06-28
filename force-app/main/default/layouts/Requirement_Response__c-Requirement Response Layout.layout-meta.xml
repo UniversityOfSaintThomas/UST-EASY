@@ -109,12 +109,16 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Question__c</fields>
+        <fields>Question_Label__c</fields>
         <fields>Question_Response__c</fields>
         <fields>IsShown__c</fields>
         <fields>IsRequired__c</fields>
         <fields>IsPopulated__c</fields>
         <fields>IsComplete__c</fields>
+        <fields>PopulatedOn__c</fields>
         <relatedList>Question_Response__c.Requirement_Response__c</relatedList>
+        <sortField>PopulatedOn__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
@@ -125,7 +129,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h19000002AE1J</masterLabel>
+        <masterLabel>00hR0000004rA7s</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

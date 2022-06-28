@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Academic_Program__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
     <description>The official plan or program the individual applies for. A lookup to Program with a filter criteria of Record Type = Academic Program.</description>
     <externalId>false</externalId>
     <inlineHelpText>The official plan or program the individual applies for.</inlineHelpText>

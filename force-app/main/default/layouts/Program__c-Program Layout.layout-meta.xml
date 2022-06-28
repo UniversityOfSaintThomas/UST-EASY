@@ -325,7 +325,44 @@
         <fields>Activate_Application_Date__c</fields>
         <fields>End_Application_Date__c</fields>
         <fields>Degree_Type__c</fields>
+        <fields>Application_Status__c</fields>
         <relatedList>Intended_Program_Term__c.Intended_Program__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
+        <fields>Intended_Program__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Application__c.Major_1__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
+        <fields>Intended_Program__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Application__c.Major_2__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
+        <fields>Intended_Program__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Application__c.Major_3__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
+        <fields>Intended_Program__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Application__c.Pre_Professional_Program__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -333,7 +370,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8A000003vtsQ</masterLabel>
+        <masterLabel>00hR0000004rA7m</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -18,6 +18,10 @@
                 <behavior>Edit</behavior>
                 <field>Lead_Only__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>College_of_Interest__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

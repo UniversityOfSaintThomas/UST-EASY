@@ -217,7 +217,18 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Label__c</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Active__c</fields>
+        <fields>Display_Order__c</fields>
+        <fields>Requirement_Item_Name__c</fields>
+        <fields>Contact_Field__c</fields>
+        <fields>Application_Field__c</fields>
+        <fields>Related_Object_Field__c</fields>
+        <fields>UPDATEDBY_USER</fields>
         <relatedList>Question__c.Requirement_Item__c</relatedList>
+        <sortField>Display_Order__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -225,7 +236,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h630000060gZt</masterLabel>
+        <masterLabel>00hR0000004rA7r</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

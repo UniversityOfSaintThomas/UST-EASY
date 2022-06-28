@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Generic_Filter_2__c</fullName>
+    <deprecated>false</deprecated>
     <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
     <externalId>false</externalId>
     <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>

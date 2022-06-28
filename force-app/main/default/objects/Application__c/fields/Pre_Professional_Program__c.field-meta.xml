@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pre_Professional_Program__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>From the application</description>
+    <externalId>false</externalId>
+    <inlineHelpText>From the application</inlineHelpText>
+    <label>Pre-Professional Program</label>
+    <referenceTo>Program__c</referenceTo>
+    <relationshipLabel>Admissions Applications (Program)</relationshipLabel>
+    <relationshipName>Admissions_Applications3</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

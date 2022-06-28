@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Lead_Source__c</fullName>
+    <deprecated>false</deprecated>
     <description>The way in which the Lead or Contact&apos;s information was first received.</description>
     <externalId>false</externalId>
     <inlineHelpText>Indicate the initial source of this data.</inlineHelpText>
@@ -37,6 +38,36 @@
                 <fullName>Phone Call</fullName>
                 <default>false</default>
                 <label>Phone Call</label>
+            </value>
+            <value>
+                <fullName>Graduate RFI</fullName>
+                <default>false</default>
+                <label>Graduate RFI</label>
+            </value>
+            <value>
+                <fullName>Undergraduate RFI</fullName>
+                <default>false</default>
+                <label>Undergraduate RFI</label>
+            </value>
+            <value>
+                <fullName>Undergrad RFI</fullName>
+                <default>false</default>
+                <label>Undergrad RFI</label>
+            </value>
+            <value>
+                <fullName>Internal RFI</fullName>
+                <default>false</default>
+                <label>Internal RFI</label>
+            </value>
+            <value>
+                <fullName>Landing Page</fullName>
+                <default>false</default>
+                <label>Landing Page</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
         </valueSetDefinition>
     </valueSet>

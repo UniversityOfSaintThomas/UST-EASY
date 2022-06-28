@@ -15,7 +15,6 @@ public class ApplicationCreate {
     public String degreeType { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
     public String template { get; set; }
-    public Application_Control__c appControl { get; set; }
 
     /* ******************************************************************************
     * @description Initialize the page - Sets up requirements
@@ -23,25 +22,40 @@ public class ApplicationCreate {
 
     public ApplicationCreate() {
         if (appInfo == null) {
-            appInfo = ApplicationUtilities.gatherApplicationInfo();
+            appInfo = createShellAppInfo();
         }
-        appControl = appInfo.appControl;
-        Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-        template = AppSettings.Default_Template__c;
     }
 
-    public PageReference init() {
-        appInfo = ApplicationUtilities.gatherApplicationInfo();
-        appControl = appInfo.appControl;
+    public EASYApplicationInfo createShellAppInfo() {
+        appInfo = new EASYApplicationInfo();
+        Application_Control__c appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
+        appInfo.contactId = ApplicationUtilities.getAppContactId();
+        appInfo.appControl = appControl;
+        appInfo.at = appControl.URL_Parameter__c;
+        appInfo.appControlId = appControl.Id;
+        appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
+        appInfo.allowSubmit = true;
+        if (String.isNotBlank(appControl.Template__c)) {
+            appInfo.template = appControl.Template__c;
+        } else {
+            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+            appInfo.template = AppSettings.Default_Template__c;
+        }
+        return appInfo;
+    }
+
+    public PageReference ApplicationCreateInit() {
+
+        if (appInfo == null) {
+            appInfo = createShellAppInfo();
+        }
         // Exit if there is no Application Control to reference
         if (appInfo.appControl == null) {
             return null;
         }
 
-
-        setup(null, null); // Do setup of all objects
+        applicationCreateSetup(null, null); // Do setup of all objects
         app.Contact__c = appInfo.contactId; // Assign contact to application
-
         // Take user straight to checklist if we don't want to ask any questions
         if (section.groups.isEmpty()) {
             return save();
@@ -53,11 +67,16 @@ public class ApplicationCreate {
     /*******************************************************************************
     * @description
     ********************************************************************************/
-    public void setup(ApplicationQuestionGroup firstGroup, ApplicationQuestionGroup lastGroup) {
+    public void applicationCreateSetup(ApplicationQuestionGroup firstGroup, ApplicationQuestionGroup lastGroup) {
 
         // Initialize contact and application
+        Id appControlId = appInfo.appControl.Id;
+        Id contactId = appInfo.contactId;
+
+        System.debug(JSON.serializePretty(appInfo));
+
         con = new Contact();
-        app = new Application__c(Application_Control__c = appInfo.appControlId, Application_Status__c = appInfo.appControl.Application_Start_Status__c);
+        app = new Application__c(Application_Control__c = appControlId, Application_Status__c = appInfo.appControl.Application_Start_Status__c);
         appInfo.appId = app.id;
 
         // List of question groups to display
@@ -75,7 +94,7 @@ public class ApplicationCreate {
                         Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_Object_Record_Type_ID__c,
                         Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Holding_Record_Id__c, Internal_Requirement_Item__c, Editable_Application_Status__c,
                         Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
-                        Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c, Requirement__c,(
+                        Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c, Requirement__c, (
                         SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c,
                                 Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
                                 Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Name_Field_API_Name__c,
@@ -87,11 +106,13 @@ public class ApplicationCreate {
                         ORDER BY Display_Order__c ASC NULLS LAST
                 )
                 FROM Requirement_Item__c
-                WHERE Requirement__r.Application_Control__c = :appInfo.appControlId
+                WHERE Requirement__r.Application_Control__c = :appControlId
                 AND Requirement__r.Show_on_Application_Creation__c = TRUE
                 AND Requirement__r.Active__c = TRUE AND Active__c = TRUE
                 ORDER BY Display_Order__c ASC NULLS LAST
         ];
+
+        System.debug(JSON.serializePretty(items));
         // Query for contact if we have one
         if (contactId != null) {
 
@@ -128,8 +149,6 @@ public class ApplicationCreate {
             }
         }
 
-        ApplicationQuestion dLQuestion;
-
         ApplicationQuestion programQuestion;
 
         // Add term and program questions if not hidden
@@ -144,7 +163,7 @@ public class ApplicationCreate {
                     FROM Program__c
                     WHERE Hide_from_Application__c = :false
                     AND Active__c = :true
-                    AND Application_Control__c = :appInfo.appControlId
+                    AND Application_Control__c = :appControlId
                     //AND Degree__c = :degreeType
                     ORDER BY Name ASC
             ];
@@ -176,7 +195,7 @@ public class ApplicationCreate {
             AggregateResult[] at = [
                     SELECT Academic_Term__r.Id, Academic_Term__r.Name
                     FROM Intended_Program_Term__c
-                    WHERE Intended_Program__r.Application_Control__c = :appInfo.appControlId
+                    WHERE Intended_Program__r.Application_Control__c = :appControlId
                     AND Academic_Term__r.Application_Status__c = :'Active'
                     GROUP BY Academic_Term__r.Id, Academic_Term__r.Name
             ];
@@ -214,7 +233,7 @@ public class ApplicationCreate {
         for (Question_Dependency__c dq : [
                 SELECT Id, Question__c, Controlling_Question__c, Value__c, ValueCheckbox__c, RecordType.DeveloperName
                 FROM Question_Dependency__c
-                WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appInfo.appControlId
+                WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appControlId
                 AND Question__r.Requirement_Item__r.Requirement__r.Show_on_Application_Creation__c = :true
         ]) {
 
@@ -426,8 +445,11 @@ public class ApplicationCreate {
         }
 
         upsert qResponses; // Insert question responses
+
         // Return URL for checklist page for new application
-        return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appInfo.appControl.URL_Parameter__c) ? '' : ('&at=' + appInfo.appControl.URL_Parameter__c));
+        appInfo = ApplicationUtilities.setApplicationInfo(appInfo.appControl, app);
+        ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
+        return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appInfo.at) ? '' : ('&at=' + appInfo.at));
     }
 
     @RemoteAction

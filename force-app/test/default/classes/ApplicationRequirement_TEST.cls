@@ -402,7 +402,6 @@ public class ApplicationRequirement_TEST {
         insert new Account(Name = 'Example Account');
         Test.stopTest();
         List<SObject> results = ApplicationRequirement.lookupSearch('Account', null, 'Name', 'Example');
-        System.debug(results);
         System.assertEquals(1, results.size());
     }
 

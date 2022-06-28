@@ -41,6 +41,10 @@
     margin-top: .2em;
 }
 
+.slds-scope .slds-button__icon_left, .slds-scope .slds-button__icon--left {
+    margin-top: -2px;
+}
+
 .slds-checkbox .slds-tabled-checklist td [type=checkbox] {
     width: 15px;
     height: 15px;

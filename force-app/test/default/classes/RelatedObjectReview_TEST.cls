@@ -22,12 +22,12 @@ public class RelatedObjectReview_TEST {
         insert req;
 
         Map<String, Id> rtMap = new Map<String, Id>();
-        for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Question__c']) {
+        for (RecordType rt : [SELECT Id, DeveloperName FROM RecordType WHERE SobjectType = 'Question__c']) {
             rtMap.put(rt.DeveloperName, rt.Id);
         }
 
         Map<String, Id> riMap = new Map<String, Id>();
-        for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Requirement_Item__c']) {
+        for (RecordType rt : [SELECT Id, DeveloperName FROM RecordType WHERE SobjectType = 'Requirement_Item__c']) {
             riMap.put(rt.DeveloperName, rt.Id);
         }
 
@@ -53,7 +53,7 @@ public class RelatedObjectReview_TEST {
         Application__c app;
         Application__c app2;
         Application__c app3;
-        for (Application__c application : [SELECT Id,Holding_Name__c FROM Application__c]) {
+        for (Application__c application : [SELECT Id, Holding_Name__c FROM Application__c]) {
             if (application.Holding_Name__c == 'Test Program') {
                 app = application;
             } else if (application.Holding_Name__c == 'Test Program2') {
@@ -80,7 +80,6 @@ public class RelatedObjectReview_TEST {
         }
         rdu.createNewRecordType = 'Program__c';
         rdu.saveTable();
-        System.debug([SELECT Id,Name,Holding_Name__c,Related_Object_JSON__c FROM Application__c WHERE Holding_Name__c != NULL]);
         System.assertEquals(1, [SELECT COUNT() FROM Application__c WHERE Holding_Name__c != NULL]);
     }
 }

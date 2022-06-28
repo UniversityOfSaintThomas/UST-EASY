@@ -5,25 +5,40 @@
 
 public with sharing class ApplicationChecklistComponentController {
 
-    public Application__c app { get; set; }
+    public Id nextRequirementId { get; set; }
+    public String nextAt { get; set; }
+    public String nextAppId { get; set; }
+    public Id nextContactId { get; set; }
     public EASYApplicationInfo appInfoParam { get; set; }
-
     public ApplicationChecklistComponentController() {
+
     }
 
-    public List<RequirementWrapper> getChecklistItems() {
-        if (String.isNotBlank(appInfoParam.contactId) && String.isNotBlank(appInfoParam.appId)) {
-            app = [
-                    SELECT Id, Name, Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name,
-                            Intended_Term_of_Entry__r.Term_Status_Type__c, Application_Status__c, Application_Control__c, Citizenship__c,
-                            Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
-                    FROM Application__c
-                    WHERE Id = :appInfoParam.appId
-                    ORDER BY Name
-            ];
-           return checklistHelper.checklistRequirements(app, appInfoParam);
+    public PageReference goToRequirement() {
+        //set the cookie with current appInfo and new requirement;
+        EASYApplicationInfo nextAppInfo;
+
+        if(appInfoParam.at != nextAt) {
+            nextAppInfo = ApplicationUtilities.setApplicationInfo(nextAt, nextAppId, nextContactId);
+        } else {
+            nextAppInfo = appInfoParam;
         }
-        return null;
 
+        if(nextAppInfo.appId != nextAppId) {
+            nextAppInfo.appId = nextAppId;
+        }
+
+        nextAppInfo.requirementId = nextRequirementId;
+        System.debug(JSON.serializePretty(nextAppInfo));
+        ApplicationUtilities.createEncryptedCookie(JSON.serialize(nextAppInfo));
+
+        PageReference requirementPage = Page.ApplicationRequirement;
+        requirementPage.getParameters().put('applicationId', nextAppInfo.appId);
+        requirementPage.getParameters().put('contactId', nextAppInfo.contactId);
+        requirementPage.getParameters().put('at', nextAppInfo.at);
+        requirementPage.getParameters().put('requirementId', nextRequirementId);
+        requirementPage.setRedirect(true);
+        return requirementPage;
     }
+
 }

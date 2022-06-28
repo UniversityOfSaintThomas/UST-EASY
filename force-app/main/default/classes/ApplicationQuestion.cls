@@ -274,8 +274,6 @@ public class ApplicationQuestion {
 
             for (Question_Dependency__c qd : dQuestions) {
 
-                System.debug(String.valueOf(resp));
-                System.debug(qd.Value__c);
 
                 if (controllingQuestions.containsKey(qd.Controlling_Question__c)) {
 
@@ -295,7 +293,6 @@ public class ApplicationQuestion {
                         satisfied = false;
                         break;
                     } else if (qd.RecordType.DeveloperName.equals('Radio') && (String.isBlank(String.valueOf(resp)) || !qd.Value__c.equals((String) resp))) {
-                        System.debug('Radio detected -- 1');
                         satisfied = false;
                         break;
                     } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
@@ -332,9 +329,6 @@ public class ApplicationQuestion {
 
             for (Question_Dependency__c qd : dQuestions) {
 
-                System.debug(String.valueOf(resp));
-                System.debug(qd.Value__c);
-
                 if (!controllingQuestions.containsKey(qd.Controlling_Question__c)) {
                     satisfied = true;
                     break;
@@ -356,8 +350,6 @@ public class ApplicationQuestion {
                     satisfied = true;
                     break;
                 } else if (qd.RecordType.DeveloperName.equals('Radio') && String.isNotBlank(String.valueOf(resp)) && qd.Value__c.equals((String) resp)) {
-                    System.debug(String.valueOf(resp) + ' ? ' + qd.Value__c);
-                    System.debug('Radio detected -- 2');
                     satisfied = true;
                     break;
                 } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {

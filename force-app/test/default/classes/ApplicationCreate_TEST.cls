@@ -20,7 +20,7 @@ private class ApplicationCreate_TEST {
 
         Test.setCurrentPage(pr);
         ApplicationCreate ac = new ApplicationCreate();
-        ac.init();
+        ac.ApplicationCreateInit();
         ac.save();
 
         Question_Response__c programResponse;
@@ -82,19 +82,19 @@ private class ApplicationCreate_TEST {
 
         Test.setCurrentPage(pr);
         ApplicationCreate ac = new ApplicationCreate();
-        ac.init();
+        ac.ApplicationCreateInit();
         pr.getParameters().put('at', 'test');
-        ac.setup(new ApplicationQuestionGroup(new List<ApplicationQuestion>()), new ApplicationQuestionGroup(new List<ApplicationQuestion>()));
+        ac.applicationCreateSetup(new ApplicationQuestionGroup(new List<ApplicationQuestion>()), new ApplicationQuestionGroup(new List<ApplicationQuestion>()));
         delete [SELECT Id FROM Requirement__c WHERE Application_Control__c = :appControl.Id];
         appControl.Hide_Term_Program__c = true;
         update appControl;
         ac = new ApplicationCreate();
-        ac.init();
+        ac.ApplicationCreateInit();
         ac.app.Contact__c = null;
         ac.save();
         ac = new ApplicationCreate();
         ac.additionalDataString = 'not json';
-        ac.init();
+        ac.ApplicationCreateInit();
         ac.save();
 
         Test.stopTest();

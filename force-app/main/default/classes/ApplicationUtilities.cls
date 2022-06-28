@@ -49,6 +49,20 @@ public class ApplicationUtilities {
         return appInfo;
     }
 
+    public static EASYApplicationInfo setApplicationInfo(String at, Id appId, Id contactId) {
+        Application_Control__c appControl = getApplicationControls(at);
+        EASYApplicationInfo appInfo = new EASYApplicationInfo();
+        appInfo.appControl = appControl;
+        appInfo.contactId = contactId;
+        appInfo.appControlId = appControl.Id;
+        appInfo.at = appControl.URL_Parameter__c;
+        appInfo.appId = appId;
+        appInfo.isExternalUser = isExternalUser();
+        appInfo.allowSubmit = true;
+        appInfo.requirementId = null;
+        return appInfo;
+    }
+
     public static Boolean isExternalUser() {
         // Is external may be guest user like recommender
         if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h')) && String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))) {
@@ -58,6 +72,7 @@ public class ApplicationUtilities {
     }
 
     public static EASYApplicationInfo gatherApplicationInfo() {
+
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         appInfo.appControl = new Application_Control__c();
         EASYApplicationInfo oldInfo = new EASYApplicationInfo();
@@ -69,28 +84,76 @@ public class ApplicationUtilities {
                 appInfo = (EASYApplicationInfo) JSON.deserialize(testDecrypt, EASYApplicationInfo.class);
                 oldInfo = appInfo;
             } catch (Exception e) {
-                System.debug(e.getMessage());
+                appInfo = new EASYApplicationInfo();
             }
         }
+        if (String.isBlank(appInfo.contactId)) {
+            appInfo.contactId = getAppContactId();
+        }
+
+        if(String.isBlank(appInfo.template)) {
+            if (!String.isBlank(appInfo.appControl.Template__c)) {
+                appInfo.template = appInfo.appControl.Template__c;
+            } else {
+                Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+                appInfo.template = AppSettings.Default_Template__c;
+            }
+        }
+
+        System.debug(appInfo);
+        return appInfo;
+    }
+
+    public static Id getAppContactId() {
+        Id contactId = null;
+        Id urlContactId = null;
+        try {
+            urlContactId = ApexPages.currentPage().getParameters().get('contactId');
+        } catch (Exception e) {
+
+        }
+
+        if (String.isNotBlank(UserInfo.getUserType())) {
+            String userType = UserInfo.getUserType();
+            if (userType.equalsIgnoreCase('standard')) {
+                contactId = urlContactId;
+            } else {
+                try {
+                    contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
+                } catch (Exception ex) {
+
+                }
+            }
+        }
+        return contactId;
+    }
+
+    public static EASYApplicationInfo getApplicationId(EASYApplicationInfo appInfo) {
+        if (String.isNotBlank(appInfo.appId)) {
+            //Get the application type from the application id
+            Application__c currentApp = [
+                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id
+                    FROM Application__c
+                    WHERE Id = :appInfo.appId
+            ];
+            appInfo.at = currentApp.Application_Control__r.URL_Parameter__c;
+            appInfo.appControlId = currentApp.Application_Control__r.Id;
+        }
+        return appINfo;
+    }
+
+    public static EASYApplicationInfo setAppInfoContext(EASYApplicationInfo appInfo) {
+
+        appInfo.contactId = getAppContactId();
+
+        // Get application type from URL and check against cookie Id
+        appInfo.at = compareToCookie('at', appInfo.at, false);
 
         // Get application Id from URL and check against cookie Id
         appInfo.appId = compareToCookie('applicationId', appInfo.appId, true);
 
         // Get requirement Id from URL anc check against cookie Id
         appInfo.requirementId = compareToCookie('requirementId', appInfo.requirementId, true);
-
-        // Get application type from URL and check against cookie Id
-        appInfo.at = compareToCookie('at', appInfo.at, false);
-
-        // Contact Id of Applicant
-        if (String.isNotBlank(UserInfo.getUserType())) {
-            try {
-                appInfo.contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
-            } catch (Exception ex) {
-
-            }
-        }
-        appInfo.contactId = compareToCookie('contactId', appInfo.contactId, true);
 
         //if(oldInfo.at != appInfo.at || oldInfo.contactId != appInfo.contactId || String.isBlank(appInfo.at) || String.isBlank(appInfo.contactId) ) {
         // if Application type is blank than get it from appId
@@ -104,7 +167,6 @@ public class ApplicationUtilities {
             appInfo.at = currentApp.Application_Control__r.URL_Parameter__c;
             appInfo.appControlId = currentApp.Application_Control__r.Id;
         }
-
 
         if (String.isBlank(appInfo.appControlId)) {
             appInfo.appControl = getApplicationControls(appInfo.appControlId);
@@ -130,10 +192,9 @@ public class ApplicationUtilities {
         // Is user allowed to submit
         appInfo.allowSubmit = true;
 
-        if (oldInfo != appInfo) {
-            createEncryptedCookie(JSON.serialize(appInfo));
-        }
-
+//        if (oldInfo != appInfo) {
+//            createEncryptedCookie(JSON.serialize(appInfo));
+//        }
         return appInfo;
     }
 
@@ -177,8 +238,6 @@ public class ApplicationUtilities {
             }
         }
 
-        //System.debug('app control: ' + appControl);
-
         return appControl == null ? defaultControl : appControl;
     }
 
@@ -200,7 +259,7 @@ public class ApplicationUtilities {
             Blob encrypted = Crypto.encryptWithManagedIV('AES256', Blob.valueOf(key), data);
             encodedCipherText = EncodingUtil.base64Encode(encrypted);
             encodedCipherText = EncodingUtil.urlEncode(encodedCipherText, 'UTF-8');
-            Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, false);
+            Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'strict');
             ApexPages.currentPage().setCookies(new Cookie[]{
                     EASYCookie
             });

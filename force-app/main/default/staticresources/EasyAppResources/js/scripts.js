@@ -389,7 +389,6 @@ function navigateRequirementGroup(redirectTo) {
     appShowLoadingSpinner();
     if (redirectTo === 'forwards') {
         if (checkForm()) {
-
             performDocUploadSave(nextRequirement);
         } else {
             appHideLoadingSpinner();
@@ -409,7 +408,7 @@ function activateCarousel(slideMoveTo) {
         totalItems = items.length,
         slide = 0,
         moving = true,
-        saveAndAdvance = document.getElementById('saveAndAdvance'),
+        saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]'),
         saveAndGoBack = document.getElementById('saveAndGoBack'),
         next = document.getElementsByClassName('carousel__button--next')[0],
         prev = document.getElementsByClassName('carousel__button--prev')[0];
@@ -685,13 +684,13 @@ function textValidations(checkFormValidate) {
 
         ssn.addEventListener('change', function () {
             let cleaned = String(ssn.value).replace(/\D/g, "");
-            if (cleaned.length === 9 ) {
+            if (cleaned.length === 9) {
                 let match = cleaned.match(re_snnFormat);
                 if (match) {
                     ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
                 }
             } else {
-                activateErrorState(ssn,'change');
+                activateErrorState(ssn, 'change');
             }
         });
 

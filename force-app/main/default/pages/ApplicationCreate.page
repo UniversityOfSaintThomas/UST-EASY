@@ -1,10 +1,9 @@
-<apex:page controller="ApplicationCreate" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!init}">
+<apex:page controller="ApplicationCreate" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!ApplicationCreateInit}">
     <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
             <c:ApplicationHead />
             <script>
-                async function  lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
-                    console.log('here');
+                async function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
                     return new Promise((resolve, reject) => {
                         Visualforce.remoting.Manager.invokeAction(
                             '{!$RemoteAction.ApplicationCreate.lookupSearch}',
@@ -21,16 +20,16 @@
         </apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="New Application" loadingText="Building Your Application..." appInfo="{!appInfo}">
-                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}" >
+                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}">
                     <apex:actionFunction name="saveWithDocs" action="{!save}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                     </apex:actionFunction>
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                         <a href="javascript:void(0)" class="slds-button slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">Back</a>
                         <a href="javascript:void(0)" class="slds-button slds-button_brand carousel__button--prev">Back</a>
-                        <a href="javascript:void(0)" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
+                        <apex:commandLink action="{!save}" styleClass="slds-button slds-button_brand" value="Save and Continue" id="saveAndAdvance"/>
                         <a href="javascript:void(0)" class="slds-button slds-button_brand carousel__button--next">Next</a>
-                        <a class="slds-button slds-button_brand" href="{!$Site.BaseUrl}/apex/ApplicationPortal?contactId={!$CurrentPage.parameters.contactId}&at={!$CurrentPage.parameters.at}">Cancel</a>
+                        <a class="slds-button slds-button_brand" href="{!$Site.BaseUrl}/apex/ApplicationPortal">Cancel</a>
                     </div>
                 </c:ApplicationForm>
             </c:ApplicationBody>

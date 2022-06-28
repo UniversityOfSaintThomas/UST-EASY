@@ -90,7 +90,7 @@ public class ApplicationChecklist {
                                 Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c,
                                 Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Contact_Field__c, Application_Field__c, External_Email_Field__c,
                                 Editable_Application_Status__c, New_Reference_Field__c, URL_Parameter__c, Static_Text__c, Display_as_Picklist__c, Generic_Filter_1__c,
-                                Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Assistive_Text__c, Related_Object__c
+                                Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c
                         FROM Questions__r
                         ORDER BY Display_Order__c ASC NULLS LAST
                 )

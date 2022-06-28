@@ -26,7 +26,6 @@ public class ApplicationProgressBar_TEST {
         for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Requirement_Item__c']) {
             rtMap.put(rt.DeveloperName, rt.Id);
         }
-        System.debug(rtMap);
 
         Requirement__c req = new Requirement__c(Active__c = true, Name = 'Test Req', Application_Control__c = appControl.Id);
         insert req;

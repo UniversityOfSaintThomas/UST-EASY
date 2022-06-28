@@ -72,7 +72,7 @@ public class ApplicationQuestion {
     public ApplicationQuestionSection section { private get; set; }
 
     /*******************************************************************************
-    * @description Returns the list of selct options for picklists/multiselect picklists and radios. For Intended Programs we also filter out programs that should not be shown.
+    * @description Returns the list of select options for picklists/multiselect picklists and radios. For Intended Programs we also filter out programs that should not be shown.
     ********************************************************************************/
     public List<SelectOption> options {
         get {
@@ -127,6 +127,16 @@ public class ApplicationQuestion {
             }
         }
     }
+    public String additionalValidation {
+        get {
+            if(String.isNotBlank(question.Additional_Field_Validation__c)) {
+                return question.Additional_Field_Validation__c;
+            }
+            return '';
+        }
+        set;
+    }
+
     private Boolean tableBased { get; set; }
     public Question_Response__c response { get; set; }
     public Id responseId { get; set; }
@@ -264,8 +274,6 @@ public class ApplicationQuestion {
 
             for (Question_Dependency__c qd : dQuestions) {
 
-                System.debug(String.valueOf(resp));
-                System.debug(qd.Value__c);
 
                 if (controllingQuestions.containsKey(qd.Controlling_Question__c)) {
 
@@ -285,7 +293,6 @@ public class ApplicationQuestion {
                         satisfied = false;
                         break;
                     } else if (qd.RecordType.DeveloperName.equals('Radio') && (String.isBlank(String.valueOf(resp)) || !qd.Value__c.equals((String) resp))) {
-                        System.debug('Radio detected -- 1');
                         satisfied = false;
                         break;
                     } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
@@ -322,9 +329,6 @@ public class ApplicationQuestion {
 
             for (Question_Dependency__c qd : dQuestions) {
 
-                System.debug(String.valueOf(resp));
-                System.debug(qd.Value__c);
-
                 if (!controllingQuestions.containsKey(qd.Controlling_Question__c)) {
                     satisfied = true;
                     break;
@@ -346,8 +350,6 @@ public class ApplicationQuestion {
                     satisfied = true;
                     break;
                 } else if (qd.RecordType.DeveloperName.equals('Radio') && String.isNotBlank(String.valueOf(resp)) && qd.Value__c.equals((String) resp)) {
-                    System.debug(String.valueOf(resp) + ' ? ' + qd.Value__c);
-                    System.debug('Radio detected -- 2');
                     satisfied = true;
                     break;
                 } else if (qd.RecordType.DeveloperName.equals('Multi_Select_Picklist')) {
@@ -452,6 +454,7 @@ public class ApplicationQuestion {
             }
         }
     }
+
     public ApplicationQuestion(SObject obj, Question__c question, Question_Response__c response, Boolean hasQuestionDependencies) {
         this.hasDependentQuestions = hasQuestionDependencies;
         this.response = response;

@@ -512,6 +512,11 @@
             <field>Assistive_Text__c</field>
             <table>Requirement_Item__c.Questions__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Additional_Field_Validation__c</field>
+            <table>Requirement_Item__c.Questions__r</table>
+        </columns>
         <masterLabel>Questions</masterLabel>
     </sections>
     <sections>

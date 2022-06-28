@@ -22,7 +22,7 @@ public class ApplicationPortal {
         template = AppSettings.Default_Template__c;
     }
 
-    public void init() {
+    public void applicationPortalInit() {
         appInfo = ApplicationUtilities.gatherApplicationInfo();
         appInfoMapByAppId = new Map<Id, EASYApplicationInfo>();
         checklistsByAppIds = new Map<Id, List<RequirementWrapper>>();
@@ -58,4 +58,5 @@ public class ApplicationPortal {
             }
         }
     }
+
 }

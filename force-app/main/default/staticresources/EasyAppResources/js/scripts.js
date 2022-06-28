@@ -10,32 +10,28 @@ ready(() => {
 });
 
 function pageLoadReRendered() {
-    document.querySelectorAll('.fieldNotEditable,.fieldNotEditable input,.fieldNotEditable select,.fieldNotEditable textarea').forEach(field => {
+    //Disable fields that are set to not be editable
+    document.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
     });
 
     document.querySelector('form').onkeypress = checkEnter;
 
-    // SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
-    document.querySelectorAll('.slds-summary-detail').forEach(item => {
-        item.querySelector("button.slds-button").addEventListener('click', function (e) {
-            e.preventDefault();
-            let content = item.querySelector('.slds-summary-detail__content');
-            if (content.style.display === 'none') {
-                item.classList.add('slds-is-open')
-                content.style.display = 'block';
-            } else {
-                item.classList.remove('slds-is-open')
-                content.style.display = 'none';
-            }
-        });
-    });
-
+    //Make sure inputs are typed with HTML5 standards
     document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
         item.required = true;
     });
 
-    //Arranging Visualforce inputs to achieve SLDS accessiblity
+    document.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent").forEach(item => {
+        item.type = "number";
+    });
+
+    document.querySelectorAll(".validatePhone").forEach(item => {
+        item.type = "tel";
+    });
+
+    //Arranging Visualforce inputs to achieve SLDS accessibility
+    summaryDetail();
     adjustLabelsFor();
     textValidations();
     radioCheckBox();
@@ -54,6 +50,7 @@ function checkEnter(e) {
     return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
 }
 
+//Clicks buttons that save data and re-renders action areas
 function reRenderAllGroups(rerenderName) {
     if (rerenderName && rerenderName !== 'none') {
         showFormSpinner();
@@ -65,6 +62,24 @@ function reRenderAllGroups(rerenderName) {
     }
 }
 
+// SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
+function summaryDetail() {
+    document.querySelectorAll('.slds-summary-detail').forEach(item => {
+        item.querySelector("button.slds-button").addEventListener('click', function (e) {
+            e.preventDefault();
+            let content = item.querySelector('.slds-summary-detail__content');
+            if (content.style.display === 'none') {
+                item.classList.add('slds-is-open')
+                content.style.display = 'block';
+            } else {
+                item.classList.remove('slds-is-open')
+                content.style.display = 'none';
+            }
+        });
+    });
+}
+
+//Creates droppable file upload areas
 function fileUploadAreas() {
 
     document.querySelectorAll('.slds-file-selector__dropzone').forEach(upload => {
@@ -101,7 +116,6 @@ function fileUploadAreas() {
         });
 
         fileInput.addEventListener('change', function () {
-            console.log('file change detected');
             currentFile.innerHTML = findFileName(fileInput.value);
         });
     })
@@ -118,6 +132,7 @@ function findFileName(filePath) {
     return filePath;
 }
 
+//Makes sure all labels have id associations to the inputs
 function adjustLabelsFor() {
     document.querySelectorAll('.slds-input, .slds-select, .slds-radio').forEach(inputFound => {
         let inputWrapper = inputFound.closest('.slds-form-element'),
@@ -126,23 +141,23 @@ function adjustLabelsFor() {
 
         if (inputLabel) {
             inputLabel.htmlFor = inputFound.getAttribute('id');
-        }
-
-        if (inputFound && helpText) {
-            if (helpText) {
-                inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
-                inputFound.setAttribute('aria-invalid', 'false');
-            }
             if (inputWrapper.dataset.placeholder) {
                 inputFound.setAttribute('placeholder', inputWrapper.dataset.placeholder);
             }
             if (inputWrapper.dataset.maxlength) {
+                console.log('maxlength found ' + inputWrapper.dataset.maxlength);
                 inputFound.setAttribute('maxlength', inputWrapper.dataset.maxlength);
             }
+        }
+
+        if (inputFound && helpText) {
+            inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
+            inputFound.setAttribute('aria-invalid', 'false');
         }
     });
 }
 
+//SLDS Radio Group Button https://www.lightningdesignsystem.com/components/radio-button-group
 function radioCheckBox() {
     document.querySelectorAll('.slds-radio_button-group').forEach(radioGroup => {
         let radioGroupValue = radioGroup.querySelector("[id$='radioField1']");
@@ -158,6 +173,7 @@ function radioCheckBox() {
     });
 }
 
+// SLDS Checkbox https://www.lightningdesignsystem.com/components/checkbox/
 function checkbox() {
     document.querySelectorAll('.slds-checkbox.single-checkbox').forEach(cb => {
         cb.addEventListener('click', () => {
@@ -202,9 +218,7 @@ function performDocUploadSave(redirectTo) {
     ensureRichTextContent();
 
     document.querySelectorAll('.docUploadInput').forEach(function (docUpload, idx) {
-        console.log(docUpload.files);
         if (docUpload.files) {
-            console.log(docUpload.files[0]);
             let fbody = docUpload.files[0];
             if (fbody) {
                 docUploadPromiseArr.push(getAsText(fbody, docUpload.getAttribute('data-respid')));
@@ -218,7 +232,6 @@ function performDocUploadSave(redirectTo) {
         docUploads.forEach(function (docUpload) {
             docUploadObj[docUpload.itemId] = {"attData": docUpload};
         });
-        console.log(JSON.stringify(docUploadObj));
         saveWithDocs(JSON.stringify(docUploadObj), redirectTo);
     }).catch(function () {
     });
@@ -242,6 +255,7 @@ function getAsText(readFile, respId) {
 function activateAutoComplete() {
 
     document.querySelectorAll('.bind-autocomplete').forEach(autoItem => {
+
 
         let originObjId = autoItem.id;
         let comboBoxContainer = autoItem.closest('.slds-combobox_container');
@@ -293,7 +307,6 @@ function activateAutoComplete() {
         }
 
         function lookupResultsFormatter(data, originObjId) {
-            console.log(JSON.stringify(data));
             let outputList = ''
             let fieldNames = comboBox.dataset.objtypenamefield.replace(' ', '').split(',');
             data.forEach(result => {
@@ -332,7 +345,6 @@ function activateAutoComplete() {
                     if (refItem.dataset.title === '**createnew**') {
                         if (typeof window['setCreatingNewRelatedRecordAF' + groupId] === "function" && recordId && resultId) {
                             window['setCreatingNewRelatedRecordAF' + groupId](recordId, resultId)
-                            console.log('result function called!');
                         }
                     } else {
                         hiddenInput.value = refItem.dataset.resultid;
@@ -359,7 +371,7 @@ function activateAutoComplete() {
 
         autoItem.addEventListener('keyup', () => {
             let searchTerm = autoItem.value;
-            if (objectType && objectTypeFilter && objectTypeNameField && searchTerm.length > 2) {
+            if (objectType && objectTypeNameField && searchTerm.length > 2) {
                 lookupSearchJS(objectType, objectTypeFilter, objectTypeNameField, searchTerm, lookupResultsFormatter, originObjId);
             }
         });
@@ -371,15 +383,12 @@ function activateAutoComplete() {
         //     comboBox.classList.remove('slds-is-open');
         // });
     });
-
 }
-
 
 function navigateRequirementGroup(redirectTo) {
     appShowLoadingSpinner();
     if (redirectTo === 'forwards') {
         if (checkForm()) {
-
             performDocUploadSave(nextRequirement);
         } else {
             appHideLoadingSpinner();
@@ -399,7 +408,7 @@ function activateCarousel(slideMoveTo) {
         totalItems = items.length,
         slide = 0,
         moving = true,
-        saveAndAdvance = document.getElementById('saveAndAdvance'),
+        saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]'),
         saveAndGoBack = document.getElementById('saveAndGoBack'),
         next = document.getElementsByClassName('carousel__button--next')[0],
         prev = document.getElementsByClassName('carousel__button--prev')[0];
@@ -450,7 +459,6 @@ function activateCarousel(slideMoveTo) {
                     newPrevious = (slide - 1);
                     newNext = 0;
                 }
-                console.log(slide + 1 + ' = ' + totalItems);
                 if (slide + 1 === totalItems || totalItems === 1) {
                     saveAndAdvance.style.display = "inline-flex"
                     next.style.display = "none"
@@ -533,10 +541,6 @@ function appShowLoadingSpinner() {
     return true;
 }
 
-function appShowConfirmation() {
-    document.getElementById("confirmation").style.display = "block";
-}
-
 function hideFormSpinner() {
     document.getElementById("form-spinner").style.display = 'none';
 }
@@ -573,139 +577,164 @@ function activateTooltips() {
 }
 
 //Validate form elements on submit
-
 function checkForm() {
-
     // let theForm = document.querySelector('form');
     // theForm.reportValidity();
-
     let error_count = 0;
-
-    //Required input check
-    document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
-        if (item) {
-            if (!item.value) {
-                activateErrorState(item, 'change')
-                error_count++;
-            }
-        }
-    });
-
-    document.querySelectorAll(".selectableOL").forEach(sel => {
-        let selWrap = sel.closest('.slds-form-element');
-        let hiddenData = document.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
-        if (selWrap.classList.contains("slds-is-required")) {
-            if (!document.getElementById(hiddenData).value) {
-                activateErrorState(sel, 'click')
-                error_count++;
-            }
-        }
-    });
 
     error_count = error_count + textValidations(true);
 
-    let carousel;
     if (error_count > 0) {
         let foundErrors = document.querySelector(".slds-has-error");
         if (foundErrors) {
             let carouselItem = foundErrors.closest('.carousel__item');
             activateCarousel(carouselItem.dataset.slide);
         }
-        //window.scrollTo(0, foundErrors[0].offsetTop);
+        window.scrollTo(0, 0);
         return false;
     }
-
     return true;
 }
 
-function formatPhoneOnEnter(input, event) {
-    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
-    input.value = input.value.replace(phoneRegex, '');
-}
-
-function formatPhone(formatPone) {
-    const phoneRegex = /(?:0)(2\d)(?:\s)*(\d{3})(?:\s)*(\d{3,4})/;
-    formatPone.value = input.value.replace(phoneRegex, '');
-    console.log(formatPone)
-}
-
-
 //Input validations
 function textValidations(checkFormValidate) {
-    let errorCount = 0;
+    let errors = 0;
     let allPhones = document.querySelectorAll('.validatePhone');
-    let allDecimals = document.querySelectorAll('.validateDecimal, .validateNumber, .validatePercent');
-    let allIntegers = document.querySelectorAll('.validateInteger');
     let allSSN = document.querySelectorAll('.validateSSN');
-    let allNameOnlyCharacters = document.querySelectorAll('.validateName');
+    let allNamCharacters = document.querySelectorAll('.validateName');
     let allEmails = document.querySelectorAll('.validateEmail');
+    let allUrls = document.querySelectorAll('.validateURL');
+    let allRequiredInputs = document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select");
 
-    const emailReg = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    const internationalPhone = /^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/;
-    const phoneIllegals = /[^\d+-/(/)]/;
-    const numbersOnly = /[^\d-]/;
-    const numberDecimalOnly = /[^\d-.]/;
-    const phoneMatch = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
-    const phoneFormatted = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    const re_email = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    const re_url = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/;
+    const re_number = /[^\d-]/;
+    const re_decimal = /[^\d-.]/;
+    const re_phoneIllegals = /[^\d+-/(/)]/;
+    const re_phoneFormat = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
+    const re_phone = /[\d+\-\(\) ]/;
+    const re_snn = /^\d{3}-\d{2}-\d{4}$/;
+    const re_snnFormat = /(\d{3})(\d{2})(\d{4})$/;
+    const re_ssnIllegals = /[^\d+-]/;
+    const re_nameIllegals = /[\d\(\)@#$,]/;
 
-    allPhones.forEach(function (phone) {
-        phone.addEventListener('change, blur', function () {
-            let initialPhone = phone.value;
-            let isInternational = false;
-            if (initialPhone.value.startsWith('+') || initialPHone.value.startsWith('0')) {
-                isInternational = true;
+    //Required input check
+    if (checkFormValidate) {
+        allRequiredInputs.forEach(item => {
+            if (item) {
+                if (!item.value) {
+                    activateErrorState(item, 'change')
+                }
             }
-            let cleaned = ('' + phone.input).replace(/\D/g, '');
-            let match = cleaned.match(phoneMatch);
+        });
+
+        document.querySelectorAll(".selectableOL").forEach(sel => {
+            let selWrap = sel.closest('.slds-form-element');
+            let hiddenData = document.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
+            if (selWrap.classList.contains("slds-is-required")) {
+                if (!document.getElementById(hiddenData).value) {
+                    activateErrorState(sel, 'click')
+                }
+            }
+        });
+    }
+
+    //Format and validate phone numbers
+    allPhones.forEach(phone => {
+
+        //format directly after input
+        phone.addEventListener('change', function () {
+            let cleaned = String(phone.value).replace(/\D/g, "");
+            let match = cleaned.match(re_phoneFormat);
             if (match) {
-                let intlCode = (match[1] ? '+1 ' : '');
-                phone.value = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+                let intlCode = match[1] ? "+1 " : "";
+                phone.value = [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join("");
             }
         });
+
+        //Don't allow anything but phone number characters on key-up
         phone.addEventListener('keyup', function () {
-            phone.value = phone.value.replace(phoneIllegals, '');
+            phone.value = phone.value.replace(re_phoneIllegals, '');
         })
+
+        //Check if the final phone number matches correctly before submit
         if (checkFormValidate) {
-            if (!phone.value.match(phoneFormatted)) {
+            if (!phone.value.match(re_phone)) {
                 activateErrorState(phone, 'change');
-                errorCount++;
             }
         }
+
     });
 
-    allDecimals.forEach(function (num) {
-        num.addEventListener('keyup, change', function () {
-            num.value = num.value.replace(numberDecimalOnly, '');
-        });
-        if (checkFormValidate && !num.match(numberDecimalOnly)) {
-            activateErrorState(num, 'change');
-            errorCount++;
+    allNamCharacters.forEach(nameInput => {
+        //Don't allow anything but phone number characters on key-up
+        nameInput.addEventListener('keyup', function () {
+            nameInput.value = nameInput.value.replace(re_nameIllegals, '');
+        })
+
+        if (checkFormValidate) {
+            nameInput.value = nameInput.value.replace(re_nameIllegals, '');
         }
     });
 
-    allIntegers.forEach(function (num) {
-        num.addEventListener('keyup, change', function () {
-            num.value = num.value.replace(numbersOnly, '');
+    //Social Security Validation
+    allSSN.forEach(ssn => {
+        ssn.addEventListener('keyup', function () {
+            ssn.value = ssn.value.replace(re_ssnIllegals, '');
+        })
+
+        ssn.addEventListener('change', function () {
+            let cleaned = String(ssn.value).replace(/\D/g, "");
+            if (cleaned.length === 9) {
+                let match = cleaned.match(re_snnFormat);
+                if (match) {
+                    ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
+                }
+            } else {
+                activateErrorState(ssn, 'change');
+            }
         });
-        if (checkFormValidate && !num.match(numbersOnly)) {
-            activateErrorState(num, 'change');
-            errorCount++;
+
+        if (checkFormValidate && !ssn.value.match(re_snn)) {
+            activateErrorState(ssn, 'change');
         }
     });
 
-    return errorCount;
-}
-
-function activateErrorState(errorInput, eventType) {
-    let errorWrap = errorInput.closest('.slds-form-element');
-    errorWrap.classList.add("slds-has-error");
-    errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-        errorHelp.style.display = "block"
+    //Email Validation
+    allEmails.forEach(email => {
+        if (checkFormValidate && !email.value.match(re_email)) {
+            activateErrorState(email, 'change');
+        }
     });
-    errorInput.addEventListener(eventType, () => {
-        errorWrap.classList.remove("slds-has-error");
+
+    //URL validation
+    allUrls.forEach(inputUrl => {
+        inputUrl.value = inputUrl.value.replace(' ', '').trim();
+        if (inputUrl.value) {
+            if (!inputUrl.value.startsWith('http')) {
+                inputUrl.value = 'https://' + inputUrl.value;
+            }
+            if (checkFormValidate && !inputUrl.value.match(re_url)) {
+                activateErrorState(inputUrl, 'change');
+            }
+        }
+    })
+
+    function activateErrorState(errorInput, eventType) {
+        let errorWrap = errorInput.closest('.slds-form-element');
+        errorWrap.classList.add("slds-has-error");
         errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-            errorHelp.style.display = "none";
+            errorHelp.style.display = "block"
         });
-    });
+        errorInput.addEventListener(eventType, () => {
+            errorWrap.classList.remove("slds-has-error");
+            errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+                errorHelp.style.display = "none";
+            });
+        });
+
+        errors++;
+    }
+
+    return errors;
 }

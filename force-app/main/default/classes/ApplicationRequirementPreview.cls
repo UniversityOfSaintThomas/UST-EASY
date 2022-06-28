@@ -36,7 +36,7 @@ public class ApplicationRequirementPreview {
 ********************************************************************************/
     public void init() {
         appInfo = ApplicationUtilities.gatherApplicationInfo();
-        requirementId = ApexPages.currentPage().getParameters().get('Id');
+        requirementId = appInfo.requirementId;
         if (requirementId == null) {
             return;
         }

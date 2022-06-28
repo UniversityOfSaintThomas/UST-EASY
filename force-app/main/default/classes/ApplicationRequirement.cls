@@ -26,7 +26,6 @@ public class ApplicationRequirement {
     public List<Requirement_Response__c> newResponses { get; set; }
     public Boolean showSuccess { get; set; }
     public Boolean isInvalid { get; set; }
-    public Boolean isExternalUser { get; set; }
     public Boolean ignoreExternalFilter { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
 
@@ -40,9 +39,9 @@ public class ApplicationRequirement {
 
     public Id nextReqId {
         get {
-            if (nextReqId == null && ApexPages.currentPage().getParameters().containsKey('requirementId')) {
+            if (nextReqId == null && appInfo != null && String.isNotBlank(appInfo.requirementId)) {
                 for (Integer i = 0; i < checklistItems.size() - 1; i++) {
-                    if (checklistItems[i].req.Id == ApexPages.currentPage().getParameters().get('requirementId')) {
+                    if (checklistItems[i].req.Id == appInfo.requirementId) {
                         nextReqId = checklistItems[i + 1].req.Id;
                         return nextReqId;
                     }
@@ -54,9 +53,9 @@ public class ApplicationRequirement {
     }
     public Id prevReqId {
         get {
-            if (prevReqId == null && ApexPages.currentPage().getParameters().containsKey('requirementId')) {
+            if (prevReqId == null && appInfo != null && String.isNotBlank(appInfo.requirementId)) {
                 for (Integer i = 1; i < checklistItems.size(); i++) {
-                    if (checklistItems[i].req.Id == ApexPages.currentPage().getParameters().get('requirementId')) {
+                    if (checklistItems[i].req.Id == appInfo.requirementId) {
                         prevReqId = checklistItems[i - 1].req.Id;
                         return prevReqId;
                     }
@@ -81,6 +80,7 @@ public class ApplicationRequirement {
         if (appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
+        System.debug(appInfo);
     }
 
     public ApplicationRequirement(Id contactId, Id applicationId, Id requirementId, List<Requirement_Item__c> items, List<Requirement_Response__c> requirementResponses, List<Question_Response__c> questionResponses, List<Question_Dependency__c> questionDependencies) {
@@ -107,8 +107,14 @@ public class ApplicationRequirement {
         if (appInfo == null || appInfo.appControlId == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
+
+        if (appInfo.appControl == null) {
+            PageReference portalPage = Page.ApplicationPortal;
+            return portalPage;
+        }
+
         allowSubmit = true;
-        isExternalUser = false;
+        //isExternalUser = appInfo.isExternalUser;
         userType = String.valueOf(UserInfo.getUserType());
         isStandardUser = userType.equalsIgnoreCase('standard');
         if (userType.equalsIgnoreCase('guest')) {
@@ -183,7 +189,6 @@ public class ApplicationRequirement {
         } else if (requirementResponses == null) {
             requirementResponses = new List<Requirement_Response__c>();
         }
-        System.debug(requirementResponses);
 
         // Requirement Responses
         for (Requirement_Response__c r : requirementResponses) {
@@ -263,7 +268,7 @@ public class ApplicationRequirement {
 
         // Clone Question Response records and store ID if this is an external user
         // in order to get around restriction of external users being able to edit objects
-        if (isExternalUser) {
+        if (appInfo.isExternalUser) {
             for (ApplicationQuestionGroup aqg : section.groups) {
                 if (aqg.questionGroup && aqg.questions != null) {
                     for (ApplicationQuestion aq : aqg.questions) {
@@ -412,7 +417,7 @@ public class ApplicationRequirement {
                         // Clone Question Response and apply ID if this is an external user
                         // in order to get around the restriction of external users not being
                         // able to edit objects.
-                        if (isExternalUser) {
+                        if (appInfo.isExternalUser) {
                             qResp = q.response.clone(false, true, false, false);
                             qResp.Id = q.responseId;
                         }
@@ -452,7 +457,7 @@ public class ApplicationRequirement {
             if (String.isNotBlank(redirectPage)) {
 
                 if (redirectPage == 'checklist') {
-                    PageReference pr = new PageReference('/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + appInfo.contactId + (ApexPages.currentPage().getParameters().containsKey('at') ? '&at=' + ApexPages.currentPage().getParameters().get('at') : ''));
+                    PageReference pr = Page.ApplicationPortal;
                     pr.setRedirect(true);
                     return pr;
                 } else if (redirectPage == 'submit') {
@@ -462,7 +467,6 @@ public class ApplicationRequirement {
                             update new Application__c(Id = app.Id, Application_Status__c = appControl.Submit_Status__c);
                             pr = Page.ApplicationPortal;
                             pr.setRedirect(true);
-
                             for (String s : new Set<String>{
                                     'contactId', 'applicationId', 'at'
                             }) {
@@ -470,11 +474,17 @@ public class ApplicationRequirement {
                             }
                         }
                     }
-
                     return pr;
 
                 } else {
-                    PageReference pr = new PageReference('/apex/ApplicationRequirement?requirementId=' + redirectPage + '&applicationId=' + appInfo.appId + '&contactId=' + appInfo.contactId + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c)));
+                    PageReference pr = Page.ApplicationRequirement;
+                    pr.getParameters().put('applicationId', appInfo.appId);
+                    pr.getParameters().put('contactId', appInfo.contactId);
+                    pr.getParameters().put('at', appInfo.at);
+                    pr.getParameters().put('requirementId', redirectPage);
+                    // new PageReference('/apex/ApplicationRequirement?requirementId=' + redirectPage + '&applicationId=' + appInfo.appId + '&contactId=' + appInfo.contactId + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c)));
+                    appInfo.requirementId = redirectPage;
+                    ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
                     pr.setRedirect(true);
                     return pr;
                 }

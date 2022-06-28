@@ -5,6 +5,17 @@
     <description>Number</description>
     <label>Number</label>
     <picklistValues>
+        <picklist>Additional_Field_Validation__c</picklist>
+        <values>
+            <fullName>validateName</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>validateSSN</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Applicant_Type__c</picklist>
         <values>
             <fullName>DFC</fullName>

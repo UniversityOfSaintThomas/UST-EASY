@@ -537,6 +537,7 @@ public class ApplicationQuestionGroup {
                         relatedObjectsMap.put(obj.Id, new SObjectWrapper(this, obj.Id, obj));
                     }
                 }
+
             }
         }
     }
@@ -713,7 +714,6 @@ public class ApplicationQuestionGroup {
                         }
                     }
                     if (lstInsert.size() > 0) {
-                        System.debug(JSON.serializePretty(lstInsert));
                         insert lstInsert;
                     }
                     if (lstUpdate.size() > 0) {

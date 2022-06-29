@@ -102,7 +102,7 @@ public class ApplicationRequirement {
     /*******************************************************************************
     * @description Initializes the page - Pulls relevant requirement items, requirement responses, etc.
     ********************************************************************************/
-    public PageReference init() {
+    public PageReference applicationRequirementInit() {
 
         if (appInfo == null || appInfo.appControlId == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();

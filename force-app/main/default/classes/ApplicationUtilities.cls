@@ -43,6 +43,7 @@ public class ApplicationUtilities {
 
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         appInfo.appControl = new Application_Control__c();
+        String userType = UserInfo.getUserType();
 
         // Get and decrypt cookie if it exist
         String testDecrypt = getDecryptCookie();
@@ -63,8 +64,27 @@ public class ApplicationUtilities {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;
         }
+        if (userType.equalsIgnoreCase('standard')) {
+            try {
+                appInfo.at = ApexPages.currentPage().getParameters().get('at');
+            } catch (Exception ex) {
 
+            }
+            if (appInfo.at != appInfo.appControl.URL_Parameter__c && String.isNotBlank(appInfo.at)) {
+                appInfo.appControl = getApplicationControls(appInfo.at);
+            }
+            if (String.isBlank(appInfo.requirementId) && String.isNotBlank(ApexPages.currentPage().getParameters().get('requirementId'))) {
+                appInfo.requirementId = ApexPages.currentPage().getParameters().get('requirementId');
+            }
+        }
+
+        if (String.isBlank(appInfo.appId)) {
+            appInfo.appId = getApplicationId(appInfo);
+        }
+
+        System.debug(appInfo);
         return appInfo;
+
     }
 
     public static Id getAppContactId() {
@@ -91,18 +111,22 @@ public class ApplicationUtilities {
         return contactId;
     }
 
-    public static EASYApplicationInfo getApplicationId(EASYApplicationInfo appInfo) {
-        if (String.isNotBlank(appInfo.appId)) {
+    public static Id getApplicationId(EASYApplicationInfo appInfo) {
+        Id newAppId = null;
+        if (String.isNotBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
             //Get the application type from the application id
-            Application__c currentApp = [
+            List<Application__c> currentApps = [
                     SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id
                     FROM Application__c
-                    WHERE Id = :appInfo.appId
+                    WHERE Contact__c = :appInfo.contactId
+                    AND Application_Control__r.URL_Parameter__c = :appInfo.at
+                    ORDER BY LastModifiedDate
             ];
-            appInfo.at = currentApp.Application_Control__r.URL_Parameter__c;
-            appInfo.appControlId = currentApp.Application_Control__r.Id;
+            if (currentApps.size() > 0) {
+                newAppId = currentApps[0].Id;
+            }
         }
-        return appINfo;
+        return newAppId;
     }
 
     /* ******************************************************************************

@@ -74,7 +74,7 @@ public class ApplicationProgressBar_TEST {
         Test.setCurrentPage(pr);
 
         ApplicationRequirement ar = new ApplicationRequirement();
-        ar.init();
+        ar.applicationRequirementInit();
         ApplicationProgressBar pb = new ApplicationProgressBar(ar);
         pb.start();
         Map<Id, RequirementWrapper> reqMap = pb.reqMap;

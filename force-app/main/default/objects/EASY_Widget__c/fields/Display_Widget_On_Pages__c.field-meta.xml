@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Display_Widget_On_Pages__c</fullName>
+    <description>Pages on which this widget should display.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Pages on which this widget should display.</inlineHelpText>
+    <label>Display Widget On Pages</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>ApplicationAdminView</fullName>
+                <default>false</default>
+                <label>Application Admin View</label>
+            </value>
+            <value>
+                <fullName>ApplicationCreate</fullName>
+                <default>false</default>
+                <label>Application Create</label>
+            </value>
+            <value>
+                <fullName>ApplicationPortal</fullName>
+                <default>false</default>
+                <label>Application Portal</label>
+            </value>
+            <value>
+                <fullName>ApplicationRegistration</fullName>
+                <default>false</default>
+                <label>Application Registration</label>
+            </value>
+            <value>
+                <fullName>ApplicationRequirement</fullName>
+                <default>true</default>
+                <label>Application Requirement</label>
+            </value>
+            <value>
+                <fullName>ApplicationReview</fullName>
+                <default>false</default>
+                <label>Application Review</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

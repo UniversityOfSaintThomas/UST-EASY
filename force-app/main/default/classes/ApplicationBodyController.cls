@@ -7,7 +7,7 @@ public with sharing class ApplicationBodyController {
 
     public EASYApplicationInfo appInfoParam { get; set; }
     public String currentPageName { get; set; }
-    public Boolean skipWidgetsPages { get; set; }
+    public String appStatusAttribute { get; set; }
 
     public ApplicationBodyController() {
     }
@@ -22,6 +22,12 @@ public with sharing class ApplicationBodyController {
     }
 
     public allWidgets getWidgets() {
+        List<String> pagesWithMultipleAppInfo = new List<String>{
+                'ApplicationPortal',
+                'ApplicationCreate',
+                'ApplicationRegistration'
+        };
+        Set<Id> appInfoIds = new Set<Id>();
         currentPageName = getVFPageName();
         allWidgets foundWidgets = new allWidgets();
         foundWidgets.topWidgets = new List<EASY_Widget__c>();
@@ -31,54 +37,76 @@ public with sharing class ApplicationBodyController {
         foundWidgets.contentTopWidgets = new List<EASY_Widget__c>();
         foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
+        if (String.isBlank(appStatusAttribute)) {
+            appStatusAttribute = 'none';
+        }
 
-        if (appInfoParam.appControl != null && String.isNotBlank(appInfoParam.appControlId)) {
-
-            skipWidgetsPages = false;
-            if (currentPageName.equalsIgnoreCase('ApplicationPortal') || currentPageName.equalsIgnoreCase('ApplicationCreate') || currentPageName.equalsIgnoreCase('ApplicationRegistration')) {
-                skipWidgetsPages = true;
+        // if (appInfoParam.appControl != null && String.isNotBlank(appInfoParam.appControlId)) {
+        if (pagesWithMultipleAppInfo.contains(currentPageName)) {
+            for (Application__c app : [
+                    SELECT Application_Control__r.Id
+                    FROM Application__c
+                    WHERE contact__c = :appInfoParam.contactId
+            ]) {
+                appInfoIds.add(app.Application_Control__r.Id);
             }
+            System.debug(appInfoIds);
+        } else {
+            appInfoIds.add(appInfoParam.appControlId);
+        }
 
-            try {
-                allPositionWidgets = [
-                        SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
-                                Widget_Type__c, Sort_Order__c
-                        FROM EASY_Widget__c
-                        WHERE Application_Control__c = :appInfoParam.appControlId
-                        WITH SECURITY_ENFORCED
-                        ORDER BY Sort_Order__c
-                ];
-            } catch (DmlException e) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
-            } catch (Exception e) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
-            }
+        try {
+            allPositionWidgets = [
+                    SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
+                            Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c
+                    FROM EASY_Widget__c
+                    WHERE Application_Control__c IN :appInfoIds
+                    WITH SECURITY_ENFORCED
+                    ORDER BY Sort_Order__c
+            ];
+        } catch (DmlException e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
+        } catch (Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+        }
 
-            for (EASY_Widget__c widget : allPositionWidgets) {
-                if (!skipWidgetsPages && !widget.Widget_Type__c.equalsIgnoreCase('Application Checklist') || !skipWidgetsPages && !widget.Widget_Type__c.equalsIgnoreCase('Progress Bar')) {
-                    switch on widget.Widget_Screen_Location__c.toLowerCase() {
-                        when 'left' {
-                            foundWidgets.leftWidgets.add(widget);
-                        }
-                        when 'right' {
-                            foundWidgets.rightWidgets.add(widget);
-                        }
-                        when 'top' {
-                            foundWidgets.topWidgets.add(widget);
-                        }
-                        when 'bottom' {
-                            foundWidgets.bottomWidgets.add(widget);
-                        }
-                        when 'content top' {
-                            foundWidgets.contentTopWidgets.add(widget);
-                        }
-                        when 'content bottom' {
-                            foundWidgets.contentTopWidgets.add(widget);
-                        }
-                    }
+        for (EASY_Widget__c widget : allPositionWidgets) {
+            Boolean skipWidget = false;
+            if (String.isNotBlank(widget.Display_Widget_On_Status__c) && !appStatusAttribute.equalsIgnoreCase('none')) {
+                if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName)) {
+                    skipWidget = true;
                 }
             }
+            if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
+                skipWidget = true;
+            }
+
+            if (!skipWidget) {
+
+                switch on widget.Widget_Screen_Location__c.toLowerCase() {
+                    when 'left' {
+                        foundWidgets.leftWidgets.add(widget);
+                    }
+                    when 'right' {
+                        foundWidgets.rightWidgets.add(widget);
+                    }
+                    when 'top' {
+                        foundWidgets.topWidgets.add(widget);
+                    }
+                    when 'bottom' {
+                        foundWidgets.bottomWidgets.add(widget);
+                    }
+                    when 'content top' {
+                        foundWidgets.contentTopWidgets.add(widget);
+                    }
+                    when 'content bottom' {
+                        foundWidgets.contentTopWidgets.add(widget);
+                    }
+                }
+
+            }
         }
+        //  }
         return foundWidgets;
     }
 

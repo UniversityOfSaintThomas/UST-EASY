@@ -145,7 +145,6 @@ function adjustLabelsFor() {
                 inputFound.setAttribute('placeholder', inputWrapper.dataset.placeholder);
             }
             if (inputWrapper.dataset.maxlength) {
-                console.log('maxlength found ' + inputWrapper.dataset.maxlength);
                 inputFound.setAttribute('maxlength', inputWrapper.dataset.maxlength);
             }
         }

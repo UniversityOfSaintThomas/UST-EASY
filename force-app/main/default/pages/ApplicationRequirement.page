@@ -1,4 +1,4 @@
-<apex:page controller="ApplicationRequirement" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0" action="{!init}">
+<apex:page controller="ApplicationRequirement" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0" action="{!applicationRequirementInit}">
     <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
             <c:ApplicationHead />

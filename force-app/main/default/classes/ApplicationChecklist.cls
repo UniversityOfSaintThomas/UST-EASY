@@ -304,7 +304,7 @@ public class ApplicationChecklist {
             ar.preventUpdates = true;
             ar.ignoreExternalFilter = true;
             arLst.add(ar);
-            ar.init();
+            ar.applicationRequirementInit();
             responses.addAll(ar.newResponses);
         }
         if (responses.size() > 0) {

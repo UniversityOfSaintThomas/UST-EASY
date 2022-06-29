@@ -46,7 +46,7 @@ public class ApplicationRequirementPreview {
         }
 
         req = new ApplicationRequirement(requirementId, app, true);
-        req.init();
+        req.applicationRequirementInit();
 
         Set<String> fieldSetFields = new Set<String>();
         for (FieldSetMember f : SObjectType.Application__c.fieldSets.Application_Preview_Filters.getFields()) {

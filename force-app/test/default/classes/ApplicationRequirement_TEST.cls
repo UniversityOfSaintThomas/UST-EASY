@@ -72,7 +72,7 @@ public class ApplicationRequirement_TEST {
         pr.getParameters().put('requirementId', req.Id);
         Test.setCurrentPage(pr);
         ApplicationRequirement ac = new ApplicationRequirement();
-        ac.init();
+        ac.applicationRequirementInit();
         System.assertEquals(ac.title, 'Test Req');
         ac.redirectPage = 'something';
         ac.submit();
@@ -105,7 +105,7 @@ public class ApplicationRequirement_TEST {
         pr.getParameters().put('requirementId', req.Id);
         Test.setCurrentPage(pr);
         ApplicationRequirement ac = new ApplicationRequirement();
-        ac.init();
+        ac.applicationRequirementInit();
         System.assertEquals(ac.title, 'Test Req');
         for (ApplicationQuestionGroup agq : ac.section.groups) {
             if (agq.documentUpload == true) {
@@ -117,7 +117,7 @@ public class ApplicationRequirement_TEST {
         System.assertEquals(1, [SELECT COUNT() FROM ContentDocumentLink WHERE LinkedEntityId = :rrDU.Id]);
         Test.startTest();
         ac = new ApplicationRequirement();
-        ac.init();
+        ac.applicationRequirementInit();
         for (ApplicationQuestionGroup agq : ac.section.groups) {
             if (agq.documentUpload == true) {
                 agq.response.ValueTextEntry__c = 'Test';
@@ -161,7 +161,7 @@ public class ApplicationRequirement_TEST {
         pr.getParameters().put('requirementId', req.Id);
         Test.setCurrentPage(pr);
         ApplicationRequirement ac = new ApplicationRequirement();
-        ac.init();
+        ac.applicationRequirementInit();
         for (ApplicationQuestionGroup agq : ac.section.groups) {
             if (agq.documentUpload == true) {
                 System.assertEquals(null, agq.questions);
@@ -201,7 +201,7 @@ public class ApplicationRequirement_TEST {
         pr.getParameters().put('requirementId', req.Id);
         Test.setCurrentPage(pr);
         ApplicationRequirement ac = new ApplicationRequirement();
-        ac.init();
+        ac.applicationRequirementInit();
         System.assertEquals(ac.title, 'Test Req');
         for (ApplicationQuestionGroup agq : ac.section.groups) {
             if (agq.relatedObject == true) {
@@ -265,7 +265,7 @@ public class ApplicationRequirement_TEST {
         pr.getParameters().put('requirementId', req.Id);
         Test.setCurrentPage(pr);
         ApplicationRequirement ac = new ApplicationRequirement();
-        ac.init();
+        ac.applicationRequirementInit();
         for (ApplicationQuestionGroup agq : ac.section.groups) {
             if (agq.questionGroup == true) {
                 String inst = agq.instructions;
@@ -346,14 +346,14 @@ public class ApplicationRequirement_TEST {
         pr.getParameters().put('requirementId', req.Id);
         Test.setCurrentPage(pr);
         ApplicationRequirement ac = new ApplicationRequirement();
-        ac.init();
+        ac.applicationRequirementInit();
 
         ac.submit();
         Test.startTest();
         q1.Dependency_Logic__c = 'OR';
         update q1;
         ac = new ApplicationRequirement();
-        ac.init();
+        ac.applicationRequirementInit();
         ac.submit();
         Test.stopTest();
     }
@@ -391,7 +391,7 @@ public class ApplicationRequirement_TEST {
         pr.getParameters().put('requirementId', req.Id);
         Test.setCurrentPage(pr);
         ApplicationRequirement ac = new ApplicationRequirement();
-        ac.init();
+        ac.applicationRequirementInit();
         ac.section.pushValuesToObjects();
         ac.submit();
     }

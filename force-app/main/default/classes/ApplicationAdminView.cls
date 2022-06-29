@@ -203,7 +203,7 @@ public class ApplicationAdminView {
             ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid, items, requirementResponses, questionResponses, questionDependencies);
             ar.preventUpdates = true;
             arLst.add(ar);
-            ar.init();
+            ar.applicationRequirementInit();
         }
     }
 

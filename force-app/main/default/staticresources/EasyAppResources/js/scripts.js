@@ -31,6 +31,7 @@ function pageLoadReRendered() {
     });
 
     //Arranging Visualforce inputs to achieve SLDS accessibility
+    vfCountryPicklist();
     summaryDetail();
     adjustLabelsFor();
     textValidations();
@@ -39,7 +40,6 @@ function pageLoadReRendered() {
     activateAutoComplete();
     activateTooltips();
     fileUploadAreas();
-
     //Hide the form spinner if it is active
     hideFormSpinner();
 }
@@ -381,6 +381,26 @@ function activateAutoComplete() {
         //     autoItem.classList.remove('slds-has-focus');
         //     comboBox.classList.remove('slds-is-open');
         // });
+    });
+}
+
+//Visualforce state/country picklist enabled does not style correctly. This observes mutations and styles the picklsit.
+function vfCountryPicklist() {
+    let vfPicklists = document.querySelectorAll('.vfStatePicklist span');
+    vfPicklists.forEach(pl => {
+        pl.querySelector('select').classList.add('slds-select');
+    });
+    let obs = new MutationObserver(function (mutations, observer) {
+        mutations.forEach(mut => {
+            mut.addedNodes.forEach(mutNode => {
+                if (mutNode.tagName.toLowerCase() === 'select') {
+                    mutNode.classList.add('slds-select');
+                }
+            });
+        });
+    });
+    vfPicklists.forEach(pl => {
+        obs.observe(pl, {attributes: true, childList: true, characterData: true});
     });
 }
 

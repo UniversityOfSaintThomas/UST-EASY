@@ -243,7 +243,7 @@
                         </apex:outputPanel>
 
                         <apex:outputPanel rendered="{!(ISPICKVAL($User.UserType,'Standard') || group.item.Allow_Supporting_Documentation_Upload__c) && rr.idx != null && !rr.isEditMode && group.isEditable && !preventUpdates}">
-                            <apex:commandLink action="{!group.RelatedUpload}" reRender="theTable" styleClass="slds-button slds-button_neutral slds-m-around_small" oncomplete="if('{!group.selectedRelatedId}')window.open('{!$Page.RelatedDocumentUpload+'?Id='+group.selectedRelatedId+'&rId='+group.item.Id}','_blank');pageLoadReRendered();">
+                            <apex:commandLink action="{!group.RelatedUpload}" reRender="theTable" styleClass="slds-button slds-button_neutral slds-m-around_small" oncomplete="if('{!group.selectedRelatedId}')window.open('{!$Page.RelatedDocumentUpload+'?Id='+group.selectedRelatedId+'&rId='+group.item.Id}','_blank');" onComplete="pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#upload")}"></use>
                                 </svg>

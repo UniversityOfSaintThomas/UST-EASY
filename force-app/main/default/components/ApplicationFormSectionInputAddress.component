@@ -23,16 +23,18 @@
 
                 <apex:inputField id="city" value="{!responseObject['City__c']}" styleClass="slds-input" rendered="{!If(inputAddressType == 'City', true, false)}"/>
 
-                <apex:outputPanel rendered="{!!questionWrapper.stateAndCountryPicklistEnabled}" layout="block">
+                <apex:outputPanel rendered="{!!questionWrapper.stateAndCountryPicklistEnabled}" layout="none">
                     <apex:inputField id="state" value="{!questionWrapper['con']['MailingState']}" styleClass="slds-input" rendered="{!If(inputAddressType == 'State/Province', true, false)}"/>
                     <apex:inputField id="country1" value="{!questionWrapper['con']['MailingCountry']}" styleClass="slds-input" rendered="{!If(inputAddressType == 'Country', true, false)}"/>
                 </apex:outputPanel>
 
-                <apex:outputPanel rendered="{!questionWrapper.stateAndCountryPicklistEnabled}" layout="block">
-                    <apex:outputPanel styleClass="slds-select_container" rendered="{!If(inputType == 'Country', true, false)}" layout="block">
-                        <apex:inputField id="country" value="{!questionWrapper['con']['MailingCountryCode']}" styleClass="slds-select"/>
+                <apex:outputPanel rendered="{!questionWrapper.stateAndCountryPicklistEnabled}" layout="none">
+
+                    <apex:outputPanel styleClass="slds-select_container" rendered="{!If(inputAddressType == 'Country', true, false)}" layout="block">
+                        <apex:inputField id="Country" value="{!questionWrapper['con']['MailingCountryCode']}" styleClass="slds-select" html-class="slds-select"/>
                     </apex:outputPanel>
-                    <apex:outputPanel styleClass="slds-select_container" rendered="{!If(inputAddressType == 'State/Province', true, false)}" layout="block">
+
+                    <apex:outputPanel styleClass="slds-select_container vfStatePicklist" rendered="{!If(inputAddressType == 'State/Province', true, false)}" layout="block">
                         <apex:inputField id="statePicklist" value="{!questionWrapper['con']['MailingStateCode']}" styleClass="slds-select"/>
                     </apex:outputPanel>
                 </apex:outputPanel>

@@ -79,10 +79,9 @@ public class ApplicationUtilities {
         }
 
         if (String.isBlank(appInfo.appId)) {
-            appInfo.appId = getApplicationId(appInfo);
+            appInfo = getApplicationId(appInfo);
         }
 
-        System.debug(appInfo);
         return appInfo;
 
     }
@@ -111,22 +110,24 @@ public class ApplicationUtilities {
         return contactId;
     }
 
-    public static Id getApplicationId(EASYApplicationInfo appInfo) {
+    public static EASYApplicationInfo getApplicationId(EASYApplicationInfo appInfo) {
         Id newAppId = null;
         if (String.isNotBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
             //Get the application type from the application id
             List<Application__c> currentApps = [
-                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id
+                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     AND Application_Control__r.URL_Parameter__c = :appInfo.at
                     ORDER BY LastModifiedDate
             ];
             if (currentApps.size() > 0) {
-                newAppId = currentApps[0].Id;
+                appInfo.appId = currentApps[0].Id;
+                appInfo.appStatus = currentApps[0].Application_Status__c;
+                appInfo.appSubStatus = currentApps[0].Application_Substatus__c;
             }
         }
-        return newAppId;
+        return appInfo;
     }
 
     /* ******************************************************************************

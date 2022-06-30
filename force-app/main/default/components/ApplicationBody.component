@@ -5,8 +5,6 @@
     <apex:attribute name="loadingText" description="The text to display when save is occurring" type="String" required="false" default="Processing..."/>
     <apex:attribute name="appInfo" description="The text to display when save is occurring" type="EASYApplicationInfo" required="true" assignTo="{!appInfoParam}"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
-    <apex:attribute name="appStatus" type="String" description="status of the current application" required="false" assignTo="{!appStatusAttribute}"/>
-    <apex:attribute name="appSubStatus" type="String" description="status of the current application" required="false" assignTo="{!appSubStatusAttribute}"/>
 
     <div id="loadSpinner" class="popupBackground">
         <div id="loading" class="PopupPanel">

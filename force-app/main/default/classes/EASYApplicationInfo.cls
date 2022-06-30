@@ -11,7 +11,7 @@ public with sharing class EASYApplicationInfo {
     public Boolean allowSubmit { get; set; }
     public Boolean isExternalUser { get; set; }
     public Application_Control__c appControl { get; set; }
-    public Id nextRequirement { get; set; }
-    public Id prevRequirement { get; set; }
+    public String appStatus { get; set; }
+    public String appSubStatus { get; set; }
     public String template { get; set; }
 }

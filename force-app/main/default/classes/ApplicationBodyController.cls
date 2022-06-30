@@ -7,8 +7,6 @@ public with sharing class ApplicationBodyController {
 
     public EASYApplicationInfo appInfoParam { get; set; }
     public String currentPageName { get; set; }
-    public String appStatusAttribute { get; set; }
-    public String appSubStatusAttribute { get; set; }
 
     public ApplicationBodyController() {
     }
@@ -40,8 +38,8 @@ public with sharing class ApplicationBodyController {
         foundWidgets.contentTopWidgets = new List<EASY_Widget__c>();
         foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
-        if (String.isBlank(appStatusAttribute)) {
-            appStatusAttribute = 'none';
+        if (String.isBlank(appInfoParam.appStatus)) {
+            appInfoParam.appStatus = 'none';
         }
 
         // if (appInfoParam.appControl != null && String.isNotBlank(appInfoParam.appControlId)) {
@@ -63,10 +61,10 @@ public with sharing class ApplicationBodyController {
             }
         } else {
             atStatusMap.put(appInfoParam.at, new Set<String>{
-                    appStatusAttribute
+                    appInfoParam.appStatus
             });
             atSubStatusMap.put(appInfoParam.at, new Set<String>{
-                    appSubStatusAttribute
+                    appInfoParam.appSubStatus
             });
             appInfoIds.add(appInfoParam.appControlId);
         }
@@ -90,21 +88,18 @@ public with sharing class ApplicationBodyController {
 
         for (EASY_Widget__c widget : allPositionWidgets) {
             Boolean skipWidget = false;
-            if (String.isNotBlank(widget.Display_Widget_On_Status__c) && !appStatusAttribute.equalsIgnoreCase('none')) {
+            if (String.isNotBlank(widget.Display_Widget_On_Status__c) && !appInfoParam.appStatus.equalsIgnoreCase('none')) {
                 if (atStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
                     skipWidget = !doesListContainItem(new List<String>(atStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Status__c.split(';'));
-                    system.debug('status skip widget: ' + skipWidget);
                 }
             }
-            if (String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) && !appSubStatusAttribute.equalsIgnoreCase('none')) {
+            if (String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) && !appInfoParam.appSubStatus.equalsIgnoreCase('none')) {
                 if (atSubStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
                     skipWidget = !doesListContainItem(new List<String>(atStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Sub_Status__c.split(';'));
-                    system.debug('sub status skip widget: ' + skipWidget);
                 }
             }
             if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
                 skipWidget = true;
-                system.debug('page skip widget: ' + skipWidget);
             }
 
             if (!skipWidget) {

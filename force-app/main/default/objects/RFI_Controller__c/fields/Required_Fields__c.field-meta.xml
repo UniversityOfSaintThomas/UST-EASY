@@ -3,7 +3,7 @@
     <fullName>Required_Fields__c</fullName>
     <externalId>false</externalId>
     <label>Required Fields</label>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>

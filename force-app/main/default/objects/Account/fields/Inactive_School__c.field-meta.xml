@@ -7,6 +7,5 @@
     <inlineHelpText>This indicates that the School is no longer active</inlineHelpText>
     <label>Inactive School</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

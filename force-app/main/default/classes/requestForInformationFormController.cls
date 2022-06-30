@@ -63,7 +63,8 @@ public without sharing class requestForInformationFormController {
                     Citizenship_Type__c,
                     Fields_to_Display__c,
                     Required_Fields__c,
-                    Lead_Owner__c
+                    Lead_Owner__c,
+                    Redirect_URL__c
                 FROM RFI_Controller__c 
                 WHERE Name =: rfi_controller_name
                 LIMIT 1
@@ -85,14 +86,14 @@ public without sharing class requestForInformationFormController {
                 'WHERE RecordTypeId = \'' + recruitment_record_type_id + '\' ' +
                 'AND Academic_Level__c = \'' + academic_level + '\' ' +
                 'AND Program_Display__c INCLUDES (\'RFI\') ' +
-                'AND Active__c = true ';
+                'AND Active__c = true';
 
             if (school_college == 'Undergraduate') {
-                query_string += 'AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\')';
-            }
-            if (!String.isBlank(school_college)) {
-                query_string += ' AND ((Associated_Schools__c INCLUDES (\'' + school_college + '\') OR School_College__c = \'' + school_college + '\')' +
-                                        'OR (Associated_Schools__c = \'\' AND School_College__c = \'\'))';
+                query_string += ' AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\')';
+            } else if (school_college == 'School of Law') {
+                query_string += ' AND Banner_Program_Code__c LIKE \'LW_%\'';
+            } else if (!String.isBlank(school_college)) {
+                query_string += ' AND (Associated_Schools__c INCLUDES (\'' + school_college + '\') OR School_College__c = \'' + school_college + '\')';
             }
             if (!String.isBlank(citizenship_type)) {
                 query_string += ' AND (Citizenship__c = \'' + citizenship_type + '\' OR Citizenship__c = \'\')';
@@ -114,7 +115,8 @@ public without sharing class requestForInformationFormController {
                 SELECT
                     Id,
                     Name,
-                    hed__Start_Date__c
+                    hed__Start_Date__c,
+                    Academic_Year__c
                 FROM hed__Term__c
                 WHERE End_Application_Date__c >=: today
             ]);

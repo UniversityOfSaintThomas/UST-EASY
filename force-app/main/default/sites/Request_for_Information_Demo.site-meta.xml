@@ -23,8 +23,8 @@
     <masterLabel>Request for Information Demo</masterLabel>
     <redirectToCustomDomain>true</redirectToCustomDomain>
     <referrerPolicyOriginWhenCrossOrigin>true</referrerPolicyOriginWhenCrossOrigin>
-    <siteAdmin>test-lhglchgsrll9@example.com</siteAdmin>
-    <siteGuestRecordDefaultOwner>test-lhglchgsrll9@example.com</siteGuestRecordDefaultOwner>
+    <siteAdmin>test-wq3j9ejynzme@example.com</siteAdmin>
+    <siteGuestRecordDefaultOwner>test-wq3j9ejynzme@example.com</siteGuestRecordDefaultOwner>
     <siteTemplate>SiteTemplate</siteTemplate>
     <siteType>Visualforce</siteType>
 </CustomSite>

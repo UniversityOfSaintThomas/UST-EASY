@@ -15,7 +15,7 @@ import LEAD_OBJECT from '@salesforce/schema/Lead';
 import LEAD_FIRST_NAME from '@salesforce/schema/Lead.FirstName';
 import LEAD_TITLE from '@salesforce/schema/Lead.Title';
 import LEAD_ADMIT_TYPE from '@salesforce/schema/Lead.Admit_Type__c';
-import LEAD_CITIZENSHIP from '@salesforce/schema/Lead.Citizenship__c';
+import LEAD_CITIZENSHIP from '@salesforce/schema/Lead.Citizenship_Type__c';
 import LEAD_RECRUITMENT_PROGRAM from '@salesforce/schema/Lead.Recruitment_Program__c';
 import LEAD_EMAIL from '@salesforce/schema/Lead.Email';
 import LEAD_PHONE from '@salesforce/schema/Lead.Phone';
@@ -30,6 +30,11 @@ import LEAD_STATE from '@salesforce/schema/Lead.State';
 import LEAD_POSTAL_CODE from '@salesforce/schema/Lead.PostalCode';
 import LEAD_COUNTRY from '@salesforce/schema/Lead.Country';
 import LEAD_ACCOUNT from '@salesforce/schema/Lead.Affiliated_Account__c';
+import LEAD_HIGH_SCHOOL_GRAD_YEAR from '@salesforce/schema/Lead.Expected_Graduate_Date__c';
+import LEAD_TIMELINE from '@salesforce/schema/Lead.Timeline__c';
+import LEAD_QUESTION from '@salesforce/schema/Lead.Has_Question__c';
+import LEAD_DESCRIPTION from '@salesforce/schema/Lead.Description';
+import LEAD_MAIL_INFO from '@salesforce/schema/Lead.Mail_Information_Requested__c';
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
@@ -59,7 +64,12 @@ const ADDITIONAL_FIELDS = [
     LEAD_STATE,
     LEAD_POSTAL_CODE,
     LEAD_COUNTRY,
-    LEAD_ACCOUNT
+    LEAD_ACCOUNT,
+    LEAD_HIGH_SCHOOL_GRAD_YEAR,
+    LEAD_TIMELINE,
+    LEAD_QUESTION,
+    LEAD_DESCRIPTION,
+    LEAD_MAIL_INFO
 ]
 
 const lookup_fields = [
@@ -69,13 +79,15 @@ const lookup_fields = [
 ]
 
 export default class RequestForInformationForm extends LightningElement {
-    // RFI controller info
+    // // RFI controller info
     @api rfi_controller = 'RFI Controller 0000';
     academic_level;
     academic_level_api;
     school_college_title;
     school_college;
     citizenship_type;
+    lead_owner;
+    redirect_url;
     fields_to_display; //use to determine which fields on form to display
     required_fields; //used for validating input
 
@@ -92,35 +104,60 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_spinner = true;
     @track manually_enter_high_school = false;
     @track high_school_data = false;
-    @track show_address_3 = false;
 
     //RFI controller determined booleans
     @track show_fields = {
-        'Academic_Interest' : false,
-        'Academic_Term' : false,
-        'Address_fields' : false,
-        'Admit_Type' : false,
-        'Birthdate' : false,
-        'Citizenship' : false,
-        'Email' : false,
-        'High_School_Attended' : false,
-        'Phone_fields' : false,
+        'Admit_Type': false,
+        'Citizenship': false,
+        'Academic_Interest': false,
+        'Title': false,
+        'Email': false,
+        'Home_and_Mobile_Phone': false,
+        'Opt_in_to_text_messages': false,
+        'Birthdate': false,
         'Employer': false,
-        'Title': false
+        'Academic_Term': false,
+        'High_School_Attended': false,
+        'Address_1': false,
+        'Address_2': false,
+        'Address_3': false,
+        'City': false,
+        'State': false,
+        'Zipcode': false,
+        'Country': false,
+        'High_School_Graduation_Year': false,
+        'Timeline_to_Enrollment': false,
+        'I_have_a_question': false,
+        'Description': false,
+        'I_would_like_program_information_to_be_mailed_to_me': false,
+        'I_will_apply_to_St_Thomas_Law_as_a': false,
+        'When_do_you_plan_to_start_school': false
     }
 
     @track require_fields = {
-        'Academic_Interest' : false,
-        'Academic_Term' : false,
-        'Address_fields' : false,
-        'Admit_Type' : false,
-        'Birthdate' : false,
-        'Citizenship' : false,
-        'Email' : false,
-        'High_School_Attended' : false,
-        'Phone_fields' : false,
+        'Admit_Type': false,
+        'Citizenship': false,
+        'Academic_Interest': false,
+        'Title': false,
+        'Email': false,
+        'Home_and_Mobile_Phone': false,
+        'Opt_in_to_text_messages': false,
+        'Birthdate': false,
         'Employer': false,
-        'Title': false
+        'Academic_Term': false,
+        'High_School_Attended': false,
+        'Address_1': false,
+        'Address_2': false,
+        'Address_3': false,
+        'City': false,
+        'State': false,
+        'Zipcode': false,
+        'Country': false,
+        'High_School_Graduation_Year': false,
+        'Timeline_to_Enrollment': false,
+        'I_have_a_question': false,
+        'I_will_apply_to_St_Thomas_Law_as_a': false,
+        'When_do_you_plan_to_start_school': false
     }
 
     record_input; // stores user enter form information
@@ -149,7 +186,14 @@ export default class RequestForInformationForm extends LightningElement {
         'high_school_not_found_label' : 'I can\'t find my High School',
         'high_school_datatable_name' : 'High School Datatable',
         'employer_label': 'Employer',
-        'title_label': 'Title'
+        'title_label': 'Title',
+        'high_school_graduation_year_label': 'High School Graduation (YYYY)',
+        'timeline_label': 'Timeline to Enrollment',
+        'has_question_label': 'I have a question',
+        'description_label': 'Questions/Comments',
+        'mail_info_label': 'I would like program information to be mailed to me',
+        'apply_law_school_label': 'I will apply to St. Thomas Law as a',
+        'plan_to_start_label': 'When do you plan to start school?'
     }
 
     //picklist values
@@ -161,6 +205,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track academic_term_picklist_values;
     @track academic_interest_picklist_values;
     @track high_school_search_results; // populate via SOSL
+    @track timeline_picklist_values;
 
     //intermediate values
     address1;
@@ -168,7 +213,7 @@ export default class RequestForInformationForm extends LightningElement {
     address3;
     new_account; // used to create new account high school not found
     new_account_id;
-
+    
     //high school datatable columns
     high_school_columns = [
         { label: 'Name', fieldName: 'name', type: 'text' },
@@ -188,13 +233,11 @@ export default class RequestForInformationForm extends LightningElement {
                         this.school_college_title = 'from the ' + result.data.School_College__c;
                 }
                 this.school_college = result.data.School_College__c;
-                if (this.school_college == 'School of Law') {
-                    this.show_address_3 = true;
-                }
                 this.citizenship_type = result.data.Citizenship_Type__c;
                 this.fields_to_display = result.data.Fields_to_Display__c;
                 this.required_fields = result.data.Required_Fields__c;
                 this.lead_owner = result.data.Lead_Owner__c;
+                this.redirect_url = result.data.Redirect_URL__c;
                 // sets boolean values for front-end display i.e. which fields on are form, which are required
                 this.handleFieldsToDisplay();
                 this.handleRequiredFields();
@@ -206,7 +249,7 @@ export default class RequestForInformationForm extends LightningElement {
                 .catch(error => {
                     console.log(error);
                 });
-                if (this.academic_level_api != undefined) {
+                if (Boolean(this.academic_level_api)) {
                     // gets programs based on academic level
                     getAcademicPrograms({academic_level: this.academic_level_api, school_college: this.school_college, citizenship_type: this.citizenship_type})
                     .then((programs) => {
@@ -254,10 +297,18 @@ export default class RequestForInformationForm extends LightningElement {
             if (result.data.length != 0) {
                 this.term_id_to_name_map = result.data;
                 var values = [];
-                for (const term in result.data) {
-                    values.push(
-                        {label: result.data[term].Name, value: result.data[term].Id}
-                    );
+                if (this.school_college == 'School of Law' && this.show_fields.When_do_you_plan_to_start_school == true) {
+                    for (const term in result.data) {
+                        values.push(
+                            {label: result.data[term].Academic_Year__c, value: result.data[term].Id}
+                        );
+                    } 
+                } else {
+                    for (const term in result.data) {
+                        values.push(
+                            {label: result.data[term].Name, value: result.data[term].Id}
+                        );
+                    }
                 }
                 this.academic_term_picklist_values = values;
             }
@@ -282,9 +333,10 @@ export default class RequestForInformationForm extends LightningElement {
     @wire(getPicklistValuesByRecordType, { objectApiName: LEAD_OBJECT, recordTypeId: '$lead_default_record_type' })
     picklist_values(result) {
         if (result.data) {
-            this.citizenship_picklist_values = result.data.picklistFieldValues.Citizenship__c.values;
+            this.citizenship_picklist_values = result.data.picklistFieldValues.Citizenship_Type__c.values;
             this.country_picklist_values = result.data.picklistFieldValues.hed__Citizenship__c.values;
             this.admit_type_picklist_values = result.data.picklistFieldValues.Admit_Type__c.values;
+            this.timeline_picklist_values = result.data.picklistFieldValues.Timeline__c.values;
         } else {
             console.log(result.error);
         }
@@ -339,7 +391,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.Birthdate__c = event.target.value;
                 break;
             case this.field_labels.citizenship_label:
-                this.record_input.fields.Citizenship__c = event.target.value;
+                this.record_input.fields.Citizenship_Type__c = event.target.value;
                 break;
             case this.field_labels.admit_type_label:
                 this.record_input.fields.Admit_Type__c = event.target.value;
@@ -370,6 +422,28 @@ export default class RequestForInformationForm extends LightningElement {
             case this.field_labels.title_label:
                 this.record_input.fields.Title = event.target.value;
                 break;
+            case this.field_labels.high_school_graduation_year_label:
+                this.record_input.fields.Expected_Graduate_Date__c = event.target.value;
+                break;
+            case this.field_labels.timeline_label:
+                this.record_input.fields.Timeline__c = event.target.value;
+                break;
+            case this.field_labels.has_question_label:
+                this.record_input.fields.Has_Question__c = event.target.checked;
+                this.show_fields.Description = event.target.checked;
+                break;
+            case this.field_labels.description_label:
+                this.record_input.fields.Description = event.target.value;
+                break;
+            case this.field_labels.mail_info_label:
+                this.record_input.fields.Mail_Information_Requested__c = event.target.checked;
+                break;
+            case this.field_labels.apply_law_school_label:
+                this.record_input.fields.Recruitment_Program__c = event.target.value;
+                break;
+            case this.field_labels.plan_to_start_label:
+                this.record_input.fields.Term__c = event.target.value;
+                break;
             default:
                 break;
         }
@@ -379,7 +453,6 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
             this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
-
         console.log(this.record_input);
     }
 
@@ -387,17 +460,20 @@ export default class RequestForInformationForm extends LightningElement {
         if (this.validateInput()) {
             this.record_input.fields.OwnerId = this.lead_owner;
             this.show_spinner = true;
+            if (Boolean(this.record_input.fields.Description)) {
+                this.record_input.fields.Description = 'Questions/Comments from RFI: ' + this.record_input.fields.Description;
+            }
             this.handleStreetAddress();
             createAccount({ account_name : this.new_account, owner_id: this.lead_owner}) 
             .then(account_id => {
-                if (account_id != '') {
+                if (Boolean(account_id)) {
                     this.record_input.fields.Affiliated_Account__c = account_id;
                 }
                 createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
                 .then(() => {
                     // redirect
-                    console.log('Success!');
                     this.show_spinner = false;
+                    console.log(this.record_input);
                 })
                 .catch(error => {
                     console.log(error);
@@ -431,10 +507,8 @@ export default class RequestForInformationForm extends LightningElement {
         }, true);
 
         if (allValid) {
-            console.log('Fields good to go!');
             return true;
         } else {
-            console.log('Missing fields.');
             return false;
         }
     }
@@ -448,10 +522,8 @@ export default class RequestForInformationForm extends LightningElement {
         }, true);
 
         if (allValid) {
-            console.log('Comboboxes good to go!');
             return true;
         } else {
-            console.log('Missing comboboxes.');
             return false;
         }
     }
@@ -487,7 +559,6 @@ export default class RequestForInformationForm extends LightningElement {
             for (const relationship_name of lookup_fields) {
                 delete this.record_input.fields[relationship_name];         
             }
-            console.log(this.record_input);
         } else {
             console.log(result.error);
         }
@@ -503,11 +574,11 @@ export default class RequestForInformationForm extends LightningElement {
                     var values = [];
                     for (const school in high_schools) {
                         var address_info;
-                        if (high_schools[school].BillingCity != null && high_schools[school].BillingState != null) {
+                        if (Boolean(high_schools[school].BillingCity) && Boolean(high_schools[school].BillingState)) {
                             address_info = high_schools[school].BillingCity + ', ' + high_schools[school].BillingState;
-                        } else if (high_schools[school].BillingCity != null && high_schools[school].BillingCountry != null) {
+                        } else if (Boolean(high_schools[school].BillingCity) && Boolean(high_schools[school].BillingCountry)) {
                             address_info = high_schools[school].BillingCity + ', ' + high_schools[school].BillingCountry;
-                        } else if (high_schools[school].BillingCountry != null) {
+                        } else if (Boolean(high_schools[school].BillingCountry)) {
                             address_info = high_schools[school].BillingCountry;
                         } else {
                             address_info = 'Unknown';

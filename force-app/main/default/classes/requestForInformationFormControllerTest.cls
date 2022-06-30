@@ -12,14 +12,13 @@ public class requestForInformationFormControllerTest {
 
     @isTest
     public static void testCreateLead() {
-        String record_input = '{"apiName": "Lead",' + '"fields": {'
-        + '"FirstName": "Testing",'
-        + '"LastName": "CreateLead",'
-        + '"Company": "Company 1234"'
-        + '}'
-        + '}';
+        String record_input_fields = '"fields": {'
+                                    + '"FirstName": "Testing",'
+                                    + '"LastName": "CreateLead",'
+                                    + '"Company": "Company 1234"'
+                                    + '}';
         Test.startTest();
-        requestForInformationFormController.createLead(record_input, 'Lead');
+        requestForInformationFormController.createLead(record_input_fields, 'Lead');
         Test.stopTest();
         List<Lead> new_lead = [SELECT Id FROM Lead WHERE LastName = 'CreateLead'];
         System.assertEquals(1, new_lead.size());
@@ -28,11 +27,10 @@ public class requestForInformationFormControllerTest {
 
     @isTest
     public static void testGetRFIController() {
-        RFI_Controller__c rfic = [SELECT Name FROM RFI_Controller__c LIMIT 1];
-        System.debug(rfic);
+        RFI_Controller__c rfic = [SELECT Name FROM RFI_Controller__c];
         Test.startTest();
-        RFI_Controller__c controller = requestForInformationFormController.getRFIController('RFI Controller-{0000}');
+        RFI_Controller__c controller = requestForInformationFormController.getRFIController(rfic.Name);
         Test.stopTest();
-        System.assertEquals('Undergraduate', controller.Academic_Level__c);
+        System.assertEquals('U', controller.Academic_Level__c);
     }
 }

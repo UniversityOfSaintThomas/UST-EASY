@@ -7,6 +7,5 @@
     <inlineHelpText>Banner Valid Major Indicator</inlineHelpText>
     <label>Valid Major</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

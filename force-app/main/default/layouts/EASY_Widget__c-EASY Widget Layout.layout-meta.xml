@@ -11,6 +11,10 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Application_Control__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Widget_Type__c</field>
             </layoutItems>
@@ -29,10 +33,6 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Application_Control__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Sort_Order__c</field>
             </layoutItems>
@@ -43,6 +43,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Display_Widget_On_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Display_Widget_On_Sub_Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

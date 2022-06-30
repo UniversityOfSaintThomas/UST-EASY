@@ -21,7 +21,7 @@
             </script>
         </apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}" appStatus="{!app.Application_Status__c}">
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}" appStatus="{!app.Application_Status__c}" appSubStatus="{!app.Application_Substatus__c}">
                 <c:ApplicationForm section="{!section}" rendered="{!!isInvalid}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}">
 
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">

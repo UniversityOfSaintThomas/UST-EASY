@@ -22,9 +22,7 @@ public with sharing class ApplicationBodyController {
 
     public allWidgets getWidgets() {
         List<String> pagesWithMultipleAppInfo = new List<String>{
-                'ApplicationPortal',
-                'ApplicationCreate',
-                'ApplicationRegistration'
+                'ApplicationPortal'
         };
         Set<Id> appInfoIds = new Set<Id>();
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();

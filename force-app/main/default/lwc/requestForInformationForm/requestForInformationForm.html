@@ -17,14 +17,14 @@
         <!-- BEGIN FORM -->
         <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
             <!-- ROW 0 -->
-            <template if:true={show_fields.Admit_Type}>
+            <template if:true={show_fields.I_will_apply_to_St_Thomas_as_a}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <lightning-combobox
-                            required={require_fields.Admit_Type}
+                            required={require_fields.I_will_apply_to_St_Thomas_as_a}
                             label={field_labels.admit_type_label}
                             options={admit_type_picklist_values}
-                            aria-label="Admit Type"
+                            aria-label="I will apply to St. Thomas as a"
                             onchange={onChange}>
                         </lightning-combobox>
                     </div>
@@ -112,7 +112,7 @@
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-input
-                            required={require_fields.Home_and_Mobile_Phone}
+                            required={require_fields.Home_Phone}
                             type="tel" 
                             label={field_labels.home_phone_label}
                             aria-label="Home Phone"
@@ -121,7 +121,7 @@
                     </div>
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-input 
-                            required={require_fields.Home_and_Mobile_Phone}
+                            required={require_fields.Mobile_Phone}
                             type="tel" 
                             label={field_labels.mobile_phone_label}
                             aria-label="Mobile Phone"
@@ -131,13 +131,13 @@
                 </div> 
             </template>
             <!-- ROW 5 -->
-            <template if:true={show_fields.Opt_in_to_text_messages}>
+            <template if:true={show_fields.I_would_like_to_receive_text_messages}>
                 <div class="slds-grid slds-gutters_medium slds-p-top_xx-small">
                     <div class="slds-col">
                         <lightning-input 
                             type="checkbox" 
                             label={field_labels.text_messages_label}
-                            aria-label="Opt-in to text messages"
+                            aria-label="I would like to receive text messages"
                             onchange={onChange}>
                         </lightning-input>
                     </div>
@@ -172,11 +172,11 @@
                 </div>
             </template>
             <!-- ROW 6 -->
-            <template if:true={show_fields.Academic_Term}>
+            <template if:true={show_fields.Expected_Start_Term_at_St_Thomas}>
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col">
                         <lightning-combobox
-                            required={require_fields.Academic_Term}
+                            required={require_fields.Expected_Start_Term_at_St_Thomas}
                             label={field_labels.academic_term_label}
                             options={academic_term_picklist_values}
                             aria-label="Academic Term"
@@ -212,8 +212,7 @@
                                     aria-label="High School Attended"
                                     placeholder="Begin typing..."
                                     onchange={handleSearch}
-                                    data-id="high_school"
-                                    is-loading>
+                                    data-id="high_school">
                                 </lightning-input>
                             </div>
                             <template if:true={high_school_data}>

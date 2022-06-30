@@ -107,16 +107,16 @@ export default class RequestForInformationForm extends LightningElement {
 
     //RFI controller determined booleans
     @track show_fields = {
-        'Admit_Type': false,
+        'I_will_apply_to_St_Thomas_as_a': false,
         'Citizenship': false,
         'Academic_Interest': false,
         'Title': false,
         'Email': false,
         'Home_and_Mobile_Phone': false,
-        'Opt_in_to_text_messages': false,
+        'I_would_like_to_receive_text_messages': false,
         'Birthdate': false,
         'Employer': false,
-        'Academic_Term': false,
+        'Expected_Start_Term_at_St_Thomas': false,
         'High_School_Attended': false,
         'Address_1': false,
         'Address_2': false,
@@ -135,16 +135,16 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     @track require_fields = {
-        'Admit_Type': false,
+        'I_will_apply_to_St_Thomas_as_a': false,
         'Citizenship': false,
         'Academic_Interest': false,
         'Title': false,
         'Email': false,
-        'Home_and_Mobile_Phone': false,
-        'Opt_in_to_text_messages': false,
+        'Home_Phone': false,
+        'Mobile_Phone': false,
         'Birthdate': false,
         'Employer': false,
-        'Academic_Term': false,
+        'Expected_Start_Term_at_St_Thomas': false,
         'High_School_Attended': false,
         'Address_1': false,
         'Address_2': false,
@@ -225,9 +225,9 @@ export default class RequestForInformationForm extends LightningElement {
     @wire(getRFIController, { rfi_controller_name: '$rfi_controller' })
     rfi(result) {
         if (result.data) {
-            if (result.data.length != 0) {
+            if (Boolean(result.data)) {
                 this.academic_level_api = result.data.Academic_Level__c;
-                if (result.data.School_College__c.length 
+                if (Boolean(result.data.School_College__c)
                     && result.data.School_College__c != 'Graduate' 
                     && result.data.School_College__c != 'Undergraduate') {
                         this.school_college_title = 'from the ' + result.data.School_College__c;
@@ -294,7 +294,7 @@ export default class RequestForInformationForm extends LightningElement {
     @wire(getAcademicTerms)
     academic_terms(result) {
         if (result.data) {
-            if (result.data.length != 0) {
+            if (Boolean(result.data)) {
                 this.term_id_to_name_map = result.data;
                 var values = [];
                 if (this.school_college == 'School of Law' && this.show_fields.When_do_you_plan_to_start_school == true) {
@@ -568,7 +568,7 @@ export default class RequestForInformationForm extends LightningElement {
         if (JSON.stringify(event.target.value).length > 4) {
             searchHighSchools({ search_term : event.target.value })
             .then((high_schools) => {
-                if (Object.keys(high_schools).length != 0) {
+                if (Boolean(Object.keys(high_schools))) {
                     this.high_school_data = true;
                     this.account_id_to_name_map = high_schools;
                     var values = [];

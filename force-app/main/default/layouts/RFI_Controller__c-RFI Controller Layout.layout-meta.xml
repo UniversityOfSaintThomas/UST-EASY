@@ -16,21 +16,29 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>Academic_Level__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Fields_to_Display__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Citizenship_Type__c</field>
+                <behavior>Required</behavior>
+                <field>Redirect_URL__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>OwnerId</field>
+                <field>Descriptive_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Academic_Level__c</field>
+                <behavior>Edit</behavior>
+                <field>Citizenship_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>School_College__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -38,7 +46,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>School_College__c</field>
+                <field>OwnerId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

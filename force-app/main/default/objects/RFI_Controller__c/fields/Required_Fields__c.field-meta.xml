@@ -9,26 +9,26 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Academic Interest</fullName>
                 <default>false</default>
                 <label>Academic Interest</label>
             </value>
             <value>
-                <fullName>Academic Term</fullName>
+                <fullName>Address 1</fullName>
                 <default>false</default>
-                <label>Academic Term</label>
+                <label>Address 1</label>
             </value>
             <value>
-                <fullName>Address fields</fullName>
+                <fullName>Address 2</fullName>
                 <default>false</default>
-                <label>Address fields</label>
+                <label>Address 2</label>
             </value>
             <value>
-                <fullName>Admit Type</fullName>
+                <fullName>Address 3</fullName>
                 <default>false</default>
-                <label>Admit Type</label>
+                <label>Address 3</label>
             </value>
             <value>
                 <fullName>Birthdate</fullName>
@@ -41,19 +41,19 @@
                 <label>Citizenship</label>
             </value>
             <value>
+                <fullName>City</fullName>
+                <default>false</default>
+                <label>City</label>
+            </value>
+            <value>
+                <fullName>Country</fullName>
+                <default>false</default>
+                <label>Country</label>
+            </value>
+            <value>
                 <fullName>Email</fullName>
                 <default>false</default>
                 <label>Email</label>
-            </value>
-            <value>
-                <fullName>High School Attended</fullName>
-                <default>false</default>
-                <label>High School Attended</label>
-            </value>
-            <value>
-                <fullName>Phone fields</fullName>
-                <default>false</default>
-                <label>Phone fields</label>
             </value>
             <value>
                 <fullName>Employer</fullName>
@@ -61,9 +61,64 @@
                 <label>Employer</label>
             </value>
             <value>
+                <fullName>Expected Start Term at St Thomas</fullName>
+                <default>false</default>
+                <label>Expected Start Term at St Thomas</label>
+            </value>
+            <value>
+                <fullName>High School Attended</fullName>
+                <default>false</default>
+                <label>High School Attended</label>
+            </value>
+            <value>
+                <fullName>High School Graduation Year</fullName>
+                <default>false</default>
+                <label>High School Graduation Year</label>
+            </value>
+            <value>
+                <fullName>Home Phone</fullName>
+                <default>false</default>
+                <label>Home Phone</label>
+            </value>
+            <value>
+                <fullName>I will apply to St Thomas as a</fullName>
+                <default>false</default>
+                <label>I will apply to St Thomas as a</label>
+            </value>
+            <value>
+                <fullName>I will apply to St Thomas Law as a</fullName>
+                <default>false</default>
+                <label>I will apply to St Thomas Law as a</label>
+            </value>
+            <value>
+                <fullName>Mobile Phone</fullName>
+                <default>false</default>
+                <label>Mobile Phone</label>
+            </value>
+            <value>
+                <fullName>State</fullName>
+                <default>false</default>
+                <label>State</label>
+            </value>
+            <value>
+                <fullName>Timeline to Enrollment</fullName>
+                <default>false</default>
+                <label>Timeline to Enrollment</label>
+            </value>
+            <value>
                 <fullName>Title</fullName>
                 <default>false</default>
                 <label>Title</label>
+            </value>
+            <value>
+                <fullName>When do you plan to start school</fullName>
+                <default>false</default>
+                <label>When do you plan to start school</label>
+            </value>
+            <value>
+                <fullName>Zipcode</fullName>
+                <default>false</default>
+                <label>Zipcode</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -104,6 +104,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track show_spinner = true;
     @track manually_enter_high_school = false;
     @track high_school_data = false;
+    @track form_submitted_successfully = false;
 
     //RFI controller determined booleans
     @track show_fields = {
@@ -473,7 +474,9 @@ export default class RequestForInformationForm extends LightningElement {
                 .then(() => {
                     // redirect
                     this.show_spinner = false;
+                    this.form_submitted_successfully = true;
                     console.log(this.record_input);
+                    window.open(this.redirect_url, '_self');
                 })
                 .catch(error => {
                     console.log(error);

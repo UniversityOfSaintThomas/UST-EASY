@@ -28,8 +28,8 @@ public class ApplicationPortal_TEST {
         pr.getParameters().put('contactId', student.Id);
         Test.setCurrentPage(pr);
         ApplicationPortal ap = new ApplicationPortal();
-        Application_Control__c appControl = ap.appInfo.appControl;
-        System.assertNotEquals(null,appControl);
+        //Application_Control__c appControl = ap.appInfo.appControl;
+        //System.assertNotEquals(null,appControl);
         System.assertEquals(1,ap.applicationsByIds.size());
     }
 }

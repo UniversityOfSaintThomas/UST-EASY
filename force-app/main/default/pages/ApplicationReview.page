@@ -14,12 +14,12 @@
         <div class="container-fluid" >
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <h1 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:600;font-size:36px;margin-bottom:20px;margin-top:30px;" >Application Review</h1>
+                    <h1 style="" >Application Review</h1>
                 </div>
             </div>
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;" />
+                    <hr />
                 </div>
             </div>
             <div class="row" >
@@ -30,7 +30,7 @@
                                 <div role="listbox">
                                     <div class="item active" >
                                         <apex:repeat value="{!$ObjectType.Application_Review__c.FieldSets.Application_Review_Header}" var="f">
-                                            <c:ApplicationField question="{!questionHolderMap[f.fieldPath]}" obj="{!review}" appControl="{!appControl}"/>
+                                            <c:ApplicationField question="{!questionHolderMap[f.fieldPath]}" obj="{!review}" appInfo="{!appInfo}"/>
                                         </apex:repeat>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
             </div>
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <apex:commandLink styleClass="btn-lightning btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" rerender="themessages" action="{!submit}" onclick="appShowLoadingSpinner();"/>
+                    <apex:commandLink styleClass="btn-lightning btn-lg" value="Save" rerender="themessages" action="{!submit}" onclick="appShowLoadingSpinner();"/>
                 </div>
             </div> 
         </div>

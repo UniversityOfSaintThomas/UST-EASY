@@ -35,6 +35,7 @@ import LEAD_TIMELINE from '@salesforce/schema/Lead.Timeline__c';
 import LEAD_QUESTION from '@salesforce/schema/Lead.Has_Question__c';
 import LEAD_DESCRIPTION from '@salesforce/schema/Lead.Description';
 import LEAD_MAIL_INFO from '@salesforce/schema/Lead.Mail_Information_Requested__c';
+import LEAD_COLLEGE_SCHOOL from '@salesforce/schema/Lead.St_Thomas_College_School__c';
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
@@ -45,6 +46,7 @@ import getAcademicLevelValue from '@salesforce/apex/requestForInformationFormCon
 import createLead from '@salesforce/apex/requestForInformationFormController.createLead';
 import createAccount from '@salesforce/apex/requestForInformationFormController.createAccount';
 import getPresetValues from '@salesforce/apex/requestForInformationFormController.getPresetValues';
+import getDepartmentAccount from '@salesforce/apex/requestForInformationFormController.getDepartmentAccount';
 
 const ADDITIONAL_FIELDS = [
     LEAD_FIRST_NAME,
@@ -69,7 +71,8 @@ const ADDITIONAL_FIELDS = [
     LEAD_TIMELINE,
     LEAD_QUESTION,
     LEAD_DESCRIPTION,
-    LEAD_MAIL_INFO
+    LEAD_MAIL_INFO,
+    LEAD_COLLEGE_SCHOOL
 ]
 
 const lookup_fields = [
@@ -174,7 +177,7 @@ export default class RequestForInformationForm extends LightningElement {
         'home_phone_label' : 'Home Phone',
         'mobile_phone_label' : 'Mobile Phone',
         'text_messages_label' : 'I would like to receive text messages',
-        'birthdate_label' : 'Birthdate',
+        'birthdate_label' : 'Birthday (MM/DD/YYYY)',
         'address1_label' : 'Address 1',
         'address2_label' : 'Address 2',
         'address3_label' : 'Address 3',
@@ -444,6 +447,7 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.plan_to_start_label:
                 this.record_input.fields.Term__c = event.target.value;
+                this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].hed__Start_Date__c;
                 break;
             default:
                 break;
@@ -454,7 +458,6 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
             this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
-        console.log(this.record_input);
     }
 
     handleSubmit() {
@@ -465,6 +468,13 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.Description = 'Questions/Comments from RFI: ' + this.record_input.fields.Description;
             }
             this.handleStreetAddress();
+            getDepartmentAccount({department_name : this.school_college})
+            .then(department_id => {
+                this.record_input.fields.St_Thomas_College_School__c = department_id;
+            }) 
+            .catch(error => {
+                console.log(error);
+            })
             createAccount({ account_name : this.new_account, owner_id: this.lead_owner}) 
             .then(account_id => {
                 if (Boolean(account_id)) {
@@ -562,6 +572,7 @@ export default class RequestForInformationForm extends LightningElement {
             for (const relationship_name of lookup_fields) {
                 delete this.record_input.fields[relationship_name];         
             }
+            console.log(JSON.stringify(this.record_input));
         } else {
             console.log(result.error);
         }

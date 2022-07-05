@@ -182,4 +182,24 @@ public without sharing class requestForInformationFormController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled
+    public static Id getDepartmentAccount(String department_name){
+        try {
+            Id return_id;
+            Id uni_department_record_type_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('University_Department').getRecordTypeId();
+            List<Account> department_accounts = [
+                SELECT Id 
+                FROM Account 
+                WHERE Name =: department_name 
+                AND RecordTypeId =: uni_department_record_type_id
+            ];
+            if (department_accounts.size() > 0) {
+                return_id = department_accounts[0].Id;
+            } 
+            return return_id;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }

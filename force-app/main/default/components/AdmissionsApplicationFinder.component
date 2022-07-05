@@ -7,7 +7,7 @@
     <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
     <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <apex:form>
+        <apex:form >
             <apex:actionFunction name="selectSchool" reRender="appArea">
                 <apex:param name="p1" assignTo="{!selectedSchool}" value=""/>
             </apex:actionFunction>

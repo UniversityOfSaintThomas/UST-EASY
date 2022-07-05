@@ -22,35 +22,17 @@ public class ApplicationCreate {
 
     public ApplicationCreate() {
         if (appInfo == null) {
-            appInfo = createShellAppInfo();
+            appInfo = ApplicationUtilities.createShellAppInfo();
         }
-    }
-
-    public EASYApplicationInfo createShellAppInfo() {
-        appInfo = new EASYApplicationInfo();
-        Application_Control__c appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
-        appInfo.contactId = ApplicationUtilities.getAppContactId();
-        appInfo.appControl = appControl;
-        appInfo.at = appControl.URL_Parameter__c;
-        appInfo.appControlId = appControl.Id;
-        appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
-        appInfo.allowSubmit = true;
-        if (String.isNotBlank(appControl.Template__c)) {
-            appInfo.template = appControl.Template__c;
-        } else {
-            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-            appInfo.template = AppSettings.Default_Template__c;
-        }
-        return appInfo;
     }
 
     public PageReference ApplicationCreateInit() {
 
         if (appInfo == null) {
-            appInfo = createShellAppInfo();
+            appInfo = ApplicationUtilities.createShellAppInfo();
         }
         // Exit if there is no Application Control to reference
-        if (appInfo.appControl == null) {
+        if (String.isBlank(appInfo.appControlId)) {
             return null;
         }
 
@@ -70,13 +52,11 @@ public class ApplicationCreate {
     public void applicationCreateSetup(ApplicationQuestionGroup firstGroup, ApplicationQuestionGroup lastGroup) {
 
         // Initialize contact and application
-        Id appControlId = appInfo.appControl.Id;
+        Id appControlId = appInfo.appControlId;
         Id contactId = appInfo.contactId;
 
-        System.debug(JSON.serializePretty(appInfo));
-
         con = new Contact();
-        app = new Application__c(Application_Control__c = appControlId, Application_Status__c = appInfo.appControl.Application_Start_Status__c);
+        app = new Application__c(Application_Control__c = appControlId, Application_Status__c = appInfo.appStartStatus);
         appInfo.appId = app.id;
 
         // List of question groups to display
@@ -112,7 +92,6 @@ public class ApplicationCreate {
                 ORDER BY Display_Order__c ASC NULLS LAST
         ];
 
-        System.debug(JSON.serializePretty(items));
         // Query for contact if we have one
         if (contactId != null) {
 
@@ -152,7 +131,7 @@ public class ApplicationCreate {
         ApplicationQuestion programQuestion;
 
         // Add term and program questions if not hidden
-        if (!appInfo.appControl.Hide_Term_Program__c) {
+        if (!appInfo.hideTermProgram) {
 
             // Get map of intended programs with id as key, and only for a specific Application Control
             List<Program__c> programs = [
@@ -330,7 +309,7 @@ public class ApplicationCreate {
         section.pushValuesToObjects();
 
         // Check to see if term/program are valid if not hidden
-        if (!appInfo.appControl.Hide_Term_Program__c) {
+        if (!appInfo.hideTermProgram) {
 
             // Throw exception if invalid program was selected
             String programError = 'The selected program is not available.';
@@ -447,7 +426,7 @@ public class ApplicationCreate {
         upsert qResponses; // Insert question responses
 
         // Return URL for checklist page for new application
-        appInfo = ApplicationUtilities.setApplicationInfo(appInfo.appControl, app);
+        appInfo = ApplicationUtilities.setApplicationInfo(appInfo, app);
         ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
         return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appInfo.at) ? '' : ('&at=' + appInfo.at));
     }

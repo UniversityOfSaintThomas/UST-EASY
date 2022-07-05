@@ -19,7 +19,7 @@ public class ApplicationRegistration {
     ********************************************************************************/
     public ApplicationRegistration() {
         userType = UserInfo.getUserType();
-        appInfo = createShellAppInfo();
+        appInfo = ApplicationUtilities.createShellAppInfo();
         cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
         if (cookieKeyPresent) {
 
@@ -29,7 +29,7 @@ public class ApplicationRegistration {
             extraFields = new Interaction__c();
 
             // Exit if there is no Application Control to reference
-            if (appInfo.appControl == null) {
+            if (String.isBlank(appInfo.appControlId)) {
                 return;
             }
 
@@ -60,24 +60,6 @@ public class ApplicationRegistration {
             // Setup other questions
             appCreate.applicationCreateSetup(firstGroup, lastGroup);
         }
-    }
-
-    public EASYApplicationInfo createShellAppInfo() {
-        appInfo = new EASYApplicationInfo();
-        Application_Control__c appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
-        appInfo.contactId = ApplicationUtilities.getAppContactId();
-        appInfo.appControl = appControl;
-        appInfo.at = appControl.URL_Parameter__c;
-        appInfo.appControlId = appControl.Id;
-        appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
-        appInfo.allowSubmit = true;
-        if (String.isNotBlank(appControl.Template__c)) {
-            appInfo.template = appControl.Template__c;
-        } else {
-            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-            appInfo.template = AppSettings.Default_Template__c;
-        }
-        return appInfo;
     }
 
     public PageReference testCookieKey() {

@@ -45,7 +45,7 @@ public with sharing class ApplicationBodyController {
             for (Application__c app : [
                     SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c
                     FROM Application__c
-                    WHERE contact__c = :appInfoParam.contactId
+                    WHERE Contact__c = :appInfoParam.contactId
             ]) {
                 appInfoIds.add(app.Application_Control__r.Id);
                 System.debug(app.Application_Control__r.URL_Parameter__c);
@@ -72,7 +72,8 @@ public with sharing class ApplicationBodyController {
             allPositionWidgets = [
                     SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
                             Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
-                            Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c
+                            Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_Start_Date__c,
+                            Activation_End_Date__c, Widget_Time_Zone__c, Activation_State__c
                     FROM EASY_Widget__c
                     WHERE Application_Control__c IN :appInfoIds
                     WITH SECURITY_ENFORCED
@@ -86,6 +87,19 @@ public with sharing class ApplicationBodyController {
 
         for (EASY_Widget__c widget : allPositionWidgets) {
             Boolean skipWidget = false;
+            If (String.IsBlank(widget.Activation_State__c)) {
+                skipWidget = true;
+            } else if (widget.Activation_State__c.endsWithIgnoreCase('Date activated')) {
+                if (widget.Activation_Start_Date__c != null) {
+                    System.debug(DateTime.Now());
+                    System.debug(widget.Activation_Start_Date__c);
+                }
+                if (widget.Activation_End_Date__c != null) {
+
+                }
+            }
+
+
             if (String.isNotBlank(widget.Display_Widget_On_Status__c) && !appInfoParam.appStatus.equalsIgnoreCase('none')) {
                 if (atStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
                     skipWidget = !doesListContainItem(new List<String>(atStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Status__c.split(';'));
@@ -96,8 +110,10 @@ public with sharing class ApplicationBodyController {
                     skipWidget = !doesListContainItem(new List<String>(atStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Sub_Status__c.split(';'));
                 }
             }
-            if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
-                skipWidget = true;
+            if (String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
+                if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
+                    skipWidget = true;
+                }
             }
 
             if (!skipWidget) {
@@ -138,13 +154,36 @@ public with sharing class ApplicationBodyController {
         return false;
     }
 
-    public string getVFPageName() {
-        String pageName = ApexPages.CurrentPage().getUrl();
+    public String getVFPageName() {
+        String pageName = ApexPages.currentPage().getUrl();
         pageName = pageName.replaceFirst('/apex/', '');
         pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');
-        string[] pageNameExtra = pageName.split('%3F', 0);
+        String[] pageNameExtra = pageName.split('%3F', 0);
         pageName = pageNameExtra[0];
         return pageName;
+    }
+
+    public Datetime adjustForTimeZone(Datetime dt, String timezoneString) {
+        timezoneString = getTimeZonePick(timezoneString);
+        //Get the current GMT time and adjust for our timezone
+        //tz = TimeZone.getTimeZone('America/Chicago');
+        //Timezone adjustment example below:
+        //Datetime NowDate = Datetime.now();
+        //NowDate = NowDate.addSeconds(tz.getOffset(NowDate)/1000);
+        //Central Daylight Time (America/Chicago)
+        TimeZone tz = TimeZone.getTimeZone(timezoneString);
+        dt = dt.addSeconds(tz.getOffset(dt) / 1000);
+        return dt;
+    }
+
+    public String getTimeZonePick(String pickListTimeZone) {
+        if (String.isNotBlank(pickListTimeZone)) {
+            if (pickListTimeZone.length() > 4) {
+                pickListTimeZone = pickListTimeZone.substring(pickListTimeZone.indexOf('(') + 1, pickListTimeZone.indexOf(')'));
+                return pickListTimeZone;
+            }
+        }
+        return '';
     }
 
 }

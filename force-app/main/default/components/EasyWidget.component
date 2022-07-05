@@ -31,6 +31,9 @@
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Progress Bar' }">
                 <c:ApplicationProgressBar appInfo="{!appInfo}" reqs="{!checklistItems}" widget="{!widget}"/>
             </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Finder' }">
+                <c:AdmissionsApplicationFinder appInfo="{!appInfo}" widget="{!widget}"/>
+            </apex:outputPanel>
         </div>
     </article>
 </apex:component>

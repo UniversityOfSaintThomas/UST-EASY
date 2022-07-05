@@ -80,7 +80,6 @@ public class ApplicationRequirement {
         if (appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
-        System.debug(appInfo);
     }
 
     public ApplicationRequirement(Id contactId, Id applicationId, Id requirementId, List<Requirement_Item__c> items, List<Requirement_Response__c> requirementResponses, List<Question_Response__c> questionResponses, List<Question_Dependency__c> questionDependencies) {
@@ -104,11 +103,11 @@ public class ApplicationRequirement {
     ********************************************************************************/
     public PageReference applicationRequirementInit() {
 
-        if (appInfo == null || appInfo.appControlId == null) {
+        if (appInfo == null || String.isNotBlank(appInfo.appControlId)) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
 
-        if (appInfo.appControl == null) {
+        if (String.isBlank(appInfo.appControlId)) {
             PageReference portalPage = Page.ApplicationPortal;
             return portalPage;
         }
@@ -133,7 +132,7 @@ public class ApplicationRequirement {
             String query = applicationHelper.getApplicationFields(items);
             query = 'SELECT ' + query + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
             app = ((List<Application__c>) Database.query(query)).get(0);
-            appControl = appInfo.appControl;
+            //TODO:  appControl = appInfo.appControl;
         }
 
         if (queryItems == true) {

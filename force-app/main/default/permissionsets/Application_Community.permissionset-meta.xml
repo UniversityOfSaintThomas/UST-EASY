@@ -401,6 +401,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>EASY_Widget__c.Activation_End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EASY_Widget__c.Activation_Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>EASY_Widget__c.Display_Heading__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -432,6 +442,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>EASY_Widget__c.Sort_Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EASY_Widget__c.Widget_Time_Zone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

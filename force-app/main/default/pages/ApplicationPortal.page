@@ -1,19 +1,18 @@
 <apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!applicationPortalInit}">
     <apex:composition template="{!template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead />
+            <c:ApplicationHead/>
         </apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="Application Portal" appInfo="{!appInfo}">
                 <apex:variable var="howManyApps" value="{!IF(!ISBLANK(applicationMapSize), applicationMapSize, 0)}"/>
                 <div class="slds-grid slds-wrap {!IF(howManyApps >= 2, ' slds-gutters','')}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <apex:pageMessages />
+                    <apex:pageMessages/>
                     <apex:variable var="checklistStyle" value="{!IF(howManyApps == 2, ' slds-large-size_6-of-12', ' slds-large-size_12-of-12')}"/>
                     <apex:variable var="checklistStyle" value="{!IF(howManyApps == 3, ' slds-large-size_4-of-12', checklistStyle)}"/>
                     <apex:repeat value="{!applicationsByIds}" var="key">
                         <apex:variable var="thisAppInfo" value="{!appInfoMapByAppId[key]}"/>
                         <apex:variable var="thisApp" value="{!applicationsByIds[key]}"/>
-                        <apex:variable var="thisAppControl" value="{!thisAppInfo.appControl}"/>
                         <apex:variable var="thisIntendedProgram" value="{!thisApp.Intended_Program__r}"/>
                         <apex:variable var="thisChecklist" value="{!checklistsByAppIds[key]}"/>
                         <div class="slds-col slds-size_1-of-1{!checklistStyle}">
@@ -26,7 +25,7 @@
                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#account')}"></use>
                                               </svg>
                                               <span class="slds-assistive-text">
-                                              <apex:outputPanel rendered="{!!thisAppControl.Hide_Term_Program__c}" layout="none">
+                                              <apex:outputPanel rendered="{!!thisAppInfo.hideTermProgram}" layout="none">
                                                 {!IF(ISBLANK( thisIntendedProgram.Program_Name_on_Application__c), thisIntendedProgram.Name, thisIntendedProgram.Program_Name_on_Application__c)}
                                                 </apex:outputPanel>
                                               </span>
@@ -36,11 +35,12 @@
                                             <h2 class="slds-card__header-title">
                                                 <a href="#" class="slds-card__header-link slds-truncate" title="Applications">
                                                     <span>
-                                                         <apex:outputPanel rendered="{!!thisAppControl.Hide_Term_Program__c}" layout="none">
+                                                         <apex:outputPanel rendered="{!!thisAppInfo.hideTermProgram}" layout="none">
                                                             {!IF(ISBLANK(thisIntendedProgram.Program_Name_on_Application__c), thisIntendedProgram.Name, thisIntendedProgram.Program_Name_on_Application__c)}
+                                                             {!IF(ISBLANK(thisApp.Intended_Term_of_Entry__c), '', thisApp.Intended_Term_of_Entry__c )}
                                                          </apex:outputPanel>
-                                                        <apex:outputPanel layout="none" rendered="{!!thisAppControl.Hide_Term_Program__c}">
-                                                            ( {!key} )
+                                                        <apex:outputPanel layout="none" rendered="{!!thisAppInfo.hideTermProgram}">
+
                                                         </apex:outputPanel>
                                                     </span>
                                                 </a>

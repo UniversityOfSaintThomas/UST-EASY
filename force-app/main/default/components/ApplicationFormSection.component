@@ -2,7 +2,6 @@
     <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
     <apex:attribute name="group" description="The ApplicationQuestionGroup for this section" type="ApplicationQuestionGroup" required="true"/>
     <apex:attribute name="preventUpdates" description="" type="Boolean" default="false" required="false"/>
-    <apex:attribute name="appControl" description="ApplicationSettings" type="Application_Control__c" required="true"/>
     <apex:attribute name="groupNewRelatedRecord" description="" type="ApexPages.Action" required="true"/>
     <apex:attribute name="obj" description="" type="sObject" required="false"/>
     <apex:variable value="{!1}" var="itemNumber"/>

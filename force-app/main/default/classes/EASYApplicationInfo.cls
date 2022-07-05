@@ -10,8 +10,17 @@ public with sharing class EASYApplicationInfo {
     public Id requirementId { get; set; }
     public Boolean allowSubmit { get; set; }
     public Boolean isExternalUser { get; set; }
-    public Application_Control__c appControl { get; set; }
+    public String citizenship { get; set; }
     public String appStatus { get; set; }
     public String appSubStatus { get; set; }
+    public String appStartStatus { get; set; }
+    public Boolean hideTermProgram { get; set; }
     public String template { get; set; }
+    public String submitStatus { get; set; }
+    public String withdrawStatus { get; set; }
+    public String allowSubmitFrom { get; set; }
+    public String allowCancelFrom { get; set; }
+    public String allowWithdrawFrom { get; set; }
+    public String academicLevel { get; set; }
+    public String schoolCollege { get; set; }
 }

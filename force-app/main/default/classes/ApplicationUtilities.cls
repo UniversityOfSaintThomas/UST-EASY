@@ -6,10 +6,17 @@ public class ApplicationUtilities {
 
     public static EASYApplicationInfo setApplicationInfo(Application_Control__c appControl, Application__c app) {
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
-        appInfo.appControl = appControl;
         appInfo.contactId = app.Contact__c;
-        appInfo.appControlId = appControl.Id;
-        appInfo.at = appControl.URL_Parameter__c;
+        appInfo = flattenAppControl(appControl, appInfo);
+        appInfo.appId = app.Id;
+        appInfo.isExternalUser = isExternalUser();
+        appInfo.allowSubmit = true;
+        appInfo.requirementId = null;
+        return appInfo;
+    }
+
+    public static EASYApplicationInfo setApplicationInfo(EASYApplicationInfo appInfo, Application__c app) {
+        appInfo.contactId = app.Contact__c;
         appInfo.appId = app.Id;
         appInfo.isExternalUser = isExternalUser();
         appInfo.allowSubmit = true;
@@ -20,14 +27,42 @@ public class ApplicationUtilities {
     public static EASYApplicationInfo setApplicationInfo(String at, Id appId, Id contactId) {
         Application_Control__c appControl = getApplicationControls(at);
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
-        appInfo.appControl = appControl;
+        appInfo = flattenAppControl(appControl, appInfo);
         appInfo.contactId = contactId;
-        appInfo.appControlId = appControl.Id;
-        appInfo.at = appControl.URL_Parameter__c;
         appInfo.appId = appId;
         appInfo.isExternalUser = isExternalUser();
         appInfo.allowSubmit = true;
         appInfo.requirementId = null;
+        return appInfo;
+    }
+
+    public static EASYApplicationInfo flattenAppControl(Application_Control__c appControl, EASYApplicationInfo appInfo) {
+        appInfo.hideTermProgram = appControl.Hide_Term_Program__c;
+        appInfo.allowWithdrawFrom = appControl.Allow_Withdraw_From__c;
+        appInfo.allowSubmitFrom = appControl.Allow_Submit_From__c;
+        appInfo.submitStatus = appControl.Submit_Status__c;
+        appInfo.withdrawStatus = appControl.Withdraw_Status__c;
+        appInfo.academicLevel = appControl.Academic_Level__c;
+        appInfo.schoolCollege = appControl.School_College__c;
+        appInfo.appControlId = appControl.Id;
+        appInfo.template = appControl.Template__c;
+        appInfo.at = appControl.URL_Parameter__c;
+        appInfo.appStartStatus = appControl.Application_Start_Status__c;
+        appInfo.allowCancelFrom = appControl.Allow_Cancel_From__c;
+        return appInfo;
+    }
+
+    public static EASYApplicationInfo createShellAppInfo() {
+        EASYApplicationInfo appInfo = new EASYApplicationInfo();
+        Application_Control__c appControl = getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
+        appInfo = flattenAppControl(appControl,appInfo);
+        appInfo.contactId = ApplicationUtilities.getAppContactId();
+        appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
+        appInfo.allowSubmit = true;
+        if (String.isBlank(appControl.Template__c)) {
+            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+            appInfo.template = AppSettings.Default_Template__c;
+        }
         return appInfo;
     }
 
@@ -42,7 +77,6 @@ public class ApplicationUtilities {
     public static EASYApplicationInfo gatherApplicationInfo() {
 
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
-        appInfo.appControl = new Application_Control__c();
         String userType = UserInfo.getUserType();
 
         // Get and decrypt cookie if it exist
@@ -58,29 +92,29 @@ public class ApplicationUtilities {
             appInfo.contactId = getAppContactId();
         }
 
-        if (String.isNotBlank(appInfo.appControl.Template__c)) {
-            appInfo.template = appInfo.appControl.Template__c;
-        } else {
+        if (String.isBlank(appInfo.template)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;
         }
+
         if (userType.equalsIgnoreCase('standard')) {
             try {
                 appInfo.at = ApexPages.currentPage().getParameters().get('at');
             } catch (Exception ex) {
 
             }
-            if (appInfo.at != appInfo.appControl.URL_Parameter__c && String.isNotBlank(appInfo.at)) {
-                appInfo.appControl = getApplicationControls(appInfo.at);
+            if (String.isNotBlank(appInfo.at)) {
+                Application_Control__c appControl = getApplicationControls(appInfo.at);
+                appInfo = flattenAppControl(appControl,appInfo);
             }
             if (String.isBlank(appInfo.requirementId) && String.isNotBlank(ApexPages.currentPage().getParameters().get('requirementId'))) {
                 appInfo.requirementId = ApexPages.currentPage().getParameters().get('requirementId');
             }
         }
 
-        if (String.isBlank(appInfo.appId)) {
+       // if (String.isBlank(appInfo.appId)) {
             appInfo = getApplicationId(appInfo);
-        }
+      //  }
 
         return appInfo;
 
@@ -111,11 +145,10 @@ public class ApplicationUtilities {
     }
 
     public static EASYApplicationInfo getApplicationId(EASYApplicationInfo appInfo) {
-        Id newAppId = null;
         if (String.isNotBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
             //Get the application type from the application id
             List<Application__c> currentApps = [
-                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c
+                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     AND Application_Control__r.URL_Parameter__c = :appInfo.at
@@ -125,6 +158,7 @@ public class ApplicationUtilities {
                 appInfo.appId = currentApps[0].Id;
                 appInfo.appStatus = currentApps[0].Application_Status__c;
                 appInfo.appSubStatus = currentApps[0].Application_Substatus__c;
+                appInfo.citizenship = currentApps[0].Citizenship__c;
             }
         }
         return appInfo;

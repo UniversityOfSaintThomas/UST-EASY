@@ -72,8 +72,7 @@ public with sharing class ApplicationBodyController {
             allPositionWidgets = [
                     SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
                             Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
-                            Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_Start_Date__c,
-                            Activation_End_Date__c, Widget_Time_Zone__c, Activation_State__c
+                            Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c
                     FROM EASY_Widget__c
                     WHERE Application_Control__c IN :appInfoIds
                     WITH SECURITY_ENFORCED
@@ -90,13 +89,13 @@ public with sharing class ApplicationBodyController {
             If (String.IsBlank(widget.Activation_State__c)) {
                 skipWidget = true;
             } else if (widget.Activation_State__c.endsWithIgnoreCase('Date activated')) {
-                if (widget.Activation_Start_Date__c != null) {
-                    System.debug(DateTime.Now());
-                    System.debug(widget.Activation_Start_Date__c);
-                }
-                if (widget.Activation_End_Date__c != null) {
-
-                }
+//                if (widget.Activation_Start_Date__c != null) {
+//                    System.debug(DateTime.Now());
+//                    System.debug(widget.Activation_Start_Date__c);
+//                }
+//                if (widget.Activation_End_Date__c != null) {
+//
+//                }
             }
 
 

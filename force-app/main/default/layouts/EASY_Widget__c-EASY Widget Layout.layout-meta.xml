@@ -36,11 +36,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Display_Widget_On_Pages__c</field>
+                <field>Display_Widget_On_Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Scripts__c</field>
+                <field>Display_Widget_On_Citizenship__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -50,25 +50,27 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Activation_Start_Date__c</field>
+                <field>Start_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Activation_End_Date__c</field>
+                <field>Start_Time__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>End_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>End_Time__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Widget_Time_Zone__c</field>
             </layoutItems>
             <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Display_Widget_On_Status__c</field>
+                <field>Display_Widget_On_Pages__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

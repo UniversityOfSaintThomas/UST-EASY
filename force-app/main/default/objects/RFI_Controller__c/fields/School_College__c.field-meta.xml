@@ -4,7 +4,7 @@
     <description>Used to filter programs shown for selection</description>
     <externalId>false</externalId>
     <label>School / College</label>
-    <required>false</required>
+    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

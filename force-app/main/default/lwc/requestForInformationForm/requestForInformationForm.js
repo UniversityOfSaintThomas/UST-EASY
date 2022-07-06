@@ -36,6 +36,7 @@ import LEAD_QUESTION from '@salesforce/schema/Lead.Has_Question__c';
 import LEAD_DESCRIPTION from '@salesforce/schema/Lead.Description';
 import LEAD_MAIL_INFO from '@salesforce/schema/Lead.Mail_Information_Requested__c';
 import LEAD_COLLEGE_SCHOOL from '@salesforce/schema/Lead.St_Thomas_College_School__c';
+import LEAD_RECENT_SCHOOL from '@salesforce/schema/Lead.hed__Most_Recent_School__c';
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
@@ -44,7 +45,6 @@ import getTerms from '@salesforce/apex/requestForInformationFormController.getTe
 import searchHighSchools from '@salesforce/apex/requestForInformationFormController.searchHighSchools';
 import getAcademicLevelValue from '@salesforce/apex/requestForInformationFormController.getAcademicLevelValue';
 import createLead from '@salesforce/apex/requestForInformationFormController.createLead';
-import createAccount from '@salesforce/apex/requestForInformationFormController.createAccount';
 import getPresetValues from '@salesforce/apex/requestForInformationFormController.getPresetValues';
 import getSchoolCollegeAccount from '@salesforce/apex/requestForInformationFormController.getSchoolCollegeAccount';
 
@@ -72,7 +72,8 @@ const ADDITIONAL_FIELDS = [
     LEAD_QUESTION,
     LEAD_DESCRIPTION,
     LEAD_MAIL_INFO,
-    LEAD_COLLEGE_SCHOOL
+    LEAD_COLLEGE_SCHOOL,
+    LEAD_RECENT_SCHOOL
 ]
 
 const lookup_fields = [
@@ -91,8 +92,8 @@ export default class RequestForInformationForm extends LightningElement {
     citizenship_type;
     lead_owner;
     redirect_url;
-    fields_to_display; //use to determine which fields on form to display
-    required_fields; //used for validating input
+    fields_to_display;
+    required_fields;
     @track hide_form_title = true;
 
     // lead info
@@ -216,8 +217,6 @@ export default class RequestForInformationForm extends LightningElement {
     address1;
     address2;
     address3;
-    new_account; // used to create new account high school not found
-    new_account_id;
     
     //high school datatable columns
     high_school_columns = [
@@ -413,12 +412,10 @@ export default class RequestForInformationForm extends LightningElement {
                     this.record_input.fields.Affiliated_Account__c = '';
                     this.high_school_search_results = null;
                     this.high_school_data = false;
-                } else {
-                    this.new_account = null;
                 }
                 break;
             case this.field_labels.high_school_search_label:
-                this.new_account = event.target.value;
+                this.record_input.fields.hed__Most_Recent_School__c = event.target.value;
                 break;
             case this.field_labels.employer_label:
                 this.record_input.fields.Company = event.target.value;
@@ -458,6 +455,8 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
             this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
+
+        console.log(JSON.stringify(this.record_input.fields));
     }
 
     handleSubmit() {
@@ -475,23 +474,13 @@ export default class RequestForInformationForm extends LightningElement {
             .catch(error => {
                 console.log(error);
             })
-            createAccount({ account_name : this.new_account, owner_id: this.lead_owner}) 
-            .then(account_id => {
-                if (Boolean(account_id)) {
-                    this.record_input.fields.Affiliated_Account__c = account_id;
-                }
-                createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
-                .then(() => {
-                    // redirect
-                    this.show_spinner = false;
-                    this.form_submitted_successfully = true;
-                    console.log(this.record_input);
-                    window.open(this.redirect_url, '_self');
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.show_spinner = false;
-                });
+            createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
+            .then(() => {
+                // redirect
+                this.show_spinner = false;
+                this.form_submitted_successfully = true;
+                console.log(this.record_input);
+                window.open(this.redirect_url, '_self');
             })
             .catch(error => {
                 console.log(error);

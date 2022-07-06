@@ -29,28 +29,12 @@ public without sharing class requestForInformationFormController {
                 }
             }
 
-            System.debug(sobj);
+            System.debug('sobj: ' + sobj);
             Database.DMLOptions dml = new Database.DMLOptions(); 
             dml.DuplicateRuleHeader.allowSave = false;
             Database.SaveResult result = Database.insert(sobj, dml);
         } catch (Exception e) {
             throw new AuraHandledException('Error creating lead: ' + e.getMessage());
-        }
-    }
-
-    @AuraEnabled
-    public static String createAccount(String account_name, String owner_id){
-        try {
-            String account_id = '';
-            if (!String.isBlank(account_name)) {
-                Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-                Account new_account = new Account(Type = 'High School', Name = account_name, OwnerId = owner_id, RecordTypeId = educational_institution_id);
-                insert new_account;
-                account_id = new_account.Id;
-            }
-            return account_id;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
         }
     }
 

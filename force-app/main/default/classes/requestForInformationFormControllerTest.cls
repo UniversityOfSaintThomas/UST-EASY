@@ -5,18 +5,17 @@ public class requestForInformationFormControllerTest {
         RFI_Controller__c controller = new RFI_Controller__c(
             Academic_Level__c = 'U',
             Fields_to_Display__c = 'Email',
-            Required_Fields__c = 'Email'
+            Required_Fields__c = 'Email',
+            Redirect_Url__c = 'https://developer.salesforce.com',
+            School_College__c = 'Undergraduate'
         );
+        
         insert controller;
     }
 
     @isTest
     public static void testCreateLead() {
-        String record_input_fields = '"fields": {'
-                                    + '"FirstName": "Testing",'
-                                    + '"LastName": "CreateLead",'
-                                    + '"Company": "Company 1234"'
-                                    + '}';
+        String record_input_fields = '{"FirstName":"Testing","LastName":"CreateLead","Company":"Company 123"}';
         Test.startTest();
         requestForInformationFormController.createLead(record_input_fields, 'Lead');
         Test.stopTest();
@@ -33,4 +32,5 @@ public class requestForInformationFormControllerTest {
         Test.stopTest();
         System.assertEquals('U', controller.Academic_Level__c);
     }
+
 }

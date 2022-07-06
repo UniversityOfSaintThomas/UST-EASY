@@ -39,14 +39,14 @@ import LEAD_COLLEGE_SCHOOL from '@salesforce/schema/Lead.St_Thomas_College_Schoo
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
-import getAcademicPrograms from '@salesforce/apex/requestForInformationFormController.getAcademicPrograms';
-import getAcademicTerms from '@salesforce/apex/requestForInformationFormController.getAcademicTerms';
+import getPrograms from '@salesforce/apex/requestForInformationFormController.getPrograms';
+import getTerms from '@salesforce/apex/requestForInformationFormController.getTerms';
 import searchHighSchools from '@salesforce/apex/requestForInformationFormController.searchHighSchools';
 import getAcademicLevelValue from '@salesforce/apex/requestForInformationFormController.getAcademicLevelValue';
 import createLead from '@salesforce/apex/requestForInformationFormController.createLead';
 import createAccount from '@salesforce/apex/requestForInformationFormController.createAccount';
 import getPresetValues from '@salesforce/apex/requestForInformationFormController.getPresetValues';
-import getDepartmentAccount from '@salesforce/apex/requestForInformationFormController.getDepartmentAccount';
+import getSchoolCollegeAccount from '@salesforce/apex/requestForInformationFormController.getSchoolCollegeAccount';
 
 const ADDITIONAL_FIELDS = [
     LEAD_FIRST_NAME,
@@ -93,6 +93,7 @@ export default class RequestForInformationForm extends LightningElement {
     redirect_url;
     fields_to_display; //use to determine which fields on form to display
     required_fields; //used for validating input
+    @track hide_form_title = true;
 
     // lead info
     lead_default_record_type;
@@ -242,6 +243,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.required_fields = result.data.Required_Fields__c;
                 this.lead_owner = result.data.Lead_Owner__c;
                 this.redirect_url = result.data.Redirect_URL__c;
+                this.hide_form_title = result.data.Hide_Form_Title__c;
                 // sets boolean values for front-end display i.e. which fields on are form, which are required
                 this.handleFieldsToDisplay();
                 this.handleRequiredFields();
@@ -253,16 +255,40 @@ export default class RequestForInformationForm extends LightningElement {
                 .catch(error => {
                     console.log(error);
                 });
+                getTerms({account_name : this.school_college})
+                .then(terms => {
+                    if (Boolean(terms)) {
+                        this.term_id_to_name_map = terms;
+                        var values = [];
+                        for (const term in terms) {
+                            values.push(
+                                {label: terms[term].Name, value: terms[term].Id}
+                            );
+                        }
+                        this.academic_term_picklist_values = values;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
                 if (Boolean(this.academic_level_api)) {
                     // gets programs based on academic level
-                    getAcademicPrograms({academic_level: this.academic_level_api, school_college: this.school_college, citizenship_type: this.citizenship_type})
+                    getPrograms({academic_level: this.academic_level_api, school_college: this.school_college})
                     .then((programs) => {
                         this.program_id_to_name_map = programs;
                         var values = [];
-                        for (const program in programs) {
-                            values.push(
-                                {label: programs[program].Name, value: programs[program].Id, description: programs[program].Degree__c}
-                            );
+                        if (this.academic_level == 'U') {
+                            for (const program in programs) {
+                                values.push(
+                                    {label: programs[program].Name, value: programs[program].Id}
+                                );
+                            }
+                        } else {
+                            for (const program in programs) {
+                                values.push(
+                                    {label: programs[program].Name, value: programs[program].Id, description: programs[program].Degree__c}
+                                );
+                            }
                         }
                         this.academic_interest_picklist_values = values;
                     })
@@ -292,32 +318,6 @@ export default class RequestForInformationForm extends LightningElement {
         for (const field of fields) {
             var object_property = field.replaceAll(' ', '_');
             this.require_fields[object_property] = true;
-        }
-    }
-
-    @wire(getAcademicTerms)
-    academic_terms(result) {
-        if (result.data) {
-            if (Boolean(result.data)) {
-                this.term_id_to_name_map = result.data;
-                var values = [];
-                if (this.school_college == 'School of Law' && this.show_fields.When_do_you_plan_to_start_school == true) {
-                    for (const term in result.data) {
-                        values.push(
-                            {label: result.data[term].Academic_Year__c, value: result.data[term].Id}
-                        );
-                    } 
-                } else {
-                    for (const term in result.data) {
-                        values.push(
-                            {label: result.data[term].Name, value: result.data[term].Id}
-                        );
-                    }
-                }
-                this.academic_term_picklist_values = values;
-            }
-        } else {
-            console.log(result.error);
         }
     }
 
@@ -468,9 +468,9 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.Description = 'Questions/Comments from RFI: ' + this.record_input.fields.Description;
             }
             this.handleStreetAddress();
-            getDepartmentAccount({department_name : this.school_college})
-            .then(department_id => {
-                this.record_input.fields.St_Thomas_College_School__c = department_id;
+            getSchoolCollegeAccount({school_college_name : this.school_college})
+            .then(school_college_account_id => {
+                this.record_input.fields.St_Thomas_College_School__c = school_college_account_id;
             }) 
             .catch(error => {
                 console.log(error);
@@ -556,7 +556,7 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             this.record_input = generateRecordInputForCreate(result.data.record);
             this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
-            this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100); // TO DO: determine what this should be
+            this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100);
             getPresetValues({rfi_controller_name : this.rfi_controller})
             .then(preset_values => {
                 for (const preset_value of preset_values) {
@@ -564,6 +564,7 @@ export default class RequestForInformationForm extends LightningElement {
                         this.record_input.fields[preset_value.Field_API_Name__c] = preset_value.Value__c;
                     }
                 }
+                console.log(JSON.stringify(this.record_input));
             })
             .catch(error => {
                 console.log(error);
@@ -572,7 +573,6 @@ export default class RequestForInformationForm extends LightningElement {
             for (const relationship_name of lookup_fields) {
                 delete this.record_input.fields[relationship_name];         
             }
-            console.log(JSON.stringify(this.record_input));
         } else {
             console.log(result.error);
         }

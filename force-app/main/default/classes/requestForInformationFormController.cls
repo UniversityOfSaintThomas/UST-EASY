@@ -43,7 +43,8 @@ public without sharing class requestForInformationFormController {
         try {
             String account_id = '';
             if (!String.isBlank(account_name)) {
-                Account new_account = new Account(Type = 'High School', Name = account_name, OwnerId = owner_id);
+                Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
+                Account new_account = new Account(Type = 'High School', Name = account_name, OwnerId = owner_id, RecordTypeId = educational_institution_id);
                 insert new_account;
                 account_id = new_account.Id;
             }
@@ -64,7 +65,8 @@ public without sharing class requestForInformationFormController {
                     Fields_to_Display__c,
                     Required_Fields__c,
                     Lead_Owner__c,
-                    Redirect_URL__c
+                    Redirect_URL__c,
+                    Hide_Form_Title__c
                 FROM RFI_Controller__c 
                 WHERE Name =: rfi_controller_name
                 LIMIT 1
@@ -75,62 +77,66 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static Map<Id, Program__c> getAcademicPrograms(String academic_level, String school_college, String citizenship_type) {
+    public static Map<Id, Program__c> getPrograms(String academic_level, String school_college) {
         try {
-            Id recruitment_record_type_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Recruitment_Program').getRecordTypeId();
+            Id recruitment_program_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Recruitment_Program').getRecordTypeId();
             String query_string = 
                 'SELECT ' + 
+                    'Id, ' +
                     'Name, ' +
                     'Degree__c ' +
                 'FROM Program__c ' +
-                'WHERE RecordTypeId = \'' + recruitment_record_type_id + '\' ' +
+                'WHERE RecordTypeId = \'' + recruitment_program_id + '\' ' +
                 'AND Academic_Level__c = \'' + academic_level + '\' ' +
                 'AND Program_Display__c INCLUDES (\'RFI\') ' +
                 'AND Active__c = true';
+            
+            if (!String.isBlank(school_college)) {
+                query_string += ' AND Associated_Schools__c INCLUDES (\'' + school_college + '\')';
+            }
 
-            if (school_college == 'Undergraduate') {
-                query_string += ' AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\')';
-            } else if (school_college == 'School of Law') {
+            if (school_college == 'School of Law') {
                 query_string += ' AND Banner_Program_Code__c LIKE \'LW_%\'';
-            } else if (!String.isBlank(school_college)) {
-                query_string += ' AND (Associated_Schools__c INCLUDES (\'' + school_college + '\') OR School_College__c = \'' + school_college + '\')';
             }
-            if (!String.isBlank(citizenship_type)) {
-                query_string += ' AND (Citizenship__c = \'' + citizenship_type + '\' OR Citizenship__c = \'\')';
+
+            if (academic_level == 'U') {
+                query_string += ' AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\')';
+            } else {
+                query_string += ' ORDER BY Degree__c';
             }
-            query_string += ' ORDER BY Degree__c';
+            
             System.debug('%% query string: ' + query_string);
             List<Program__c> programs = Database.query(query_string);
             return new Map<Id, Program__c>(programs);
         } catch (Exception e) {
-            throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
+            throw new AuraHandledException('Error retrieving programs: ' + e.getMessage());
         }
     }
 
     @AuraEnabled(cacheable=true)
-    public static Map<Id, hed__Term__c> getAcademicTerms() {
+    public static Map<Id, hed__Term__c> getTerms(String account_name) {
         try {
+            String account_id = getSchoolCollegeAccount(account_name);
             Date today = System.today();
             Map<Id, hed__Term__c> terms = new Map<Id, hed__Term__c>([
                 SELECT
                     Id,
                     Name,
-                    hed__Start_Date__c,
-                    Academic_Year__c
+                    hed__Start_Date__c
                 FROM hed__Term__c
-                WHERE End_Application_Date__c >=: today
+                WHERE hed__Start_Date__c >=: today
+                AND hed__Account__c =: account_id
             ]);
             return terms;
         } catch (Exception e) {
-            throw new AuraHandledException('Error retrieving academic programs: ' + e.getMessage());
+            throw new AuraHandledException('Error retrieving terms: ' + e.getMessage());
         }
     }
 
-    // TO DO: change to BillingState and BillingCity
-    // AND Type = 'High School'
     @AuraEnabled
     public static Map<Id, Account> searchHighSchools(String search_term){
         try {
+            Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
             Map<Id, Account> high_school_map = new Map<Id, Account>();
                 List<List<Account>> high_schools = [
                     FIND :search_term 
@@ -142,6 +148,7 @@ public without sharing class requestForInformationFormController {
                                     BillingState, 
                                     BillingCountry 
                                 WHERE Type =: 'High School' 
+                                AND RecordTypeId =: educational_institution_id
                                 ORDER BY Name
                 )];
                 for (List<Account> account_list : high_schools) {
@@ -184,20 +191,21 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled
-    public static Id getDepartmentAccount(String department_name){
+    public static String getSchoolCollegeAccount(String school_college_name){
         try {
-            Id return_id;
-            Id uni_department_record_type_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('University_Department').getRecordTypeId();
-            List<Account> department_accounts = [
+            String school_college_id = '';
+            Id administrative_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Administrative').getRecordTypeId();
+            List<Account> school_college_accounts = [
                 SELECT Id 
                 FROM Account 
-                WHERE Name =: department_name 
-                AND RecordTypeId =: uni_department_record_type_id
+                WHERE Name =: school_college_name 
+                AND RecordTypeId =: administrative_id
+                AND Banner_Key__c LIKE 'STVCOLL-%'
             ];
-            if (department_accounts.size() > 0) {
-                return_id = department_accounts[0].Id;
+            if (school_college_accounts.size() > 0) {
+                school_college_id = school_college_accounts[0].Id;
             } 
-            return return_id;
+            return school_college_id;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="slds-p-vertical_medium">
-                    <apex:commandLink action="{!goToApp}" styleClass="slds-button slds-button_brand" value="Start New App"/>
+                    <apex:commandButton action="{!goToApp}" styleClass="slds-button slds-button_brand" value="Start New App" disabled="{!ISBLANK(selectedApp)}"/>
                 </div>
             </apex:outputPanel>
         </apex:form>

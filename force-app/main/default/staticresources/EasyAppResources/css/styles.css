@@ -13,13 +13,21 @@
 }
 
 .slds-scope .slds-summary-detail.slds-is-open .slds-summary-detail__content {
-    padding-top:0px;
+    padding-top: 0px;
+}
+
+.slds-scope .slds-summary-detail button {
+    padding: 1px 10px 2px 0;
+}
+
+.slds-scope .slds-summary-detail {
+    padding: 1px 0px 5px 0;
 }
 
 .slds-scope:not(html), .slds-scope body,
 .slds-scope .slds-text-body_regular, .slds-scope label, .slds-scope p,
 .slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select,
-.slds-scope textarea, .slds-scope ul, .slds-scope ol{
+.slds-scope textarea, .slds-scope ul, .slds-scope ol {
     font-size: 1.02rem;
     line-height: 1.5rem;
     font-weight: 400;

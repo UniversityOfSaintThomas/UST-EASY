@@ -33,7 +33,7 @@ public with sharing class AdmissionsApplicationFinderComponent {
         options.add(new SelectOption('', 'Select...'));
 
         for (String s : acMapBySchool.keySet()) {
-            if(String.isNotBlank(s)) {
+            if (String.isNotBlank(s)) {
                 options.add(new SelectOption(s, s));
             }
         }
@@ -51,9 +51,9 @@ public with sharing class AdmissionsApplicationFinderComponent {
 
     public PageReference goToApp() {
         PageReference appCreate = Page.ApplicationCreate;
-        appCreate.getParameters().put('at',selectedApp);
+        appCreate.getParameters().put('at', selectedApp);
+        appCreate.setRedirect(true);
         return appCreate;
-
     }
 
 }

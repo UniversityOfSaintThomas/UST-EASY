@@ -12,9 +12,71 @@
     border-color: #9E28B5;
 }
 
-.slds-scope label.slds-text-body_regular, .slds-scope .slds-text-body_regular, .slds-scope label.slds-radio_button__label, .slds-scope label {
-    font-size: 1.2em;
+.slds-scope .slds-summary-detail.slds-is-open .slds-summary-detail__content {
+    padding-top:0px;
+}
+
+.slds-scope:not(html), .slds-scope body,
+.slds-scope .slds-text-body_regular, .slds-scope label, .slds-scope p,
+.slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select,
+.slds-scope textarea, .slds-scope ul, .slds-scope ol{
+    font-size: 1.02rem;
+    line-height: 1.5rem;
     font-weight: 400;
+    color: #0a0a0a;
+}
+
+.slds-scope .slds-button {
+    font-size: 1.1rem;
+    line-height: 1.7rem;
+    font-weight: 400;
+    padding: 0.3rem 0.8rem;
+}
+
+.slds-scope .slds-tabled-checklist td {
+    padding: .4rem .3rem;
+}
+
+.slds-scope .slds-tabled-checklist label {
+    display: block;
+}
+
+.slds-scope .slds-tabled-checklist {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.slds-scope .slds-tabled-checklist tr:nth-child(odd) {
+    background: #f7f7f7;
+}
+
+.slds-scope ul {
+    margin: 0.4rem 0 0.7rem 1.7rem;
+    list-style: disc;
+}
+
+.slds-scope .slds-summary-detail__content ul {
+    margin: 0 0 .5rem 1.7rem;
+}
+
+.slds-scope ol {
+    margin: 0.4rem 0 0.7rem 1.7rem;
+    list-style: number;
+}
+
+.slds-scope slds-text-heading_small {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgb(3, 45, 96);
+}
+
+.slds-scope .slds-card__header-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.slds-scope .slds-text-heading_large {
+    font-weight: 600;
 }
 
 .slds-checkbox .slds-tabled-checklist td [type=checkbox] {
@@ -41,16 +103,18 @@
     margin-top: .2em;
 }
 
-.slds-scope .slds-button__icon_left, .slds-scope .slds-button__icon--left {
-    margin-top: -2px;
-}
-
 .slds-checkbox .slds-tabled-checklist td [type=checkbox] {
     width: 15px;
     height: 15px;
     position: relative;
     margin: 2px 7px 2px 2px;
     float: left;
+}
+
+.slds-scope .slds-button__icon {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.2rem;
 }
 
 div.slds-progress {

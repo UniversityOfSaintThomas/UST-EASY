@@ -7,47 +7,49 @@
     <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
     <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <apex:form >
-            <apex:repeat value="{!checklistItems}" var="r">
-                <apex:outputPanel rendered="{!r.display}" layout="none">
-                    <apex:variable value="{!IF(r.req.Label__c != null && r.req.Label__c != '', r.req.Label__c, r.req.Name)}" var="requirementTitle"/>
-                    <div class="slds-summary-detail">
-                        <button class="slds-button slds-button_icon slds-m-right_x-small" title="Toggle details for {!requirementTitle}" aria-controls="expando-{!r.req.Id}" aria-expanded="false">
-                            <svg class="slds-button__icon slds-summary-detail__action-icon" aria-hidden="true">
-                                <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}"></use>
-                            </svg>
-                            <span class="slds-assistive-text">Toggle details for {!requirementTitle}</span>
-                        </button>
-                        <div>
-                            <div class="slds-summary-detail__title">
-                                <h3 class="slds-text-heading_small">
-                                    <apex:commandLink action="{!goToRequirement}" onClick="appShowLoadingSpinner();">
-                                        <apex:param name="nextRequirementId" value="{!r.req.Id}" assignTo="{!nextRequirementId}"/>
-                                        <apex:param name="nextAt" value="{!appInfoParam.at}" assignTo="{!nextAt}"/>
-                                        <apex:param name="nextAppId" value="{!appInfoParam.appId}" assignTo="{!nextAppId}"/>
-                                        <apex:param name="nextContactId" value="{!appInfoParam.contactId}" assignTo="{!nextContactId}"/>
-                                        {!requirementTitle}
-                                        <span class="slds-badge {!IF(r.reqStatus,'slds-theme_success','In Progress')}">{!IF(r.reqStatus,'Viewed','In Progress')}</span>
-                                    </apex:commandLink>
-                                </h3>
-                            </div>
-                            <div aria-hidden="false" class="slds-summary-detail__content" id="expando-{!r.req.Id}" style="display:none;">
-                                <apex:outputPanel rendered="{!IF(r.reqItems.size > 0, true,false)}" layout="none">
-                                    <ul class="slds-list_dotted slds-m-bottom_medium">
-                                        <apex:repeat value="{!r.reqItems}" var="ri">
-                                            <apex:outputPanel rendered="{!ri.display}" layout="none">
-                                                <li>
-                                                    <apex:outputText >{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
-                                                </li>
-                                            </apex:outputPanel>
-                                        </apex:repeat>
-                                    </ul>
-                                </apex:outputPanel>
+        <apex:form>
+            <nav>
+                <apex:repeat value="{!checklistItems}" var="r">
+                    <apex:outputPanel rendered="{!r.display}" layout="none">
+                        <apex:variable value="{!IF(r.req.Label__c != null && r.req.Label__c != '', r.req.Label__c, r.req.Name)}" var="requirementTitle"/>
+                        <div class="slds-summary-detail">
+                            <button class="slds-button slds-button_icon" title="Toggle details for {!requirementTitle}" aria-controls="expando-{!r.req.Id}" aria-expanded="false">
+                                <svg class="slds-button__icon slds-summary-detail__action-icon" aria-hidden="true">
+                                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}"></use>
+                                </svg>
+                                <span class="slds-assistive-text">Toggle details for {!requirementTitle}</span>
+                            </button>
+                            <div>
+                                <div class="slds-summary-detail__title">
+                                    <h3 class="slds-text-heading_small">
+                                        <apex:commandLink action="{!goToRequirement}" onClick="appShowLoadingSpinner();">
+                                            <apex:param name="nextRequirementId" value="{!r.req.Id}" assignTo="{!nextRequirementId}"/>
+                                            <apex:param name="nextAt" value="{!appInfoParam.at}" assignTo="{!nextAt}"/>
+                                            <apex:param name="nextAppId" value="{!appInfoParam.appId}" assignTo="{!nextAppId}"/>
+                                            <apex:param name="nextContactId" value="{!appInfoParam.contactId}" assignTo="{!nextContactId}"/>
+                                            {!requirementTitle}
+                                            <span class="slds-badge {!IF(r.reqStatus,'slds-theme_success','In Progress')}">{!IF(r.reqStatus,'Viewed','In Progress')}</span>
+                                        </apex:commandLink>
+                                    </h3>
+                                </div>
+                                <div aria-hidden="false" class="slds-summary-detail__content" id="expando-{!r.req.Id}" style="display:none;">
+                                    <apex:outputPanel rendered="{!IF(r.reqItems.size > 0, true,false)}" layout="none">
+                                        <ul class="slds-list_dotted slds-m-bottom_medium">
+                                            <apex:repeat value="{!r.reqItems}" var="ri">
+                                                <apex:outputPanel rendered="{!ri.display}" layout="none">
+                                                    <li>
+                                                        <apex:outputText>{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
+                                                    </li>
+                                                </apex:outputPanel>
+                                            </apex:repeat>
+                                        </ul>
+                                    </apex:outputPanel>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </apex:outputPanel>
-            </apex:repeat>
+                    </apex:outputPanel>
+                </apex:repeat>
+            </nav>
         </apex:form>
     </div>
 </apex:component>

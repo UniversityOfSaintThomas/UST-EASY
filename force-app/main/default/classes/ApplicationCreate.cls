@@ -8,6 +8,7 @@ public class ApplicationCreate {
     public Contact con { get; set; }
     public Application__c app { get; set; }
     public ApplicationQuestionSection section { get; set; }
+    public List<RequirementWrapper> checklistItems { get; set; }
     public List<Requirement_Item__c> items { get; set; }
     public Map<Id, Program__c> intendedPrograms { get; set; }
     public transient String additionalDataString { get; set; }
@@ -28,9 +29,8 @@ public class ApplicationCreate {
 
     public PageReference ApplicationCreateInit() {
 
-        if (appInfo == null) {
-            appInfo = ApplicationUtilities.createShellAppInfo();
-        }
+        appInfo = ApplicationUtilities.createShellAppInfo();
+
         // Exit if there is no Application Control to reference
         if (String.isBlank(appInfo.appControlId)) {
             return null;
@@ -38,6 +38,7 @@ public class ApplicationCreate {
 
         applicationCreateSetup(null, null); // Do setup of all objects
         app.Contact__c = appInfo.contactId; // Assign contact to application
+
         // Take user straight to checklist if we don't want to ask any questions
         if (section.groups.isEmpty()) {
             return save();
@@ -200,6 +201,7 @@ public class ApplicationCreate {
                     termQuestion, programQuestion
             }));
         }
+
 
         // Create question groups for requirements we should display
         for (Requirement_Item__c i : items) {

@@ -62,6 +62,23 @@ public class ApplicationRegistration {
         }
     }
 
+    public PageReference applicationRegistrationInit() {
+        ApplicationUtilities.getCookieKey();
+        userType = UserInfo.getUserType();
+        if (!userType.endsWithIgnoreCase('guest')) {
+            PageReference createApp;
+            If (String.isNOtBlank(ApexPages.currentPage().getParameters().get('at'))) {
+                createApp = Page.ApplicationCreate;
+                createApp.getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
+            } else {
+                createApp = Page.ApplicationPortal;
+            }
+            createApp.setRedirect(true);
+            return createApp;
+        }
+        return null;
+    }
+
     public PageReference testCookieKey() {
         ApplicationUtilities.getCookieKey();
         PageReference pageRef = ApexPages.CurrentPage();
@@ -84,7 +101,7 @@ public class ApplicationRegistration {
         loginUrl = null;
         crudToDo doCrud = new crudToDo();
 
-       // try {
+        try {
             // Throw exception if not all required fields have been filled-out
             String errorMessage = appCreate.checkFields();
             if (errorMessage != null) {
@@ -143,25 +160,25 @@ public class ApplicationRegistration {
                 return Site.login(loginUser.Username, loginPassword, loginUrl);
             }
 
-//        } catch (DmlException err) {
-//            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getDmlMessage(0)));
-//            dmlException = true;
-//            Database.rollback(sp);
-//        } catch (ApplicationUtilities.ApplicationException err) {
-//            if (String.isNotBlank(err.getMessage())) {
-//                ApexPages.addMessage(new ApexPages.Message(err.isError ? ApexPages.Severity.ERROR : ApexPages.Severity.CONFIRM, err.getMessage()));
-//            }
-//            if (err.doRollback) {
-//                Database.rollback(sp);
-//            }
-//
-//        } catch (Exception err) {
-//            if (!dmlException) {
-//                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getMessage()));
-//                Database.rollback(sp);
-//            }
-//            dmlException = false;
-//        }
+        } catch (DmlException err) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getDmlMessage(0)));
+            dmlException = true;
+            Database.rollback(sp);
+        } catch (ApplicationUtilities.ApplicationException err) {
+            if (String.isNotBlank(err.getMessage())) {
+                ApexPages.addMessage(new ApexPages.Message(err.isError ? ApexPages.Severity.ERROR : ApexPages.Severity.CONFIRM, err.getMessage()));
+            }
+            if (err.doRollback) {
+                Database.rollback(sp);
+            }
+
+        } catch (Exception err) {
+            if (!dmlException) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, err.getMessage()));
+                Database.rollback(sp);
+            }
+            dmlException = false;
+        }
         return null;
     }
 

@@ -13,7 +13,7 @@
         <apex:commandLink id="reRenderTheTable" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.theTable}"/>
 
         <script>
-            const previousRequirement = "{!prevId}", nextRequirement = "{!nextId}";
+            const previousRequirement = "{!if(!ISBLANK(prevId), prevId, '')}", nextRequirement = "{!IF(!ISBLANK(nextId), nextId, '')}";
         </script>
         <div class="slds-p-vertical_medium slds-border_top slds-border_bottom">
             <div class="{!if(hidePaging,'','carousel-wrapper')}">

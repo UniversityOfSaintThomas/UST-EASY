@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_UGFR_Demographics</fullName>
+    <columns>NAME</columns>
+    <columns>Label__c</columns>
+    <columns>Active__c</columns>
+    <columns>Required__c</columns>
+    <columns>Editable_Application_Status__c</columns>
+    <columns>RECORDTYPE</columns>
+    <columns>Requirement_Item__c</columns>
+    <columns>Display_Order__c</columns>
+    <columns>Picklist_Values__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>contains</operation>
+        <value>UGFR</value>
+    </filters>
+    <filters>
+        <field>Requirement_Item__c</field>
+        <operation>contains</operation>
+        <value>Demographics</value>
+    </filters>
+    <label>All - UGFR - Demographics</label>
+    <language>en_US</language>
+</ListView>

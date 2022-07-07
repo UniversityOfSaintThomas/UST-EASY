@@ -7,5 +7,6 @@
 private class ApplicationBodyController_TEST {
     @IsTest
     static void testBehavior() {
+        
     }
 }

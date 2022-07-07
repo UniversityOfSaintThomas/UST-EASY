@@ -32,7 +32,7 @@ public with sharing class ApplicationBodyController {
         Set<Id> appInfoIds = new Set<Id>();
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atSubStatusMap = new Map<String, Set<String>>();
-        Map<String, Set<String>> atCitizenshipMap = New Map<String, Set<String>>();
+        Map<String, Set<String>> atCitizenshipMap = new Map<String, Set<String>>();
         currentPageName = getVFPageName();
         allWidgets foundWidgets = new allWidgets();
         foundWidgets.topWidgets = new List<EASY_Widget__c>();
@@ -120,12 +120,12 @@ public with sharing class ApplicationBodyController {
         /* Start/End date filter if defined */
         for (EASY_Widget__c widget : allPositionWidgets) {
             Boolean skipWidget = false;
-            If (String.IsBlank(widget.Activation_State__c)) {
+            if (String.isBlank(widget.Activation_State__c)) {
                 skipWidget = true;
             } else if (widget.Activation_State__c.endsWithIgnoreCase('Date activated')) {
                 Datetime nowDateTime = adjustForTimeZone(Datetime.now(), widget.Widget_Time_Zone__c);
                 System.debug(nowDateTime);
-                if (String.isNOtBlank(widget.Widget_Time_Zone__c)) {
+                if (String.isNotBlank(widget.Widget_Time_Zone__c)) {
                     if (widget.Start_Date__c != null && widget.Start_Time__c != null) {
                         Datetime widgetStartDateTime = convertDateToDatetime(widget.Start_Date__c, widget.Start_Time__c, null);
                         System.debug(widgetStartDateTime);

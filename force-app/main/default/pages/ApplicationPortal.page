@@ -20,16 +20,16 @@
                             <c:ApplicationChecklist appInfo="{!thisAppInfo}" checklistItems="{!thisChecklist}"/>
                         </div>
                     </apex:repeat>
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_x-large">
-                        <button class="slds-button slds-button_neutral slds-button_dual-stateful" aria-live="assertive" href="{!$Site.BaseUrl}/apex/ApplicationCreate?contactId={!appInfo.contactId}&at={!appInfo.at}">
-                            <a href="{!$Site.BaseUrl}/apex/ApplicationCreate?contactId={!appInfo.contactId}&at={!appInfo.at}">
-                                <svg class="slds-button__icon slds-button__icon_small slds-button__icon_left" aria-hidden="true">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>
-                                </svg>
-                                New Application
-                            </a>
-                        </button>
-                    </div>
+<!--                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_x-large">-->
+<!--                        <button class="slds-button slds-button_neutral slds-button_dual-stateful" aria-live="assertive" href="{!$Site.BaseUrl}/apex/ApplicationCreate?contactId={!appInfo.contactId}&at={!appInfo.at}">-->
+<!--                            <a href="{!$Site.BaseUrl}/apex/ApplicationCreate?at={!appInfo.at}">-->
+<!--                                <svg class="slds-button__icon slds-button__icon_small slds-button__icon_left" aria-hidden="true">-->
+<!--                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>-->
+<!--                                </svg>-->
+<!--                                New Application-->
+<!--                            </a>-->
+<!--                        </button>-->
+<!--                    </div>-->
                 </div>
             </c:ApplicationBody>
         </apex:define>

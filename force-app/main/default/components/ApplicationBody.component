@@ -18,7 +18,7 @@
 
     <apex:outputPanel styleClass="slds-grid slds-wrap slds-p-bottom_x-large application-body" layout="block">
         <!-- TOP WIDGETS -->
-        <apex:outputPanel layout="block" rendered="{!IF(w.topWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+        <apex:outputPanel layout="block" rendered="{!IF(w.topWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-clearfix">
             <apex:repeat value="{!w.topWidgets}" var="widget" rendered="{!IF(w.topWidgets.size > 0, true, false)}">
                 <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
             </apex:repeat>
@@ -75,7 +75,7 @@
         </apex:outputPanel>
 
         <!-- BOTTOM WIDGETS -->
-        <apex:outputPanel layout="block" rendered="{!IF(w.bottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+        <apex:outputPanel layout="block" rendered="{!IF(w.bottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-clearfix">
             <apex:repeat value="{!w.bottomWidgets}" var="widget">
                 <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
             </apex:repeat>

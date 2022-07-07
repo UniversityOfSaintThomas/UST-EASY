@@ -76,7 +76,8 @@ public with sharing class ApplicationBodyController {
             allPositionWidgets = [
                     SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
                             Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
-                            Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c
+                            Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
+                            Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c
                     FROM EASY_Widget__c
                     WHERE Application_Control__c IN :appInfoIds
                     WITH SECURITY_ENFORCED
@@ -93,13 +94,23 @@ public with sharing class ApplicationBodyController {
             If (String.IsBlank(widget.Activation_State__c)) {
                 skipWidget = true;
             } else if (widget.Activation_State__c.endsWithIgnoreCase('Date activated')) {
-//                if (widget.Activation_Start_Date__c != null) {
-//                    System.debug(DateTime.Now());
-//                    System.debug(widget.Activation_Start_Date__c);
-//                }
-//                if (widget.Activation_End_Date__c != null) {
-//
-//                }
+                Datetime nowDateTime = adjustForTimeZone(Datetime.now(), widget.Widget_Time_Zone__c);
+                System.debug(nowDateTime);
+                if (String.isNOtBlank(widget.Widget_Time_Zone__c)) {
+                    if (widget.Start_Date__c != null && widget.Start_Time__c != null) {
+                        Datetime widgetStartDateTime = convertDateToDatetime(widget.Start_Date__c, widget.Start_Time__c, null);
+                        System.debug(widgetStartDateTime);
+                        if (nowDateTime <= widgetStartDateTime) {
+                            skipWidget = true;
+                        }
+                    }
+                    if (widget.End_Date__c != null && widget.End_Time__c != null) {
+                        Datetime widgetEndDateTime = convertDateToDatetime(widget.End_Date__c, widget.End_Time__c, null);
+                        if (nowDateTime >= widgetEndDateTime) {
+                            skipWidget = true;
+                        }
+                    }
+                }
             }
 
             if (onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
@@ -194,6 +205,17 @@ public with sharing class ApplicationBodyController {
             }
         }
         return '';
+    }
+
+    public Datetime convertDateToDatetime(Date dateIn, Time timeIn, String timezoneString) {
+        if (timeIn == null) {
+            timeIn = Time.newInstance(1, 12, 3, 4);
+        }
+        Datetime converted = Datetime.newInstance(dateIn.year(), dateIn.month(), dateIn.day(), timeIn.hour(), timeIn.minute(), timeIn.second());
+        if (String.isNotBlank(timezoneString)) {
+            converted = adjustForTimeZone(converted, timezoneString);
+        }
+        return converted;
     }
 
 }

@@ -120,7 +120,6 @@ public class ApplicationUtilities {
 
         appInfo = getApplicationId(appInfo);
 
-        System.debug(JSON.serializePretty(appInfo));
         return appInfo;
 
     }

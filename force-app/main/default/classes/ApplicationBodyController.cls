@@ -32,6 +32,7 @@ public with sharing class ApplicationBodyController {
         Set<Id> appInfoIds = new Set<Id>();
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atSubStatusMap = new Map<String, Set<String>>();
+        Map<String, Set<String>> atCitizenshipMap = New Map<String, Set<String>>();
         currentPageName = getVFPageName();
         allWidgets foundWidgets = new allWidgets();
         foundWidgets.topWidgets = new List<EASY_Widget__c>();
@@ -41,26 +42,49 @@ public with sharing class ApplicationBodyController {
         foundWidgets.contentTopWidgets = new List<EASY_Widget__c>();
         foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
+
         if (String.isBlank(appInfoParam.appStatus)) {
             appInfoParam.appStatus = 'none';
         }
 
-        // if (appInfoParam.appControl != null && String.isNotBlank(appInfoParam.appControlId)) {
+        /* Some pages may have multiple app contexts */
         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
             for (Application__c app : [
-                    SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c
+                    SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
+                            Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c
                     FROM Application__c
                     WHERE Contact__c = :appInfoParam.contactId
             ]) {
                 appInfoIds.add(app.Application_Control__r.Id);
+                String atURL = app.Application_Control__r.URL_Parameter__c;
 
+                //atStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
                 if (String.isNotBlank(app.Application_Status__c)) {
-                    atStatusMap.put(app.Application_Control__r.URL_Parameter__c, new Set<String>(app.Application_Status__c.split(';')));
+                    if (atStatusMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
+                        atStatusMap.get(atURL).addAll(new Set<String>(app.Application_Status__c.split(';')));
+                    } else {
+                        atStatusMap.put(atURL, new Set<String>(app.Application_Status__c.split(';')));
+                    }
                 }
+
+                //atSubStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
                 if (String.isNotBlank(app.Application_Substatus__c)) {
-                    atSubStatusMap.put(app.Application_Control__r.URL_Parameter__c, new Set<String>(app.Application_Substatus__c.split(';')));
+                    if (atSubStatusMap.containsKey(atURL)) {
+                        atSubStatusMap.get(atURL).addAll(new Set<String>(app.Application_Substatus__c.split(';')));
+                    } else {
+                        atSubStatusMap.put(atURL, new Set<String>(app.Application_Substatus__c.split(';')));
+                    }
                 }
-                //Map URL parameter to status for widgets
+
+                if (String.isNotBlank(app.Citizenship__c)) {
+                    if (atCitizenshipMap.containsKey(atURL)) {
+                        atCitizenshipMap.get(atURL).add(app.Citizenship__c);
+                    } else {
+                        atCitizenshipMap.put(atURL, new Set<String>{
+                                app.Citizenship__c
+                        });
+                    }
+                }
             }
         } else {
             atStatusMap.put(appInfoParam.at, new Set<String>{
@@ -69,15 +93,19 @@ public with sharing class ApplicationBodyController {
             atSubStatusMap.put(appInfoParam.at, new Set<String>{
                     appInfoParam.appSubStatus
             });
+            atCitizenshipMap.put(appInfoParam.at, new Set<String>{
+                    appInfoParam.citizenship
+            });
             appInfoIds.add(appInfoParam.appControlId);
         }
 
+        /* Gather up all the widgets */
         try {
             allPositionWidgets = [
                     SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
                             Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
                             Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
-                            Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c
+                            Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c
                     FROM EASY_Widget__c
                     WHERE Application_Control__c IN :appInfoIds
                     WITH SECURITY_ENFORCED
@@ -89,6 +117,7 @@ public with sharing class ApplicationBodyController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 
+        /* Start/End date filter if defined */
         for (EASY_Widget__c widget : allPositionWidgets) {
             Boolean skipWidget = false;
             If (String.IsBlank(widget.Activation_State__c)) {
@@ -113,6 +142,7 @@ public with sharing class ApplicationBodyController {
                 }
             }
 
+            /* Only show one widget of type hard coded above. Admission App finder should only show once on a portal even if defined for several apps */
             if (onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
                 if (onlyOneWidgetPerPage.get(widget.Widget_Type__c) > 0) {
                     skipWidget = true;
@@ -121,16 +151,28 @@ public with sharing class ApplicationBodyController {
                 }
             }
 
+            /* Status filter */
             if (String.isNotBlank(widget.Display_Widget_On_Status__c) && !appInfoParam.appStatus.equalsIgnoreCase('none')) {
                 if (atStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
                     skipWidget = !doesListContainItem(new List<String>(atStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Status__c.split(';'));
                 }
             }
+
+            /* Sub Status filter */
             if (String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) && !appInfoParam.appSubStatus.equalsIgnoreCase('none')) {
                 if (atSubStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
-                    skipWidget = !doesListContainItem(new List<String>(atStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Sub_Status__c.split(';'));
+                    skipWidget = !doesListContainItem(new List<String>(atSubStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Sub_Status__c.split(';'));
                 }
             }
+
+            /* Citizenship filter */
+            if (String.isNotBlank(widget.Display_Widget_On_Citizenship__c) && String.isNotBlank(appInfoParam.citizenship)) {
+                if (atCitizenshipMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
+                    skipWidget = !doesListContainItem(new List<String>(atCitizenshipMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Citizenship__c.split(';'));
+                }
+            }
+
+            /* Display on pages filter */
             if (String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
                 if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
                     skipWidget = true;
@@ -165,6 +207,7 @@ public with sharing class ApplicationBodyController {
         //  }
         return foundWidgets;
     }
+
 
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
         for (String l : list1) {

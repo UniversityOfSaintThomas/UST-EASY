@@ -4,18 +4,20 @@
     <columns>OPPORTUNITY.NAME</columns>
     <columns>ACCOUNT.NAME</columns>
     <columns>OPPORTUNITY.STAGE_NAME</columns>
-    <columns>OPPORTUNITY.CLOSE_DATE</columns>
-    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>Term__c</columns>
     <columns>CORE.USERS.ALIAS</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>OPPORTUNITY.TYPE</columns>
+    <columns>OPPORTUNITY.RECORDTYPE</columns>
+    <columns>Academic_Program__c</columns>
+    <columns>Admissions_Application__c</columns>
+    <columns>Admit_Type__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        
-            <field>OPPORTUNITY.RECORDTYPE</field>
-        
-            <operation>equals</operation>
-        
-            <value>Opportunity.Applicant_Opportunity</value>
-        
-        </filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Applicant_Opportunity</value>
+    </filters>
     <label>Applicant Opportunities</label>
+    <language>en_US</language>
 </ListView>

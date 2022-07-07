@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Application_Control_External_ID__c</fullName>
     <defaultValue>&quot;Application_Control__c&quot; &amp; TEXT(NOW()) &amp; MID($User.Id,6,5)</defaultValue>
+    <deprecated>false</deprecated>
     <description>Used for external systems to identify this record as unique.  Format:  &quot;AC_&quot; &amp; URL_Parameter__c. Example: AC_UGFR</description>
     <externalId>false</externalId>
     <inlineHelpText>Used for external systems to identify this record as unique.  Format:  &quot;AC_&quot; &amp; URL_Parameter__c. Example: AC_UGFR</inlineHelpText>

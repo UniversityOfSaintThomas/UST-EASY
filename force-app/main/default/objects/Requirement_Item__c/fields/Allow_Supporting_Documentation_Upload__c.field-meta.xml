@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Allow_Supporting_Documentation_Upload__c</fullName>
     <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
     <description>If checked, applicants will be able to upload supporting documentation as files to each related object record.</description>
     <externalId>false</externalId>
     <inlineHelpText>If checked, applicants will be able to upload supporting documentation as files to each related object record.</inlineHelpText>

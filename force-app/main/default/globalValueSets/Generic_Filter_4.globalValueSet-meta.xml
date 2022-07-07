@@ -1,15 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Fall 2022</fullName>
+        <default>false</default>
+        <label>Fall 2022</label>
+    </customValue>
+    <customValue>
+        <fullName>J-term 2023</fullName>
+        <default>false</default>
+        <label>J-term 2023</label>
+    </customValue>
+    <customValue>
+        <fullName>Spring 2023</fullName>
+        <default>false</default>
+        <label>Spring 2023</label>
+    </customValue>
+    <customValue>
+        <fullName>Summer 2023</fullName>
+        <default>false</default>
+        <label>Summer 2023</label>
+    </customValue>
+    <customValue>
+        <fullName>Fall 2023</fullName>
+        <default>false</default>
+        <label>Fall 2023</label>
+    </customValue>
+    <customValue>
+        <fullName>J-Term 2024</fullName>
+        <default>false</default>
+        <label>J-Term 2024</label>
+    </customValue>
+    <customValue>
+        <fullName>Spring 2024</fullName>
+        <default>false</default>
+        <label>Spring 2024</label>
+    </customValue>
+    <customValue>
+        <fullName>Summer 2024</fullName>
+        <default>false</default>
+        <label>Summer 2024</label>
+    </customValue>
+    <customValue>
+        <fullName>Fall 2024</fullName>
+        <default>false</default>
+        <label>Fall 2024</label>
+    </customValue>
+    <customValue>
+        <fullName>J-term 2025</fullName>
+        <default>false</default>
+        <label>J-term 2025</label>
+    </customValue>
+    <customValue>
+        <fullName>Spring 2025</fullName>
+        <default>false</default>
+        <label>Spring 2025</label>
+    </customValue>
+    <customValue>
+        <fullName>Summer 2025</fullName>
+        <default>false</default>
+        <label>Summer 2025</label>
+    </customValue>
+    <customValue>
+        <fullName>Fall 2025</fullName>
+        <default>false</default>
+        <label>Fall 2025</label>
+    </customValue>
+    <customValue>
+        <fullName>J-term 2026</fullName>
+        <default>false</default>
+        <label>J-term 2026</label>
+    </customValue>
+    <customValue>
+        <fullName>Spring 2026</fullName>
+        <default>false</default>
+        <label>Spring 2026</label>
+    </customValue>
+    <customValue>
+        <fullName>Summer 2026</fullName>
+        <default>false</default>
+        <label>Summer 2026</label>
+    </customValue>
+    <customValue>
+        <fullName>Fall 2026</fullName>
+        <default>false</default>
+        <label>Fall 2026</label>
+    </customValue>
+    <customValue>
+        <fullName>J-term 2027</fullName>
+        <default>false</default>
+        <label>J-term 2027</label>
+    </customValue>
+    <customValue>
+        <fullName>Spring 2027</fullName>
+        <default>false</default>
+        <label>Spring 2027</label>
+    </customValue>
+    <customValue>
+        <fullName>Summer 2027</fullName>
+        <default>false</default>
+        <label>Summer 2027</label>
+    </customValue>
+    <customValue>
+        <fullName>Fall 2027</fullName>
+        <default>false</default>
+        <label>Fall 2027</label>
+    </customValue>
+    <customValue>
+        <fullName>J-term 2028</fullName>
+        <default>false</default>
+        <label>J-term 2028</label>
+    </customValue>
+    <customValue>
+        <fullName>Spring 2028</fullName>
+        <default>false</default>
+        <label>Spring 2028</label>
+    </customValue>
+    <customValue>
+        <fullName>Summer 2028</fullName>
+        <default>false</default>
+        <label>Summer 2028</label>
+    </customValue>
+    <customValue>
+        <fullName>Fall 2028</fullName>
+        <default>false</default>
+        <label>Fall 2028</label>
+    </customValue>
+    <customValue>
+        <fullName>J-term 2029</fullName>
+        <default>false</default>
+        <label>J-term 2029</label>
+    </customValue>
+    <customValue>
+        <fullName>Spring 2029</fullName>
+        <default>false</default>
+        <label>Spring 2029</label>
+    </customValue>
+    <customValue>
+        <fullName>Summer 2029</fullName>
+        <default>false</default>
+        <label>Summer 2029</label>
+    </customValue>
+    <customValue>
+        <fullName>Fall 2029</fullName>
+        <default>false</default>
+        <label>Fall 2029</label>
+    </customValue>
+    <customValue>
+        <fullName>J-term 2030</fullName>
+        <default>false</default>
+        <label>J-term 2030</label>
+    </customValue>
+    <customValue>
+        <fullName>Spring 2030</fullName>
+        <default>false</default>
+        <label>Spring 2030</label>
+    </customValue>
+    <customValue>
+        <fullName>Summer 2030</fullName>
+        <default>false</default>
+        <label>Summer 2030</label>
+    </customValue>
+    <customValue>
         <fullName>Generic Value 1</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Generic Value 1</label>
     </customValue>
     <customValue>
         <fullName>Generic Value 2</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Generic Value 2</label>
     </customValue>
-    <masterLabel>Generic Filter 4</masterLabel>
+    <masterLabel>Application Term</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

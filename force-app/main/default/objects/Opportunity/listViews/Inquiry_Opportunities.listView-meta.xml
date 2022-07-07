@@ -6,13 +6,9 @@
     <columns>OPPORTUNITY.LEAD_SOURCE</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        
-            <field>OPPORTUNITY.RECORDTYPE</field>
-        
-            <operation>equals</operation>
-        
-            <value>Opportunity.Inquiry_Opportunity</value>
-        
-        </filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Inquiry_Opportunity</value>
+    </filters>
     <label>Inquiry Opportunities</label>
 </ListView>

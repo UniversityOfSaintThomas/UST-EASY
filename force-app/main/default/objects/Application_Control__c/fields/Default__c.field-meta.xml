@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Default__c</fullName>
     <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Checked if this is the default Application Control when no URL Parameter is specified</inlineHelpText>
     <label>Default</label>

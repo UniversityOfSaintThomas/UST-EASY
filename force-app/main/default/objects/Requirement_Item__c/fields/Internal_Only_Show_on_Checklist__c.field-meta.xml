@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Internal_Only_Show_on_Checklist__c</fullName>
     <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
     <description>If checked, this requirement item will show on the checklist even if it&apos;s internal-only. The applicant will not be able to view answers for this requirement item, but will be able to see if it&apos;s been satisfied or not.</description>
     <externalId>false</externalId>
     <inlineHelpText>If checked, this requirement item will show on the checklist even if it&apos;s internal-only. The applicant will not be able to view answers for this requirement item, but will be able to see if it&apos;s been satisfied or not.</inlineHelpText>

@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <description>Junction object between requirement and application.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
@@ -161,7 +162,14 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Requirement Responses</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <customTabListAdditionalFields>Requirement_Item__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Application__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Requirement_Item__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Application__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

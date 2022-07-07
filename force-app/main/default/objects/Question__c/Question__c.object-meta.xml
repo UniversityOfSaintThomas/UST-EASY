@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <description>Question for a requirement item.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
@@ -160,7 +161,24 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Questions</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <customTabListAdditionalFields>Requirement_Item__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>RECORDTYPE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Contact_Field__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Application_Field__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Related_Object__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Related_Object_Field__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATEDBY_USER</customTabListAdditionalFields>
+        <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Requirement_Item__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact_Field__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Application_Field__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Related_Object__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Related_Object_Field__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

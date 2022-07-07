@@ -3,24 +3,23 @@
     <fullName>Inquiry</fullName>
     <isActive>true</isActive>
     <values>
-        
-            <fullName>Closed Lost</fullName>
-        
-            <default>false</default>
-        
-        </values>
+        <fullName>Engaged</fullName>
+        <default>false</default>
+    </values>
     <values>
-        
-            <fullName>Closed Won</fullName>
-        
-            <default>false</default>
-        
-        </values>
+        <fullName>Inquiry</fullName>
+        <default>false</default>
+    </values>
     <values>
-        
-            <fullName>Prospecting</fullName>
-        
-            <default>false</default>
-        
-        </values>
+        <fullName>Moderately Suspect</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>No Longer Interested</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Suspect</fullName>
+        <default>false</default>
+    </values>
 </BusinessProcess>

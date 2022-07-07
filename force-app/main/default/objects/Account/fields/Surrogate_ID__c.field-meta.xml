@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Surrogate_ID__c</fullName>
+    <deprecated>false</deprecated>
     <description>STVDEGC_SURROGATE_ID</description>
     <externalId>false</externalId>
     <label>Surrogate ID</label>

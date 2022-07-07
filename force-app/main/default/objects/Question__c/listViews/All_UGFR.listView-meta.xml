@@ -8,6 +8,10 @@
     <columns>Editable_Application_Status__c</columns>
     <columns>RECORDTYPE</columns>
     <columns>LAST_UPDATE</columns>
+    <columns>Contact_Field__c</columns>
+    <columns>Application_Field__c</columns>
+    <columns>Related_Object__c</columns>
+    <columns>Related_Object_Field__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>NAME</field>

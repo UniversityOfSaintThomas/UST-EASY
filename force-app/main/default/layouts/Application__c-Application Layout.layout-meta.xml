@@ -78,6 +78,10 @@
                 <behavior>Edit</behavior>
                 <field>Pre_Professional_Program__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Documents_Missing__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -126,6 +130,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Degree_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_4__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -212,14 +224,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>School_College__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Generic_Filter_2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Generic_Filter_4__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -341,6 +345,16 @@
         <fields>ACCOUNT.NAME</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>Opportunity.Admissions_Application__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Lead__c</fields>
+        <fields>Email__c</fields>
+        <fields>Opportunity__c</fields>
+        <fields>Lead_Source__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>Interaction__c.Admissions_Application__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

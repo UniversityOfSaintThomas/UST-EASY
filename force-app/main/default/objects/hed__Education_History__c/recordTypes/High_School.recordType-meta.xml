@@ -38,6 +38,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Transcript_Evaluator__c</picklist>
+        <values>
+            <fullName>ECE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WES</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Transcripts_Evaluated_Previously__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>hed__Class_Rank_Scale__c</picklist>
         <values>
             <fullName>Decile</fullName>
@@ -74,11 +96,11 @@
     <picklistValues>
         <picklist>hed__Degree_Earned__c</picklist>
         <values>
-            <fullName>Associates</fullName>
+            <fullName>Associate%27s</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Bachelors</fullName>
+            <fullName>Bachelor%27s</fullName>
             <default>false</default>
         </values>
         <values>
@@ -90,11 +112,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Education Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GED</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>High School Diploma</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Masters</fullName>
+            <fullName>Juris Doctor %28JD%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Licensure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master%27s</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Degree</fullName>
             <default>false</default>
         </values>
         <values>
@@ -107,6 +149,14 @@
         </values>
         <values>
             <fullName>Post Graduate Diploma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post-Masters Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-Professional Program</fullName>
             <default>false</default>
         </values>
     </picklistValues>

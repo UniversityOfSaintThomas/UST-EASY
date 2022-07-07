@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>St_Thomas_College_School__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>St. Thomas College/School</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Leads (St. Thomas College/School)</relationshipLabel>
+    <relationshipName>Leads_UST_College_School</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

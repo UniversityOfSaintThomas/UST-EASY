@@ -43,8 +43,10 @@ public with sharing class AdmissionsApplicationFinderComponent {
     public List<SelectOption> getApps() {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('', 'Select...'));
-        for (Application_Control__c ac : acMapBySchool.get(selectedSchool)) {
-            options.add(new SelectOption(ac.URL_Parameter__c, ac.Name));
+        if (String.isNotBlank(selectedSchool)) {
+            for (Application_Control__c ac : acMapBySchool.get(selectedSchool)) {
+                options.add(new SelectOption(ac.URL_Parameter__c, ac.Name));
+            }
         }
         return options;
     }

@@ -45,6 +45,17 @@
     padding: 0.3rem 0.7rem;
 }
 
+.slds-scope .slds-progress__item .slds-button {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.3rem 0.3rem;
+}
+.slds-scope .slds-progress__item .slds-button__icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: 0;
+}
+
 .slds-scope .slds-tabled-checklist td {
     padding: .4rem .3rem;
 }

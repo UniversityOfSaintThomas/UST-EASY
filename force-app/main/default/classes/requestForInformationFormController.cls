@@ -166,9 +166,12 @@ public without sharing class requestForInformationFormController {
     @AuraEnabled
     public static List<Lead_Preset_Value__mdt> getPresetValues(String rfi_controller_name){
         try {
-            List<Lead_Preset_Value__mdt> preset_values = new List<Lead_Preset_Value__mdt>();
-            preset_values = [SELECT Field_API_Name__c, Value__c FROM Lead_Preset_Value__mdt WHERE RFI_Controller_Name__c =: rfi_controller_name];
-            return preset_values;
+            List<Lead_Preset_Value__mdt> return_preset_values = new List<Lead_Preset_Value__mdt>();
+            List<Lead_Preset_Value__mdt> preset_values = [SELECT Field_API_Name__c, Value__c FROM Lead_Preset_Value__mdt WHERE RFI_Controller_Name__c =: rfi_controller_name];
+            if (preset_values.size() > 0) {
+                return preset_values;
+            }
+            return return_preset_values;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -180,7 +183,7 @@ public without sharing class requestForInformationFormController {
             String school_college_id = '';
             Id administrative_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Administrative').getRecordTypeId();
             List<Account> school_college_accounts = [
-                SELECT Id 
+                SELECT Id
                 FROM Account 
                 WHERE Name =: school_college_name 
                 AND RecordTypeId =: administrative_id

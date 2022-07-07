@@ -19,7 +19,7 @@ public class requestForInformationFormControllerTest {
             Active__c = true,
             Degree__c = 'Bachelor of Arts',
             Program_Display__c = 'RFI',
-            Academic_Level__c = 'Undergraduate',
+            Academic_Level__c = 'U',
             Associated_Schools__c = 'Undergraduate',
             Program_Type__c = 'Major'
         );
@@ -30,7 +30,7 @@ public class requestForInformationFormControllerTest {
             Active__c = true,
             Degree__c = 'Juris Doctor',
             Program_Display__c = 'RFI',
-            Academic_Level__c = 'Graduate',
+            Academic_Level__c = 'G',
             Associated_Schools__c = 'School of Law',
             Banner_Program_Code__c = 'LW_JD'
         );
@@ -38,6 +38,7 @@ public class requestForInformationFormControllerTest {
         insert programs_to_insert;
 
         List<Account> accounts_to_insert = new List<Account>();
+        List<Id> search_results = new List<Id>();
         Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
         Id administrative_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Administrative').getRecordTypeId();
         Account high_school1 = new Account(
@@ -66,6 +67,10 @@ public class requestForInformationFormControllerTest {
         accounts_to_insert.add(college_account2);
         insert accounts_to_insert;
 
+        search_results.add(high_school1.Id);
+        search_results.add(high_school2.Id);
+        Test.setFixedSearchResults(search_results);
+
         List<hed__Term__c> terms = [SELECT Id, Name FROM hed__Term__c];
         System.debug(terms);
 
@@ -76,12 +81,6 @@ public class requestForInformationFormControllerTest {
             hed__Account__c = college_account1.Id
         );
         terms_to_insert.add(term1);
-        hed__Term__c term2 = new hed__Term__c(
-            Name = 'Fall 2029',
-            hed__Start_Date__c = System.today().addMonths(15),
-            hed__Account__c = college_account2.Id
-        );
-        terms_to_insert.add(term2);
         insert terms_to_insert;
     }
 
@@ -117,10 +116,32 @@ public class requestForInformationFormControllerTest {
 
     @isTest 
     public static void testSearchHighSchools() {
+        List<Account> accounts_to_insert = new List<Account>();
+        List<Id> search_results = new List<Id>();
+        Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
+        
+        Account high_school1 = new Account(
+            Name = 'Test High School',
+            RecordTypeId = educational_institution_id,
+            Type = 'High School'
+        );
+        accounts_to_insert.add(high_school1);
+        Account high_school2 = new Account(
+            Name = 'New High School',
+            RecordTypeId = educational_institution_id,
+            Type = 'High School'
+        );
+        accounts_to_insert.add(high_school2);
+        insert accounts_to_insert;
+
+        search_results.add(high_school1.Id);
+        search_results.add(high_school2.Id);
+        Test.setFixedSearchResults(search_results);
+
         Test.startTest();
-        Map<Id, Account> high_schools = requestForInformationFormController.searchHighSchools('Test');
+        Map<Id, Account> high_schools = requestForInformationFormController.searchHighSchools('High');
         Test.stopTest();
-        System.assertEquals(1, high_schools.size());
+        System.assertEquals(2, high_schools.size());
     }
 
     @isTest 
@@ -129,5 +150,30 @@ public class requestForInformationFormControllerTest {
         Map<Id, hed__Term__c> terms = requestForInformationFormController.getTerms('School of Law');
         Test.stopTest();
         System.assertEquals(1, terms.size());
+    }
+
+    @isTest
+    public static void testGetAcademicLevelValue() {
+        Test.startTest();
+        String value = requestForInformationFormController.getAcademicLevelValue('U');
+        Test.stopTest();
+        System.assertEquals('Undergraduate', value);
+    }
+
+    @isTest
+    public static void testGetPresetValues() {
+        Test.startTest();
+        List<Lead_Preset_Value__mdt> presets = requestForInformationFormController.getPresetValues('RFI Controller 0000');
+        Test.stopTest();
+        System.assertEquals(0, presets.size());
+    }
+
+    @isTest 
+    public static void testGetSchoolCollegeAccount() {
+        Test.startTest();
+        String school_id = requestForInformationFormController.getSchoolCollegeAccount('School of Law');
+        Test.stopTest();
+        String school_of_law_id = Id.valueOf([SELECT Id FROM Account WHERE Name = 'School of Law'].Id);
+        System.assertEquals(school_of_law_id, school_id);
     }
 }

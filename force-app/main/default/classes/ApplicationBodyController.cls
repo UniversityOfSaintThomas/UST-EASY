@@ -49,6 +49,7 @@ public with sharing class ApplicationBodyController {
 
         /* Some pages may have multiple app contexts */
         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
+            System.debug('has multiple apps');
             for (Application__c app : [
                     SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
                             Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c
@@ -120,15 +121,14 @@ public with sharing class ApplicationBodyController {
         /* Start/End date filter if defined */
         for (EASY_Widget__c widget : allPositionWidgets) {
             Boolean skipWidget = false;
-            if (String.isBlank(widget.Activation_State__c)) {
+
+            if (widget.Activation_State__c.equalsIgnoreCase('Inactive')) {
                 skipWidget = true;
-            } else if (widget.Activation_State__c.endsWithIgnoreCase('Date activated')) {
+            } else if (widget.Activation_State__c.equalsIgnoreCase('Date activated')) {
                 Datetime nowDateTime = adjustForTimeZone(Datetime.now(), widget.Widget_Time_Zone__c);
-                System.debug(nowDateTime);
                 if (String.isNotBlank(widget.Widget_Time_Zone__c)) {
                     if (widget.Start_Date__c != null && widget.Start_Time__c != null) {
                         Datetime widgetStartDateTime = convertDateToDatetime(widget.Start_Date__c, widget.Start_Time__c, null);
-                        System.debug(widgetStartDateTime);
                         if (nowDateTime <= widgetStartDateTime) {
                             skipWidget = true;
                         }
@@ -142,42 +142,51 @@ public with sharing class ApplicationBodyController {
                 }
             }
 
-            /* Only show one widget of type hard coded above. Admission App finder should only show once on a portal even if defined for several apps */
-            if (onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
-                if (onlyOneWidgetPerPage.get(widget.Widget_Type__c) > 0) {
-                    skipWidget = true;
-                } else {
-                    onlyOneWidgetPerPage.put(widget.Widget_Type__c, onlyOneWidgetPerPage.get(widget.Widget_Type__c) + 1);
+            if (!skipWidget) {
+                /* Only show one widget of type hard coded above. Admission App finder should only show once on a portal even if defined for several apps */
+                if (onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
+                    if (onlyOneWidgetPerPage.get(widget.Widget_Type__c) > 0) {
+                        skipWidget = true;
+                    } else {
+                        onlyOneWidgetPerPage.put(widget.Widget_Type__c, onlyOneWidgetPerPage.get(widget.Widget_Type__c) + 1);
+                    }
+                }
+
+                /* Status filter */
+                if (String.isNotBlank(widget.Display_Widget_On_Status__c) && !appInfoParam.appStatus.equalsIgnoreCase('none')) {
+                    if (atStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
+                        if (!doesListContainItem(new List<String>(atStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Status__c.split(';'))) {
+                            skipWidget = true;
+                        }
+                    }
+                }
+
+                /* Sub Status filter */
+                if (String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) && !appInfoParam.appSubStatus.equalsIgnoreCase('none')) {
+                    if (atSubStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
+                        if (!doesListContainItem(new List<String>(atSubStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Sub_Status__c.split(';'))) {
+                            skipWidget = true;
+                        }
+                    }
+                }
+
+                /* Citizenship filter */
+                if (String.isNotBlank(widget.Display_Widget_On_Citizenship__c) && String.isNotBlank(appInfoParam.citizenship)) {
+                    if (atCitizenshipMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
+                        if (!doesListContainItem(new List<String>(atCitizenshipMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Citizenship__c.split(';'))) {
+                            skipWidget = true;
+                        }
+                    }
+                }
+
+                /* Display on pages filter */
+                if (String.isNotBlank(widget.Display_Widget_On_Pages__c) && !skipWidget) {
+                    if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
+                        skipWidget = true;
+                    }
                 }
             }
 
-            /* Status filter */
-            if (String.isNotBlank(widget.Display_Widget_On_Status__c) && !appInfoParam.appStatus.equalsIgnoreCase('none')) {
-                if (atStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
-                    skipWidget = !doesListContainItem(new List<String>(atStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Status__c.split(';'));
-                }
-            }
-
-            /* Sub Status filter */
-            if (String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) && !appInfoParam.appSubStatus.equalsIgnoreCase('none')) {
-                if (atSubStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
-                    skipWidget = !doesListContainItem(new List<String>(atSubStatusMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Sub_Status__c.split(';'));
-                }
-            }
-
-            /* Citizenship filter */
-            if (String.isNotBlank(widget.Display_Widget_On_Citizenship__c) && String.isNotBlank(appInfoParam.citizenship)) {
-                if (atCitizenshipMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {
-                    skipWidget = !doesListContainItem(new List<String>(atCitizenshipMap.get(widget.Application_Control__r.URL_Parameter__c)), widget.Display_Widget_On_Citizenship__c.split(';'));
-                }
-            }
-
-            /* Display on pages filter */
-            if (String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
-                if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
-                    skipWidget = true;
-                }
-            }
 
             if (!skipWidget) {
 
@@ -204,7 +213,7 @@ public with sharing class ApplicationBodyController {
 
             }
         }
-        //  }
+
         return foundWidgets;
     }
 

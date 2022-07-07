@@ -24,6 +24,10 @@
     padding: 1px 0px 5px 0;
 }
 
+.slds-scope .slds-icon-standard-brand {
+    background-color: #510C76;
+}
+
 .slds-scope:not(html), .slds-scope body,
 .slds-scope .slds-text-body_regular, .slds-scope label, .slds-scope p,
 .slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select,

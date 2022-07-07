@@ -8,7 +8,7 @@
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
     <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <article class="slds-card slds-m-bottom_medium">
-            <div class="slds-card__header slds-grid">
+            <div class="{!IF(LOWER($CurrentPage.Name) == 'applicationportal', 'slds-card__header', '')} slds-grid">
                 <header class="slds-media slds-has-flexi-truncate">
                     <div class="slds-media__figure slds-m-top_xx-small">
                             <span class="slds-icon_container slds-icon-standard-brand" title="Admissions Application">
@@ -34,7 +34,7 @@
                     </div>
                 </header>
             </div>
-            <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-card__body {!IF(LOWER($CurrentPage.Name) == 'applicationportal', 'slds-card__body_inner', '')}">
                 <nav>
                     <apex:form>
                         <apex:repeat value="{!checklistItems}" var="r">

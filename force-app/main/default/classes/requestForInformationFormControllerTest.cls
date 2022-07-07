@@ -71,9 +71,6 @@ public class requestForInformationFormControllerTest {
         search_results.add(high_school2.Id);
         Test.setFixedSearchResults(search_results);
 
-        List<hed__Term__c> terms = [SELECT Id, Name FROM hed__Term__c];
-        System.debug(terms);
-
         List<hed__Term__c> terms_to_insert = new List<hed__Term__c>();
         hed__Term__c term1 = new hed__Term__c(
             Name = 'Spring 2024',

@@ -9,8 +9,80 @@ public class requestForInformationFormControllerTest {
             Redirect_Url__c = 'https://developer.salesforce.com',
             School_College__c = 'Undergraduate'
         );
-        
         insert controller;
+
+        List<Program__c> programs_to_insert = new List<Program__c>();
+        Id recruitment_program_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Recruitment_Program').getRecordTypeId();
+        Program__c program1 = new Program__c(
+            Name = 'Sociology',
+            RecordTypeId = recruitment_program_id,
+            Active__c = true,
+            Degree__c = 'Bachelor of Arts',
+            Program_Display__c = 'RFI',
+            Academic_Level__c = 'Undergraduate',
+            Associated_Schools__c = 'Undergraduate',
+            Program_Type__c = 'Major'
+        );
+        programs_to_insert.add(program1);
+        Program__c program2 = new Program__c(
+            Name = 'JD',
+            RecordTypeId = recruitment_program_id,
+            Active__c = true,
+            Degree__c = 'Juris Doctor',
+            Program_Display__c = 'RFI',
+            Academic_Level__c = 'Graduate',
+            Associated_Schools__c = 'School of Law',
+            Banner_Program_Code__c = 'LW_JD'
+        );
+        programs_to_insert.add(program2);
+        insert programs_to_insert;
+
+        List<Account> accounts_to_insert = new List<Account>();
+        Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
+        Id administrative_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Administrative').getRecordTypeId();
+        Account high_school1 = new Account(
+            Name = 'Test High School',
+            RecordTypeId = educational_institution_id,
+            Type = 'High School'
+        );
+        accounts_to_insert.add(high_school1);
+        Account high_school2 = new Account(
+            Name = 'New High School',
+            RecordTypeId = educational_institution_id,
+            Type = 'High School'
+        );
+        accounts_to_insert.add(high_school2);
+        Account college_account1 = new Account(
+            Name = 'School of Law',
+            RecordTypeId = administrative_id,
+            Banner_Key__c = 'STVCOLL-LAW'
+        );
+        accounts_to_insert.add(college_account1);
+        Account college_account2 = new Account(
+            Name = 'Undergraduate',
+            RecordTypeId = administrative_id,
+            Banner_Key__c = 'STVCOLL-UG'
+        );
+        accounts_to_insert.add(college_account2);
+        insert accounts_to_insert;
+
+        List<hed__Term__c> terms = [SELECT Id, Name FROM hed__Term__c];
+        System.debug(terms);
+
+        List<hed__Term__c> terms_to_insert = new List<hed__Term__c>();
+        hed__Term__c term1 = new hed__Term__c(
+            Name = 'Spring 2024',
+            hed__Start_Date__c = System.today().addMonths(3),
+            hed__Account__c = college_account1.Id
+        );
+        terms_to_insert.add(term1);
+        hed__Term__c term2 = new hed__Term__c(
+            Name = 'Fall 2029',
+            hed__Start_Date__c = System.today().addMonths(15),
+            hed__Account__c = college_account2.Id
+        );
+        terms_to_insert.add(term2);
+        insert terms_to_insert;
     }
 
     @isTest
@@ -33,4 +105,29 @@ public class requestForInformationFormControllerTest {
         System.assertEquals('U', controller.Academic_Level__c);
     }
 
+    @isTest
+    public static void testGetPrograms() {
+        Test.startTest();
+        Map<Id, Program__c> program_map1 = requestForInformationFormController.getPrograms('U', 'Undergraduate');
+        Map<Id, Program__c> program_map2 = requestForInformationFormController.getPrograms('G', 'School of Law');
+        Test.stopTest();
+        System.assertEquals(1, program_map1.size());
+        System.assertEquals(1, program_map2.size());
+    }
+
+    @isTest 
+    public static void testSearchHighSchools() {
+        Test.startTest();
+        Map<Id, Account> high_schools = requestForInformationFormController.searchHighSchools('Test');
+        Test.stopTest();
+        System.assertEquals(1, high_schools.size());
+    }
+
+    @isTest 
+    public static void testGetTerms() {
+        Test.startTest();
+        Map<Id, hed__Term__c> terms = requestForInformationFormController.getTerms('School of Law');
+        Test.stopTest();
+        System.assertEquals(1, terms.size());
+    }
 }

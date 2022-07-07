@@ -23,4 +23,7 @@ public with sharing class EASYApplicationInfo {
     public String allowWithdrawFrom { get; set; }
     public String academicLevel { get; set; }
     public String schoolCollege { get; set; }
+    public String intendedProgram { get; set; }
+    public String intendedTerm { get; set; }
+
 }

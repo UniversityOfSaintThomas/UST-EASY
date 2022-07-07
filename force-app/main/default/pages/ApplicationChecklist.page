@@ -1,5 +1,5 @@
 <apex:page controller="ApplicationChecklist" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0" action="{!init}">
-    <apex:composition template="Capricorn2020">
+ <!--   <apex:composition template="Capricorn2020">
         <apex:define name="scriptsHead">
             <c:ApplicationHead />
         </apex:define>
@@ -57,5 +57,5 @@
                 </apex:form>
             </c:ApplicationBody>
         </apex:define>
-    </apex:composition>
+    </apex:composition>-->
 </apex:page>

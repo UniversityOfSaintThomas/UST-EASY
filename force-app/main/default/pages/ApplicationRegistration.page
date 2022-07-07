@@ -19,6 +19,7 @@
                 }
             </script>
         </apex:define>
+        <apex:define name="metaPageTitle">New Application: {!appInfo.academicLevel}</apex:define>
         <apex:define name="body">
 
             <!-- This only runs after initial install and generates the cookie encryption key unique to each org -->
@@ -58,12 +59,12 @@
                                 </svg>
                             </a>
 
-                            <button class="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">
+                            <a href="javascript:void(0)" class="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">
                                 Save and Continue
                                 <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                                 </svg>
-                            </button>
+                            </a>
                         </nav>
 
                         <nav class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">

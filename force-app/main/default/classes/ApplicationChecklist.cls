@@ -5,6 +5,8 @@
 Revision (s):
 *******************************************************************************/
 public class ApplicationChecklist {
+    public void init() {}
+/*
 
     public Map<Id, RequirementWrapper> reqMap { get; set; }
     public List<RequirementWrapper> reqs { get {return reqMap.values();} }
@@ -33,9 +35,11 @@ public class ApplicationChecklist {
         appInfo = ApplicationUtilities.gatherApplicationInfo();
     }
 
-    /*******************************************************************************
+    */
+/*******************************************************************************
     * @description Initialize the page - Checks if requirements have been completed
-    ********************************************************************************/
+    ********************************************************************************//*
+
     public void init() {
         appInfo = ApplicationUtilities.gatherApplicationInfo();
         allowSubmit = true;
@@ -193,9 +197,11 @@ public class ApplicationChecklist {
 
     }
 
-    /*******************************************************************************
+    */
+/*******************************************************************************
     * @description Checks to see if requirements have been completed. Checks related list items too (Even if they are not marked completed on the Requirement Response)
-    ********************************************************************************/
+    ********************************************************************************//*
+
     public void checkRequirementCompletion() {
 
         Set<Id> requirementIds = new Set<Id>();
@@ -353,9 +359,11 @@ public class ApplicationChecklist {
         }
 
     }
-    /* ******************************************************************************
+    */
+/* ******************************************************************************
     * @description Submits the application if the application is in the correct status
-    ********************************************************************************/
+    ********************************************************************************//*
+
     public PageReference submit() {
         PageReference pr;
         if (allowSubmit && app != null) {
@@ -372,9 +380,11 @@ public class ApplicationChecklist {
         }
         return pr;
     }
-    /* ******************************************************************************
+    */
+/* ******************************************************************************
     * @description Cancels the application if the application is in the correct status
-    ********************************************************************************/
+    ********************************************************************************//*
+
     public PageReference cancelApp() {
         PageReference pr;
         if (allowCancel && app != null) {
@@ -391,9 +401,11 @@ public class ApplicationChecklist {
         }
         return pr;
     }
-    /* ******************************************************************************
+    */
+/* ******************************************************************************
     * @description Withdraws the application if the application is in the correct status
-    ********************************************************************************/
+    ********************************************************************************//*
+
     public PageReference withdrawApp() {
         PageReference pr;
         if (allowWithdraw && app != null) {
@@ -410,5 +422,6 @@ public class ApplicationChecklist {
         }
         return pr;
     }
+*/
 
 }

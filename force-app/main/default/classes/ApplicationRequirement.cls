@@ -7,7 +7,6 @@ Revision (s):
 public class ApplicationRequirement {
 
     public List<Requirement_Item__c> items { get; set; }
-    public Map<Id, Requirement_Item__c> allRequirementItems { get; set; }
     public String title {
         get {
             return items.isEmpty() ? '' : (String.isBlank(items[0].Requirement__r.Label__c) ? items[0].Requirement__r.Name : items[0].Requirement__r.Label__c);
@@ -39,7 +38,7 @@ public class ApplicationRequirement {
 
     public Id nextReqId {
         get {
-            if (nextReqId == null && appInfo != null && String.isNotBlank(appInfo.requirementId)) {
+            if (appInfo != null && String.isNotBlank(appInfo.requirementId)) {
                 for (Integer i = 0; i < checklistItems.size() - 1; i++) {
                     if (checklistItems[i].req.Id == appInfo.requirementId) {
                         nextReqId = checklistItems[i + 1].req.Id;
@@ -53,7 +52,7 @@ public class ApplicationRequirement {
     }
     public Id prevReqId {
         get {
-            if (prevReqId == null && appInfo != null && String.isNotBlank(appInfo.requirementId)) {
+            if (appInfo != null && String.isNotBlank(appInfo.requirementId)) {
                 for (Integer i = 1; i < checklistItems.size(); i++) {
                     if (checklistItems[i].req.Id == appInfo.requirementId) {
                         prevReqId = checklistItems[i - 1].req.Id;
@@ -77,7 +76,7 @@ public class ApplicationRequirement {
 
     public ApplicationRequirement() {
         //Need to get appInfo on constructor to know which template to use
-        if (appInfo == null) {
+        if(appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
     }
@@ -103,7 +102,7 @@ public class ApplicationRequirement {
     ********************************************************************************/
     public PageReference applicationRequirementInit() {
 
-        if (appInfo == null || String.isNotBlank(appInfo.appControlId)) {
+        if(appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
 
@@ -118,7 +117,7 @@ public class ApplicationRequirement {
         isStandardUser = userType.equalsIgnoreCase('standard');
         if (userType.equalsIgnoreCase('guest')) {
             String startUrl = System.currentPageReference().getParameters().get('startURL');
-            return new PageReference(Site.getPathPrefix() + '/SiteLogin?startURL=' + EncodingUtil.urlEncode(startURL, 'UTF-8'));
+            return new PageReference(Site.getPathPrefix() + '/SiteLogin?startURL=' + EncodingUtil.urlEncode(startUrl, 'UTF-8'));
         }
 
         if (queryItems == true) {
@@ -340,6 +339,7 @@ public class ApplicationRequirement {
     * description: Saves question responses, requirement responses and the application. Takes the student back to the application checklist
     ******************************************************************************* */
     public PageReference submit() {
+        PageReference pr = null;
 
         Boolean hasError = false;
         for (ApplicationQuestionGroup g : section.groups) {
@@ -388,7 +388,8 @@ public class ApplicationRequirement {
         }
 
         if (hasError) {
-            return null;
+            System.debug('Has Error: ');
+            return pr;
         }
 
         section.processValues(additionalData);
@@ -443,6 +444,7 @@ public class ApplicationRequirement {
         try {
             update con;
         } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, ex.getMessage()));
             System.debug(ex.getMessage());
         }
 
@@ -450,22 +452,17 @@ public class ApplicationRequirement {
 
             if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h')) && String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))) {
                 showSuccess = true;
-                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Your response has been submitted successfully. Thank you!'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Your response has been submitted successfully. Thank you!'));
             }
 
             if (String.isNotBlank(redirectPage)) {
-
                 if (redirectPage == 'checklist') {
-                    PageReference pr = Page.ApplicationPortal;
-                    pr.setRedirect(true);
-                    return pr;
+                    pr = Page.ApplicationPortal;
                 } else if (redirectPage == 'submit') {
-                    PageReference pr;
                     if (allowSubmit && app != null) {
                         if (appControl != null && String.isNotBlank(appControl.Submit_Status__c)) {
                             update new Application__c(Id = app.Id, Application_Status__c = appControl.Submit_Status__c);
                             pr = Page.ApplicationPortal;
-                            pr.setRedirect(true);
                             for (String s : new Set<String>{
                                     'contactId', 'applicationId', 'at'
                             }) {
@@ -473,23 +470,20 @@ public class ApplicationRequirement {
                             }
                         }
                     }
-                    return pr;
-
                 } else {
-                    PageReference pr = Page.ApplicationRequirement;
-                    pr.getParameters().put('applicationId', appInfo.appId);
-                    pr.getParameters().put('contactId', appInfo.contactId);
-                    pr.getParameters().put('at', appInfo.at);
-                    pr.getParameters().put('requirementId', redirectPage);
-                    // new PageReference('/apex/ApplicationRequirement?requirementId=' + redirectPage + '&applicationId=' + appInfo.appId + '&contactId=' + appInfo.contactId + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c)));
+                    pr = Page.ApplicationRequirement;
                     appInfo.requirementId = redirectPage;
                     ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
-                    pr.setRedirect(true);
-                    return pr;
+//                    pr.getParameters().put('applicationId', appInfo.appId);
+//                    pr.getParameters().put('contactId', appInfo.contactId);
+                    pr.getParameters().put('at', appInfo.at);
+                    pr.getParameters().put('requirementId', appInfo.requirementId);
                 }
+                pr.setRedirect(true);
             }
 
-            return null;
+            System.debug(pr);
+
 
         } catch (DmlException e) {
             System.debug('DML error:' + e.getDmlMessage(0));
@@ -499,6 +493,6 @@ public class ApplicationRequirement {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 
-        return null;
+        return pr;
     }
 }

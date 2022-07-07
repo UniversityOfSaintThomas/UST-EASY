@@ -18,6 +18,7 @@
                 }
             </script>
         </apex:define>
+        <apex:define name="metaPageTitle">New Application: {!appInfo.academicLevel}</apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="New Application" loadingText="Building Your Application..." appInfo="{!appInfo}" checklistItems="{!checklistItems}">
                 <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}">

@@ -5,7 +5,7 @@
 Revision (s): 
 *******************************************************************************/
 public class ApplicationProgressBar {
-
+/*
     //public EASYApplicationInfo appInfo { get; set; }
 
     // public List<Requirement__c> reqs {get;set;}
@@ -92,9 +92,9 @@ public class ApplicationProgressBar {
     public ApplicationProgressBar(ApplicationRequirement appReqmt) {
     }
 
-    /*******************************************************************************
+    *//*******************************************************************************
     * @description Initialize the page - Checks if requirements have been completed
-    ********************************************************************************/
+    ********************************************************************************//*
     public void start() {
 
         allowSubmit = true;
@@ -298,9 +298,9 @@ public class ApplicationProgressBar {
         reqMap.keySet().retainAll(reqIdsToKeep);
         reqIds.retainAll(reqIdsToKeep);
     }
-    /*******************************************************************************
+    *//*******************************************************************************
     * @description Checks to see if requirements have been completed. Checks related list items too (Even if they are not marked completed on the Requirement Response)
-    ********************************************************************************/
+    ********************************************************************************//*
     public void checkRequirementCompletion() {
 
         Set<Id> requirementIds = new Set<Id>();
@@ -454,5 +454,5 @@ public class ApplicationProgressBar {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 
-    }
+    }*/
 }

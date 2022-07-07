@@ -30,13 +30,11 @@ public with sharing class ApplicationChecklistComponentController {
 
         nextAppInfo.requirementId = nextRequirementId;
 
-        System.debug(JSON.serializePretty(nextAppInfo));
-
         ApplicationUtilities.createEncryptedCookie(JSON.serialize(nextAppInfo));
 
         PageReference requirementPage = Page.ApplicationRequirement;
-        requirementPage.getParameters().put('applicationId', nextAppInfo.appId);
-        requirementPage.getParameters().put('contactId', nextAppInfo.contactId);
+//        requirementPage.getParameters().put('applicationId', nextAppInfo.appId);
+//        requirementPage.getParameters().put('contactId', nextAppInfo.contactId);
         requirementPage.getParameters().put('at', nextAppInfo.at);
         requirementPage.getParameters().put('requirementId', nextRequirementId);
         requirementPage.setRedirect(true);

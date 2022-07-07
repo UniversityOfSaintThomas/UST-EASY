@@ -48,7 +48,7 @@ public with sharing class ApplicationBodyController {
                     WHERE Contact__c = :appInfoParam.contactId
             ]) {
                 appInfoIds.add(app.Application_Control__r.Id);
-                System.debug(app.Application_Control__r.URL_Parameter__c);
+
                 if (String.isNotBlank(app.Application_Status__c)) {
                     atStatusMap.put(app.Application_Control__r.URL_Parameter__c, new Set<String>(app.Application_Status__c.split(';')));
                 }
@@ -66,8 +66,7 @@ public with sharing class ApplicationBodyController {
             });
             appInfoIds.add(appInfoParam.appControlId);
         }
-        System.debug(atStatusMap);
-        System.debug(atSubStatusMap);
+
         try {
             allPositionWidgets = [
                     SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,

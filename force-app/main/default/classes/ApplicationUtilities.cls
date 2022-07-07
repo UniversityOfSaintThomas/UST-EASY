@@ -12,6 +12,12 @@ public class ApplicationUtilities {
         appInfo.isExternalUser = isExternalUser();
         appInfo.allowSubmit = true;
         appInfo.requirementId = null;
+        appInfo.appId = app.Id;
+        appInfo.appStatus = app.Application_Status__c;
+        appInfo.appSubStatus = app.Application_Substatus__c;
+        appInfo.citizenship = app.Citizenship__c;
+        appInfo.intendedProgram = app.Intended_Program__r.Name;
+        appInfo.intendedTerm = app.Intended_Term_of_Entry__r.Name;
         return appInfo;
     }
 
@@ -55,7 +61,7 @@ public class ApplicationUtilities {
     public static EASYApplicationInfo createShellAppInfo() {
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         Application_Control__c appControl = getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
-        appInfo = flattenAppControl(appControl,appInfo);
+        appInfo = flattenAppControl(appControl, appInfo);
         appInfo.contactId = ApplicationUtilities.getAppContactId();
         appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
         appInfo.allowSubmit = true;
@@ -105,17 +111,16 @@ public class ApplicationUtilities {
             }
             if (String.isNotBlank(appInfo.at)) {
                 Application_Control__c appControl = getApplicationControls(appInfo.at);
-                appInfo = flattenAppControl(appControl,appInfo);
+                appInfo = flattenAppControl(appControl, appInfo);
             }
             if (String.isBlank(appInfo.requirementId) && String.isNotBlank(ApexPages.currentPage().getParameters().get('requirementId'))) {
                 appInfo.requirementId = ApexPages.currentPage().getParameters().get('requirementId');
             }
         }
 
-       // if (String.isBlank(appInfo.appId)) {
-            appInfo = getApplicationId(appInfo);
-      //  }
+        appInfo = getApplicationId(appInfo);
 
+        System.debug(JSON.serializePretty(appInfo));
         return appInfo;
 
     }
@@ -148,7 +153,8 @@ public class ApplicationUtilities {
         if (String.isNotBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
             //Get the application type from the application id
             List<Application__c> currentApps = [
-                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c
+                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
+                            Intended_Program__r.Name, Intended_Term_of_Entry__r.Name
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     AND Application_Control__r.URL_Parameter__c = :appInfo.at
@@ -159,6 +165,8 @@ public class ApplicationUtilities {
                 appInfo.appStatus = currentApps[0].Application_Status__c;
                 appInfo.appSubStatus = currentApps[0].Application_Substatus__c;
                 appInfo.citizenship = currentApps[0].Citizenship__c;
+                appInfo.intendedProgram = currentApps[0].Intended_Program__r.Name;
+                appInfo.intendedTerm = currentApps[0].Intended_Term_of_Entry__r.Name;
             }
         }
         return appInfo;

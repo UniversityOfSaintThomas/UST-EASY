@@ -198,14 +198,14 @@
                         </apex:outputPanel>
 
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && !rr.isEditMode && !preventUpdates && group.isEditable}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" onClick="showFormSpinner()" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_neutral slds-m-right-small">
+                            <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" onClick="showFormSpinner()" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_brand slds-m-right-small">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#edit_form")}"></use>
                                 </svg>
                                 Edit
                                 <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                             </apex:commandLink>
-                            <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" onClick="showFormSpinner()" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_neutral">
+                            <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" onClick="showFormSpinner()" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_brand">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#delete")}"></use>
                                 </svg>
@@ -215,14 +215,14 @@
                         </apex:outputPanel>
 
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_neutral slds-m-right-small" onComplete="pageLoadReRendered();">
+                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand slds-m-right-small" onComplete="pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                                 </svg>
                                 Ok
                                 <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                             </apex:commandLink>
-                            <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_neutral" onComplete="pageLoadReRendered();">
+                            <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand" onComplete="pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#close")}"></use>
                                 </svg>
@@ -242,7 +242,7 @@
                         </apex:outputPanel>
 
                         <apex:outputPanel rendered="{!(ISPICKVAL($User.UserType,'Standard') || group.item.Allow_Supporting_Documentation_Upload__c) && rr.idx != null && !rr.isEditMode && group.isEditable && !preventUpdates}">
-                            <apex:commandLink action="{!group.RelatedUpload}" reRender="theTable" styleClass="slds-button slds-button_neutral slds-m-around_small" oncomplete="if('{!group.selectedRelatedId}')window.open('{!$Page.RelatedDocumentUpload+'?Id='+group.selectedRelatedId+'&rId='+group.item.Id}','_blank');" onComplete="pageLoadReRendered();">
+                            <apex:commandLink action="{!group.RelatedUpload}" reRender="theTable" styleClass="slds-button slds-button_brand slds-m-around_small" oncomplete="if('{!group.selectedRelatedId}')window.open('{!$Page.RelatedDocumentUpload+'?Id='+group.selectedRelatedId+'&rId='+group.item.Id}','_blank');" onComplete="pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#upload")}"></use>
                                 </svg>
@@ -255,7 +255,7 @@
                 </apex:outputPanel>
 
                 <apex:outputPanel rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                    <apex:commandLink styleClass="slds-button slds-button_neutral" onClick="showFormSpinner();" action="{!group.newRow}" onComplete="pageLoadReRendered();" reRender="theTable">
+                    <apex:commandLink styleClass="slds-button slds-button_brand" onClick="showFormSpinner();" action="{!group.newRow}" onComplete="pageLoadReRendered();" reRender="theTable">
                         <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                             <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#new")}"></use>
                         </svg>

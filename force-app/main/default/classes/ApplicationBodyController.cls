@@ -24,6 +24,11 @@ public with sharing class ApplicationBodyController {
         List<String> pagesWithMultipleAppInfo = new List<String>{
                 'ApplicationPortal'
         };
+
+        Map<String, Integer> onlyOneWidgetPerPage = new Map<String, Integer>{
+                'Application Finder' => 0
+        };
+
         Set<Id> appInfoIds = new Set<Id>();
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atSubStatusMap = new Map<String, Set<String>>();
@@ -97,6 +102,13 @@ public with sharing class ApplicationBodyController {
 //                }
             }
 
+            if (onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
+                if (onlyOneWidgetPerPage.get(widget.Widget_Type__c) > 0) {
+                    skipWidget = true;
+                } else {
+                    onlyOneWidgetPerPage.put(widget.Widget_Type__c, onlyOneWidgetPerPage.get(widget.Widget_Type__c) + 1);
+                }
+            }
 
             if (String.isNotBlank(widget.Display_Widget_On_Status__c) && !appInfoParam.appStatus.equalsIgnoreCase('none')) {
                 if (atStatusMap.get(widget.Application_Control__r.URL_Parameter__c) != null) {

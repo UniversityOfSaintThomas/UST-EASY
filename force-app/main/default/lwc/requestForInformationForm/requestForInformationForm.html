@@ -325,16 +325,30 @@
                         </div>
                     </template>
                     <template if:true={show_fields.State}>
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-combobox
-                                required={require_fields.State}
-                                label={field_labels.state_label} 
-                                options={stateOptions}
-                                aria-label="State"
-                                placeholder="Select a state..."
-                                onchange={onChange}>
-                            </lightning-combobox>
-                        </div>
+                        <template if:true={international_citizen_type}>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input
+                                    required={require_fields.State}
+                                    type="text"
+                                    label={field_labels.region_label}
+                                    aria-label="Region, Province, or State"
+                                    placeholder="Enter a region, province, or state..."
+                                    onchange={onChange}>
+                                </lightning-input>
+                            </div>
+                        </template>
+                        <template if:false={international_citizen_type}>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-combobox
+                                    required={require_fields.State}
+                                    label={field_labels.state_label} 
+                                    options={stateOptions}
+                                    aria-label="State"
+                                    placeholder="Select a state..."
+                                    onchange={onChange}>
+                                </lightning-combobox>
+                            </div>
+                        </template>
                     </template>
                 </div>  
                 <!-- ROW 10 -->

@@ -110,6 +110,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track manually_enter_high_school = false;
     @track high_school_data = false;
     @track form_submitted_successfully = false;
+    @track international_citizen_type = false;
 
     //RFI controller determined booleans
     @track show_fields = {
@@ -185,6 +186,7 @@ export default class RequestForInformationForm extends LightningElement {
         'address3_label' : 'Address 3',
         'city_label' : 'City',
         'state_label' : 'State',
+        'region_label' : 'Region, Province, or State',
         'zipcode_label' : 'Zip Code',
         'country_label' : 'Country',
         'academic_term_label' : 'Expected Start Term at St. Thomas',
@@ -377,6 +379,9 @@ export default class RequestForInformationForm extends LightningElement {
             case this.field_labels.state_label:
                 this.record_input.fields.State = event.target.value;
                 break;
+            case this.field_labels.region_label:
+                this.record_input.fields.State = event.target.value;
+                break;
             case this.field_labels.zipcode_label:
                 this.record_input.fields.PostalCode = event.target.value;
                 break;
@@ -395,6 +400,9 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.citizenship_label:
                 this.record_input.fields.Citizenship_Type__c = event.target.value;
+                if (event.target.value == 'International') {
+                    this.international_citizen_type = true;
+                }
                 break;
             case this.field_labels.admit_type_label:
                 this.record_input.fields.Admit_Type__c = event.target.value;

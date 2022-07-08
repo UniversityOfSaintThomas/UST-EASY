@@ -79,10 +79,26 @@ private static void setHoldingIds() {
 
     List<Application__c> testApplication = [SELECT Id, Contact__r.Name FROM Application__c WHERE Contact__r.Name = 'Test Contact'];
 
-    Family__c familyHolderSibling = new Family__c(Holding_Name__c = 'Unknown Sibling Account', First_Name__c = 'Unknown', Last_Name__c = 'Sibling Account', RecordTypeId = familySiblingRecordTypeId, Application__c = testApplication[0].Id);
-    insert familyHolderSibling;
-    Family__c familyHolderParent = new Family__c(Holding_Name__c = 'Unknown Parent Account', First_Name__c = 'Unknown', Last_Name__c = 'Parent Account', RecordTypeId = familyParentRecordTypeId, Application__c = testApplication[0].Id);
-    insert familyHolderParent;
+//    if (String.isNOtBlank(familySiblingRecordTypeId)) {
+//        Family__c familyHolderSibling = new Family__c(Holding_Name__c = 'Unknown Sibling Account', First_Name__c = 'Unknown', Last_Name__c = 'Sibling Account', RecordTypeId = familySiblingRecordTypeId, Application__c = testApplication[0].Id);
+//        insert familyHolderSibling;
+//    }
+//    if (String.isNOtBlank(familyParentRecordTypeId)) {
+//        Family__c familyHolderParent = new Family__c(Holding_Name__c = 'Unknown Parent/Guardian 1 Account', First_Name__c = 'Unknown', Last_Name__c = 'Parent Account', RecordTypeId = familyParentRecordTypeId, Application__c = testApplication[0].Id);
+//        insert familyHolderParent;
+//    }
+
+    List<Account> unknownParent = [
+            SELECT Id, Name, RecordTypeId
+            FROM Account
+            WHERE Name = 'Unknown Parent%'
+    ];
+
+    List<Account> unknownSibling = [
+            SELECT Id, Name, RecordTypeId
+            FROM Account
+            WHERE Name = 'Unknown Sibling%'
+    ];
 
     for (Requirement_Item__c familyRequirement : [
             SELECT Id, Name, RecordType.Name, Holding_Record_Id__c, Related_Object_Record_Type_ID__c
@@ -93,10 +109,10 @@ private static void setHoldingIds() {
     ]) {
         if (familyRequirement.Name.contains('Sibling')) {
             familyRequirement.Related_Object_Record_Type_ID__c = familySiblingRecordTypeId;
-            familyRequirement.Holding_Record_Id__c = familyHolderSibling.RecordTypeId;
+            familyRequirement.Holding_Record_Id__c = unknownParent[0].Id;
         } else {
             familyRequirement.Related_Object_Record_Type_ID__c = familyParentRecordTypeId;
-            familyRequirement.Holding_Record_Id__c = familyHolderParent.RecordTypeId;
+            familyRequirement.Holding_Record_Id__c = unknownSibling[0].Id;
         }
         updateItems.add(familyRequirement);
     }

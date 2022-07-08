@@ -94,65 +94,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>hed__Degree_Earned__c</picklist>
-        <values>
-            <fullName>Associate%27s</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bachelor%27s</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Certificate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Doctoral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Education Specialist</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Juris Doctor %28JD%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Licensure</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Master%27s</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non-Degree</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>None</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Post Graduate Diploma</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Post-Masters Certificate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pre-Professional Program</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>hed__GPA_Scale_Reporting__c</picklist>
         <values>
             <fullName>10</fullName>

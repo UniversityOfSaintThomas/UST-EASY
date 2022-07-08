@@ -1990,7 +1990,19 @@
     <picklistValues>
         <picklist>Generic_Filter_2__c</picklist>
         <values>
-            <fullName>Generic Value 3</fullName>
+            <fullName>Add another gender</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nonbinary</fullName>
             <default>false</default>
         </values>
     </picklistValues>

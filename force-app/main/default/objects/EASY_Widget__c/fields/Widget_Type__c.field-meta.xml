@@ -27,6 +27,11 @@
                 <default>false</default>
                 <label>Progress Bar</label>
             </value>
+            <value>
+                <fullName>Application Finder</fullName>
+                <default>false</default>
+                <label>Application Finder</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -10,6 +10,26 @@
         <default>false</default>
         <label>4 Year College</label>
     </customValue>
+    <customValue>
+        <fullName>Law</fullName>
+        <default>false</default>
+        <label>Law</label>
+    </customValue>
+    <customValue>
+        <fullName>Graduate</fullName>
+        <default>false</default>
+        <label>Graduate</label>
+    </customValue>
+    <customValue>
+        <fullName>Non-Degree</fullName>
+        <default>false</default>
+        <label>Non-Degree</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
     <description>Used to capture the College of Interest</description>
     <masterLabel>College of Interest</masterLabel>
     <sorted>false</sorted>

@@ -49,6 +49,10 @@
                 <behavior>Edit</behavior>
                 <field>Program_College_of_Interest__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Application_Control_URL__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -363,6 +367,14 @@
         <fields>Intended_Program__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Application__c.Pre_Professional_Program__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Active__c</fields>
+        <fields>Career__c</fields>
+        <fields>Department__c</fields>
+        <fields>Plan_Code__c</fields>
+        <relatedList>Plan__c.Program__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

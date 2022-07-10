@@ -12,16 +12,13 @@
             <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Please Wait..</span>
         </div>
     </div>
-    <!--            <apex:outputPanel styleClass="row" style="padding:10px;padding-left:15px;" rendered="{!!hideLogo}">-->
-    <!--                <div class="col-xs-12" >-->
-    <!--                    <img src="{!URLFOR($Resource[appControl.Logo_Static_Resource__c], appControl.Logo_Static_Resource_Path__c)}" />-->
-    <!--                </div>-->
-    <!--            </apex:outputPanel>-->
+
     <apex:variable value="{!widgets}" var="w"/>
     <apex:variable value="{!If(w.leftWidgets.size >0, 'l', '')}{!If(w.rightWidgets.size >0, 'r', '')}" var="col"/>
+
     <apex:outputPanel styleClass="slds-grid slds-wrap slds-p-bottom_x-large application-body" layout="block">
         <!-- TOP WIDGETS -->
-        <apex:outputPanel layout="block" rendered="{!IF(w.topWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+        <apex:outputPanel layout="block" rendered="{!IF(w.topWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-clearfix">
             <apex:repeat value="{!w.topWidgets}" var="widget" rendered="{!IF(w.topWidgets.size > 0, true, false)}">
                 <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
             </apex:repeat>
@@ -39,7 +36,7 @@
 
             <!-- CONTENT TOP WIDGETS -->
             <apex:outputPanel layout="block" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                <apex:repeat value="{!w.topWidgets}" var="widget" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}">
+                <apex:repeat value="{!w.contentTopWidgets}" var="widget" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}">
                     <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
                 </apex:repeat>
             </apex:outputPanel>
@@ -63,7 +60,7 @@
 
             <!-- CONTENT BOTTOM WIDGETS -->
             <apex:outputPanel layout="block" rendered="{!IF(w.contentBottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                <apex:repeat value="{!w.topWidgets}" var="widget" rendered="{!IF(w.contentBottomWidgets.size > 0, true, false)}">
+                <apex:repeat value="{!w.contentBottomWidgets}" var="widget" rendered="{!IF(w.contentBottomWidgets.size > 0, true, false)}">
                     <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
                 </apex:repeat>
             </apex:outputPanel>
@@ -78,7 +75,7 @@
         </apex:outputPanel>
 
         <!-- BOTTOM WIDGETS -->
-        <apex:outputPanel layout="block" rendered="{!IF(w.bottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+        <apex:outputPanel layout="block" rendered="{!IF(w.bottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-clearfix">
             <apex:repeat value="{!w.bottomWidgets}" var="widget">
                 <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
             </apex:repeat>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Academic_Programs_SPSSD</fullName>
+    <columns>NAME</columns>
+    <columns>Program_Major_Concentration__c</columns>
+    <columns>Application_Control__c</columns>
+    <columns>Degree_Type__c</columns>
+    <columns>Applicant_Type__c</columns>
+    <columns>Student_Type__c</columns>
+    <columns>Application_Fee_Amount__c</columns>
+    <columns>Active__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Program_Record_Type__c</field>
+        <operation>equals</operation>
+        <value>Academic Program</value>
+    </filters>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>contains</operation>
+        <value>Seminary</value>
+    </filters>
+    <label>Academic Programs - SPSSD</label>
+    <language>en_US</language>
+</ListView>

@@ -11,6 +11,7 @@
     <columns>Academic_Term_Integration_External_ID__c</columns>
     <columns>Current_Term__c</columns>
     <columns>Term_Status_Type__c</columns>
+    <columns>Term__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
     <language>en_US</language>

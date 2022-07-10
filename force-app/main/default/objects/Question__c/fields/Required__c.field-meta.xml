@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Required__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Application status(es) that this field is required for (applies to none if blank)</inlineHelpText>
     <label>Required</label>

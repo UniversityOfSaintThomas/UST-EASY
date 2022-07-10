@@ -38,6 +38,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Transcript_Evaluator__c</picklist>
+        <values>
+            <fullName>ECE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WES</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Transcripts_Evaluated_Previously__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>hed__Class_Rank_Scale__c</picklist>
         <values>
             <fullName>Decile</fullName>
@@ -68,45 +90,6 @@
         </values>
         <values>
             <fullName>Weighted</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>hed__Degree_Earned__c</picklist>
-        <values>
-            <fullName>Associates</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bachelors</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Certificate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Doctoral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>High School Diploma</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Masters</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>None</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Post Graduate Diploma</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -91,13 +91,13 @@ private static void setHoldingIds() {
     List<Account> unknownParent = [
             SELECT Id, Name, RecordTypeId
             FROM Account
-            WHERE Name = 'Unknown Parent%'
+            WHERE Name LIKE 'Unknown Parent%'
     ];
 
     List<Account> unknownSibling = [
             SELECT Id, Name, RecordTypeId
             FROM Account
-            WHERE Name = 'Unknown Sibling%'
+            WHERE Name LIKE 'Unknown Sibling%'
     ];
 
     for (Requirement_Item__c familyRequirement : [
@@ -120,8 +120,6 @@ private static void setHoldingIds() {
     if (updateItems.size() > 0) {
         update updateItems;
     }
-
-
 }
 
 private static void permissionGuestUser() {

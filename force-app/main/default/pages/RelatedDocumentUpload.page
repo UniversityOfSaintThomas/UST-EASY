@@ -26,13 +26,13 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
-                            <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;"/>
+                            <hr style="border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
                             <div class="col-xs-3 col-md-2">
-                                <apex:commandLink styleClass="btn btn-lightning rightNav" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();" rendered="{!!success}"/>
+                                <apex:commandLink styleClass="btn btn-lightning rightNav" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();" rendered="{!!success}"/>
                             </div>
                         </div>
                     </div>

@@ -18,8 +18,8 @@ public with sharing class checklistHelper {
         allowCancel = false;
         allowWithdraw = false;
 
-        allowCancel = String.isNotBlank(appInfo.appControl.Allow_Cancel_From__c) && new Set<String>(appInfo.appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c);
-        allowWithdraw = String.isNotBlank(appInfo.appControl.Allow_Withdraw_From__c) && new Set<String>(appInfo.appControl.Allow_Withdraw_From__c.split(';')).contains(app.Application_Status__c);
+        allowCancel = String.isNotBlank(appInfo.allowCancelFrom) && new Set<String>(appInfo.allowCancelFrom.split(';')).contains(app.Application_Status__c);
+        allowWithdraw = String.isNotBlank(appInfo.allowWithdrawFrom) && new Set<String>(appInfo.allowWithdrawFrom.split(';')).contains(app.Application_Status__c);
 
         reqMap = new Map<Id, RequirementWrapper>();
         Set<Id> reqIds = new Set<Id>();
@@ -114,12 +114,12 @@ public with sharing class checklistHelper {
             }
         }
 
-        if (appInfo.appControl != null && String.isNotBlank(appInfo.appControl.Allow_Submit_From__c)) {
-            if (!(new Set<String>(appInfo.appControl.Allow_Submit_From__c.split(';'))).contains(app.Application_Status__c)) {
+        if (String.isNotBlank(appInfo.appControlId) && String.isNotBlank(appInfo.allowSubmitFrom)) {
+            if (!(new Set<String>(appInfo.allowSubmitFrom.split(';'))).contains(app.Application_Status__c)) {
                 allowSubmit = false;
             }
 
-        } else if (appInfo.appControl != null && String.isBlank(appInfo.appControl.Allow_Submit_From__c) && String.isNotBlank(appInfo.appControl.Submit_Status__c)) {
+        } else if (String.isNotBlank(appInfo.appControlId) && String.isBlank(appInfo.allowSubmitFrom) && String.isNotBlank(appInfo.submitStatus)) {
 
         } else {
             allowSubmit = false;

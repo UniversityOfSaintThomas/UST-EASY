@@ -36,7 +36,7 @@
                                         <apex:form>
                                             <apex:repeat value="{!req.section.groups}" var="g" rendered="{!req.section.groups != null && req.section.groups.size > 0}">
                                                 <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
-                                                    <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appControl="{!appControl}" appInfo="{!appInfo}"/>
+                                                    <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appInfo="{!appInfo}"/>
                                                 </div>
                                                 <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
                                             </apex:repeat>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
-                        <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;"/>
+                        <hr />
                     </div>
                 </div>
             </c:ApplicationBody>
@@ -57,14 +57,14 @@
         </apex:repeat>
         <div class="row">
             <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 col-xs-6">
-                <apex:outputLink styleClass="btn-lightning btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="/{!applicationId}">Back to Application</apex:outputLink>
+                <apex:outputLink styleClass="btn-lightning btn-lg" value="/{!applicationId}">Back to Application</apex:outputLink>
             </div>
             <div class="col-lg-4 col-md-5 col-xs-6">
                 <apex:form>
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                     </apex:actionFunction>
-                    <apex:commandLink styleClass="btn-lightning btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};float:right;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                    <apex:commandLink styleClass="btn-lightning btn-lg" style="float:right;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
                 </apex:form>
             </div>
         </div>

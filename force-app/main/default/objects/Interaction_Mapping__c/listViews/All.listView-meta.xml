@@ -3,11 +3,14 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>Active__c</columns>
+    <columns>Interaction_Source_Field_API_Name__c</columns>
+    <columns>Source_Object_API_Name__c</columns>
+    <columns>Source_Field_API_Name__c</columns>
     <columns>Target_Object_API_Name__c</columns>
     <columns>Target_Field_API_Name__c</columns>
-    <columns>Interaction_Source_Field_API_Name__c</columns>
     <columns>Insert_Null__c</columns>
     <columns>Skip_Mapping__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
+    <language>en_US</language>
 </ListView>

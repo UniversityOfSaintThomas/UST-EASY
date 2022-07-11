@@ -33,9 +33,9 @@
                 <label>Webform</label>
             </value>
             <value>
-                <fullName>Stealth App</fullName>
+                <fullName>Application</fullName>
                 <default>true</default>
-                <label>Stealth App</label>
+                <label>Application</label>
             </value>
         </valueSetDefinition>
     </valueSet>

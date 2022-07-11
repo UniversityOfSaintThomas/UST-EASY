@@ -18,7 +18,7 @@
             );
         }
     </script>
-    <c:ApplicationHead />
+    <c:ApplicationHead/>
     <c:ApplicationBody title="Related Object Review" appInfo="{!appInfo}">
         <div class="row">
             <div class="">
@@ -26,9 +26,9 @@
                     <div class="row" style="display:flex;">
                         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-120">
                             <div role="listbox">
-                                <apex:pageMessages />
+                                <apex:pageMessages/>
                                 <apex:form id="theForm">
-                                    <apex:outputPanel >
+                                    <apex:outputPanel>
                                         <script>
                                             jQuery(function () {
                                                 jQuery('.bind-autocomplete').each(function (idx, autocompleteItem) {
@@ -62,7 +62,7 @@
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-lg-8 col-md-10 col-xs-12">
-                                                    <h2 style="font-family:'Open Sans', sans-serif;color:#{!appControl.Text_Color__c};font-weight:400;font-size:24px;">{!$ObjectType[ot].Label}</h2>
+                                                    <h2>{!$ObjectType[ot].Label}</h2>
                                                 </div>
                                             </div>
                                             <table class="table" id="table">
@@ -83,11 +83,11 @@
                                                     <tr>
                                                         <apex:repeat value="{!objFieldMap[ot]}" var="q">
                                                             <td class="ui-front">
-                                                                <c:ApplicationField question="{!rr.relatedObjMap[q]}" obj="{!rr.relatedSObj}" objType="{!ot}" appControl="{!appControl}"/>
+                                                                <c:ApplicationField question="{!rr.relatedObjMap[q]}" obj="{!rr.relatedSObj}" objType="{!ot}" appInfo="{!appInfo}"/>
                                                             </td>
                                                         </apex:repeat>
                                                         <td>
-                                                            <apex:commandLink styleClass="btn btn-lg" action="{!createRec}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" value="Create" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" rerender="theForm">
+                                                            <apex:commandLink styleClass="btn btn-lg" action="{!createRec}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" value="Create" rerender="theForm">
                                                                 <apex:param name="p1" value="{!rr.obj.Id}" assignTo="{!createNewRecordId}"/>
                                                                 <apex:param name="p2" value="{!ot}" assignTo="{!createNewRecordType}"/>
                                                             </apex:commandLink>
@@ -99,7 +99,7 @@
                                                     </tr>
                                                 </apex:repeat>
                                             </table>
-                                            <apex:commandLink styleClass="btn btn-lg" action="{!saveTable}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" value="Save Table" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" rerender="theForm">
+                                            <apex:commandLink styleClass="btn btn-lg" action="{!saveTable}" onclick="appShowLoadingSpinner();" oncomplete="appHideLoadingSpinner();" value="Save Table" rerender="theForm">
                                                 <apex:param name="p1" value="{!ot}" assignTo="{!createNewRecordType}"/>
                                             </apex:commandLink>
                                         </div>
@@ -113,13 +113,13 @@
         </div>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
-                <hr style="border:solid #{!appControl.Line_Color__c};border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;"/>
+                <hr style="border-width:1px 0 0;clear:both;margin:1.25rem 0 1.1875rem;height:0;"/>
             </div>
         </div>
         <!-- buttons -->
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
-                <apex:outputLink styleClass="btn btn-lg" style="color:#{!appControl.Button_Text_Color__c};background-color:#{!appControl.Button_Color__c};" value="/">Go Back</apex:outputLink>
+                <apex:outputLink styleClass="btn btn-lg" value="/">Go Back</apex:outputLink>
             </div>
         </div>
     </c:ApplicationBody>

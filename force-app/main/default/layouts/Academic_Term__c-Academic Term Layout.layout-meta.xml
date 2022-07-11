@@ -68,6 +68,10 @@
                 <behavior>Edit</behavior>
                 <field>Term_10th_Day__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Term__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

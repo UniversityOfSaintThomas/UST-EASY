@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <description>An object for housing recruitment and academic program records. There are two record types: Recruitment Programs and Academic Programs.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
@@ -165,8 +166,8 @@
         <customTabListAdditionalFields>Career__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Department__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Program_Code__c</customTabListAdditionalFields>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Active__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Career__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Program_Code__c</lookupDialogsAdditionalFields>

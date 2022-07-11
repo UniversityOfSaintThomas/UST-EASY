@@ -27,7 +27,7 @@
                             <apex:param name="nextAppId" value="{!appInfoParam.appId}" assignTo="{!nextAppId}"/>
                             <apex:param name="nextContactId" value="{!appInfoParam.contactId}" assignTo="{!nextContactId}"/>
                             <apex:outputPanel rendered="{!progressIcon != 'clear'}" layout="none">
-                                <svg class="slds-button__icon slds-icon_small icon-Complete slds-is-animated">
+                                <svg class="slds-button__icon slds-icon_large icon-Complete slds-is-animated">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#' + progressIcon )}"/>
                                 </svg>
                             </apex:outputPanel>
@@ -41,7 +41,7 @@
             </ol>
 
             <apex:variable var="progress" value="{!IF(!ISBLANK(count) && !ISBLANK(successCount),IF(successCount>0 && count > 0,successCount * 100 / count,0),0)}"/>
-            <div class="slds-progress-bar slds-progress-bar_small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{!progress}" aria-label="Percentage of Application completed." role="progressbar">
+            <div class="slds-progress-bar slds-progress-bar_medium" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{!progress}" aria-label="Percentage of Application completed." role="progressbar">
             <span class="slds-progress-bar__value" style="width:{!successCount * 100 / count}%">
               <span class="slds-assistive-text">Progress: {!progress} </span>
             </span>

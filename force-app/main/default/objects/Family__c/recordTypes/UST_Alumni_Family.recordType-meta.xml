@@ -963,6 +963,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Family_Address_Relationship__c</picklist>
+        <values>
+            <fullName>A different address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Same as my Current Address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Same as my Mailing Address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Graduate_from_UST__c</picklist>
         <values>
             <fullName>No</fullName>

@@ -4,8 +4,72 @@
 
 
 @IsTest
-private class ApplicationChecklistComponentCtrl_TEST {
+public class ApplicationChecklistComponentCtrl_TEST {
+
+    @TestSetup
+    public static void setup(){
+        Application_Control__c appControl = new Application_Control__c(
+            Application_Start_Status__c = Application_Control__c.Application_Start_Status__c.getDescribe().getPicklistValues()[0].getValue(),
+            Active__c = true,
+            Allow_Cancel_From__c = Application_Control__c.Allow_Cancel_From__c.getDescribe().getPicklistValues()[0].getValue(),
+            Allow_Withdraw_From__c = Application_Control__c.Allow_Withdraw_From__c.getDescribe().getPicklistValues()[0].getValue(),
+            Allow_Submit_From__c = Application_Control__c.Allow_Submit_From__c.getDescribe().getPicklistValues()[0].getValue(),
+            Cancel_Status__c = Application_Control__c.Cancel_Status__c.getDescribe().getPicklistValues()[0].getValue(),
+            Default__c = true,
+            URL_Parameter__c = 'st',
+            Submit_Status__c = Application_Control__c.Submit_Status__c.getDescribe().getPicklistValues()[0].getValue(),
+            Withdraw_Status__c = Application_Control__c.Withdraw_Status__c.getDescribe().getPicklistValues()[0].getValue()
+        );
+        insert appControl;
+
+        Contact student = new Contact(LastName = 'TestStudent');
+        insert student;
+        Application__c app = new Application__c(
+            Contact__c = student.Id, 
+            Application_Status__c = Application__c.Application_Status__c.getDescribe().getPicklistValues()[0].getValue()
+        );
+        insert app;
+
+        Requirement__c req = new Requirement__c(
+            Active__c = true, 
+            Name = 'Test Req', 
+            Application_Control__c = appControl.Id
+        );
+        insert req;
+    }
+
     @IsTest
-    static void testBehavior() {
+    public static void testGoToRequirement() {
+        Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
+        Application app = [SELECT Id FROM Application__c LIMIT 1];
+        Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
+
+        EASYApplicationInfo appInfo = new EASYApplicationInfo(
+            appControlId = appControl.Id,
+            appControl = appControl,
+            contactId = app.Contact__c,
+            at = 'teststring'
+        );
+
+        ApplicationChecklistComponentController controller = new ApplicationChecklistComponentController(
+            appInfoParam = appInfo,
+            nextAppId = app.Id,
+            nextRequirementId = req.Id,
+            nextAt = 'teststring'
+        );
+
+        PageReference requirementPage = Page.ApplicationRequirement;
+        requirementPage.getParameters().put('applicationId', app.Id);
+        requirementPage.getParameters().put('contactId', appInfo.contactId);
+        requirementPage.getParameters().put('at', appInfo.at);
+        requirementPage.getParameters().put('requirementId', nextRequirementId);
+        requirementPage.setRedirect(true);
+
+        Test.startTest();
+        PageReference returnPage = controller.goToRequirement();
+        Test.stopTest();
+
+        System.assertEquals(requirementPage, returnPage);
+
     }
 }

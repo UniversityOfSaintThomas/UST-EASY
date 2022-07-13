@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proposal_Type__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Possible Values:  Capital (building related), Planned Gift, Current Restricted, Current Unrestricted.</inlineHelpText>
+    <label>Proposal Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Capital</fullName>
+                <default>false</default>
+                <label>Capital</label>
+            </value>
+            <value>
+                <fullName>Planned Gift</fullName>
+                <default>false</default>
+                <label>Planned Gift</label>
+            </value>
+            <value>
+                <fullName>Restricted</fullName>
+                <default>false</default>
+                <label>Restricted</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -41,35 +41,30 @@ public class ApplicationChecklistComponentCtrl_TEST {
     @IsTest
     public static void testGoToRequirement() {
         Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
-        Application app = [SELECT Id FROM Application__c LIMIT 1];
+        Application__c app = [SELECT Id, Contact__c FROM Application__c LIMIT 1];
         Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
 
-        EASYApplicationInfo appInfo = new EASYApplicationInfo(
-            appControlId = appControl.Id,
-            appControl = appControl,
-            contactId = app.Contact__c,
-            at = 'teststring'
-        );
+        EASYApplicationInfo appInfo = new EASYApplicationInfo();
+        appInfo.appControlId = appControl.Id;
+        appInfo.contactId = app.Contact__c;
+        appInfo.at = 'teststring';
 
-        ApplicationChecklistComponentController controller = new ApplicationChecklistComponentController(
-            appInfoParam = appInfo,
-            nextAppId = app.Id,
-            nextRequirementId = req.Id,
-            nextAt = 'teststring'
-        );
+        ApplicationChecklistComponentController controller = new ApplicationChecklistComponentController();
+        controller.appInfoParam = appInfo;
+        controller.nextAppId = app.Id;
+        controller.nextRequirementId = req.Id;
+        controller.nextAt = 'teststring';
 
         PageReference requirementPage = Page.ApplicationRequirement;
-        requirementPage.getParameters().put('applicationId', app.Id);
-        requirementPage.getParameters().put('contactId', appInfo.contactId);
         requirementPage.getParameters().put('at', appInfo.at);
-        requirementPage.getParameters().put('requirementId', nextRequirementId);
+        requirementPage.getParameters().put('requirementId', controller.nextRequirementId);
         requirementPage.setRedirect(true);
 
         Test.startTest();
         PageReference returnPage = controller.goToRequirement();
         Test.stopTest();
 
-        System.assertEquals(requirementPage, returnPage);
+        System.assertEquals(requirementPage.getUrl(), returnPage.getUrl());
 
     }
 }

@@ -240,6 +240,9 @@ private class INT_InteractionProcessor_TEST {
         );
         insert testFallTerm;
 
+        Contact student = new Contact(LastName='TestStudent');
+        insert student;
+
         Interaction__c testInt = new Interaction__c(
                 First_Name__c = 'Super',
                 Last_Name__c = 'Gary',
@@ -255,7 +258,8 @@ private class INT_InteractionProcessor_TEST {
                 Lead_Source__c = 'Office Visit',
                 Affiliated_Account__c = testUniversity.Id,
                 Affiliation_Role__c = 'Student',
-                Primary_Affiliation__c = true
+                Primary_Affiliation__c = true,
+                Opportunity_Stage__c = 'Inquired'
         );
 
         // Act

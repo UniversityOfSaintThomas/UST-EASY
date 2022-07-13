@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Donor_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Donor Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Acquired</fullName>
+                <default>false</default>
+                <label>Acquired</label>
+            </value>
+            <value>
+                <fullName>Retained</fullName>
+                <default>false</default>
+                <label>Retained</label>
+            </value>
+            <value>
+                <fullName>Renewed</fullName>
+                <default>false</default>
+                <label>Renewed</label>
+            </value>
+            <value>
+                <fullName>LYBUNT</fullName>
+                <default>false</default>
+                <label>LYBUNT</label>
+            </value>
+            <value>
+                <fullName>SYBUNT</fullName>
+                <default>false</default>
+                <label>SYBUNT</label>
+            </value>
+            <value>
+                <fullName>Past Donor</fullName>
+                <default>false</default>
+                <label>Past Donor</label>
+            </value>
+            <value>
+                <fullName>Never Giver</fullName>
+                <default>false</default>
+                <label>Never Giver</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Likelihood_Stoplight__c</fullName>
+    <description>Likelihood that a proposal will be funded and nothing to do with timing.   Values include Green, Yellow, Red or Purple</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Likelihood that a proposal will be funded and nothing to do with timing.   Values include Green, Yellow, Red or Purple</inlineHelpText>
+    <label>Likelihood Stoplight</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Green</fullName>
+                <default>false</default>
+                <label>Green</label>
+            </value>
+            <value>
+                <fullName>Purple</fullName>
+                <default>false</default>
+                <label>Purple</label>
+            </value>
+            <value>
+                <fullName>Red</fullName>
+                <default>false</default>
+                <label>Red</label>
+            </value>
+            <value>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+                <label>Yellow</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

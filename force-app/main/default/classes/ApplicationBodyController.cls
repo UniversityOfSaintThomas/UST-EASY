@@ -207,7 +207,7 @@ public with sharing class ApplicationBodyController {
                         foundWidgets.contentTopWidgets.add(widget);
                     }
                     when 'content bottom' {
-                        foundWidgets.contentTopWidgets.add(widget);
+                        foundWidgets.contentBottomWidgets.add(widget);
                     }
                 }
 

@@ -18,11 +18,11 @@
             );
         }
     </script>
-    <c:ApplicationHead/>
+    <c:ApplicationHead />
     <apex:variable value="0" var="reqIndex"/>
     <div class="appBodyReview">
         <apex:outputPanel id="themessages">
-            <apex:pageMessages/>
+            <apex:pageMessages />
         </apex:outputPanel>
         <apex:repeat value="{!arLst}" var="req">
             <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}">
@@ -33,7 +33,7 @@
                                 <div class="col-lg-8 col-xs-10">
                                     <div role="listbox">
                                         <apex:variable var="itemCount" value="0"/>
-                                        <apex:form>
+                                        <apex:form >
                                             <apex:repeat value="{!req.section.groups}" var="g" rendered="{!req.section.groups != null && req.section.groups.size > 0}">
                                                 <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
                                                     <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appInfo="{!appInfo}"/>
@@ -60,7 +60,7 @@
                 <apex:outputLink styleClass="btn-lightning btn-lg" value="/{!applicationId}">Back to Application</apex:outputLink>
             </div>
             <div class="col-lg-4 col-md-5 col-xs-6">
-                <apex:form>
+                <apex:form >
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                     </apex:actionFunction>

@@ -169,15 +169,9 @@
     <customValue>
         <fullName>Generic Value 2</fullName>
         <default>false</default>
-<<<<<<< HEAD
         <isActive>false</isActive>
         <label>Generic Value 2</label>
     </customValue>
     <masterLabel>Application Term</masterLabel>
-=======
-        <label>Generic Value 2</label>
-    </customValue>
-    <masterLabel>Generic Filter 4</masterLabel>
->>>>>>> master-holder
     <sorted>false</sorted>
 </GlobalValueSet>

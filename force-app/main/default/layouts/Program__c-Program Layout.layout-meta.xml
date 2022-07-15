@@ -49,13 +49,10 @@
                 <behavior>Edit</behavior>
                 <field>Program_College_of_Interest__c</field>
             </layoutItems>
-<<<<<<< HEAD
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Application_Control_URL__c</field>
             </layoutItems>
-=======
->>>>>>> master-holder
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

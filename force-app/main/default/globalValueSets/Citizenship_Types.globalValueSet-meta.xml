@@ -26,14 +26,11 @@
         <label>Asylee/Refugee</label>
     </customValue>
     <customValue>
-<<<<<<< HEAD
         <fullName>Other</fullName>
         <default>false</default>
         <label>Other</label>
     </customValue>
     <customValue>
-=======
->>>>>>> master-holder
         <fullName>Domestic</fullName>
         <default>false</default>
         <isActive>false</isActive>

@@ -163,13 +163,10 @@
             <default>false</default>
         </values>
         <values>
-<<<<<<< HEAD
             <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
-=======
->>>>>>> master-holder
             <fullName>U%2ES%2E Citizen</fullName>
             <default>false</default>
         </values>
@@ -2160,7 +2157,6 @@
     <picklistValues>
         <picklist>Generic_Filter_2__c</picklist>
         <values>
-<<<<<<< HEAD
             <fullName>Add another gender</fullName>
             <default>false</default>
         </values>
@@ -2174,17 +2170,6 @@
         </values>
         <values>
             <fullName>Nonbinary</fullName>
-=======
-            <fullName>Generic Value 1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Generic Value 2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Generic Value 3</fullName>
->>>>>>> master-holder
             <default>false</default>
         </values>
     </picklistValues>
@@ -2210,7 +2195,6 @@
     <picklistValues>
         <picklist>Generic_Filter_4__c</picklist>
         <values>
-<<<<<<< HEAD
             <fullName>Fall 2022</fullName>
             <default>false</default>
         </values>
@@ -2336,13 +2320,6 @@
         </values>
         <values>
             <fullName>Summer 2030</fullName>
-=======
-            <fullName>Generic Value 1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Generic Value 2</fullName>
->>>>>>> master-holder
             <default>false</default>
         </values>
     </picklistValues>
@@ -2392,13 +2369,10 @@
             <default>false</default>
         </values>
         <values>
-<<<<<<< HEAD
             <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
-=======
->>>>>>> master-holder
             <fullName>U%2ES%2E Citizen</fullName>
             <default>false</default>
         </values>
@@ -2607,7 +2581,6 @@
             <fullName>4 Year College</fullName>
             <default>false</default>
         </values>
-<<<<<<< HEAD
         <values>
             <fullName>Graduate</fullName>
             <default>false</default>
@@ -2624,8 +2597,6 @@
             <fullName>Other</fullName>
             <default>false</default>
         </values>
-=======
->>>>>>> master-holder
     </picklistValues>
     <picklistValues>
         <picklist>Program_Degree_Code__c</picklist>

@@ -37,7 +37,6 @@
         <label>Special Ed 5</label>
     </customValue>
     <customValue>
-<<<<<<< HEAD
         <fullName>Special Ed 4</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -48,18 +47,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Special Ed 6</label>
-=======
-        <fullName>Special Ed 6</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Special Ed 6</label>
-    </customValue>
-    <customValue>
-        <fullName>Special Ed 4</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Special Ed 4</label>
->>>>>>> master-holder
     </customValue>
     <masterLabel>License Area</masterLabel>
     <sorted>false</sorted>

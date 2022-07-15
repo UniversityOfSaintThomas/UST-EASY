@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Affiliation_Role__c</fullName>
-<<<<<<< HEAD
     <deprecated>false</deprecated>
-=======
->>>>>>> master-holder
     <description>The role associated to the Affiliated Account, used in the Interaction Process.</description>
     <externalId>false</externalId>
     <inlineHelpText>Select the role for the affiliation with an organizational account.</inlineHelpText>

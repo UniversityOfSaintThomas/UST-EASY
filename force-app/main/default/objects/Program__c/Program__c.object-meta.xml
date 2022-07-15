@@ -143,10 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-<<<<<<< HEAD
     <deprecated>false</deprecated>
-=======
->>>>>>> master-holder
     <description>An object for housing recruitment and academic program records. There are two record types: Recruitment Programs and Academic Programs.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>

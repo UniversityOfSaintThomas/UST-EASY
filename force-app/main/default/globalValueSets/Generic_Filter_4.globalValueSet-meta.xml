@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-<<<<<<< HEAD
         <fullName>Fall 2022</fullName>
         <default>false</default>
         <label>Fall 2022</label>
@@ -165,10 +164,6 @@
         <fullName>Generic Value 1</fullName>
         <default>false</default>
         <isActive>false</isActive>
-=======
-        <fullName>Generic Value 1</fullName>
-        <default>false</default>
->>>>>>> master-holder
         <label>Generic Value 1</label>
     </customValue>
     <customValue>

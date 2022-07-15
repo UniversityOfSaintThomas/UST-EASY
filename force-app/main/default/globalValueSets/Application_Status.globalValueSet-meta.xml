@@ -46,6 +46,15 @@
         <label>Withdrawn</label>
     </customValue>
     <customValue>
+<<<<<<< HEAD
+=======
+        <fullName>Complete-Pending Review</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Pending Review</label>
+    </customValue>
+    <customValue>
+>>>>>>> master-holder
         <fullName>Incomplete</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -81,12 +90,15 @@
         <isActive>false</isActive>
         <label>Deposit Waived</label>
     </customValue>
+<<<<<<< HEAD
     <customValue>
         <fullName>Complete-Pending Review</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Complete-Pending Review</label>
     </customValue>
+=======
+>>>>>>> master-holder
     <masterLabel>Application Status</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

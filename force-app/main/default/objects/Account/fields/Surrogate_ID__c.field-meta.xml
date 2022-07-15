@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Surrogate_ID__c</fullName>
+<<<<<<< HEAD
     <deprecated>false</deprecated>
+=======
+>>>>>>> master-holder
     <description>STVDEGC_SURROGATE_ID</description>
     <externalId>false</externalId>
     <label>Surrogate ID</label>
     <length>19</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+<<<<<<< HEAD
     <trackHistory>false</trackHistory>
+=======
+>>>>>>> master-holder
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

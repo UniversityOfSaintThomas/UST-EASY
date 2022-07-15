@@ -2,12 +2,18 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Valid_Minor__c</fullName>
     <defaultValue>false</defaultValue>
+<<<<<<< HEAD
     <deprecated>false</deprecated>
+=======
+>>>>>>> master-holder
     <description>STVMAJR_VALID_MINOR_IND</description>
     <externalId>false</externalId>
     <inlineHelpText>Banner Valid Minor Indicator</inlineHelpText>
     <label>Valid Minor</label>
     <trackFeedHistory>false</trackFeedHistory>
+<<<<<<< HEAD
     <trackHistory>false</trackHistory>
+=======
+>>>>>>> master-holder
     <type>Checkbox</type>
 </CustomField>

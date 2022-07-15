@@ -10,6 +10,7 @@
         <default>false</default>
         <label>4 Year College</label>
     </customValue>
+<<<<<<< HEAD
     <customValue>
         <fullName>Law</fullName>
         <default>false</default>
@@ -30,6 +31,8 @@
         <default>false</default>
         <label>Other</label>
     </customValue>
+=======
+>>>>>>> master-holder
     <description>Used to capture the College of Interest</description>
     <masterLabel>College of Interest</masterLabel>
     <sorted>false</sorted>

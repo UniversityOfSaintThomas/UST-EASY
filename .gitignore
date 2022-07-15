@@ -1,8 +1,11 @@
 # Salesforce / SFDX / CCI
 .cci
 .sfdx
+<<<<<<< HEAD
 .sf
 .sf/
+=======
+>>>>>>> master-holder
 /src.orig
 /src
 
@@ -11,7 +14,11 @@
 __pycache__
 
 # Robot Framework results
+<<<<<<< HEAD
 robot/EASY-Open-Source-Solution/results/
+=======
+robot/admissions-rfi/results/
+>>>>>>> master-holder
 
 # Editors
 *.sublime-project
@@ -23,6 +30,7 @@ robot/EASY-Open-Source-Solution/results/
 
 # Misc
 .DS_Store
+<<<<<<< HEAD
 
 # Illuminated Cloud (IntelliJ IDEA)
 IlluminatedCloud
@@ -32,3 +40,5 @@ out
 
 # CumulusCI
 /test_results.*
+=======
+>>>>>>> master-holder

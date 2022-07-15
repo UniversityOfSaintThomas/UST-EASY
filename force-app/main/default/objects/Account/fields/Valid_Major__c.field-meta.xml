@@ -2,12 +2,18 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Valid_Major__c</fullName>
     <defaultValue>true</defaultValue>
+<<<<<<< HEAD
     <deprecated>false</deprecated>
+=======
+>>>>>>> master-holder
     <description>STVMAJR_VALID_MAJOR_IND</description>
     <externalId>false</externalId>
     <inlineHelpText>Banner Valid Major Indicator</inlineHelpText>
     <label>Valid Major</label>
     <trackFeedHistory>false</trackFeedHistory>
+<<<<<<< HEAD
     <trackHistory>false</trackHistory>
+=======
+>>>>>>> master-holder
     <type>Checkbox</type>
 </CustomField>

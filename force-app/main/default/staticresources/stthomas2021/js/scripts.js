@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function copyrightYear() {
     const current = document.getElementById("date");
     const date = new Date();
@@ -8,4 +9,16 @@ function copyrightYear() {
 
 window.onload = () => {
     copyrightYear();
+=======
+function copyrightYear() {
+    const current = document.getElementById("date");
+    const date = new Date();
+    if (current) {
+        current.innerHTML = date.getFullYear();
+    }
+}
+
+window.onload = () => {
+    copyrightYear();
+>>>>>>> master-holder
 };

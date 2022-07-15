@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Program_Learning_Style__c</fullName>
+<<<<<<< HEAD
     <deprecated>false</deprecated>
+=======
+>>>>>>> master-holder
     <description>Used for Program Finder</description>
     <externalId>false</externalId>
     <inlineHelpText>Used for Program Finder</inlineHelpText>

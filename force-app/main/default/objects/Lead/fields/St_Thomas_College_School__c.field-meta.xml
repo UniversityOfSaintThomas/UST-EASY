@@ -4,6 +4,18 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>St. Thomas College/School</label>
+<<<<<<< HEAD
+=======
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>University Department, University Department</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+>>>>>>> master-holder
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Leads (St. Thomas College/School)</relationshipLabel>
     <relationshipName>Leads_UST_College_School</relationshipName>

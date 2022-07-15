@@ -2,14 +2,20 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Banner_Key__c</fullName>
     <caseSensitive>false</caseSensitive>
+<<<<<<< HEAD
     <deprecated>false</deprecated>
+=======
+>>>>>>> master-holder
     <description>The Banner Key field is used to create an external key to link Banner records to the Salesforce records for integration.  This key is especially helpful for Account records in Salesforce that do not have a Banner ID and PIDM</description>
     <externalId>true</externalId>
     <label>Banner Key</label>
     <length>100</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+<<<<<<< HEAD
     <trackHistory>false</trackHistory>
+=======
+>>>>>>> master-holder
     <type>Text</type>
     <unique>true</unique>
 </CustomField>

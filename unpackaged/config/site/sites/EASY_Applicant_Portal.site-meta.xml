@@ -7,17 +7,21 @@
     <allowStandardLookups>false</allowStandardLookups>
     <allowStandardPortalPages>true</allowStandardPortalPages>
     <allowStandardSearch>false</allowStandardSearch>
-    <authorizationRequiredPage>CommunitiesLogin</authorizationRequiredPage>
+    <authorizationRequiredPage>ApplicationLogin</authorizationRequiredPage>
     <bandwidthExceededPage>BandwidthExceeded</bandwidthExceededPage>
     <browserXssProtection>true</browserXssProtection>
+    <cachePublicVisualforcePagesInProxyServers>true</cachePublicVisualforcePagesInProxyServers>
+    <changePasswordPage>ApplicationChangePassword</changePasswordPage>
     <clickjackProtectionLevel>SameOriginOnly</clickjackProtectionLevel>
     <contentSniffingProtection>true</contentSniffingProtection>
     <enableAuraRequests>true</enableAuraRequests>
     <fileNotFoundPage>FileNotFound</fileNotFoundPage>
+    <forgotPasswordPage>ApplicationForgotPassword</forgotPasswordPage>
     <genericErrorPage>Exception</genericErrorPage>
     <inMaintenancePage>InMaintenance</inMaintenancePage>
-    <indexPage>CommunitiesLanding</indexPage>
+    <indexPage>ApplicationPortal</indexPage>
     <masterLabel>EASY Applicant Portal</masterLabel>
+    <redirectToCustomDomain>false</redirectToCustomDomain>
     <referrerPolicyOriginWhenCrossOrigin>true</referrerPolicyOriginWhenCrossOrigin>
     <selfRegPage>ApplicationRegistration</selfRegPage>
     <siteAdmin>test-qwvjmepq9laf@example.com</siteAdmin>

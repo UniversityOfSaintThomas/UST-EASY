@@ -10,6 +10,7 @@
     <emailSenderName>EASY Applicant Portal</emailSenderName>
     <enableCustomVFErrorPageOverrides>false</enableCustomVFErrorPageOverrides>
     <enableDirectMessages>true</enableDirectMessages>
+    <enableExperienceBundleBasedSnaOverrideEnabled>true</enableExperienceBundleBasedSnaOverrideEnabled>
     <enableGuestChatter>false</enableGuestChatter>
     <enableGuestFileAccess>false</enableGuestFileAccess>
     <enableGuestMemberVisibility>false</enableGuestMemberVisibility>
@@ -34,13 +35,14 @@
         <profile>customer community login user</profile>
     </networkMemberGroups>
     <networkPageOverrides>
-        <changePasswordPageOverrideSetting>Standard</changePasswordPageOverrideSetting>
-        <forgotPasswordPageOverrideSetting>Standard</forgotPasswordPageOverrideSetting>
+        <changePasswordPageOverrideSetting>VisualForce</changePasswordPageOverrideSetting>
+        <forgotPasswordPageOverrideSetting>VisualForce</forgotPasswordPageOverrideSetting>
         <homePageOverrideSetting>Designer</homePageOverrideSetting>
-        <loginPageOverrideSetting>Standard</loginPageOverrideSetting>
+        <loginPageOverrideSetting>VisualForce</loginPageOverrideSetting>
         <selfRegProfilePageOverrideSetting>VisualForce</selfRegProfilePageOverrideSetting>
     </networkPageOverrides>
     <picassoSite>EASY_Applicant_Portal1</picassoSite>
+    <selfRegProfile>customer community login user</selfRegProfile>
     <selfRegistration>true</selfRegistration>
     <sendWelcomeEmail>false</sendWelcomeEmail>
     <site>EASY_Applicant_Portal</site>

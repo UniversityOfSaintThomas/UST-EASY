@@ -432,121 +432,123 @@ function activateCarousel(slideMoveTo) {
         next = document.getElementsByClassName('carousel__button--next')[0],
         prev = document.getElementsByClassName('carousel__button--prev')[0];
 
-    // Set click events to navigation buttons
-    function setEventListeners() {
-        next.addEventListener('click', moveNext);
-        prev.addEventListener('click', movePrev);
-        if (totalItems === 1) {
-            next.style.display = 'none';
-            prev.style.display = 'none';
-            saveAndAdvance.style.dispay = 'inline-flex';
-        } else {
-            prev.style.display = 'none';
-            saveAndAdvance.style.display = "none";
+    if (items.length > 0) {
+
+        // Set click events to navigation buttons
+        function setEventListeners() {
+            next.addEventListener('click', moveNext);
+            prev.addEventListener('click', movePrev);
+            if (totalItems === 1) {
+                next.style.display = 'none';
+                prev.style.display = 'none';
+                saveAndAdvance.style.dispay = 'inline-flex';
+            } else {
+                prev.style.display = 'none';
+                saveAndAdvance.style.display = "none";
+            }
+            if (slide === 0 && previousRequirement) {
+                saveAndGoBack.style.display = 'inline-flex';
+            }
         }
-        if (slide === 0 && previousRequirement) {
-            saveAndGoBack.style.display = 'inline-flex';
+
+        // Disable interaction by setting 'moving' to true for the same duration as our transition (0.5s = 500ms)
+        function disableInteraction() {
+            moving = true;
+            setTimeout(function () {
+                moving = false
+            }, 500);
         }
-    }
 
-    // Disable interaction by setting 'moving' to true for the same duration as our transition (0.5s = 500ms)
-    function disableInteraction() {
-        moving = true;
-        setTimeout(function () {
-            moving = false
-        }, 500);
-    }
+        let moveCarouselTo = function (slide) {
+            if (!moving) {
+                disableInteraction();
+                let newPrevious = slide - 1,
+                    newNext = slide + 1;
 
-    let moveCarouselTo = function (slide) {
-        if (!moving) {
-            disableInteraction();
-            let newPrevious = slide - 1,
-                newNext = slide + 1;
+                if (totalItems > 1) {
 
-            if (totalItems > 1) {
-
-                if (slide === 0) {
-                    prev.style.display = "none";
-                    if (previousRequirement) {
-                        saveAndGoBack.style.display = 'inline-flex';
+                    if (slide === 0) {
+                        prev.style.display = "none";
+                        if (previousRequirement) {
+                            saveAndGoBack.style.display = 'inline-flex';
+                        }
+                        newPrevious = (totalItems - 1);
+                    } else if (slide === 1) {
+                        saveAndGoBack.style.display = "none"
+                        newPrevious = 0;
+                    } else if (slide === (totalItems - 1)) {
+                        newPrevious = (slide - 1);
+                        newNext = 0;
                     }
-                    newPrevious = (totalItems - 1);
-                } else if (slide === 1) {
-                    saveAndGoBack.style.display = "none"
-                    newPrevious = 0;
-                } else if (slide === (totalItems - 1)) {
-                    newPrevious = (slide - 1);
-                    newNext = 0;
+                    if (slide + 1 === totalItems || totalItems === 1) {
+                        saveAndAdvance.style.display = "inline-flex"
+                        next.style.display = "none"
+                    } else {
+                        saveAndAdvance.style.display = "none"
+                        next.style.display = "inline-flex"
+                    }
+
+                    if (slide > 0) {
+                        prev.style.display = "inline-flex"
+                    } else {
+                        prev.style.display = "none"
+                    }
+
+                    for (let i = 0; i < items.length; i++) {
+                        items[i].classList.remove('prev');
+                        items[i].classList.remove('next');
+                        items[i].classList.remove('active');
+                    }
+                    if (items[newPrevious]) {
+                        items[newPrevious].classList.add("prev");
+                    }
+                    if (items[slide]) {
+                        items[slide].classList.add("active");
+                    }
+                    if (items[newNext]) {
+                        items[newNext].classList.add("next");
+                    }
+
                 }
-                if (slide + 1 === totalItems || totalItems === 1) {
-                    saveAndAdvance.style.display = "inline-flex"
-                    next.style.display = "none"
+            }
+        }
+
+
+        function moveNext() {
+            if (!moving) {
+                if (slide === (totalItems - 1)) {
+                    slide = 0;
                 } else {
-                    saveAndAdvance.style.display = "none"
-                    next.style.display = "inline-flex"
+                    slide++;
                 }
+                moveCarouselTo(slide);
+            }
+        }
 
-                if (slide > 0) {
-                    prev.style.display = "inline-flex"
+        function movePrev() {
+            if (!moving) {
+                if (slide === 0) {
+                    slide = (totalItems - 1);
                 } else {
-                    prev.style.display = "none"
+                    slide--;
                 }
+                moveCarouselTo(slide);
+            }
+        }
 
-                for (let i = 0; i < items.length; i++) {
-                    items[i].classList.remove('prev');
-                    items[i].classList.remove('next');
-                    items[i].classList.remove('active');
-                }
-                if (items[newPrevious]) {
-                    items[newPrevious].classList.add("prev");
-                }
-                if (items[slide]) {
-                    items[slide].classList.add("active");
-                }
-                if (items[newNext]) {
-                    items[newNext].classList.add("next");
-                }
+        function initCarousel() {
+            setEventListeners();
+            moving = false;
+        }
 
+        initCarousel();
+
+        if (slideMoveTo) {
+            if (!moving) {
+                moveCarouselTo(parseInt(slideMoveTo));
             }
         }
     }
-
-
-    function moveNext() {
-        if (!moving) {
-            if (slide === (totalItems - 1)) {
-                slide = 0;
-            } else {
-                slide++;
-            }
-            moveCarouselTo(slide);
-        }
-    }
-
-    function movePrev() {
-        if (!moving) {
-            if (slide === 0) {
-                slide = (totalItems - 1);
-            } else {
-                slide--;
-            }
-            moveCarouselTo(slide);
-        }
-    }
-
-    function initCarousel() {
-        setEventListeners();
-        moving = false;
-    }
-
-    initCarousel();
-
-    if (slideMoveTo) {
-        if (!moving) {
-            moveCarouselTo(parseInt(slideMoveTo));
-        }
-    }
-
 }
 
 /* Spinners on/off */
@@ -609,6 +611,16 @@ function checkForm() {
             let carouselItem = foundErrors.closest('.carousel__item');
             activateCarousel(carouselItem.dataset.slide);
         }
+        window.scrollTo(0, 0);
+        return false;
+    }
+    return true;
+}
+
+function checkFormNoCarousel() {
+    let error_count = 0;
+    error_count = error_count + textValidations(true);
+    if (error_count > 0) {
         window.scrollTo(0, 0);
         return false;
     }

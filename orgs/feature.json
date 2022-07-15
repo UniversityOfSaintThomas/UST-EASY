@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "orgName": "EASY-Open-Source-Solution - Feature Test Org",
   "edition": "Developer",
   "features": [
@@ -8,10 +7,6 @@
     "PartnerCommunity",
     "ForceComPlatform"
   ],
-=======
-  "orgName": "admissions-rfi - Feature Test Org",
-  "edition": "Developer",
->>>>>>> master-holder
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
@@ -24,22 +19,16 @@
     },
     "securitySettings": {
       "enableAdminLoginAsAnyUser": true,
-<<<<<<< HEAD
       "enableAuditFieldsInactiveOwner": true,
-=======
->>>>>>> master-holder
       "sessionSettings": {
         "forceRelogin": false
       }
     },
     "languageSettings": {
       "enableTranslationWorkbench": true
-<<<<<<< HEAD
     },
     "orgPreferenceSettings": {
       "networksEnabled": true
-=======
->>>>>>> master-holder
     }
   }
 }

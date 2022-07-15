@@ -323,7 +323,6 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-<<<<<<< HEAD
     <relatedLists>
         <fields>NAME</fields>
         <fields>Academic_Term__c</fields>
@@ -377,19 +376,13 @@
         <fields>Plan_Code__c</fields>
         <relatedList>Plan__c.Program__c</relatedList>
     </relatedLists>
-=======
->>>>>>> master-holder
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-<<<<<<< HEAD
         <masterLabel>00hR0000004rA7m</masterLabel>
-=======
-        <masterLabel>00h8A000003vtsQ</masterLabel>
->>>>>>> master-holder
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
     "packageDirectories": [
         {
@@ -37,6 +36,3 @@
         "UST-Easy@0.21.0-1": "04t4P000002KnQzQAK"
     }
 }
-=======
-{"packageDirectories": [{"path": "force-app", "default": true}], "namespace": null, "sourceApiVersion": "52.0"}
->>>>>>> master-holder

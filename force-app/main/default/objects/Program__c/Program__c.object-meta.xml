@@ -166,13 +166,8 @@
         <customTabListAdditionalFields>Career__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Department__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Program_Code__c</customTabListAdditionalFields>
-<<<<<<< HEAD
         <excludedStandardButtons>Accept</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
-=======
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
-        <excludedStandardButtons>Accept</excludedStandardButtons>
->>>>>>> master-holder
         <lookupDialogsAdditionalFields>Active__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Career__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Program_Code__c</lookupDialogsAdditionalFields>

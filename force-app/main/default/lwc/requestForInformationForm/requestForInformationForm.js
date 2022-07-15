@@ -74,13 +74,13 @@ const ADDITIONAL_FIELDS = [
     LEAD_MAIL_INFO,
     LEAD_COLLEGE_SCHOOL,
     LEAD_RECENT_SCHOOL
-]
+];
 
 const lookup_fields = [
     'Affiliated_Account__r',
     'Recruitment_Program__r',
     'Term__r'
-]
+];
 
 export default class RequestForInformationForm extends LightningElement {
     // // RFI controller info
@@ -228,6 +228,11 @@ export default class RequestForInformationForm extends LightningElement {
         }
     ];
 
+    /**
+    ******************************************
+    * Begin WIRES
+    ******************************************
+    */
     @wire(getRFIController, { rfi_controller_name: '$rfi_controller' })
     rfi(result) {
         if (result.data) {
@@ -305,23 +310,6 @@ export default class RequestForInformationForm extends LightningElement {
         }
     }
 
-    // used Fields_to_Display__c field on RFI_Controller__c to determine which fields to display on form
-    handleFieldsToDisplay() {
-        var fields = this.fields_to_display.split(';');
-        for (const field of fields) {
-            var object_property = field.replaceAll(' ', '_');
-            this.show_fields[object_property] = true;
-        }
-    }
-
-    handleRequiredFields() {
-        var fields = this.required_fields.split(';');
-        for (const field of fields) {
-            var object_property = field.replaceAll(' ', '_');
-            this.require_fields[object_property] = true;
-        }
-    }
-
     @wire(getObjectInfo, { objectApiName: LEAD_OBJECT })
     object_info(result) {
         if (result.data) {
@@ -346,6 +334,42 @@ export default class RequestForInformationForm extends LightningElement {
             console.log(result.error);
         }
     }
+
+    @wire(getRecordCreateDefaults, { objectApiName: LEAD_OBJECT, optionalFields: ADDITIONAL_FIELDS})
+    output(result) {
+        if (result.data) {
+            this.record_input = generateRecordInputForCreate(result.data.record);
+            this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
+            this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100);
+            getPresetValues({rfi_controller_name : this.rfi_controller})
+            .then(preset_values => {
+                for (const preset_value of preset_values) {
+                    if (this.all_lead_field_api_names.includes(preset_value.Field_API_Name__c)) {
+                        this.record_input.fields[preset_value.Field_API_Name__c] = preset_value.Value__c;
+                    }
+                }
+                console.log(JSON.stringify(this.record_input));
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            // relationship lookup fields throwing error on insert, so removing
+            for (const relationship_name of lookup_fields) {
+                delete this.record_input.fields[relationship_name];         
+            }
+        } else {
+            console.log(result.error);
+        }
+    }
+
+    /**
+    ******************************************
+    * END Wires
+    ******************************************
+    ******************************************
+    * Begin OnChange
+    ******************************************
+    */
 
     onChange(event) {
         switch (event.target.label) {
@@ -467,6 +491,54 @@ export default class RequestForInformationForm extends LightningElement {
         console.log(JSON.stringify(this.record_input.fields));
     }
 
+    handleSearch(event) {
+        if (JSON.stringify(event.target.value).length > 4) {
+            searchHighSchools({ search_term : event.target.value })
+            .then((high_schools) => {
+                if (Boolean(Object.keys(high_schools))) {
+                    this.high_school_data = true;
+                    this.account_id_to_name_map = high_schools;
+                    var values = [];
+                    for (const school in high_schools) {
+                        var address_info;
+                        if (Boolean(high_schools[school].BillingCity) && Boolean(high_schools[school].BillingState)) {
+                            address_info = high_schools[school].BillingCity + ', ' + high_schools[school].BillingState;
+                        } else if (Boolean(high_schools[school].BillingCity) && Boolean(high_schools[school].BillingCountry)) {
+                            address_info = high_schools[school].BillingCity + ', ' + high_schools[school].BillingCountry;
+                        } else if (Boolean(high_schools[school].BillingCountry)) {
+                            address_info = high_schools[school].BillingCountry;
+                        } else {
+                            address_info = 'Unknown';
+                        }
+                        values.push(
+                            {   
+                                name: high_schools[school].Name, 
+                                account_id: high_schools[school].Id, 
+                                address: address_info
+                            }
+                        );
+                    }
+                    this.high_school_search_results = values;
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        } else {
+            this.high_school_search_results = null;
+            this.high_school_data = false;
+        }
+    } 
+
+    /**
+    ******************************************
+    * END OnChange
+    ******************************************
+    ******************************************
+    * Begin OnClick
+    ******************************************
+    */
+
     handleSubmit() {
         if (this.validateInput()) {
             this.record_input.fields.OwnerId = this.lead_owner;
@@ -494,6 +566,29 @@ export default class RequestForInformationForm extends LightningElement {
                 console.log(error);
                 this.show_spinner = false;
             });
+        }
+    }
+
+    /**
+    ******************************************
+    * END OnChange
+    ******************************************
+    */
+
+    // used Fields_to_Display__c field on RFI_Controller__c to determine which fields to display on form
+    handleFieldsToDisplay() {
+        var fields = this.fields_to_display.split(';');
+        for (const field of fields) {
+            var object_property = field.replaceAll(' ', '_');
+            this.show_fields[object_property] = true;
+        }
+    }
+
+    handleRequiredFields() {
+        var fields = this.required_fields.split(';');
+        for (const field of fields) {
+            var object_property = field.replaceAll(' ', '_');
+            this.require_fields[object_property] = true;
         }
     }
 
@@ -547,72 +642,6 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.Street = this.address1;
         }
     }
-
-    @wire(getRecordCreateDefaults, { objectApiName: LEAD_OBJECT, optionalFields: ADDITIONAL_FIELDS})
-    output(result) {
-        if (result.data) {
-            this.record_input = generateRecordInputForCreate(result.data.record);
-            this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
-            this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100);
-            getPresetValues({rfi_controller_name : this.rfi_controller})
-            .then(preset_values => {
-                for (const preset_value of preset_values) {
-                    if (this.all_lead_field_api_names.includes(preset_value.Field_API_Name__c)) {
-                        this.record_input.fields[preset_value.Field_API_Name__c] = preset_value.Value__c;
-                    }
-                }
-                console.log(JSON.stringify(this.record_input));
-            })
-            .catch(error => {
-                console.log(error);
-            })
-            // relationship lookup fields throwing error on insert, so removing
-            for (const relationship_name of lookup_fields) {
-                delete this.record_input.fields[relationship_name];         
-            }
-        } else {
-            console.log(result.error);
-        }
-    }
-
-    handleSearch(event) {
-        if (JSON.stringify(event.target.value).length > 4) {
-            searchHighSchools({ search_term : event.target.value })
-            .then((high_schools) => {
-                if (Boolean(Object.keys(high_schools))) {
-                    this.high_school_data = true;
-                    this.account_id_to_name_map = high_schools;
-                    var values = [];
-                    for (const school in high_schools) {
-                        var address_info;
-                        if (Boolean(high_schools[school].BillingCity) && Boolean(high_schools[school].BillingState)) {
-                            address_info = high_schools[school].BillingCity + ', ' + high_schools[school].BillingState;
-                        } else if (Boolean(high_schools[school].BillingCity) && Boolean(high_schools[school].BillingCountry)) {
-                            address_info = high_schools[school].BillingCity + ', ' + high_schools[school].BillingCountry;
-                        } else if (Boolean(high_schools[school].BillingCountry)) {
-                            address_info = high_schools[school].BillingCountry;
-                        } else {
-                            address_info = 'Unknown';
-                        }
-                        values.push(
-                            {   
-                                name: high_schools[school].Name, 
-                                account_id: high_schools[school].Id, 
-                                address: address_info
-                            }
-                        );
-                    }
-                    this.high_school_search_results = values;
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        } else {
-            this.high_school_search_results = null;
-            this.high_school_data = false;
-        }
-    } 
 
     // can't query for global value sets -- would need to be a field
     get stateOptions() {

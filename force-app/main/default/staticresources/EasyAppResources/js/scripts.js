@@ -44,6 +44,18 @@ function pageLoadReRendered() {
     hideFormSpinner();
 }
 
+//Add record action
+function addRecordValidation(elem, rrIndex) {
+    showFormSpinner();
+    let recWrap = elem.closest('.slds-card');
+    window.scrollTo(0, 0);
+    if (textValidations(true, recWrap) === 0) {
+        return true;
+    }
+    hideFormSpinner();
+    return false;
+}
+
 function checkEnter(e) {
     e = e || event;
     let txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
@@ -617,25 +629,22 @@ function checkForm() {
     return true;
 }
 
-function checkFormNoCarousel() {
-    let error_count = 0;
-    error_count = error_count + textValidations(true);
-    if (error_count > 0) {
-        window.scrollTo(0, 0);
-        return false;
-    }
-    return true;
-}
-
 //Input validations
-function textValidations(checkFormValidate) {
+function textValidations(checkFormValidate, documentStart) {
+    let doc;
+    if (!documentStart) {
+        doc = document;
+    } else {
+        doc = documentStart;
+    }
     let errors = 0;
-    let allPhones = document.querySelectorAll('.validatePhone');
-    let allSSN = document.querySelectorAll('.validateSSN');
-    let allNamCharacters = document.querySelectorAll('.validateName');
-    let allEmails = document.querySelectorAll('.validateEmail');
-    let allUrls = document.querySelectorAll('.validateURL');
-    let allRequiredInputs = document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select");
+    let allPhones = doc.querySelectorAll('.validatePhone');
+    let allSSN = doc.querySelectorAll('.validateSSN');
+    let allNamCharacters = doc.querySelectorAll('.validateName');
+    let allEmails = doc.querySelectorAll('.validateEmail');
+    let allUrls = doc.querySelectorAll('.validateURL');
+    let allRequiredInputs = doc.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select");
+
 
     const re_email = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     const re_url = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/;
@@ -659,11 +668,11 @@ function textValidations(checkFormValidate) {
             }
         });
 
-        document.querySelectorAll(".selectableOL").forEach(sel => {
+        doc.querySelectorAll(".selectableOL").forEach(sel => {
             let selWrap = sel.closest('.slds-form-element');
-            let hiddenData = document.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
+            let hiddenData = doc.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
             if (selWrap.classList.contains("slds-is-required")) {
-                if (!document.getElementById(hiddenData).value) {
+                if (!doc.getElementById(hiddenData).value) {
                     activateErrorState(sel, 'click')
                 }
             }
@@ -674,6 +683,11 @@ function textValidations(checkFormValidate) {
     allPhones.forEach(phone => {
 
         //format directly after input
+        //Don't allow anything but phone number characters on key-up
+        phone.addEventListener('keyup', function () {
+            phone.value = phone.value.replace(re_phoneIllegals, '');
+        })
+
         phone.addEventListener('change', function () {
             let cleaned = String(phone.value).replace(/\D/g, "");
             let match = cleaned.match(re_phoneFormat);
@@ -683,19 +697,16 @@ function textValidations(checkFormValidate) {
             }
         });
 
-        //Don't allow anything but phone number characters on key-up
-        phone.addEventListener('keyup', function () {
-            phone.value = phone.value.replace(re_phoneIllegals, '');
-        })
-
         //Check if the final phone number matches correctly before submit
-        if (checkFormValidate) {
+        if (checkFormValidate && phone.value) {
             if (!phone.value.match(re_phone)) {
                 activateErrorState(phone, 'change');
             }
         }
 
+
     });
+
 
     allNamCharacters.forEach(nameInput => {
         //Don't allow anything but phone number characters on key-up
@@ -703,7 +714,7 @@ function textValidations(checkFormValidate) {
             nameInput.value = nameInput.value.replace(re_nameIllegals, '');
         })
 
-        if (checkFormValidate) {
+        if (checkFormValidate && nameInput.value) {
             nameInput.value = nameInput.value.replace(re_nameIllegals, '');
         }
     });
@@ -726,15 +737,19 @@ function textValidations(checkFormValidate) {
             }
         });
 
-        if (checkFormValidate && !ssn.value.match(re_snn)) {
-            activateErrorState(ssn, 'change');
+        if (checkFormValidate && ssn.value) {
+            if (!ssn.value.match(re_snn)) {
+                activateErrorState(ssn, 'change');
+            }
         }
     });
 
     //Email Validation
     allEmails.forEach(email => {
-        if (checkFormValidate && !email.value.match(re_email)) {
-            activateErrorState(email, 'change');
+        if (checkFormValidate && email.value) {
+            if (!email.value.match(re_email)) {
+                activateErrorState(email, 'change');
+            }
         }
     });
 
@@ -745,8 +760,10 @@ function textValidations(checkFormValidate) {
             if (!inputUrl.value.startsWith('http')) {
                 inputUrl.value = 'https://' + inputUrl.value;
             }
-            if (checkFormValidate && !inputUrl.value.match(re_url)) {
-                activateErrorState(inputUrl, 'change');
+            if (checkFormValidate && inputUrl.value) {
+                if (!inputUrl.value.match(re_url)) {
+                    activateErrorState(inputUrl, 'change');
+                }
             }
         }
     })

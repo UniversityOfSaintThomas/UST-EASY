@@ -4,6 +4,7 @@
         <application>Enterprise_Application</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <description>This permission set is assigned to Admissions Staff who will help manage the EASY application and portal.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Academic_Term__c.Activate_Application_Date__c</field>
@@ -1568,21 +1569,6 @@
         <editable>true</editable>
         <field>Requirement__c.Viewing_Requirement__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>hed__Test__c.ACT_Composite_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>hed__Test__c.ACT_Composite_Score__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>hed__Test__c.Planned_Future_Test_Sittings__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Application Config Admin</label>

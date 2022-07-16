@@ -4,6 +4,7 @@
         <application>Enterprise_Application</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <description>This permission set is assigned to Admissions staff who review EASY applications.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Academic_Term__c.Activate_Application_Date__c</field>
@@ -759,7 +760,6 @@
         <field>Opportunity.Receive_Texts__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Recruitment_Interest__c</field>

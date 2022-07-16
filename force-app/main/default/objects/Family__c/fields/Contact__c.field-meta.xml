@@ -8,8 +8,10 @@
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Family</relationshipLabel>
     <relationshipName>Family</relationshipName>
-    <required>false</required>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Lookup</type>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
 </CustomField>

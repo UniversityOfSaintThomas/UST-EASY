@@ -565,9 +565,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Family__c.Applicant__c</field>
-        <readable>true</readable>
+        <editable>false</editable>
+        <field>Family__c.Application__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -582,11 +582,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Family__c.City__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Family__c.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

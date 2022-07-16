@@ -193,12 +193,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Program_Major_Concentration__c</fields>
+        <fields>Degree_Type__c</fields>
+        <fields>Student_Type__c</fields>
+        <fields>RECORDTYPE</fields>
         <fields>Active__c</fields>
-        <fields>Career__c</fields>
-        <fields>Department__c</fields>
-        <fields>Program_Code__c</fields>
-        <fields>Academic_Level__c</fields>
-        <fields>Program_Type__c</fields>
         <relatedList>Program__c.Application_Control__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -207,7 +206,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hR0000004rA7c</masterLabel>
+        <masterLabel>00hJ0000007pOaF</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

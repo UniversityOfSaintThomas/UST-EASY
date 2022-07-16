@@ -31,11 +31,16 @@
 .slds-scope:not(html), .slds-scope body,
 .slds-scope .slds-text-body_regular, .slds-scope label, .slds-scope p,
 .slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select,
-.slds-scope textarea, .slds-scope ul, .slds-scope ol {
+.slds-scope textarea, .slds-scope ul, .slds-scope ol,
+.slds-scope .slds-checkbox .slds-checkbox__label .slds-form-element__label {
     font-size: 1.02rem;
     line-height: 1.5rem;
     font-weight: 400;
     color: #0a0a0a;
+}
+
+.slds-scope .slds-radio_faux {
+    line-height: 2rem;
 }
 
 .slds-scope .slds-button {
@@ -43,6 +48,10 @@
     line-height: 1.6rem;
     font-weight: 400;
     padding: 0.3rem 0.7rem;
+}
+
+.slds-scope .slds-button.slds-radio_button {
+    padding: 0;
 }
 
 .slds-scope .slds-progress__item .slds-button {

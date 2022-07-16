@@ -42,7 +42,6 @@
         <selfRegProfilePageOverrideSetting>VisualForce</selfRegProfilePageOverrideSetting>
     </networkPageOverrides>
     <picassoSite>EASY_Applicant_Portal1</picassoSite>
-    <selfRegProfile>customer community login user</selfRegProfile>
     <selfRegistration>true</selfRegistration>
     <sendWelcomeEmail>false</sendWelcomeEmail>
     <site>EASY_Applicant_Portal</site>

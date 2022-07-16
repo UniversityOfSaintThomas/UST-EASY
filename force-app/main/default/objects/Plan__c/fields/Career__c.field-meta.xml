@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Career__c</fullName>
-    <deprecated>false</deprecated>
     <description>The Career that the record belongs to (Ex: Undergraduate).</description>
     <externalId>false</externalId>
     <inlineHelpText>Select a Career for the record.</inlineHelpText>

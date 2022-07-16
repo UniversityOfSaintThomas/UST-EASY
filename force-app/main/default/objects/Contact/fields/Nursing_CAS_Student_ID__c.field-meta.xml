@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Nursing_CAS_Student_ID__c</fullName>
-    <deprecated>false</deprecated>
     <description>Nursing CAS Student Unique ID</description>
     <externalId>true</externalId>
     <label>Nursing CAS Student ID</label>

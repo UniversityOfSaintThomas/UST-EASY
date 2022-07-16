@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Editable_Application_Status__c</fullName>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Application status(es) that applicants can edit this question for (applies to all if blank)</inlineHelpText>
     <label>Editable Application Status</label>

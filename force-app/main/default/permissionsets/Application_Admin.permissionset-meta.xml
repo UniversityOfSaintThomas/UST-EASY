@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
+        <application>EASY_Application_Admin</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>Enterprise_Application</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Enterprise_Application_Administration</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <description>This permission set is assigned to System Admins so they can view/edit all EASY app related objects and fields.</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Academic_Term__c.Academic_Term_Integration_External_ID__c</field>

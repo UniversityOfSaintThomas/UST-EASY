@@ -4,6 +4,7 @@
         <apexClass>JustInTimePermissionSets</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <description>This permission set is assigned to an EASY applicant after they create their profile or log in.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Academic_Term__c.Activate_Application_Date__c</field>
@@ -563,11 +564,6 @@
         <editable>true</editable>
         <field>Family__c.Alumni__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Family__c.Application__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

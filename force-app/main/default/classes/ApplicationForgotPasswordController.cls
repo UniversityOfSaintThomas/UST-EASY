@@ -5,7 +5,7 @@ public with sharing class ApplicationForgotPasswordController {
     public ApplicationForgotPasswordController() {}
   
     public PageReference ApplicationForgotPassword() {
-      boolean success = Site.forgotPassword(username);
+      Boolean success = Site.forgotPassword(username);
       PageReference pr = Page.ApplicationForgotPasswordConfirm;
       pr.setRedirect(true);
       

@@ -16,7 +16,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Application__c</field>
+                <field>Application_del__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Admissions_Application__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>

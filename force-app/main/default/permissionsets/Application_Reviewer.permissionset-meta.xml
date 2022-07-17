@@ -462,11 +462,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Family_Member__c.Application__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Family_Member__c.Birth_Country_Region_Territory__c</field>
         <readable>true</readable>
     </fieldPermissions>

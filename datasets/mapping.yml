@@ -28,6 +28,17 @@ Insert Application_Control__c:
   - Text_Color__c
   - URL_Parameter__c
   - Withdraw_Status__c
+Insert Campaign:
+  sf_object: Campaign
+  fields:
+  - Campaign_Key__c
+  - Campaign_Reference_ID__c
+  - IsActive
+  - Name
+  lookups:
+    ParentId:
+      table: Campaign
+      after: Insert Campaign
 Insert Interaction_Mapping__c:
   sf_object: Interaction_Mapping__c
   fields:
@@ -41,190 +52,6 @@ Insert Interaction_Mapping__c:
   - Source_Object_API_Name__c
   - Target_Field_API_Name__c
   - Target_Object_API_Name__c
-Insert Staging_Record__c:
-  sf_object: Staging_Record__c
-  fields:
-  - ACT_Composite_Score__c
-  - ACT_English_Score__c
-  - ACT_Mathematics_Score__c
-  - ACT_Reading_Score__c
-  - ACT_Science_Score__c
-  - ACT_Writing_EW_Score__c
-  - ACT_Writing_WR_Score__c
-  - AP_Banner_Code__c
-  - AP_Test_Score__c
-  - AP_Test_Type__c
-  - AP_Test_origin__c
-  - Academic_Interests__c
-  - Admissions_Status__c
-  - Alumni_Class_Year__c
-  - Applicant_Type__c
-  - Application_Common_App_ID__c
-  - Application_Stage__c
-  - Attended_College_End__c
-  - Attended_College_Start__c
-  - Banner_Admission_Type__c
-  - Banner_ID__c
-  - Banner_Student_Type__c
-  - Birthdate__c
-  - Booking__c
-  - Business_Email__c
-  - CEEB_Code__c
-  - Campaign_ID__c
-  - Cheer__c
-  - Citizenship_Status__c
-  - City__c
-  - Common_App_ID__c
-  - Community_Based_Organization__c
-  - Company_Employer__c
-  - Country__c
-  - Country_of_Birth__c
-  - CreatedDate
-  - Dance__c
-  - Deceased__c
-  - Degree_Level__c
-  - Degree_Sought_Contact__c
-  - Degree_Sought__c
-  - Document_Status__c
-  - ELS_Student_ID__c
-  - Email__c
-  - Expected_Graduation_Date__c
-  - External_Salesforce_ID__c
-  - FAFSA_Current_CPS_Process_Date__c
-  - FAFSA_Filed_Load_Date__c
-  - FAFSA_Filed__c
-  - FAFSA_Guardian_Email__c
-  - FAFSA_ID__c
-  - FAFSA_Initial_CPS_Process_Date__c
-  - FAFSA_Parent_1_School_Level__c
-  - FAFSA_Parent_2_School_Level__c
-  - FAFSA_Selected_for_Verification__c
-  - FAFSA_Term__c
-  - First_Name__c
-  - Foot_on_Campus_Date__c
-  - Foot_on_Campus__c
-  - Former_Last_Name__c
-  - GPA__c
-  - Gender_Identity__c
-  - Gender__c
-  - High_School_Code__c
-  - High_School_Expected_Graduation_Year__c
-  - High_School_Name_Text__c
-  - Hispanic_Latino__c
-  - HomePhone__c
-  - Home_Phone__c
-  - Import_Source__c
-  - Inquiry_Citizenship__c
-  - Inquiry_College_Interest__c
-  - Language_Proficiency__c
-  - Language__c
-  - LastModifiedDate
-  - Last_Name__c
-  - Lead_Source__c
-  - Legacy_Add_Date__c
-  - Legacy_Application_Received_Date__c
-  - Legacy_Application_Record_Date__c
-  - Legacy_Decision_Date__c
-  - Legacy_Primary_Source__c
-  - LinkedIn_Profile__c
-  - MailingCity__c
-  - MailingCountry__c
-  - MailingPostalCode__c
-  - MailingSreetLine1__c
-  - MailingState__c
-  - MailingStreet3__c
-  - MailingStreetLine2__c
-  - MailingZip__c
-  - Mailing_State_Prov__c
-  - Major1__c
-  - Major2__c
-  - Major3__c
-  - Major_Code__c
-  - Major_Interest_Group__c
-  - Master_or_Copy_Test_Scores__c
-  - Middle_Name__c
-  - MobilePhone__c
-  - Mobile_Phone__c
-  - Music__c
-  - Non_US_Country_of_Citizenship__c
-  - Official_Major_Code__c
-  - Official_Transcript_Received__c
-  - PIDM__c
-  - Parent_1_Email__c
-  - Parent_1_First_Name__c
-  - Parent_1_Last_Name__c
-  - Parent_2_Email__c
-  - Parent_2_First_Name__c
-  - Parent_2_Last_Name__c
-  - PermCity__c
-  - PermCountry__c
-  - PermPostalCode__c
-  - PermState__c
-  - PermStreet1__c
-  - PermStreet2__c
-  - PermStreet3__c
-  - PermZip__c
-  - Perm_State_Prov__c
-  - Preferred_First_Name__c
-  - Preferred_Phone__c
-  - Primary_Relationship_to_Referral__c
-  - Program_Catalog__c
-  - Program_Code__c
-  - Program_Offered__c
-  - ROTC__c
-  - Race__c
-  - RaiseMe_ID__c
-  - RaiseMe_Portfolio_URL__c
-  - Receive_Texts__c
-  - Rejected_FAFSA__c
-  - Religious_Preference__c
-  - SF_LID__c
-  - SSN__c
-  - Salary__c
-  - Salesforce_Contact_ID__c
-  - Salutation__c
-  - School__c
-  - Self_Reported_ACT__c
-  - Self_Reported_IELTS__c
-  - Self_Reported_SAT__c
-  - Self_Reported_TOEFL__c
-  - Self_Reported_Undergrad_Degree__c
-  - Self_Reported_Undergrad_Grad_Year__c
-  - Self_Reported_Undergrad_Institution__c
-  - Session__c
-  - Source_Area_of_Interest__c
-  - Sport_1__c
-  - Sport_2__c
-  - Sport_3__c
-  - Sport_Type_1__c
-  - Sport_Type_2__c
-  - Sport_Type_3__c
-  - St_Thomas_School__c
-  - Start_Term__c
-  - State__c
-  - Status__c
-  - Street_Line_1__c
-  - Street_Line_2__c
-  - Student_Type__c
-  - Suffix__c
-  - System_Export_User_ID__c
-  - Term__c
-  - Test_Date__c
-  - Test_Score_Status__c
-  - Test_Type__c
-  - Title__c
-  - Touch_Point_Source__c
-  - Touch_Point_Status__c
-  - UST_Email__c
-  - Visit_Date_Time__c
-  - Visit_Event_Name__c
-  - Visit_Guests__c
-  - Visit_ID__c
-  - Visit_Needs__c
-  - Visit_Requester_Role__c
-  - Visit_Status__c
-  - Work_Phone__c
-  - Zip__c
 Insert hed__Language__c:
   sf_object: hed__Language__c
   fields:
@@ -404,61 +231,6 @@ Insert Program__c:
     Recruitment_Program__c:
       table: Program__c
       after: Insert Program__c
-Insert hed__Academic_Certification__c:
-  sf_object: hed__Academic_Certification__c
-  fields:
-  - CreatedDate
-  - LastModifiedDate
-  - Name
-  - RecordTypeId
-  - hed__Academic_Level__c
-  - hed__Credentialing_Identifier__c
-  - hed__Description__c
-  - hed__Extended_Name__c
-  - hed__Field_Of_Study__c
-  lookups:
-    hed__Issuer__c:
-      table: Account
-Insert hed__Course__c:
-  sf_object: hed__Course__c
-  fields:
-  - Active__c
-  - Banner_Activity_Date__c
-  - College_Code__c
-  - Course_Key__c
-  - Course_Number__c
-  - CreatedDate
-  - Effective_Term__c
-  - LastModifiedDate
-  - Name
-  - Subject__c
-  - hed__Academic_Level__c
-  - hed__Course_ID__c
-  - hed__Credentialing_Identifier__c
-  - hed__Credit_Hours__c
-  - hed__Description__c
-  - hed__Extended_Description__c
-  - hed__Subject__c
-  lookups:
-    hed__Account__c:
-      table: Account
-    hed__Issuer__c:
-      table: Account
-Insert hed__Facility__c:
-  sf_object: hed__Facility__c
-  fields:
-  - CreatedDate
-  - LastModifiedDate
-  - Name
-  - hed__Capacity__c
-  - hed__Description__c
-  - hed__Facility_Type__c
-  lookups:
-    hed__Account__c:
-      table: Account
-    hed__Parent_Facility__c:
-      table: hed__Facility__c
-      after: Insert hed__Facility__c
 Insert hed__Term__c:
   sf_object: hed__Term__c
   fields:
@@ -906,6 +678,21 @@ Insert Question_Response__c:
       table: Question__c
     Requirement_Response__c:
       table: Requirement_Response__c
+Insert CampaignMember:
+  sf_object: CampaignMember
+  fields:
+  - Campaign_Member_Key__c
+  - CreatedDate
+  - LastModifiedDate
+  lookups:
+    CampaignId:
+      table: Campaign
+    ContactId:
+      table: Contact
+      after: Insert Contact
+    LeadId:
+      table: Lead
+      after: Insert Lead
 Insert Contact:
   sf_object: Contact
   fields:
@@ -1010,56 +797,6 @@ Insert Extracurricular_Activity__c:
   lookups:
     Contact__c:
       table: Contact
-Insert Family__c:
-  sf_object: Family__c
-  fields:
-  - Address__c
-  - Age__c
-  - Alumni__c
-  - Birth_Country_Region_Territory__c
-  - Cell_Phone__c
-  - City__c
-  - Country__c
-  - CreatedDate
-  - Date_Deceased__c
-  - Email__c
-  - Employer__c
-  - Family_Address_Relationship__c
-  - First_Name__c
-  - Grad_Year__c
-  - Graduate_from_UST__c
-  - Highest_Level_of_Education__c
-  - Holding_Name__c
-  - Home_Phone__c
-  - LastModifiedDate
-  - Last_Name__c
-  - Maiden_Other_Last__c
-  - Middle_Name__c
-  - Number_of_Siblings__c
-  - Occupation__c
-  - Other_Occupation_Details__c
-  - Other_Phone__c
-  - Parent_Living__c
-  - PostalCode__c
-  - Prefix__c
-  - RecordTypeId
-  - Related_Object_JSON__c
-  - Relationship__c
-  - State__c
-  - Street__c
-  - Suffix__c
-  - UST_Attended__c
-  - UST_Employee__c
-  - UST_Sibling_Same_Term__c
-  - User_Created__c
-  - Work_Phone__c
-  lookups:
-    Applicant__c:
-      table: Contact
-    Application__c:
-      table: Application__c
-    Contact__c:
-      table: Contact
 Insert Opportunity:
   sf_object: Opportunity
   fields:
@@ -1107,6 +844,7 @@ Insert Opportunity:
   - Opportunity_Key__c
   - Override_Close_Date__c
   - Receive_Texts__c
+  - RecordTypeId
   - StageName
   - Submitted_Date__c
   - Years_Attended__c
@@ -1125,6 +863,8 @@ Insert Opportunity:
       table: Application__c
     Affiliated_Account__c:
       table: Account
+    CampaignId:
+      table: Campaign
     ContactId:
       table: Contact
     Contact__c:
@@ -1135,6 +875,8 @@ Insert Opportunity:
       table: Account
     Intended_Start_Term__c:
       table: Academic_Term__c
+    Last_Campaign_Source__c:
+      table: Campaign
     Major_Program_1__c:
       table: Program__c
     Major_Program_2__c:
@@ -1239,6 +981,29 @@ Insert hed__Affiliation__c:
       table: Account
     hed__Contact__c:
       table: Contact
+Insert hed__Application__c:
+  sf_object: hed__Application__c
+  fields:
+  - CreatedDate
+  - LastModifiedDate
+  - hed__Applicant_Decision_Date__c
+  - hed__Application_Date__c
+  - hed__Application_Decision_Date__c
+  - hed__Application_JSON__c
+  - hed__Application_Status__c
+  - hed__Application_Type__c
+  - hed__Due_Date__c
+  - hed__Initial_Creation_Date__c
+  - hed__Open_Date__c
+  lookups:
+    hed__Applicant__c:
+      table: Contact
+    hed__Applying_To__c:
+      table: Account
+    hed__Preparer__c:
+      table: Contact
+    hed__Term__c:
+      table: hed__Term__c
 Insert hed__Contact_Language__c:
   sf_object: hed__Contact_Language__c
   fields:
@@ -1350,6 +1115,55 @@ Insert hed__Test__c:
   - hed__Verification_Status__c
   lookups:
     hed__Contact__c:
+      table: Contact
+Insert Family_Member__c:
+  sf_object: Family_Member__c
+  fields:
+  - Address__c
+  - Admissions_Application__c
+  - Age__c
+  - Alumni__c
+  - Application__c
+  - Birth_Country_Region_Territory__c
+  - Cell_Phone__c
+  - City__c
+  - Country__c
+  - CreatedDate
+  - Date_Deceased__c
+  - Email__c
+  - Employer__c
+  - Family_Address_Relationship__c
+  - First_Name__c
+  - Grad_Year__c
+  - Graduate_from_UST__c
+  - Highest_Level_of_Education__c
+  - Holding_Name__c
+  - Home_Phone__c
+  - LastModifiedDate
+  - Last_Name__c
+  - Maiden_Other_Last__c
+  - Middle_Name__c
+  - Number_of_Siblings__c
+  - Occupation__c
+  - Other_Occupation_Details__c
+  - Other_Phone__c
+  - Parent_Living__c
+  - PostalCode__c
+  - Prefix__c
+  - Related_Object_JSON__c
+  - Relationship__c
+  - State__c
+  - Street__c
+  - Suffix__c
+  - UST_Attended__c
+  - UST_Employee__c
+  - UST_Sibling_Same_Term__c
+  - User_Created__c
+  - Work_Phone__c
+  lookups:
+    Application__c:
+      table: Application__c
+    Contact__c:
       table: Contact
 Insert Lead:
   sf_object: Lead
@@ -1519,10 +1333,14 @@ Insert Interaction__c:
       table: Plan__c
     Academic_Program__c:
       table: Program__c
+    Additional_Campaign__c:
+      table: Campaign
     Admissions_Application__c:
       table: Application__c
     Affiliated_Account__c:
       table: Account
+    Campaign__c:
+      table: Campaign
     Contact__c:
       table: Contact
     High_School_Transfer__c:

@@ -609,17 +609,24 @@ function activateTooltips() {
     });
 }
 
+function isCarousel() {
+    let items = document.getElementsByClassName("carousel__item");
+    if (items.length > 0) {
+        return true;
+    }
+    return false;
+}
+
 //Validate form elements on submit
 function checkForm() {
     // let theForm = document.querySelector('form');
     // theForm.reportValidity();
     let error_count = 0;
-
     error_count = error_count + textValidations(true);
 
     if (error_count > 0) {
         let foundErrors = document.querySelector(".slds-has-error");
-        if (foundErrors) {
+        if (foundErrors && isCarousel()) {
             let carouselItem = foundErrors.closest('.carousel__item');
             activateCarousel(carouselItem.dataset.slide);
         }

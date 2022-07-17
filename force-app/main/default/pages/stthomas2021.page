@@ -84,8 +84,8 @@
     </header>
     <main style="min-height: 50vh">
         <div class="slds-scope">
-            <div class="slds-grid slds-grid_align-center">
-                <div class="slds-col slds-size_1-of-1" style="max-width:1170px; margin-top:110px; margin-bottom:20px">
+            <div class="slds-grid slds-wrap slds-grid_align-center">
+                <div class="slds-col slds-size_1-of-1 slds-p-around_x-small" style="max-width:1170px; margin-top:110px; margin-bottom:20px">
                     <apex:insert name="body"/>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <apex:page controller="ApplicationLoginController" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0" action="{!checkIfLoggedIn}">
     <apex:composition template="{!template}">
-        <apex:define name="titleText">Returning Applicant Login</apex:define>
+        <apex:define name="metaPageTitle">Returning Applicant Login</apex:define>
         <apex:define name="scriptsHead">
             <c:ApplicationHead />
         </apex:define>
@@ -63,15 +63,16 @@
                     </div>
 
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-                        <apex:commandButton action="{!login}" onClick="return checkFormNoCarousel();" value="Sign in" id="login-submit" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand"/>
+                        <apex:commandButton action="{!login}" onClick="return checkForm();" value="Sign in" id="login-submit" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand"/>
                     </div>
 
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-                        <a href="./ApplicationForgotPassword" class="forgot-password-text">Forgot your password?</a>
+                        <a href="{!$Site.Prefix}/ApplicationForgotPassword" class="forgot-password-text">Forgot your password?</a>
                     </div>
 
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-                        <a href="./ApplicationRegistration" class="register-text">Create Account</a>
+                        <a href="{!$Site.Prefix}/ApplicationRegistration" class="register-text">Create Account</a>
+                        <a href="{!$Site.Prefix}/ApplicationRegistration" class="register-text">Create Account</a>
                     </div>
 
                 </div>

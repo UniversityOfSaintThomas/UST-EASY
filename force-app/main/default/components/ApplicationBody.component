@@ -2,6 +2,7 @@
     <apex:attribute name="title" description="The title for this page" type="String" required="true"/>
     <apex:attribute name="subtitle" description="The subtitle for this page" type="String" required="false"/>
     <apex:attribute name="hideLogo" description="Should the logo be hidden" type="Boolean" required="false"/>
+    <apex:attribute name="applicantName" description="Greeting name of the applicant" type="String" required="false"/>
     <apex:attribute name="loadingText" description="The text to display when save is occurring" type="String" required="false" default="Processing..."/>
     <apex:attribute name="appInfo" description="The text to display when save is occurring" type="EASYApplicationInfo" required="true" assignTo="{!appInfoParam}"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>

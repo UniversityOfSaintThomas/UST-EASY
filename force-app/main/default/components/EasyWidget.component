@@ -34,6 +34,10 @@
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Finder' }">
                 <c:AdmissionsApplicationFinder appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'User Info Login/Logout' }">
+                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}"/>
+            </apex:outputPanel>
+
         </div>
     </article>
 </apex:component>

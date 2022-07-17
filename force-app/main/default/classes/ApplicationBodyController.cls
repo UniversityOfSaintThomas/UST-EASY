@@ -26,7 +26,8 @@ public with sharing class ApplicationBodyController {
         };
 
         Map<String, Integer> onlyOneWidgetPerPage = new Map<String, Integer>{
-                'Application Finder' => 0
+                'Application Finder' => 0,
+                'User Info Login/Logout' => 0
         };
 
         Set<Id> appInfoIds = new Set<Id>();

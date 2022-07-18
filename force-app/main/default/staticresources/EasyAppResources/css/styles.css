@@ -55,14 +55,19 @@
 }
 
 .slds-scope .slds-progress__item .slds-button {
-    width: 3rem;
-    height: 3rem;
-    padding: 0.3rem 0.3rem;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.1rem 0.1rem;
 }
+
 .slds-scope .slds-progress__item .slds-button__icon {
     width: 1.4rem;
     height: 1.4rem;
     margin-top: 0;
+}
+
+.slds-scope .slds-progress .slds-progress-bar {
+    margin-top: -0.2rem;
 }
 
 .slds-scope .slds-tabled-checklist td {
@@ -163,7 +168,7 @@ div.slds-progress {
 }
 
 .slds-scope .messageTable {
-    margin: 1rem!important;
+    margin: 1rem !important;
 }
 
 /* Carousel styles */

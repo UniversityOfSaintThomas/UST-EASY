@@ -7,6 +7,6 @@
       ApplicationForgotPasswordController controller = new ApplicationForgotPasswordController();
       controller.username = 'test@salesforce.com';       
     
-      System.assertEquals(controller.ApplicationforgotPassword(),null); 
+      System.assertEquals(controller.ApplicationForgotPassword(),null);
     }
 }

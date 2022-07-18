@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>hed__Preferred_Enrollment_Date__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The Lead&apos;s preferred enrollment date.</description>
+    <externalId>false</externalId>
+    <label>Preferred Enrollment Date</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Date</type>
+</CustomField>

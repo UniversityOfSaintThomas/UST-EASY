@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>UST_Sibling_Same_Term__c</fullName>
-    <deprecated>false</deprecated>
     <description>Is this sibling applying for the same term as the applicant?</description>
     <externalId>false</externalId>
     <inlineHelpText>Is this sibling applying for the same term as the applicant?</inlineHelpText>

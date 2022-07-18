@@ -77,6 +77,15 @@ tasks:
       sql_path: datasets/2022-07-08/data.sql
       inject_namespaces: False
 
+  load_fdf_application_data:
+    description: 'Load data needed to start EASY applications'
+    class_path: cumulusci.tasks.bulkdata.load.LoadData
+    options:
+      mapping: datasets/fdfdata/mapping.yml
+      sql_path: datasets/fdfdata/data.sql
+      inject_namespaces: False
+
+
   load_prod_application_data:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
@@ -245,7 +254,7 @@ flows:
       6:
         task: turn_off_duplicate_rules
       7:
-        task: load_application_data
+        task: load_fdf_application_data
       #      7.5:
       #        task: create_fake_school_data
       8:

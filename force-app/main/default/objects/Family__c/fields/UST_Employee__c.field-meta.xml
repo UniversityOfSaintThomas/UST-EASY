@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>UST_Employee__c</fullName>
-    <deprecated>false</deprecated>
     <description>Is this family member an employee of UST?</description>
     <externalId>false</externalId>
     <inlineHelpText>Is this family member an employee of UST?</inlineHelpText>

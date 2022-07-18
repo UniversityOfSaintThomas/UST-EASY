@@ -22,18 +22,19 @@ public with sharing class ApplicationBodyController {
 
     public allWidgets getWidgets() {
         List<String> pagesWithMultipleAppInfo = new List<String>{
-                'ApplicationPortal'
+                'applicationportal'
         };
 
         Map<String, Integer> onlyOneWidgetPerPage = new Map<String, Integer>{
-                'Application Finder' => 0
+                'Application Finder' => 0,
+                'User Info Login/Logout' => 0
         };
 
         Set<Id> appInfoIds = new Set<Id>();
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atSubStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atCitizenshipMap = new Map<String, Set<String>>();
-        currentPageName = getVFPageName();
+        currentPageName = getVFPageName().toLowerCase();
         allWidgets foundWidgets = new allWidgets();
         foundWidgets.topWidgets = new List<EASY_Widget__c>();
         foundWidgets.rightWidgets = new List<EASY_Widget__c>();
@@ -207,7 +208,7 @@ public with sharing class ApplicationBodyController {
                         foundWidgets.contentTopWidgets.add(widget);
                     }
                     when 'content bottom' {
-                        foundWidgets.contentTopWidgets.add(widget);
+                        foundWidgets.contentBottomWidgets.add(widget);
                     }
                 }
 
@@ -232,7 +233,7 @@ public with sharing class ApplicationBodyController {
         pageName = pageName.replaceFirst('/apex/', '');
         pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');
         String[] pageNameExtra = pageName.split('%3F', 0);
-        pageName = pageNameExtra[0];
+        pageName = pageNameExtra[0].toLowerCase();
         return pageName;
     }
 

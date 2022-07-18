@@ -1,7 +1,7 @@
 <apex:page controller="ApplicationCreate" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!ApplicationCreateInit}">
     <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead/>
+            <c:ApplicationHead />
             <script>
                 async function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
                     return new Promise((resolve, reject) => {

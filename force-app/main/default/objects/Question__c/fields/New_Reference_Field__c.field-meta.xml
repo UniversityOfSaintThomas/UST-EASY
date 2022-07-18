@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>New_Reference_Field__c</fullName>
     <defaultValue>false</defaultValue>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Checked if this field is a part of a newly-created record to reference (e.g. new company that doesn&apos;t already exist in Salesforce)</inlineHelpText>
     <label>New Reference Field</label>

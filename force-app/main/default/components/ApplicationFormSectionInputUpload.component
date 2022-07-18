@@ -45,9 +45,9 @@
                     </div>
                     <div class="slds-media__body">
                         <h2 class="slds-card__header-title">
-                            <a href="#" class="slds-card__header-link slds-truncate" title="Upload file">
+                            <span class="slds-card__header-link slds-truncate" title="Upload file">
                                 <span>Upload file</span>
-                            </a>
+                            </span>
                         </h2>
                     </div>
                 </header>

@@ -137,7 +137,7 @@
                         </label>
                     </span>
                 </apex:repeat>
-                <apex:inputHidden value="{!responseObject[fieldAPI]}" id="radioField1"/>
+                <apex:inputHidden value="{!responseObject[fieldAPI]}" id="radioField1" html-class="slds-radio_button-value"/>
             </div>
         </div>
     </apex:outputPanel>

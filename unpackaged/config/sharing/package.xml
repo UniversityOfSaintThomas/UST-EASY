@@ -20,5 +20,9 @@
         <members>EASY_Widget__c</members>
         <name>SharingRules</name>
     </types>
+    <types>
+        <members>Program__c</members>
+        <name>SharingRules</name>
+    </types>
     <version>52.0</version>
 </Package>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Inquiry_Date__c</fullName>
-    <deprecated>false</deprecated>
     <description>A date stamp (set by the Opportunity: Set Inquiry Date workflow rule) to capture when an Opportunity is created.</description>
     <externalId>false</externalId>
     <inlineHelpText>The date when the Opportunity was created.</inlineHelpText>

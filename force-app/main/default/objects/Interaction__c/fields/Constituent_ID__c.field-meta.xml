@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Constituent_ID__c</fullName>
-    <deprecated>false</deprecated>
     <description>The individual&apos;s external ID from another database, used to match on Contact in the Lead and Contact Matching Rules.</description>
     <externalId>false</externalId>
     <inlineHelpText>The individual&apos;s external ID from another database.</inlineHelpText>

@@ -1,7 +1,7 @@
 <apex:page controller="ApplicationRequirement" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0" action="{!applicationRequirementInit}">
     <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead/>
+            <c:ApplicationHead />
             <script>
                 function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
                     Visualforce.remoting.Manager.invokeAction(
@@ -22,8 +22,8 @@
         </apex:define>
         <apex:define name="metaPageTitle">{!appInfo.academicLevel} : {!title}</apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}">
-                <c:ApplicationForm section="{!section}" rendered="{!!isInvalid}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}">
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occurred',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}">
+                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}">
 
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>

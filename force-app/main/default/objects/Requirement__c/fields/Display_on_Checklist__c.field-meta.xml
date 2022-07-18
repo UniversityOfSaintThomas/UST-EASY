@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Display_on_Checklist__c</fullName>
     <defaultValue>true</defaultValue>
-    <deprecated>false</deprecated>
     <description>If checked, this Requirement will display on the Application Checklist.</description>
     <externalId>false</externalId>
     <inlineHelpText>If checked, this Requirement will display on the Application Checklist.</inlineHelpText>

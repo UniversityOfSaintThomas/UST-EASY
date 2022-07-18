@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Affiliation_Status__c</fullName>
-    <deprecated>false</deprecated>
     <description>The status of the Contact&apos;s affiliation to the Affiliated Account. Defaulted to &quot;Current.&quot;</description>
     <externalId>false</externalId>
     <inlineHelpText>The status of the Contact&apos;s affiliation to the Affiliated Account.</inlineHelpText>

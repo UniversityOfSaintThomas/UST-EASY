@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Allow_Text_Entry__c</fullName>
     <defaultValue>false</defaultValue>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Whether or not text entry is allowed for this document upload item</inlineHelpText>
     <label>Allow Text Entry</label>

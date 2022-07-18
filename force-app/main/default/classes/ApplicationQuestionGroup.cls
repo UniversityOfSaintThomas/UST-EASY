@@ -173,7 +173,7 @@ public class ApplicationQuestionGroup {
                 isEditMode = false;
                 sobjClone = obj.clone(true, true, true, true);
             } else {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ' Required Fields Missing ' + errorFound));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ' Required Field(s) Missing '));
             }
         }
 

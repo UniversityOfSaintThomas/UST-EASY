@@ -131,6 +131,10 @@
     display: block;
 }
 
+.slds-scope .slds-has-error .slds-radio_button-group {
+    border: solid 2px red;
+}
+
 .slds-scope label.slds-text-body_regular {
     margin-top: .2em;
 }
@@ -156,6 +160,10 @@ div.slds-progress {
 
 .slds-col img {
     max-width: 99%;
+}
+
+.slds-scope .messageTable {
+    margin: 1rem!important;
 }
 
 /* Carousel styles */

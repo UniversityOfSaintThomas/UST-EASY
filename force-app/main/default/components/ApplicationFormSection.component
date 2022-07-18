@@ -215,7 +215,7 @@
                         </apex:outputPanel>
 
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand slds-m-right-small" onComplete="pageLoadReRendered();">
+                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" styleClass="slds-button slds-button_brand slds-m-right-small" onComplete="addRecordValidation(this);pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                                 </svg>

@@ -8,18 +8,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>U.S. Citizen</fullName>
-                <default>false</default>
-                <label>U.S. Citizen</label>
-            </value>
-            <value>
-                <fullName>International</fullName>
-                <default>false</default>
-                <label>International</label>
-            </value>
-        </valueSetDefinition>
+        <restricted>true</restricted>
+        <valueSetName>Citizenship_Types</valueSetName>
     </valueSet>
 </CustomField>

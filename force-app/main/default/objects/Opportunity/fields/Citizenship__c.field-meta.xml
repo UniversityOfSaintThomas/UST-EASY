@@ -20,6 +20,26 @@
                 <default>false</default>
                 <label>International</label>
             </value>
+            <value>
+                <fullName>U.S. Dual Citizen</fullName>
+                <default>false</default>
+                <label>U.S. Dual Citizen</label>
+            </value>
+            <value>
+                <fullName>U.S. Permanent Resident</fullName>
+                <default>false</default>
+                <label>U.S. Permanent Resident</label>
+            </value>
+            <value>
+                <fullName>Asylee/Refugee</fullName>
+                <default>false</default>
+                <label>Asylee/Refugee</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

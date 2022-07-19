@@ -121,28 +121,10 @@ CREATE TABLE "Account" (
 INSERT INTO "Account" VALUES(1,'','','','','false','Applicant Parent Account','012f20000003jN9AAI','','false','','','','');
 INSERT INTO "Account" VALUES(2,'','','','','false','Unknown High School','012f20000003jN9AAI','','false','','','','');
 INSERT INTO "Account" VALUES(3,'','','','','false','Unknown College','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(4,'006110','STVSBGI-006110','','','false','University of St Thomas','012f20000003jN9AAI','8254','false','','','','');
+INSERT INTO "Account" VALUES(4,'','','','','false','University of St Thomas','012f20000003jN9AAI','','false','','','','');
 INSERT INTO "Account" VALUES(5,'','','','','false','Unknown Sibling Account','012f20000003jN9AAI','','false','','','','');
 INSERT INTO "Account" VALUES(6,'','','','','false','Unknown Parent/Guardian 1 Account','012f20000003jN9AAI','','false','','','','');
 INSERT INTO "Account" VALUES(7,'','','','','false','Unknown Language','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(8,'00','STVCOLL-00','','','false','No College Designated','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(9,'99','STVCOLL-99','','','false','Not used in standing','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(10,'AS','STVCOLL-AS','','','false','College of Arts & Sciences','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(11,'BU','STVCOLL-BU','','','false','Opus College of Business','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(12,'CP','STVCOLL-CP','','','false','Coll Ed, Ldr, & Counsl CELC','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(13,'CS','STVCOLL-CS','','','false','School of Continuing Studies','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(14,'DC','STVCOLL-DC','','','false','Dougherty Family College','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(15,'DV','STVCOLL-DV','','','false','School of Divinity','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(16,'EC','STVCOLL-EC','','','false','Continuing Education','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(17,'ED','STVCOLL-ED','','','false','School of Education','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(18,'ET','STVCOLL-ET','','','false','School of Engineering','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(19,'LW','STVCOLL-LW','','','false','School of Law','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(20,'NN','STVCOLL-NN','','','false','No College Designated','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(21,'OT','STVCOLL-OT','','','false','Other','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(22,'PS','STVCOLL-PS','','','false','School of Prof Psychology','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(23,'SE','STVCOLL-SE','','','false','Grad Prog in Software Eng','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(24,'SW','STVCOLL-SW','','','false','School of Social Work','012f20000003jN9AAI','','false','','','','');
-INSERT INTO "Account" VALUES(25,'XC','STVCOLL-XC','','','false','Exchange Schools','012f20000003jN9AAI','','false','','','','');
 CREATE TABLE "Account_rt_mapping" (
 	record_type_id VARCHAR(18) NOT NULL, 
 	developer_name VARCHAR(255), 
@@ -201,9 +183,7 @@ INSERT INTO "Application_Control__c" VALUES(9,'','True','','Started App','Submit
 INSERT INTO "Application_Control__c" VALUES(10,'','True','','Started App','Submitted App','Started App','000000','ffffff','000000','Withdrawn','False','','False','000000','000000','','Logo','Graduate School of Professional Psychology','Graduate School of Professional Psychology','Submitted App','','000000','GSPP','Withdrawn');
 INSERT INTO "Application_Control__c" VALUES(11,'Undergraduate','True','','Started App','Submitted App','Started App','000000','ffffff','000000','Withdrawn','False','','False','000000','000000','','Logo','Undergraduate DFC','Dougherty Family College','Submitted App','','000000','DFC','Withdrawn');
 INSERT INTO "Application_Control__c" VALUES(12,'Graduate','True','','Started App','Submitted App','Started App','000000','ffffff','000000','Withdrawn','False','Master''s
-
 Certificate
-
 Non-Degree','False','000000','000000','','Logo','Graduate Opus College of Business','Opus College of Business','Submitted App','','000000','GOCB','Withdrawn');
 INSERT INTO "Application_Control__c" VALUES(13,'','True','Started App','Started App','Started App;Submitted App','Started App','000000','ffffff','000000','Withdrawn','True','','False','000000','000000','','Logo','Undergraduate First-Year','Undergraduate','Submitted App','stthomas2021','000000','UGFR','Withdrawn');
 INSERT INTO "Application_Control__c" VALUES(14,'','False','','Started App','','Started App','00000','fffff','00000','Withdrawn','False','','False','00000','00000','','Logo','International Non-Degree','','Submitted App','stthomas2021','00000','INTLND','Withdrawn');
@@ -23899,25 +23879,25 @@ INSERT INTO "hed__Language__c" VALUES(175,'','Afrikaans','');
 INSERT INTO "hed__Language__c" VALUES(176,'','Konkani','');
 INSERT INTO "hed__Language__c" VALUES(177,'','Indonesian','');
 CREATE TABLE "hed__Term__c" (
-	id INTEGER NOT NULL, 
-	"Activate_Application_Date__c" VARCHAR(255), 
-	"Banner_Term_Code__c" VARCHAR(255), 
-	"End_Application_Date__c" VARCHAR(255), 
-	"Housing_End_Date__c" VARCHAR(255), 
-	"Housing_Start_Date__c" VARCHAR(255), 
-	"Name" VARCHAR(255), 
-	"Term_Code__c" VARCHAR(255), 
-	"Term_End_Date__c" VARCHAR(255), 
-	"Term_Friendly_Name__c" VARCHAR(255), 
-	"Term_Key__c" VARCHAR(255), 
-	"Term_Start_Date__c" VARCHAR(255), 
-	"hed__End_Date__c" VARCHAR(255), 
-	"hed__Grading_Period_Sequence__c" VARCHAR(255), 
-	"hed__Instructional_Days__c" VARCHAR(255), 
-	"hed__Start_Date__c" VARCHAR(255), 
-	"hed__Type__c" VARCHAR(255), 
-	"hed__Account__c" VARCHAR(255), 
-	"hed__Parent_Term__c" VARCHAR(255), 
+	id INTEGER NOT NULL,
+	"Activate_Application_Date__c" VARCHAR(255),
+	"Banner_Term_Code__c" VARCHAR(255),
+	"End_Application_Date__c" VARCHAR(255),
+	"Housing_End_Date__c" VARCHAR(255),
+	"Housing_Start_Date__c" VARCHAR(255),
+	"Name" VARCHAR(255),
+	"Term_Code__c" VARCHAR(255),
+	"Term_End_Date__c" VARCHAR(255),
+	"Term_Friendly_Name__c" VARCHAR(255),
+	"Term_Key__c" VARCHAR(255),
+	"Term_Start_Date__c" VARCHAR(255),
+	"hed__End_Date__c" VARCHAR(255),
+	"hed__Grading_Period_Sequence__c" VARCHAR(255),
+	"hed__Instructional_Days__c" VARCHAR(255),
+	"hed__Start_Date__c" VARCHAR(255),
+	"hed__Type__c" VARCHAR(255),
+	"hed__Account__c" VARCHAR(255),
+	"hed__Parent_Term__c" VARCHAR(255),
 	PRIMARY KEY (id)
 );
 INSERT INTO "hed__Term__c" VALUES(1,'','','','','','Summer 2018','201830.0','','Summer 2018','201830','','2018-08-31','','','2018-06-01','','4','');

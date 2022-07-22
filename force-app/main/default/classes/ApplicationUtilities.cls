@@ -98,6 +98,23 @@ public class ApplicationUtilities {
             appInfo.contactId = getAppContactId();
         }
 
+        if (String.isBlank(appInfo.appId) && String.isBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
+            //If we've arrived with no cookie or parameters;
+            List<Application__c> lastApps = [
+                    SELECT Id, Application_Control__r.URL_Parameter__c, LastModifiedDate, Contact__c,
+                            Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
+                            Intended_Program__r.Name, Intended_Term_of_Entry__r.Name
+                    FROM Application__c
+                    WHERE Contact__c = :appInfo.contactId
+                    ORDER BY LastModifiedDate
+            ];
+            if (lastApps.size() > 0) {
+                Application_Control__c appControl = getApplicationControls(lastApps[0].Application_Control__r.URL_Parameter__c);
+                Application__c app = lastApps[0];
+                appInfo = setApplicationInfo(appControl, app);
+            }
+        }
+
         if (String.isBlank(appInfo.template)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;
@@ -153,7 +170,7 @@ public class ApplicationUtilities {
             //Get the application type from the application id
             List<Application__c> currentApps = [
                     SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
-                            Intended_Program__r.Name, Intended_Term_of_Entry__r.Name
+                            Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Contact__c
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     AND Application_Control__r.URL_Parameter__c = :appInfo.at

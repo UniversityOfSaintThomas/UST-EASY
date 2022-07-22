@@ -7,7 +7,6 @@
         <apex:define name="body">
             <apex:form id="loginForm" forceSSL="true" styleClass="form-signin">
                 <div class="main-container slds-grid slds-grid_vertical">
-                    <apex:pageMessages showDetail="false" id="error"/>
 
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
 
@@ -20,10 +19,10 @@
                             <p class="slds-var-p-top_medium text-align-center">
                                 <span class="sub-heading">Please login below or click "Create Account" to sign up</span>
                             </p>
+                            <apex:pageMessages showDetail="false" id="error"/>
                         </div>
 
                     </div>
-
 
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
 

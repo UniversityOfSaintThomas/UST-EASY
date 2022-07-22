@@ -119,6 +119,8 @@ public with sharing class ApplicationBodyController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 
+        System.debug(allPositionWidgets.size());
+        System.debug(appInfoIds);
         /* Start/End date filter if defined */
         for (EASY_Widget__c widget : allPositionWidgets) {
             Boolean skipWidget = false;
@@ -140,6 +142,13 @@ public with sharing class ApplicationBodyController {
                             skipWidget = true;
                         }
                     }
+                }
+            }
+
+
+            if (widget.Widget_Type__c.equalsIgnoreCase('custom')) {
+                if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
+                    skipWidget = true;
                 }
             }
 
@@ -235,6 +244,13 @@ public with sharing class ApplicationBodyController {
         String[] pageNameExtra = pageName.split('%3F', 0);
         pageName = pageNameExtra[0].toLowerCase();
         return pageName;
+    }
+
+    public String removeHTML(String q) {
+        if (String.isNotBlank(q)) {
+            q = q.replaceAll('<[^>]+>', '').trim();
+        }
+        return q;
     }
 
     public Datetime adjustForTimeZone(Datetime dt, String timezoneString) {

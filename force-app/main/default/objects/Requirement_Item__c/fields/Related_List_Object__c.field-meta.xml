@@ -31,9 +31,9 @@
                 <label>Recommendation__c</label>
             </value>
             <value>
-                <fullName>Family_Member__c</fullName>
+                <fullName>Family__c</fullName>
                 <default>false</default>
-                <label>Family_Member__c</label>
+                <label>Family__c</label>
             </value>
             <value>
                 <fullName>Work_History__c</fullName>

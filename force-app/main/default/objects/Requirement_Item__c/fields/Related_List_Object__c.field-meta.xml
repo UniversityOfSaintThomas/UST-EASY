@@ -31,9 +31,9 @@
                 <label>Recommendation__c</label>
             </value>
             <value>
-                <fullName>Family__c</fullName>
+                <fullName>Family_Member__c</fullName>
                 <default>false</default>
-                <label>Family__c</label>
+                <label>Family_Member__c</label>
             </value>
             <value>
                 <fullName>Work_History__c</fullName>
@@ -44,6 +44,11 @@
                 <fullName>hed__Education_History__c</fullName>
                 <default>false</default>
                 <label>hed__Education_History__c</label>
+            </value>
+            <value>
+                <fullName>Family__c</fullName>
+                <default>false</default>
+                <label>Family__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>

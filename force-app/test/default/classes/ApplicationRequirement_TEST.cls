@@ -103,6 +103,7 @@ public class ApplicationRequirement_TEST {
         ApplicationRequirement appReq = new ApplicationRequirement();
         appReq.items = [SELECT Id FROM Requirement_Item__c];
         appReq.appInfo = appInfo;
+        appReq.showSuccess = false;
         appReq.applicationRequirementInit();
 
         Test.startTest();
@@ -158,7 +159,7 @@ public class ApplicationRequirement_TEST {
     }
     
     @isTest
-    public static void testSevenParamContstructor() {
+    public static void testSevenParamConstructor() {
         Application__c app = [SELECT Id FROM Application__c LIMIT 1];
         Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
         Contact student = [SELECT Id FROM Contact LIMIT 1];
@@ -211,11 +212,7 @@ public class ApplicationRequirement_TEST {
         PageReference reference = appReq2.applicationRequirementInit();
         Test.stopTest();
 
-        System.debug(appReq.checklistItems);
-        System.debug(reference);
-
         PageReference portalPage = Page.ApplicationPortal;
-        System.debug(portalPage);
         System.assertEquals(student.Id, appReq.con.Id);
         System.assertEquals(String.valueOf(portalPage), String.valueOf(reference));
     }
@@ -343,55 +340,68 @@ public class ApplicationRequirement_TEST {
         System.assertEquals(1, results.size());
     }
 
-    // @IsTest
-    // public static void standardTest() {
-    //     Application__c app = [SELECT Id FROM Application__c LIMIT 1];
-    //     Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
-    //     Contact student = [SELECT Id FROM Contact LIMIT 1];
+    @IsTest
+    public static void standardTest() {
+        Application__c app = [SELECT Id FROM Application__c LIMIT 1];
+        Application_Control__c appControl = [SELECT Id, Submit_Status__c FROM Application_Control__c LIMIT 1];
+        Contact student = [SELECT Id FROM Contact LIMIT 1];
 
-    //     Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
+        Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
 
-    //     Map<String, Id> riMap = new Map<String, Id>();
-    //     for (Requirement_Item__c ri : [SELECT Id,RecordType.DeveloperName FROM Requirement_Item__c]) {
-    //         riMap.put(ri.RecordType.DeveloperName, ri.Id);
-    //     }
+        Map<String, Id> riMap = new Map<String, Id>();
+        for (Requirement_Item__c ri : [SELECT Id,RecordType.DeveloperName FROM Requirement_Item__c]) {
+            riMap.put(ri.RecordType.DeveloperName, ri.Id);
+        }
 
-    //     Requirement_Response__c rrQG = new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = riMap.get('Question_Group'));
-    //     Requirement_Response__c rrDU = new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = riMap.get('Document_Upload'), HasDocument__c = true);
-    //     Requirement_Response__c rrRO = new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = riMap.get('Related_Object'), Has_Child_Requirement__c = true);
-    //     insert new List<Requirement_Response__c>{
-    //             rrQG, rrDU, rrRO
-    //     };
-    //     insert new Question_Response__c(Requirement_Response__c = rrQG.Id);
+        Requirement_Response__c rrQG = new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = riMap.get('Question_Group'));
+        Requirement_Response__c rrDU = new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = riMap.get('Document_Upload'), HasDocument__c = true);
+        Requirement_Response__c rrRO = new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = riMap.get('Related_Object'), Has_Child_Requirement__c = true);
+        insert new List<Requirement_Response__c>{
+                rrQG, rrDU, rrRO
+        };
+        insert new Question_Response__c(Requirement_Response__c = rrQG.Id);
 
-    //     ContentVersion cv = new ContentVersion(Title = 'Test', PathOnClient = 'Test', VersionData = Blob.valueOf('test'));
-    //     insert cv;
-    //     cv = [SELECT Id,ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id];
-    //     insert new ContentDocumentLink(LinkedEntityId = rrDU.Id, ContentDocumentId = cv.ContentDocumentId, Visibility = 'AllUsers', ShareType = 'I');
+        ContentVersion cv = new ContentVersion(Title = 'Test', PathOnClient = 'Test', VersionData = Blob.valueOf('test'));
+        insert cv;
+        cv = [SELECT Id,ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id];
+        insert new ContentDocumentLink(LinkedEntityId = rrDU.Id, ContentDocumentId = cv.ContentDocumentId, Visibility = 'AllUsers', ShareType = 'I');
 
-    //     PageReference pr = Page.ApplicationRequirement;
-    //     pr.getParameters().put('contactId', student.Id);
-    //     pr.getParameters().put('applicationId', app.Id);
-    //     pr.getParameters().put('requirementId', req.Id);
-    //     Test.setCurrentPage(pr);
-    //     ApplicationRequirement ac = new ApplicationRequirement();
-    //     EASYApplicationInfo appInfo = new EASYApplicationInfo();
-    //     appInfo.appId = app.Id;
-    //     appInfo.contactId = student.Id;
-    //     appInfo.requirementId = req.Id;
-    //     appInfo.appControlId = appControl.Id;
-    //     appInfo.isExternalUser = true;
-    //     ac.appInfo = appInfo;
-    //     ac.applicationRequirementInit();
-    //     System.assertEquals(ac.title, 'Test Req');
-    //     ac.redirectPage = 'something';
-    //     ac.submit();
-    //     ac.redirectPage = 'submit';
-    //     ac.submit();
-    //     ac.redirectPage = 'checklist';
-    //     ac.submit();
+        PageReference pr = Page.ApplicationRequirement;
+        pr.getParameters().put('contactId', student.Id);
+        pr.getParameters().put('applicationId', app.Id);
+        pr.getParameters().put('requirementId', req.Id);
+        Test.setCurrentPage(pr);
+        ApplicationRequirement ac = new ApplicationRequirement();
+        EASYApplicationInfo appInfo = new EASYApplicationInfo();
+        appInfo.appId = app.Id;
+        appInfo.contactId = student.Id;
+        appInfo.requirementId = req.Id;
+        appInfo.appControlId = appControl.Id;
+        appInfo.isExternalUser = true;
+        ac.appInfo = appInfo;
+        ac.applicationRequirementInit();
+        System.assertEquals(ac.title, 'Test Req');
 
-    // }
+        ac.redirectPage = 'something';
+        PageReference pr1 = ac.submit();
+        System.assertEquals(String.valueOf(Page.ApplicationRequirement), String.valueOf(pr1));
+
+        ac.redirectPage = 'submit';
+        ac.allowSubmit = true;
+        ac.app = app;
+        ac.appControl = appControl;
+        PageReference pr2 = ac.submit();
+        PageReference expected = Page.ApplicationPortal;
+        expected.getParameters().put('contactId', student.Id);
+        expected.getParameters().put('applicationId', app.Id);
+        System.assertEquals(String.valueOf(expected), String.valueOf(pr2));
+
+        ac.redirectPage = 'checklist';
+        PageReference pr3 = ac.submit();
+        System.assertEquals(String.valueOf(Page.ApplicationPortal), String.valueOf(pr3));
+    
+    }
+
     @IsTest
     public static void testDocumentUpload() {
         Application__c app = [SELECT Id FROM Application__c LIMIT 1];
@@ -454,53 +464,57 @@ public class ApplicationRequirement_TEST {
         System.assertEquals(1, [SELECT COUNT() FROM ContentDocumentLink WHERE LinkedEntityId = :rrDU.Id]);
         System.assertEquals('Test', [SELECT Id,ValueTextEntry__c FROM Requirement_Response__c WHERE Id = :rrDU.Id].ValueTextEntry__c);
     }
-    // @IsTest
-    // public static void testExternal() {
-    //     Application__c app = [SELECT Id FROM Application__c LIMIT 1];
-    //     Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
-    //     Contact student = [SELECT Id FROM Contact LIMIT 1];
 
-    //     Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
+    @IsTest
+    public static void testExternal() {
+        Application__c app = [SELECT Id FROM Application__c LIMIT 1];
+        Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
+        Contact student = [SELECT Id FROM Contact LIMIT 1];
+        Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
+        Requirement_Item__c riQG = [SELECT Id FROM Requirement_Item__c WHERE Name = 'Test RI Question Group'];
 
-    //     Map<String, Id> rtMap = new Map<String, Id>();
-    //     for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Question__c']) {
-    //         rtMap.put(rt.DeveloperName, rt.Id);
-    //     }
+        Map<String, Id> rtMap = new Map<String, Id>();
+        for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Question__c']) {
+            rtMap.put(rt.DeveloperName, rt.Id);
+        }
 
-    //     Map<String, Id> riMap = new Map<String, Id>();
-    //     for (Requirement_Item__c ri : [SELECT Id,RecordType.DeveloperName FROM Requirement_Item__c]) {
-    //         riMap.put(ri.RecordType.DeveloperName, ri.Id);
-    //     }
-    //     Requirement_Item__c riQG = new Requirement_Item__c(Id = riMap.get('Question_Group'));
-    //     Question__c q = new Question__c(RecordTypeId = rtMap.get('Email'), External_Email_Field__c = true, Name = 'Email', Label__c = 'Email', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID());
-    //     insert q;
-    //     Requirement_Item__c riDU = new Requirement_Item__c(Id = riMap.get('Document_Upload'), Internal_Requirement_Item__c = riQG.Id, Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
-    //     update riDU;ew1';
-    //             agq.enableEditMode();
-    //             Map<String, ApplicationQuestionGroup.SObjectWrapper> relatedObjectsMap = agq.relatedObjectsMap;
-    //             ApplicationQuestionGroup.S
-    //     };
+        Question__c q = new Question__c(
+            RecordTypeId = rtMap.get('Email'), 
+            External_Email_Field__c = true, 
+            Name = 'Email', 
+            Label__c = 'Email', 
+            Requirement_Item__c = riQG.Id, 
+            Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
+        );
+        insert q;
+        Requirement_Response__c rrDU = new Requirement_Response__c(
+            Application__c = app.Id, 
+            Requirement_Item__c = riQG.Id, 
+            Hashcode__c = '1234'
+        );
+        insert rrDU;
 
-    //     PageReference pr = Page.ApplicationRequirement;
-    //     pr.getParameters().put('contactId', student.Id);
-    //     pr.getParameters().put('applicationId', app.Id);
-    //     pr.getParameters().put('requirementId', req.Id);
-    //     Test.setCurrentPage(pr);
-    //     ApplicationRequirement ac = new ApplicationRequirement();
-    //     EASYApplicationInfo appInfo = new EASYApplicationInfo();
-    //     appInfo.appId = app.Id;
-    //     appInfo.contactId = student.Id;
-    //     appInfo.requirementId = req.Id;
-    //     appInfo.appControlId = appControl.Id;
-    //     appInfo.isExternalUser = true;
-    //     ac.appInfo = appInfo;
-    //     ac.applicationRequirementInit();
-    //     for (ApplicationQuestionGroup agq : ac.section.groups) {
-    //         if (agq.documentUpload == true) {
-    //             System.assertEquals(null, agq.questions);
-    //         }
-    //     }
-    // }
+        PageReference pr = Page.ApplicationRequirement;
+        pr.getParameters().put('contactId', student.Id);
+        pr.getParameters().put('applicationId', app.Id);
+        pr.getParameters().put('requirementId', req.Id);
+        Test.setCurrentPage(pr);
+        ApplicationRequirement ac = new ApplicationRequirement();
+        EASYApplicationInfo appInfo = new EASYApplicationInfo();
+        appInfo.appId = app.Id;
+        appInfo.contactId = student.Id;
+        appInfo.requirementId = req.Id;
+        appInfo.appControlId = appControl.Id;
+        appInfo.isExternalUser = true;
+        ac.appInfo = appInfo;
+        ac.applicationRequirementInit();
+        for (ApplicationQuestionGroup agq : ac.section.groups) {
+            if (agq.documentUpload == true) {
+                System.assertEquals(null, agq.questions);
+            }
+        }
+    }
+
     // @IsTest
     // public static void testRelatedObject() {
     //     Application__c app = [SELECT Id FROM Application__c LIMIT 1];

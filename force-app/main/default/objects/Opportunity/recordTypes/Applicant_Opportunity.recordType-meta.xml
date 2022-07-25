@@ -3,7 +3,6 @@
     <fullName>Applicant_Opportunity</fullName>
     <active>true</active>
     <businessProcess>Applicant</businessProcess>
-    <compactLayoutAssignment>Applicant_Opportunity</compactLayoutAssignment>
     <label>Applicant Opportunity</label>
     <picklistValues>
         <picklist>Admit_Type__c</picklist>

@@ -459,8 +459,13 @@ public class ApplicationRequirement {
                 if (redirectPage == 'checklist') {
                     pr = Page.ApplicationPortal;
                 } else if (redirectPage == 'submit') {
+                    System.debug('allowSubmit: ' + allowSubmit);
+                    System.debug('app: ' + app);
+                    System.debug('appControl: ' + appControl);
+                    System.debug('appControl.Submit_Status__c: ' + appControl.Submit_Status__c);
                     if (allowSubmit && app != null) {
                         if (appControl != null && String.isNotBlank(appControl.Submit_Status__c)) {
+                            System.debug('here');
                             update new Application__c(Id = app.Id, Application_Status__c = appControl.Submit_Status__c);
                             pr = Page.ApplicationPortal;
                             for (String s : new Set<String>{
@@ -469,6 +474,7 @@ public class ApplicationRequirement {
                                 pr.getParameters().put(s, ApexPages.currentPage().getParameters().get(s));
                             }
                         }
+                        System.debug(pr);
                     }
                 } else {
                     pr = Page.ApplicationRequirement;

@@ -3,7 +3,6 @@
     <fullName>Inquiry_Opportunity</fullName>
     <active>true</active>
     <businessProcess>Inquiry</businessProcess>
-    <compactLayoutAssignment>Inquiry_Opportunity</compactLayoutAssignment>
     <label>Inquiry Opportunity</label>
     <picklistValues>
         <picklist>Admit_Type__c</picklist>

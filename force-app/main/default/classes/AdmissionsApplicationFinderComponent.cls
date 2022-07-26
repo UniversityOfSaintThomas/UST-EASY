@@ -12,8 +12,10 @@ public with sharing class AdmissionsApplicationFinderComponent {
 
     public AdmissionsApplicationFinderComponent() {
         List<Application_Control__c> applicationList = [
-                SELECT Name, Id, School_College__c, Active__c, URL_Parameter__c
+                SELECT Name, Id, School_College__c, Active__c, Show_on_App_Finder__c, URL_Parameter__c
                 FROM Application_Control__c
+                WHERE Active__c = TRUE AND Show_on_App_Finder__c = TRUE
+                ORDER BY Name
         ];
 
         acMapBySchool = new Map<String, List<Application_Control__c>>();
@@ -30,7 +32,7 @@ public with sharing class AdmissionsApplicationFinderComponent {
 
     public List<SelectOption> getSchools() {
         List<SelectOption> options = new List<SelectOption>();
-        options.add(new SelectOption('', 'Select...'));
+        options.add(new SelectOption('', 'Select a college'));
 
         for (String s : acMapBySchool.keySet()) {
             if (String.isNotBlank(s)) {
@@ -42,7 +44,7 @@ public with sharing class AdmissionsApplicationFinderComponent {
 
     public List<SelectOption> getApps() {
         List<SelectOption> options = new List<SelectOption>();
-        options.add(new SelectOption('', 'Select...'));
+        options.add(new SelectOption('', 'Select application type'));
         if (String.isNotBlank(selectedSchool)) {
             for (Application_Control__c ac : acMapBySchool.get(selectedSchool)) {
                 options.add(new SelectOption(ac.URL_Parameter__c, ac.Name));

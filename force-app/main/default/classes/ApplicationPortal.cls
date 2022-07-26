@@ -27,6 +27,7 @@ public class ApplicationPortal {
         appInfoMapByAppId = new Map<Id, EASYApplicationInfo>();
         checklistsByAppIds = new Map<Id, List<RequirementWrapper>>();
         Id contactId = appInfo.contactId;
+        System.debug('contactId: ' + contactId);
         if (String.isNotBlank(contactId)) {
             //Get Application Controls for all apps
             appControlsByAppIds = new Map<Id, Application_Control__c>([
@@ -40,7 +41,8 @@ public class ApplicationPortal {
                             WHERE Contact__r.Id = :contactId
                     )
             ]);
-
+            System.debug('appControlsByAppIds: ' + appControlsByAppIds);
+            
             List<Id> appControlIdsList = new List<Id>(appControlsByAppIds.keySet());
             String appFields = ApplicationHelper.getAllItemApplicationFieldsByAppControlId(appControlIdsList);
 

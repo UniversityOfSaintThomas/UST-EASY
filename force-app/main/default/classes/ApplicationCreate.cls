@@ -256,7 +256,6 @@ public class ApplicationCreate {
             // Throw exception if not all required fields have been filled-out
             String errorMessage = checkFields();
             if (errorMessage != null) {
-                System.debug('error: ' + errorMessage);
                 throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
             }
 

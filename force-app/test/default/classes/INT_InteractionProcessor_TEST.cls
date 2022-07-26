@@ -295,7 +295,6 @@ private class INT_InteractionProcessor_TEST {
         Opportunity assertOppty = [SELECT Name, Career__c, StageName FROM Opportunity WHERE Id = :assertInteraction.Opportunity__c];
         System.assertEquals('Inquired', assertOppty.StageName, 'Stage should be defaulted from processing to \'Inquired\'.');
         System.assertEquals(assertInteraction.Opportunity_Name__c, assertOppty.Name, 'Name should have been copied over to Opportunity.');
-        System.assertEquals(assertInteraction.Career__c, assertOppty.Career__c, 'Career__c should have been copied over to Opportunity.');
     }
 
     @IsTest

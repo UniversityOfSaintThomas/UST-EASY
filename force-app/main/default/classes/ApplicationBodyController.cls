@@ -48,9 +48,11 @@ public with sharing class ApplicationBodyController {
             appInfoParam.appStatus = 'none';
         }
 
+
+
         /* Some pages may have multiple app contexts */
         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
-            System.debug('has multiple apps');
+
             for (Application__c app : [
                     SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
                             Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c
@@ -140,6 +142,13 @@ public with sharing class ApplicationBodyController {
                             skipWidget = true;
                         }
                     }
+                }
+            }
+
+
+            if (widget.Widget_Type__c.equalsIgnoreCase('custom')) {
+                if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
+                    skipWidget = true;
                 }
             }
 
@@ -235,6 +244,13 @@ public with sharing class ApplicationBodyController {
         String[] pageNameExtra = pageName.split('%3F', 0);
         pageName = pageNameExtra[0].toLowerCase();
         return pageName;
+    }
+
+    public String removeHTML(String q) {
+        if (String.isNotBlank(q)) {
+            q = q.replaceAll('<[^>]+>', '').trim();
+        }
+        return q;
     }
 
     public Datetime adjustForTimeZone(Datetime dt, String timezoneString) {

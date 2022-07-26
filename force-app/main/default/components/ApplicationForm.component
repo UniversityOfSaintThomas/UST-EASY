@@ -5,9 +5,10 @@
     <apex:attribute name="nextId" description="ApplicationSettings" type="Id" required="false"/>
     <apex:attribute name="prevId" description="ApplicationSettings" type="Id" required="false"/>
     <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
+    <apex:attribute name="title" description="Title of current section" type="String" required="false"/>
     <apex:form id="theForm">
         <apex:outputPanel id="formPageMessages">
-            <apex:pageMessages />
+            <apex:pageMessages/>
         </apex:outputPanel>
         <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
         <apex:commandLink id="reRenderTheTable" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.theTable}"/>
@@ -15,7 +16,9 @@
         <script>
             const previousRequirement = "{!if(!ISBLANK(prevId), prevId, '')}", nextRequirement = "{!IF(!ISBLANK(nextId), nextId, '')}";
         </script>
-        <div class="slds-p-vertical_medium slds-border_top slds-border_bottom">
+
+
+        <div class="slds-p-vertical_medium slds-border_top">
             <div class="{!if(hidePaging,'','carousel-wrapper')}">
 
                 <div class="{!if(hidePaging,'','carousel')}" data-carousel-size="{!section.groups.size}">
@@ -27,20 +30,36 @@
                             <div class="slds-spinner__dot-b"></div>
                         </div>
                     </section>
-                    <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}" >
+                    <apex:repeat id="groupRepeat" value="{!section.groups}" var="g" rendered="{!section.groups != null && section.groups.size > 0}">
                         <div class="carousel__item{!IF(VALUE(itemCount) == 0,' active','')}{!IF(VALUE(itemCount) == 1,' next','')}{!IF(VALUE(itemCount) == (section.groups.size - 1) && section.groups.size > 2,' prev','')} slide-{!itemCount}" data-slide="{!itemCount}">
-                            <c:ApplicationFormSection id="theFormSectionComponent" groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appInfo="{!appInfo}"/>
+
+                            <apex:outputPanel rendered="{!!ISBLANK(g.item.Label__c)}" layout="none">
+                                <div class="slds-text-heading_medium slds-p-bottom_small">
+                                    <h2>{!g.item.Label__c}</h2>
+                                </div>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!!ISBLANK(g.item.Instructions__c)}" layout="none">
+                                <div class="slds-text-body_regular slds-p-bottom_small">
+                                    <p>{!g.item.Instructions__c}</p>
+                                </div>
+                            </apex:outputPanel>
+
+                            <div class="slds-text-body_regular slds-border_bottom slds-p-bottom_medium">
+                                <c:ApplicationFormSection id="theFormSectionComponent" groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="{!preventUpdates}" appInfo="{!appInfo}"/>
+                            </div>
+                            <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
+                            <div class="slds-text-body_regular slds-p-vertical_medium slds-m-top_medium ">
+                                <p>Question group {!itemCount} of {!section.groups.size} in {!title}.</p>
+                            </div>
+                            <div class="slds-text-body_regular slds-p-bottom_small">
+                                <p>This question group will not be complete until you click the "Save and Continue" button at the end of this grouping.</p>
+                            </div>
                         </div>
-                        <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
                     </apex:repeat>
                 </div>
             </div>
         </div>
-        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-            <div class="slds-text-body_regular">
-                <p>This question group will not be complete until you click the "Save and Continue" button at the end of this grouping.</p>
-            </div>
-        </div>
-        <apex:componentBody />
+        <apex:componentBody/>
     </apex:form>
 </apex:component>

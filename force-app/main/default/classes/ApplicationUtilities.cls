@@ -6,13 +6,12 @@ public class ApplicationUtilities {
 
     public static EASYApplicationInfo setApplicationInfo(Application_Control__c appControl, Application__c app) {
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
-        appInfo.contactId = app.Contact__c;
         appInfo = flattenAppControl(appControl, appInfo);
-        appInfo.appId = app.Id;
         appInfo.isExternalUser = isExternalUser();
-        appInfo.allowSubmit = true;
+        appInfo.allowSubmit = false;
         appInfo.requirementId = null;
         appInfo.appId = app.Id;
+        appInfo.contactId = app.Contact__c;
         appInfo.appStatus = app.Application_Status__c;
         appInfo.appSubStatus = app.Application_Substatus__c;
         appInfo.citizenship = app.Citizenship__c;
@@ -22,23 +21,16 @@ public class ApplicationUtilities {
     }
 
     public static EASYApplicationInfo setApplicationInfo(EASYApplicationInfo appInfo, Application__c app) {
-        appInfo.contactId = app.Contact__c;
+        appInfo.isExternalUser = isExternalUser();
+        appInfo.allowSubmit = false;
+        appInfo.requirementId = null;
         appInfo.appId = app.Id;
-        appInfo.isExternalUser = isExternalUser();
-        appInfo.allowSubmit = true;
-        appInfo.requirementId = null;
-        return appInfo;
-    }
-
-    public static EASYApplicationInfo setApplicationInfo(String at, Id appId, Id contactId) {
-        Application_Control__c appControl = getApplicationControls(at);
-        EASYApplicationInfo appInfo = new EASYApplicationInfo();
-        appInfo = flattenAppControl(appControl, appInfo);
-        appInfo.contactId = contactId;
-        appInfo.appId = appId;
-        appInfo.isExternalUser = isExternalUser();
-        appInfo.allowSubmit = true;
-        appInfo.requirementId = null;
+        appInfo.contactId = app.Contact__c;
+        appInfo.appStatus = app.Application_Status__c;
+        appInfo.appSubStatus = app.Application_Substatus__c;
+        appInfo.citizenship = app.Citizenship__c;
+        appInfo.intendedProgram = app.Intended_Program__r.Name;
+        appInfo.intendedTerm = app.Intended_Term_of_Entry__r.Name;
         return appInfo;
     }
 
@@ -64,7 +56,7 @@ public class ApplicationUtilities {
         appInfo = flattenAppControl(appControl, appInfo);
         appInfo.contactId = ApplicationUtilities.getAppContactId();
         appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
-        appInfo.allowSubmit = true;
+        appInfo.allowSubmit = false;
         if (String.isBlank(appControl.Template__c)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;
@@ -80,6 +72,7 @@ public class ApplicationUtilities {
         return true;
     }
 
+
     public static EASYApplicationInfo gatherApplicationInfo() {
 
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
@@ -94,13 +87,14 @@ public class ApplicationUtilities {
                 appInfo = new EASYApplicationInfo();
             }
         }
-        if (String.isBlank(appInfo.contactId)) {
-            appInfo.contactId = getAppContactId();
-        }
 
-        if (String.isBlank(appInfo.template)) {
-            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-            appInfo.template = AppSettings.Default_Template__c;
+        //Check to see if the logged in (or url contact Id for standard user) equals the decrypted Id.
+        Id requestedContact = getAppContactId();
+
+        if (appInfo.contactId != requestedContact) {
+            //If contactId from cookie doesn't match user contact id reset
+            appInfo = new EASYApplicationInfo();
+            appInfo.contactId = requestedContact;
         }
 
         if (userType.equalsIgnoreCase('standard')) {
@@ -118,26 +112,65 @@ public class ApplicationUtilities {
             }
         }
 
-        appInfo = getApplicationId(appInfo);
+        if (String.isBlank(appInfo.appId) && String.isBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
+            //If we've arrived with no cookie or parameters; Get last updated application
+            List<Application__c> lastApps = [
+                    SELECT Id, Application_Control__r.URL_Parameter__c, LastModifiedDate, Contact__c,
+                            Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
+                            Intended_Program__r.Name, Intended_Term_of_Entry__r.Name
+                    FROM Application__c
+                    WHERE Contact__c = :appInfo.contactId
+                    ORDER BY LastModifiedDate
+            ];
+            if (lastApps.size() > 0) {
+                Application_Control__c appControl = getApplicationControls(lastApps[0].Application_Control__r.URL_Parameter__c);
+                Application__c app = lastApps[0];
+                appInfo = setApplicationInfo(appControl, app);
+            }
+        }
+
+        if (String.isBlank(appInfo.template)) {
+            Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+            appInfo.template = AppSettings.Default_Template__c;
+        }
 
         return appInfo;
 
     }
 
+    public static Application__c getApplicationInfo(Id appId, Id ContactId) {
+        Application__c currentApp = null;
+        try {
+            currentApp = [
+                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
+                            Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Contact__c
+                    FROM Application__c
+                    WHERE Id = :appId
+                    AND Contact__c = :contactId
+                    ORDER BY LastModifiedDate
+            ];
+        } catch (Exception ex) {
+            System.debug(ex.getMessage());
+        }
+        return currentApp;
+    }
+
+
     public static Id getAppContactId() {
         Id contactId = null;
-        Id urlContactId = null;
-        try {
-            urlContactId = ApexPages.currentPage().getParameters().get('contactId');
-        } catch (Exception e) {
-
-        }
 
         if (String.isNotBlank(UserInfo.getUserType())) {
             String userType = UserInfo.getUserType();
             if (userType.equalsIgnoreCase('standard')) {
-                contactId = urlContactId;
+                //Standard users can pass contact Id through URL
+                try {
+                    contactId = ApexPages.currentPage().getParameters().get('contactId');
+                } catch (Exception e) {
+
+                }
+
             } else {
+                // Everyone else gets contact through user record
                 try {
                     contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
                 } catch (Exception ex) {
@@ -148,28 +181,6 @@ public class ApplicationUtilities {
         return contactId;
     }
 
-    public static EASYApplicationInfo getApplicationId(EASYApplicationInfo appInfo) {
-        if (String.isNotBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
-            //Get the application type from the application id
-            List<Application__c> currentApps = [
-                    SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
-                            Intended_Program__r.Name, Intended_Term_of_Entry__r.Name
-                    FROM Application__c
-                    WHERE Contact__c = :appInfo.contactId
-                    AND Application_Control__r.URL_Parameter__c = :appInfo.at
-                    ORDER BY LastModifiedDate
-            ];
-            if (currentApps.size() > 0) {
-                appInfo.appId = currentApps[0].Id;
-                appInfo.appStatus = currentApps[0].Application_Status__c;
-                appInfo.appSubStatus = currentApps[0].Application_Substatus__c;
-                appInfo.citizenship = currentApps[0].Citizenship__c;
-                appInfo.intendedProgram = currentApps[0].Intended_Program__r.Name;
-                appInfo.intendedTerm = currentApps[0].Intended_Term_of_Entry__r.Name;
-            }
-        }
-        return appInfo;
-    }
 
     /* ******************************************************************************
     * @description Returns the application control based on urlParameter or the default one if no param is found.

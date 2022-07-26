@@ -15,7 +15,7 @@
                 <apex:param name="p1" assignTo="{!selectedApp}" value=""/>
             </apex:actionFunction>
             <apex:outputLabel styleClass="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular" for="schoolPicklist">
-                Select a school
+                Select a college
             </apex:outputLabel>
             <div class="slds-form-element__control">
                 <div class="slds-select_container">
@@ -27,7 +27,7 @@
             <apex:outputPanel id="appArea">
 
                 <apex:outputLabel styleClass="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular" for="AppPicklist">
-                    Select a program
+                    Select application type
                 </apex:outputLabel>
                 <div class="slds-form-element__control">
                     <div class="slds-select_container">

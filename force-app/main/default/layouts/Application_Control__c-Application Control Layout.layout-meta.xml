@@ -43,6 +43,10 @@
                 <behavior>Edit</behavior>
                 <field>Template__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Show_on_App_Finder__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

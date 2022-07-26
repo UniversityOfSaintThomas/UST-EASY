@@ -200,8 +200,7 @@ Insert hed__Term__c:
       table: Account
     hed__Parent_Term__c:
       table: hed__Term__c
-      after: Insert hed__Term__c
-Insert Intended_Program_Term__c:
+      after: Insert hed__Term__cInsert Intended_Program_Term__c:
   sf_object: Intended_Program_Term__c
   fields:
   - Activate_Application_Date__c

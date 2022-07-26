@@ -55,6 +55,8 @@ public with sharing class ApplicationChecklistComponentController {
 
     public PageReference finalSubmitApp() {
         PageReference pr = Page.ApplicationPortal;
+        //System.debug(submitAppId);
+        System.debug(submitAppStatus);
         try {
             update new Application__c(Id = submitAppId, Application_Status__c = submitAppStatus);
         } catch (Exception ex) {

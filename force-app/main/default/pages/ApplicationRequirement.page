@@ -23,7 +23,7 @@
         <apex:define name="metaPageTitle">{!appInfo.academicLevel} : {!title}</apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="{!if(isInvalid,'An Error has occurred',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}">
-                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}">
+                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}" title="{!title}">
 
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>

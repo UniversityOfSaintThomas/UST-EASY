@@ -18,7 +18,7 @@
     <apex:outputPanel styleClass="{!if(group.isEditable,'','fieldNotEditable')}" id="theSection" layout="block">
 
         <apex:outputPanel rendered="{!group.instructions != null && group.instructions != ''}">
-            <div class="slds-text-body_regular">
+            <div class="slds-text-body_regular slds-p-bottom_small">
                 <p>
                     <apex:outputText value="{!group.instructions}" escape="false"/>
                 </p>
@@ -26,7 +26,7 @@
         </apex:outputPanel>
 
         <apex:outputPanel rendered="{!group.isInternal && (group.response != null && group.response.Fulfilled_On__c != null)}">
-            <div class="slds-text-body_regular">
+            <div class="slds-text-body_regular slds-p-bottom_small">
                 <p>
                     <apex:outputText value="Completed on {0, Date}.">
                         <apex:param value="{!group.response.Fulfilled_On__c}"/>
@@ -36,7 +36,7 @@
         </apex:outputPanel>
 
         <apex:outputPanel rendered="{!group.isInternal && (group.response == null || group.response.Fulfilled_On__c == null)}">
-            <div class="slds-text-body_regular">
+            <div class="slds-text-body_regular slds-p-bottom_small">
                 <p>This has not been completed.</p>
             </div>
         </apex:outputPanel>

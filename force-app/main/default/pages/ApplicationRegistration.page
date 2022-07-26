@@ -32,7 +32,6 @@
                 </apex:form>
             </apex:outputPanel>
 
-
             <apex:outputPanel layout="none" rendered="{!cookieKeyPresent}">
                 <c:ApplicationBody title="New Application" appInfo="{!appInfo}" loadingText="Building Your Application...">
                     <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}">

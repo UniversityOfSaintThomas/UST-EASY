@@ -2,7 +2,7 @@
  - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 2/23/2021.
  -->
 
-<apex:component id="ApplicationChecklist" controller="ApplicationChecklistComponentController">
+<apex:component id="ApplicationChecklist" controller="ApplicationChecklistComponentController" allowDML="true">
     <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true" assignTo="{!appInfoParam}"/>
     <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
@@ -37,7 +37,6 @@
             <div class="slds-card__body {!IF(LOWER($CurrentPage.Name) == 'applicationportal', 'slds-card__body_inner', '')}">
                 <apex:form>
                     <nav>
-                        {!appInfo.appStatus}
                         <apex:repeat value="{!checklistItems}" var="r">
                             <apex:outputPanel rendered="{!r.display}" layout="none">
                                 <apex:variable value="{!IF(r.req.Label__c != null && r.req.Label__c != '', r.req.Label__c, r.req.Name)}" var="requirementTitle"/>
@@ -87,18 +86,23 @@
                             </apex:outputPanel>
                         </apex:repeat>
                     </nav>
-                    <apex:outputPanel rendered="{!appInfo.allowSubmit}" layout="none">
 
+                    <apex:outputPanel rendered="{!appInfoParam.allowSubmit}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
                             <p>This application meets all the requirements for submission.</p>
                         </div>
                         <div class="slds-p-bottom_small">
-                            <apex:commandButton action="{!finalSubmitApp}" rendered="{!appInfo.allowSubmit}" value="Submit Application" styleClass="slds-button slds-button_success">
-                                <apex:param name="submitAppId" value="{!appInfo.appId}" assignTo="{!submitAppId}"/>
-                                <apex:param name="submitAppId" value="{!appInfo.submitStatus}" assignTo="{!submitAppStatus}"/>
-                            </apex:commandButton>
+                            <apex:commandLink action="{!finalSubmitApp}" rendered="{!appInfo.allowSubmit}" value="Submit Application" styleClass="slds-button slds-button_success">
+                                <apex:param name="submitAppId" value="{!appInfoParam.appId}" assignTo="{!submitAppId}"/>
+                                <apex:param name="submitAppStatus" value="{!appInfoParam.submitStatus}" assignTo="{!submitAppStatus}"/>
+                            </apex:commandLink>
                         </div>
+                    </apex:outputPanel>
 
+                    <apex:outputPanel rendered="{!appInfo.appStatus != 'Started App'}" layout="none">
+                        <div class="slds-p-bottom_small slds-p-top_medium">
+                            <p class="slds-text-color_success"><strong>This application has been submitted. Check here for any other needed items to complete the enrollment process.</strong></p>
+                        </div>
                     </apex:outputPanel>
                 </apex:form>
             </div>

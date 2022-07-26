@@ -104,7 +104,6 @@ public with sharing class ApplicationBodyController {
         }
 
         /* Gather up all the widgets */
-        System.debug(appInfoIds);
         try {
             allPositionWidgets = [
                     SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,

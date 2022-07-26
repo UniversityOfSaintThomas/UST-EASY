@@ -175,11 +175,12 @@ public class ApplicationCreate {
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
             AggregateResult[] at = [
-                    SELECT Academic_Term__r.Id, Academic_Term__r.Name
+                    SELECT Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c
                     FROM Intended_Program_Term__c
                     WHERE Intended_Program__r.Application_Control__c = :appControlId
                     AND Academic_Term__r.Application_Status__c = :'Active'
-                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name
+                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c
+                    ORDER BY Academic_Term__r.Term_Start_Date__c
             ];
 
             for (AggregateResult ar : at) {

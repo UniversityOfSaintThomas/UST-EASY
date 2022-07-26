@@ -78,7 +78,6 @@ private class ApplicationRegistration_TEST {
         Id termId = [SELECT Id FROM Academic_Term__c WHERE Name = 'test'].Id;
 
         Application_Control__c appControl = [SELECT Id FROM Application_Control__c WHERE Name = 'test'];
-        System.debug('Test Id: ' + appControl.Id);
         appControl.Default__c = false;
         appControl.URL_Parameter__c = appControl.Id;
         update appControl;

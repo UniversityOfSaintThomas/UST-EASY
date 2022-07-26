@@ -15,6 +15,7 @@
         <script>
             const previousRequirement = "{!if(!ISBLANK(prevId), prevId, '')}", nextRequirement = "{!IF(!ISBLANK(nextId), nextId, '')}";
         </script>
+        {!appInfo.allowSubmit}
         <div class="slds-p-vertical_medium slds-border_top slds-border_bottom">
             <div class="{!if(hidePaging,'','carousel-wrapper')}">
 

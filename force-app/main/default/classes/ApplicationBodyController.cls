@@ -48,9 +48,11 @@ public with sharing class ApplicationBodyController {
             appInfoParam.appStatus = 'none';
         }
 
+
+
         /* Some pages may have multiple app contexts */
         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
-            System.debug('has multiple apps');
+
             for (Application__c app : [
                     SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
                             Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c
@@ -102,6 +104,7 @@ public with sharing class ApplicationBodyController {
         }
 
         /* Gather up all the widgets */
+        System.debug(appInfoIds);
         try {
             allPositionWidgets = [
                     SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
@@ -119,8 +122,6 @@ public with sharing class ApplicationBodyController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 
-        System.debug(allPositionWidgets.size());
-        System.debug(appInfoIds);
         /* Start/End date filter if defined */
         for (EASY_Widget__c widget : allPositionWidgets) {
             Boolean skipWidget = false;

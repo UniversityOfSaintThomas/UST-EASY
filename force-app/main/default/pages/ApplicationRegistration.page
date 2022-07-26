@@ -36,7 +36,7 @@
             <apex:outputPanel layout="none" rendered="{!cookieKeyPresent}">
                 <c:ApplicationBody title="New Application" appInfo="{!appInfo}" loadingText="Building Your Application...">
                     <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}">
-                        <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="login();">
+                        <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
                             <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
                         </apex:actionFunction>
                         <nav class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_x-small">

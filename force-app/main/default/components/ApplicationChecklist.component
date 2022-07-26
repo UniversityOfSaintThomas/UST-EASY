@@ -35,8 +35,9 @@
                 </header>
             </div>
             <div class="slds-card__body {!IF(LOWER($CurrentPage.Name) == 'applicationportal', 'slds-card__body_inner', '')}">
-                <nav>
-                    <apex:form>
+                <apex:form>
+                    <nav>
+                        {!appInfo.appStatus}
                         <apex:repeat value="{!checklistItems}" var="r">
                             <apex:outputPanel rendered="{!r.display}" layout="none">
                                 <apex:variable value="{!IF(r.req.Label__c != null && r.req.Label__c != '', r.req.Label__c, r.req.Name)}" var="requirementTitle"/>
@@ -56,8 +57,16 @@
                                                     <apex:param name="nextAppId" value="{!appInfoParam.appId}" assignTo="{!nextAppId}"/>
                                                     <apex:param name="nextContactId" value="{!appInfoParam.contactId}" assignTo="{!nextContactId}"/>
                                                     {!requirementTitle}
-                                                    <span class="slds-badge {!IF(r.reqStatus,'slds-theme_success','In Progress')}">{!IF(r.reqStatus,'Viewed','In Progress')}</span>
                                                 </apex:commandLink>
+                                                <apex:outputPanel layout="none" rendered="{!r.viewed && !r.reqStatus}">
+                                                    <span class="slds-badge slds-badge_inverse">Viewed</span>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!r.reqStatus}">
+                                                    <span class="slds-badge slds-theme_success">Finished</span>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{!!r.viewed && !r.reqStatus}">
+                                                    <span class="slds-badge slds-badge_lightest">Visit</span>
+                                                </apex:outputPanel>
                                             </h3>
                                         </div>
                                         <div aria-hidden="false" class="slds-summary-detail__content" id="expando-{!r.req.Id}" style="display:none;">
@@ -77,8 +86,21 @@
                                 </div>
                             </apex:outputPanel>
                         </apex:repeat>
-                    </apex:form>
-                </nav>
+                    </nav>
+                    <apex:outputPanel rendered="{!appInfo.allowSubmit}" layout="none">
+
+                        <div class="slds-p-bottom_small slds-p-top_medium">
+                            <p>This application meets all the requirements for submission.</p>
+                        </div>
+                        <div class="slds-p-bottom_small">
+                            <apex:commandButton action="{!finalSubmitApp}" rendered="{!appInfo.allowSubmit}" value="Submit Application" styleClass="slds-button slds-button_success">
+                                <apex:param name="submitAppId" value="{!appInfo.appId}" assignTo="{!submitAppId}"/>
+                                <apex:param name="submitAppId" value="{!appInfo.submitStatus}" assignTo="{!submitAppStatus}"/>
+                            </apex:commandButton>
+                        </div>
+
+                    </apex:outputPanel>
+                </apex:form>
             </div>
         </article>
     </div>

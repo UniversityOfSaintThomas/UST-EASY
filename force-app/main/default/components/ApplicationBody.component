@@ -15,6 +15,7 @@
     </div>
 
     <apex:variable value="{!widgets}" var="w"/>
+
     <apex:variable value="{!If(w.leftWidgets.size >0, 'l', '')}{!If(w.rightWidgets.size >0, 'r', '')}" var="col"/>
 
     <apex:outputPanel styleClass="slds-grid slds-wrap slds-p-bottom_x-large application-body" layout="block">

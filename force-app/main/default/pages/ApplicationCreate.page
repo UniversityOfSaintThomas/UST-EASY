@@ -21,7 +21,7 @@
         <apex:define name="metaPageTitle">New Application: {!appInfo.academicLevel}</apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="New Application" loadingText="Building Your Application..." appInfo="{!appInfo}" checklistItems="{!checklistItems}">
-                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}">
+                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}" title="New Application">
                     <apex:actionFunction name="saveWithDocs" action="{!save}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                     </apex:actionFunction>

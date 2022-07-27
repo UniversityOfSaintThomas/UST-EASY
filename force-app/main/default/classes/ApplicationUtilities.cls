@@ -118,6 +118,8 @@ public class ApplicationUtilities {
             }
         }
 
+        appInfo.isExternalUser = isExternalUser();
+        
         appInfo = getApplicationId(appInfo);
 
         return appInfo;

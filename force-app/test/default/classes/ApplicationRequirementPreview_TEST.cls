@@ -6,8 +6,6 @@ public class ApplicationRequirementPreview_TEST {
         insert acc;
         Contact student = new Contact(LastName = 'TestStudent');
         insert student;
-        Application__c app = new Application__c(Contact__c = student.Id);
-        insert app;
 
         Map<String, Id> rtMap = new Map<String, Id>();
         for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Question__c']) {
@@ -38,9 +36,12 @@ public class ApplicationRequirementPreview_TEST {
         );
         insert appControl;
 
-        Requirement__c req = new Requirement__c(Application_Control__c = appControl.Id, Active__c = true, Name = 'Test Req', Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID());
+        Application__c app = new Application__c(Contact__c = student.Id, Application_Control__c = appControl.Id);
+        insert app;
+
+        Requirement__c req = new Requirement__c(Application_Control__c = appControl.Id, Active__c = true, Name = 'Test Req', Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID(), Internal_Only__c = true);
         insert req;
-        Requirement_Item__c riQG = new Requirement_Item__c(Requirement__c = req.Id, Name = 'Test RI', Active__c = true, RecordTypeId = rtMapRI.get('Question_Group'), Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
+        Requirement_Item__c riQG = new Requirement_Item__c(Requirement__c = req.Id, Name = 'Test RI', Active__c = true, RecordTypeId = rtMapRI.get('Question_Group'), Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID(), Internal_Only__c = true);
         Requirement_Item__c riDU = new Requirement_Item__c(Requirement__c = req.Id, Name = 'Test RI', Active__c = true, RecordTypeId = rtMapRI.get('Document_Upload'), Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
         Requirement_Item__c riRO = new Requirement_Item__c(Requirement__c = req.Id, Name = 'Test RI', Active__c = true, RecordTypeId = rtMapRI.get('Related_Object'), Related_List_Object__c = 'Application__c', Related_List_Object_Master__c = 'Contact', Related_List_Object_Master_Field__c = 'Contact__c', Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
         insert new List<Requirement_Item__c>{
@@ -78,18 +79,33 @@ public class ApplicationRequirementPreview_TEST {
     @IsTest
     public static void appPreview() {
         Requirement__c req = [SELECT Id, Application_Control__r.Id FROM Requirement__c LIMIT 1];
-        Test.startTest();
+        Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
+        Contact student = [SELECT Id FROM Contact LIMIT 1];
+        Application__c app = [SELECT Id FROM Application__c LIMIT 1];
+
         PageReference pr = Page.ApplicationRequirementPreview;
         pr.getParameters().put('at', 'st');
-        pr.getParameters().put('Id', req.Id);
+        pr.getParameters().put('requirementId', req.Id);
         pr.getParameters().put('applicationId', req.Application_Control__r.Id);
+        pr.getParameters().put('contactId', student.Id);
         Test.setCurrentPage(pr);
+
         ApplicationRequirementPreview arp = new ApplicationRequirementPreview();
+        EASYApplicationInfo appInfo = new EASYApplicationInfo();
+        appInfo.requirementId = req.Id;
+        appInfo.appControlId = appControl.Id;
+        appInfo.isExternalUser = true;
+        arp.appInfo = appInfo;
+        arp.appControl = appControl;
+        arp.reqs = new List<Requirement__c>{req};
+        arp.contactId = student.Id;
+        arp.applicationId = app.Id;
+
+        Test.startTest();
         arp.init();
-        Application_Control__c ac = arp.appControl;
-        Id cId = arp.contactId;
-        Id aId = arp.applicationId;
         Test.stopTest();
+
+        System.assertEquals(2, arp.questionHolderMap.size());
 
     }
 }

@@ -155,4 +155,9 @@ public class ApplicationChecklist_TEST {
 //        app = [SELECT Id, Application_Status__c FROM Application__c WHERE Id = :app.Id LIMIT 1];
 //        System.assertEquals(app.Application_Status__c, appControl.Cancel_Status__c);
 //    }
+    @IsTest
+    public static void testInit() {
+        ApplicationChecklist appChecklist = new ApplicationChecklist();
+        appChecklist.init();
+    }
 }

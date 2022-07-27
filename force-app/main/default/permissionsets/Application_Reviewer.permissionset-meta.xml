@@ -5642,8 +5642,4 @@
         <tab>standard-Document</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ChatterInternalUser</name>
-    </userPermissions>
 </PermissionSet>

@@ -112,6 +112,8 @@ public class ApplicationUtilities {
             }
         }
 
+        appInfo.isExternalUser = isExternalUser();
+
         if (String.isBlank(appInfo.appId) && String.isBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
             //If we've arrived with no cookie or parameters; Get last updated application
             List<Application__c> lastApps = [

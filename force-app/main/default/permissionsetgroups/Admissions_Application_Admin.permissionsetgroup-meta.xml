@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permissions needed to manage application configuration for admissions</description>
+    <label>Admissions - Application Admin</label>
+    <permissionSets>Admissions_Email_Template_Management</permissionSets>
+    <permissionSets>Admissions_Reports_and_Dashboards</permissionSets>
+    <permissionSets>Application_Config_Admin</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

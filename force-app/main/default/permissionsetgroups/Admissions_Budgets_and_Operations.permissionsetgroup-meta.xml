@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permissions needed for staff supporting budgets and operations for Enrollment.</description>
+    <label>Admissions - Budgets and Operations</label>
+    <permissionSets>Admissions_Email_Template_Management</permissionSets>
+    <permissionSets>Admissions_Reports_and_Dashboards</permissionSets>
+    <permissionSets>Application_Decision</permissionSets>
+    <permissionSets>Application_Reviewer</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

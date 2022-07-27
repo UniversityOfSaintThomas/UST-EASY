@@ -701,11 +701,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Jigsaw</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.Job_Title__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -862,21 +857,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.hed__Ethnicity__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Exclude_from_Household_Formal_Greeting__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Exclude_from_Household_Informal_Greeting__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.hed__Exclude_from_Household_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

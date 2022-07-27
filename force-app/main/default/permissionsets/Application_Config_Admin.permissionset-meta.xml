@@ -1778,10 +1778,6 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>standard-Dashboard</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
         <tab>standard-Document</tab>
         <visibility>Visible</visibility>
     </tabSettings>

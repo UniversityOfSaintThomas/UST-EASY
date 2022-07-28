@@ -71,7 +71,6 @@
 
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
                         <a href="{!$Site.Prefix}/ApplicationRegistration" class="register-text">Create Account</a>
-                        <a href="{!$Site.Prefix}/ApplicationRegistration" class="register-text">Create Account</a>
                     </div>
 
                 </div>

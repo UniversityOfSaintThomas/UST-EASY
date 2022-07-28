@@ -155,6 +155,7 @@ public class ApplicationRequirement_TEST {
         test.stopTest();
 
         System.assertEquals(app, appReq.app);
+        appInfo.isExternalUser = true;
         System.assertEquals(String.valueOf(appInfo), String.valueOf(appReq.appInfo));
     }
     

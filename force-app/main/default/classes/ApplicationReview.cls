@@ -90,7 +90,7 @@ public class ApplicationReview {
                                 Lookup_Object__c, Lookup_Where_Clause__c, Contact_Field__c, Application_Field__c, External_Email_Field__c,
                                 Editable_Application_Status__c, URL_Parameter__c, New_Reference_Field__c, Static_Text__c, Name_Field_API_Name__c,
                                 Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
-                                Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c
+                                Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c, Hidden_Value__c
                         FROM Questions__r
                         WHERE Active__c = :true
                         AND Display_on_Admin_Review_Pages__c = :true

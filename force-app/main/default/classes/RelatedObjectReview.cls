@@ -32,7 +32,7 @@ public class RelatedObjectReview {
         //Find all relevant fields based on questions asked
         for(Question__c q : [
                 SELECT Id, Lookup_Object__c, Related_Object_Field__c, Requirement_Item__c, Requirement_Item__r.Related_List_Object__c, RecordType.DeveloperName,
-                        New_Reference_Field__c ,Static_Text__c, Assistive_Text__c, Related_Object__c
+                        New_Reference_Field__c ,Static_Text__c, Assistive_Text__c, Related_Object__c, Hidden_Value__c
                 FROM Question__c
                 WHERE (Lookup_Object__c != NULL OR New_Reference_Field__c = TRUE)
                 AND Active__c = :true AND Requirement_Item__r.Active__c = :true

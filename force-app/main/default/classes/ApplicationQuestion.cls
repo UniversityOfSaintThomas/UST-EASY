@@ -129,7 +129,7 @@ public class ApplicationQuestion {
     }
     public String additionalValidation {
         get {
-            if(String.isNotBlank(question.Additional_Field_Validation__c)) {
+            if (String.isNotBlank(question.Additional_Field_Validation__c)) {
                 return question.Additional_Field_Validation__c;
             }
             return '';
@@ -142,6 +142,7 @@ public class ApplicationQuestion {
     public Id responseId { get; set; }
     public String helpText { get; set; }
     public String assistiveText { get; set; }
+    public String hiddenValue { get; set; }
 
     public Contact contact { get; set; }
     public Application__c application { get; set; }
@@ -423,6 +424,10 @@ public class ApplicationQuestion {
                 response.ValueText__c = question.Hardcoded_Value__c;
             }
             ret = false;
+        } else if (question != null && String.isNotBlank(question.Hidden_Value__c) && fieldType.equals('Hidden')) {
+            if (response != null) {
+                response.ValueText__c = question.Hidden_Value__c;
+            }
         }
 
         resp = getResponseObject();
@@ -496,6 +501,8 @@ public class ApplicationQuestion {
         this.helpText = question.Help_Text__c;
 
         this.assistiveText = question.Assistive_Text__c;
+
+        this.hiddenValue = question.Hidden_Value__c;
 
         populateContactFieldOnResponse();
 

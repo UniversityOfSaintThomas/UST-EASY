@@ -1,22 +1,19 @@
 <apex:page controller="ApplicationRequirement" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" cache="false" docType="html-5.0" action="{!applicationRequirementInit}">
     <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead />
+            <c:ApplicationHead/>
             <script>
-                function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
-                    Visualforce.remoting.Manager.invokeAction(
-                        '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
-                        sObj, sObjFilter, sObjNameField, searchTerm,
-                        function (result, event) {
-                            if (event.status) {
-                                callback(result, originObjId)
-                            } else if (event.type === 'exception') {
-                                console.log(event.errors)
-                            } else {
-                            }
-                        },
-                        {escape: true}
-                    );
+                async function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm) {
+                    return new Promise((resolve, reject) => {
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
+                            sObj, sObjFilter, sObjNameField, searchTerm,
+                            (result, event) => {
+                                event.status ? resolve(result) : reject(event.message);
+                            },
+                            {escape: true}
+                        );
+                    });
                 }
             </script>
         </apex:define>

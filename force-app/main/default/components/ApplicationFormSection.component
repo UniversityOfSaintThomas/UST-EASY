@@ -135,7 +135,7 @@
                 <apex:pageMessages />
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
-                    <p>You haven"t created any records yet. Click "New Record" to create one.</p>
+                    <p>You haven't created any records yet. Click "New Record" to create one.</p>
                 </apex:outputPanel>
 
                 <apex:outputPanel rendered="{!CONTAINS(group.item.Required__c, group.app.Application_Status__c) && group.item.Required_Number_of_Children__c != null && group.item.Required_Number_of_Children__c > 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">

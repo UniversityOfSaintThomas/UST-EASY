@@ -129,7 +129,7 @@ public class ApplicationQuestion {
     }
     public String additionalValidation {
         get {
-            if(String.isNotBlank(question.Additional_Field_Validation__c)) {
+            if (String.isNotBlank(question.Additional_Field_Validation__c)) {
                 return question.Additional_Field_Validation__c;
             }
             return '';
@@ -142,6 +142,7 @@ public class ApplicationQuestion {
     public Id responseId { get; set; }
     public String helpText { get; set; }
     public String assistiveText { get; set; }
+    public String hiddenValue { get; set; }
 
     public Contact contact { get; set; }
     public Application__c application { get; set; }

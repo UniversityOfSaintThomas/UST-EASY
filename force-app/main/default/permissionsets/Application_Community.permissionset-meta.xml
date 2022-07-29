@@ -3569,6 +3569,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>ApplicationHome</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>ApplicationLogin</apexPage>
         <enabled>true</enabled>
     </pageAccesses>

@@ -101,7 +101,7 @@
 
                     <apex:outputPanel rendered="{!appInfo.appStatus != 'Started App'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
-                            <p class="slds-text-color_success"><strong>This application has been submitted. Check here for any other needed items to complete the enrollment process.</strong></p>
+                            <p class="slds-text-color_success"><strong>Status: Submitted</strong></p>
                         </div>
                     </apex:outputPanel>
                 </apex:form>

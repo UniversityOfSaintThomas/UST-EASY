@@ -27,7 +27,7 @@ public class ApplicationPortal {
         String userType = UserInfo.getUserType();
         PageReference pageRef = null;
 
-        if (userType.equalsIgnoreCase('CSPLitePortal')) {
+        if (userType.equalsIgnoreCase('CSPLitePortal') || userType.equalsIgnoreCase('standard')) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
             appInfoMapByAppId = new Map<Id, EASYApplicationInfo>();
             checklistsByAppIds = new Map<Id, List<RequirementWrapper>>();

@@ -23,6 +23,11 @@
                 <label>Application Create</label>
             </value>
             <value>
+                <fullName>ApplicationHome</fullName>
+                <default>false</default>
+                <label>Application Home</label>
+            </value>
+            <value>
                 <fullName>ApplicationPortal</fullName>
                 <default>false</default>
                 <label>Application Portal</label>

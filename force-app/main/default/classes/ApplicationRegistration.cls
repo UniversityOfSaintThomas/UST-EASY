@@ -116,7 +116,7 @@ public class ApplicationRegistration {
 
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty()) {
-                throw new ApplicationUtilities.ApplicationException('An account with this email already exists.', true, false);
+                throw new ApplicationUtilities.ApplicationException(' An account with this email already exists. Please sign in with the button to the right for existing users."', true, true);
             }
 
             // Update Account owner to Site admin if owner is current user (guest user)
@@ -152,7 +152,7 @@ public class ApplicationRegistration {
             if (!Test.isRunningTest() && pass.equals(passConfirm)) {
                 uId = Site.createExternalUser(u, con.AccountId, pass, true);
                 if (uId == null) {
-                    throw new ApplicationUtilities.ApplicationException('Error occured when creating user.', true, true);
+                    throw new ApplicationUtilities.ApplicationException('Error occurred when creating user.', true, true);
                 }
                 loginUser = new User(Id = uId, Username = u.Username);
                 loginPassword = pass;

@@ -2,7 +2,6 @@
 private class ApplicationCreate_TEST {
     @TestSetup
     static void setup() {
-
         Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl();
 
         Contact con = new Contact(LastName = 'test');
@@ -143,7 +142,6 @@ private class ApplicationCreate_TEST {
 
     @IsTest
     static void test_other() {
-
         Application_Control__c appControl = [SELECT Id FROM Application_Control__c WHERE Name = :'test'];
         Contact student = [SELECT Id FROM Contact LIMIT 1];
         appControl.Default__c = false;

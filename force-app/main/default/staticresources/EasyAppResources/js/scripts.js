@@ -269,27 +269,26 @@ function getAsText(readFile, respId) {
 function activateAutoComplete() {
 
     document.querySelectorAll('.bind-autocomplete').forEach(autoItem => {
-
-
-        let originObjId = autoItem.id;
         let comboBoxContainer = autoItem.closest('.slds-combobox_container');
-        let hiddenInput = comboBoxContainer.querySelector('.inputHidden');
         let comboBox = comboBoxContainer.querySelector('.slds-combobox');
-        let objectType = comboBox.dataset.objtype;
-        let objectTypeFilter = comboBox.dataset.objtypefilter;
-        let objectTypeNameField = comboBox.dataset.objtypenamefield;
+        let spinner = comboBox.querySelector('.slds-modal');
+        let hiddenInput = comboBoxContainer.querySelector('.inputHidden');
         let removeButton = comboBox.querySelector('.refRemoveButton');
         let magGlass = comboBox.querySelector('.refMagGlass');
         let resultList = comboBox.querySelector('.slds-listbox');
+        let originObjId = autoItem.id;
+        let objectType = comboBox.dataset.objtype;
+        let objectTypeFilter = comboBox.dataset.objtypefilter;
+        let objectTypeNameField = comboBox.dataset.objtypenamefield;
 
         /* Remote reference lookup */
         const resultListTemplate = (title, subtitle, icon, originObjId, resultId) => `
-            <li role="presentation" class="slds-listbox__item" data-title="${title} ${subtitle}" data-origId="${originObjId}" data-resultId="${resultId}">
+            <li role="presentation" class="slds-listbox__item" data-title="${title}, ${subtitle}" data-origId="${originObjId}" data-resultId="${resultId}">
                 <div id="option1" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
                   <span class="slds-media__figure slds-listbox__option-icon">
                     <span class="slds-icon_container slds-icon-standard-account">
                       <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                        <use xlink:href="${icon}"></use>
+                        <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="${icon}"></use>
                       </svg>
                     </span>
                   </span>
@@ -320,56 +319,82 @@ function activateAutoComplete() {
             resultList.innerHTML = '';
         }
 
-        function lookupResultsFormatter(data, originObjId) {
-            let outputList = ''
-            let fieldNames = comboBox.dataset.objtypenamefield.replace(' ', '').split(',');
-            data.forEach(result => {
-                let resultName = '';
-                let subTitle = '';
-                let resultId = '';
-                if (result['Id']) {
-                    resultId = result['Id'];
+        async function fetchLookupResults(objectType, objectTypeFilter, objectTypeNameField, searchTerm) {
+            try {
+                let data = await lookupSearchJS(objectType, objectTypeFilter, objectTypeNameField, searchTerm);
+                updateLookupUI(data);
+            } catch (ex) {
+                if (ex.name === 'AbortError') {
+                    return; // Continuation logic has already been skipped, so return normally
                 }
-                for (let x = 0; x < fieldNames.length; x++) {
-                    let fieldName = fieldNames[x].trim();
-                    if (x === 0) {
-                        resultName = result[fieldName];
-                    } else {
-                        if (result[fieldName]) {
-                            subTitle += result[fieldName] + ', ';
-                        }
-                    }
-                }
-                if (subTitle) {
-                    subTitle = subTitle.substr(0, subTitle.length - 2);
-                }
-                outputList += resultListTemplate(resultName, subTitle, comboBox.dataset.listicon, originObjId, resultId);
-            });
-            resultList.innerHTML = '';
-
-            comboBox.classList.remove('slds-is-open');
-            if (outputList) {
-                comboBox.classList.add('slds-is-open');
+                resultList.innerHTML = ex.message;
             }
+            setTimeout(() => {
+                spinner.classList.remove('slds-fade-in-open');
+                spinner.style.zIndex = '-1'
+            }, 1000);
+        }
 
-            resultList.insertAdjacentHTML("beforeend", outputList);
+        const updateLookupUI = (data) => {
+            let outputList = ''
+            if (data.length) {
 
-            resultList.querySelectorAll('li').forEach(refItem => {
-                refItem.addEventListener('click', function () {
-                    if (refItem.dataset.title === '**createnew**') {
-                        if (typeof window['setCreatingNewRelatedRecordAF' + groupId] === "function" && recordId && resultId) {
-                            window['setCreatingNewRelatedRecordAF' + groupId](recordId, resultId)
-                        }
-                    } else {
-                        hiddenInput.value = refItem.dataset.resultid;
-                        autoItem.value = refItem.dataset.title;
-                        refValueAdded();
+                let fieldNames = comboBox.dataset.objtypenamefield.replace(' ', '').split(',');
+
+                data.forEach(result => {
+                    let resultName = '', subTitle = '', resultId = '';
+
+                    if (result['Id']) {
+                        resultId = result['Id'];
                     }
+
+                    for (let x = 0; x < fieldNames.length; x++) {
+                        let fieldName = fieldNames[x].trim();
+                        if (x === 0) {
+                            resultName = result[fieldName];
+                        } else {
+                            if (result[fieldName]) {
+                                subTitle += result[fieldName] + ', ';
+                            }
+                        }
+                    }
+
+                    if (subTitle) {
+                        subTitle = subTitle.substr(0, subTitle.length - 2);
+                    }
+
+                    outputList += resultListTemplate(resultName, subTitle, comboBox.dataset.listicon, originObjId, resultId);
                 });
-            });
+
+                resultList.innerHTML = '';
+
+                comboBox.classList.remove('slds-is-open');
+                if (outputList) {
+                    comboBox.classList.add('slds-is-open');
+                }
+
+                resultList.innerHTML = outputList;
+
+                resultList.querySelectorAll('li').forEach(refItem => {
+                    refItem.addEventListener('click', function () {
+                        if (refItem.dataset.title === '**createnew**') {
+                            if (typeof window['setCreatingNewRelatedRecordAF' + groupId] === "function" && recordId && resultId) {
+                                window['setCreatingNewRelatedRecordAF' + groupId](recordId, resultId)
+                            }
+                        } else {
+                            hiddenInput.value = refItem.dataset.resultid;
+                            autoItem.value = refItem.dataset.title;
+                            refValueAdded();
+                        }
+                    });
+                });
+
+            }
         }
 
         if (autoItem.value) {
+            autoItem.classList.remove('slds-has-focus');
+            comboBox.classList.remove('slds-is-open');
             refValueAdded();
         }
 
@@ -384,18 +409,14 @@ function activateAutoComplete() {
         });
 
         autoItem.addEventListener('keyup', () => {
+            spinner.style.zIndex = null;
+            spinner.classList.add('slds-fade-in-open');
             let searchTerm = autoItem.value;
-            if (objectType && objectTypeNameField && searchTerm.length > 2) {
-                lookupSearchJS(objectType, objectTypeFilter, objectTypeNameField, searchTerm, lookupResultsFormatter, originObjId);
+            if (searchTerm.length > 2) {
+                fetchLookupResults(objectType, objectTypeFilter, objectTypeNameField, searchTerm);
             }
         });
 
-
-        // comboBox.addEventListener('focusout', (e) => {
-        //     console.log('focus out of combo box');
-        //     autoItem.classList.remove('slds-has-focus');
-        //     comboBox.classList.remove('slds-is-open');
-        // });
     });
 }
 

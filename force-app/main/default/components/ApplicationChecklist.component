@@ -87,12 +87,12 @@
                         </apex:repeat>
                     </nav>
 
-                    <apex:outputPanel rendered="{!appInfoParam.allowSubmit}" layout="none">
+                    <apex:outputPanel rendered="{!appInfo.allowSubmit && appInfo.appStatus = 'Started App'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
                             <p>This application meets all the requirements for submission.</p>
                         </div>
                         <div class="slds-p-bottom_small">
-                            <apex:commandLink action="{!finalSubmitApp}" rendered="{!appInfo.allowSubmit}" value="Submit Application" styleClass="slds-button slds-button_success">
+                            <apex:commandLink action="{!finalSubmitApp}" rendered="{!appInfo.allowSubmit && appInfo.appStatus = 'Started App'}" value="Submit Application" styleClass="slds-button slds-button_success">
                                 <apex:param name="submitAppId" value="{!appInfoParam.appId}" assignTo="{!submitAppId}"/>
                                 <apex:param name="submitAppStatus" value="{!appInfoParam.submitStatus}" assignTo="{!submitAppStatus}"/>
                             </apex:commandLink>
@@ -101,7 +101,7 @@
 
                     <apex:outputPanel rendered="{!appInfo.appStatus != 'Started App'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
-                            <p class="slds-text-color_success"><strong>This application has been submitted. Check here for any other needed items to complete the enrollment process.</strong></p>
+                            <p class="slds-text-color_success"><strong>Status: Submitted</strong></p>
                         </div>
                     </apex:outputPanel>
                 </apex:form>

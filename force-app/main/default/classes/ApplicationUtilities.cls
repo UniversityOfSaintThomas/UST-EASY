@@ -15,7 +15,7 @@ public class ApplicationUtilities {
         appInfo.appStatus = app.Application_Status__c;
         appInfo.appSubStatus = app.Application_Substatus__c;
         appInfo.citizenship = app.Citizenship__c;
-        appInfo.intendedProgram = app.Intended_Program__r.Name;
+        appInfo.intendedProgram = app.Intended_Program__r.Program_Name_on_Application__c;
         appInfo.intendedTerm = app.Intended_Term_of_Entry__r.Name;
         return appInfo;
     }
@@ -29,7 +29,7 @@ public class ApplicationUtilities {
         appInfo.appStatus = app.Application_Status__c;
         appInfo.appSubStatus = app.Application_Substatus__c;
         appInfo.citizenship = app.Citizenship__c;
-        appInfo.intendedProgram = app.Intended_Program__r.Name;
+        appInfo.intendedProgram = app.Intended_Program__r.Program_Name_on_Application__c;
         appInfo.intendedTerm = app.Intended_Term_of_Entry__r.Name;
         return appInfo;
     }
@@ -119,7 +119,7 @@ public class ApplicationUtilities {
             List<Application__c> lastApps = [
                     SELECT Id, Application_Control__r.URL_Parameter__c, LastModifiedDate, Contact__c,
                             Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
-                            Intended_Program__r.Name, Intended_Term_of_Entry__r.Name
+                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     ORDER BY LastModifiedDate
@@ -145,7 +145,7 @@ public class ApplicationUtilities {
         try {
             currentApp = [
                     SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
-                            Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Contact__c
+                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Contact__c
                     FROM Application__c
                     WHERE Id = :appId
                     AND Contact__c = :contactId

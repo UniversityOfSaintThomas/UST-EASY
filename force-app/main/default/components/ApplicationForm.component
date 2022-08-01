@@ -8,7 +8,7 @@
     <apex:attribute name="title" description="Title of current section" type="String" required="false"/>
     <apex:form id="theForm">
         <apex:outputPanel id="formPageMessages">
-            <apex:pageMessages/>
+            <apex:pageMessages />
         </apex:outputPanel>
         <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
         <apex:commandLink id="reRenderTheTable" value="" style="display:none;" action="{!section.pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.theTable}"/>
@@ -38,16 +38,16 @@
                             </div>
                             <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
                             <div class="slds-text-body_regular slds-p-vertical_medium slds-m-top_medium ">
-                                <p>Question group {!itemCount} of {!section.groups.size} in {!title}.</p>
+                                <p>Question Group {!itemCount} of {!section.groups.size} in the {!title} section.</p>
                             </div>
                             <div class="slds-text-body_regular slds-p-bottom_small">
-                                <p>This question group will not be complete until you click the "Save and Continue" button at the end of this grouping.</p>
+                                <p>This question group will not be saved and finished until you click the "Save and Continue" button at the end of this grouping.</p>
                             </div>
                         </div>
                     </apex:repeat>
                 </div>
             </div>
         </div>
-        <apex:componentBody/>
+        <apex:componentBody />
     </apex:form>
 </apex:component>

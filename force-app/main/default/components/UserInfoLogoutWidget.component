@@ -10,7 +10,7 @@
     <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
         <apex:outputPanel layout="none" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">
-            <p class="slds-text-body_regular">Hi,{!$User.FirstName}.</p>
+            <p class="slds-text-body_regular">Hi, {!$User.FirstName}.</p>
             <p class="slds-text-body_regular">You are currently logged in.</p>
             <p class="slds-text-body_regular slds-p-vertical_x-small"><a class="slds-button slds-button_outline-brand" href="{!$Site.Prefix}/secur/logout.jsp">
                     <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
@@ -21,7 +21,7 @@
             </p>
         </apex:outputPanel>
         <apex:outputPanel layout="none" rendered="{!ISPICKVAL($User.UserType,'Guest')}">
-            <p class="slds-text-body_regular">If you already have an account you may log in to view and continue current applications</p>
+            <p class="slds-text-body_regular">If you already have an account you may log in to view and continue current applications.</p>
             <p class="slds-text-body_regular slds-p-vertical_x-small"><a class="slds-button slds-button_outline-brand" href="{!$Site.Prefix}/ApplicationLogin">
                     <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                         <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#password")}"></use>

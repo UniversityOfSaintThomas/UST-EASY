@@ -191,11 +191,11 @@ public with sharing class ScholarshipSharedUtilities {
     public static String setHistoryPage(String scholarshipId) {
         String cPage = ApexPages.currentPage().getUrl();
         String[] cPageSplit = cPage.split('\\?');
-        String historyURL = '/EASYApp/ScholarshipHome';
+        String historyURL = '/Admissions/ScholarshipHome';
         if (cPageSplit.size() > 0) {
             historyURL = cPageSplit[0];
         }
-        historyURL = historyURL.replace('/apex/', '/EASYApp/');
+        historyURL = historyURL.replace('/apex/', '/Admissions/');
         if (!String.isEmpty(scholarshipId)) {
             historyURL += '?sid=' + scholarshipId;
         }

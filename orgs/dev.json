@@ -4,7 +4,6 @@
   "features": [
     "Communities",
     "Sites",
-    "PartnerCommunity",
     "ForceComPlatform"
   ],
   "settings": {

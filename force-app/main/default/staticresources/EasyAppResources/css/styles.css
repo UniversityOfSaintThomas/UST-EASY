@@ -28,14 +28,34 @@
     background-color: #510C76;
 }
 
+.slds-scope table, .slds-scope iframe, .slds-scope img {
+    max-width: 100% !important;
+}
+
+.slds-scope ul.slds-listbox {
+    margin: 0;
+    list-style: none;
+}
+
+.slds-scope .slds-combobox .slds-combobox__form-element .refRemoveButton {
+    padding: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: -0.8rem;
+}
 .slds-scope:not(html), .slds-scope body,
 .slds-scope .slds-text-body_regular, .slds-scope label, .slds-scope p,
 .slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select,
-.slds-scope textarea, .slds-scope ul, .slds-scope ol {
+.slds-scope textarea, .slds-scope ul, .slds-scope ol,
+.slds-scope .slds-checkbox .slds-checkbox__label .slds-form-element__label {
     font-size: 1.02rem;
     line-height: 1.5rem;
     font-weight: 400;
     color: #0a0a0a;
+}
+
+.slds-scope .slds-radio_faux {
+    line-height: 2rem;
 }
 
 .slds-scope .slds-button {
@@ -45,15 +65,24 @@
     padding: 0.3rem 0.7rem;
 }
 
-.slds-scope .slds-progress__item .slds-button {
-    width: 3rem;
-    height: 3rem;
-    padding: 0.3rem 0.3rem;
+.slds-scope .slds-button.slds-radio_button {
+    padding: 0;
 }
+
+.slds-scope .slds-progress__item .slds-button {
+    width: 2rem;
+    height: 2rem;
+    padding: 0.1rem 0.1rem;
+}
+
 .slds-scope .slds-progress__item .slds-button__icon {
     width: 1.4rem;
     height: 1.4rem;
     margin-top: 0;
+}
+
+.slds-scope .slds-progress .slds-progress-bar {
+    margin-top: -0.2rem;
 }
 
 .slds-scope .slds-tabled-checklist td {
@@ -122,6 +151,10 @@
     display: block;
 }
 
+.slds-scope .slds-has-error .slds-radio_button-group {
+    border: solid 2px red;
+}
+
 .slds-scope label.slds-text-body_regular {
     margin-top: .2em;
 }
@@ -147,6 +180,10 @@ div.slds-progress {
 
 .slds-col img {
     max-width: 99%;
+}
+
+.slds-scope .messageTable {
+    margin: 1rem !important;
 }
 
 /* Carousel styles */

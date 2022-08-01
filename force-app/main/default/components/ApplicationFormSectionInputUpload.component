@@ -10,6 +10,9 @@
     <apex:attribute name="odlAttachmentId" description="" type="Id" required="false"/>
     <apex:attribute name="attachmentTitle" description="" type="String" required="false"/>
     <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
+    <apex:attribute name="supportedFileTypes" description="" type="String" required="false"/>
+
+    <apex:variable var="fileTypes" value="{!IF(!ISBLANK(supportedFileTypes), SUBSTITUTE(LOWER(supportedFileTypes),';',', '),'')}"/>
 
     <!-- Rich Text Editor text-->
     <apex:outputPanel styleClass="slds-form-element" rendered="{!allowTextEntry && (!preventUpdates || isEditable)}">
@@ -45,9 +48,9 @@
                     </div>
                     <div class="slds-media__body">
                         <h2 class="slds-card__header-title">
-                            <a href="#" class="slds-card__header-link slds-truncate" title="Upload file">
+                            <span class="slds-card__header-link slds-truncate" title="Upload file">
                                 <span>Upload file</span>
-                            </a>
+                            </span>
                         </h2>
                     </div>
                 </header>
@@ -63,7 +66,7 @@
                                             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                                 <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#upload")}"></use>
                                             </svg>
-                                            Upload Files
+                                            Upload Files {!IF(!ISBLANK(fileTypes), ' (' + fileTypes + ')', '')}
                                         </span>
                                 <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
                             </label>

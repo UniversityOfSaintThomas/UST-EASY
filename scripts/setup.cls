@@ -25,15 +25,17 @@ private static void setHoldingIds() {
     ];
 
     List<Requirement_Item__c> collegeRequirementItems = [
-            SELECT Id, Name
+            SELECT Id, Name, Label__c, Related_List_Where_Clause__c
             FROM Requirement_Item__c
-            WHERE Name LIKE 'College%'
+            WHERE Label__c LIKE '%College%'
+            AND RecordType.Name = 'Related Object'
     ];
 
     List<Requirement_Item__c> hsRequirementItems = [
-            SELECT Id, Name, Related_List_Where_Clause__c
+            SELECT Id, Name, Label__c, Related_List_Where_Clause__c
             FROM Requirement_Item__c
-            WHERE Name LIKE 'High School%'
+            WHERE Label__c LIKE '%High School%'
+            AND RecordType.Name = 'Related Object'
     ];
 
     List<Requirement_Item__c> updateItems = new List<Requirement_Item__c>();

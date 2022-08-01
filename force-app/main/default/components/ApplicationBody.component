@@ -2,6 +2,7 @@
     <apex:attribute name="title" description="The title for this page" type="String" required="true"/>
     <apex:attribute name="subtitle" description="The subtitle for this page" type="String" required="false"/>
     <apex:attribute name="hideLogo" description="Should the logo be hidden" type="Boolean" required="false"/>
+    <apex:attribute name="applicantName" description="Greeting name of the applicant" type="String" required="false"/>
     <apex:attribute name="loadingText" description="The text to display when save is occurring" type="String" required="false" default="Processing..."/>
     <apex:attribute name="appInfo" description="The text to display when save is occurring" type="EASYApplicationInfo" required="true" assignTo="{!appInfoParam}"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
@@ -14,20 +15,22 @@
     </div>
 
     <apex:variable value="{!widgets}" var="w"/>
+
     <apex:variable value="{!If(w.leftWidgets.size >0, 'l', '')}{!If(w.rightWidgets.size >0, 'r', '')}" var="col"/>
 
     <apex:outputPanel styleClass="slds-grid slds-wrap slds-p-bottom_x-large application-body" layout="block">
+
         <!-- TOP WIDGETS -->
         <apex:outputPanel layout="block" rendered="{!IF(w.topWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-clearfix">
-            <apex:repeat value="{!w.topWidgets}" var="widget" rendered="{!IF(w.topWidgets.size > 0, true, false)}">
-                <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
+            <apex:repeat value="{!w.topWidgets}" var="topWidgets" rendered="{!IF(w.topWidgets.size > 0, true, false)}">
+                <c:EasyWidget widget="{!topWidgets}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
             </apex:repeat>
         </apex:outputPanel>
 
         <!-- LEFT WIDGETS -->
         <apex:outputPanel layout="block" rendered="{!CONTAINS(col,'l')}" styleClass="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-p-right_medium">
-            <apex:repeat value="{!w.leftWidgets}" var="widget">
-                <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
+            <apex:repeat value="{!w.leftWidgets}" var="leftWidgets">
+                <c:EasyWidget widget="{!leftWidgets}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
             </apex:repeat>
         </apex:outputPanel>
 
@@ -36,8 +39,8 @@
 
             <!-- CONTENT TOP WIDGETS -->
             <apex:outputPanel layout="block" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                <apex:repeat value="{!w.contentTopWidgets}" var="widget" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}">
-                    <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
+                <apex:repeat value="{!w.contentTopWidgets}" var="contentTopWidgets" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}">
+                    <c:EasyWidget widget="{!contentTopWidgets}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
                 </apex:repeat>
             </apex:outputPanel>
 
@@ -60,8 +63,8 @@
 
             <!-- CONTENT BOTTOM WIDGETS -->
             <apex:outputPanel layout="block" rendered="{!IF(w.contentBottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                <apex:repeat value="{!w.contentBottomWidgets}" var="widget" rendered="{!IF(w.contentBottomWidgets.size > 0, true, false)}">
-                    <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
+                <apex:repeat value="{!w.contentBottomWidgets}" var="contentBottomWidgets" rendered="{!IF(w.contentBottomWidgets.size > 0, true, false)}">
+                    <c:EasyWidget widget="{!contentBottomWidgets}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
                 </apex:repeat>
             </apex:outputPanel>
 
@@ -69,15 +72,15 @@
 
         <!-- RIGHT WIDGETS -->
         <apex:outputPanel layout="block" rendered="{!CONTAINS(col,'r')}" styleClass="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-p-left_medium slds-p-left_medium">
-            <apex:repeat value="{!w.rightWidgets}" var="widget">
-                <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
+            <apex:repeat value="{!w.rightWidgets}" var="rightWidgets">
+                <c:EasyWidget widget="{!rightWidgets}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
             </apex:repeat>
         </apex:outputPanel>
 
         <!-- BOTTOM WIDGETS -->
         <apex:outputPanel layout="block" rendered="{!IF(w.bottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-clearfix">
-            <apex:repeat value="{!w.bottomWidgets}" var="widget">
-                <c:EasyWidget widget="{!widget}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
+            <apex:repeat value="{!w.bottomWidgets}" var="bottomWidgets">
+                <c:EasyWidget widget="{!bottomWidgets}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
             </apex:repeat>
         </apex:outputPanel>
 

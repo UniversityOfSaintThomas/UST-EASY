@@ -10,22 +10,36 @@ public with sharing class ApplicationChecklistComponentController {
     public String nextAppId { get; set; }
     public Id nextContactId { get; set; }
     public EASYApplicationInfo appInfoParam { get; set; }
+    public Id submitAppId { get; set; }
+    public String submitAppStatus { get; set; }
+
     public ApplicationChecklistComponentController() {
 
     }
 
     public PageReference goToRequirement() {
         //set the cookie with current appInfo and new requirement;
-        EASYApplicationInfo nextAppInfo;
+        EASYApplicationInfo nextAppInfo = appInfoParam;
+        Application_Control__c appControl = null;
+        Application__c app = null;
 
-        if (appInfoParam.at != nextAt) {
-            nextAppInfo = ApplicationUtilities.setApplicationInfo(nextAt, nextAppId, nextContactId);
-        } else {
-            nextAppInfo = appInfoParam;
+        //next at != previous at
+        if (nextAt != appInfoParam.at) {
+            appControl = ApplicationUtilities.getApplicationControls(nextAt);
         }
 
-        if (nextAppInfo.appId != nextAppId) {
-            nextAppInfo.appId = nextAppId;
+        if (nextAppId != appInfoParam.appId) {
+            app = ApplicationUtilities.getApplicationInfo(nextAppId, nextContactId);
+        }
+
+        if (app != null && appControl != null) {
+            nextAppInfo = ApplicationUtilities.setApplicationInfo(appControl, app);
+        } else if (app != null) {
+            nextAppInfo = ApplicationUtilities.setApplicationInfo(appInfoParam, app);
+        } else if (appControl != null) {
+            nextAppInfo = ApplicationUtilities.flattenAppControl(appControl, appInfoParam);
+        } else {
+            nextAppInfo = appInfoParam;
         }
 
         nextAppInfo.requirementId = nextRequirementId;
@@ -33,12 +47,23 @@ public with sharing class ApplicationChecklistComponentController {
         ApplicationUtilities.createEncryptedCookie(JSON.serialize(nextAppInfo));
 
         PageReference requirementPage = Page.ApplicationRequirement;
-//        requirementPage.getParameters().put('applicationId', nextAppInfo.appId);
-//        requirementPage.getParameters().put('contactId', nextAppInfo.contactId);
         requirementPage.getParameters().put('at', nextAppInfo.at);
         requirementPage.getParameters().put('requirementId', nextRequirementId);
         requirementPage.setRedirect(true);
         return requirementPage;
+    }
+
+    public PageReference finalSubmitApp() {
+        PageReference pr = Page.ApplicationPortal;
+        //System.debug(submitAppId);
+        System.debug(submitAppStatus);
+        try {
+            update new Application__c(Id = submitAppId, Application_Status__c = submitAppStatus);
+        } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            return null;
+        }
+        return pr;
     }
 
 }

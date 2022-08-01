@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Name_Field_API_Name__c</fullName>
     <defaultValue>&quot;Name&quot;</defaultValue>
-    <deprecated>false</deprecated>
     <description>Comma separated field API names to query. The first field is the primary (i.e. Name), and the others are secondary (i.e. BillingCity, BillingState). Up to 255 characters.</description>
     <externalId>false</externalId>
     <inlineHelpText>Comma separated field API names to query. The first field is the primary (i.e. Name), and the others are secondary (i.e. BillingCity, BillingState). Up to 255 characters.</inlineHelpText>

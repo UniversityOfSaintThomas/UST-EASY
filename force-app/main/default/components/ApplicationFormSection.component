@@ -18,7 +18,7 @@
     <apex:outputPanel styleClass="{!if(group.isEditable,'','fieldNotEditable')}" id="theSection" layout="block">
 
         <apex:outputPanel rendered="{!group.instructions != null && group.instructions != ''}">
-            <div class="slds-text-body_regular">
+            <div class="slds-text-body_regular slds-p-bottom_small">
                 <p>
                     <apex:outputText value="{!group.instructions}" escape="false"/>
                 </p>
@@ -26,7 +26,7 @@
         </apex:outputPanel>
 
         <apex:outputPanel rendered="{!group.isInternal && (group.response != null && group.response.Fulfilled_On__c != null)}">
-            <div class="slds-text-body_regular">
+            <div class="slds-text-body_regular slds-p-bottom_small">
                 <p>
                     <apex:outputText value="Completed on {0, Date}.">
                         <apex:param value="{!group.response.Fulfilled_On__c}"/>
@@ -36,7 +36,7 @@
         </apex:outputPanel>
 
         <apex:outputPanel rendered="{!group.isInternal && (group.response == null || group.response.Fulfilled_On__c == null)}">
-            <div class="slds-text-body_regular">
+            <div class="slds-text-body_regular slds-p-bottom_small">
                 <p>This has not been completed.</p>
             </div>
         </apex:outputPanel>
@@ -102,6 +102,7 @@
                                                  itemId="{!group.item.Id}"
                                                  odlAttachmentId="{!group.oldAttVersion.Id}"
                                                  attachmentTitle="{!group.att.Title}"
+                                                 supportedFileTypes="{!group.item.File_Types__c}"
             />
         </apex:outputPanel>
 
@@ -135,7 +136,7 @@
                 <apex:pageMessages />
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
-                    <p>You haven"t created any records yet. Click "New Record" to create one.</p>
+                    <p>You haven't created any records yet. Click "New Record" to create one.</p>
                 </apex:outputPanel>
 
                 <apex:outputPanel rendered="{!CONTAINS(group.item.Required__c, group.app.Application_Status__c) && group.item.Required_Number_of_Children__c != null && group.item.Required_Number_of_Children__c > 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
@@ -215,7 +216,7 @@
                         </apex:outputPanel>
 
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand slds-m-right-small" onComplete="pageLoadReRendered();">
+                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" styleClass="slds-button slds-button_brand slds-m-right-small" onComplete="addRecordValidation(this);pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                                 </svg>

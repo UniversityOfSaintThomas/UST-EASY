@@ -4,5 +4,9 @@
         <members>EASY_Applicant_Portal</members>
         <name>CustomSite</name>
     </types>
+    <types>
+        <members>Request_for_Information_Demo</members>
+        <name>CustomSite</name>
+    </types>
     <version>52.0</version>
 </Package>

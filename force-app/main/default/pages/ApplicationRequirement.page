@@ -3,32 +3,51 @@
         <apex:define name="scriptsHead">
             <c:ApplicationHead/>
             <script>
-                function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
-                    Visualforce.remoting.Manager.invokeAction(
-                        '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
-                        sObj, sObjFilter, sObjNameField, searchTerm,
-                        function (result, event) {
-                            if (event.status) {
-                                callback(result, originObjId)
-                            } else if (event.type === 'exception') {
-                                console.log(event.errors)
-                            } else {
-                            }
-                        },
-                        {escape: true}
-                    );
+                async function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm) {
+                    return new Promise((resolve, reject) => {
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.ApplicationRequirement.lookupSearch}',
+                            sObj, sObjFilter, sObjNameField, searchTerm,
+                            (result, event) => {
+                                event.status ? resolve(result) : reject(event.message);
+                            },
+                            {escape: true}
+                        );
+                    });
                 }
             </script>
         </apex:define>
-        <apex:define name="metaPageTitle">{!appInfo.academicLevel} : {!title}</apex:define>
+        <apex:define name="metaPageTitle">{!appInfo.intendedProgram} : {!title}</apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="{!if(isInvalid,'An Error has occured',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}">
-                <c:ApplicationForm section="{!section}" rendered="{!!isInvalid}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}">
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occurred',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}">
+                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}" title="{!title}">
 
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                         <apex:param name="p2" value="" assignTo="{!redirectPage}"/>
                     </apex:actionFunction>
+
+                    <apex:outputPanel rendered="{!appInfo.allowSubmit}" layout="none">
+                        <article class="slds-card slds-m-bottom_medium">
+                            <div class="slds-card__header slds-grid">
+                                <header>
+                                    <div class="slds-media__body">
+                                        <h3 class="slds-card__header-title">
+                                            Submit this Application
+                                        </h3>
+                                    </div>
+                                </header>
+                            </div>
+                            <div class="slds-card__body slds-card__body_inner">
+                                <div class="slds-p-bottom_small">
+                                    <p>This application meets all the requirements for submission.</p>
+                                </div>
+                                <div class="slds-p-bottom_small">
+                                    <apex:commandButton action="{!finalSubmitApp}" rendered="{!appInfo.allowSubmit}" value="Submit Application" styleClass="slds-button slds-button_success"/>
+                                </div>
+                            </div>
+                        </article>
+                    </apex:outputPanel>
 
                     <nav class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_x-small">
                         <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">

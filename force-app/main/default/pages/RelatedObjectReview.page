@@ -18,7 +18,7 @@
             );
         }
     </script>
-    <c:ApplicationHead/>
+    <c:ApplicationHead />
     <c:ApplicationBody title="Related Object Review" appInfo="{!appInfo}">
         <div class="row">
             <div class="">
@@ -26,9 +26,9 @@
                     <div class="row" style="display:flex;">
                         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-120">
                             <div role="listbox">
-                                <apex:pageMessages/>
+                                <apex:pageMessages />
                                 <apex:form id="theForm">
-                                    <apex:outputPanel>
+                                    <apex:outputPanel >
                                         <script>
                                             jQuery(function () {
                                                 jQuery('.bind-autocomplete').each(function (idx, autocompleteItem) {

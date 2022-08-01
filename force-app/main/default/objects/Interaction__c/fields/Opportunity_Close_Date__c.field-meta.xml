@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Opportunity_Close_Date__c</fullName>
-    <deprecated>false</deprecated>
     <description>Set to the Start Date of the Term. If Term Start Date is blank, set to today&apos;s date.</description>
     <externalId>false</externalId>
     <formula>IF( ISBLANK(Term__r.hed__Start_Date__c), TODAY(), Term__r.hed__Start_Date__c)</formula>

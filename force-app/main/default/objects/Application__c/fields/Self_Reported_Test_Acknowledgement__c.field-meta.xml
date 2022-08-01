@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Self_Reported_Test_Acknowledgement__c</fullName>
-    <defaultValue>false</defaultValue>
-    <deprecated>false</deprecated>
     <description>By providing the information below, I understand that my self-reported test scores will be used for admission and merit scholarship processes.</description>
     <externalId>false</externalId>
     <inlineHelpText>By providing the information below, I understand that my self-reported test scores will be used for admission and merit scholarship processes.</inlineHelpText>
     <label>Self Reported Test Acknowledgement</label>
+    <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>Checkbox</type>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Apply With Standardized Test</fullName>
+                <default>false</default>
+                <label>Apply With Standardized Test</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

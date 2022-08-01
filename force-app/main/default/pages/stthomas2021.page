@@ -9,6 +9,11 @@
         <meta charset="UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="https://www.stthomas.edu/_files/images/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+        <link href="https://www.stthomas.edu/_files/images/favicons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+        <link href="https://www.stthomas.edu/_files/images/favicons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+        <link href="https://www.stthomas.edu/_files/images/favicons/site.webmanifest" rel="manifest"/>
+        <link color="#510c76" href="https://www.stthomas.edu/_files/images/favicons/safari-pinned-tab.svg" rel="mask-icon"/>
         <title>
             <apex:insert name="metaPageTitle"/>
         </title>
@@ -84,8 +89,8 @@
     </header>
     <main style="min-height: 50vh">
         <div class="slds-scope">
-            <div class="slds-grid slds-grid_align-center">
-                <div class="slds-col slds-size_1-of-1" style="max-width:1170px; margin-top:110px; margin-bottom:20px">
+            <div class="slds-grid slds-wrap slds-grid_align-center">
+                <div class="slds-col slds-size_1-of-1 slds-p-around_x-small" style="max-width:1170px; margin-top:110px; margin-bottom:20px">
                     <apex:insert name="body"/>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>URL_Parameter__c</fullName>
-    <deprecated>false</deprecated>
     <description>The URL Parameter to be used as a key when pre-populating this question</description>
     <externalId>false</externalId>
     <label>URL Parameter</label>

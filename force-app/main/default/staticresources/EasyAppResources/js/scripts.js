@@ -44,6 +44,19 @@ function pageLoadReRendered() {
     hideFormSpinner();
 }
 
+//Add record action
+function addRecordValidation(elem, rrIndex) {
+    showFormSpinner();
+    let recWrap = elem.closest('.slds-card');
+    window.scrollTo(0, 0);
+    if (textValidations(true, recWrap) === 0) {
+        hideFormSpinner();
+        return true;
+    }
+    hideFormSpinner();
+    return false;
+}
+
 function checkEnter(e) {
     e = e || event;
     let txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
@@ -56,6 +69,8 @@ function reRenderAllGroups(rerenderName) {
         showFormSpinner();
         if (rerenderName === 'rerenderTheTable') {
             document.querySelector("[id$=reRenderTheTable]").click();
+        } else if (rerenderName === 'reRenderTheTableLight') {
+            document.querySelector("[id$=reRenderTheTableLight]").click();
         } else {
             document.querySelector("[id$=reRenderGroups]").click();
         }
@@ -254,27 +269,26 @@ function getAsText(readFile, respId) {
 function activateAutoComplete() {
 
     document.querySelectorAll('.bind-autocomplete').forEach(autoItem => {
-
-
-        let originObjId = autoItem.id;
         let comboBoxContainer = autoItem.closest('.slds-combobox_container');
-        let hiddenInput = comboBoxContainer.querySelector('.inputHidden');
         let comboBox = comboBoxContainer.querySelector('.slds-combobox');
-        let objectType = comboBox.dataset.objtype;
-        let objectTypeFilter = comboBox.dataset.objtypefilter;
-        let objectTypeNameField = comboBox.dataset.objtypenamefield;
+        let spinner = comboBox.querySelector('.slds-modal');
+        let hiddenInput = comboBoxContainer.querySelector('.inputHidden');
         let removeButton = comboBox.querySelector('.refRemoveButton');
         let magGlass = comboBox.querySelector('.refMagGlass');
         let resultList = comboBox.querySelector('.slds-listbox');
+        let originObjId = autoItem.id;
+        let objectType = comboBox.dataset.objtype;
+        let objectTypeFilter = comboBox.dataset.objtypefilter;
+        let objectTypeNameField = comboBox.dataset.objtypenamefield;
 
         /* Remote reference lookup */
         const resultListTemplate = (title, subtitle, icon, originObjId, resultId) => `
-            <li role="presentation" class="slds-listbox__item" data-title="${title} ${subtitle}" data-origId="${originObjId}" data-resultId="${resultId}">
+            <li role="presentation" class="slds-listbox__item" data-title="${title}, ${subtitle}" data-origId="${originObjId}" data-resultId="${resultId}">
                 <div id="option1" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
                   <span class="slds-media__figure slds-listbox__option-icon">
                     <span class="slds-icon_container slds-icon-standard-account">
                       <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                        <use xlink:href="${icon}"></use>
+                        <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="${icon}"></use>
                       </svg>
                     </span>
                   </span>
@@ -305,56 +319,82 @@ function activateAutoComplete() {
             resultList.innerHTML = '';
         }
 
-        function lookupResultsFormatter(data, originObjId) {
-            let outputList = ''
-            let fieldNames = comboBox.dataset.objtypenamefield.replace(' ', '').split(',');
-            data.forEach(result => {
-                let resultName = '';
-                let subTitle = '';
-                let resultId = '';
-                if (result['Id']) {
-                    resultId = result['Id'];
+        async function fetchLookupResults(objectType, objectTypeFilter, objectTypeNameField, searchTerm) {
+            try {
+                let data = await lookupSearchJS(objectType, objectTypeFilter, objectTypeNameField, searchTerm);
+                updateLookupUI(data);
+            } catch (ex) {
+                if (ex.name === 'AbortError') {
+                    return; // Continuation logic has already been skipped, so return normally
                 }
-                for (let x = 0; x < fieldNames.length; x++) {
-                    let fieldName = fieldNames[x].trim();
-                    if (x === 0) {
-                        resultName = result[fieldName];
-                    } else {
-                        if (result[fieldName]) {
-                            subTitle += result[fieldName] + ', ';
-                        }
-                    }
-                }
-                if (subTitle) {
-                    subTitle = subTitle.substr(0, subTitle.length - 2);
-                }
-                outputList += resultListTemplate(resultName, subTitle, comboBox.dataset.listicon, originObjId, resultId);
-            });
-            resultList.innerHTML = '';
-
-            comboBox.classList.remove('slds-is-open');
-            if (outputList) {
-                comboBox.classList.add('slds-is-open');
+                resultList.innerHTML = ex.message;
             }
+            setTimeout(() => {
+                spinner.classList.remove('slds-fade-in-open');
+                spinner.style.zIndex = '-1'
+            }, 1000);
+        }
 
-            resultList.insertAdjacentHTML("beforeend", outputList);
+        const updateLookupUI = (data) => {
+            let outputList = ''
+            if (data.length) {
 
-            resultList.querySelectorAll('li').forEach(refItem => {
-                refItem.addEventListener('click', function () {
-                    if (refItem.dataset.title === '**createnew**') {
-                        if (typeof window['setCreatingNewRelatedRecordAF' + groupId] === "function" && recordId && resultId) {
-                            window['setCreatingNewRelatedRecordAF' + groupId](recordId, resultId)
-                        }
-                    } else {
-                        hiddenInput.value = refItem.dataset.resultid;
-                        autoItem.value = refItem.dataset.title;
-                        refValueAdded();
+                let fieldNames = comboBox.dataset.objtypenamefield.replace(' ', '').split(',');
+
+                data.forEach(result => {
+                    let resultName = '', subTitle = '', resultId = '';
+
+                    if (result['Id']) {
+                        resultId = result['Id'];
                     }
+
+                    for (let x = 0; x < fieldNames.length; x++) {
+                        let fieldName = fieldNames[x].trim();
+                        if (x === 0) {
+                            resultName = result[fieldName];
+                        } else {
+                            if (result[fieldName]) {
+                                subTitle += result[fieldName] + ', ';
+                            }
+                        }
+                    }
+
+                    if (subTitle) {
+                        subTitle = subTitle.substr(0, subTitle.length - 2);
+                    }
+
+                    outputList += resultListTemplate(resultName, subTitle, comboBox.dataset.listicon, originObjId, resultId);
                 });
-            });
+
+                resultList.innerHTML = '';
+
+                comboBox.classList.remove('slds-is-open');
+                if (outputList) {
+                    comboBox.classList.add('slds-is-open');
+                }
+
+                resultList.innerHTML = outputList;
+
+                resultList.querySelectorAll('li').forEach(refItem => {
+                    refItem.addEventListener('click', function () {
+                        if (refItem.dataset.title === '**createnew**') {
+                            if (typeof window['setCreatingNewRelatedRecordAF' + groupId] === "function" && recordId && resultId) {
+                                window['setCreatingNewRelatedRecordAF' + groupId](recordId, resultId)
+                            }
+                        } else {
+                            hiddenInput.value = refItem.dataset.resultid;
+                            autoItem.value = refItem.dataset.title;
+                            refValueAdded();
+                        }
+                    });
+                });
+
+            }
         }
 
         if (autoItem.value) {
+            autoItem.classList.remove('slds-has-focus');
+            comboBox.classList.remove('slds-is-open');
             refValueAdded();
         }
 
@@ -369,18 +409,14 @@ function activateAutoComplete() {
         });
 
         autoItem.addEventListener('keyup', () => {
+            spinner.style.zIndex = null;
+            spinner.classList.add('slds-fade-in-open');
             let searchTerm = autoItem.value;
-            if (objectType && objectTypeNameField && searchTerm.length > 2) {
-                lookupSearchJS(objectType, objectTypeFilter, objectTypeNameField, searchTerm, lookupResultsFormatter, originObjId);
+            if (searchTerm.length > 2) {
+                fetchLookupResults(objectType, objectTypeFilter, objectTypeNameField, searchTerm);
             }
         });
 
-
-        // comboBox.addEventListener('focusout', (e) => {
-        //     console.log('focus out of combo box');
-        //     autoItem.classList.remove('slds-has-focus');
-        //     comboBox.classList.remove('slds-is-open');
-        // });
     });
 }
 
@@ -432,121 +468,123 @@ function activateCarousel(slideMoveTo) {
         next = document.getElementsByClassName('carousel__button--next')[0],
         prev = document.getElementsByClassName('carousel__button--prev')[0];
 
-    // Set click events to navigation buttons
-    function setEventListeners() {
-        next.addEventListener('click', moveNext);
-        prev.addEventListener('click', movePrev);
-        if (totalItems === 1) {
-            next.style.display = 'none';
-            prev.style.display = 'none';
-            saveAndAdvance.style.dispay = 'inline-flex';
-        } else {
-            prev.style.display = 'none';
-            saveAndAdvance.style.display = "none";
+    if (items.length > 0) {
+
+        // Set click events to navigation buttons
+        function setEventListeners() {
+            next.addEventListener('click', moveNext);
+            prev.addEventListener('click', movePrev);
+            if (totalItems === 1) {
+                next.style.display = 'none';
+                prev.style.display = 'none';
+                saveAndAdvance.style.dispay = 'inline-flex';
+            } else {
+                prev.style.display = 'none';
+                saveAndAdvance.style.display = "none";
+            }
+            if (slide === 0 && previousRequirement) {
+                saveAndGoBack.style.display = 'inline-flex';
+            }
         }
-        if (slide === 0 && previousRequirement) {
-            saveAndGoBack.style.display = 'inline-flex';
+
+        // Disable interaction by setting 'moving' to true for the same duration as our transition (0.5s = 500ms)
+        function disableInteraction() {
+            moving = true;
+            setTimeout(function () {
+                moving = false
+            }, 500);
         }
-    }
 
-    // Disable interaction by setting 'moving' to true for the same duration as our transition (0.5s = 500ms)
-    function disableInteraction() {
-        moving = true;
-        setTimeout(function () {
-            moving = false
-        }, 500);
-    }
+        let moveCarouselTo = function (slide) {
+            if (!moving) {
+                disableInteraction();
+                let newPrevious = slide - 1,
+                    newNext = slide + 1;
 
-    let moveCarouselTo = function (slide) {
-        if (!moving) {
-            disableInteraction();
-            let newPrevious = slide - 1,
-                newNext = slide + 1;
+                if (totalItems > 1) {
 
-            if (totalItems > 1) {
-
-                if (slide === 0) {
-                    prev.style.display = "none";
-                    if (previousRequirement) {
-                        saveAndGoBack.style.display = 'inline-flex';
+                    if (slide === 0) {
+                        prev.style.display = "none";
+                        if (previousRequirement) {
+                            saveAndGoBack.style.display = 'inline-flex';
+                        }
+                        newPrevious = (totalItems - 1);
+                    } else if (slide === 1) {
+                        saveAndGoBack.style.display = "none"
+                        newPrevious = 0;
+                    } else if (slide === (totalItems - 1)) {
+                        newPrevious = (slide - 1);
+                        newNext = 0;
                     }
-                    newPrevious = (totalItems - 1);
-                } else if (slide === 1) {
-                    saveAndGoBack.style.display = "none"
-                    newPrevious = 0;
-                } else if (slide === (totalItems - 1)) {
-                    newPrevious = (slide - 1);
-                    newNext = 0;
+                    if (slide + 1 === totalItems || totalItems === 1) {
+                        saveAndAdvance.style.display = "inline-flex"
+                        next.style.display = "none"
+                    } else {
+                        saveAndAdvance.style.display = "none"
+                        next.style.display = "inline-flex"
+                    }
+
+                    if (slide > 0) {
+                        prev.style.display = "inline-flex"
+                    } else {
+                        prev.style.display = "none"
+                    }
+
+                    for (let i = 0; i < items.length; i++) {
+                        items[i].classList.remove('prev');
+                        items[i].classList.remove('next');
+                        items[i].classList.remove('active');
+                    }
+                    if (items[newPrevious]) {
+                        items[newPrevious].classList.add("prev");
+                    }
+                    if (items[slide]) {
+                        items[slide].classList.add("active");
+                    }
+                    if (items[newNext]) {
+                        items[newNext].classList.add("next");
+                    }
+
                 }
-                if (slide + 1 === totalItems || totalItems === 1) {
-                    saveAndAdvance.style.display = "inline-flex"
-                    next.style.display = "none"
+            }
+        }
+
+
+        function moveNext() {
+            if (!moving) {
+                if (slide === (totalItems - 1)) {
+                    slide = 0;
                 } else {
-                    saveAndAdvance.style.display = "none"
-                    next.style.display = "inline-flex"
+                    slide++;
                 }
+                moveCarouselTo(slide);
+            }
+        }
 
-                if (slide > 0) {
-                    prev.style.display = "inline-flex"
+        function movePrev() {
+            if (!moving) {
+                if (slide === 0) {
+                    slide = (totalItems - 1);
                 } else {
-                    prev.style.display = "none"
+                    slide--;
                 }
+                moveCarouselTo(slide);
+            }
+        }
 
-                for (let i = 0; i < items.length; i++) {
-                    items[i].classList.remove('prev');
-                    items[i].classList.remove('next');
-                    items[i].classList.remove('active');
-                }
-                if (items[newPrevious]) {
-                    items[newPrevious].classList.add("prev");
-                }
-                if (items[slide]) {
-                    items[slide].classList.add("active");
-                }
-                if (items[newNext]) {
-                    items[newNext].classList.add("next");
-                }
+        function initCarousel() {
+            setEventListeners();
+            moving = false;
+        }
 
+        initCarousel();
+
+        if (slideMoveTo) {
+            if (!moving) {
+                moveCarouselTo(parseInt(slideMoveTo));
             }
         }
     }
-
-
-    function moveNext() {
-        if (!moving) {
-            if (slide === (totalItems - 1)) {
-                slide = 0;
-            } else {
-                slide++;
-            }
-            moveCarouselTo(slide);
-        }
-    }
-
-    function movePrev() {
-        if (!moving) {
-            if (slide === 0) {
-                slide = (totalItems - 1);
-            } else {
-                slide--;
-            }
-            moveCarouselTo(slide);
-        }
-    }
-
-    function initCarousel() {
-        setEventListeners();
-        moving = false;
-    }
-
-    initCarousel();
-
-    if (slideMoveTo) {
-        if (!moving) {
-            moveCarouselTo(parseInt(slideMoveTo));
-        }
-    }
-
 }
 
 /* Spinners on/off */
@@ -595,17 +633,24 @@ function activateTooltips() {
     });
 }
 
+function isCarousel() {
+    let items = document.getElementsByClassName("carousel__item");
+    if (items.length > 0) {
+        return true;
+    }
+    return false;
+}
+
 //Validate form elements on submit
 function checkForm() {
     // let theForm = document.querySelector('form');
     // theForm.reportValidity();
     let error_count = 0;
-
     error_count = error_count + textValidations(true);
 
     if (error_count > 0) {
         let foundErrors = document.querySelector(".slds-has-error");
-        if (foundErrors) {
+        if (foundErrors && isCarousel()) {
             let carouselItem = foundErrors.closest('.carousel__item');
             activateCarousel(carouselItem.dataset.slide);
         }
@@ -616,14 +661,21 @@ function checkForm() {
 }
 
 //Input validations
-function textValidations(checkFormValidate) {
+function textValidations(checkFormValidate, documentStart) {
+    let doc;
+    if (!documentStart) {
+        doc = document;
+    } else {
+        doc = documentStart;
+    }
     let errors = 0;
-    let allPhones = document.querySelectorAll('.validatePhone');
-    let allSSN = document.querySelectorAll('.validateSSN');
-    let allNamCharacters = document.querySelectorAll('.validateName');
-    let allEmails = document.querySelectorAll('.validateEmail');
-    let allUrls = document.querySelectorAll('.validateURL');
-    let allRequiredInputs = document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select");
+    let allPhones = doc.querySelectorAll('.validatePhone');
+    let allSSN = doc.querySelectorAll('.validateSSN');
+    let allNamCharacters = doc.querySelectorAll('.validateName');
+    let allEmails = doc.querySelectorAll('.validateEmail');
+    let allUrls = doc.querySelectorAll('.validateURL');
+    let allRequiredInputs = doc.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select, .slds-is-required .slds-radio_button-group .slds-radio_button-value");
+
 
     const re_email = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     const re_url = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/;
@@ -647,11 +699,11 @@ function textValidations(checkFormValidate) {
             }
         });
 
-        document.querySelectorAll(".selectableOL").forEach(sel => {
+        doc.querySelectorAll(".selectableOL").forEach(sel => {
             let selWrap = sel.closest('.slds-form-element');
-            let hiddenData = document.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
+            let hiddenData = doc.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
             if (selWrap.classList.contains("slds-is-required")) {
-                if (!document.getElementById(hiddenData).value) {
+                if (!doc.getElementById(hiddenData).value) {
                     activateErrorState(sel, 'click')
                 }
             }
@@ -662,6 +714,11 @@ function textValidations(checkFormValidate) {
     allPhones.forEach(phone => {
 
         //format directly after input
+        //Don't allow anything but phone number characters on key-up
+        phone.addEventListener('keyup', function () {
+            phone.value = phone.value.replace(re_phoneIllegals, '');
+        })
+
         phone.addEventListener('change', function () {
             let cleaned = String(phone.value).replace(/\D/g, "");
             let match = cleaned.match(re_phoneFormat);
@@ -671,19 +728,16 @@ function textValidations(checkFormValidate) {
             }
         });
 
-        //Don't allow anything but phone number characters on key-up
-        phone.addEventListener('keyup', function () {
-            phone.value = phone.value.replace(re_phoneIllegals, '');
-        })
-
         //Check if the final phone number matches correctly before submit
-        if (checkFormValidate) {
+        if (checkFormValidate && phone.value) {
             if (!phone.value.match(re_phone)) {
                 activateErrorState(phone, 'change');
             }
         }
 
+
     });
+
 
     allNamCharacters.forEach(nameInput => {
         //Don't allow anything but phone number characters on key-up
@@ -691,7 +745,7 @@ function textValidations(checkFormValidate) {
             nameInput.value = nameInput.value.replace(re_nameIllegals, '');
         })
 
-        if (checkFormValidate) {
+        if (checkFormValidate && nameInput.value) {
             nameInput.value = nameInput.value.replace(re_nameIllegals, '');
         }
     });
@@ -714,15 +768,19 @@ function textValidations(checkFormValidate) {
             }
         });
 
-        if (checkFormValidate && !ssn.value.match(re_snn)) {
-            activateErrorState(ssn, 'change');
+        if (checkFormValidate && ssn.value) {
+            if (!ssn.value.match(re_snn)) {
+                activateErrorState(ssn, 'change');
+            }
         }
     });
 
     //Email Validation
     allEmails.forEach(email => {
-        if (checkFormValidate && !email.value.match(re_email)) {
-            activateErrorState(email, 'change');
+        if (checkFormValidate && email.value) {
+            if (!email.value.match(re_email)) {
+                activateErrorState(email, 'change');
+            }
         }
     });
 
@@ -733,8 +791,10 @@ function textValidations(checkFormValidate) {
             if (!inputUrl.value.startsWith('http')) {
                 inputUrl.value = 'https://' + inputUrl.value;
             }
-            if (checkFormValidate && !inputUrl.value.match(re_url)) {
-                activateErrorState(inputUrl, 'change');
+            if (checkFormValidate && inputUrl.value) {
+                if (!inputUrl.value.match(re_url)) {
+                    activateErrorState(inputUrl, 'change');
+                }
             }
         }
     })

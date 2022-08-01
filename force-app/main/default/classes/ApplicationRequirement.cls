@@ -76,7 +76,7 @@ public class ApplicationRequirement {
 
     public ApplicationRequirement() {
         //Need to get appInfo on constructor to know which template to use
-        if(appInfo == null) {
+        if (appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
     }
@@ -102,7 +102,7 @@ public class ApplicationRequirement {
     ********************************************************************************/
     public PageReference applicationRequirementInit() {
 
-        if(appInfo == null) {
+        if (appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
 
@@ -111,7 +111,6 @@ public class ApplicationRequirement {
             return portalPage;
         }
 
-        allowSubmit = true;
         //isExternalUser = appInfo.isExternalUser;
         userType = String.valueOf(UserInfo.getUserType());
         isStandardUser = userType.equalsIgnoreCase('standard');
@@ -127,15 +126,16 @@ public class ApplicationRequirement {
         }
 
         //Get the application values for this requirement
-        if ((String.isBlank(appInfo.appId) || app == null)) {
+        if ((String.isNotBlank(appInfo.appId) && app == null)) {
             String query = applicationHelper.getApplicationFields(items);
             query = 'SELECT ' + query + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
             app = ((List<Application__c>) Database.query(query)).get(0);
-            //TODO:  appControl = appInfo.appControl;
         }
 
         if (queryItems == true) {
             checklistItems = checklistHelper.checklistRequirements(app, appInfo);
+            allowSubmit = checklistHelper.allowSubmit(checklistItems, appInfo);
+            appInfo.allowSubmit = allowSubmit;
         }
 
         //Get needed values from Contact record
@@ -339,7 +339,7 @@ public class ApplicationRequirement {
     * description: Saves question responses, requirement responses and the application. Takes the student back to the application checklist
     ******************************************************************************* */
     public PageReference submit() {
-        PageReference pr = null;
+        PageReference pr = Page.ApplicationRequirement;
 
         Boolean hasError = false;
         for (ApplicationQuestionGroup g : section.groups) {
@@ -456,34 +456,26 @@ public class ApplicationRequirement {
             }
 
             if (String.isNotBlank(redirectPage)) {
-                if (redirectPage == 'checklist') {
+                if (redirectPage == 'checklist' || redirectPage == 'portal') {
                     pr = Page.ApplicationPortal;
                 } else if (redirectPage == 'submit') {
                     if (allowSubmit && app != null) {
-                        if (appControl != null && String.isNotBlank(appControl.Submit_Status__c)) {
-                            update new Application__c(Id = app.Id, Application_Status__c = appControl.Submit_Status__c);
+                        if (appInfo.allowSubmit && String.isNotBlank(appControl.Submit_Status__c)) {
+                            update new Application__c(Id = app.Id, Application_Status__c = appInfo.submitStatus);
                             pr = Page.ApplicationPortal;
                             for (String s : new Set<String>{
                                     'contactId', 'applicationId', 'at'
                             }) {
                                 pr.getParameters().put(s, ApexPages.currentPage().getParameters().get(s));
                             }
+                            return pr;
                         }
                     }
                 } else {
-                    pr = Page.ApplicationRequirement;
                     appInfo.requirementId = redirectPage;
                     ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
-//                    pr.getParameters().put('applicationId', appInfo.appId);
-//                    pr.getParameters().put('contactId', appInfo.contactId);
-                    pr.getParameters().put('at', appInfo.at);
-                    pr.getParameters().put('requirementId', appInfo.requirementId);
                 }
-                pr.setRedirect(true);
             }
-
-            System.debug(pr);
-
 
         } catch (DmlException e) {
             System.debug('DML error:' + e.getDmlMessage(0));
@@ -493,6 +485,21 @@ public class ApplicationRequirement {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 
+        pr.getParameters().put('at', appInfo.at);
+        pr.getParameters().put('requirementId', appInfo.requirementId);
+        pr.setRedirect(true);
+
+        return pr;
+    }
+
+    public PageReference finalSubmitApp() {
+        PageReference pr = Page.ApplicationPortal;
+        try {
+            update new Application__c(Id = appInfo.appId, Application_Status__c = appInfo.submitStatus);
+        } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            return null;
+        }
         return pr;
     }
 }

@@ -107,24 +107,6 @@ public with sharing class checklistHelper {
             }
         }
 
-        for (RequirementWrapper rw : reqMap.values()) {
-            if (!rw.reqStatus) {
-                allowSubmit = false;
-                break;
-            }
-        }
-
-        if (String.isNotBlank(appInfo.appControlId) && String.isNotBlank(appInfo.allowSubmitFrom)) {
-            if (!(new Set<String>(appInfo.allowSubmitFrom.split(';'))).contains(app.Application_Status__c)) {
-                allowSubmit = false;
-            }
-
-        } else if (String.isNotBlank(appInfo.appControlId) && String.isBlank(appInfo.allowSubmitFrom) && String.isNotBlank(appInfo.submitStatus)) {
-
-        } else {
-            allowSubmit = false;
-        }
-
         Decimal total = reqs == null || reqs.isEmpty() ? 1 : (Decimal) reqs.size();
         Decimal complete = 0;
 
@@ -136,6 +118,26 @@ public with sharing class checklistHelper {
         progress = (complete / total) * 100;
 
         return reqMap.values();
+    }
+
+    public static Boolean allowSubmit (List<RequirementWrapper> requirements, EASYApplicationInfo appInfo) {
+
+        allowSubmit = false;
+
+        for (RequirementWrapper rw : requirements) {
+            if (!rw.reqStatus) {
+                return allowSubmit;
+            }
+        }
+
+        if (String.isNotBlank(appInfo.appControlId) && String.isNotBlank(appInfo.allowSubmitFrom)) {
+            if (!(new Set<String>(appInfo.allowSubmitFrom.split(';'))).contains(appInfo.appStatus)) {
+                return allowSubmit;
+            }
+        }
+        allowSubmit = true;
+
+        return allowSubmit;
     }
 
     /*******************************************************************************
@@ -199,11 +201,11 @@ public with sharing class checklistHelper {
             qrMap.get(qdReqMap.get(qr.Question__c)).add(qr);
         }
         List<ApplicationRequirement> arLst = new List<ApplicationRequirement>();
-        List<Requirement_Response__c> responses = new List<Requirement_Response__c>();
         List<Requirement_Response__c> newResponses = new List<Requirement_Response__c>();
         for (Id rid : requirementIds) {
             //Requirement Items
             List<Requirement_Item__c> items;
+
             if (riMap.containsKey(rid)) {
                 items = riMap.get(rid);
             } else {
@@ -240,9 +242,6 @@ public with sharing class checklistHelper {
                 mapResponses.put(r.Requirement_Item__c, r);
             }
 
-            Map<String, Map<String, Schema.SObjectField>> relatedFieldDescribes = new Map<String, Map<String, SObjectField>>();
-            Set<String> relatedObjects = new Set<String>();
-            List<Requirement_Item__c> riLst = new List<Requirement_Item__c>();
             for (Requirement_Item__c i : items) {
                 if (ApplicationFilter.filter(app, i)) {
                     if (!mapResponses.containsKey(i.Id) && String.isNotBlank(applicationId)) {

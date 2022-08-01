@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Active__c</fullName>
     <defaultValue>false</defaultValue>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Checked if this question is active. If unchecked, this question won&apos;t display on any applications.</inlineHelpText>
     <label>Active</label>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Additional_Campaign_Member_Status__c</fullName>
-    <deprecated>false</deprecated>
     <description>The status that should be set on the Campaign Member created for the Additional Campaign. It must match an available status from the Additional Campaign, and it cannot be blank.</description>
     <externalId>false</externalId>
     <inlineHelpText>Set the status for the Campaign Member created from the Additional Campaign.</inlineHelpText>

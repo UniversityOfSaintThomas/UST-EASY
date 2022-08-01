@@ -147,6 +147,7 @@ public class ApplicationCreate {
                     //AND Degree__c = :degreeType
                     ORDER BY Name ASC
             ];
+
             // Original EASY query, that does not limit program list by application control
             // List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Application_Control__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true  ORDER BY Name ASC];
 
@@ -173,11 +174,12 @@ public class ApplicationCreate {
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
             AggregateResult[] at = [
-                    SELECT Academic_Term__r.Id, Academic_Term__r.Name
+                    SELECT Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c
                     FROM Intended_Program_Term__c
                     WHERE Intended_Program__r.Application_Control__c = :appControlId
                     AND Academic_Term__r.Application_Status__c = :'Active'
-                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name
+                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c
+                    ORDER BY Academic_Term__r.Term_Start_Date__c
             ];
 
             for (AggregateResult ar : at) {

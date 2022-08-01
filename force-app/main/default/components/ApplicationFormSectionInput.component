@@ -21,7 +21,7 @@
     <apex:attribute name="itemNumber" description="iterating number of current displayed questions" type="Integer" required="false"/>
     <apex:attribute name="relatedRecords" description="Is part of a related records question" type="Boolean" required="false" default="false"/>
 
-    <apex:outputPanel rendered="{!inputType != 'Address' && !ISBLANK(inputLabel) && inputType != 'Checkbox'}" layout="none">
+    <apex:outputPanel rendered="{!inputType != 'Address' && !ISBLANK(inputLabel) && inputType != 'Checkbox' && inputType != 'Hidden'}" layout="none">
         <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
             {!inputLabel}
             <apex:outputPanel rendered="{!isRequired}" layout="none">
@@ -29,6 +29,9 @@
             </apex:outputPanel>
         </label>
     </apex:outputPanel>
+
+    <!-- Hidden Field -->
+    <apex:inputHidden value="{!responseObject[fieldAPI]}" rendered="{!inputType == 'Hidden'}"/>
 
     <!-- Static for Address label -->
     <apex:outputPanel rendered="{!inputType == 'Address'}" layout="block" styleClass="slds-text-body_regular validate{!inputType} ">
@@ -137,7 +140,7 @@
                         </label>
                     </span>
                 </apex:repeat>
-                <apex:inputHidden value="{!responseObject[fieldAPI]}" id="radioField1"/>
+                <apex:inputHidden value="{!responseObject[fieldAPI]}" id="radioField1" html-class="slds-radio_button-value"/>
             </div>
         </div>
     </apex:outputPanel>

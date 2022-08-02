@@ -103,7 +103,7 @@ function fileUploadAreas() {
         let currentFile = fileCard.querySelector('.currentlySelectedFile');
 
         ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(evt => {
-            upload.addEventListener(evt, function () {
+            upload.addEventListener(evt, function (e) {
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -121,7 +121,7 @@ function fileUploadAreas() {
             });
         });
 
-        upload.addEventListener('drop', function () {
+        upload.addEventListener('drop', function (e) {
             fileInput.files = e.dataTransfer.files;
             currentFile.innerHTML = findFileName(fileInput.value);
         });

@@ -20,7 +20,7 @@ public class ApplicationBodyController_TEST {
         );
         insert appControl;
 
-        Contact student = new Contact(LastName = 'TestStudent');
+        Contact student = new Contact(LastName = 'TestStudent', FirstName = 'TestFirst', Email = 'test@email.com');
         insert student;
 
         List<Application__c> apps = new List<Application__c>();
@@ -28,7 +28,6 @@ public class ApplicationBodyController_TEST {
                 Contact__c = student.Id,
                 Application_Status__c = Application__c.Application_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 Application_Control__c = appControl.Id,
-                Application_Substatus__c = 'Hold',
                 Citizenship__c = 'U.S. Citizen'
         );
         apps.add(app);
@@ -37,7 +36,6 @@ public class ApplicationBodyController_TEST {
                 Contact__c = student.Id,
                 Application_Status__c = Application__c.Application_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 Application_Control__c = appControl.Id,
-                Application_Substatus__c = 'Hold',
                 Citizenship__c = 'U.S. Citizen'
         );
         apps.add(app2);

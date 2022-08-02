@@ -102,7 +102,6 @@
                                                  itemId="{!group.item.Id}"
                                                  odlAttachmentId="{!group.oldAttVersion.Id}"
                                                  attachmentTitle="{!group.att.Title}"
-                                                 supportedFileTypes="{!group.item.File_Types__c}"
             />
         </apex:outputPanel>
 

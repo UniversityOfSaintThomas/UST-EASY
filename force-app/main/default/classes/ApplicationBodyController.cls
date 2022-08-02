@@ -235,12 +235,7 @@ public with sharing class ApplicationBodyController {
     }
 
     public String getVFPageName() {
-        String pageName = ApexPages.currentPage().getUrl();
-        pageName = pageName.replaceFirst('/apex/', '');
-        pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');
-        String[] pageNameExtra = pageName.split('%3F', 0);
-        pageName = pageNameExtra[0].toLowerCase();
-        return pageName;
+        return ApexPages.currentPage().getUrl().substringAfter('apex/').split('\\?')[0];
     }
 
     public String removeHTML(String q) {

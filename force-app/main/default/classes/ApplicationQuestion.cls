@@ -250,7 +250,6 @@ public class ApplicationQuestion {
 
     public Boolean getShowQuestion(SObject obj) {
 
-
         if (dependencyCalculated) {
             return showQuestion;
         }

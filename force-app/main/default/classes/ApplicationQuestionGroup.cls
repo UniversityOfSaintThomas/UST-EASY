@@ -186,10 +186,9 @@ public class ApplicationQuestionGroup {
                     continue;
                 }
 
-                if (question.fieldType.equalsIgnoreCase('Address')
-                        && (question.application != null && String.isNotBlank(question.question.Required__c)
-                        && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c))
-                        && String.isNotBlank(question.question.Related_Object_Field__c)) {
+                System.debug('question.app: ' + question.application);
+                System.debug('question.question.Required__c: ' + question.question.Required__c);
+                if (question.fieldType.equalsIgnoreCase('Address') && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && String.isNotBlank(question.question.Related_Object_Field__c)) {
 
                     for (String addressField : new Set<String>{
                             'City__c', 'Country__c', 'PostalCode__c', 'State__c', 'Street__c'
@@ -204,10 +203,7 @@ public class ApplicationQuestionGroup {
                     //returnedError += 'Address in play';
                 } else {
                     try {
-                        if (String.isNotBlank(question.question.Related_Object_Field__c)
-                                && (question.application != null && String.isNotBlank(question.question.Required__c)
-                                && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c))
-                                && obj.get(question.question.Related_Object_Field__c) == '') {
+                        if (String.isNotBlank(question.question.Related_Object_Field__c) && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && obj.get(question.question.Related_Object_Field__c) == '') {
                             returnedError += question.label;
                         }
 
@@ -276,8 +272,9 @@ public class ApplicationQuestionGroup {
     ********************************************************************************/
     public void relatedUpload() {
         if (String.isNotBlank(selectedRelatedId) && relatedObjectsMap.containsKey(selectedRelatedId) && relatedObjectsMap.get(selectedRelatedId).isEditMode == false) {
-            if (relatedObjectsMap.get(selectedRelatedId).obj.Id != null) {
-            } else if (relatedObjectsMap.get(selectedRelatedId).obj.Id == null) {
+            // if (relatedObjectsMap.get(selectedRelatedId).obj.Id != null) {
+            // } else 
+            if (relatedObjectsMap.get(selectedRelatedId).obj.Id == null) {
                 try {
                     SObjectWrapper objW = relatedObjectsMap.get(selectedRelatedId);
                     insert objW.obj;

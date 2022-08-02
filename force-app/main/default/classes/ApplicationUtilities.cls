@@ -188,7 +188,6 @@ public class ApplicationUtilities {
     * @description Returns the application control based on urlParameter or the default one if no param is found.
     ********************************************************************************/
     public static Application_Control__c getApplicationControls(String param) {
-
         Application_Control__c appControl;
         Application_Control__c defaultControl;
 

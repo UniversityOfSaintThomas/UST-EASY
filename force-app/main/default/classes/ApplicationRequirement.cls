@@ -266,7 +266,7 @@ public class ApplicationRequirement {
 
         // Clone Question Response records and store ID if this is an external user
         // in order to get around restriction of external users being able to edit objects
-        if (appInfo.isExternalUser) {
+        if (appInfo.isExternalUser != null && appInfo.isExternalUser) {
             for (ApplicationQuestionGroup aqg : section.groups) {
                 if (aqg.questionGroup && aqg.questions != null) {
                     for (ApplicationQuestion aq : aqg.questions) {

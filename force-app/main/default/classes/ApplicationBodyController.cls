@@ -48,8 +48,6 @@ public with sharing class ApplicationBodyController {
             appInfoParam.appStatus = 'none';
         }
 
-
-
         /* Some pages may have multiple app contexts */
         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
 
@@ -124,7 +122,6 @@ public with sharing class ApplicationBodyController {
         /* Start/End date filter if defined */
         for (EASY_Widget__c widget : allPositionWidgets) {
             Boolean skipWidget = false;
-
             if (widget.Activation_State__c.equalsIgnoreCase('Inactive')) {
                 skipWidget = true;
             } else if (widget.Activation_State__c.equalsIgnoreCase('Date activated')) {

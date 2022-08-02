@@ -16,10 +16,11 @@ public class ApplicationQuestionGroup_TEST {
         );
         insert appControl;
 
-        Account acc = new Account(Name = 'Test Account');
-
         Contact student = new Contact(LastName = 'Student');
         insert student;
+
+        Account acc = new Account(Name = 'Test Account', hed__Primary_Contact__c = student.Id);
+        insert acc;
 
         ContentVersion cv = new ContentVersion(Title = 'Test', PathOnClient = 'Test', VersionData = Blob.valueOf('test'));
         insert cv;
@@ -337,10 +338,8 @@ public class ApplicationQuestionGroup_TEST {
         multiPicklistWrapper.setMultiPicklistValues(values);
         List<String> multiPicklistValues = multiPicklistWrapper.getMultiPicklistValues();
 
-        for (ApplicationQuestion appQuestion : appQuestionGroup.questions) {
-            appQuestion.dependencyCalculated = true;
-            appQuestion.showQuestion = true;
-        }
+        appQuestionGroup.questions[0].dependencyCalculated = true;
+        appQuestionGroup.questions[0].showQuestion = true;
 
         appQuestionGroup.selectedRelatedId = student.Id;
         ApplicationQuestionGroup.SObjectWrapper sobjectWrapper1 = new ApplicationQuestionGroup.SObjectWrapper(appQuestionGroup, 'idx test', student);
@@ -411,5 +410,156 @@ public class ApplicationQuestionGroup_TEST {
         System.assertEquals(expectedFieldResultMap, fieldResultMap);
         System.assertEquals(true, creatingNewRelatedRecord);
         System.assertEquals(student.Id, selectedRelatedId);
+    }
+
+    @IsTest
+    public static void testAddress() {
+        Contact student = [SELECT Id, Department, Name, (SELECT Id FROM ContentDocumentLinks) FROM Contact LIMIT 1];
+        Application__c app = [SELECT Id, Name, Contact__c, Application_Status__c FROM Application__c LIMIT 1];
+        Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
+
+        Map<String, Id> rtMapRI = new Map<String, Id>();
+        for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Requirement_Item__c']) {
+            rtMapRI.put(rt.DeveloperName, rt.Id);
+        }
+        Requirement_Item__c reqItem = new Requirement_Item__c(
+            Requirement__c = req.Id, 
+            Name = 'Address Test', 
+            Active__c = true, 
+            RecordTypeId = rtMapRI.get('Related_Object'),
+            Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID(), 
+            Internal_Only__c = true,
+            Related_List_Object__c = 'Family__c',
+            Related_List_Object_Master_Field__c = 'Applicant__c'
+        );
+        insert reqItem;
+
+        Map<String, Id> rtMap = new Map<String, Id>();
+        for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Question__c']) {
+            rtMap.put(rt.DeveloperName, rt.Id);
+        }
+        Question__c q1 = new Question__c(
+            Active__c = true, 
+            RecordTypeId = rtMap.get('Address'), 
+            Name = 'Test Address', 
+            Label__c = 'Test', 
+            Requirement_Item__c = reqItem.Id, 
+            Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), 
+            Additional_Field_Validation__c = 'validateName',
+            Lookup_Object__c = 'Family__c',
+            Related_Object_Field__c = 'Applicant__c',
+            New_Reference_Field__c = false,
+            Hardcoded_Value__c = 'test value',
+            Required__c = 'Started App;Pending',
+            Contact_Field__c = 'test'
+        );
+        insert q1;
+
+        Map<String, Id> rtMapQD = new Map<String, Id>();
+        for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Question_Dependency__c']) {
+            rtMapQD.put(rt.DeveloperName, rt.Id);
+        }
+        Question_Dependency__c qd = new Question_Dependency__c(
+            Question__c = q1.Id, 
+            Controlling_Question__c = q1.Id, 
+            Value__c = 'Test Address', 
+            Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+        );
+        insert qd;
+
+        Requirement_Response__c rr = new Requirement_Response__c(
+            Application__c = app.Id, 
+            Requirement_Item__c = reqItem.Id,
+            External_Email__c = 'testaddress@test.com'
+        );
+        insert rr;
+
+        Question_Response__c qr = new Question_Response__c(
+            Requirement_Response__c = rr.Id,
+            Question__c = q1.Id
+        );
+        insert qr;
+
+        reqItem = [
+            SELECT Id,                 
+                RecordType.DeveloperName, 
+                Internal_Only__c, 
+                Instructions__c,
+                Related_List_Object_Master__c,
+                Related_List_Object__c,
+                Related_List_Object_Master_Field__c,
+                Related_List_Where_Clause__c,
+                Required_Number_of_Children__c,
+                Editable_Application_Status__c,
+                    (SELECT Id, 
+                        RecordType.DeveloperName, 
+                        RecordType.Name, 
+                        Contact_Field__c, 
+                        Application_Field__c, 
+                        URL_Parameter__c,
+                        Length__c,
+                        Placeholder__c,
+                        Label__c,
+                        Help_Text__c,
+                        Assistive_Text__c,
+                        Active__c,
+                        Intended_Program__c,
+                        Applicant_Type__c,
+                        Citizenship__c,
+                        School_College__c,
+                        Delivery_Type__c,
+                        Residency__c,
+                        Student_Type__c,
+                        Degree_Type__c,
+                        Generic_Filter_1__c,
+                        Generic_Filter_2__c,
+                        Generic_Filter_3__c,
+                        Generic_Filter_4__c,
+                        Application_Status__c,
+                        Hardcoded_Value__c,
+                        Related_Object_Field__c,
+                        Required__c,
+                        New_Reference_Field__c,
+                        Lookup_Object__c,
+                        Editable_Application_Status__c,
+                        Display_as_Picklist__c 
+                    FROM Questions__r) 
+            FROM Requirement_Item__c 
+            WHERE Name = 'Address Test' 
+            LIMIT 1
+        ];
+
+        Family__c family = new Family__c(Application__c = app.Id, Applicant__c = student.Id);
+        insert family;
+
+        q1 = [SELECT Id FROM Question__c WHERE Name = 'Test Address' LIMIT 1];
+        qd = [SELECT Id FROM Question_Dependency__c WHERE Value__c = 'Test Address' LIMIT 1];
+        rr = [SELECT Id FROM Requirement_Response__c WHERE External_Email__c = 'testaddress@test.com' LIMIT 1];
+        qr = [SELECT Id FROM Question_Response__c WHERE Question__c =: q1.Id LIMIT 1];
+
+        Map<Id, List<Question_Dependency__c>> dependentQuestions = new Map<Id, List<Question_Dependency__c>>();
+        List<Question_Dependency__c> qdList = new List<Question_Dependency__c>{qd};
+        dependentQuestions.put(q1.Id, qdList);
+        List<Question_Response__c> qrList = new List<Question_Response__c>{qr};
+        Schema.DescribeFieldResult describeField = Question__c.Additional_Field_Validation__c.getDescribe();
+        Schema.sObjectField field = describeField.getSObjectField();
+        Map<String, Schema.sObjectField> sobjectFieldMap = new Map<String, Schema.sObjectField>();
+        sobjectFieldMap.put('Additional_Field_Validation__c', field);
+
+        Test.startTest();
+        ApplicationQuestionGroup appQuestionGroup = new ApplicationQuestionGroup(
+            student, app, reqItem, dependentQuestions, rr, qrList, sobjectFieldMap, true
+        );
+        ApplicationQuestionGroup.SObjectWrapper objectWrapper = new ApplicationQuestionGroup.SObjectWrapper(appQuestionGroup, 'idx test', family);
+        objectWrapper.enableViewMode();
+        objectWrapper.enableConfirmMode();
+        Map<String, ApplicationQuestionGroup.SObjectWrapper> relatedObjectsMap = new Map<String, ApplicationQuestionGroup.SObjectWrapper>();
+        relatedObjectsMap.put(String.valueOf(family.Id), objectWrapper);
+        appQuestionGroup.relatedObjectsMap = relatedObjectsMap;
+        appQuestionGroup.selectedRelatedId = family.Id;
+        appQuestionGroup.enableDeleteMode();
+        appQuestionGroup.relatedUpload();
+        Test.stopTest();
+        System.assertEquals(false, objectWrapper.isEditMode);
     }
 }

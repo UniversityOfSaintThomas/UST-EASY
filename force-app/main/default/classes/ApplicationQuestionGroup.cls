@@ -186,6 +186,8 @@ public class ApplicationQuestionGroup {
                     continue;
                 }
 
+                System.debug('question.app: ' + question.application);
+                System.debug('question.question.Required__c: ' + question.question.Required__c);
                 if (question.fieldType.equalsIgnoreCase('Address') && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && String.isNotBlank(question.question.Related_Object_Field__c)) {
 
                     for (String addressField : new Set<String>{
@@ -402,8 +404,6 @@ public class ApplicationQuestionGroup {
             questions = new List<ApplicationQuestion>();
 
             for (Question__c q : item.Questions__r) {
-                System.debug('isAppCreate: ' + isAppCreate);
-                System.debug('q.Contact_Field__c: ' + q.Contact_Field__c);
                 if (isAppCreate && String.isNotBlank(q.Contact_Field__c)) {
                     ApplicationQuestion aq = new ApplicationQuestion(con, app, q.Label__c, con, q.Contact_Field__c);
                     aq.addQuestionObject(q);

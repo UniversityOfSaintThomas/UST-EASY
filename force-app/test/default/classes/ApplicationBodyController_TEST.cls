@@ -50,6 +50,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Top Widget',
                 Widget_Screen_Location__c = 'Top',
                 Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading',
+                Display_Text__c = 'Display Text',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Active',
                 Display_Widget_On_Pages__c = 'ApplicationPortal'
@@ -60,6 +62,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Top Widget 2',
                 Widget_Screen_Location__c = 'Top',
                 Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading',
+                Display_Text__c = 'Display Text',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Date Activated',
                 Display_Widget_On_Pages__c = 'ApplicationPortal',
@@ -75,6 +79,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Bottom Widget',
                 Widget_Screen_Location__c = 'Bottom',
                 Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading',
+                Display_Text__c = 'Display Text',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Active',
                 Display_Widget_On_Pages__c = 'ApplicationPortal'
@@ -85,6 +91,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Left Widget',
                 Widget_Screen_Location__c = 'Left',
                 Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading',
+                Display_Text__c = 'Display Text',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Active',
                 Display_Widget_On_Pages__c = 'ApplicationPortal'
@@ -95,6 +103,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Right Widget',
                 Widget_Screen_Location__c = 'Right',
                 Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading',
+                Display_Text__c = 'Display Text',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Active',
                 Display_Widget_On_Pages__c = 'ApplicationPortal'
@@ -127,6 +137,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Content Top Widget',
                 Widget_Screen_Location__c = 'Content Top',
                 Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading',
+                Display_Text__c = 'Display Text',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Active',
                 Display_Widget_On_Pages__c = 'ApplicationPortal'
@@ -137,6 +149,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Content Top Widget',
                 Widget_Screen_Location__c = 'Content Top',
                 Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading',
+                Display_Text__c = 'Display Text',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Active',
                 Display_Widget_On_Pages__c = 'ApplicationPortal',
@@ -148,6 +162,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Content Bottom Widget',
                 Widget_Screen_Location__c = 'Content Bottom',
                 Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading',
+                Display_Text__c = 'Display Text',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Active',
                 Display_Widget_On_Pages__c = 'ApplicationPortal'
@@ -158,6 +174,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Content Bottom Widget',
                 Widget_Screen_Location__c = 'Content Bottom',
                 Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading',
+                Display_Text__c = 'Display Text',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Active',
                 Display_Widget_On_Pages__c = 'ApplicationPortal',
@@ -199,7 +217,8 @@ public class ApplicationBodyController_TEST {
         System.debug(JSON.serializePretty(allWidgets));
 
         System.assertEquals(1, allWidgets.topWidgets.size());
-        System.assertEquals(1, allWidgets.rightWidgets.size());
+        //Right includes one login widget
+        System.assertEquals(2, allWidgets.rightWidgets.size());
         System.assertEquals(1, allWidgets.bottomWidgets.size());
         System.assertEquals(1, allWidgets.leftWidgets.size());
         System.assertEquals(1, allWidgets.contentTopWidgets.size());

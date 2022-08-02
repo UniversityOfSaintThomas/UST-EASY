@@ -48,8 +48,6 @@ public with sharing class ApplicationBodyController {
             appInfoParam.appStatus = 'none';
         }
 
-
-
         /* Some pages may have multiple app contexts */
         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
 

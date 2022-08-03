@@ -1,7 +1,7 @@
 /**
  * author: nicole.b@digitalmass.com
  * created-date: 2022-06-01
- * last-modified: 2022-06-06
+ * last-modified: 2022-08-02
  */
 
 //built-ins
@@ -100,7 +100,7 @@ export default class RequestForInformationForm extends LightningElement {
     lead_default_record_type;
     all_lead_field_api_names = [];
 
-    // maps to populate picklists, where label is name and value is id of object
+    // maps to populate picklists, where value is name and key is id of object
     program_id_to_name_map; // for Recruitment_Program__c
     term_id_to_name_map; // for Term__c
     account_id_to_name_map; // for Affiliated_Account__c
@@ -167,7 +167,7 @@ export default class RequestForInformationForm extends LightningElement {
         'When_do_you_plan_to_start_school': false
     }
 
-    record_input; // stores user enter form information
+    record_input; // stores user entered form information
 
     //field labels
     field_labels = {
@@ -408,9 +408,49 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.zipcode_label:
                 this.record_input.fields.PostalCode = event.target.value;
+                if (String(event.target.value).length === 5 
+                    && String(event.target.value).match(/^[0-9]+$/) != null
+                    && !this.international_citizen_type
+                ) {
+                    this.show_spinner = true;
+                    let url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&postalcode=' + String(event.target.value) + '&countrycodes=US';
+                    fetch(url)
+                    .then((response) => response.json())
+                    .then((result) => {
+                        let city = result[0].address.city;
+                        if (city == null) {
+                            city = result[0].address.hamlet;
+                        }
+                        if (city == null) {
+                            city = result[0].address.town;
+                        }
+                        if (city == null) {
+                            city = result[0].address.municipality;
+                        }
+
+                        let state = result[0].address.state;
+                        if (state == null) {
+                            state = result[0].address.county;
+                        }
+
+                        this.template.querySelector('lightning-input[data-id="city"]').value = city;
+                        this.template.querySelector('lightning-combobox[data-id="state"]').value = state;
+                        this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States of America (the)';
+                        this.show_spinner = false;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.show_spinner = false;
+                    })
+                }
                 break;
             case this.field_labels.country_label:
                 this.record_input.fields.Country = event.target.value;
+                if (event.target.value != 'United States of America (the)') {
+                    this.international_citizen_type = true;
+                } else {
+                    this.international_citizen_type = false;
+                }
                 break;
             case this.field_labels.text_messages_label:
                 if (event.target.checked) {
@@ -426,6 +466,8 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.Citizenship_Type__c = event.target.value;
                 if (event.target.value == 'International') {
                     this.international_citizen_type = true;
+                } else {
+                    this.international_citizen_type = false;
                 }
                 break;
             case this.field_labels.admit_type_label:
@@ -487,8 +529,6 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
             this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
-
-        console.log(JSON.stringify(this.record_input.fields));
     }
 
     handleSearch(event) {
@@ -571,7 +611,13 @@ export default class RequestForInformationForm extends LightningElement {
 
     /**
     ******************************************
-    * END OnChange
+    * END OnClick
+    ******************************************
+    */
+
+    /**
+    ******************************************
+    * BEGIN Helper Methods
     ******************************************
     */
 
@@ -646,65 +692,70 @@ export default class RequestForInformationForm extends LightningElement {
     // can't query for global value sets -- would need to be a field
     get stateOptions() {
         return [
-            { label: 'AL', value: 'AL' },
-            { label: 'AK', value: 'AK' },
-            { label: 'AS', value: 'AS' },
-            { label: 'AZ', value: 'AZ' },
-            { label: 'AR', value: 'AR' },
-            { label: 'CA', value: 'CA' },
-            { label: 'CO', value: 'CO' },
-            { label: 'CT', value: 'CT' },
-            { label: 'DE', value: 'DE' },
-            { label: 'DC', value: 'DC' },
-            { label: 'FM', value: 'FM' },
-            { label: 'FL', value: 'FL' },
-            { label: 'GA', value: 'GA' },
-            { label: 'GU', value: 'GU' },
-            { label: 'HI', value: 'HI' },
-            { label: 'ID', value: 'ID' },
-            { label: 'IL', value: 'IL' },
-            { label: 'IN', value: 'IN' },
-            { label: 'IA', value: 'IA' },
-            { label: 'KS', value: 'KS' },
-            { label: 'KY', value: 'KY' },
-            { label: 'LA', value: 'LA' },
-            { label: 'ME', value: 'ME' },
-            { label: 'MH', value: 'MH' },
-            { label: 'MD', value: 'MD' },
-            { label: 'MA', value: 'MA' },
-            { label: 'MI', value: 'MI' },
-            { label: 'MN', value: 'MN' },
-            { label: 'MS', value: 'MS' },
-            { label: 'MO', value: 'MO' },
-            { label: 'MT', value: 'MT' },
-            { label: 'NE', value: 'NE' },
-            { label: 'NV', value: 'NV' },
-            { label: 'NH', value: 'NH' },
-            { label: 'NJ', value: 'NJ' },
-            { label: 'NM', value: 'NM' },
-            { label: 'NY', value: 'NY' },
-            { label: 'NC', value: 'NC' },
-            { label: 'ND', value: 'ND' },
-            { label: 'MP', value: 'MP' },
-            { label: 'OH', value: 'OH' },
-            { label: 'OK', value: 'OK' },
-            { label: 'OR', value: 'OR' },
-            { label: 'PW', value: 'PW' },
-            { label: 'PA', value: 'PA' },
-            { label: 'PR', value: 'PR' },
-            { label: 'RI', value: 'RI' },
-            { label: 'SC', value: 'SC' },
-            { label: 'SD', value: 'SD' },
-            { label: 'TN', value: 'TN' },
-            { label: 'TX', value: 'TX' },
-            { label: 'UT', value: 'UT' },
-            { label: 'VT', value: 'VT' },
-            { label: 'VI', value: 'VI' },
-            { label: 'VA', value: 'VA' },
-            { label: 'WA', value: 'WA' },
-            { label: 'WV', value: 'WV' },
-            { label: 'WI', value: 'WI' },
-            { label: 'WY', value: 'WY' }
+            { label: 'Alabama', value: 'Alabama' },
+            { label: 'Alaska', value: 'Alaska' },
+            { label: 'American Samoa', value: 'American Samoa' },
+            { label: 'Arizona', value: 'Arizona' },
+            { label: 'Arkansas', value: 'Arkansas' },
+            { label: 'California', value: 'California' },
+            { label: 'Colorado', value: 'Colorado' },
+            { label: 'Connecticut', value: 'Connecticut' },
+            { label: 'Delaware', value: 'Delaware' },
+            { label: 'District of Columbia', value: 'District of Columbia' },
+            { label: 'Micronesia', value: 'Micronesia' },
+            { label: 'Florida', value: 'Florida' },
+            { label: 'Georgia', value: 'Georgia' },
+            { label: 'Guam', value: 'Guam' },
+            { label: 'Hawaii', value: 'Hawaii' },
+            { label: 'Idaho', value: 'Idaho' },
+            { label: 'Illinois', value: 'Illinois' },
+            { label: 'Indiana', value: 'Indiana' },
+            { label: 'Iowa', value: 'Iowa' },
+            { label: 'Kansas', value: 'Kansas' },
+            { label: 'Kentucky', value: 'Kentucky' },
+            { label: 'Louisiana', value: 'Louisiana' },
+            { label: 'Maine', value: 'Maine' },
+            { label: 'Marshall Islands', value: 'Marshall Islands' },
+            { label: 'Maryland', value: 'Maryland' },
+            { label: 'Massachusetts', value: 'Massachusetts' },
+            { label: 'Michigan', value: 'Michigan' },
+            { label: 'Minnesota', value: 'Minnesota' },
+            { label: 'Mississippi', value: 'Mississippi' },
+            { label: 'Missouri', value: 'Missouri' },
+            { label: 'Montana', value: 'Montana' },
+            { label: 'Nebraska', value: 'Nebraska' },
+            { label: 'Nevada', value: 'Nevada' },
+            { label: 'New Hampshire', value: 'New Hampshire' },
+            { label: 'New Jersey', value: 'New Jersey' },
+            { label: 'New Mexico', value: 'New Mexico' },
+            { label: 'New York', value: 'New York' },
+            { label: 'North Carolina', value: 'North Carolina' },
+            { label: 'North Dakota', value: 'North Dakota' },
+            { label: 'Northern Mariana Islands', value: 'Northern Mariana Islands' },
+            { label: 'Ohio', value: 'Ohio' },
+            { label: 'Oklahoma', value: 'Oklahoma' },
+            { label: 'Oregon', value: 'Oregon' },
+            { label: 'Palau', value: 'Palau' },
+            { label: 'Pennsylvania', value: 'Pennsylvania' },
+            { label: 'Puerto Rico', value: 'Puerto Rico' },
+            { label: 'Rhode Island', value: 'Rhode Island' },
+            { label: 'South Carolina', value: 'South Carolina' },
+            { label: 'South Dakota', value: 'South Dakota' },
+            { label: 'Tennessee', value: 'Tennessee' },
+            { label: 'Texas', value: 'Texas' },
+            { label: 'Utah', value: 'Utah' },
+            { label: 'Vermont', value: 'Vermont' },
+            { label: 'Virgin Islands', value: 'Virgin Islands' },
+            { label: 'Virginia', value: 'Virginia' },
+            { label: 'Washington', value: 'Washington' },
+            { label: 'West Virginia', value: 'West Virginia' },
+            { label: 'Wisconsin', value: 'Wisconsin' },
+            { label: 'Wyoming', value: 'Wyoming' }
         ];
     }
+        /**
+    ******************************************
+    * END Helper Methods
+    ******************************************
+    */
 }

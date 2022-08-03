@@ -34,7 +34,7 @@ public with sharing class ApplicationBodyController {
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atSubStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atCitizenshipMap = new Map<String, Set<String>>();
-        currentPageName = getVFPageName().toLowerCase();
+        currentPageName = currentPageName.toLowerCase();
         allWidgets foundWidgets = new allWidgets();
         foundWidgets.topWidgets = new List<EASY_Widget__c>();
         foundWidgets.rightWidgets = new List<EASY_Widget__c>();
@@ -232,10 +232,6 @@ public with sharing class ApplicationBodyController {
             }
         }
         return false;
-    }
-
-    public String getVFPageName() {
-        return ApexPages.currentPage().getUrl().substringAfter('apex/').split('\\?')[0];
     }
 
     public String removeHTML(String q) {

@@ -19,8 +19,8 @@
         </apex:define>
         <apex:define name="metaPageTitle">{!appInfo.intendedProgram} : {!title}</apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="{!if(isInvalid,'An Error has occurred',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}">
-                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}" title="{!title}">
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occurred',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}" vfPageName="ApplicationRequirement">
+                <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}" title="{!title}" vfPageName="ApplicationRequirement">
 
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>

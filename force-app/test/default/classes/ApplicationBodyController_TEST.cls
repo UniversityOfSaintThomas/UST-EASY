@@ -23,6 +23,14 @@ public class ApplicationBodyController_TEST {
         Contact student = new Contact(LastName = 'TestStudent', FirstName = 'TestFirst', Email = 'test@email.com');
         insert student;
 
+        Opportunity opp = new Opportunity(
+                Contact__c = student.id,
+                Name = student.LastName + '||',
+                StageName = 'Started App',
+                CloseDate = Date.today().addDays(30)
+        );
+        insert opp;
+
         List<Application__c> apps = new List<Application__c>();
         Application__c app = new Application__c(
                 Contact__c = student.Id,
@@ -186,7 +194,7 @@ public class ApplicationBodyController_TEST {
         insert widgets;
     }
 
-    @isTest
+    @IsTest
     public static void testGetWidgets() {
         Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
         Contact student = [SELECT Id FROM Contact LIMIT 1];
@@ -206,7 +214,7 @@ public class ApplicationBodyController_TEST {
 
         ApplicationBodyController controller = new ApplicationBodyController();
         controller.appInfoParam = appInfo;
-        controller.currentPageName = 'TestPageName';
+        controller.currentPageName = 'ApplicationPortal';
 
         Test.startTest();
         ApplicationBodyController.allWidgets allWidgets = controller.getWidgets();

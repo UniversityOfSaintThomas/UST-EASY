@@ -4,6 +4,7 @@
     <apex:attribute name="preventUpdates" description="Set the page to output only" type="Boolean" default="false" required="false"/>
     <apex:attribute name="nextId" description="ApplicationSettings" type="Id" required="false"/>
     <apex:attribute name="prevId" description="ApplicationSettings" type="Id" required="false"/>
+    <apex:attribute name="vfPageName" description="The visualForce page name currently on." type="String" required="false"/>
     <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
     <apex:attribute name="title" description="Title of current section" type="String" required="false"/>
     <apex:form id="theForm">

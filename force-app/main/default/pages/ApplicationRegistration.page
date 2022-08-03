@@ -31,8 +31,8 @@
             </apex:outputPanel>
 
             <apex:outputPanel layout="none" rendered="{!cookieKeyPresent}">
-                <c:ApplicationBody title="New Application" appInfo="{!appInfo}" loadingText="Building Your Application...">
-                    <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}" title="New Application">
+                <c:ApplicationBody title="New Application" appInfo="{!appInfo}" loadingText="Building Your Application..." vfPageName="ApplicationRegistration">
+                    <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}" title="New Application" vfPageName="ApplicationRegistration">
                         <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
                             <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
                         </apex:actionFunction>

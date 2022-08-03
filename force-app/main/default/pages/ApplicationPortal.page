@@ -5,7 +5,7 @@
         </apex:define>
         <apex:define name="metaPageTitle">St. Thomas Application Portal</apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="Application(s)" appInfo="{!appInfo}">
+            <c:ApplicationBody title="Application(s)" appInfo="{!appInfo}" vfPageName="ApplicationPortal">
                 <apex:variable var="howManyApps" value="{!IF(!ISBLANK(applicationMapSize), applicationMapSize, 0)}"/>
                 <div class="slds-grid slds-wrap {!IF(howManyApps >= 2, ' slds-gutters','')}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <apex:pageMessages />

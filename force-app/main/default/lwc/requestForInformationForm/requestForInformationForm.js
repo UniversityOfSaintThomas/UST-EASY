@@ -38,6 +38,8 @@ import LEAD_MAIL_INFO from '@salesforce/schema/Lead.Mail_Information_Requested__
 import LEAD_COLLEGE_SCHOOL from '@salesforce/schema/Lead.St_Thomas_College_School__c';
 import LEAD_RECENT_SCHOOL from '@salesforce/schema/Lead.hed__Most_Recent_School__c';
 
+import FAMILY_OBJECT from '@salesforce/schema/Family__c'; //using to get Country global picklist value set
+
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
 import getPrograms from '@salesforce/apex/requestForInformationFormController.getPrograms';
@@ -99,6 +101,9 @@ export default class RequestForInformationForm extends LightningElement {
     // lead info
     lead_default_record_type;
     all_lead_field_api_names = [];
+
+    // family info - used to get Country global picklist value set
+    family_default_record_type;
 
     // maps to populate picklists, where value is name and key is id of object
     program_id_to_name_map; // for Recruitment_Program__c
@@ -327,9 +332,26 @@ export default class RequestForInformationForm extends LightningElement {
     picklist_values(result) {
         if (result.data) {
             this.citizenship_picklist_values = result.data.picklistFieldValues.Citizenship_Type__c.values;
-            this.country_picklist_values = result.data.picklistFieldValues.hed__Citizenship__c.values;
             this.admit_type_picklist_values = result.data.picklistFieldValues.Admit_Type__c.values;
             this.timeline_picklist_values = result.data.picklistFieldValues.Timeline__c.values;
+        } else {
+            console.log(result.error);
+        }
+    }
+
+    @wire(getObjectInfo, { objectApiName: FAMILY_OBJECT })
+    object_info_family(result) {
+        if (result.data) {
+            this.family_default_record_type = result.data.defaultRecordTypeId;
+        } else {
+            console.log(result.error);
+        }
+    }
+
+    @wire(getPicklistValuesByRecordType, { objectApiName: FAMILY_OBJECT, recordTypeId: '$family_default_record_type' })
+    picklist_values_family(result) {
+        if (result.data) {
+            this.country_picklist_values = result.data.picklistFieldValues.Birth_Country_Region_Territory__c.values;
         } else {
             console.log(result.error);
         }
@@ -412,41 +434,12 @@ export default class RequestForInformationForm extends LightningElement {
                     && String(event.target.value).match(/^[0-9]+$/) != null
                     && !this.international_citizen_type
                 ) {
-                    this.show_spinner = true;
-                    let url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&postalcode=' + String(event.target.value) + '&countrycodes=US';
-                    fetch(url)
-                    .then((response) => response.json())
-                    .then((result) => {
-                        let city = result[0].address.city;
-                        if (city == null) {
-                            city = result[0].address.hamlet;
-                        }
-                        if (city == null) {
-                            city = result[0].address.town;
-                        }
-                        if (city == null) {
-                            city = result[0].address.municipality;
-                        }
-
-                        let state = result[0].address.state;
-                        if (state == null) {
-                            state = result[0].address.county;
-                        }
-
-                        this.template.querySelector('lightning-input[data-id="city"]').value = city;
-                        this.template.querySelector('lightning-combobox[data-id="state"]').value = state;
-                        this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States of America (the)';
-                        this.show_spinner = false;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.show_spinner = false;
-                    })
+                    this.populateUSCityStateAndCountry(event.target.value);
                 }
                 break;
             case this.field_labels.country_label:
                 this.record_input.fields.Country = event.target.value;
-                if (event.target.value != 'United States of America (the)') {
+                if (event.target.value != 'United States') {
                     this.international_citizen_type = true;
                 } else {
                     this.international_citizen_type = false;
@@ -687,6 +680,48 @@ export default class RequestForInformationForm extends LightningElement {
         } else if (Boolean(this.address1)) {
             this.record_input.fields.Street = this.address1;
         }
+    }
+
+    populateUSCityStateAndCountry(zipcode) {
+        this.show_spinner = true;
+        let url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&postalcode=' + String(zipcode) + '&countrycodes=US';
+        fetch(url)
+        .then((response) => response.json())
+        .then((result) => {
+            let city = result[0].address.city;
+            if (city == null) {
+                city = result[0].address.hamlet;
+            }
+            if (city == null) {
+                city = result[0].address.town;
+            }
+            if (city == null) {
+                city = result[0].address.municipality;
+            }
+
+            let state = result[0].address.state;
+            if (state == null) {
+                state = result[0].address.county;
+            }
+
+            if (this.show_fields.City) {
+                this.template.querySelector('lightning-input[data-id="city"]').value = city;
+                this.record_input.fields.City = city;
+            }
+            if (this.show_fields.State) {
+                this.template.querySelector('lightning-combobox[data-id="state"]').value = state;
+                this.record_input.fields.State = state;
+            }
+            if (this.show_fields.Country) {
+                this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States';
+                this.record_input.fields.Country = 'United States';
+            }
+            this.show_spinner = false;
+        })
+        .catch((error) => {
+            console.log(error);
+            this.show_spinner = false;
+        })
     }
 
     // can't query for global value sets -- would need to be a field

@@ -1,10 +1,11 @@
 /**
  * @description       : 
- * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-03-2022
- * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @last modified on  : 08-04-2022
+ * @last modified by  : nicole.b@digitalmass.com
 **/
+
 public without sharing class requestForInformationFormController {
 
     @AuraEnabled

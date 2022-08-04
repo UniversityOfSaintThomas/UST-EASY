@@ -1,8 +1,11 @@
 /**
- * author: nicole.b@digitalmass.com
- * created-date: 2022-06-01
- * last-modified: 2022-08-02
- */
+ * @description       : 
+ * @author            : nicole.b@digitalmass.com
+ * @group             : 
+ * @last modified on  : 08-04-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
+
 
 //built-ins
 import { LightningElement, api, track, wire } from 'lwc';

@@ -1,3 +1,7 @@
+/**
+ * @last modified on  : 08-04-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @IsTest
 public class ApplicationRequirement_TEST {
     @TestSetup
@@ -18,7 +22,7 @@ public class ApplicationRequirement_TEST {
 
         Account acc = new Account(Name = 'NewAcc1234324234');
         insert acc;
-        Contact student = new Contact(LastName = 'TestStudent23542542');
+        Contact student = new Contact(FirstName = 'TestFirst', LastName = 'TestStudent', Email = 'testfirst@teststudent.com');
         insert student;
         Application__c app = new Application__c(
                 Contact__c = student.Id,

@@ -1,10 +1,14 @@
+/**
+ * @last modified on  : 08-04-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @IsTest
 public class ApplicationRequirementPreview_TEST {
     @TestSetup
     public static void testSetup() {
         Account acc = new Account(Name = 'NewAcc');
         insert acc;
-        Contact student = new Contact(LastName = 'TestStudent');
+        Contact student = new Contact(FirstName = 'TestFirst', LastName = 'TestStudent', Email = 'testfirst@teststudent.com');
         insert student;
 
         Map<String, Id> rtMap = new Map<String, Id>();

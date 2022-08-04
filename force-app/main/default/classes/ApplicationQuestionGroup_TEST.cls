@@ -1,3 +1,7 @@
+/**
+ * @last modified on  : 08-04-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @IsTest
 public class ApplicationQuestionGroup_TEST {
     @TestSetup
@@ -16,7 +20,7 @@ public class ApplicationQuestionGroup_TEST {
         );
         insert appControl;
 
-        Contact student = new Contact(LastName = 'Student');
+        Contact student = new Contact(FirstName = 'TestFirst', LastName='Student', Email = 'testfirst@student.com');
         insert student;
 
         Account acc = new Account(Name = 'Test Account', hed__Primary_Contact__c = student.Id);

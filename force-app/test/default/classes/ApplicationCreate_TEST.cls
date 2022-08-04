@@ -1,10 +1,14 @@
+/**
+ * @last modified on  : 08-04-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @IsTest
 private class ApplicationCreate_TEST {
     @TestSetup
     static void setup() {
         Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl();
 
-        Contact con = new Contact(LastName = 'test');
+        Contact con = new Contact(FirstName = 'TestFirst', LastName = 'test', Email = 'testfirst@test.com');
         insert con;
 
         Academic_Term__c at = new Academic_Term__c(

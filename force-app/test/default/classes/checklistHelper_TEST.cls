@@ -1,6 +1,6 @@
 /**
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 2/3/2022.
- * Last Modified By: nicole.b@digitalmass.com 07/13/2022
+ * Last Modified By: nicole.b@digitalmass.com 08/04/2022
  */
 
 
@@ -23,7 +23,7 @@ public class checklistHelper_TEST {
         );
         insert appControl;
 
-        Contact student = new Contact(LastName = 'TestStudent');
+        Contact student = new Contact(FirstName = 'TestFirst', LastName = 'TestStudent', Email = 'testfirst@teststudent.com');
         insert student;
 
         Application__c app = new Application__c(

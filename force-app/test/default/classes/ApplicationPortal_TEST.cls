@@ -1,3 +1,7 @@
+/**
+ * @last modified on  : 08-04-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @isTest
 public class ApplicationPortal_TEST {
     @testSetup
@@ -16,7 +20,7 @@ public class ApplicationPortal_TEST {
         );
         insert appControl;
         
-        Contact student = new Contact(LastName='TestStudent');
+        Contact student = new Contact(FirstName = 'TestFirst', LastName='TestStudent', Email = 'testfirst@teststudent.com');
         insert student;
         Application__c app = new Application__c(Contact__c=student.Id, Application_Control__c = appControl.Id);
         insert app;

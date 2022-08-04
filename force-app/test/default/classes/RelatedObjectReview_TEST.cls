@@ -1,3 +1,7 @@
+/**
+ * @last modified on  : 08-04-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @IsTest
 public class RelatedObjectReview_TEST {
     @TestSetup
@@ -40,7 +44,7 @@ public class RelatedObjectReview_TEST {
                 q1, q2
         };
 
-        Contact con = new Contact(LastName = 'Test');
+        Contact con = new Contact(FirstName = 'TestFirst', LastName = 'Test', Email = 'testfirst@test.com');
         Application__c app = new Application__c(Contact__c = con.Id, Holding_Name__c = 'Test Program', Related_Object_JSON__c = JSON.serialize(new Program__c(Name = 'Test Program')));
         Application__c app2 = new Application__c(Contact__c = con.Id, Holding_Name__c = 'Test Program2', Related_Object_JSON__c = JSON.serialize(new Program__c(Name = 'Test Program2')));
         Application__c app3 = new Application__c(Contact__c = con.Id, Holding_Name__c = 'Test Program3', Related_Object_JSON__c = JSON.serialize(new Program__c(Name = 'Test Program3')));

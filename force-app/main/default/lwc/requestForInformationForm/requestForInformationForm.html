@@ -1,8 +1,11 @@
 <!--
-    @author: nicole.b@digitalmass.com
-    @created-date: 2022-06-01
-    @last-modified: 2022-06-01
+  @description       : 
+  @author            : nicole.b@digitalmass.com
+  @group             : 
+  @last modified on  : 08-04-2022
+  @last modified by  : nicole.b@digitalmass.com
 -->
+
 <template>
     <lightning-card>
         <template if:true={show_spinner}>
@@ -313,6 +316,17 @@
                 </template>
                 <!-- ROW 9 -->
                 <div class="slds-grid slds-gutters_medium">
+                    <template if:true={show_fields.Zipcode}>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input 
+                                required={require_fields.Zipcode}
+                                type="text" 
+                                label={field_labels.zipcode_label}
+                                aria-label="Zip Code"
+                                onchange={onChange}>
+                            </lightning-input>
+                        </div>
+                    </template>
                     <template if:true={show_fields.City}>
                         <div class="slds-col slds-size_1-of-2">
                             <lightning-input 
@@ -320,10 +334,14 @@
                                 type="text" 
                                 label={field_labels.city_label}
                                 aria-label="City"
-                                onchange={onChange}>
+                                onchange={onChange}
+                                data-id="city">
                             </lightning-input>
                         </div>
                     </template>
+                </div>  
+                <!-- ROW 10 -->
+                <div class="slds-grid slds-gutters_medium">
                     <template if:true={show_fields.State}>
                         <template if:true={international_citizen_type}>
                             <div class="slds-col slds-size_1-of-2">
@@ -345,24 +363,11 @@
                                     options={stateOptions}
                                     aria-label="State"
                                     placeholder="Select a state..."
-                                    onchange={onChange}>
+                                    onchange={onChange}
+                                    data-id="state">
                                 </lightning-combobox>
                             </div>
                         </template>
-                    </template>
-                </div>  
-                <!-- ROW 10 -->
-                <div class="slds-grid slds-gutters_medium">
-                    <template if:true={show_fields.Zipcode}>
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-input 
-                                required={require_fields.Zipcode}
-                                type="text" 
-                                label={field_labels.zipcode_label}
-                                aria-label="Zip Code"
-                                onchange={onChange}>
-                            </lightning-input>
-                        </div>
                     </template>
                     <template if:true={show_fields.Country}>
                         <div class="slds-col slds-size_1-of-2">
@@ -372,7 +377,8 @@
                                 options={country_picklist_values}
                                 aria-label="Country"
                                 placeholder="Select a country..."
-                                onchange={onChange}>
+                                onchange={onChange}
+                                data-id="country">
                             </lightning-combobox>
                         </div>
                     </template>

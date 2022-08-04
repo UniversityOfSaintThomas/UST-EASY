@@ -1,3 +1,11 @@
+/**
+ * @description       : 
+ * @author            : nicole.b@digitalmass.com
+ * @group             : 
+ * @last modified on  : 08-04-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
+
 public without sharing class requestForInformationFormController {
 
     @AuraEnabled

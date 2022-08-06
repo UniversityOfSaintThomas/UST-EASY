@@ -10,6 +10,7 @@
     <apex:attribute name="odlAttachmentId" description="" type="Id" required="false"/>
     <apex:attribute name="attachmentTitle" description="" type="String" required="false"/>
     <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
+    <apex:attribute name="isRequired" description="Upload is required" type="Boolean" default="false"/>
 
     <!-- Rich Text Editor text-->
     <apex:outputPanel styleClass="slds-form-element" rendered="{!allowTextEntry && (!preventUpdates || isEditable)}">

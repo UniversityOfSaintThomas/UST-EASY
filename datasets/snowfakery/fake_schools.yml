@@ -1,0 +1,58 @@
+- object: Account
+  count: 400
+  fields:
+    Name:
+      random_choice:
+        - choice:
+            probability: 25%
+            pick: ${{fake.last_name}} University
+        - choice:
+            probability: 25%
+            pick: ${{fake.city}} University
+        - choice:
+            probability: 25%
+            pick: ${{fake.last_name}} College
+        - choice:
+            probability: 25%
+            pick: ${{fake.city}} College
+    BillingCity:
+      fake: city
+    BillingStreet:
+      fake: street_address
+    BillingState:
+      fake: state
+    BillingCountry:
+      fake: country
+    Industry: Education
+    Type: College
+    RecordType: Educational_Institution
+    Account_Integration_External_ID__c: ${{id}}
+- object: Account
+  count: 400
+  fields:
+    Name:
+      random_choice:
+        - choice:
+            probability: 25%
+            pick: ${{fake.last_name}} High School
+        - choice:
+            probability: 25%
+            pick: ${{fake.city}} High School
+        - choice:
+            probability: 25%
+            pick: ${{fake.last_name}} Senior High
+        - choice:
+            probability: 25%
+            pick: ${{fake.city}} Senior High
+    BillingCity:
+      fake: city
+    BillingStreet:
+      fake: street_address
+    BillingState:
+      fake: state
+    BillingCountry:
+      fake: country
+    Industry: Education
+    Type: High School
+    RecordType: Educational_Institution
+    Account_Integration_External_ID__c: ${{id}}

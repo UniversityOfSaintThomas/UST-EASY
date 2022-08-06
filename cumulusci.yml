@@ -166,7 +166,13 @@ tasks:
     description: Makes fake account data to mimic schools with Educaiton as industry
     class_path: cumulusci.tasks.bulkdata.snowfakery.Snowfakery
     options:
-      recipe: datasets/dev22/school_snowfakery_recipe.yml
+      recipe: datasets/snowfakery/fake_schools.yml
+
+  create_fake_contacts:
+    description: Makes fake account data to mimic schools with Educaiton as industry
+    class_path: cumulusci.tasks.bulkdata.snowfakery.Snowfakery
+    options:
+      recipe: datasets/snowfakery/fake_contacts.yml
 
   update_admin_profile:
     options:

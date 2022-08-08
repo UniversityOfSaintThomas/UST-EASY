@@ -1,5 +1,5 @@
 /**
- * @last modified on  : 08-04-2022
+ * @last modified on  : 08-08-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 @isTest
@@ -20,9 +20,55 @@ public class ApplicationPortal_TEST {
         );
         insert appControl;
         
-        Contact student = new Contact(FirstName = 'TestFirst', LastName='TestStudent', Email = 'testfirst@teststudent.com');
+        Contact student = new Contact(
+            FirstName = 'TestFirst', 
+            LastName='TestStudent', 
+            Email = 'testfirst@teststudent.com'
+        );
         insert student;
-        Application__c app = new Application__c(Contact__c=student.Id, Application_Control__c = appControl.Id);
+
+        Account acc = new Account(
+            Name = 'Test Account', 
+            hed__Primary_Contact__c = student.Id
+        );
+        insert acc;
+
+        Id inquiryRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Inquiry_Opportunity').getRecordTypeId();
+        Opportunity newOpp = new Opportunity(
+            RecordTypeId = inquiryRT, 
+            Name = 'TestStudent|Test 2022|Test Program', 
+            AccountId = acc.Id, 
+            Contact__c = student.Id, 
+            StageName = 'Suspect', 
+            CloseDate = System.today()
+        );
+        insert newOpp;
+
+        hed__Term__c hedTerm = new hed__Term__c(
+            Name = 'Test 2022', 
+            hed__Account__c = acc.Id
+        );
+        insert hedTerm;
+
+        Academic_Term__c term = new Academic_Term__c(
+            Name = 'Test 2022', 
+            Term__c = hedTerm.Id
+        );
+        insert term;
+
+        Program__c program = new Program__c(
+            Name = 'Test Program', 
+            Program_Name_on_Application__c = 'Test Program'
+        );
+        insert program;
+
+        Application__c app = new Application__c(
+            Contact__c = student.Id, 
+            Application_Control__c = appControl.Id, 
+            Intended_Term_of_Entry__c = term.Id, 
+            Intended_Program__c = program.Id, 
+            Application_Status__c = 'Started App'
+        );
         insert app;
     }
     public static TestMethod void loadApps(){

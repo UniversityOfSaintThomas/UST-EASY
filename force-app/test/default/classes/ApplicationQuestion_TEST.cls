@@ -1,3 +1,7 @@
+/**
+ * @last modified on  : 08-08-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @IsTest
 public class ApplicationQuestion_TEST {
 
@@ -5,7 +9,8 @@ public class ApplicationQuestion_TEST {
     public static void testSetup() {
         Account acc = new Account(Name = 'NewAcc');
         insert acc;
-        Contact student = new Contact(LastName = 'TestStudent');
+        
+        Contact student = new Contact(FirstName = 'TestFirst', LastName = 'TestStudent', Email = 'testfirst@teststudent.com');
         insert student;
 
         Map<String, Id> rtMap = new Map<String, Id>();
@@ -37,7 +42,20 @@ public class ApplicationQuestion_TEST {
         );
         insert appControl;
 
-        Application__c app = new Application__c(Contact__c = student.Id, Application_Control__c = appControl.Id);
+        Id inquiryRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Inquiry_Opportunity').getRecordTypeId();
+        Opportunity newOpp = new Opportunity(RecordTypeId = inquiryRT, Name = 'TestStudent|Test 2022|Test Program', AccountId = acc.Id, Contact__c = student.Id, StageName = 'Suspect', CloseDate = System.today());
+        insert newOpp;
+
+        hed__Term__c hedTerm = new hed__Term__c(Name = 'Test 2022', hed__Account__c = acc.Id);
+        insert hedTerm;
+
+        Academic_Term__c term = new Academic_Term__c(Name = 'Test 2022', Term__c = hedTerm.Id);
+        insert term;
+
+        Program__c program = new Program__c(Name = 'Test Program', Program_Name_on_Application__c = 'Test Program');
+        insert program;
+
+        Application__c app = new Application__c(Contact__c = student.Id, Application_Control__c = appControl.Id, Intended_Term_of_Entry__c = term.Id, Intended_Program__c = program.Id, Application_Status__c = 'Started App');
         insert app;
 
         Requirement__c req = new Requirement__c(Application_Control__c = appControl.Id, Active__c = true, Name = 'Test Req', Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID(), Internal_Only__c = true);
@@ -198,6 +216,6 @@ public class ApplicationQuestion_TEST {
         System.assertEquals(app.Id, appQuestion.controllingQuestion.application.Id);
         System.assertEquals(new Set<String>{'test value'}, appQuestion.showValues);
         System.assertEquals(1, appQuestion.multiControllingQuestions.size());
-        System.assertEquals(false, enabled);
+        System.assertEquals(true, enabled);
     }
 }

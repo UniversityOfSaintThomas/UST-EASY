@@ -1,3 +1,7 @@
+/**
+ * @last modified on  : 08-08-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @IsTest
 public class ApplicationQuestionGroup_TEST {
     @TestSetup
@@ -16,18 +20,75 @@ public class ApplicationQuestionGroup_TEST {
         );
         insert appControl;
 
-        Contact student = new Contact(LastName = 'Student');
+        Contact student = new Contact(
+            FirstName = 'TestFirst', 
+            LastName = 'Student', 
+            Email = 'testfirst@student.com'
+        );
         insert student;
 
-        Account acc = new Account(Name = 'Test Account', hed__Primary_Contact__c = student.Id);
+        Account acc = new Account(
+            Name = 'Test Account', 
+            hed__Primary_Contact__c = student.Id
+        );
         insert acc;
 
-        ContentVersion cv = new ContentVersion(Title = 'Test', PathOnClient = 'Test', VersionData = Blob.valueOf('test'));
+        ContentVersion cv = new ContentVersion(
+            Title = 'Test', 
+            PathOnClient = 'Test', 
+            VersionData = Blob.valueOf('test')
+        );
         insert cv;
-        cv = [SELECT Id,ContentDocumentId FROM ContentVersion WHERE Id = :cv.Id];
-        insert new ContentDocumentLink(LinkedEntityId = student.Id, ContentDocumentId = cv.ContentDocumentId, Visibility = 'AllUsers', ShareType = 'I');
+        
+        cv = [
+            SELECT Id,
+                ContentDocumentId 
+            FROM ContentVersion 
+            WHERE Id = :cv.Id
+        ];
+        insert new ContentDocumentLink(
+            LinkedEntityId = student.Id, 
+            ContentDocumentId = cv.ContentDocumentId, 
+            Visibility = 'AllUsers', 
+            ShareType = 'I'
+        );
 
-        Application__c app = new Application__c(Contact__c = student.Id, Application_Control__c = appControl.Id, Application_Status__c = 'Started App');
+        Id inquiryRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Inquiry_Opportunity').getRecordTypeId();
+        Opportunity newOpp = new Opportunity(
+            RecordTypeId = inquiryRT, 
+            Name = 'Student|Test 2022|Test Program', 
+            AccountId = acc.Id, 
+            Contact__c = student.Id, 
+            StageName = 'Suspect', 
+            CloseDate = System.today()
+        );
+        insert newOpp;
+
+        hed__Term__c hedTerm = new hed__Term__c(
+            Name = 'Test 2022', 
+            hed__Account__c = acc.Id
+        );
+        insert hedTerm;
+
+        Academic_Term__c term = new Academic_Term__c(
+            Name = 'Test 2022', 
+            Term__c = hedTerm.Id
+        );
+        insert term;
+
+        Program__c program = new Program__c(
+            Name = 'Test Program', 
+            Program_Name_on_Application__c = 'Test Program'
+        );
+        insert program;
+
+        Application__c app = new Application__c(
+            Contact__c = student.Id, 
+            Application_Control__c = appControl.Id, 
+            Intended_Term_of_Entry__c = term.Id, 
+            Intended_Program__c = program.Id, 
+            Application_Status__c = 'Started App'
+        );
         insert app;
 
         Requirement__c req = new Requirement__c(
@@ -453,7 +514,18 @@ public class ApplicationQuestionGroup_TEST {
             Required__c = 'Started App;Pending',
             Contact_Field__c = 'test'
         );
-        insert q1;
+
+        Question__c q2 = new Question__c(
+            Active__c = true,
+            RecordTypeId = rtMap.get('MultiPicklist'),
+            Name = 'Test MultiPicklist',
+            Label__c = 'Test MultiPicklist',
+            Requirement_Item__c = reqItem.Id,
+            Question_Integration_External_Id__c = ApplicationUtilities.getUUID(),
+            Additional_Field_Validation__c = 'validateName',
+            Related_Object_Field__c = 'Applicant__c'
+        );
+        insert new List<Question__c>{ q1, q2 };
 
         Map<String, Id> rtMapQD = new Map<String, Id>();
         for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Question_Dependency__c']) {
@@ -522,7 +594,8 @@ public class ApplicationQuestionGroup_TEST {
                         New_Reference_Field__c,
                         Lookup_Object__c,
                         Editable_Application_Status__c,
-                        Display_as_Picklist__c 
+                        Display_as_Picklist__c,
+                        Picklist_Values__c
                     FROM Questions__r) 
             FROM Requirement_Item__c 
             WHERE Name = 'Address Test' 
@@ -551,13 +624,20 @@ public class ApplicationQuestionGroup_TEST {
             student, app, reqItem, dependentQuestions, rr, qrList, sobjectFieldMap, true
         );
         ApplicationQuestionGroup.SObjectWrapper objectWrapper = new ApplicationQuestionGroup.SObjectWrapper(appQuestionGroup, 'idx test', family);
+        Map<String, ApplicationQuestionGroup.MultiPicklistWrapper> multiPicklistWrapper = objectWrapper.multiPicklistValues;
         objectWrapper.enableViewMode();
         objectWrapper.enableConfirmMode();
         Map<String, ApplicationQuestionGroup.SObjectWrapper> relatedObjectsMap = new Map<String, ApplicationQuestionGroup.SObjectWrapper>();
         relatedObjectsMap.put(String.valueOf(family.Id), objectWrapper);
         appQuestionGroup.relatedObjectsMap = relatedObjectsMap;
-        appQuestionGroup.selectedRelatedId = family.Id;
+        appQuestionGroup.selectedRelatedId = String.valueOf(family.Id);
         appQuestionGroup.enableDeleteMode();
+
+        ApplicationQuestionGroup.SObjectWrapper objectWrapper2 = new ApplicationQuestionGroup.SObjectWrapper(appQuestionGroup, 'idx test', new Family__c(Application__c = app.Id, Applicant__c = student.Id));
+        Map<String, ApplicationQuestionGroup.SObjectWrapper> relatedObjectsMap2 = new Map<String, ApplicationQuestionGroup.SObjectWrapper>();
+        appQuestionGroup.selectedRelatedId = String.valueOf(family.Id);
+        relatedObjectsMap2.put(appQuestionGroup.selectedRelatedId, objectWrapper2);
+        appQuestionGroup.relatedObjectsMap = relatedObjectsMap2;
         appQuestionGroup.relatedUpload();
         Test.stopTest();
         System.assertEquals(false, objectWrapper.isEditMode);

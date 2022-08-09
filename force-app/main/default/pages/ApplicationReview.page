@@ -3,7 +3,7 @@
      <apex:variable value="0" var="reqIndex"/>
     <div class="appBodyReview">
         <apex:repeat value="{!arLst}" var="req">
-            <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}">
+            <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}" vfPageName="ApplicationReview">
                 <c:ApplicationForm section="{!req.section}" hidePaging="true" preventUpdates="true" appInfo="{!appInfo}">
                 </c:ApplicationForm>
             </c:ApplicationBody>
@@ -48,13 +48,13 @@
         <apex:outputPanel id="themessages"><apex:pageMessages ></apex:pageMessages></apex:outputPanel>
     </apex:form>
     <script>
-        jQuery(function(){
-            jQuery('.appBodyReview .statePicklist select').addClass('form-control');
-            jQuery('.appBodyReview .statePicklist').on('DOMNodeInserted',function(){
-                jQuery('.appBodyReview .statePicklist select:not(.form-control)').addClass('form-control');
-                jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
-            });
-            jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
-        });
+        // jQuery(function(){
+        //     jQuery('.appBodyReview .statePicklist select').addClass('form-control');
+        //     jQuery('.appBodyReview .statePicklist').on('DOMNodeInserted',function(){
+        //         jQuery('.appBodyReview .statePicklist select:not(.form-control)').addClass('form-control');
+        //         jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
+        //     });
+        //     jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
+        // });
     </script>
 </apex:page>

@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-10-2022
+ * @last modified on  : 08-11-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 public with sharing class graduateRecommenderInfoController {
@@ -66,7 +66,8 @@ public with sharing class graduateRecommenderInfoController {
                     Name,
                     External_Email_Field__c,
                     Placeholder__c,
-                    Static_Text__c
+                    Static_Text__c,
+                    Hardcoded_Value__c
                 FROM Question__c
                 WHERE Requirement_Item__c =: requirement_item_id
             ];

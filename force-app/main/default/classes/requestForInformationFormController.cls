@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-04-2022
+ * @last modified on  : 08-11-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
@@ -92,7 +92,7 @@ public without sharing class requestForInformationFormController {
             }
 
             if (academic_level == 'U') {
-                query_string += ' AND (Program_Type__c = \'Major\' OR Program_Type__c = \'Pre-Professional\')';
+                query_string += ' AND (Program_Type__c INCLUDES \'Major\' OR Program_Type__c INCLUDES \'Pre-Professional\')';
             } else {
                 query_string += ' ORDER BY Degree__c';
             }

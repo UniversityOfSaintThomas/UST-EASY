@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-04-2022
+ * @last modified on  : 08-11-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
@@ -20,13 +20,17 @@ import LEAD_TITLE from '@salesforce/schema/Lead.Title';
 import LEAD_ADMIT_TYPE from '@salesforce/schema/Lead.Admit_Type__c';
 import LEAD_CITIZENSHIP from '@salesforce/schema/Lead.Citizenship_Type__c';
 import LEAD_RECRUITMENT_PROGRAM from '@salesforce/schema/Lead.Recruitment_Program__c';
+import LEAD_MAJOR1 from '@salesforce/schema/Lead.Major_Program__c';
+import LEAD_MAJOR2 from '@salesforce/schema/Lead.Major_Program_2__c';
+import LEAD_MAJOR3 from '@salesforce/schema/Lead.Major_Program_3__c';
+import LEAD_MAJOR4 from '@salesforce/schema/Lead.Major_Program_4__c';
 import LEAD_EMAIL from '@salesforce/schema/Lead.Email';
 import LEAD_PHONE from '@salesforce/schema/Lead.Phone';
 import LEAD_MOBILE_PHONE from '@salesforce/schema/Lead.MobilePhone';
 import LEAD_SMS_OPT_OUT from '@salesforce/schema/Lead.hed__SMS_Opt_Out__c';
 import LEAD_BIRTHDATE from '@salesforce/schema/Lead.Birthdate__c';
 import LEAD_PREFERRED_ENROLLMENT from '@salesforce/schema/Lead.hed__Preferred_Enrollment_Date__c';
-import LEAD_TERM from '@salesforce/schema/Lead.Term__c';
+import LEAD_INTENDED_START_TERM from '@salesforce/schema/Lead.Intended_Start_Term__c';
 import LEAD_STREET from '@salesforce/schema/Lead.Street';
 import LEAD_CITY from '@salesforce/schema/Lead.City';
 import LEAD_STATE from '@salesforce/schema/Lead.State';
@@ -59,13 +63,17 @@ const ADDITIONAL_FIELDS = [
     LEAD_ADMIT_TYPE,
     LEAD_CITIZENSHIP,
     LEAD_RECRUITMENT_PROGRAM,
+    LEAD_MAJOR1,
+    LEAD_MAJOR2,
+    LEAD_MAJOR3,
+    LEAD_MAJOR4,
     LEAD_EMAIL,
     LEAD_PHONE,
     LEAD_MOBILE_PHONE,
     LEAD_SMS_OPT_OUT,
     LEAD_BIRTHDATE,
     LEAD_PREFERRED_ENROLLMENT,
-    LEAD_TERM,
+    LEAD_INTENDED_START_TERM,
     LEAD_STREET,
     LEAD_CITY,
     LEAD_STATE,
@@ -119,6 +127,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track high_school_data = false;
     @track form_submitted_successfully = false;
     @track international_citizen_type = false;
+    @track is_undergraduate = false;
 
     //RFI controller determined booleans
     @track show_fields = {
@@ -227,6 +236,7 @@ export default class RequestForInformationForm extends LightningElement {
     address1;
     address2;
     address3;
+    academic_interest_id_list = [];
     
     //high school datatable columns
     high_school_columns = [
@@ -246,6 +256,9 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             if (Boolean(result.data)) {
                 this.academic_level_api = result.data.Academic_Level__c;
+                if (this.academic_level_api == 'U') {
+                    this.is_undergraduate = true;
+                }
                 if (Boolean(result.data.School_College__c)
                     && result.data.School_College__c != 'Graduate' 
                     && result.data.School_College__c != 'Undergraduate') {
@@ -365,7 +378,6 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             this.record_input = generateRecordInputForCreate(result.data.record);
             this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
-            this.record_input.fields.Company = 'Random Company ' + Math.floor(Math.random() * 100);
             getPresetValues({rfi_controller_name : this.rfi_controller})
             .then(preset_values => {
                 for (const preset_value of preset_values) {
@@ -470,11 +482,15 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.Admit_Type__c = event.target.value;
                 break;
             case this.field_labels.academic_interest_label:
-                this.record_input.fields.Recruitment_Program__c = event.target.value;
+                if (this.is_undergraduate) {
+                    this.academic_interest_id_list = event.detail.value;
+                } else {
+                    this.record_input.fields.Recruitment_Program__c = event.target.value;
+                }
                 break;
             case this.field_labels.academic_term_label:
-                this.record_input.fields.Term__c = event.target.value; 
-                this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].hed__Start_Date__c;
+                this.record_input.Intended_Start_Term__c = event.target.value;
+                this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].Term_Start_Date__c;
                 break;
             case this.field_labels.high_school_not_found_label:
                 this.manually_enter_high_school = event.target.checked;
@@ -578,6 +594,33 @@ export default class RequestForInformationForm extends LightningElement {
     handleSubmit() {
         if (this.validateInput()) {
             this.record_input.fields.OwnerId = this.lead_owner;
+            this.record_input.fields.Company = String(this.record_input.FirstName) + String(this.record_input.LastName);
+            this.record_input.fields.Inquiry_Date__c = this.getTodaysDate();
+            var count = 0;
+            if (this.is_undergraduate) {
+                for (const program_id of this.academic_interest_id_list) {
+                    if (count == 0) {
+                        this.record_input.fields.Major_Program__c = program_id;
+                    } else if (count == 1) {
+                        this.record_input.fields.Major_Program_2__c = program_id;
+                    } else if (count == 2) {
+                        this.record_input.fields.Major_Program_3__c = program_id;
+                    } else if (count == 3) {
+                        this.record_input_fields.Major_Program_4__c = program_id;
+                    } else {
+                        break; // shouldn't have more than 4 program ids in list
+                    }
+                }
+                getRecruitmentProgram({academic_level: this.academic_level_api, citizenship_type: this.record_input.fields.Citizenship_Type__c, admit_type: this.record_input.fields.Admit_Type__c})
+                .then(program => {
+                    if (Boolean(program)) {
+                        this.record_input.fields.Recruitment_Program__c = program;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            }
             this.show_spinner = true;
             if (Boolean(this.record_input.fields.Description)) {
                 this.record_input.fields.Description = 'Questions/Comments from RFI: ' + this.record_input.fields.Description;
@@ -585,7 +628,9 @@ export default class RequestForInformationForm extends LightningElement {
             this.handleStreetAddress();
             getSchoolCollegeAccount({school_college_name : this.school_college})
             .then(school_college_account_id => {
-                this.record_input.fields.St_Thomas_College_School__c = school_college_account_id;
+                if (Boolean(school_college_account_id)){
+                    this.record_input.fields.St_Thomas_College_School__c = school_college_account_id;
+                }
             }) 
             .catch(error => {
                 console.log(error);
@@ -683,6 +728,14 @@ export default class RequestForInformationForm extends LightningElement {
         } else if (Boolean(this.address1)) {
             this.record_input.fields.Street = this.address1;
         }
+    }
+
+    getTodaysDate() {
+        const date = new Date();
+        let day = String(date.getDate());
+        let month = String(date.getMonth() + 1);
+        let year = String(date.getFullYear());
+        return year + '-' + month + '-' + day;
     }
 
     populateUSCityStateAndCountry(zipcode) {

@@ -79,21 +79,19 @@ public without sharing class requestForInformationFormController {
                     'Degree__c ' +
                 'FROM Program__c ' +
                 'WHERE RecordTypeId = \'' + recruitment_program_id + '\' ' +
-                'AND Academic_Level__c = \'' + academic_level + '\' ' +
                 'AND Program_Display__c INCLUDES (\'RFI\') ' +
                 'AND Active__c = true';
-            
-            if (!String.isBlank(school_college)) {
-                query_string += ' AND Associated_Schools__c INCLUDES (\'' + school_college + '\')';
-            }
-
-            if (school_college == 'School of Law') {
-                query_string += ' AND Banner_Program_Code__c LIKE \'LW_%\'';
-            }
 
             if (academic_level == 'U') {
-                query_string += ' AND (Program_Type__c INCLUDES \'Major\' OR Program_Type__c INCLUDES \'Pre-Professional\')';
+                query_string += ' AND Academic_Level__c = \'U\' AND (Program_Type__c INCLUDES \'Major\' OR Program_Type__c INCLUDES \'Pre-Professional\')';
             } else {
+                query_string += ' AND Academic_Level__c != \'U\'';
+                if (!String.isBlank(school_college)) {
+                    query_string += ' AND Associated_Schools__c INCLUDES (\'' + school_college + '\')';
+                }
+                if (school_college == 'School of Law') {
+                    query_string += ' AND Banner_Program_Code__c LIKE \'LW_%\'';
+                }
                 query_string += ' ORDER BY Degree__c';
             }
             
@@ -106,18 +104,20 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static Map<Id, hed__Term__c> getTerms(String account_name) {
+    public static Map<Id, Academic_Term__c> getTerms(String account_name) {
         try {
-            String account_id = getSchoolCollegeAccount(account_name);
             Date today = System.today();
-            Map<Id, hed__Term__c> terms = new Map<Id, hed__Term__c>([
+            Date today_plus_four_years = today.addYears(4);
+            // Academic Term -> intended start term
+            // limit by 4 years, show Fall and Spring 
+            Map<Id, Academic_Term__c> terms = new Map<Id, Academic_Term__c>([
                 SELECT
                     Id,
                     Name,
-                    hed__Start_Date__c
+                    Term_Start_Date__c
                 FROM hed__Term__c
-                WHERE hed__Start_Date__c >=: today
-                AND hed__Account__c =: account_id
+                WHERE Term_Start_Date__c >=: today
+                AND Term_Start_Date__c <=: today_plus_four_years
             ]);
             return terms;
         } catch (Exception e) {
@@ -202,7 +202,28 @@ public without sharing class requestForInformationFormController {
             } 
             return school_college_id;
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            return '';
+        }
+    }
+
+    @AuraEnabled
+    public static Id getRecruitmentProgram(String academic_level, String citizenship_type, String admit_type) {
+        try {
+            Id academic_program_RT_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Academic_Program').getRecordTypeId();
+            if (academic_level == 'U') {
+                if (admit_type == 'Transfer') {
+                    if (citizenship_type == 'International') {
+                        program_name = 'Undergraduate Transfer (INTL)';
+                    } else {
+                        program_name = 'Undergraduate Transfer';
+                    }
+                } else {
+                    program_name = 'Undergraduate First-Year';
+                }
+            }
+            return [SELECT Id FROM Program__c WHERE Name =: program_name AND Program_Major_Concentration__c = 'AS_UN_BA' AND RecordTypeId =: academic_program_RT_id LIMIT 1].Id;
+        } catch (Exception e) {
+            return '';
         }
     }
 }

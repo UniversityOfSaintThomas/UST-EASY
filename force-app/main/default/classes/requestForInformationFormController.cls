@@ -115,7 +115,7 @@ public without sharing class requestForInformationFormController {
                     Id,
                     Name,
                     Term_Start_Date__c
-                FROM hed__Term__c
+                FROM Academic_Term__c
                 WHERE Term_Start_Date__c >=: today
                 AND Term_Start_Date__c <=: today_plus_four_years
             ]);
@@ -210,6 +210,7 @@ public without sharing class requestForInformationFormController {
     public static Id getRecruitmentProgram(String academic_level, String citizenship_type, String admit_type) {
         try {
             Id academic_program_RT_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Academic_Program').getRecordTypeId();
+            String program_name = '';
             if (academic_level == 'U') {
                 if (admit_type == 'Transfer') {
                     if (citizenship_type == 'International') {
@@ -221,7 +222,11 @@ public without sharing class requestForInformationFormController {
                     program_name = 'Undergraduate First-Year';
                 }
             }
-            return [SELECT Id FROM Program__c WHERE Name =: program_name AND Program_Major_Concentration__c = 'AS_UN_BA' AND RecordTypeId =: academic_program_RT_id LIMIT 1].Id;
+            if (program_name != '') {
+                return [SELECT Id FROM Program__c WHERE Name =: program_name AND Program_Major_Concentration__c = 'AS_UN_BA' AND RecordTypeId =: academic_program_RT_id LIMIT 1].Id;
+            } else {
+                return '';
+            }
         } catch (Exception e) {
             return '';
         }

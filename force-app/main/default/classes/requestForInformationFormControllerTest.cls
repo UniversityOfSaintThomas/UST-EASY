@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : nicole.b@digitalmass.com
+ * @group             : 
+ * @last modified on  : 08-11-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @IsTest
 public class requestForInformationFormControllerTest {
     @TestSetup
@@ -144,7 +151,7 @@ public class requestForInformationFormControllerTest {
     @isTest
     public static void testGetTerms() {
         Test.startTest();
-        Map<Id, hed__Term__c> terms = requestForInformationFormController.getTerms('School of Law');
+        Map<Id, Academic_Term__c> terms = requestForInformationFormController.getTerms('School of Law');
         Test.stopTest();
         System.assertEquals(1, terms.size());
     }

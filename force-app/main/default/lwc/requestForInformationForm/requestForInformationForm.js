@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-11-2022
+ * @last modified on  : 08-12-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
@@ -56,6 +56,7 @@ import getAcademicLevelValue from '@salesforce/apex/requestForInformationFormCon
 import createLead from '@salesforce/apex/requestForInformationFormController.createLead';
 import getPresetValues from '@salesforce/apex/requestForInformationFormController.getPresetValues';
 import getSchoolCollegeAccount from '@salesforce/apex/requestForInformationFormController.getSchoolCollegeAccount';
+import getRecruitmentProgram from '@salesforce/apex/requestForInformationFormController.getRecruitmentProgram';
 
 const ADDITIONAL_FIELDS = [
     LEAD_FIRST_NAME,
@@ -271,6 +272,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.lead_owner = result.data.Lead_Owner__c;
                 this.redirect_url = result.data.Redirect_URL__c;
                 this.hide_form_title = result.data.Hide_Form_Title__c;
+                this.redirect_after_submit = result.data.Redirect_After_Form_Submission__c;
                 // sets boolean values for front-end display i.e. which fields on are form, which are required
                 this.handleFieldsToDisplay();
                 this.handleRequiredFields();
@@ -489,7 +491,7 @@ export default class RequestForInformationForm extends LightningElement {
                 }
                 break;
             case this.field_labels.academic_term_label:
-                this.record_input.Intended_Start_Term__c = event.target.value;
+                this.record_input.fields.Intended_Start_Term__c = event.target.value;
                 this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].Term_Start_Date__c;
                 break;
             case this.field_labels.high_school_not_found_label:
@@ -594,7 +596,7 @@ export default class RequestForInformationForm extends LightningElement {
     handleSubmit() {
         if (this.validateInput()) {
             this.record_input.fields.OwnerId = this.lead_owner;
-            this.record_input.fields.Company = String(this.record_input.FirstName) + String(this.record_input.LastName);
+            this.record_input.fields.Company = this.record_input.fields.FirstName + ' ' + this.record_input.fields.LastName;
             this.record_input.fields.Inquiry_Date__c = this.getTodaysDate();
             var count = 0;
             if (this.is_undergraduate) {
@@ -605,12 +607,15 @@ export default class RequestForInformationForm extends LightningElement {
                         this.record_input.fields.Major_Program_2__c = program_id;
                     } else if (count == 2) {
                         this.record_input.fields.Major_Program_3__c = program_id;
-                    } else if (count == 3) {
-                        this.record_input_fields.Major_Program_4__c = program_id;
                     } else {
-                        break; // shouldn't have more than 4 program ids in list
+                        this.record_input.fields.Major_Program_4__c = program_id;
                     }
+                    count++;
                 }
+                console.log(this.record_input.fields);
+                console.log(String(this.academic_level_api));
+                console.log(String(this.record_input.fields.Citizenship_Type__c));
+                console.log(String(this.record_input.fields.Admit_Type__c));
                 getRecruitmentProgram({academic_level: this.academic_level_api, citizenship_type: this.record_input.fields.Citizenship_Type__c, admit_type: this.record_input.fields.Admit_Type__c})
                 .then(program => {
                     if (Boolean(program)) {
@@ -637,11 +642,12 @@ export default class RequestForInformationForm extends LightningElement {
             })
             createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
             .then(() => {
-                // redirect
                 this.show_spinner = false;
                 this.form_submitted_successfully = true;
                 console.log(this.record_input);
-                window.open(this.redirect_url, '_self');
+                if (this.redirect_after_submit) {
+                    window.open(this.redirect_url, '_self');
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -682,7 +688,8 @@ export default class RequestForInformationForm extends LightningElement {
     validateInput() {
         let valid_input_fields = this.validateInputFields();
         let valid_picklist_fields = this.validatePicklistFields();
-        if (valid_input_fields && valid_picklist_fields) {
+        let valid_multi_picklist_fields = this.validateMultiPicklistFields();
+        if (valid_input_fields && valid_picklist_fields && valid_multi_picklist_fields) {
             return true;
         } else {
             return false;
@@ -708,6 +715,21 @@ export default class RequestForInformationForm extends LightningElement {
     validatePicklistFields() {
         const allValid = [
             ...this.template.querySelectorAll('lightning-combobox'),
+        ].reduce((validSoFar, inputCmp) => {
+            inputCmp.reportValidity();
+            return validSoFar && inputCmp.checkValidity();
+        }, true);
+
+        if (allValid) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    validateMultiPicklistFields() {
+        const allValid = [
+            ...this.template.querySelectorAll('lightning-dual-listbox'),
         ].reduce((validSoFar, inputCmp) => {
             inputCmp.reportValidity();
             return validSoFar && inputCmp.checkValidity();

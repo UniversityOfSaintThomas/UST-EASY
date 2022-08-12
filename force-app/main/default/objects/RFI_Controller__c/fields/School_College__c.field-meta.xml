@@ -4,10 +4,11 @@
     <description>Used to filter programs shown for selection</description>
     <externalId>false</externalId>
     <label>School / College</label>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>Academic_Level__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>School_College</valueSetName>
     </valueSet>

@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-11-2022
+ * @last modified on  : 08-12-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
@@ -41,6 +41,7 @@ public without sharing class requestForInformationFormController {
             Database.DMLOptions dml = new Database.DMLOptions(); 
             dml.DuplicateRuleHeader.allowSave = false;
             Database.SaveResult result = Database.insert(sobj, dml);
+            System.debug(result);
         } catch (Exception e) {
             throw new AuraHandledException('Error creating lead: ' + e.getMessage());
         }
@@ -58,7 +59,8 @@ public without sharing class requestForInformationFormController {
                     Required_Fields__c,
                     Lead_Owner__c,
                     Redirect_URL__c,
-                    Hide_Form_Title__c
+                    Hide_Form_Title__c,
+                    Redirect_After_Form_Submission__c
                 FROM RFI_Controller__c 
                 WHERE Name =: rfi_controller_name
                 LIMIT 1
@@ -83,7 +85,7 @@ public without sharing class requestForInformationFormController {
                 'AND Active__c = true';
 
             if (academic_level == 'U') {
-                query_string += ' AND Academic_Level__c = \'U\' AND (Program_Type__c INCLUDES \'Major\' OR Program_Type__c INCLUDES \'Pre-Professional\')';
+                query_string += ' AND Academic_Level__c = \'U\' AND (Program_Type__c INCLUDES (\'Major\') OR Program_Type__c INCLUDES (\'Pre-Professional\'))';
             } else {
                 query_string += ' AND Academic_Level__c != \'U\'';
                 if (!String.isBlank(school_college)) {
@@ -92,9 +94,8 @@ public without sharing class requestForInformationFormController {
                 if (school_college == 'School of Law') {
                     query_string += ' AND Banner_Program_Code__c LIKE \'LW_%\'';
                 }
-                query_string += ' ORDER BY Degree__c';
             }
-            
+            query_string += ' ORDER BY Name';
             System.debug('%% query string: ' + query_string);
             List<Program__c> programs = Database.query(query_string);
             return new Map<Id, Program__c>(programs);
@@ -118,6 +119,8 @@ public without sharing class requestForInformationFormController {
                 FROM Academic_Term__c
                 WHERE Term_Start_Date__c >=: today
                 AND Term_Start_Date__c <=: today_plus_four_years
+                AND (Name LIKE 'Fall%' OR Name LIKE 'Spring%')
+                ORDER BY Term_Start_Date__c
             ]);
             return terms;
         } catch (Exception e) {

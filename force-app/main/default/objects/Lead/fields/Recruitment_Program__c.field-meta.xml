@@ -13,7 +13,7 @@
             <operation>equals</operation>
             <value>Recruitment Program</value>
         </filterItems>
-        <isOptional>false</isOptional>
+        <isOptional>true</isOptional>
     </lookupFilter>
     <referenceTo>Program__c</referenceTo>
     <relationshipLabel>Leads with Recruitment Program</relationshipLabel>

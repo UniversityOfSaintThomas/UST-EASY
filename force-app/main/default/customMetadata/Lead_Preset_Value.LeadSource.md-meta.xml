@@ -3,6 +3,10 @@
     <label>LeadSource</label>
     <protected>false</protected>
     <values>
+        <field>Active__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Field_API_Name__c</field>
         <value xsi:type="xsd:string">LeadSource</value>
     </values>

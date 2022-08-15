@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-12-2022
+ * @last modified on  : 08-15-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
@@ -90,12 +90,6 @@ const ADDITIONAL_FIELDS = [
     LEAD_RECENT_SCHOOL
 ];
 
-const lookup_fields = [
-    'Affiliated_Account__r',
-    'Recruitment_Program__r',
-    'Term__r'
-];
-
 export default class RequestForInformationForm extends LightningElement {
     // // RFI controller info
     @api rfi_controller = 'RFI Controller 0000';
@@ -155,8 +149,6 @@ export default class RequestForInformationForm extends LightningElement {
         'I_have_a_question': false,
         'Description': false,
         'I_would_like_program_information_to_be_mailed_to_me': false,
-        'I_will_apply_to_St_Thomas_Law_as_a': false,
-        'When_do_you_plan_to_start_school': false
     }
 
     @track require_fields = {
@@ -181,8 +173,6 @@ export default class RequestForInformationForm extends LightningElement {
         'High_School_Graduation_Year': false,
         'Timeline_to_Enrollment': false,
         'I_have_a_question': false,
-        'I_will_apply_to_St_Thomas_Law_as_a': false,
-        'When_do_you_plan_to_start_school': false
     }
 
     record_input; // stores user entered form information
@@ -218,8 +208,6 @@ export default class RequestForInformationForm extends LightningElement {
         'has_question_label': 'I have a question',
         'description_label': 'Questions/Comments',
         'mail_info_label': 'I would like program information to be mailed to me',
-        'apply_law_school_label': 'I will apply to St. Thomas Law as a',
-        'plan_to_start_label': 'When do you plan to start school?'
     }
 
     //picklist values
@@ -387,15 +375,10 @@ export default class RequestForInformationForm extends LightningElement {
                         this.record_input.fields[preset_value.Field_API_Name__c] = preset_value.Value__c;
                     }
                 }
-                console.log(JSON.stringify(this.record_input));
             })
             .catch(error => {
                 console.log(error);
             })
-            // relationship lookup fields throwing error on insert, so removing
-            for (const relationship_name of lookup_fields) {
-                delete this.record_input.fields[relationship_name];         
-            }
         } else {
             console.log(result.error);
         }
@@ -527,13 +510,6 @@ export default class RequestForInformationForm extends LightningElement {
             case this.field_labels.mail_info_label:
                 this.record_input.fields.Mail_Information_Requested__c = event.target.checked;
                 break;
-            case this.field_labels.apply_law_school_label:
-                this.record_input.fields.Recruitment_Program__c = event.target.value;
-                break;
-            case this.field_labels.plan_to_start_label:
-                this.record_input.fields.Term__c = event.target.value;
-                this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].hed__Start_Date__c;
-                break;
             default:
                 break;
         }
@@ -595,64 +571,27 @@ export default class RequestForInformationForm extends LightningElement {
 
     handleSubmit() {
         if (this.validateInput()) {
-            this.record_input.fields.OwnerId = this.lead_owner;
-            this.record_input.fields.Company = this.record_input.fields.FirstName + ' ' + this.record_input.fields.LastName;
-            this.record_input.fields.Inquiry_Date__c = this.getTodaysDate();
-            var count = 0;
-            if (this.is_undergraduate) {
-                for (const program_id of this.academic_interest_id_list) {
-                    if (count == 0) {
-                        this.record_input.fields.Major_Program__c = program_id;
-                    } else if (count == 1) {
-                        this.record_input.fields.Major_Program_2__c = program_id;
-                    } else if (count == 2) {
-                        this.record_input.fields.Major_Program_3__c = program_id;
-                    } else {
-                        this.record_input.fields.Major_Program_4__c = program_id;
-                    }
-                    count++;
-                }
-                console.log(this.record_input.fields);
-                console.log(String(this.academic_level_api));
-                console.log(String(this.record_input.fields.Citizenship_Type__c));
-                console.log(String(this.record_input.fields.Admit_Type__c));
-                getRecruitmentProgram({academic_level: this.academic_level_api, citizenship_type: this.record_input.fields.Citizenship_Type__c, admit_type: this.record_input.fields.Admit_Type__c})
-                .then(program => {
-                    if (Boolean(program)) {
-                        this.record_input.fields.Recruitment_Program__c = program;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-            }
             this.show_spinner = true;
+            this.record_input.fields.OwnerId = this.lead_owner;
+            if (!Boolean(this.record_input.fields.Company)) {
+                this.record_input.fields.Company = this.record_input.fields.FirstName + ' ' + this.record_input.fields.LastName;
+            }
+            this.record_input.fields.Inquiry_Date__c = this.getTodaysDate();
+            this.handleStreetAddress();
             if (Boolean(this.record_input.fields.Description)) {
                 this.record_input.fields.Description = 'Questions/Comments from RFI: ' + this.record_input.fields.Description;
             }
-            this.handleStreetAddress();
             getSchoolCollegeAccount({school_college_name : this.school_college})
             .then(school_college_account_id => {
                 if (Boolean(school_college_account_id)){
                     this.record_input.fields.St_Thomas_College_School__c = school_college_account_id;
                 }
-            }) 
-            .catch(error => {
-                console.log(error);
-            })
-            createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
-            .then(() => {
-                this.show_spinner = false;
-                this.form_submitted_successfully = true;
-                console.log(this.record_input);
-                if (this.redirect_after_submit) {
-                    window.open(this.redirect_url, '_self');
-                }
+                this.handleRecruitmentProgram();
             })
             .catch(error => {
                 console.log(error);
-                this.show_spinner = false;
-            });
+                this.handleRecruitmentProgram();
+            })
         }
     }
 
@@ -667,6 +606,53 @@ export default class RequestForInformationForm extends LightningElement {
     * BEGIN Helper Methods
     ******************************************
     */
+
+    handleRecruitmentProgram() {
+        var count = 0;
+        if (this.is_undergraduate) {
+            for (const program_id of this.academic_interest_id_list) {
+                if (count == 0) {
+                    this.record_input.fields.Major_Program__c = program_id;
+                } else if (count == 1) {
+                    this.record_input.fields.Major_Program_2__c = program_id;
+                } else if (count == 2) {
+                    this.record_input.fields.Major_Program_3__c = program_id;
+                } else {
+                    this.record_input.fields.Major_Program_4__c = program_id;
+                }
+                count++;
+            }
+            getRecruitmentProgram({academic_level: this.academic_level_api, citizenship_type: this.record_input.fields.Citizenship_Type__c, admit_type: this.record_input.fields.Admit_Type__c})
+            .then(program => {
+                if (Boolean(program)) {
+                    this.record_input.fields.Recruitment_Program__c = String(program);
+                }
+                this.createLead();
+            })
+            .catch(error => {
+                console.log(error);
+                this.createLead();
+            })
+        } else {
+            this.createLead();
+        }
+    }
+
+    createLead() {
+        console.log(this.record_input.fields);
+        createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
+        .then(() => {
+            this.show_spinner = false;
+            this.form_submitted_successfully = true;
+            if (this.redirect_after_submit) {
+                window.open(this.redirect_url, '_self');
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            this.show_spinner = false;
+        });
+    }
 
     // used Fields_to_Display__c field on RFI_Controller__c to determine which fields to display on form
     handleFieldsToDisplay() {

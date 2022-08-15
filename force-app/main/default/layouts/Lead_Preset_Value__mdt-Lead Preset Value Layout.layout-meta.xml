@@ -26,6 +26,10 @@
                 <behavior>Required</behavior>
                 <field>RFI_Controller_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Active__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

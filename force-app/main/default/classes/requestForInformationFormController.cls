@@ -2,19 +2,18 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-12-2022
+ * @last modified on  : 08-15-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
 public without sharing class requestForInformationFormController {
 
     @AuraEnabled
-    public static void createLead(String record,String objectApiName){
+    public static void createLead(String record, String objectApiName){
         try {
             SObject sobj;
             Map<String,SObjectField> fieldMap;
             Map<String,Object> objMap = (Map<String,Object>) JSON.deserializeUntyped(record);
-            System.debug(objMap);
             sobj = (SObject) Schema.describeSObjects(new List<String>{objectApiName})[0].getSObjectType().newSObject();
             fieldMap = sobj.getSObjectType().getDescribe().fields.getMap();
             for(String field : objMap.keySet()){
@@ -37,11 +36,9 @@ public without sharing class requestForInformationFormController {
                 }
             }
 
-            System.debug('sobj: ' + sobj);
             Database.DMLOptions dml = new Database.DMLOptions(); 
             dml.DuplicateRuleHeader.allowSave = false;
             Database.SaveResult result = Database.insert(sobj, dml);
-            System.debug(result);
         } catch (Exception e) {
             throw new AuraHandledException('Error creating lead: ' + e.getMessage());
         }
@@ -96,7 +93,6 @@ public without sharing class requestForInformationFormController {
                 }
             }
             query_string += ' ORDER BY Name';
-            System.debug('%% query string: ' + query_string);
             List<Program__c> programs = Database.query(query_string);
             return new Map<Id, Program__c>(programs);
         } catch (Exception e) {
@@ -178,7 +174,7 @@ public without sharing class requestForInformationFormController {
     public static List<Lead_Preset_Value__mdt> getPresetValues(String rfi_controller_name){
         try {
             List<Lead_Preset_Value__mdt> return_preset_values = new List<Lead_Preset_Value__mdt>();
-            List<Lead_Preset_Value__mdt> preset_values = [SELECT Field_API_Name__c, Value__c FROM Lead_Preset_Value__mdt WHERE RFI_Controller_Name__c =: rfi_controller_name];
+            List<Lead_Preset_Value__mdt> preset_values = [SELECT Field_API_Name__c, Value__c FROM Lead_Preset_Value__mdt WHERE RFI_Controller_Name__c =: rfi_controller_name AND Active__c = true];
             if (preset_values.size() > 0) {
                 return preset_values;
             }

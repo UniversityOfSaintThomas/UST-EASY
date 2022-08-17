@@ -1,3 +1,256 @@
+<!--
+  @description       : 
+  @author            : nicole.b@digitalmass.com
+  @group             : 
+  @last modified on  : 08-17-2022
+  @last modified by  : nicole.b@digitalmass.com
+-->
 <template>
-    
+    <lightning-card>
+        <!-- ADDRESS -->
+        <template for:each={address_question_list} for:item="question">
+            <lightning-input-address
+                key={question.Id}
+                address-label={question.Label__c}
+                street-label="Street"
+                city-label="City"
+                country-label="Country"
+                province-label="State/Province"
+                postal-code-label="Zipcode"
+                field-level-help={question.Help_Text__c}
+                required={question.Required__c}>
+            </lightning-input-address>
+        </template>
+
+        <!-- CHECKBOX -->
+        <template for:each={checkbox_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}
+                type="checkbox"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                required={question.Required__c}>
+            </lightning-input>
+        </template>
+
+        <!-- CURRENCY -->
+        <template for:each={currency_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}
+                type="number"
+                formatter="currency"
+                step="0.01"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                max={question.Length__c}
+                placeholder={question.Placeholder__c}
+                required={question.Required__c}>
+            </lightning-input>
+        </template>
+
+        <!-- DATE -->
+        <template for:each={date_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}
+                type="date"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                placeholder={question.Placeholder__c}
+                required={question.Required__c}>
+            </lightning-input>
+        </template>
+
+        <!-- DATETIME -->
+        <template for:each={datetime_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}
+                type="datetime"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                required={question.Required__c}>
+            </lightning-input>
+        </template>
+
+        <!-- EMAIL -->
+        <template for:each={email_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}
+                type="email"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                placeholder={question.Placeholder__c}
+                required={question.Required__c}
+                max-length={question.Length__c}>
+            </lightning-input>
+        </template>
+
+        <!-- NUMBER -->
+        <template for:each={number_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}   
+                type="number"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                placeholder={question.Placeholder__c}
+                required={question.Required__c}
+                max={question.Length__c}>
+            </lightning-input>
+        </template>
+
+        <!-- PERCENT -->
+        <template for:each={percent_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}
+                type="number"
+                formatter="percent"
+                step="0.01"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                placeholder={question.Placeholder__c}
+                required={question.Required__c}
+                max={question.Length__c}>
+            </lightning-input>
+        </template>
+
+        <!-- PHONE -->
+        <template for:each={phone_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}
+                type="tel"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                placeholder={question.Placeholder__c}
+                required={question.Required__c}
+                max-length={question.Length__c}>
+            </lightning-input>
+        </template>
+
+        <!-- PICKLIST -->
+        <template for:each={picklist_question_list} for:item="question">
+            <lightning-combobox
+                key={question.Id}
+                label={question.Label__c}
+                options={question.Picklist_Values__c}
+                aria-label={question.Label__c}
+                message-when-value-missing={question.Assistive_Text__c}
+                placeholder={question.Placeholder__c}
+                required={question.Required__c}
+                field-level-help={question.Help_Text__c}>
+            </lightning-combobox>
+        </template>
+
+        <!-- MULTIPICKLIST -->
+        <template for:each={multipicklist_question_list} for:item="question">
+            <lightning-dual-listbox
+                key={question.Id}
+                required={question.Required__c}>
+            </lightning-dual-listbox>
+        </template>
+
+        <!-- RADIO -->
+        <template for:each={radio_question_list} for:item="question">
+            <lightning-radio-group
+                key={question.Id}
+                required={question.Required__c}>
+            </lightning-radio-group>
+        </template>
+
+        <!-- REFERENCE -->
+        <template for:each={reference_question_list} for:item="question">
+            <template if:true={question.Display_as_Picklist__c}>
+                <lightning-combobox 
+                    key={question.Id}
+                    label={question.Label__c}
+                    options={question.Picklist_Values__c}
+                    aria-label={question.Label__c}
+                    message-when-value-missing={question.Assistive_Text__c}
+                    placeholder={question.Placeholder__c}
+                    required={question.Required__c}
+                    field-level-help={question.Help_Text__c}>
+                </lightning-combobox>
+            </template>
+            <template if:false={question.Display_as_Picklist__c}>
+                <lightning-input
+                    key={question.Id}
+                    data-item={question}
+                    type="search"
+                    label={question.Label__c}
+                    aria-label={question.Label__c}
+                    field-level-help={question.Help_Text__c}
+                    placeholder={question.Placeholder__c}
+                    required={question.Required__c}
+                    max-length={question.Length__c}
+                    onchange={handleSearch}>
+                </lightning-input>
+            </template>
+        </template>
+
+        <!-- STATIC -->
+        <template for:each={static_question_list} for:item="question">
+            <lightning-formatted-text
+                key={question.Id}
+                required={question.Required__c}
+                value={question.Static_Text__c}>
+            </lightning-formatted-text>
+        </template>
+
+        <!-- TEXT -->
+        <template for:each={text_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}
+                type="text"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                placeholder={question.Placeholder__c}
+                required={question.Required__c}
+                max-length={question.Length__c}>
+            </lightning-input>
+        </template>
+
+        <!-- TEXT ENCRYPTED -->
+
+        <!-- TEXT AREA -->
+        <template for:each={textarea_question_list} for:item="question">
+            <lightning-textarea
+                key={question.Id}
+                max-length={question.Length__c}
+                required={question.Required__c}
+                label={question.Label__c}>
+            </lightning-textarea>
+        </template>
+
+        <!-- LONG TEXT AREA -->
+        <template for:each={textarea_long_question_list} for:item="question">
+            <lightning-textarea
+                key={question.Id}
+                max-length={question.Length__c}
+                required={question.Required__c}
+                label={question.Label__c}>
+            </lightning-textarea>
+        </template>
+
+        <!-- URL -->
+        <template for:each={url_question_list} for:item="question">
+            <lightning-input
+                key={question.Id}
+                type="url"
+                label={question.Label__c}
+                aria-label={question.Label__c}
+                field-level-help={question.Help_Text__c}
+                placeholder={question.Placeholder__c}
+                required={question.Required__c}
+                max-length={question.Length__c}>
+            </lightning-input>
+        </template>
+
+    </lightning-card>
 </template>

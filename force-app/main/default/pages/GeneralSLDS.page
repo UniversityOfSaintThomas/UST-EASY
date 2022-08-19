@@ -5,7 +5,7 @@ license that can be found in the LICENSE file.
 Created by Thaddaeus Dahlberg on 2/15/2020.
 -->
 <apex:page id="GeneralSLDS" sidebar="false" lightningStyleSheets="true" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false" docType="html-5.0">
-    <apex:slds />
+    <apex:slds/>
     <html class="no-js" lang="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <head>
         <meta charset="utf-8"/>
@@ -13,18 +13,8 @@ Created by Thaddaeus Dahlberg on 2/15/2020.
         <title>
             <apex:insert name="metaPageTitle"/>
         </title>
-        <style>
-            #loading .background {
-                background-image: url({!URLFOR($Resource.EasyAppResources, '/img/loading-shield.gif')}) !important;
-                width: 160px;
-                height: 160px;
-            }
-
-            .slds-col img {
-                max-width: 99%;
-            }
-        </style>
-
+        <link rel="stylesheet" href="{!URLFOR($Resource.GeneralSLDS, '/css/styles.css')}"/>
+        <script src="{!URLFOR($Resource.GeneralSLDS, '/js/scripts.js')}" type="text/javascript"></script>
         <apex:insert name="scriptsHead"/>
     </head>
     <body>

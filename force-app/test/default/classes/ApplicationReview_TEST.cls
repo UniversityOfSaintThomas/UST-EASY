@@ -46,7 +46,7 @@ public class ApplicationReview_TEST {
             RecordTypeId = inquiryRT, 
             Name = 'TestStudent|Test 2022|Test Program', 
             AccountId = acc.Id, 
-            Contact__c = student.Id, 
+            Contact__c = student.Id,
             StageName = 'Suspect', CloseDate = System.today()
         );
         insert newOpp;
@@ -220,7 +220,7 @@ public class ApplicationReview_TEST {
         pr.getParameters().put('applicationId', app.Id);
         Test.setCurrentPage(pr);
         ApplicationReview ar = new ApplicationReview();
-        ar.init();
+        ar.ApplicationReviewInit();
         System.assertEquals(1, [SELECT COUNT() FROM Application_Review__c]);
         ar.review.Decision_Recommendation__c = 'Accepted';
         ar.submit();

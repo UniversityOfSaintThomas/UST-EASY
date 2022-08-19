@@ -1,0 +1,115 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 8/15/2022.
+ -->
+
+<apex:component id="ApplicationReviewAdmin" allowDML="true">
+    <apex:attribute name="reqs" type="ApplicationRequirement[]" required="true" description="displays the full app"/>
+    <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
+    <apex:attribute name="disabled" description="Disable form fields" type="Boolean" required="false"/>
+    <apex:variable var="itemCount" value="{!0}"/>
+
+    <apex:outputPanel layout="none">
+        <apex:repeat value="{!reqs}" var="req">
+            <apex:repeat value="{!req.section.groups}" var="group" rendered="{!req.section.groups != null && req.section.groups.size > 0}">
+
+                <apex:outputPanel rendered="{!group.instructions != null && group.instructions != ''}">
+                    <div class="slds-text-body_regular slds-p-bottom_small">
+                        <p>
+                            <apex:outputText value="{!group.instructions}" escape="false"/>
+                        </p>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!group.isInternal && (group.response != null && group.response.Fulfilled_On__c != null)}">
+                    <div class="slds-text-body_regular slds-p-bottom_small">
+                        <p>
+                            <apex:outputText value="Completed on {0, Date}.">
+                                <apex:param value="{!group.response.Fulfilled_On__c}"/>
+                            </apex:outputText>
+                        </p>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!group.isInternal && (group.response == null || group.response.Fulfilled_On__c == null)}">
+                    <div class="slds-text-body_regular slds-p-bottom_small">
+                        <p>This has not been completed.</p>
+                    </div>
+                </apex:outputPanel>
+
+
+                <apex:repeat value="{!group.questions}" var="question">
+
+
+                    <!--                        <c:ApplicationFormSectionInput responseObject="{!question.response}"-->
+                    <!--                                                       questionWrapper="{!question}"-->
+                    <!--                                                       fieldAPI="{!question.defaultFieldName}"-->
+                    <!--                                                       inputLabel="{!question.label}"-->
+                    <!--                                                       inputType="{!question.fieldType}"-->
+                    <!--                                                       isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"-->
+                    <!--                                                       isRequired="{!isRequired}"-->
+                    <!--                                                       isEditable="{!question.isEditable}"-->
+                    <!--                                                       isExternalEmail="{!question.question.External_Email_Field__c}"-->
+                    <!--                                                       itemId="{!group.item.Id}"-->
+                    <!--                                                       inputOptions="{!question.options}"-->
+                    <!--                                                       isRadio="{!question.radio}"-->
+                    <!--                                                       rerenderGroup="{!if(question.hasDependentQuestions, 'reRenderGroups', 'none')}"-->
+                    <!--                                                       itemNumber="{!itemNumber}"-->
+                    <!--                                                       disabled="{!disabled}"-->
+
+                    <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="isRequired"/>
+                    <apex:variable value="{!itemCount+1}" var="itemNumber"/>
+                    <apex:variable value="{!question.label}" var="inputLabel"/>
+                    <apex:variable value="{!question.fieldType}" var="inputType"/>
+                    <apex:variable value="{!question.response}" var="responseObject"/>
+                    <apex:variable value="{!question.defaultFieldName}" var="fieldAPI"/>
+                    <apex:variable value="{!question}" var="questionWrapper"/>
+                    <!--                    <apex:variable value="{!rr['multiPicklistValues'][question.question.Related_Object_Field__c].multiPicklistValues}" var="multiPicklist"/>-->
+                    <apex:variable value="{!question.options}" var="inputOptions"/>
+
+                    <apex:outputPanel rendered="{!inputType != 'Address' && !ISBLANK(inputLabel) && inputType != 'Checkbox' && inputType != 'Hidden'}" layout="none">
+                        <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
+                            {!question.label}
+                            <apex:outputPanel rendered="{!isRequired}" layout="none">
+                                <abbr class='slds-required' title='required'>* </abbr>
+                            </apex:outputPanel>
+                        </label>
+                    </apex:outputPanel>
+
+                    <!-- Hidden Field -->
+                    <apex:inputHidden value="{!responseObject[fieldAPI]}" rendered="{!inputType == 'Hidden'}"/>
+
+                    <!-- Static for Address label -->
+                    <apex:outputPanel rendered="{!inputType == 'Address'}" layout="block" styleClass="slds-text-body_regular validate{!inputType} ">
+                        <p>
+                            {!inputLabel}
+                        </p>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="none" rendered="{!inputType != 'Address' && inputType != 'MultiPicklist'}">
+                            <span class="disabledAnswer">
+                                <p><apex:outputText value="{!responseObject[fieldAPI]}" escape="false"/></p>
+                            </span>
+                    </apex:outputPanel>
+
+
+                    <apex:outputPanel rendered="{!inputType == 'MultiPicklist' && inputType != 'Address'}" layout="block" styleClass="slds-form-element__control">
+                        <div class="slds-checkbox disabledAnswer">
+                            {!question.response.ValueText__c}
+                            <!--                            {!responseObject[fieldAPI]}-->
+                            <!--                            <apex:selectCheckboxes value="{!multiPicklist}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}"  disabled="true">-->
+                            <!--                                <apex:selectOptions value="{!inputOptions}"/>-->
+                            <!--                            </apex:selectCheckboxes>-->
+                            <!--                            <apex:selectCheckboxes value="{!questionWrapper[fieldAPI]}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" disabled="true">-->
+                            <!--                                <apex:selectOptions value="{!inputOptions}"/>-->
+                            <!--                            </apex:selectCheckboxes>-->
+                        </div>
+                    </apex:outputPanel>
+
+
+                </apex:repeat>
+            </apex:repeat>
+
+        </apex:repeat>
+    </apex:outputPanel>
+
+</apex:component>

@@ -1,6 +1,6 @@
-<apex:page controller="ApplicationAdminView" action="{!init}" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" cache="false" standardStylesheets="false" docType="html-5.0">
+<apex:page controller="ApplicationAdminView" action="{!ApplicationAdminViewInit}" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" cache="false" standardStylesheets="false" docType="html-5.0">
     <apex:composition template="GeneralSLDS">
-        <c:ApplicationHead/>
+
         <apex:define name="scriptsHead">
             <script>
                 async function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm) {
@@ -16,11 +16,13 @@
                     });
                 }
             </script>
+            <c:ApplicationHead/>
         </apex:define>
-        <apex:define name="metaPageTitle">TEST</apex:define>
+        <apex:define name="metaPageTitle">Application Admin View</apex:define>
+
         <apex:define name="body">
 
-            <apex:variable value="0" var="reqIndex"/>
+            <h1 style="">Application Admin View</h1>
 
             <div id="loadSpinner" class="popupBackground">
                 <div id="loading" class="PopupPanel">
@@ -29,34 +31,37 @@
                 </div>
             </div>
 
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-backdrop_open slds-backdrop" id="form-spinner" style="display:none">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </section>
+
             <apex:outputPanel id="themessages">
                 <apex:pageMessages/>
             </apex:outputPanel>
 
-            <!--    <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}" vfPageName="ApplicationAdminView">-->
-            <!--    <c:ApplicationBody title="Title" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}" vfPageName="ApplicationAdminView">-->
-            <apex:repeat value="{!arLst}" var="req">
+            <apex:form id="application">
 
-                <apex:variable var="itemCount" value="0"/>
-                <apex:form>
-                    <apex:repeat value="{!req.section.groups}" var="g" rendered="{!req.section.groups != null && req.section.groups.size > 0}">
-                        <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
-                            <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appInfo="{!appInfo}"/>
-                        </div>
-                        <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
-                    </apex:repeat>
-                </apex:form>
-                <apex:variable var="reqIndex" value="{!TEXT(value(reqIndex) + 1)}"/>
-            </apex:repeat>
-            <!--    </c:ApplicationBody>-->
-
-            <apex:outputLink styleClass="btn-lightning btn-lg" value="/{!applicationId}">Back to Application</apex:outputLink>
-
-            <apex:form>
                 <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                     <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                 </apex:actionFunction>
-                <apex:commandLink styleClass="slds-button_brand" style="float:right;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+
+                <apex:commandLink id="reRenderGroups" value="" style="display:none;" action="{!pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.questionGroupWrapper}"/>
+                <apex:commandLink id="reRenderTheTable" value="" style="display:none;" action="{!pushValuesToObjects}" onComplete="pageLoadReRendered();" reRender="{!$Component.groupRepeat.theFormSectionComponent.applicationFormSectionComponent.theTable}"/>
+
+                <apex:repeat value="{!arLst}" var="req" id="groupRepeat">
+                    <apex:repeat value="{!req.section.groups}" var="g" rendered="{!req.section.groups != null && req.section.groups.size > 0}">
+                        <c:ApplicationFormSection id="theFormSectionComponent" groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appInfo="{!appInfo}"/>
+                    </apex:repeat>
+                </apex:repeat>
+
+                <apex:outputLink styleClass="slds-button_brand" value="/{!applicationId}">Back to Application</apex:outputLink>
+
+                <apex:outputLink styleClass="slds-button_brand" onclick="performDocUploadSave();appShowLoadingSpinner();">Save</apex:outputLink>
+
             </apex:form>
 
             <br/>

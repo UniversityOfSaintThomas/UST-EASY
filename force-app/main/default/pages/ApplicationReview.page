@@ -1,60 +1,65 @@
-<apex:page controller="ApplicationReview" action="{!init}" showHeader="false" standardStylesheets="false" docType="html-5.0" >
-   <c:ApplicationHead />
-     <apex:variable value="0" var="reqIndex"/>
-    <div class="appBodyReview">
-        <apex:repeat value="{!arLst}" var="req">
-            <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}" vfPageName="ApplicationReview">
-                <c:ApplicationForm section="{!req.section}" hidePaging="true" preventUpdates="true" appInfo="{!appInfo}">
-                </c:ApplicationForm>
-            </c:ApplicationBody>
-            <apex:variable var="reqIndex" value="{!VALUE(reqIndex) + 1}"/>
-        </apex:repeat>
-    </div>
-  <apex:form id="appReviewForm">
-        <div class="container-fluid" >
-            <div class="row" >
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <h1 style="" >Application Review</h1>
+<apex:page controller="ApplicationReview" action="{!ApplicationReviewInit}" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" cache="false" standardStylesheets="false" docType="html-5.0">
+    <apex:composition template="GeneralSLDS">
+
+        <apex:define name="scriptsHead">
+            <c:ApplicationHead/>
+        </apex:define>
+
+        <apex:define name="metaPageTitle">Application Review</apex:define>
+
+        <apex:define name="body">
+
+            <h1 style="">Application Review</h1>
+
+            <div id="loadSpinner" class="popupBackground">
+                <div id="loading" class="PopupPanel">
+                    <div class="background"></div>
+                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Please Wait..</span>
                 </div>
             </div>
-            <div class="row" >
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <hr />
+
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-backdrop_open slds-backdrop" id="form-spinner" style="display:none">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
                 </div>
-            </div>
-            <div class="row" >
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <div>
-                        <div class="row" style="display:flex;" >
-                            <div class="col-lg-8 col-xs-10" >
-                                <div role="listbox">
-                                    <div class="item active" >
-                                        <apex:repeat value="{!$ObjectType.Application_Review__c.FieldSets.Application_Review_Header}" var="f">
-                                            <c:ApplicationField question="{!questionHolderMap[f.fieldPath]}" obj="{!review}" appInfo="{!appInfo}"/>
-                                        </apex:repeat>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" >
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
-                    <apex:commandLink styleClass="btn-lightning btn-lg" value="Save" rerender="themessages" action="{!submit}" onclick="appShowLoadingSpinner();"/>
-                </div>
-            </div> 
-        </div>
-        <apex:outputPanel id="themessages"><apex:pageMessages ></apex:pageMessages></apex:outputPanel>
-    </apex:form>
-    <script>
-        // jQuery(function(){
-        //     jQuery('.appBodyReview .statePicklist select').addClass('form-control');
-        //     jQuery('.appBodyReview .statePicklist').on('DOMNodeInserted',function(){
-        //         jQuery('.appBodyReview .statePicklist select:not(.form-control)').addClass('form-control');
-        //         jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
-        //     });
-        //     jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
-        // });
-    </script>
+            </section>
+
+            <apex:outputPanel id="themessages">
+                <apex:pageMessages/>
+            </apex:outputPanel>
+
+            <apex:form id="application">
+                <c:ApplicationReviewAdmin reqs="{!arLst}" appInfo="{!appInfo}" disabled="true"/>
+
+                <apex:variable value="{!0}" var="itemNumber"/>
+
+                <apex:actionRegion>
+                    <apex:repeat value="{!$ObjectType.Application_Review__c.FieldSets.Application_Review_Header}" var="f">
+
+                        <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
+                        <apex:variable value="{!questionHolderMap[f.fieldPath]}" var="question"/>
+
+                        <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="isRequired"/>
+                        <apex:outputPanel styleClass="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
+                            <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
+                                <c:ApplicationFormSectionInput
+                                        fieldAPI="{!f}"
+                                        responseObject="{!review}"
+                                        inputLabel="{!f.label}"
+                                        questionWrapper="{!question}"
+                                        inputType="{!question.fieldType}"
+                                        inputOptions="{!question.options}"
+                                        isRequired="{!isRequired}"
+                                />
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                    <apex:commandLink styleClass="slds-button_brand" value="Save" rerender="themessages" action="{!submit}" onclick="appShowLoadingSpinner();"/>
+                </apex:actionRegion>
+            </apex:form>
+
+        </apex:define>
+    </apex:composition>
 </apex:page>

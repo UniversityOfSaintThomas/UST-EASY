@@ -122,9 +122,9 @@ public class ApplicationAdminView_TEST {
         appInfo.at = 'st';
         ar.appInfo = appInfo;
         ar.applicationId = app.Id;
-        ar.contactId = student.Id;
+        //ar.contactId = student.Id;
         ar.app = app;
-        ar.init();
+        ar.ApplicationAdminViewInit();
         ar.arLst[0].newResponses = new List<Requirement_Response__c>{
                 new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = ri.Id)
         };

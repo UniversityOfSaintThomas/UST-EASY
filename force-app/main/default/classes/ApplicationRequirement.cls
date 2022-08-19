@@ -7,7 +7,7 @@ Revision (s):
 public class ApplicationRequirement {
 
     public List<Requirement_Item__c> items { get; set; }
-    public String title {
+    public transient String title {
         get {
             return items.isEmpty() ? '' : (String.isBlank(items[0].Requirement__r.Label__c) ? items[0].Requirement__r.Name : items[0].Requirement__r.Label__c);
         }
@@ -15,24 +15,20 @@ public class ApplicationRequirement {
     public ApplicationQuestionSection section { get; set; }
     public Contact con { get; set; }
     public Application__c app { get; set; }
-    public List<Question_Response__c> qResponses { get; set; }
     private Boolean queryItems = true;
-    List<Requirement_Response__c> requirementResponses { get; set; }
-    List<Question_Response__c> questionResponses { get; set; }
-    List<Question_Dependency__c> questionDependencies { get; set; }
+    public List<Requirement_Response__c> requirementResponses { get; set; }
+    public List<Question_Response__c> questionResponses { get; set; }
+    public List<Question_Dependency__c> questionDependencies { get; set; }
     public List<RequirementWrapper> checklistItems { get; set; }
     public Boolean preventUpdates { get; set; }
-    public List<Requirement_Response__c> newResponses { get; set; }
     public Boolean showSuccess { get; set; }
     public Boolean isInvalid { get; set; }
     public Boolean ignoreExternalFilter { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
-
     public Boolean allowSubmit { get; set; }
     public transient String additionalDataString { get; set; }
     public String redirectPage { get; set; }
-    public String userType { get; set; }
-    public Boolean isStandardUser { get; set; }
+
 
     public Application_Control__c appControl { get; set; }
 
@@ -100,6 +96,12 @@ public class ApplicationRequirement {
     /*******************************************************************************
     * @description Initializes the page - Pulls relevant requirement items, requirement responses, etc.
     ********************************************************************************/
+
+    public PageReference applicationRequirementInitAppInfo(EASYApplicationInfo appInfo) {
+        this.appInfo = appInfo;
+        return applicationRequirementInit();
+    }
+
     public PageReference applicationRequirementInit() {
 
         if (appInfo == null) {
@@ -111,10 +113,7 @@ public class ApplicationRequirement {
             return portalPage;
         }
 
-        //isExternalUser = appInfo.isExternalUser;
-        userType = String.valueOf(UserInfo.getUserType());
-        isStandardUser = userType.equalsIgnoreCase('standard');
-        if (userType.equalsIgnoreCase('guest')) {
+        if (String.valueOf(UserInfo.getUserType()).equalsIgnoreCase('guest')) {
             String startUrl = System.currentPageReference().getParameters().get('startURL');
             return new PageReference(Site.getPathPrefix() + '/SiteLogin?startURL=' + EncodingUtil.urlEncode(startUrl, 'UTF-8'));
         }
@@ -225,7 +224,7 @@ public class ApplicationRequirement {
         }
 
         // Creates new responses for "new" requirements
-        newResponses = new List<Requirement_Response__c>();
+        List<Requirement_Response__c> newResponses = new List<Requirement_Response__c>();
         Map<String, Map<String, Schema.SObjectField>> relatedFieldDescribes = new Map<String, Map<String, SObjectField>>();
         Set<String> relatedObjects = new Set<String>();
         List<Requirement_Item__c> riLst = new List<Requirement_Item__c>();
@@ -407,7 +406,7 @@ public class ApplicationRequirement {
             System.debug(ex.getMessage());
         }
 
-        qResponses = new List<Question_Response__c>();
+        List<Question_Response__c> qResponses = new List<Question_Response__c>();
         for (ApplicationQuestionGroup g : section.groups) {
             if (g.questionGroup == true && g.questions != null && g.isEditable) {
                 for (ApplicationQuestion q : g.questions) {

@@ -2,11 +2,18 @@
   @description       : 
   @author            : nicole.b@digitalmass.com
   @group             : 
-  @last modified on  : 08-22-2022
+  @last modified on  : 08-23-2022
   @last modified by  : nicole.b@digitalmass.com
 -->
 <template>
     <lightning-card>
+        <template if:true={show_spinner}>
+            <lightning-spinner
+                alternative-text="Loading" 
+                size="medium">
+            </lightning-spinner>
+        </template>
+        
         <div class="slds-text-heading_medium slds-m-left_medium">{requirement_item_instructions}</div>
         <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
             <template for:each={questions_to_display_list} for:item="question">
@@ -228,6 +235,7 @@
                             <lightning-input
                                 name={question.Id}
                                 data-item={question}
+                                data-id={question.Id}
                                 type="search"
                                 label={question.Label__c}
                                 aria-label={question.Label__c}
@@ -237,6 +245,19 @@
                                 max-length={question.Length__c}
                                 onchange={handleSearch}>
                             </lightning-input>
+                            <div class="slds-scrollable_y" style="max-height:120px">
+                                <lightning-datatable
+                                    hide-table-header
+                                    column-widths-mode="fixed"
+                                    data={question.Picklist_Values__c}
+                                    columns={reference_question_search_columns}
+                                    key-field="id"
+                                    data-id={question.Id}
+                                    max-row-selection="1"
+                                    onrowselection={onChange}
+                                    name={question.Id}>
+                                </lightning-datatable>
+                            </div>
                         </template>
                     </div>
                 </template>
@@ -271,6 +292,21 @@
                 </template>
 
                 <!-- TEXT ENCRYPTED -->
+                <template if:true={question.TextEncrypted}>
+                    <div class="slds-col" key={question}>
+                        <lightning-input
+                            name={question.Id}
+                            type="password"
+                            label={question.Label__c}
+                            aria-label={question.Label__c}
+                            field-level-help={question.Help_Text__c}
+                            placeholder={question.Placeholder__c}
+                            required={question.Required__c}
+                            max-length={question.Length__c}
+                            onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                </template>
 
                 <!-- TEXT AREA -->
                 <template if:true={question.TextArea}>
@@ -315,6 +351,16 @@
                     </div>
                 </template>
             </template> 
+
+            <div class="slds-align_absolute-center slds-m-top_medium">
+                <lightning-button 
+                    variant="brand" 
+                    label="Submit" 
+                    title="Submit"
+                    onclick={handleSubmit}>
+                </lightning-button>
+            </div>
+
         </div>
     </lightning-card>
 </template>

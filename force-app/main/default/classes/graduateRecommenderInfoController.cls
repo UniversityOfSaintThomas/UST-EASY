@@ -103,6 +103,7 @@ public without sharing class graduateRecommenderInfoController {
             ];
 
             String query_string = 'SELECT Id, ' +
+                                      'Name, ' +
                                       'Label__c, ' +
                                       'RecordType.DeveloperName, ' +
                                       'Assistive_Text__c, ' +
@@ -135,39 +136,39 @@ public without sharing class graduateRecommenderInfoController {
 
     private static String filterQueryByApplication(String query_string, Application__c app) {
         if (app.Applicant_Type__c != null) {
-            query_string += ' AND Applicant_Type__c INCLUDES (\'' + app.Applicant_Type__c + '\')';
+            query_string += ' AND Applicant_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Applicant_Type__c) + '\')';
         }
 
         if (app.Application_Status__c != null) {
-            query_string += ' AND Application_Status__c INCLUDES (\'' + app.Application_Status__c + '\')';
+            query_string += ' AND Application_Status__c INCLUDES (\'' + String.escapeSingleQuotes(app.Application_Status__c) + '\')';
         }
 
         if (app.Citizenship__c != null) {
-            query_string += ' AND Citizenship__c INCLUDES (\'' + app.Citizenship__c + '\')';
+            query_string += ' AND Citizenship__c INCLUDES (\'' + String.escapeSingleQuotes(app.Citizenship__c) + '\')';
         }
 
         if (app.Degree_Type__c != null) {
-            query_string += ' AND Degree_Type__c INCLUDES (\'' + app.Degree_Type__c + '\')';
+            query_string += ' AND Degree_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Degree_Type__c) + '\')';
         }
 
         if (app.Delivery_Type__c != null) {
-            query_string += ' AND Delivery_Type__c INCLUDES (\'' + app.Delivery_Type__c + '\')';
+            query_string += ' AND Delivery_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Delivery_Type__c) + '\')';
         }
 
         if (app.Intended_Program__c != null) {
-            query_string += ' AND Intended_Program__c = \'' + app.Intended_Program__c + '\'';
+            query_string += ' AND Intended_Program__c = \'' + String.escapeSingleQuotes(app.Intended_Program__c) + '\'';
         }
 
         if (app.School_College__c != null) {
-            query_string += ' AND School_College__c = \'' + app.School_College__c + '\'';
+            query_string += ' AND School_College__c = \'' + String.escapeSingleQuotes(app.School_College__c) + '\'';
         }
 
         if (app.Student_Type__c != null) {
-            query_string += ' AND Student_Type__c INCLUDES (\'' + app.Student_Type__c + '\')';
+            query_string += ' AND Student_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Student_Type__c) + '\')';
         }
 
         if (app.Residency__c != null) {
-            query_string += ' AND Residency__c = \'' + app.Residency__c + '\'';
+            query_string += ' AND Residency__c = \'' + String.escapeSingleQuotes(app.Residency__c) + '\'';
         }
 
         return query_string;
@@ -175,8 +176,9 @@ public without sharing class graduateRecommenderInfoController {
 
     @AuraEnabled
     public static Map<Id, SObject> lookup(String lookup_object, String lookup_where_clause, String name_field_api_name){
-        if (String.isNotBlank(lookup_object) || String.isNotBlank(lookup_where_clause) || String.isNotBlank(name_field_api_name)) {
+        if (String.isNotBlank(lookup_object) && String.isNotBlank(lookup_where_clause) && String.isNotBlank(name_field_api_name)) {
             try {
+                // string format / builder
                 String query_string = 'SELECT Id, ' + name_field_api_name + ' FROM ' + lookup_object + ' WHERE ' + lookup_where_clause + ' ORDER BY ' + name_field_api_name;
                 return new Map<Id, SObject>(Database.query(query_string));
             } catch (Exception e) {

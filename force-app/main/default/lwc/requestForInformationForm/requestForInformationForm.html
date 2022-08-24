@@ -2,7 +2,7 @@
   @description       : 
   @author            : nicole.b@digitalmass.com
   @group             : 
-  @last modified on  : 08-04-2022
+  @last modified on  : 08-15-2022
   @last modified by  : nicole.b@digitalmass.com
 -->
 
@@ -22,7 +22,6 @@
         <template if:false={form_submitted_successfully}>
             <!-- BEGIN FORM -->
             <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
-                <!-- ROW 0 -->
                 <template if:true={show_fields.I_will_apply_to_St_Thomas_as_a}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -36,7 +35,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 1 -->
                 <template if:true={show_fields.Citizenship}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -50,21 +48,38 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 2 -->
                 <template if:true={show_fields.Academic_Interest}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-combobox
-                                required={require_fields.Academic_Interest}
-                                label={field_labels.academic_interest_label}
-                                options={academic_interest_picklist_values}
-                                aria-label="Academic Interest"
-                                onchange={onChange}>
-                            </lightning-combobox>
+                    <template if:true={is_undergraduate}>
+                        <div class="slds-grid slds-gutters_medium">
+                            <div class="slds-col">
+                                <lightning-dual-listbox
+                                    required={require_fields.Academic_Interest}
+                                    label={field_labels.academic_interest_label}
+                                    source-label="Available"
+                                    selected-label="Selected"
+                                    options={academic_interest_picklist_values}
+                                    aria-label="Academic Interest"
+                                    onchange={onChange}
+                                    max="4"
+                                    field-level-help="">
+                                </lightning-dual-listbox>
+                            </div>
                         </div>
-                    </div>
+                    </template>
+                    <template if:false={is_undergraduate}>
+                        <div class="slds-grid slds-gutters_medium">
+                            <div class="slds-col">
+                                <lightning-combobox
+                                    required={require_fields.Academic_Interest}
+                                    label={field_labels.academic_interest_label}
+                                    options={academic_interest_picklist_values}
+                                    aria-label="Academic Interest"
+                                    onchange={onChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </template>
                 </template>
-                <!-- ROW 6 -->
                 <template if:true={show_fields.Title}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col slds-size_1-of-4">
@@ -78,7 +93,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 2 -->
                 <div class="slds-grid slds-gutters_medium">
                     <div class="slds-col slds-size_1-of-2">
                         <lightning-input 
@@ -99,7 +113,6 @@
                         </lightning-input>
                     </div>
                 </div>
-                <!-- ROW 3 -->
                 <template if:true={show_fields.Email}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -112,8 +125,7 @@
                             </lightning-input>
                         </div>
                     </div>  
-                </template>  
-                <!-- ROW 4 -->
+                </template>
                 <template if:true={show_fields.Home_and_Mobile_Phone}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col slds-size_1-of-2">
@@ -136,7 +148,6 @@
                         </div>
                     </div> 
                 </template>
-                <!-- ROW 5 -->
                 <template if:true={show_fields.I_would_like_to_receive_text_messages}>
                     <div class="slds-grid slds-gutters_medium slds-p-top_xx-small">
                         <div class="slds-col">
@@ -148,8 +159,7 @@
                             </lightning-input>
                         </div>
                     </div>
-                </template> 
-                <!-- ROW 6 -->
+                </template>
                 <template if:true={show_fields.Birthdate}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -163,7 +173,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 6 -->
                 <template if:true={show_fields.Employer}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -177,7 +186,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 6 -->
                 <template if:true={show_fields.Expected_Start_Term_at_St_Thomas}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -191,7 +199,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 6 -->
                 <template if:true={show_fields.Timeline_to_Enrollment}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -205,7 +212,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 6 -->
                 <template if:true={show_fields.High_School_Attended}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -258,7 +264,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 7 -->
                 <template if:true={show_fields.High_School_Graduation_Year}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -274,7 +279,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 7 -->
                 <template if:true={show_fields.Address_1}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -288,7 +292,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 8 -->
                 <template if:true={show_fields.Address_2}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -301,7 +304,6 @@
                         </div>
                     </div>  
                 </template>
-                <!-- ROW 8 -->
                 <template if:true={show_fields.Address_3}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">
@@ -314,7 +316,6 @@
                         </div>
                     </div>
                 </template>
-                <!-- ROW 9 -->
                 <div class="slds-grid slds-gutters_medium">
                     <template if:true={show_fields.Zipcode}>
                         <div class="slds-col slds-size_1-of-2">
@@ -339,8 +340,7 @@
                             </lightning-input>
                         </div>
                     </template>
-                </div>  
-                <!-- ROW 10 -->
+                </div>
                 <div class="slds-grid slds-gutters_medium">
                     <template if:true={show_fields.State}>
                         <template if:true={international_citizen_type}>
@@ -383,35 +383,6 @@
                         </div>
                     </template>
                 </div>
-                <!-- ROW 2 -->
-                <template if:true={show_fields.I_will_apply_to_St_Thomas_Law_as_a}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-combobox
-                                required={require_fields.I_will_apply_to_St_Thomas_Law_as_a}
-                                label={field_labels.apply_law_school_label}
-                                options={academic_interest_picklist_values}
-                                aria-label="I will apply to St. Thomas Law as a"
-                                onchange={onChange}>
-                            </lightning-combobox>
-                        </div>
-                    </div>
-                </template>
-                <!-- ROW 2 -->
-                <template if:true={show_fields.When_do_you_plan_to_start_school}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-combobox
-                                required={require_fields.When_do_you_plan_to_start_school}
-                                label={field_labels.plan_to_start_label}
-                                options={academic_term_picklist_values}
-                                aria-label="When do you plan to start school?"
-                                onchange={onChange}>
-                            </lightning-combobox>
-                        </div>
-                    </div>
-                </template>
-                <!-- ROW 10 -->
                 <template if:true={show_fields.I_would_like_program_information_to_be_mailed_to_me}>
                     <div class="slds-grid slds-gutters_medium slds-p-top_x-small">
                             <div class="slds-col">
@@ -424,7 +395,6 @@
                             </div>
                     </div> 
                 </template>
-                <!-- ROW 10 -->
                 <template if:true={show_fields.I_have_a_question}>
                     <div class="slds-grid slds-gutters_medium slds-p-top_x-small">
                             <div class="slds-col">
@@ -438,7 +408,6 @@
                             </div>
                     </div> 
                 </template>
-                <!-- ROW 10 -->
                 <template if:true={show_fields.Description}>
                     <div class="slds-grid slds-gutters_medium">
                         <div class="slds-col">

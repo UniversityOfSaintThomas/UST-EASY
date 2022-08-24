@@ -1,10 +1,19 @@
+/**
+ * @last modified on  : 08-08-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 @IsTest
 public class ApplicationRequirementPreview_TEST {
     @TestSetup
     public static void testSetup() {
         Account acc = new Account(Name = 'NewAcc');
         insert acc;
-        Contact student = new Contact(LastName = 'TestStudent');
+        
+        Contact student = new Contact(
+            FirstName = 'TestFirst', 
+            LastName = 'TestStudent', 
+            Email = 'testfirst@teststudent.com'
+        );
         insert student;
 
         Map<String, Id> rtMap = new Map<String, Id>();
@@ -36,44 +45,164 @@ public class ApplicationRequirementPreview_TEST {
         );
         insert appControl;
 
-        Application__c app = new Application__c(Contact__c = student.Id, Application_Control__c = appControl.Id);
+        Id inquiryRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Inquiry_Opportunity').getRecordTypeId();
+        Opportunity newOpp = new Opportunity(
+            RecordTypeId = inquiryRT, 
+            Name = 'TestStudent|Test 2022|Test Program', 
+            AccountId = acc.Id, 
+            Contact__c = student.Id, 
+            StageName = 'Suspect', 
+            CloseDate = System.today()
+        );
+        insert newOpp;
+
+        hed__Term__c hedTerm = new hed__Term__c(
+            Name = 'Test 2022', 
+            hed__Account__c = acc.Id
+        );
+        insert hedTerm;
+
+        Academic_Term__c term = new Academic_Term__c(
+            Name = 'Test 2022', 
+            Term__c = hedTerm.Id
+        );
+        insert term;
+
+        Program__c program = new Program__c(
+            Name = 'Test Program', 
+            Program_Name_on_Application__c = 'Test Program'
+        );
+        insert program;
+
+        Application__c app = new Application__c(
+            Contact__c = student.Id, 
+            Application_Control__c = appControl.Id, 
+            Intended_Term_of_Entry__c = term.Id, 
+            Intended_Program__c = program.Id, 
+            Application_Status__c = 'Started App'
+        );
         insert app;
 
-        Requirement__c req = new Requirement__c(Application_Control__c = appControl.Id, Active__c = true, Name = 'Test Req', Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID(), Internal_Only__c = true);
+        Requirement__c req = new Requirement__c(
+            Application_Control__c = appControl.Id,
+            Active__c = true, 
+            Name = 'Test Req', 
+            Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID(), 
+            Internal_Only__c = true
+        );
         insert req;
-        Requirement_Item__c riQG = new Requirement_Item__c(Requirement__c = req.Id, Name = 'Test RI', Active__c = true, RecordTypeId = rtMapRI.get('Question_Group'), Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID(), Internal_Only__c = true);
-        Requirement_Item__c riDU = new Requirement_Item__c(Requirement__c = req.Id, Name = 'Test RI', Active__c = true, RecordTypeId = rtMapRI.get('Document_Upload'), Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
-        Requirement_Item__c riRO = new Requirement_Item__c(Requirement__c = req.Id, Name = 'Test RI', Active__c = true, RecordTypeId = rtMapRI.get('Related_Object'), Related_List_Object__c = 'Application__c', Related_List_Object_Master__c = 'Contact', Related_List_Object_Master_Field__c = 'Contact__c', Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
+        Requirement_Item__c riQG = new Requirement_Item__c(
+            Requirement__c = req.Id, 
+            Name = 'Test RI', 
+            Active__c = true, 
+            RecordTypeId = rtMapRI.get('Question_Group'), 
+            Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID(), 
+            Internal_Only__c = true
+        );
+        Requirement_Item__c riDU = new Requirement_Item__c(
+            Requirement__c = req.Id, 
+            Name = 'Test RI', 
+            Active__c = true, 
+            RecordTypeId = rtMapRI.get('Document_Upload'), 
+            Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+        );
+        Requirement_Item__c riRO = new Requirement_Item__c(
+            Requirement__c = req.Id, 
+            Name = 'Test RI', 
+            Active__c = true, 
+            RecordTypeId = rtMapRI.get('Related_Object'), 
+            Related_List_Object__c = 'Application__c', 
+            Related_List_Object_Master__c = 'Contact', 
+            Related_List_Object_Master_Field__c = 'Contact__c', 
+            Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+        );
         insert new List<Requirement_Item__c>{
                 riQG, riDU, riRO
         };
 
-        Requirement__c req2 = new Requirement__c(Application_Control__c = appControl.Id, Active__c = true, Name = 'Test Req 2', Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID());
+        Requirement__c req2 = new Requirement__c(
+            Application_Control__c = appControl.Id, 
+            Active__c = true, 
+            Name = 'Test Req 2', 
+            Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID()
+        );
         insert req2;
-        Requirement_Item__c riQG2 = new Requirement_Item__c(Requirement__c = req2.Id, Name = 'Test RI', Active__c = true, RecordTypeId = rtMapRI.get('Question_Group'), Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
+        Requirement_Item__c riQG2 = new Requirement_Item__c(
+            Requirement__c = req2.Id, 
+            Name = 'Test RI', 
+            Active__c = true, 
+            RecordTypeId = rtMapRI.get('Question_Group'), 
+            Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+        );
         insert riQG2;
 
-        Question__c q1 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test', Label__c = 'Test', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID());
-        Question__c q2 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test2', Label__c = 'Test2', Requirement_Item__c = riQG2.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID());
-        Question__c q3 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test3', Label__c = 'Test3', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID());
+        Question__c q1 = new Question__c(
+            Active__c = true, 
+            RecordTypeId = rtMap.get('Text'), 
+            Name = 'Test', 
+            Label__c = 'Test', 
+            Requirement_Item__c = riQG.Id, 
+            Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
+        );
+        Question__c q2 = new Question__c(
+            Active__c = true, 
+            RecordTypeId = rtMap.get('Text'), 
+            Name = 'Test2', 
+            Label__c = 'Test2', 
+            Requirement_Item__c = riQG2.Id, 
+            Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
+        );
+        Question__c q3 = new Question__c(
+            Active__c = true, 
+            RecordTypeId = rtMap.get('Text'), 
+            Name = 'Test3', 
+            Label__c = 'Test3', 
+            Requirement_Item__c = riQG.Id, 
+            Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
+        );
         insert new List<Question__c>{
                 q1, q2, q3
         };
 
-        Question_Dependency__c qd1 = new Question_Dependency__c(Question__c = q1.Id, Controlling_Question__c = q2.Id, Value__c = 'Test', Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
-        Question_Dependency__c qd2 = new Question_Dependency__c(Question__c = q1.Id, Controlling_Question__c = q3.Id, Value__c = 'Test;Test2;Test3', RecordTypeId = rtMapQD.get('Multi_Select_Picklist'), Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
+        Question_Dependency__c qd1 = new Question_Dependency__c(
+            Question__c = q1.Id, 
+            Controlling_Question__c = q2.Id, 
+            Value__c = 'Test', 
+            Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+        );
+        Question_Dependency__c qd2 = new Question_Dependency__c(
+            Question__c = q1.Id, 
+            Controlling_Question__c = q3.Id, 
+            Value__c = 'Test;Test2;Test3', 
+            RecordTypeId = rtMapQD.get('Multi_Select_Picklist'), 
+            Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+        );
         insert new List<Question_Dependency__c>{
                 qd1, qd2
         };
 
 
-        Requirement_Response__c rrQG = new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = riQG.Id);
-        Requirement_Response__c rrDU = new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = riDU.Id, HasDocument__c = true);
-        Requirement_Response__c rrRO = new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = riRO.Id, Has_Child_Requirement__c = true);
+        Requirement_Response__c rrQG = new Requirement_Response__c(
+            Application__c = app.Id, 
+            Requirement_Item__c = riQG.Id
+        );
+        Requirement_Response__c rrDU = new Requirement_Response__c(
+            Application__c = app.Id, 
+            Requirement_Item__c = riDU.Id, 
+            HasDocument__c = true
+        );
+        Requirement_Response__c rrRO = new Requirement_Response__c(
+            Application__c = app.Id, 
+            Requirement_Item__c = riRO.Id, 
+            Has_Child_Requirement__c = true
+        );
         insert new List<Requirement_Response__c>{
                 rrQG, rrDU, rrRO
         };
-        insert new Question_Response__c(Requirement_Response__c = rrQG.Id, Question__c = q2.Id);
+        insert new Question_Response__c(
+            Requirement_Response__c = rrQG.Id, 
+            Question__c = q2.Id
+        );
     }
 
     @IsTest

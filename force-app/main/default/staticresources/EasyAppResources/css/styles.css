@@ -43,6 +43,7 @@
     height: 1.4rem;
     margin-top: -0.8rem;
 }
+
 .slds-scope:not(html), .slds-scope body,
 .slds-scope .slds-text-body_regular, .slds-scope label, .slds-scope p,
 .slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select,
@@ -183,7 +184,21 @@ div.slds-progress {
 }
 
 .slds-scope .messageTable {
-    margin: 1rem !important;
+    margin: 1rem 0 !important;
+    border: solid 1px red;
+}
+
+.slds-scope .messageTable td {
+    padding: .2rem;
+}
+
+.slds-scope .messageCell h4 {
+    font-weight: bold;
+    padding-right: .4rem;
+}
+
+.slds-scope .messageTable .msgIcon {
+
 }
 
 /* Carousel styles */
@@ -229,4 +244,3 @@ div.slds-progress {
 .carousel__item.prev {
     transform: translateX(-100%);
 }
-

@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>Hide_Form_Title__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Redirect_After_Form_Submission__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

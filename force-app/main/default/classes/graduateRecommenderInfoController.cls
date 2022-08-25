@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-23-2022
+ * @last modified on  : 08-25-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 public without sharing class graduateRecommenderInfoController {
@@ -23,15 +23,28 @@ public without sharing class graduateRecommenderInfoController {
                     Application__r.Id, 
                     Application__r.Application_Status__c,
                     Application__r.Application_Control__r.Id,
-                    Display_Instructive_Text__c
+                    Application__r.Intended_Program__r.Application_Control__r.Id,
+                    Display_Instructive_Text__c,
+                    Submitted__c
                 FROM Recommendation__c 
                 WHERE Id =: recommendation_id
                 LIMIT 1
             ];
+
             id_map.put('application_id', recommendation_object.Application__r.Id);
             id_map.put('application_status', recommendation_object.Application__r.Application_Status__c);
-            id_map.put('application_control_id', recommendation_object.Application__r.Application_Control__r.Id);
+
+            Id app_control_id;
+            if (recommendation_object.Application__r.Application_Control__r.Id == null) {
+                id_map.put('application_control_id', recommendation_object.Application__r.Intended_Program__r.Application_Control__r.Id);
+                app_control_id = recommendation_object.Application__r.Intended_Program__r.Application_Control__r.Id;
+            } else {
+                id_map.put('application_control_id', recommendation_object.Application__r.Application_Control__r.Id);
+                app_control_id = recommendation_object.Application__r.Application_Control__r.Id;
+            }
+
             id_map.put('display_instructive_text', String.valueOf(recommendation_object.Display_Instructive_Text__c));
+            id_map.put('submitted', String.valueOf(recommendation_object.Submitted__c));
 
             Application__c app = [
                 SELECT Id,
@@ -49,7 +62,7 @@ public without sharing class graduateRecommenderInfoController {
                 LIMIT 1
             ];
 
-            String requirement_query_string = 'SELECT Id FROM Requirement__c WHERE Application_Control__c = \'' + recommendation_object.Application__r.Application_Control__r.Id + '\'';
+            String requirement_query_string = 'SELECT Id FROM Requirement__c WHERE Application_Control__c = \'' + app_control_id + '\' AND Active__c = true';
             requirement_query_string = filterQueryByApplication(requirement_query_string, app);
 
             List<Requirement__c> reqs = Database.query(requirement_query_string);
@@ -57,25 +70,57 @@ public without sharing class graduateRecommenderInfoController {
             Set<Id> applicable_requirement_ids = applicable_requirements.keySet();
     
             Id related_object_RT = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByDeveloperName().get('Related_Object').getRecordTypeId();
-            String app_control_case_sensitive_id = String.valueOf(recommendation_object.Application__r.Application_Control__r.Id).substring(0,15); // Application_Control_Id__c is formula field and populated with 15-char Id
+            Id document_upload_RT = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByDeveloperName().get('Document_Upload').getRecordTypeId();
+            String app_control_case_sensitive_id = String.valueOf(app_control_id).substring(0,15); // Application_Control_Id__c is formula field and populated with 15-char Id
             String query_string = 'SELECT Id, ' +
                                         'Requirement__r.Id, ' +
-                                        'Instructions__c ' + 
+                                        'Instructions__c, ' + 
+                                        'File_Types__c, ' + 
+                                        'RecordTypeId, ' + 
+                                        'Required__c, ' + 
+                                        'Allow_Text_Entry__c ' + 
                                   'FROM Requirement_Item__c ' + 
                                   'WHERE Application_Control_Id__c = \'' + app_control_case_sensitive_id + '\' ' +
                                   'AND Requirement__c IN: applicable_requirement_ids ' +
                                   'AND Internal_Requirement_Item__c != null ' +
-                                  'AND RecordTypeId = \'' + related_object_RT + '\' ' +
-                                  'AND Active__c = true ' +
-                                  'AND Requirement__r.Active__c = true';
+                                  'AND (RecordTypeId = \'' + related_object_RT + '\' ' +
+                                        'OR RecordTypeId = \'' + document_upload_RT + '\') ' +
+                                  'AND Active__c = true ';
             query_string = filterQueryByApplication(query_string, app);
-            query_string += ' LIMIT 1';
+            query_string += ' LIMIT 2';
 
             List<Requirement_Item__c> external_requirement_items = Database.query(query_string);
+            Requirement_Item__c related_object_req_item;
+            Requirement_Item__c document_upload_req_item;
+            for (Requirement_Item__c req_item : external_requirement_items) {
+                if (req_item.RecordTypeId == related_object_RT) {
+                    related_object_req_item = req_item;
+                } else if (req_item.RecordTypeId == document_upload_RT) {
+                    document_upload_req_item = req_item;
+                }
+            }
 
-            id_map.put('requirement_id', external_requirement_items[0].Requirement__r.Id);
-            id_map.put('requirement_item_instructions', external_requirement_items[0].Instructions__c);
-            id_map.put('related_object_requirement_item_id', external_requirement_items[0].Id);
+            if (related_object_req_item != null) {
+                id_map.put('related_object_requirement_item_instructions', related_object_req_item.Instructions__c);
+                id_map.put('related_object_requirement_item_id', related_object_req_item.Id);
+            } else {
+                id_map.put('related_object_requirement_item_instructions', null);
+                id_map.put('related_object_requirement_item_id', null);
+            }
+
+            if (document_upload_req_item != null) {
+                id_map.put('document_upload_requirement_item_instructions', document_upload_req_item.Instructions__c);
+                id_map.put('document_upload_requirement_item_id', document_upload_req_item.Id);
+                id_map.put('document_upload_requirement_item_allow_text_entry', String.valueOf(document_upload_req_item.Allow_Text_Entry__c));
+                id_map.put('document_upload_requirement_item_file_types', String.valueOf(document_upload_req_item.File_Types__c));
+                id_map.put('document_upload_requirement_item_required', document_upload_req_item.Required__c);
+            } else {
+                id_map.put('document_upload_requirement_item_instructions', null);
+                id_map.put('document_upload_requirement_item_id', null);
+                id_map.put('document_upload_requirement_item_allow_text_entry', null);
+                id_map.put('document_upload_requirement_item_file_types', null);
+                id_map.put('document_upload_requirement_item_required', null);
+            }
     
             return id_map;
         } catch (Exception e) {
@@ -136,39 +181,39 @@ public without sharing class graduateRecommenderInfoController {
 
     private static String filterQueryByApplication(String query_string, Application__c app) {
         if (app.Applicant_Type__c != null) {
-            query_string += ' AND Applicant_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Applicant_Type__c) + '\')';
+            query_string += ' AND (Applicant_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Applicant_Type__c) + '\') OR Applicant_Type__c = null)';
         }
 
         if (app.Application_Status__c != null) {
-            query_string += ' AND Application_Status__c INCLUDES (\'' + String.escapeSingleQuotes(app.Application_Status__c) + '\')';
+            query_string += ' AND (Application_Status__c INCLUDES (\'' + String.escapeSingleQuotes(app.Application_Status__c) + '\') OR Application_Status__c = null)';
         }
 
         if (app.Citizenship__c != null) {
-            query_string += ' AND Citizenship__c INCLUDES (\'' + String.escapeSingleQuotes(app.Citizenship__c) + '\')';
+            query_string += ' AND (Citizenship__c INCLUDES (\'' + String.escapeSingleQuotes(app.Citizenship__c) + '\') OR Citizenship__c = null)';
         }
 
         if (app.Degree_Type__c != null) {
-            query_string += ' AND Degree_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Degree_Type__c) + '\')';
+            query_string += ' AND (Degree_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Degree_Type__c) + '\') OR Degree_Type__c = null)';
         }
 
         if (app.Delivery_Type__c != null) {
-            query_string += ' AND Delivery_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Delivery_Type__c) + '\')';
+            query_string += ' AND (Delivery_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Delivery_Type__c) + '\') OR Delivery_Type__c = null)';
         }
 
         if (app.Intended_Program__c != null) {
-            query_string += ' AND Intended_Program__c = \'' + String.escapeSingleQuotes(app.Intended_Program__c) + '\'';
+            query_string += ' AND (Intended_Program__c = \'' + String.escapeSingleQuotes(app.Intended_Program__c) + '\' OR Intended_Program__c = null)';
         }
 
         if (app.School_College__c != null) {
-            query_string += ' AND School_College__c = \'' + String.escapeSingleQuotes(app.School_College__c) + '\'';
+            query_string += ' AND (School_College__c = \'' + String.escapeSingleQuotes(app.School_College__c) + '\' OR School_College__c = null)';
         }
 
         if (app.Student_Type__c != null) {
-            query_string += ' AND Student_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Student_Type__c) + '\')';
+            query_string += ' AND (Student_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Student_Type__c) + '\') OR Student_Type__c = null)';
         }
 
         if (app.Residency__c != null) {
-            query_string += ' AND Residency__c = \'' + String.escapeSingleQuotes(app.Residency__c) + '\'';
+            query_string += ' AND (Residency__c = \'' + String.escapeSingleQuotes(app.Residency__c) + '\' OR Residency__c = null)';
         }
 
         return query_string;
@@ -186,6 +231,91 @@ public without sharing class graduateRecommenderInfoController {
             }
         } else {
             return new Map<Id, SObject>();
+        }
+    }
+
+    @AuraEnabled
+    public static void updateRecommendation(String record, String objectApiName){
+        try {
+            SObject sobj;
+            Map<String,SObjectField> fieldMap;
+            Map<String,Object> objMap = (Map<String,Object>) JSON.deserializeUntyped(record);
+            sobj = (SObject) Schema.describeSObjects(new List<String>{objectApiName})[0].getSObjectType().newSObject();
+            fieldMap = sobj.getSObjectType().getDescribe().fields.getMap();
+            for(String field : objMap.keySet()){
+                Schema.SObjectField sObjField = fieldMap.get(field);
+                if(sObjField == null){
+                    continue;
+                }
+                if(objMap.get(field) == null){
+                    sobj.put(field,null);
+                }else{
+                    switch on sObjField.getDescribe().getType().name().toLowerCase(){
+                        when 'date'{
+                            sobj.put(field,Date.valueOf((String)objMap.get(field)));
+                        }when 'datetime'{
+                            sobj.put(field,Datetime.valueOf(((String)objMap.get(field)).replace('T', ' ').replace('Z', '')));
+                        }when else{
+                            sobj.put(field,objMap.get(field));
+                        }
+                    }
+                }
+            }
+
+            Database.DMLOptions dml = new Database.DMLOptions(); 
+            dml.DuplicateRuleHeader.allowSave = false;
+            Database.SaveResult result = Database.update(sobj, dml);
+        } catch (Exception e) {
+            throw new AuraHandledException('Error updating recommendation: ' + e.getMessage());
+        }
+    }
+
+    // adapted from https://www.salesforcetroop.com/custom_file_upload_using_lwc
+    // can't use built-in lightning-file-upload element as it is not supported with Lightning Out
+    @AuraEnabled
+    public static Id uploadFile(String base64, String filename, String recordId) {
+        try {   
+            ContentVersion cv = createContentVersion(base64, filename);
+            ContentDocumentLink document_link = createContentLink(cv.Id, recordId);
+            if (cv == null || document_link == null) {
+                return null;
+            } else {
+                return cv.Id;
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException('Error uploading file: ' + e.getMessage());
+        }
+    }
+
+    private static ContentVersion createContentVersion(String base64, String filename) {
+        ContentVersion cv = new ContentVersion();
+        cv.VersionData = EncodingUtil.base64Decode(base64);
+        cv.Title = filename;
+        cv.PathOnClient = filename;
+        try {
+            insert cv;
+            return cv;
+        } catch (DMLException e) {
+            System.debug(e);
+            return null;
+        }
+    }
+
+    private static ContentDocumentLink createContentLink(String content_version_id, String recordId) {
+        if (content_version_id != null || recordId != null) {
+            ContentDocumentLink document_link = new ContentDocumentLink();
+            document_link.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: content_version_id].ContentDocumentId;
+            document_link.LinkedEntityId = recordId;
+            document_link.ShareType = 'V';
+            try {
+                insert document_link;
+                return document_link;
+            } catch (DMLException e) {
+                System.debug(e);
+                return null;
+            }
+        } else {
+            return null;
         }
     }
 }

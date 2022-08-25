@@ -12,9 +12,11 @@ public without sharing class graduateRecommenderInfoController {
         try {
             Map<String, String> id_map = new Map<String, String>();
 
-            Id recommendation_id;// = ApexPages.currentPage().getParameters().get('recId');
-            if (recommendation_id == null) {
-                recommendation_id = [SELECT Id FROM Recommendation__c LIMIT 1].Id;
+            Id recommendation_id;
+            try {
+                recommendation_id = ApexPages.currentPage().getParameters().get('recId');
+            } catch (Exception e) {
+                recommendation_id = [SELECT Id FROM Recommendation__c LIMIT 1].Id; // FOR TESTING ONLY - WILL NEED TO REMOVE
             }
             id_map.put('recommendation_id', recommendation_id);
     

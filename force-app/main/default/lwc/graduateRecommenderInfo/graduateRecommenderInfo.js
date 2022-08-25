@@ -53,7 +53,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
     @track file_name = 'No file chosen';
     @track show_letter_error = false;
 
-    // you to display search results for reference non-picklist type questions
+    // to display search results for reference non-picklist type questions
     reference_question_search_columns = [
         { label: 'Name', fieldName: 'label', type: 'text' }
     ];

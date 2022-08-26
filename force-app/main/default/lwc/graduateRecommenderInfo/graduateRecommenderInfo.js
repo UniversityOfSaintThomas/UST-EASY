@@ -93,7 +93,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
             getRelatedObjectInfo()
             .then(objectInfo => {
                 if (Boolean(objectInfo)) {
-                    if (this.object_info.submitted == 'false') {
+                    if (objectInfo.submitted == 'false') {
                         this.recommendation_already_submitted = false;
                     } else {
                         this.recommendation_already_submitted = true;

@@ -2,7 +2,7 @@
   @description       : 
   @author            : nicole.b@digitalmass.com
   @group             : 
-  @last modified on  : 08-25-2022
+  @last modified on  : 08-26-2022
   @last modified by  : nicole.b@digitalmass.com
 -->
 <template>
@@ -388,6 +388,7 @@
                         </template>
                     </div>
                 </template>
+
                 <div class="slds-align_absolute-center slds-p-top_medium slds-m-bottom_xx-small">
                     <lightning-button 
                         variant="brand" 
@@ -398,14 +399,17 @@
                 </div>
                 <div class="slds-text-color_error slds-align_absolute-center">{required_fields_missing}</div>
             </template>
+
             <template if:true={recommendation_submitted}>
                 <div class="slds-text-heading_large slds-align_absolute-center">Thank you! Your recommendation has been successfully submitted.</div>
             </template>
         </template>
+
         <template if:true={recommendation_already_submitted}>
             <div class="slds-box slds-theme_shade slds-theme_alert-texture slds-m-left_medium slds-m-right_medium">
                 <div class="slds-text-heading_large slds-align_absolute-center">Your recommendation is no longer required. Thank you for your time.</div>
             </div>
         </template>
+        
     </lightning-card>
 </template>

@@ -46,6 +46,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
     question_count = 0;
     current_count = 0;
     @track accepted_file_types;
+    @track unaccepted_file_type = false;
     uploaded_file = false;
 
     // file upload info
@@ -352,6 +353,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
     }
 
     handleFileUpload(event) {
+        this.unaccepted_file_type = false;
         if (event.target.name == 'manual_letter_entry') {
             this.file_data = {
                 'filename' : 'Recommendation_Letter_' + this.application_id + '.txt',
@@ -369,6 +371,13 @@ export default class GraduateRecommenderInfo extends LightningElement {
                     'filename' : file.name,
                     'base64' : base64,
                     'recordId' : this.recommendation_id
+                }
+                if (Boolean(this.accepted_file_types)) {
+                    if (!this.accepted_file_types.includes(this.file_name.substring(this.file_name.length - 4, this.file_name.length))) {
+                        this.file_data = null;
+                        this.file_name = 'No File Chosen';
+                        this.unaccepted_file_type = true;
+                    }
                 }
             }
             reader.readAsDataURL(file);

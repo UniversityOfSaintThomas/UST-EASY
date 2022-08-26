@@ -360,6 +360,9 @@
                         <template if:true={show_letter_error}>
                             <div class="slds-text-color_error slds-m-left_medium slds-m-top_medium">Letter required. Please upload a file or enter text below.</div>
                         </template>
+                        <template if:true={unaccepted_file_type}>
+                            <div class="slds-text-color_error slds-m-left_medium slds-m-top_medium">File type not accepted. Please upload one of the following: {accepted_file_types}.</div>
+                        </template>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small">
                                 <div class="slds-p-left_xx-small">

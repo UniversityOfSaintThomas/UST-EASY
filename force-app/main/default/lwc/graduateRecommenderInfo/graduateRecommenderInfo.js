@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-25-2022
+ * @last modified on  : 08-26-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
@@ -93,7 +93,11 @@ export default class GraduateRecommenderInfo extends LightningElement {
             getRelatedObjectInfo()
             .then(objectInfo => {
                 if (Boolean(objectInfo)) {
-                    this.recommendation_already_submitted = objectInfo.submitted;
+                    if (this.object_info.submitted == 'false') {
+                        this.recommendation_already_submitted = false;
+                    } else {
+                        this.recommendation_already_submitted = true;
+                    }
                     this.recommendation_id = objectInfo.recommendation_id;
                     this.application_id = objectInfo.application_id;
                     this.application_status = objectInfo.application_status;

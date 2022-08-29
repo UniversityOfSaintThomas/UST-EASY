@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-26-2022
+ * @last modified on  : 08-29-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
@@ -19,19 +19,26 @@ import updateRecommendation from '@salesforce/apex/graduateRecommenderInfoContro
 import uploadFile from '@salesforce/apex/graduateRecommenderInfoController.uploadFile';
 export default class GraduateRecommenderInfo extends LightningElement {
 
-    // parent/related object info
+    // parent/related object ids
     @track recommendation_id = '';
     application_id = '';
+    related_object_requirement_item_id = '';
+    document_upload_requirement_item_id = '';
+
+    // parent/related object relevant info
     application_status = '';
     @track related_object_requirement_item_instructions = '';
     @track document_upload_requirement_item_instructions = '';
-    related_object_requirement_item_id = '';
-    document_upload_requirement_item_id = '';
     @track document_upload_requirement_item_file_types = '';
     @track document_upload_requirement_item_required = false;
+    @track show_manual_letter_entry = false;
+    @track show_document_upload = false;
+    @track accepted_file_types;
+
+    // if true, questions are not displayed
     @track recommendation_already_submitted = false;
 
-    // recommendation info
+    // recommendation object + fields information
     recommendation_input;
     recommendation_default_RT_ID;
     all_recommendation_field_api_names = [];
@@ -44,15 +51,14 @@ export default class GraduateRecommenderInfo extends LightningElement {
     question_id_to_question_map_map = new Map();
     reference_question_options_map = new Map();
     question_count = 0;
-    current_count = 0;
-    @track accepted_file_types;
-    @track unaccepted_file_type = false;
-    uploaded_file = false;
+    current_count = 0; // used to determine when list should be sorted and pushed to tracked question list (displau on the front end)
 
-    // file upload info
+    // uploaded file info
     file_data;
     @track file_name = 'No file chosen';
     @track show_letter_error = false;
+    uploaded_file = false; // true if file is uploaded vs manully typed
+    @track unaccepted_file_type = false;
 
     // to display search results for reference non-picklist type questions
     reference_question_search_columns = [
@@ -60,11 +66,10 @@ export default class GraduateRecommenderInfo extends LightningElement {
     ];
 
     @track show_spinner = false;
-    @track show_document_upload = false;
-    @track show_manual_letter_entry = false;
 
     @track required_fields_missing;
 
+    // set to true after user submits form
     @track recommendation_submitted = false;
 
     /**
@@ -94,55 +99,54 @@ export default class GraduateRecommenderInfo extends LightningElement {
             getRelatedObjectInfo()
             .then(objectInfo => {
                 if (Boolean(objectInfo)) {
-                    if (objectInfo.submitted == 'false') {
-                        this.recommendation_already_submitted = false;
-                    } else {
+                    if (objectInfo.submitted == 'true') {
                         this.recommendation_already_submitted = true;
-                    }
-                    this.recommendation_id = objectInfo.recommendation_id;
-                    this.application_id = objectInfo.application_id;
-                    this.application_status = objectInfo.application_status;
-                    this.related_object_requirement_item_id = objectInfo.related_object_requirement_item_id;
-                    this.document_upload_requirement_item_id = objectInfo.document_upload_requirement_item_id;
-                    this.document_upload_requirement_item_file_types = objectInfo.document_upload_requirement_item_file_types;
-
-                    if (Boolean(this.document_upload_requirement_item_id)) {
-                        this.show_document_upload = 'true';
-                        if (Boolean(this.document_upload_requirement_item_file_types)) {
-                            let temp_accepted_file_types = '';
-                            let file_type_arr = this.document_upload_requirement_item_file_types.split(';');
-                            for (let type of file_type_arr) {
-                                let type_converted = '.' + type.toLowerCase();
-                                temp_accepted_file_types += type_converted + ', ';
+                    } else {
+                        this.recommendation_id = objectInfo.recommendation_id;
+                        this.application_id = objectInfo.application_id;
+                        this.application_status = objectInfo.application_status;
+                        this.related_object_requirement_item_id = objectInfo.related_object_requirement_item_id;
+                        this.document_upload_requirement_item_id = objectInfo.document_upload_requirement_item_id;
+                        this.document_upload_requirement_item_file_types = objectInfo.document_upload_requirement_item_file_types;
+    
+                        if (Boolean(this.document_upload_requirement_item_id)) {
+                            this.show_document_upload = 'true';
+                            if (Boolean(this.document_upload_requirement_item_file_types)) {
+                                let temp_accepted_file_types = '';
+                                let file_type_arr = this.document_upload_requirement_item_file_types.split(';');
+                                for (let type of file_type_arr) {
+                                    let type_converted = '.' + type.toLowerCase();
+                                    temp_accepted_file_types += type_converted + ', ';
+                                }
+                                this.accepted_file_types = temp_accepted_file_types.substring(0, temp_accepted_file_types.length - 2);
                             }
-                            this.accepted_file_types = temp_accepted_file_types.substring(0, temp_accepted_file_types.length - 2);
-                        }
-
-                        if (Boolean(objectInfo.document_upload_requirement_item_required)) {
-                            if (objectInfo.document_upload_requirement_item_required.includes(this.application_status)) {
-                                this.document_upload_requirement_item_required = true;
+    
+                            if (Boolean(objectInfo.document_upload_requirement_item_required)) {
+                                if (objectInfo.document_upload_requirement_item_required.includes(this.application_status)) {
+                                    this.document_upload_requirement_item_required = true;
+                                }
                             }
                         }
+    
+                        if (objectInfo.document_upload_requirement_item_allow_text_entry == 'true') {
+                            this.show_manual_letter_entry = true;
+                        }
+    
+                        if (objectInfo.display_instructive_text == 'true') {
+                            this.related_object_requirement_item_instructions = objectInfo.related_object_requirement_item_instructions;
+                            this.document_upload_requirement_item_instructions = objectInfo.document_upload_requirement_item_instructions;
+                        }
+    
+                        getRelatedObjectQuestions({requirement_item_id: this.related_object_requirement_item_id, application_id: this.application_id})
+                        .then(questions => {
+                            this.question_count = questions.length;
+                            this.generateReferenceOptions(questions);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.show_spinner = false;
+                        })
                     }
-
-                    if (objectInfo.document_upload_requirement_item_allow_text_entry == 'true') {
-                        this.show_manual_letter_entry = true;
-                    }
-
-                    if (objectInfo.display_instructive_text == 'true') {
-                        this.related_object_requirement_item_instructions = objectInfo.related_object_requirement_item_instructions;
-                        this.document_upload_requirement_item_instructions = objectInfo.document_upload_requirement_item_instructions;
-                    }
-
-                    getRelatedObjectQuestions({requirement_item_id: this.related_object_requirement_item_id, application_id: this.application_id})
-                    .then(questions => {
-                        this.question_count = questions.length;
-                        this.generateReferenceOptions(questions);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.show_spinner = false;
-                    })
                 }
             })
             .catch(error => {
@@ -166,10 +170,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
 
     generateReferenceOptions(questions) {
         for (const question of questions) {
-            let lookup_object = question.Lookup_Object__c;
-            let lookup_where_clause = question.Lookup_Where_Clause__c;
-            let name_field_api_name = question.Name_Field_API_Name__c;
-            lookup({lookup_object : lookup_object, lookup_where_clause : lookup_where_clause, name_field_api_name : name_field_api_name})
+            lookup({lookup_object : question.Lookup_Object__c, lookup_where_clause : question.Lookup_Where_Clause__c, name_field_api_name : question.Name_Field_API_Name__c})
             .then((results) => {
                 if (JSON.stringify(results).length > 2) {
                     let values = [];
@@ -273,24 +274,47 @@ export default class GraduateRecommenderInfo extends LightningElement {
     }
 
     handleLength(question) {
-        if (Boolean(question.Length__c)) {
-            if (question.RecordType.DeveloperName == 'Currency' || 
-                question.RecordType.DeveloperName == 'Number' || 
-                question.RecordType.DeveloperName == 'Percent') {
-                    let max_value = '';
-                    for (let i = 0; i < Integer(question.Length__c); i++) {
-                        max_value += '9';
-                    }
-                    return max_value;
-            } else if (question.RecordType.DeveloperName == 'Text' || question.RecordType.DeveloperName == 'Text') {
-                if (Integer(question.Length__c) > 255) {
+        switch (question.RecordType.DeveloperName) {
+            case 'Currency':
+            case 'Number':
+            case 'Percent':
+                let max_value = '';
+                for (let i = 0; i < parseInt(question.Length__c); i++) {
+                    max_value += '9';
+                }
+                console.log(max_value);
+                return max_value;
+            case 'Text':
+            case 'TextArea':
+                if (parseInt(question.Length__c) > 255 || !Boolean(question.Length__c)) {
                     return '255';
                 }
-            } else if (question.RecordType.DeveloperName == 'LongTextArea') {
-                if (Integer(question.Length__c) > 131072) {
+                break;
+            case 'LongTextArea':
+                if (parseInt(question.Length__c) > 131072 || !Boolean(question.Length__c)) {
                     return '131072';
                 }
-            }
+                break;
+            case 'TextEncrypted':
+                if (parseInt(question.Length__c) > 175 || !Boolean(question.Length__c)) {
+                    return '175';
+                }
+                break;
+            case 'Email':
+                if (parseInt(question.Length__c) > 80 || !Boolean(question.Length__c)) {
+                    return '80';
+                }
+                break;
+            case 'Phone':
+                if (parseInt(question.Length__c) > 40 || !Boolean(question.Length__c)) {
+                    return '40';
+                }
+                break;
+            case 'URL':
+                if (parseInt(question.Length__c) > 255 || !Boolean(question.Length__c)) {
+                    return '255'
+                }
+                break;
         }
         return question.Length__c;
     }

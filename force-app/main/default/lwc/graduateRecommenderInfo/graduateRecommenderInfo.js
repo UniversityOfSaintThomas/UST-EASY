@@ -282,7 +282,6 @@ export default class GraduateRecommenderInfo extends LightningElement {
                 for (let i = 0; i < parseInt(question.Length__c); i++) {
                     max_value += '9';
                 }
-                console.log(max_value);
                 return max_value;
             case 'Text':
             case 'TextArea':

@@ -104,7 +104,6 @@ export default class GraduateRecommenderInfo extends LightningElement {
                     } else {
                         this.recommendation_id = objectInfo.recommendation_id;
                         this.application_id = objectInfo.application_id;
-                        console.log(this.application_id);
                         this.application_status = objectInfo.application_status;
                         this.related_object_requirement_item_id = objectInfo.related_object_requirement_item_id;
                         this.document_upload_requirement_item_id = objectInfo.document_upload_requirement_item_id;

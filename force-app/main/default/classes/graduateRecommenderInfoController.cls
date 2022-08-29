@@ -279,7 +279,6 @@ public without sharing class graduateRecommenderInfoController {
         try {   
             ContentVersion cv = createContentVersion(base64, filename);
             ContentDocumentLink document_link = createContentLink(cv.Id, recordId);
-            System.debug('app id: ' + application_id);
             Requirement_Response__c req_response = new Requirement_Response__c(
                 Application__c = application_id, 
                 Requirement_Item__c = document_upload_requirement_item_id, 

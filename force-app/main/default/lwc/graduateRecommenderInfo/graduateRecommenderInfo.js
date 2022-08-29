@@ -104,6 +104,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
                     } else {
                         this.recommendation_id = objectInfo.recommendation_id;
                         this.application_id = objectInfo.application_id;
+                        console.log(this.application_id);
                         this.application_status = objectInfo.application_status;
                         this.related_object_requirement_item_id = objectInfo.related_object_requirement_item_id;
                         this.document_upload_requirement_item_id = objectInfo.document_upload_requirement_item_id;
@@ -439,7 +440,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
             this.show_spinner = true;
             if (Boolean(this.file_data)) {
                 const {base64, filename, recordId} = this.file_data;
-                uploadFile({base64 : base64, filename : filename, recordId : recordId})
+                uploadFile({base64 : base64, filename : filename, recordId : recordId, application_id: this.application_id, document_upload_requirement_item_id: this.document_upload_requirement_item_id})
                 .then(result => {
                     this.file_data = null;
                     this.submitUpdates();

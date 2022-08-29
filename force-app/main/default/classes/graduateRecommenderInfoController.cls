@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-25-2022
+ * @last modified on  : 08-29-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 public without sharing class graduateRecommenderInfoController {
@@ -275,10 +275,19 @@ public without sharing class graduateRecommenderInfoController {
     // adapted from https://www.salesforcetroop.com/custom_file_upload_using_lwc
     // can't use built-in lightning-file-upload element as it is not supported with Lightning Out
     @AuraEnabled
-    public static Id uploadFile(String base64, String filename, String recordId) {
+    public static Id uploadFile(String base64, String filename, String recordId, String application_id, String document_upload_requirement_item_id) {
         try {   
             ContentVersion cv = createContentVersion(base64, filename);
             ContentDocumentLink document_link = createContentLink(cv.Id, recordId);
+            System.debug('app id: ' + application_id);
+            Requirement_Response__c req_response = new Requirement_Response__c(
+                Application__c = application_id, 
+                Requirement_Item__c = document_upload_requirement_item_id, 
+                HasDocument__c = true, 
+                Document_Requirement_Fulfilled_On__c = System.now()
+            );
+            insert req_response;
+            ContentDocumentLink req_response_document_link = createContentLink(cv.Id, req_response.Id);
             if (cv == null || document_link == null) {
                 return null;
             } else {

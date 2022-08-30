@@ -413,6 +413,7 @@ public class ApplicationRequirement {
                     if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null) {
 
                         Question_Response__c qResp = q.response;
+                        qResp.Application__c = app.Id;
 
                         // Clone Question Response and apply ID if this is an external user
                         // in order to get around the restriction of external users not being

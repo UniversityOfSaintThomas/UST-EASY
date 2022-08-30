@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : nicole.b@digitalmass.com
+ * @group             : 
+ * @last modified on  : 08-30-2022
+ * @last modified by  : nicole.b@digitalmass.com
+**/
 private static void setHoldingIds() {
 
 
@@ -131,16 +138,20 @@ private static void permissionGuestUser() {
             WHERE Name = 'EASY_Applicant_Portal'
     ];
 
-    List<PermissionSet> guestPermissionSet = [
+    List<PermissionSet> guestPermissionSets = [
             SELECT Name, Id
             FROM PermissionSet
             WHERE Name = 'Application_Community_Guest'
+               OR Name = 'RFI_User'
+               OR Name = 'Graduate_Recommender'
     ];
 
     List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
 
-    if (!guestPermissionSet.isEmpty()) {
-        permissionSetList.add(new PermissionSetAssignment(PermissionSetId = guestPermissionSet[0].Id, AssigneeId = site.GuestUserId));
+    if (!guestPermissionSets.isEmpty()) {
+        for (PermissionSet permission : guestPermissionSets) {
+            permissionSetList.add(new PermissionSetAssignment(PermissionSetId = permission.Id, AssigneeId = site.GuestUserId));
+        }
     }
 
     if (!permissionSetList.isEmpty()) {

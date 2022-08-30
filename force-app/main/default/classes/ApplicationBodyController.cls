@@ -125,16 +125,16 @@ public with sharing class ApplicationBodyController {
             if (widget.Activation_State__c.equalsIgnoreCase('Inactive')) {
                 skipWidget = true;
             } else if (widget.Activation_State__c.equalsIgnoreCase('Date activated')) {
-                Datetime nowDateTime = adjustForTimeZone(Datetime.now(), widget.Widget_Time_Zone__c);
+                Datetime nowDateTime = ApplicationUtilities.adjustForTimeZone(Datetime.now(), widget.Widget_Time_Zone__c);
                 if (String.isNotBlank(widget.Widget_Time_Zone__c)) {
                     if (widget.Start_Date__c != null && widget.Start_Time__c != null) {
-                        Datetime widgetStartDateTime = convertDateToDatetime(widget.Start_Date__c, widget.Start_Time__c, null);
+                        Datetime widgetStartDateTime = ApplicationUtilities.convertDateToDatetime(widget.Start_Date__c, widget.Start_Time__c, null);
                         if (nowDateTime <= widgetStartDateTime) {
                             skipWidget = true;
                         }
                     }
                     if (widget.End_Date__c != null && widget.End_Time__c != null) {
-                        Datetime widgetEndDateTime = convertDateToDatetime(widget.End_Date__c, widget.End_Time__c, null);
+                        Datetime widgetEndDateTime = ApplicationUtilities.convertDateToDatetime(widget.End_Date__c, widget.End_Time__c, null);
                         if (nowDateTime >= widgetEndDateTime) {
                             skipWidget = true;
                         }
@@ -239,40 +239,6 @@ public with sharing class ApplicationBodyController {
             q = q.replaceAll('<[^>]+>', '').trim();
         }
         return q;
-    }
-
-    public Datetime adjustForTimeZone(Datetime dt, String timezoneString) {
-        timezoneString = getTimeZonePick(timezoneString);
-        //Get the current GMT time and adjust for our timezone
-        //tz = TimeZone.getTimeZone('America/Chicago');
-        //Timezone adjustment example below:
-        //Datetime NowDate = Datetime.now();
-        //NowDate = NowDate.addSeconds(tz.getOffset(NowDate)/1000);
-        //Central Daylight Time (America/Chicago)
-        TimeZone tz = TimeZone.getTimeZone(timezoneString);
-        dt = dt.addSeconds(tz.getOffset(dt) / 1000);
-        return dt;
-    }
-
-    public String getTimeZonePick(String pickListTimeZone) {
-        if (String.isNotBlank(pickListTimeZone)) {
-            if (pickListTimeZone.length() > 4) {
-                pickListTimeZone = pickListTimeZone.substring(pickListTimeZone.indexOf('(') + 1, pickListTimeZone.indexOf(')'));
-                return pickListTimeZone;
-            }
-        }
-        return '';
-    }
-
-    public Datetime convertDateToDatetime(Date dateIn, Time timeIn, String timezoneString) {
-        if (timeIn == null) {
-            timeIn = Time.newInstance(1, 12, 3, 4);
-        }
-        Datetime converted = Datetime.newInstance(dateIn.year(), dateIn.month(), dateIn.day(), timeIn.hour(), timeIn.minute(), timeIn.second());
-        if (String.isNotBlank(timezoneString)) {
-            converted = adjustForTimeZone(converted, timezoneString);
-        }
-        return converted;
     }
 
 }

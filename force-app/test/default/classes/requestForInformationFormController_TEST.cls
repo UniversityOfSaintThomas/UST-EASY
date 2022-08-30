@@ -6,7 +6,7 @@
  * @last modified by  : nicole.b@digitalmass.com
 **/
 @IsTest
-public class requestForInformationFormControllerTest {
+public class requestForInformationFormController_TEST {
     @TestSetup
     public static void setup() {
         RFI_Controller__c controller = new RFI_Controller__c(

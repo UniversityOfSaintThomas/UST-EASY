@@ -12,13 +12,7 @@ public without sharing class graduateRecommenderInfoController {
         try {
             Map<String, String> id_map = new Map<String, String>();
 
-            System.debug('$$$ recId: ' + recId);
             Id recommendation_id = Id.valueOf(recId);
-            // try {
-            //     recommendation_id = ApexPages.currentPage().getParameters().get('recId');
-            // } catch (Exception e) {
-            //     recommendation_id = [SELECT Id FROM Recommendation__c LIMIT 1].Id; // FOR TESTING ONLY - WILL NEED TO REMOVE
-            // }
             id_map.put('recommendation_id', recommendation_id);
     
             Recommendation__c recommendation_object = [
@@ -278,8 +272,6 @@ public without sharing class graduateRecommenderInfoController {
     @AuraEnabled
     public static Id uploadFile(String base64, String filename, String recordId, String application_id, String document_upload_requirement_item_id) {
         try {   
-            ContentVersion cv = createContentVersion(base64, filename);
-            ContentDocumentLink document_link = createContentLink(cv.Id, recordId);
             List<Requirement_Response__c> req_response = [SELECT Id FROM Requirement_Response__c WHERE Requirement_Item__c =: document_upload_requirement_item_id LIMIT 1];
             if (req_response.isEmpty()) {
                 req_response.add(new Requirement_Response__c(
@@ -290,8 +282,11 @@ public without sharing class graduateRecommenderInfoController {
                 ));
                 insert req_response;
             }
-            ContentDocumentLink req_response_document_link = createContentLink(cv.Id, req_response[0].Id);
-            if (cv == null || document_link == null) {
+            List<String> recordIds = new List<String>();
+            recordIds.add(recordId);
+            recordIds.add(req_response[0].Id);
+            ContentVersion cv = createContentVersionAndLinks(base64, filename, recordIds);
+            if (cv == null) {
                 return null;
             } else {
                 return cv.Id;
@@ -301,35 +296,29 @@ public without sharing class graduateRecommenderInfoController {
         }
     }
 
-    private static ContentVersion createContentVersion(String base64, String filename) {
-        ContentVersion cv = new ContentVersion();
-        cv.VersionData = EncodingUtil.base64Decode(base64);
-        cv.Title = filename;
-        cv.PathOnClient = filename;
+    private static ContentVersion createContentVersionAndLinks(String base64, String filename, List<String> recordIds) {
         try {
+            ContentVersion cv = new ContentVersion();
+            cv.VersionData = EncodingUtil.base64Decode(base64);
+            cv.Title = filename;
+            cv.PathOnClient = filename;
+            cv.OwnerId = UserInfo.getUserId();
             insert cv;
-            return cv;
-        } catch (DMLException e) {
-            System.debug(e);
-            return null;
-        }
-    }
-
-    private static ContentDocumentLink createContentLink(String content_version_id, String recordId) {
-        if (content_version_id != null || recordId != null) {
-            ContentDocumentLink document_link = new ContentDocumentLink();
-            document_link.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: content_version_id].ContentDocumentId;
-            document_link.LinkedEntityId = recordId;
-            document_link.ShareType = 'V';
-            try {
-                insert document_link;
-                return document_link;
-            } catch (DMLException e) {
-                System.debug(e);
-                return null;
+            if (!recordIds.isEmpty() && cv.Id != null) {
+                List<ContentDocumentLink> content_document_links = new List<ContentDocumentLink>();
+                Id content_document_id = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: cv.Id].ContentDocumentId;
+                for (String recordId : recordIds) {
+                    ContentDocumentLink document_link = new ContentDocumentLink();
+                    document_link.ContentDocumentId = content_document_id;
+                    document_link.LinkedEntityId = recordId;
+                    document_link.ShareType = 'V';
+                    content_document_links.add(document_link);
+                }
+                insert content_document_links;
             }
-        } else {
-            return null;
+            return cv;
+        } catch (Exception e) {
+            throw new AuraHandledException('Error uploading file: ' + e.getMessage());
         }
     }
 }

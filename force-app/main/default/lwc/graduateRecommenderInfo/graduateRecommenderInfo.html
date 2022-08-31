@@ -2,7 +2,7 @@
   @description       : 
   @author            : nicole.b@digitalmass.com
   @group             : 
-  @last modified on  : 08-26-2022
+  @last modified on  : 08-31-2022
   @last modified by  : nicole.b@digitalmass.com
 -->
 <template>
@@ -397,7 +397,8 @@
                         variant="brand" 
                         label="Submit" 
                         title="Submit"
-                        onclick={handleSubmit}>
+                        onclick={handleSubmit}
+                        disabled={disable_submit}>
                     </lightning-button>
                 </div>
                 <div class="slds-text-color_error slds-align_absolute-center">{required_fields_missing}</div>

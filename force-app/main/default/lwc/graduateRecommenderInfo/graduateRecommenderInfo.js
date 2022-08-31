@@ -68,6 +68,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
     ];
 
     @track show_spinner = false;
+    @track disable_submit = true;
 
     @track required_fields_missing;
 
@@ -143,6 +144,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
                         .then(questions => {
                             this.question_count = questions.length;
                             this.generateReferenceOptions(questions);
+                            this.disable_submit = false;
                         })
                         .catch(error => {
                             console.log(error);
@@ -443,6 +445,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
                 const {base64, filename, recordId} = this.file_data;
                 uploadFile({base64 : base64, filename : filename, recordId : recordId, application_id: this.application_id, document_upload_requirement_item_id: this.document_upload_requirement_item_id})
                 .then(result => {
+                    console.log('result: ' + result);
                     this.file_data = null;
                     this.submitUpdates();
                 })

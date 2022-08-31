@@ -2,22 +2,23 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-29-2022
+ * @last modified on  : 08-31-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 public without sharing class graduateRecommenderInfoController {
     
     @AuraEnabled(cacheable=true)
-    public static Map<String, String> getRelatedObjectInfo() {
+    public static Map<String, String> getRelatedObjectInfo(String recId) {
         try {
             Map<String, String> id_map = new Map<String, String>();
 
-            Id recommendation_id;
-            try {
-                recommendation_id = ApexPages.currentPage().getParameters().get('recId');
-            } catch (Exception e) {
-                recommendation_id = [SELECT Id FROM Recommendation__c LIMIT 1].Id; // FOR TESTING ONLY - WILL NEED TO REMOVE
-            }
+            System.debug('$$$ recId: ' + recId);
+            Id recommendation_id = Id.valueOf(recId);
+            // try {
+            //     recommendation_id = ApexPages.currentPage().getParameters().get('recId');
+            // } catch (Exception e) {
+            //     recommendation_id = [SELECT Id FROM Recommendation__c LIMIT 1].Id; // FOR TESTING ONLY - WILL NEED TO REMOVE
+            // }
             id_map.put('recommendation_id', recommendation_id);
     
             Recommendation__c recommendation_object = [
@@ -279,14 +280,17 @@ public without sharing class graduateRecommenderInfoController {
         try {   
             ContentVersion cv = createContentVersion(base64, filename);
             ContentDocumentLink document_link = createContentLink(cv.Id, recordId);
-            Requirement_Response__c req_response = new Requirement_Response__c(
-                Application__c = application_id, 
-                Requirement_Item__c = document_upload_requirement_item_id, 
-                HasDocument__c = true, 
-                Document_Requirement_Fulfilled_On__c = System.now()
-            );
-            insert req_response;
-            ContentDocumentLink req_response_document_link = createContentLink(cv.Id, req_response.Id);
+            List<Requirement_Response__c> req_response = [SELECT Id FROM Requirement_Response__c WHERE Requirement_Item__c =: document_upload_requirement_item_id LIMIT 1];
+            if (req_response.isEmpty()) {
+                req_response.add(new Requirement_Response__c(
+                    Application__c = application_id,
+                    Requirement_Item__c = document_upload_requirement_item_id, 
+                    HasDocument__c = true, 
+                    Document_Requirement_Fulfilled_On__c = System.now()
+                ));
+                insert req_response;
+            }
+            ContentDocumentLink req_response_document_link = createContentLink(cv.Id, req_response[0].Id);
             if (cv == null || document_link == null) {
                 return null;
             } else {

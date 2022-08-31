@@ -90,7 +90,7 @@
                     $Lightning.use("c:graduateRecommenderInfoApp", function() {
                         $Lightning.createComponent(
                             "c:graduateRecommenderInfo",
-                            {},
+                            {"recId":"{!$CurrentPage.parameters.recId}"},
                             "component",
                             function(cmp) {
                                 console.log("LWC Component Created.");

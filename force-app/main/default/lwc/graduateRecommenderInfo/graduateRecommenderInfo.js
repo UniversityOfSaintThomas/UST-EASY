@@ -2,11 +2,11 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-29-2022
+ * @last modified on  : 08-31-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
-import { LightningElement, wire, track } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { generateRecordInputForCreate, getRecordCreateDefaults } from 'lightning/uiRecordApi';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 
@@ -18,6 +18,8 @@ import lookup from '@salesforce/apex/graduateRecommenderInfoController.lookup';
 import updateRecommendation from '@salesforce/apex/graduateRecommenderInfoController.updateRecommendation';
 import uploadFile from '@salesforce/apex/graduateRecommenderInfoController.uploadFile';
 export default class GraduateRecommenderInfo extends LightningElement {
+
+    @api recId;
 
     // parent/related object ids
     @track recommendation_id = '';
@@ -96,7 +98,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
         this.show_spinner = true;
         if (result.data) {
             this.recommendation_input = generateRecordInputForCreate(result.data.record);
-            getRelatedObjectInfo()
+            getRelatedObjectInfo({recId : this.recId})
             .then(objectInfo => {
                 if (Boolean(objectInfo)) {
                     if (objectInfo.submitted == 'true') {

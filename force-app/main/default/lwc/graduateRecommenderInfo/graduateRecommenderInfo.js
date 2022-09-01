@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-31-2022
+ * @last modified on  : 09-01-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
@@ -17,6 +17,7 @@ import getRelatedObjectQuestions from '@salesforce/apex/graduateRecommenderInfoC
 import lookup from '@salesforce/apex/graduateRecommenderInfoController.lookup';
 import updateRecommendation from '@salesforce/apex/graduateRecommenderInfoController.updateRecommendation';
 import uploadFile from '@salesforce/apex/graduateRecommenderInfoController.uploadFile';
+import updateRequirementResponses from '@salesforce/apex/graduateRecommenderInfoController.updateRequirementResponses';
 export default class GraduateRecommenderInfo extends LightningElement {
 
     @api recId;
@@ -59,7 +60,6 @@ export default class GraduateRecommenderInfo extends LightningElement {
     file_data;
     @track file_name = 'No file chosen';
     @track show_letter_error = false;
-    uploaded_file = false; // true if file is uploaded vs manully typed
     @track unaccepted_file_type = false;
 
     // to display search results for reference non-picklist type questions
@@ -382,22 +382,16 @@ export default class GraduateRecommenderInfo extends LightningElement {
     handleFileUpload(event) {
         this.unaccepted_file_type = false;
         if (event.target.name == 'manual_letter_entry') {
-            this.file_data = {
-                'filename' : 'Recommendation_Letter_' + this.application_id + '.txt',
-                'base64' : btoa(event.target.value),
-                'recordId' : this.recommendation_id
-            }
+            this.recommendation_input.fields.Recommendation_JSON__c	= event.target.value;
         } else {
-            this.uploaded_file = true;
             const file = event.target.files[0];
             var reader = new FileReader();
             reader.onload = () => {
                 var base64 = reader.result.split(',')[1];
                 this.file_name = file.name;
                 this.file_data = {
-                    'filename' : file.name,
-                    'base64' : base64,
-                    'recordId' : this.recommendation_id
+                    'file_name' : file.name,
+                    'base_64' : base64
                 }
                 if (Boolean(this.accepted_file_types)) {
                     if (!this.accepted_file_types.includes(this.file_name.substring(this.file_name.length - 4, this.file_name.length))) {
@@ -442,19 +436,17 @@ export default class GraduateRecommenderInfo extends LightningElement {
         if (this.validateInput()) {
             this.show_spinner = true;
             if (Boolean(this.file_data)) {
-                const {base64, filename, recordId} = this.file_data;
-                uploadFile({base64 : base64, filename : filename, recordId : recordId, application_id: this.application_id, document_upload_requirement_item_id: this.document_upload_requirement_item_id})
+                const {base_64, file_name} = this.file_data;
+                uploadFile({base_64 : base_64, file_name : file_name, recommendation_id: this.recommendation_id})
                 .then(result => {
-                    console.log('result: ' + result);
                     this.file_data = null;
                     this.submitUpdates();
                 })
                 .catch(error => {
                     console.log(error);
-                    if (this.uploaded_file == true) {
-                        this.file_name = 'Upload failed. Please try again or type below.';
-                    }
+                    this.file_name = 'Upload failed. Please try again or type below.';
                     this.show_spinner = false;
+                    this.file_data = null;
                 })
             } else {
                 this.submitUpdates();
@@ -474,8 +466,15 @@ export default class GraduateRecommenderInfo extends LightningElement {
         delete this.recommendation_input.fields.OwnerId;
         updateRecommendation({record: JSON.stringify(this.recommendation_input.fields), objectApiName: this.recommendation_input.apiName})
         .then(() => {
-            this.show_spinner = false;
             this.recommendation_submitted = true;
+            updateRequirementResponses({related_object_requirement_item_id : this.related_object_requirement_item_id, document_upload_requirement_item_id : this.document_upload_requirement_item_id})
+            .then(() => {
+                this.show_spinner = false;
+            })
+            .catch(error => {
+                console.log(error);
+                this.show_spinner = false;
+            })
         })
         .catch(error => {
             console.log(error);
@@ -627,7 +626,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
 
     validateLetterEntry() {
         if (this.document_upload_requirement_item_required == true) {
-            if (Boolean(this.file_data)) {
+            if (Boolean(this.file_data) || Boolean(this.recommendation_input.fields.Recommendation_JSON__c)) {
                 this.show_letter_error = false;
                 return true;
             } else {

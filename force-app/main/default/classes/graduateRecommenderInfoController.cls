@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-31-2022
+ * @last modified on  : 09-01-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 public without sharing class graduateRecommenderInfoController {
@@ -269,56 +269,102 @@ public without sharing class graduateRecommenderInfoController {
 
     // adapted from https://www.salesforcetroop.com/custom_file_upload_using_lwc
     // can't use built-in lightning-file-upload element as it is not supported with Lightning Out
+    // @AuraEnabled
+    // public static Id uploadFile(String base_64, String file_name, String document_upload_requirement_item_id, String application_id){
+    //     try {
+    //         List<Requirement_Response__c> req_responses = [SELECT Id, HasDocument__c, Document_Requirement_Fulfilled_On__c FROM Requirement_Response__c WHERE Id =: document_upload_requirement_item_id LIMIT 1];
+    //         String linked_entity_id = '';
+    //         if (req_responses.isEmpty()) {
+    //             req_responses.add(new Requirement_Response__c(
+    //                 Application__c = application_id,
+    //                 Requirement_Item__c = document_upload_requirement_item_id
+    //             ));
+    //             insert req_responses;
+    //         }
+    //         linked_entity_id = req_responses[0].Id;
+    //         ContentDocumentLink content_document_link = createContentDocumentLink(base_64, file_name, linked_entity_id);
+    //         if (content_document_link != null) {
+    //             req_responses[0].HasDocument__c = true;
+    //             req_responses[0].Document_Requirement_Fulfilled_On__c = System.now();
+    //             update req_responses;
+    //             return content_document_link.Id;
+    //         } else {
+    //             return null;
+    //         }
+
+    //     } catch (Exception e) {
+    //         throw new AuraHandledException(e.getMessage());
+    //     }
+    // }
+
+    // private static ContentDocumentLink createContentDocumentLink(String base_64, String file_name, String linked_entity_id) {
+    //     ContentVersion cv = new ContentVersion(
+    //         VersionData = EncodingUtil.base64Decode(base_64),
+    //         Title = file_name,
+    //         PathOnClient = file_name,
+    //         OwnerId = UserInfo.getUserId()
+    //     );
+    //     if (!Test.isRunningTest()) {
+    //         cv.NetworkId = Network.getNetworkId();
+    //     }
+    //     insert cv;
+
+    //     Id content_document_id = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: cv.Id LIMIT 1].ContentDocumentId;
+    //     ContentDocumentLink content_document_link = new ContentDocumentLink(
+    //         ContentDocumentId = content_document_id,
+    //         LinkedEntityId = linked_entity_id,
+    //         ShareType = 'V'
+    //     );
+    //     insert content_document_link;
+    //     return content_document_link;
+    // }
+
+    // adapted from https://www.salesforcetroop.com/custom_file_upload_using_lwc
+    // can't use built-in lightning-file-upload element as it is not supported with Lightning Out
     @AuraEnabled
-    public static Id uploadFile(String base64, String filename, String recordId, String application_id, String document_upload_requirement_item_id) {
-        try {   
-            List<Requirement_Response__c> req_response = [SELECT Id FROM Requirement_Response__c WHERE Requirement_Item__c =: document_upload_requirement_item_id LIMIT 1];
-            if (req_response.isEmpty()) {
-                req_response.add(new Requirement_Response__c(
-                    Application__c = application_id,
-                    Requirement_Item__c = document_upload_requirement_item_id, 
-                    HasDocument__c = true, 
-                    Document_Requirement_Fulfilled_On__c = System.now()
-                ));
-                insert req_response;
+    public static Id uploadFile(String base_64, String file_name, String recommendation_id){
+        try {
+            ContentVersion cv = new ContentVersion(
+                VersionData = EncodingUtil.base64Decode(base_64),
+                Title = file_name,
+                PathOnClient = file_name,
+                OwnerId = UserInfo.getUserId(),
+                FirstPublishLocationId = recommendation_id
+            );
+            if (!Test.isRunningTest()) {
+                cv.NetworkId = Network.getNetworkId();
             }
-            List<String> recordIds = new List<String>();
-            recordIds.add(recordId);
-            recordIds.add(req_response[0].Id);
-            ContentVersion cv = createContentVersionAndLinks(base64, filename, recordIds);
-            if (cv == null) {
-                return null;
-            } else {
-                return cv.Id;
-            }
+            insert cv;
+            return cv.Id;
         } catch (Exception e) {
-            throw new AuraHandledException('Error uploading file: ' + e.getMessage());
+            throw new AuraHandledException(e.getMessage());
         }
     }
 
-    private static ContentVersion createContentVersionAndLinks(String base64, String filename, List<String> recordIds) {
+    @AuraEnabled
+    public static void updateRequirementResponses(String related_object_requirement_item_id, String document_upload_requirement_item_id){
         try {
-            ContentVersion cv = new ContentVersion();
-            cv.VersionData = EncodingUtil.base64Decode(base64);
-            cv.Title = filename;
-            cv.PathOnClient = filename;
-            cv.OwnerId = UserInfo.getUserId();
-            insert cv;
-            if (!recordIds.isEmpty() && cv.Id != null) {
-                List<ContentDocumentLink> content_document_links = new List<ContentDocumentLink>();
-                Id content_document_id = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: cv.Id].ContentDocumentId;
-                for (String recordId : recordIds) {
-                    ContentDocumentLink document_link = new ContentDocumentLink();
-                    document_link.ContentDocumentId = content_document_id;
-                    document_link.LinkedEntityId = recordId;
-                    document_link.ShareType = 'V';
-                    content_document_links.add(document_link);
-                }
-                insert content_document_links;
+            List<String> ids_to_query = new List<String>();
+            if (related_object_requirement_item_id != null) {
+                ids_to_query.add(related_object_requirement_item_id);
             }
-            return cv;
+            if (document_upload_requirement_item_id != null) {
+                ids_to_query.add(document_upload_requirement_item_id);
+            }
+            List<Requirement_Response__c> req_responses = [SELECT Id, Document_Requirement_Fulfilled_On__c, Child_Requirement_Fulfilled_On__c, Requirement_Item__r.RecordTypeId FROM Requirement_Response__c WHERE Requirement_Item__c IN: ids_to_query];
+            Id related_object_RT = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByDeveloperName().get('Related_Object').getRecordTypeId();
+            Id document_upload_RT = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByDeveloperName().get('Document_Upload').getRecordTypeId();
+            for (Requirement_Response__c req_response : req_responses) {
+                if (req_response.Requirement_Item__r.RecordTypeId == related_object_RT) {
+                    req_response.Child_Requirement_Fulfilled_On__c = System.now();
+                } else if (req_response.Requirement_Item__r.RecordTypeId == document_upload_RT) {
+                    req_response.Document_Requirement_Fulfilled_On__c = System.now();
+                }
+            }
+            update req_responses;
+            
         } catch (Exception e) {
-            throw new AuraHandledException('Error uploading file: ' + e.getMessage());
+            throw new AuraHandledException(e.getMessage());
         }
     }
 }

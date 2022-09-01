@@ -2,7 +2,7 @@
   @description       : 
   @author            : nicole.b@digitalmass.com
   @group             : 
-  @last modified on  : 08-31-2022
+  @last modified on  : 09-01-2022
   @last modified by  : nicole.b@digitalmass.com
 -->
 <template>
@@ -383,10 +383,11 @@
                         </lightning-layout>
                         <template if:true={show_manual_letter_entry}>
                             <div class="slds-m-right_medium slds-m-left_medium">
-                                <lightning-input-rich-text
+                                <lightning-textarea
                                     name="manual_letter_entry"
-                                    onchange={handleFileUpload}>
-                                </lightning-input-rich-text>
+                                    onchange={handleFileUpload}
+                                    max-length="131072">
+                                </lightning-textarea>
                             </div>
                         </template>
                     </div>

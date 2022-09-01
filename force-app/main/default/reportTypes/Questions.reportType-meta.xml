@@ -306,6 +306,16 @@
             <field>Additional_Field_Validation__c</field>
             <table>Question__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Hidden_Question_Text__c</field>
+            <table>Question__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Hidden_Question_Date__c</field>
+            <table>Question__c</table>
+        </columns>
         <masterLabel>Questions</masterLabel>
     </sections>
 </ReportType>

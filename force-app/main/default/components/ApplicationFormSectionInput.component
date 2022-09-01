@@ -31,7 +31,7 @@
     </apex:outputPanel>
 
     <!-- Hidden Field -->
-    <apex:inputHidden value="{!responseObject[fieldAPI]}" rendered="{!inputType == 'Hidden'}"/>
+<!--    <apex:inputHidden value="{!responseObject[fieldAPI]}" rendered="{!inputType == 'Hidden'}"/>-->
 
     <!-- Static for Address label -->
     <apex:outputPanel rendered="{!inputType == 'Address'}" layout="block" styleClass="slds-text-body_regular validate{!inputType} ">

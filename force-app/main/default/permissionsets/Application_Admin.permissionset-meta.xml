@@ -3195,6 +3195,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Hidden_Question_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Hidden_Question_Text__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Question__c.Hide_from_Application__c</field>
         <readable>true</readable>
@@ -4427,6 +4437,10 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Question__c.Email</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Question__c.Hidden</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

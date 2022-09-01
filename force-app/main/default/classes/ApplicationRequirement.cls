@@ -410,10 +410,30 @@ public class ApplicationRequirement {
         for (ApplicationQuestionGroup g : section.groups) {
             if (g.questionGroup == true && g.questions != null && g.isEditable) {
                 for (ApplicationQuestion q : g.questions) {
+
+
                     if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null) {
+
 
                         Question_Response__c qResp = q.response;
                         qResp.Application__c = app.Id;
+
+                        //Hidden question record types are never on the page. Evaluated here.
+                        if (q.fieldType.equals('Hidden')) {
+                            //Check if dependencies have been met by whether the question should be shown.
+                            if (q.showQuestion) {
+                                if (String.isNotBlank(q.question.Hidden_Question_Text__c)) {
+                                    qResp.ValueText__c = q.question.Hidden_Question_Text__c;
+                                }
+                                if (q.question.Hidden_Question_Date__c != null) {
+                                    qResp.ValueDate__c = q.question.Hidden_Question_Date__c;
+                                }
+                            } else {
+                                //clear the values if question is not shown.
+                                qResp.ValueText__c = '';
+                                qResp.ValueDate__c = null;
+                            }
+                        }
 
                         // Clone Question Response and apply ID if this is an external user
                         // in order to get around the restriction of external users not being

@@ -319,8 +319,26 @@ public class ApplicationRequirement_TEST {
                 Requirement_Item__c = riQG.Id,
                 Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
         );
+        Question__c q6 = new Question__c(
+                Active__c = true,
+                RecordTypeId = rtMapQ.get('Hidden'),
+                Name = 'Test5',
+                Label__c = 'Test5',
+                Hidden_Question_Date__c = Date.today(),
+                Requirement_Item__c = riQG.Id,
+                Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
+        );
+        Question__c q7 = new Question__c(
+                Active__c = true,
+                RecordTypeId = rtMapQ.get('Hidden'),
+                Name = 'Test5',
+                Label__c = 'Test5',
+                Hidden_Question_Text__c = 'TEST TEXT',
+                Requirement_Item__c = riQG.Id,
+                Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
+        );
         insert new List<Question__c>{
-                q1, q2, q3, q4, q5
+                q1, q2, q3, q4, q5, q6, q7
         };
 
         Question_Dependency__c qd1 = new Question_Dependency__c(

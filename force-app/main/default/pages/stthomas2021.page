@@ -33,6 +33,9 @@
         <apex:insert name="scriptsHead"/>
     </head>
     <body>
+    <nav aria-label="Skip navigation" class="tab-navigation" id="access">
+    	<a href="#main-content" tabindex="1">Skip to primary content</a>
+    </nav>
     <header class="capricorn-header">
         <div class="header capricorn header_dark">
             <div class="header__inner">

@@ -36,6 +36,7 @@
         </apex:outputPanel>
 
         <!-- MAIN BODY -->
+        <a id="main-content"></a>
         <apex:outputPanel layout="block" styleClass="{!IF(col=='lr','slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-medium-size_6-of-12',IF(col=='l' || col=='r', 'slds-col slds-size_1-of-1 slds-large-size_9-of-12 slds-medium-size_9-of-12', 'slds-col slds-size_1-of-1 slds-large-size_12-of-12'))}">
 
             <!-- CONTENT TOP WIDGETS -->

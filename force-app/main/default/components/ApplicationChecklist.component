@@ -23,14 +23,14 @@
                             </span>
                     </div>
                     <div class="slds-media__body">
-                        <h2 class="slds-card__header-title">
+                        <h1 class="slds-card__header-title">
                             <span>
                                 <apex:outputPanel rendered="{!!appInfo.hideTermProgram}" layout="none">
                                     {!IF(!ISBLANK(appInfo.intendedProgram), appInfo.intendedProgram, '')}
                                  </apex:outputPanel>
                             </span>
-                        </h2>
-                        <h3>{!IF(!ISBLANK(appInfo.intendedTerm), appInfo.intendedTerm, '' )}</h3>
+                        </h1>
+                        <h2>{!IF(!ISBLANK(appInfo.intendedTerm), appInfo.intendedTerm, '' )}</h2>
                     </div>
                 </header>
             </div>
@@ -49,7 +49,7 @@
                                     </button>
                                     <div>
                                         <div class="slds-summary-detail__title">
-                                            <h3 class="slds-text-heading_small">
+                                            <h2 class="slds-text-heading_small">
                                                 <apex:commandLink action="{!goToRequirement}" onClick="appShowLoadingSpinner();">
                                                     <apex:param name="nextRequirementId" value="{!r.req.Id}" assignTo="{!nextRequirementId}"/>
                                                     <apex:param name="nextAt" value="{!appInfoParam.at}" assignTo="{!nextAt}"/>
@@ -66,7 +66,7 @@
                                                 <apex:outputPanel layout="none" rendered="{!!r.viewed && !r.reqStatus}">
                                                     <span class="slds-badge slds-badge_lightest">Visit</span>
                                                 </apex:outputPanel>
-                                            </h3>
+                                            </h2>
                                         </div>
                                         <div aria-hidden="false" class="slds-summary-detail__content" id="expando-{!r.req.Id}" style="display:none;">
                                             <apex:outputPanel rendered="{!IF(r.reqItems.size > 0, true,false)}" layout="none">

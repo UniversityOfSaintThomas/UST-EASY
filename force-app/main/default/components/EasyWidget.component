@@ -12,9 +12,9 @@
             <div class="slds-card__header slds-grid">
                 <header>
                     <div class="slds-media__body">
-                        <h3 class="slds-card__header-title">
+                        <h2 class="slds-card__header-title">
                             {!widget.Display_Heading__c}
-                        </h3>
+                        </h2>
                     </div>
                 </header>
             </div>

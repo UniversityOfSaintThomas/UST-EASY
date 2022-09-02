@@ -44,11 +44,11 @@
                                 </span>
                     </div>
                     <div class="slds-media__body">
-                        <h2 class="slds-card__header-title">
+                        <h1 class="slds-card__header-title">
                             <span class="slds-card__header-link slds-truncate" title="Upload file">
                                 <span>Upload file</span>
                             </span>
-                        </h2>
+                        </h1>
                     </div>
                 </header>
             </div>

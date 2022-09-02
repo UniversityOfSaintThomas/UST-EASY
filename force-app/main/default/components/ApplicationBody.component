@@ -48,11 +48,11 @@
             <!-- TITLE AND SUB TITLE -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 " layout="block">
                 <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                    <h2 class="slds-text-heading_large">{!title}</h2>
+                    <h1 class="slds-text-heading_large">{!title}</h1>
                 </div>
                 <apex:outputPanel rendered="{!subtitle != null}" layout="none">
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                        <h3 class="slds-text-heading_medium">{!subtitle}</h3>
+                        <h2 class="slds-text-heading_medium">{!subtitle}</h2>
                     </div>
                 </apex:outputPanel>
             </apex:outputPanel>

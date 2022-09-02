@@ -119,11 +119,11 @@
                         </span>
                     </div>
                     <div class="slds-media__body">
-                        <h2 class="slds-card__header-title">
+                        <h1 class="slds-card__header-title">
                             <a href="#" class="slds-card__header-link slds-truncate" title="{!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}">
                                 <span>{!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}</span>
                             </a>
-                        </h2>
+                        </h1>
                     </div>
                 </header>
             </apex:outputPanel>

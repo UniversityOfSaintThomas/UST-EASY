@@ -316,3 +316,5 @@ orgs:
   scratch:
     build:
       config_file: orgs/build.json
+    dev:
+      days: 14

@@ -653,11 +653,14 @@ public class ApplicationQuestionGroup {
 
             response.Send_Reminder__c = !response.Send_Reminder__c;
             update new Requirement_Response__c(Id = response.Id, Send_Reminder__c = response.Send_Reminder__c, External_Email__c = externalEmail);
+
             Requirement_Item__c reqItem = [SELECT Id, Related_List_Object__c FROM Requirement_Item__c WHERE Id =: response.Requirement_Item__c LIMIT 1];
             if (reqItem.Related_List_Object__c == 'Recommendation__c') {
-                Recommendation__c recommendation = [SELECT Id, Resend_Date__c FROM Recommendation__c WHERE Requirement_Response__c =: response.Id LIMIT 1];
-                recommendation.Resend_Date__c = System.today();
-                update recommendation;
+                Recommendation__c recommendation = [SELECT Id, Resend_Date__c, Submitted__c FROM Recommendation__c WHERE Requirement_Response__c =: response.Id LIMIT 1];
+                if (recommendation.Submitted__c == false) {
+                    recommendation.Resend_Date__c = System.today();
+                    update recommendation;
+                }
             }
         }
     }

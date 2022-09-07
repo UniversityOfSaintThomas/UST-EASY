@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Related_List_Object__c</fullName>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Object that this related object requirement item is populating</inlineHelpText>
     <label>Related List Object</label>
@@ -32,9 +31,9 @@
                 <label>Recommendation__c</label>
             </value>
             <value>
-                <fullName>Family__c</fullName>
+                <fullName>Family_Member__c</fullName>
                 <default>false</default>
-                <label>Family__c</label>
+                <label>Family_Member__c</label>
             </value>
             <value>
                 <fullName>Work_History__c</fullName>
@@ -45,6 +44,11 @@
                 <fullName>hed__Education_History__c</fullName>
                 <default>false</default>
                 <label>hed__Education_History__c</label>
+            </value>
+            <value>
+                <fullName>Family__c</fullName>
+                <default>false</default>
+                <label>Family__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>

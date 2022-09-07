@@ -557,24 +557,24 @@ public class ApplicationRequirement {
                     requirement_response_to_recommendation_map.put(rec.Requirement_Response__c, rec);
                 }
                 List<Recommendation__c> recs_to_upsert = new List<Recommendation__c>();
-                List<Recommendation__c> existing_recs = new List<Recommendation__c>();
-                List<Recommendation__c> new_recs = new List<Recommendation__c>();
                 for (Id rr_id : rrs_that_should_have_recommendation) {
-                    Recommendation__c related_rec;
-                    if (requirement_response_to_recommendation_map.get(rr_id) != null) { // recommendation already exists, update recommendation fields
-                        related_rec = requirement_response_to_recommendation_map.get(rr_id);
-                    } else { // create new recommendation
-                        related_rec = new Recommendation__c();
-                        related_rec.Application__c = rrMap.get(rr_id).Application__c;
-                        related_rec.Requirement_Response__c = rr_id;
-                    }
-                        related_rec.Rec_Email__c = rrMap.get(rr_id).External_Email__c;
-                        for (Question_Response__c question_response : requirement_response_to_question_responses_map.get(rr_id)) {
-                            if (String.isNotBlank(question_response.Question__r.Related_Object_Field__c)) {
-                                related_rec.put(question_response.Question__r.Related_Object_Field__c, question_response.Question_Response__c);
-                            }
+                    if (String.isNotBlank(rrMap.get(rr_id).External_Email__c)) {
+                        Recommendation__c related_rec;
+                        if (requirement_response_to_recommendation_map.get(rr_id) != null) { // recommendation already exists, update recommendation fields
+                            related_rec = requirement_response_to_recommendation_map.get(rr_id);
+                        } else { // create new recommendation
+                            related_rec = new Recommendation__c();
+                            related_rec.Application__c = rrMap.get(rr_id).Application__c;
+                            related_rec.Requirement_Response__c = rr_id;
                         }
-                        recs_to_upsert.add(related_rec);
+                            related_rec.Rec_Email__c = rrMap.get(rr_id).External_Email__c;
+                            for (Question_Response__c question_response : requirement_response_to_question_responses_map.get(rr_id)) {
+                                if (String.isNotBlank(question_response.Question__r.Related_Object_Field__c)) {
+                                    related_rec.put(question_response.Question__r.Related_Object_Field__c, question_response.Question_Response__c);
+                                }
+                            }
+                            recs_to_upsert.add(related_rec);
+                    }
                 }
                 if (recs_to_upsert != null) {
                     upsert recs_to_upsert;

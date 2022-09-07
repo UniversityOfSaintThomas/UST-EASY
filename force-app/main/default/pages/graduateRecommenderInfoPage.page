@@ -83,21 +83,23 @@
     </header>
     <main>
         <div class="slds-scope">
-            <div class="slds-align_absolute-center" style="max-width:1170px; margin-top:110px; margin-bottom:20px">
-                <apex:includeLightning />
-                <div id="component"/>
-                <script>
-                    $Lightning.use("c:graduateRecommenderInfoApp", function() {
-                        $Lightning.createComponent(
-                            "c:graduateRecommenderInfo",
-                            {"recId":"{!$CurrentPage.parameters.recId}"},
-                            "component",
-                            function(cmp) {
-                                console.log("LWC Component Created.");
-                            }
-                        );
-                    });
-                </script>
+            <div class="slds-grid slds-wrap slds-grid_align-center">
+                <div class="slds-col slds-size_1-of-1 slds-p-around_x-small" style="max-width:1170px; margin-top:110px; margin-bottom:20px">
+                    <apex:includeLightning />
+                    <div id="component"/>
+                    <script>
+                        $Lightning.use("c:graduateRecommenderInfoApp", function() {
+                            $Lightning.createComponent(
+                                "c:graduateRecommenderInfo",
+                                {"recId":"{!$CurrentPage.parameters.recId}"},
+                                "component",
+                                function(cmp) {
+                                    console.log("LWC Component Created.");
+                                }
+                            );
+                        });
+                    </script>
+                </div>
             </div>
         </div>
     </main>

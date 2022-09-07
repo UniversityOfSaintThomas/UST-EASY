@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="Recommendation Request for {!relatedTo.Application__r.Contact__r.Name}" recipientType="Contact" relatedToType="Recommendation__c">
+<messaging:plainTextEmailBody >
+Please follow the link below to complete the Recommendation:
+{!$Setup.Application_Setting__c.Community_URL__c+"/graduateRecommenderInfoPage?recId="+relatedTo.Id}
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

@@ -2,12 +2,12 @@
   @description       : 
   @author            : nicole.b@digitalmass.com
   @group             : 
-  @last modified on  : 09-01-2022
+  @last modified on  : 09-06-2022
   @last modified by  : nicole.b@digitalmass.com
 -->
 <template>
     <lightning-card>
-        <div class="slds-text-heading_large slds-align_absolute-center" style="color:#510c76"><b>RECOMMENDATION FORM</b></div>
+        <div class="slds-text-heading_large slds-align_absolute-center slds-m-left_medium slds-m-right_medium" style="color:#510c76"><b>RECOMMENDATION FORM</b></div>
         <template if:false={recommendation_already_submitted}>
             <template if:true={show_spinner}>
                 <lightning-spinner
@@ -406,7 +406,7 @@
             </template>
 
             <template if:true={recommendation_submitted}>
-                <div class="slds-text-heading_large slds-align_absolute-center">Thank you! Your recommendation has been successfully submitted.</div>
+                <div class="slds-text-heading_large slds-align_absolute-center slds-m-left_medium slds-m-right_medium">Thank you! Your recommendation has been successfully submitted.</div>
             </template>
         </template>
 

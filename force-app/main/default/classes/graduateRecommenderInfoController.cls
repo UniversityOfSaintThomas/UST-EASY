@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 09-01-2022
+ * @last modified on  : 09-06-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 public without sharing class graduateRecommenderInfoController {
@@ -22,7 +22,9 @@ public without sharing class graduateRecommenderInfoController {
                     Application__r.Application_Control__r.Id,
                     Application__r.Intended_Program__r.Application_Control__r.Id,
                     Display_Instructive_Text__c,
-                    Submitted__c
+                    Submitted__c,
+                    Requirement_Response__r.Requirement_Item__c,
+                    Rec_Email__c
                 FROM Recommendation__c 
                 WHERE Id =: recommendation_id
                 LIMIT 1
@@ -42,6 +44,7 @@ public without sharing class graduateRecommenderInfoController {
 
             id_map.put('display_instructive_text', String.valueOf(recommendation_object.Display_Instructive_Text__c));
             id_map.put('submitted', String.valueOf(recommendation_object.Submitted__c));
+            id_map.put('rec_email', String.valueOf(recommendation_object.Rec_Email__c));
 
             Application__c app = [
                 SELECT Id,
@@ -79,7 +82,7 @@ public without sharing class graduateRecommenderInfoController {
                                   'FROM Requirement_Item__c ' + 
                                   'WHERE Application_Control_Id__c = \'' + app_control_case_sensitive_id + '\' ' +
                                   'AND Requirement__c IN: applicable_requirement_ids ' +
-                                  'AND Internal_Requirement_Item__c != null ' +
+                                  'AND Internal_Requirement_Item__c = \'' + recommendation_object.Requirement_Response__r.Requirement_Item__c + '\' ' +
                                   'AND (RecordTypeId = \'' + related_object_RT + '\' ' +
                                         'OR RecordTypeId = \'' + document_upload_RT + '\') ' +
                                   'AND Active__c = true ';
@@ -269,58 +272,6 @@ public without sharing class graduateRecommenderInfoController {
 
     // adapted from https://www.salesforcetroop.com/custom_file_upload_using_lwc
     // can't use built-in lightning-file-upload element as it is not supported with Lightning Out
-    // @AuraEnabled
-    // public static Id uploadFile(String base_64, String file_name, String document_upload_requirement_item_id, String application_id){
-    //     try {
-    //         List<Requirement_Response__c> req_responses = [SELECT Id, HasDocument__c, Document_Requirement_Fulfilled_On__c FROM Requirement_Response__c WHERE Id =: document_upload_requirement_item_id LIMIT 1];
-    //         String linked_entity_id = '';
-    //         if (req_responses.isEmpty()) {
-    //             req_responses.add(new Requirement_Response__c(
-    //                 Application__c = application_id,
-    //                 Requirement_Item__c = document_upload_requirement_item_id
-    //             ));
-    //             insert req_responses;
-    //         }
-    //         linked_entity_id = req_responses[0].Id;
-    //         ContentDocumentLink content_document_link = createContentDocumentLink(base_64, file_name, linked_entity_id);
-    //         if (content_document_link != null) {
-    //             req_responses[0].HasDocument__c = true;
-    //             req_responses[0].Document_Requirement_Fulfilled_On__c = System.now();
-    //             update req_responses;
-    //             return content_document_link.Id;
-    //         } else {
-    //             return null;
-    //         }
-
-    //     } catch (Exception e) {
-    //         throw new AuraHandledException(e.getMessage());
-    //     }
-    // }
-
-    // private static ContentDocumentLink createContentDocumentLink(String base_64, String file_name, String linked_entity_id) {
-    //     ContentVersion cv = new ContentVersion(
-    //         VersionData = EncodingUtil.base64Decode(base_64),
-    //         Title = file_name,
-    //         PathOnClient = file_name,
-    //         OwnerId = UserInfo.getUserId()
-    //     );
-    //     if (!Test.isRunningTest()) {
-    //         cv.NetworkId = Network.getNetworkId();
-    //     }
-    //     insert cv;
-
-    //     Id content_document_id = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: cv.Id LIMIT 1].ContentDocumentId;
-    //     ContentDocumentLink content_document_link = new ContentDocumentLink(
-    //         ContentDocumentId = content_document_id,
-    //         LinkedEntityId = linked_entity_id,
-    //         ShareType = 'V'
-    //     );
-    //     insert content_document_link;
-    //     return content_document_link;
-    // }
-
-    // adapted from https://www.salesforcetroop.com/custom_file_upload_using_lwc
-    // can't use built-in lightning-file-upload element as it is not supported with Lightning Out
     @AuraEnabled
     public static Id uploadFile(String base_64, String file_name, String recommendation_id){
         try {
@@ -351,7 +302,14 @@ public without sharing class graduateRecommenderInfoController {
             if (document_upload_requirement_item_id != null) {
                 ids_to_query.add(document_upload_requirement_item_id);
             }
-            List<Requirement_Response__c> req_responses = [SELECT Id, Document_Requirement_Fulfilled_On__c, Child_Requirement_Fulfilled_On__c, Requirement_Item__r.RecordTypeId FROM Requirement_Response__c WHERE Requirement_Item__c IN: ids_to_query];
+            List<Requirement_Response__c> req_responses = [
+                SELECT Id, 
+                    Document_Requirement_Fulfilled_On__c, 
+                    Child_Requirement_Fulfilled_On__c, 
+                    Requirement_Item__r.RecordTypeId 
+                FROM Requirement_Response__c 
+                WHERE Requirement_Item__c IN: ids_to_query
+            ];
             Id related_object_RT = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByDeveloperName().get('Related_Object').getRecordTypeId();
             Id document_upload_RT = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByDeveloperName().get('Document_Upload').getRecordTypeId();
             for (Requirement_Response__c req_response : req_responses) {

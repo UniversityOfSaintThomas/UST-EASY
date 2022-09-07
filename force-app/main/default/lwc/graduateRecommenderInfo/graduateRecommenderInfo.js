@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 09-01-2022
+ * @last modified on  : 09-06-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 
@@ -21,6 +21,7 @@ import updateRequirementResponses from '@salesforce/apex/graduateRecommenderInfo
 export default class GraduateRecommenderInfo extends LightningElement {
 
     @api recId;
+    rec_email;
 
     // parent/related object ids
     @track recommendation_id = '';
@@ -111,7 +112,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
                         this.related_object_requirement_item_id = objectInfo.related_object_requirement_item_id;
                         this.document_upload_requirement_item_id = objectInfo.document_upload_requirement_item_id;
                         this.document_upload_requirement_item_file_types = objectInfo.document_upload_requirement_item_file_types;
-    
+                        this.rec_email = objectInfo.rec_email;
                         if (Boolean(this.document_upload_requirement_item_id)) {
                             this.show_document_upload = 'true';
                             if (Boolean(this.document_upload_requirement_item_file_types)) {
@@ -433,24 +434,35 @@ export default class GraduateRecommenderInfo extends LightningElement {
     */
 
     handleSubmit() {
-        if (this.validateInput()) {
-            this.show_spinner = true;
-            if (Boolean(this.file_data)) {
-                const {base_64, file_name} = this.file_data;
-                uploadFile({base_64 : base_64, file_name : file_name, recommendation_id: this.recommendation_id})
-                .then(result => {
-                    this.file_data = null;
-                    this.submitUpdates();
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.file_name = 'Upload failed. Please try again or type below.';
-                    this.show_spinner = false;
-                    this.file_data = null;
-                })
-            } else {
-                this.submitUpdates();
+        let email_mismatch = false;
+        for (let property in this.recommendation_input.fields) {
+            if (property == 'Rec_Email__c' && this.recommendation_input.fields[property] != this.rec_email && this.recommendation_input.fields[property] != null) {
+                email_mismatch = true;
             }
+        }
+        if (!email_mismatch) {
+            this.required_fields_missing = '';
+            if (this.validateInput()) {
+                this.show_spinner = true;
+                if (Boolean(this.file_data)) {
+                    const {base_64, file_name} = this.file_data;
+                    uploadFile({base_64 : base_64, file_name : file_name, recommendation_id: this.recommendation_id})
+                    .then(result => {
+                        this.file_data = null;
+                        this.submitUpdates();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.file_name = 'Upload failed. Please try again or type below.';
+                        this.show_spinner = false;
+                        this.file_data = null;
+                    })
+                } else {
+                    this.submitUpdates();
+                }
+            }
+        } else {
+            this.required_fields_missing = 'The Recommender Email entered above does not match the email recipient of this request.';
         }
     }
 

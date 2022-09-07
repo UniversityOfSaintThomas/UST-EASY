@@ -83,7 +83,7 @@
     </header>
     <main>
         <div class="slds-scope">
-            <div class="slds-p-right_xx-large slds-p-left_xx-large" style="margin-top:110px; margin-bottom:20px">
+            <div class="slds-align_absolute-center" style="max-width:1170px; margin-top:110px; margin-bottom:20px">
                 <apex:includeLightning />
                 <div id="component"/>
                 <script>

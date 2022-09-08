@@ -31,7 +31,7 @@ tasks:
       name: EASY Applicant Portal
       description: EASY application portal
       template: Build Your Own
-      url_path_prefix: EASYApp
+      url_path_prefix: Admissions
 
   permission_guest_user:
     description: 'Applies permission set to guest community guest user'

@@ -656,9 +656,9 @@ public class ApplicationQuestionGroup {
 
             Requirement_Item__c reqItem = [SELECT Id, Related_List_Object__c FROM Requirement_Item__c WHERE Id =: response.Requirement_Item__c LIMIT 1];
             if (reqItem.Related_List_Object__c == 'Recommendation__c') {
-                Recommendation__c recommendation = [SELECT Id, Resend_Date__c, Submitted__c FROM Recommendation__c WHERE Requirement_Response__c =: response.Id LIMIT 1];
-                if (recommendation.Submitted__c == false) {
-                    recommendation.Resend_Date__c = System.today();
+                List<Recommendation__c> recommendation = [SELECT Id, Resend_Date__c, Submitted__c FROM Recommendation__c WHERE Requirement_Response__c =: response.Id LIMIT 1];
+                if (if recommendation.size() > 0 && recommendation[0].Submitted__c == false) {
+                    recommendation[0].Resend_Date__c = System.today();
                     update recommendation;
                 }
             }

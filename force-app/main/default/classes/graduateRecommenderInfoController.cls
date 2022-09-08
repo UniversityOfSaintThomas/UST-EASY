@@ -287,7 +287,7 @@ public without sharing class graduateRecommenderInfoController {
             insert cv;
             return cv.Id;
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            throw new AuraHandledException('Error uploading file: ' + e.getMessage());
         }
     }
 

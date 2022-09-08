@@ -524,16 +524,17 @@ public class ApplicationRequirement {
             ];
 
             if (!requirement_items_of_external_email_rrs.isEmpty()) {
-                List<Id> rrs_that_should_have_recommendation = new List<Id>();
+                // get corresponding requirement responses
+                List<Id> rr_ids_that_should_have_recommendation = new List<Id>();
                 for (Requirement_Item__c requirement_item : requirement_items_of_external_email_rrs) {
-                    rrs_that_should_have_recommendation.add(requirement_item_ids_of_external_email_rrs.get(requirement_item.Id));
+                    rr_ids_that_should_have_recommendation.add(requirement_item_ids_of_external_email_rrs.get(requirement_item.Id));
                 }
 
                 // get Question Response info to populate fields on recommendation
                 List<Question_Response__c> related_question_responses = [
                     SELECT Question_Response__c, Requirement_Response__c, Question__r.Related_Object_Field__c
                     FROM Question_Response__c 
-                    WHERE Requirement_Response__c IN: rrs_that_should_have_recommendation
+                    WHERE Requirement_Response__c IN: rr_ids_that_should_have_recommendation
                 ];
                 Map<Id, List<Question_Response__c>> requirement_response_to_question_responses_map = new Map<Id, List<Question_Response__c>>();
                 for (Question_Response__c question_response : related_question_responses) {
@@ -545,27 +546,30 @@ public class ApplicationRequirement {
                         requirement_response_to_question_responses_map.get(question_response.Requirement_Response__c).add(question_response);
                     }
                 }
+
                 // get existing recommendations
-                List<Recommendation__c> recommendations_related_to_requirement_response = [
+                List<Recommendation__c> recommendations_related_to_requirement_responses = [
                     SELECT Id, Requirement_Response__c, Rec_Email__c
                     FROM Recommendation__c 
-                    WHERE Requirement_Response__c IN: rrs_that_should_have_recommendation
+                    WHERE Requirement_Response__c IN: rr_ids_that_should_have_recommendation
                 ];
 
                 Map<Id, Recommendation__c> requirement_response_to_recommendation_map = new Map<Id, Recommendation__c>();
-                for (Recommendation__c rec : recommendations_related_to_requirement_response) {
+                for (Recommendation__c rec : recommendations_related_to_requirement_responses) {
                     requirement_response_to_recommendation_map.put(rec.Requirement_Response__c, rec);
                 }
+
                 List<Recommendation__c> recs_to_upsert = new List<Recommendation__c>();
-                for (Id rr_id : rrs_that_should_have_recommendation) {
+                for (Id rr_id : rr_ids_that_should_have_recommendation) {
                     if (String.isNotBlank(rrMap.get(rr_id).External_Email__c)) {
                         Recommendation__c related_rec;
-                        if (requirement_response_to_recommendation_map.get(rr_id) != null) { // recommendation already exists, update recommendation fields
+                        if (requirement_response_to_recommendation_map.get(rr_id) != null) { // recommendation already exists
                             related_rec = requirement_response_to_recommendation_map.get(rr_id);
                         } else { // create new recommendation
                             related_rec = new Recommendation__c();
                             related_rec.Application__c = rrMap.get(rr_id).Application__c;
                             related_rec.Requirement_Response__c = rr_id;
+                            related_rec.Status__c = 'Requested';
                         }
                             related_rec.Rec_Email__c = rrMap.get(rr_id).External_Email__c;
                             for (Question_Response__c question_response : requirement_response_to_question_responses_map.get(rr_id)) {

@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 09-06-2022
+ * @last modified on  : 09-08-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 public without sharing class graduateRecommenderInfoController {
@@ -270,7 +270,6 @@ public without sharing class graduateRecommenderInfoController {
         }
     }
 
-    // adapted from https://www.salesforcetroop.com/custom_file_upload_using_lwc
     // can't use built-in lightning-file-upload element as it is not supported with Lightning Out
     @AuraEnabled
     public static Id uploadFile(String base_64, String file_name, String recommendation_id){

@@ -41,6 +41,7 @@ public with sharing class ScholarshipSharedUtilities {
 
     public static Scholarship__c getScholarshipInfo(String scholarshipId) {
         Scholarship__c scholarshipInfo = null;
+        System.debug('getApplicantInfo():: scholarshipId: ' + scholarshipId);
         List<Scholarship__c> ScholarshipInfos = [
                 SELECT Close_Date__c,Completion_Statement__c,Criteria_Statement__c,Description__c,Essay_1_Text__c,Essay_2_Text__c,
                         Id,Name,Open_Date__c,OwnerId,Question_1_Text__c,Question_2_Text__c,Question_3_Text__c,Question_4_Text__c,

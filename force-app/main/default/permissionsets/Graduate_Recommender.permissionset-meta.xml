@@ -411,7 +411,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
-        <apexPage>graduateRecommenderInfoPage</apexPage>
+        <apexPage>RecommendationForm</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
 </PermissionSet>

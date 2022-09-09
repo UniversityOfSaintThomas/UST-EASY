@@ -513,7 +513,7 @@ public class ApplicationRequirement {
         return pr;
     }
 
-    public void handleRecommendations(Map<Id, Requirement_Response__c> rrMap, Map<Id, Id> requirement_item_ids_of_external_email_rrs) {
+    public static void handleRecommendations(Map<Id, Requirement_Response__c> rrMap, Map<Id, Id> requirement_item_ids_of_external_email_rrs) {
         // Check if external email is for recommendation object
         if (!requirement_item_ids_of_external_email_rrs.isEmpty()) {
             List<Requirement_Item__c> requirement_items_of_external_email_rrs = [
@@ -572,14 +572,17 @@ public class ApplicationRequirement {
                             related_rec.Status__c = 'Requested';
                         }
                             related_rec.Rec_Email__c = rrMap.get(rr_id).External_Email__c;
-                            for (Question_Response__c question_response : requirement_response_to_question_responses_map.get(rr_id)) {
-                                if (String.isNotBlank(question_response.Question__r.Related_Object_Field__c)) {
-                                    related_rec.put(question_response.Question__r.Related_Object_Field__c, question_response.Question_Response__c);
+                            if (!requirement_response_to_question_responses_map.isEmpty()) {
+                                for (Question_Response__c question_response : requirement_response_to_question_responses_map.get(rr_id)) {
+                                    if (String.isNotBlank(question_response.Question__r.Related_Object_Field__c)) {
+                                        related_rec.put(question_response.Question__r.Related_Object_Field__c, question_response.Question_Response__c);
+                                    }
                                 }
                             }
                             recs_to_upsert.add(related_rec);
                     }
                 }
+
                 if (recs_to_upsert != null) {
                     upsert recs_to_upsert;
                 }

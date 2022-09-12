@@ -183,7 +183,7 @@ public with sharing class gradRecommendationInfoController_TEST {
         insert rr_to_insert;
 
         Recommendation__c recommendation = new Recommendation__c(
-            Requirement_Response__c = request_rr.Id,
+            Recommendation_Requirement_Response__c = request_rr.Id,
             Application__c = app.Id,
             Rec_Email__c = 'testrecommender@test.com',
             Status__c = 'Requested'
@@ -313,7 +313,7 @@ public with sharing class gradRecommendationInfoController_TEST {
         insert request_rr;
 
         Recommendation__c recommendation = new Recommendation__c(
-            Requirement_Response__c = request_rr.Id,
+            Recommendation_Requirement_Response__c = request_rr.Id,
             Application__c = app.Id,
             Rec_Email__c = 'testrecommender2@test.com',
             Status__c = 'Requested'

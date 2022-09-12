@@ -33,7 +33,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Requirement_Response__c</field>
+                <field>Recommendation_Requirement_Response__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -23,7 +23,7 @@ public without sharing class graduateRecommenderInfoController {
                     Application__r.Intended_Program__r.Application_Control__r.Id,
                     Display_Instructive_Text__c,
                     Submitted__c,
-                    Requirement_Response__r.Requirement_Item__c,
+                    Recommendation_Requirement_Response__r.Requirement_Item__c,
                     Rec_Email__c
                 FROM Recommendation__c 
                 WHERE Id =: recommendation_id
@@ -82,7 +82,7 @@ public without sharing class graduateRecommenderInfoController {
                                   'FROM Requirement_Item__c ' + 
                                   'WHERE Application_Control_Id__c = \'' + app_control_case_sensitive_id + '\' ' +
                                   'AND Requirement__c IN: applicable_requirement_ids ' +
-                                  'AND Internal_Requirement_Item__c = \'' + recommendation_object.Requirement_Response__r.Requirement_Item__c + '\' ' +
+                                  'AND Internal_Requirement_Item__c = \'' + recommendation_object.Recommendation_Requirement_Response__r.Requirement_Item__c + '\' ' +
                                   'AND (RecordTypeId = \'' + related_object_RT + '\' ' +
                                         'OR RecordTypeId = \'' + document_upload_RT + '\') ' +
                                   'AND Active__c = true ';

@@ -2,12 +2,12 @@
   @description       : 
   @author            : nicole.b@digitalmass.com
   @group             : 
-  @last modified on  : 08-26-2022
+  @last modified on  : 09-06-2022
   @last modified by  : nicole.b@digitalmass.com
 -->
 <template>
     <lightning-card>
-        <div class="slds-text-heading_large slds-align_absolute-center" style="color:#510c76"><b>RECOMMENDATION FORM</b></div>
+        <div class="slds-text-heading_large slds-align_absolute-center slds-m-left_medium slds-m-right_medium" style="color:#510c76"><b>RECOMMENDATION FORM</b></div>
         <template if:false={recommendation_already_submitted}>
             <template if:true={show_spinner}>
                 <lightning-spinner
@@ -383,10 +383,11 @@
                         </lightning-layout>
                         <template if:true={show_manual_letter_entry}>
                             <div class="slds-m-right_medium slds-m-left_medium">
-                                <lightning-input-rich-text
+                                <lightning-textarea
                                     name="manual_letter_entry"
-                                    onchange={handleFileUpload}>
-                                </lightning-input-rich-text>
+                                    onchange={handleFileUpload}
+                                    max-length="131072">
+                                </lightning-textarea>
                             </div>
                         </template>
                     </div>
@@ -397,14 +398,15 @@
                         variant="brand" 
                         label="Submit" 
                         title="Submit"
-                        onclick={handleSubmit}>
+                        onclick={handleSubmit}
+                        disabled={disable_submit}>
                     </lightning-button>
                 </div>
                 <div class="slds-text-color_error slds-align_absolute-center">{required_fields_missing}</div>
             </template>
 
             <template if:true={recommendation_submitted}>
-                <div class="slds-text-heading_large slds-align_absolute-center">Thank you! Your recommendation has been successfully submitted.</div>
+                <div class="slds-text-heading_large slds-align_absolute-center slds-m-left_medium slds-m-right_medium">Thank you! Your recommendation has been successfully submitted.</div>
             </template>
         </template>
 

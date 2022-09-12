@@ -51,7 +51,7 @@
             <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#email")}"></use>
         </svg>
         <apex:inputField type="email" id="emailField" styleClass="slds-input validate{!inputType}" value="{!responseObject[fieldAPI]}"/>
-        <apex:commandLink styleClass="btn-lightning" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder{!itemId}();" reRender="none" rendered="{!!preventUpdates && isEditable && isExternalEmail}"/>
+        <apex:commandLink styleClass="btn-lightning" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder{!itemId}();" reRender="" rendered="{!!preventUpdates && isEditable && isExternalEmail}"/>
     </apex:outputPanel>
 
     <!--Date Box-->

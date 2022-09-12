@@ -288,7 +288,7 @@ private class ApplicationCreate_TEST {
 
         Test.stopTest();
 
-        System.assertEquals('System.PageReference[/apex/ApplicationPortal?applicationId=' + appId + '&at=test&contactId=null]', String.valueOf(returnPage));
+        System.assertEquals('/apex/ApplicationPortal?applicationId=' + appId + '&at=test&contactId=null', returnpage.getUrl());
         System.assertEquals(null, returnPage2);
     }
 

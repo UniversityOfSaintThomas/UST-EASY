@@ -288,7 +288,7 @@ private class ApplicationCreate_TEST {
 
         Test.stopTest();
 
-        System.assertEquals('/apex/ApplicationPortal?applicationId=' + appId + '&at=test&contactId=null', returnpage.getUrl());
+        System.assertEquals('/apex/ApplicationPortal?applicationId=' + appId + '&at=test' + '&contactId=null', returnPage.getUrl());
         System.assertEquals(null, returnPage2);
     }
 

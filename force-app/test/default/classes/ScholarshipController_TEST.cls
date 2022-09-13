@@ -1,15 +1,6 @@
+/* Credit where due: although my name is on the commit to EASYApp, much of this is taken from the Old Scholarships repo, and was authored by Thad or his predecessors. */
 @IsTest
 public class ScholarshipController_TEST {
-/*    @TestSetup static void insertCertainBaselineDataForTestsIfNotPresent() { Util.insertCertainBaselineDataForTestsIfNotPresent(); }
-	private static Profile testProfile ;
-    private static Contact student;
-    private static User testUser;
-    private static  Scholarship__c ScholarshipInfo {get; set;}
-    private static Scholarship__c ScholarshipInfoExpired {get;set;}
-    private static  Scholarship_Applicant__c ScholarshipApplicant {get; set;}
-    private static Attachment Essay1 { get; set; }
-    private static Attachment Essay2 { get; set; }*/
-
     @IsTest static void testScholarshipHomeNullScholarship() {
         //dataPrepare();
         Contact student = makeTestContact('_home');
@@ -17,15 +8,9 @@ public class ScholarshipController_TEST {
             Test.startTest();
             Test.setCurrentPageReference(new PageReference('/Admissions/ScholarshipHome'));
             ScholarshipHomeController homeCon = new ScholarshipHomeController();
-
-            //Get all scholarships no input needed
             homeCon.getAvailableScholarships();
-
-            //Try to get scholarship with no info
-            homeCon.chooseScholarship();
-
-            // Put Id into the current page Parameters
-            ApexPages.currentPage().getParameters().put('sid', '');
+            homeCon.chooseScholarship();  // Try to get scholarship with no info
+            ApexPages.currentPage().getParameters().put('sid', ''); // Null SID.
             Test.stopTest();
         }
     }
@@ -53,7 +38,6 @@ public class ScholarshipController_TEST {
         String identifier = '_expiredTest';
         Contact student = makeTestContact(identifier);
         Scholarship__c expiredScholarship = makeTestExpiredScholarship(identifier);
-        Scholarship_Applicant__c scholarshipApplicant = makeTestScholarshipApplicant(student, expiredScholarship);
         System.runAs(getScholarshipTestUser(student)) {
             Test.startTest();
             PageReference p1 = ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationPage1, false, expiredScholarship.Scholarship_ID__c);
@@ -136,8 +120,14 @@ public class ScholarshipController_TEST {
         String identifier = '_recTest';
         Contact recommender = makeTestContact(identifier);
         Scholarship_Applicant__c scholarshipApplicant = makeTestScholarshipApplicant(makeTestContact(identifier), makeTestScholarship(identifier));
-        System.runAs(getScholarshipTestUser(recommender, true)) {
+        User testUser = getScholarshipTestUser(recommender, true);
+        System.runAs(getAdminUser()) {
+            PermissionSetAssignment psa = assignPermissionSetToUser('Scholarship_Recommenders', testUser.Id);
+            System.debug(JSON.serialize(psa));
+        }
+        System.runAs(testUser/*userToRunWith('Standard User', 'Scholarship_Recommenders')*/) {
             Test.startTest();
+
             ScholarshipRecommenderController schRecCon = new ScholarshipRecommenderController();
             schRecCon.buildRecommendation();
 
@@ -170,6 +160,7 @@ public class ScholarshipController_TEST {
             System.currentPageReference().getParameters().put('recId', ScholarshipApplicant.Id + '2');
             schRecCon = new ScholarshipRecommenderController();
             schRecCon.Save();
+
             //recID > 2
             System.currentPageReference().getParameters().put('recId', ScholarshipApplicant.Id + '3');
             schRecCon = new ScholarshipRecommenderController();
@@ -178,20 +169,21 @@ public class ScholarshipController_TEST {
         }
     }
 
+    /**** PROFILE METHODS ****/
+
+    private static Profile getSystemAdministratorProfile() {
+        return [SELECT id, name FROM profile WHERE name='System Administrator'];
+    }
     private static Profile getStudentTestProfile() {
-        Profile testProfile = [SELECT id, name FROM profile WHERE name='Customer Community Login User'];
-        return testProfile;
+        return [SELECT id, name FROM profile WHERE name='Customer Community Login User'];
     }
-
     private static Profile getRecommenderTestProfile() {
-        Profile[] profiles = [SELECT id, name FROM profile WHERE name='EASY Applicant Portal Site Guest User'];
-        if (profiles.size() == 0) {
-            profiles = [SELECT id, name FROM profile WHERE name='Admissions Site Guest User']; // Fallback
-        }
-
-        Profile testProfile = profiles.get(0);
-        return testProfile;
+        // It turns out that the profile you want is NOT the Admissions Portal Profile / EASY Applicant Portal Profile,
+        // even though that's the profile the pages are actually accessed under. You want the Standard User profile cuz reasons.
+        return [SELECT id, name FROM profile WHERE name = 'Standard User'];
     }
+
+    /**** CONTACTS ****/
 
     public static Contact makeTestContact(String uniqueBit) {
         Contact student = new Contact(firstname='test',lastname='Contact'+uniqueBit,MailingStreet='testStreet',MailingCity='testCity',
@@ -200,6 +192,8 @@ public class ScholarshipController_TEST {
         student = [SELECT Id FROM Contact WHERE ID = :student.Id];
         return student;
     }
+
+    /**** USERS ****/
     private static User getScholarshipTestUser(Contact contact) {
         return getScholarshipTestUser(contact, false);
     }
@@ -210,20 +204,58 @@ public class ScholarshipController_TEST {
         if (testUsers.size() > 0) {
             testUser = testUsers.get(0);
         } else {
-            Profile testProfile;
-            if (isRecommender == true) {
-                testProfile = getStudentTestProfile();
-            } else {
-                testProfile = getRecommenderTestProfile();
+            System.runAs(getAdminUser()) {
+                testUser = new User(alias = 'u1', email = 'u1@testorg.com', emailencodingkey = 'UTF-8', lastname = 'Testing',
+                        languagelocalekey = 'en_US', localesidkey = 'en_US', timezonesidkey = 'America/Los_Angeles', username = 'u1@testorg.com');
+
+                Profile testProfile;
+                if (isRecommender == true) {
+                    testProfile = getRecommenderTestProfile();
+                } else {
+                    testProfile = getStudentTestProfile();
+                    testUser.ContactId = contact.Id;
+                }
+                testUser.ProfileId = testProfile.Id;
+
+                insert testUser;
+                testUser = [SELECT Id FROM User WHERE Id = :testUser.Id];
             }
-            testUser = new User(alias = 'u1', email = 'u1@testorg.com', emailencodingkey = 'UTF-8', lastname = 'Testing',
-                    languagelocalekey = 'en_US', localesidkey = 'en_US', profileid = testProfile.Id,
-                    timezonesidkey = 'America/Los_Angeles', username = 'u1@testorg.com', contactId = contact.Id);
-            insert testUser;
-            testUser = [SELECT Id FROM User WHERE Id=:testUser.Id];
         }
         return testUser;
     }
+
+    // For some utterly demented reason, Salesforce doesn't let you create a user and assign it a permission set.
+    // Well, it does, but that user won't be able to access anything at a WITH SECURITY_ENFORCED flag, for no obvious reason.
+    // Instead, you must create an admin user, and have THAT user create a user and assign a permission set. Insane. Unintuitive. Largely undocumented!
+    // Salesforce is bad. --JJH 2022 September 13.
+    private static User getAdminUser() {
+        User adminUser;
+        User[] adminUsers = [SELECT Id FROM User WHERE Username='admin-test@sfdx-test.com'];
+        if (adminUsers.size() > 0) {
+            adminUser = adminUsers.get(0);
+        } else {
+            Profile admin = getSystemAdministratorProfile();
+            adminUser = new User(Alias = 'admintst', Username = 'admin-test@sfdx-test.com', LastName = 'LM',
+                    Email = 'example@example-213213.com', EmailEncodingKey = 'UTF-8', LanguageLocaleKey = 'en_US',
+                    LocaleSidKey = 'en_US', TimeZoneSidKey = 'America/Chicago', ProfileId = admin.Id
+            );
+            insert adminUser;
+            adminUser = [SELECT Id FROM User WHERE ID = :adminUser.Id];
+        }
+        return adminUser;
+    }
+
+    /**** PERMISSION SETS ****/
+    private static PermissionSetAssignment assignPermissionSetToUser(String permissionSetName, Id assignee) {
+        PermissionSetAssignment psa;
+        PermissionSet permissions = [SELECT Id FROM PermissionSet WHERE Name = :permissionSetName];
+        psa = new PermissionSetAssignment(PermissionSetId = permissions.Id, AssigneeId = assignee);
+        insert psa;
+        psa = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetId = :permissions.Id AND AssigneeId = :assignee];
+        return psa;
+    }
+
+    /**** SCHOLARSHIPS ****/
 
     private static Scholarship__c makeTestScholarship(String uniqueBit) {
         Date yesterday = Date.today().addDays(-1);
@@ -259,6 +291,8 @@ public class ScholarshipController_TEST {
         return scholarshipInfoExpired;
     }
 
+    /**** SCHOLARSHIP APPLICANTS ****/
+
     private static Scholarship_Applicant__c makeTestScholarshipApplicant(Contact student, Scholarship__c scholarship) {
         Scholarship_Applicant__c applicant = new Scholarship_Applicant__c(
                 Contact__c = student.Id,
@@ -285,28 +319,4 @@ public class ScholarshipController_TEST {
         return applicant;
     }
 
-    private static void dataPrepare(){
-        //Querying on profile
-        String identifier = '_dataPrep';
-        Profile testProfile = getStudentTestProfile();
-        Contact student = makeTestContact(identifier);
-        Scholarship__c scholarship = makeTestScholarship(identifier);
-        User testUser = getScholarshipTestUser(student);
-        Scholarship__c expiredScholarship = makeTestExpiredScholarship(identifier);
-        Scholarship_Applicant__c scholarshipApplicant = makeTestScholarshipApplicant(student, scholarship);
-
-        //Create fake blogs for attachment uploading
-        Blob b = Blob.valueOf('Test Data');
-        Attachment Essay1 = new Attachment();
-        Essay1.ParentId = ScholarshipApplicant.Id;
-        Essay1.Name = 'Test Essay 2 for Parent';
-        Essay1.Body = b;
-        //insert(Essay1);
-
-        Attachment Essay2 = new Attachment();
-        Essay2.ParentId = ScholarshipApplicant.Id;
-        Essay2.Name = 'Test Essay 2 for Parent';
-        Essay2.Body = b;
-        //insert(Essay2);
-    }
 }

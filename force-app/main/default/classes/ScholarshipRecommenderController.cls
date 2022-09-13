@@ -22,7 +22,7 @@ public class ScholarshipRecommenderController {
         }
 
         //If rec number isn't 1 or 2 then error
-        if (incomingRecNum < 0 || incomingRecNum > 2) {
+        if (incomingRecNum <= 0 || incomingRecNum > 2) {
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Could not determine recommender number. -- ' + incomingRecId));
         }
 
@@ -39,31 +39,35 @@ public class ScholarshipRecommenderController {
 
         if (recId != null) {
             //get scholarship and applicant object object
-            ScholarshipApplicant = [
-                    SELECT Contact__c, Scholarship__c,Recommendation2__c,Recommendation__c,Recommender2_Email__c,
-                            Recommender2_Name__c,Recommender_Email__c,Recommender_Name__c, Recommendation_Received__c, Recommendation2_Received__c,
+            Scholarship_Applicant__c[] applicants = [
+                    SELECT Contact__c, Scholarship__c, Recommendation2__c, Recommendation__c, Recommender2_Email__c,
+                            Recommender2_Name__c, Recommender_Email__c, Recommender_Name__c, Recommendation_Received__c, Recommendation2_Received__c,
                             Scholarship__r.Description__c, Scholarship__r.Name, Scholarship__r.Recommender2_Question__c, Scholarship__r.Recommender_Question__c,
                             Scholarship__r.Short_Description__c
                     FROM Scholarship_Applicant__c
                     WHERE Id = :recId
                     WITH SECURITY_ENFORCED
             ];
-            ScholarshipApplicant.Id = null;
-            if (this.ScholarshipApplicant != null) {
-                this.scholarshipApplicantContactRecord = ScholarshipSharedUtilities.getContactRecord(this.ScholarshipApplicant.Contact__c);
-            }
-
-            System.debug(JSON.serializePretty(ScholarshipApplicant));
-            if (incomingRecNum == 1) {
-                if (ScholarshipApplicant.Recommendation_Received__c != null) {
-                    recComplete = true;
+            if (applicants.size() > 0) {
+                this.ScholarshipApplicant = applicants.get(0);
+                this.ScholarshipApplicant.Id = null;
+                if (this.ScholarshipApplicant != null) {
+                    this.scholarshipApplicantContactRecord = ScholarshipSharedUtilities.getContactRecord(this.ScholarshipApplicant.Contact__c);
                 }
-            } else if (incomingRecNum == 2) {
-                if (ScholarshipApplicant.Recommendation2_Received__c != null) {
-                    recComplete = true;
-                }
-            }
 
+                System.debug(JSON.serializePretty(ScholarshipApplicant));
+                if (incomingRecNum == 1) {
+                    if (ScholarshipApplicant.Recommendation_Received__c != null) {
+                        recComplete = true;
+                    }
+                } else if (incomingRecNum == 2) {
+                    if (ScholarshipApplicant.Recommendation2_Received__c != null) {
+                        recComplete = true;
+                    }
+                }
+            } else {
+                ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Could not find scholarship applicant record.'));
+            }
         } else {
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Could not find scholarship applicant record.'));
         }
@@ -75,15 +79,17 @@ public class ScholarshipRecommenderController {
     }
 
     public PageReference Save() {
-        doCRUD CRUDToDo = new doCRUD();
-        if (incomingRecNum == 1) {
-            ScholarshipApplicant.Recommendation_Received__c = Datetime.now();
-        } else if (incomingRecNum == 2) {
-            ScholarshipApplicant.Recommendation2_Received__c = Datetime.now();
-        }
-        If(String.isNotBlank(recId)) {
-            CRUDToDo.saveRecommendation(ScholarshipApplicant, recId);
-            recComplete = true;
+        if (this.ScholarshipApplicant != null) {
+            doCRUD CRUDToDo = new doCRUD();
+            if (this.incomingRecNum == 1) {
+                this.ScholarshipApplicant.Recommendation_Received__c = Datetime.now();
+            } else if (this.incomingRecNum == 2) {
+                this.ScholarshipApplicant.Recommendation2_Received__c = Datetime.now();
+            }
+            If (String.isNotBlank(this.recId)) {
+                CRUDToDo.saveRecommendation(this.ScholarshipApplicant, this.recId);
+                this.recComplete = true;
+            }
         }
         return null;
     }

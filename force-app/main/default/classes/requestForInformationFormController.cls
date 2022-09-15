@@ -9,7 +9,7 @@
 public without sharing class requestForInformationFormController {
 
     @AuraEnabled
-    public static void createLead(String record, String objectApiName){
+    public static void createLead(String record, String objectApiName, String rfiController){
         try {
             SObject sobj;
             Map<String,SObjectField> fieldMap;
@@ -39,9 +39,24 @@ public without sharing class requestForInformationFormController {
             Database.DMLOptions dml = new Database.DMLOptions(); 
             dml.DuplicateRuleHeader.allowSave = false;
             Database.SaveResult result = Database.insert(sobj, dml);
+            if (result.isSuccess() == false) {
+                String context = 'Creation of lead failed on insert. \n Error: ' + result.getErrors();
+                insertErrorRecord(rfiController, record, context);
+            }
         } catch (Exception e) {
+            String context = 'Creation of lead failed because of caught exception in requestForInformationFormController.createLead(). \n Error: ' + e.getMessage();
+            insertErrorRecord(rfiController, record, context);
             throw new AuraHandledException('Error creating lead: ' + e.getMessage());
         }
+    }
+
+    public static void insertErrorRecord(String rfiController, String record, String context) {
+        hed__Error__c error_message = new hed__Error__c(
+            hed__Object_Type__c = 'Lead',
+            hed__Error_Type__c = 'ERROR: RFI Form Lead creation failed',
+            hed__Full_Message__c = context + '. \n\n RFI Controller of form: ' + rfiController + '. \n\n The following information was entered on the form to be mapped to Lead: \n' + record
+        );
+        insert error_message;
     }
 
     @AuraEnabled(cacheable=true)

@@ -17,7 +17,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <stringValue>salesforce@stthomas.edu</stringValue>
+                <stringValue>nicole.b@digitalmass.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -114,6 +114,13 @@
                 <elementReference>Week_Earlier_Date</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>hed__Error_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ERROR: RFI Form Lead creation failed</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>hed__Error__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -127,11 +134,11 @@
         <schedule>
             <frequency>Weekly</frequency>
             <startDate>2022-09-26</startDate>
-            <startTime>07:30:00.000Z</startTime>
+            <startTime>07:00:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>Email_Body</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>

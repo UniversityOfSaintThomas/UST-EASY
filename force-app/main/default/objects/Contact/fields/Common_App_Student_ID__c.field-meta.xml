@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Common_App_Student_ID__c</fullName>
     <caseSensitive>false</caseSensitive>
-    <deprecated>false</deprecated>
     <description>Common App Unique Student ID</description>
     <externalId>true</externalId>
     <label>Common App Student ID</label>

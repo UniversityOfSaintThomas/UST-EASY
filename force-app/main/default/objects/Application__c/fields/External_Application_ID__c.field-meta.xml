@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>External_Application_ID__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <deprecated>false</deprecated>
     <description>External application system unique ID. Example: Common App, Nursing CAS, ELS</description>
     <externalId>true</externalId>
     <inlineHelpText>External application system unique ID. Example: Common App, Nursing CAS, ELS</inlineHelpText>
@@ -10,5 +12,5 @@
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
-    <unique>false</unique>
+    <unique>true</unique>
 </CustomField>

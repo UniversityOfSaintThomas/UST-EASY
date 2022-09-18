@@ -157,7 +157,7 @@ private static void permissionAdminUser() {
     List<PermissionSet> adminPermissionSets = [
             SELECT Name, Id
             FROM PermissionSet
-            WHERE Name = 'Application_Admin' OR Name = 'Data_Mover_Staging_Tables_Access'
+            WHERE Name = 'Application_Admin' OR Name = 'Data_Mover_Staging_Tables_Access' OR Name = 'ETL_Objects_and_Field_Permissions'
     ];
 
     List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();

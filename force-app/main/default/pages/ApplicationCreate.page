@@ -47,7 +47,7 @@
                             Next
                         </a>
 
-                        <apex:commandLink action="{!save}" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance">
+                        <apex:commandLink action="{!save}" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onClick="appShowLoadingSpinner();" onComplete="appHideLoadingSpinner();">
                             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                 <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                             </svg>

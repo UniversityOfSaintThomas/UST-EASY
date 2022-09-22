@@ -27,7 +27,7 @@ import LEAD_MAJOR4 from '@salesforce/schema/Lead.Major_Program_4__c';
 import LEAD_EMAIL from '@salesforce/schema/Lead.Email';
 import LEAD_PHONE from '@salesforce/schema/Lead.Phone';
 import LEAD_MOBILE_PHONE from '@salesforce/schema/Lead.MobilePhone';
-import LEAD_SMS_OPT_OUT from '@salesforce/schema/Lead.hed__SMS_Opt_Out__c';
+import LEAD_TEXTS from '@salesforce/schema/Lead.Receive_Texts__c';
 import LEAD_BIRTHDATE from '@salesforce/schema/Lead.Birthdate__c';
 import LEAD_PREFERRED_ENROLLMENT from '@salesforce/schema/Lead.hed__Preferred_Enrollment_Date__c';
 import LEAD_INTENDED_START_TERM from '@salesforce/schema/Lead.Intended_Start_Term__c';
@@ -36,7 +36,7 @@ import LEAD_CITY from '@salesforce/schema/Lead.City';
 import LEAD_STATE from '@salesforce/schema/Lead.State';
 import LEAD_POSTAL_CODE from '@salesforce/schema/Lead.PostalCode';
 import LEAD_COUNTRY from '@salesforce/schema/Lead.Country';
-import LEAD_ACCOUNT from '@salesforce/schema/Lead.Affiliated_Account__c';
+import LEAD_HIGH_SCHOOL_OR_COLLEGE from '@salesforce/schema/Lead.High_School_or_College__c';
 import LEAD_HIGH_SCHOOL_GRAD_YEAR from '@salesforce/schema/Lead.Expected_Graduate_Date__c';
 import LEAD_TIMELINE from '@salesforce/schema/Lead.Timeline__c';
 import LEAD_QUESTION from '@salesforce/schema/Lead.Has_Question__c';
@@ -45,7 +45,7 @@ import LEAD_MAIL_INFO from '@salesforce/schema/Lead.Mail_Information_Requested__
 import LEAD_COLLEGE_SCHOOL from '@salesforce/schema/Lead.St_Thomas_College_School__c';
 import LEAD_RECENT_SCHOOL from '@salesforce/schema/Lead.hed__Most_Recent_School__c';
 
-import FAMILY_OBJECT from '@salesforce/schema/Family__c'; //using to get Country global picklist value set
+import FAMILY_OBJECT from '@salesforce/schema/Family_Member__c'; //using to get Country global picklist value set
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
@@ -71,7 +71,7 @@ const ADDITIONAL_FIELDS = [
     LEAD_EMAIL,
     LEAD_PHONE,
     LEAD_MOBILE_PHONE,
-    LEAD_SMS_OPT_OUT,
+    LEAD_TEXTS,
     LEAD_BIRTHDATE,
     LEAD_PREFERRED_ENROLLMENT,
     LEAD_INTENDED_START_TERM,
@@ -80,7 +80,7 @@ const ADDITIONAL_FIELDS = [
     LEAD_STATE,
     LEAD_POSTAL_CODE,
     LEAD_COUNTRY,
-    LEAD_ACCOUNT,
+    LEAD_HIGH_SCHOOL_OR_COLLEGE,
     LEAD_HIGH_SCHOOL_GRAD_YEAR,
     LEAD_TIMELINE,
     LEAD_QUESTION,
@@ -113,8 +113,8 @@ export default class RequestForInformationForm extends LightningElement {
 
     // maps to populate picklists, where value is name and key is id of object
     program_id_to_name_map; // for Recruitment_Program__c
-    term_id_to_name_map; // for Term__c
-    account_id_to_name_map; // for Affiliated_Account__c
+    term_id_to_name_map; // for Intended_Start_Term__c
+    account_id_to_name_map; // for High_School_or_College__c
 
     //front-end display
     @track show_spinner = true;
@@ -367,7 +367,6 @@ export default class RequestForInformationForm extends LightningElement {
     output(result) {
         if (result.data) {
             this.record_input = generateRecordInputForCreate(result.data.record);
-            this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
             getPresetValues({rfi_controller_name : this.rfi_controller})
             .then(preset_values => {
                 for (const preset_value of preset_values) {
@@ -447,9 +446,9 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.text_messages_label:
                 if (event.target.checked) {
-                    this.record_input.fields.hed__SMS_Opt_Out__c = false;
+                    this.record_input.fields.Receive_Texts__c = 'Yes';
                 } else {
-                    this.record_input.fields.hed__SMS_Opt_Out__c = true;
+                    this.record_input.fields.Receive_Texts__c = 'No';
                 }
                 break;
             case this.field_labels.birthdate_label:
@@ -480,7 +479,7 @@ export default class RequestForInformationForm extends LightningElement {
             case this.field_labels.high_school_not_found_label:
                 this.manually_enter_high_school = event.target.checked;
                 if (event.target.checked) {
-                    this.record_input.fields.Affiliated_Account__c = '';
+                    this.record_input.fields.High_School_or_College__c = '';
                     this.high_school_search_results = null;
                     this.high_school_data = false;
                 }
@@ -516,7 +515,7 @@ export default class RequestForInformationForm extends LightningElement {
 
         if (event.target.name == this.field_labels.high_school_datatable_name) {
             var selected_row = this.template.querySelector('lightning-datatable').getSelectedRows();
-            this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
+            this.record_input.fields.High_School_or_College__c = selected_row[0].account_id;
             this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
     }
@@ -640,7 +639,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     createLead() {
         console.log(this.record_input.fields);
-        createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
+        createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead', rfiController : this.rfi_controller})
         .then(() => {
             this.show_spinner = false;
             this.form_submitted_successfully = true;

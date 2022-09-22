@@ -2,59 +2,62 @@ let ready = (callback) => {
     if (document.readyState !== "loading") callback();
     else document.addEventListener("DOMContentLoaded", callback);
 }
-
+let loadSpinner, formSpinner;
 ready(() => {
+    loadSpinner = document.getElementById('loadSpinner');
+    formSpinner = document.getElementById("form-spinner");
     appHideLoadingSpinner();
     pageLoadReRendered();
-    activateCarousel();
 });
 
 function pageLoadReRendered() {
+
     //Disable fields that are set to not be editable
-    document.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
+    let sldsScope = document.querySelector('.slds-scope');
+    sldsScope.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
     });
 
-    document.querySelector('form').onkeypress = checkEnter;
+    sldsScope.querySelector('form').onkeypress = checkEnter;
 
     //Make sure inputs are typed with HTML5 standards
-    document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
+    sldsScope.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
         item.required = true;
     });
 
-    document.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent").forEach(item => {
+    sldsScope.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent, .validateACT, .validateSATComposite, .validateSATSubject").forEach(item => {
         item.type = "number";
+        if (item.classList.contains('validateACT')) {
+            item.setAttribute('min', '0');
+            item.setAttribute('max', '36');
+        }
+        if (item.classList.contains('validateSATComposite')) {
+            item.setAttribute('min', '0');
+            item.setAttribute('max', '1600');
+        }
+        if (item.classList.contains('validateSATSubject')) {
+            item.setAttribute('min', '0');
+            item.setAttribute('max', '800');
+        }
     });
 
-    document.querySelectorAll(".validatePhone").forEach(item => {
+    sldsScope.querySelectorAll(".validatePhone").forEach(item => {
         item.type = "tel";
     });
 
     //Arranging Visualforce inputs to achieve SLDS accessibility
+    activateCarousel();
     vfCountryPicklist();
     summaryDetail();
-    adjustLabelsFor();
-    textValidations();
     radioCheckBox();
     checkbox();
+    adjustLabelsFor();
     activateAutoComplete();
     activateTooltips();
     fileUploadAreas();
+    checkForm(null, true);
     //Hide the form spinner if it is active
     hideFormSpinner();
-}
-
-//Add record action
-function addRecordValidation(elem, rrIndex) {
-    showFormSpinner();
-    let recWrap = elem.closest('.slds-card');
-    window.scrollTo(0, 0);
-    if (textValidations(true, recWrap) === 0) {
-        hideFormSpinner();
-        return true;
-    }
-    hideFormSpinner();
-    return false;
 }
 
 function checkEnter(e) {
@@ -93,6 +96,7 @@ function summaryDetail() {
         });
     });
 }
+
 
 //Creates droppable file upload areas
 function fileUploadAreas() {
@@ -150,10 +154,14 @@ function findFileName(filePath) {
 //Makes sure all labels have id associations to the inputs
 function adjustLabelsFor() {
     document.querySelectorAll('.slds-input, .slds-select, .slds-radio').forEach(inputFound => {
-        let inputWrapper = inputFound.closest('.slds-form-element'),
-            inputLabel = inputWrapper.querySelector('label'),
+        let inputWrapper = inputFound.closest('.slds-form-element');
+        let isElement = inputWrapper instanceof Element || inputWrapper instanceof HTMLDocument;
+        let inputLabel = '';
+        let helpText = '';
+        if (isElement) {
+            inputLabel = inputWrapper.querySelector('label');
             helpText = inputWrapper.querySelector('.slds-form-element__help');
-
+        }
         if (inputLabel) {
             inputLabel.htmlFor = inputFound.getAttribute('id');
             if (inputWrapper.dataset.placeholder) {
@@ -281,6 +289,15 @@ function activateAutoComplete() {
         let objectTypeFilter = comboBox.dataset.objtypefilter;
         let objectTypeNameField = comboBox.dataset.objtypenamefield;
 
+        let clearField = document.createElement('li');
+        clearField.classList.add('clear-search-field');
+        clearField.classList.add('slds-listbox__item');
+        let clearFieldLInk = document.createElement('a');
+        clearFieldLInk.innerText = ' Clear search. '
+        clearFieldLInk.addEventListener('click', function () {
+            refValueRemoved()
+        });
+
         /* Remote reference lookup */
         const resultListTemplate = (title, subtitle, icon, originObjId, resultId) => `
             <li role="presentation" class="slds-listbox__item" data-title="${title}, ${subtitle}" data-origId="${originObjId}" data-resultId="${resultId}">
@@ -362,7 +379,8 @@ function activateAutoComplete() {
                     if (subTitle) {
                         subTitle = subTitle.substr(0, subTitle.length - 2);
                     }
-
+                    subTitle = removeStartTrailComma(subTitle);
+                    resultName = removeStartTrailComma(resultName);
                     outputList += resultListTemplate(resultName, subTitle, comboBox.dataset.listicon, originObjId, resultId);
                 });
 
@@ -383,12 +401,21 @@ function activateAutoComplete() {
                             }
                         } else {
                             hiddenInput.value = refItem.dataset.resultid;
-                            autoItem.value = refItem.dataset.title;
+                            autoItem.value = removeStartTrailComma(refItem.dataset.title);
                             refValueAdded();
                         }
                     });
                 });
 
+                clearField.innerText = ''
+                clearField.appendChild(clearFieldLInk);
+                resultList.appendChild(clearField);
+
+            } else {
+                resultList.innerHTML = '';
+                clearField.innerText = 'No matching results...'
+                clearField.appendChild(clearFieldLInk);
+                resultList.appendChild(clearField);
             }
         }
 
@@ -418,6 +445,12 @@ function activateAutoComplete() {
         });
 
     });
+}
+
+function removeStartTrailComma(stringIn) {
+    stringIn = stringIn.trim();
+    stringIn = stringIn.replace(/(^,)|(,$)/g, '');
+    return stringIn;
 }
 
 //Visualforce state/country picklist enabled does not style correctly. This observes mutations and styles the picklsit.
@@ -456,156 +489,6 @@ function navigateRequirementGroup(redirectTo) {
     }
 }
 
-/* Carousel Script */
-function activateCarousel(slideMoveTo) {
-    // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
-    let items = document.getElementsByClassName("carousel__item"),
-        totalItems = items.length,
-        slide = 0,
-        moving = true,
-        saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]'),
-        saveAndGoBack = document.getElementById('saveAndGoBack'),
-        next = document.getElementsByClassName('carousel__button--next')[0],
-        prev = document.getElementsByClassName('carousel__button--prev')[0];
-
-    if (items.length > 0) {
-
-        // Set click events to navigation buttons
-        function setEventListeners() {
-            next.addEventListener('click', moveNext);
-            prev.addEventListener('click', movePrev);
-            if (totalItems === 1) {
-                next.style.display = 'none';
-                prev.style.display = 'none';
-                saveAndAdvance.style.dispay = 'inline-flex';
-            } else {
-                prev.style.display = 'none';
-                saveAndAdvance.style.display = "none";
-            }
-            if (slide === 0 && previousRequirement) {
-                saveAndGoBack.style.display = 'inline-flex';
-            }
-        }
-
-        // Disable interaction by setting 'moving' to true for the same duration as our transition (0.5s = 500ms)
-        function disableInteraction() {
-            moving = true;
-            setTimeout(function () {
-                moving = false
-            }, 500);
-        }
-
-        let moveCarouselTo = function (slide) {
-            if (!moving) {
-                disableInteraction();
-                let newPrevious = slide - 1,
-                    newNext = slide + 1;
-
-                if (totalItems > 1) {
-
-                    if (slide === 0) {
-                        prev.style.display = "none";
-                        if (previousRequirement) {
-                            saveAndGoBack.style.display = 'inline-flex';
-                        }
-                        newPrevious = (totalItems - 1);
-                    } else if (slide === 1) {
-                        saveAndGoBack.style.display = "none"
-                        newPrevious = 0;
-                    } else if (slide === (totalItems - 1)) {
-                        newPrevious = (slide - 1);
-                        newNext = 0;
-                    }
-                    if (slide + 1 === totalItems || totalItems === 1) {
-                        saveAndAdvance.style.display = "inline-flex"
-                        next.style.display = "none"
-                    } else {
-                        saveAndAdvance.style.display = "none"
-                        next.style.display = "inline-flex"
-                    }
-
-                    if (slide > 0) {
-                        prev.style.display = "inline-flex"
-                    } else {
-                        prev.style.display = "none"
-                    }
-
-                    for (let i = 0; i < items.length; i++) {
-                        items[i].classList.remove('prev');
-                        items[i].classList.remove('next');
-                        items[i].classList.remove('active');
-                    }
-                    if (items[newPrevious]) {
-                        items[newPrevious].classList.add("prev");
-                    }
-                    if (items[slide]) {
-                        items[slide].classList.add("active");
-                    }
-                    if (items[newNext]) {
-                        items[newNext].classList.add("next");
-                    }
-
-                }
-            }
-        }
-
-
-        function moveNext() {
-            if (!moving) {
-                if (slide === (totalItems - 1)) {
-                    slide = 0;
-                } else {
-                    slide++;
-                }
-                moveCarouselTo(slide);
-            }
-        }
-
-        function movePrev() {
-            if (!moving) {
-                if (slide === 0) {
-                    slide = (totalItems - 1);
-                } else {
-                    slide--;
-                }
-                moveCarouselTo(slide);
-            }
-        }
-
-        function initCarousel() {
-            setEventListeners();
-            moving = false;
-        }
-
-        initCarousel();
-
-        if (slideMoveTo) {
-            if (!moving) {
-                moveCarouselTo(parseInt(slideMoveTo));
-            }
-        }
-    }
-}
-
-/* Spinners on/off */
-function appHideLoadingSpinner() {
-    document.getElementById('loadSpinner').style.display = "none";
-    return true;
-}
-
-function appShowLoadingSpinner() {
-    document.getElementById('loadSpinner').style.display = "block";
-    return true;
-}
-
-function hideFormSpinner() {
-    document.getElementById("form-spinner").style.display = 'none';
-}
-
-function showFormSpinner() {
-    document.getElementById("form-spinner").style.display = 'block';
-}
-
 /* Tooltip */
 function activateTooltips() {
     document.querySelectorAll('.aria-describedby-tooltip').forEach(item => {
@@ -633,187 +516,21 @@ function activateTooltips() {
     });
 }
 
-function isCarousel() {
-    let items = document.getElementsByClassName("carousel__item");
-    if (items.length > 0) {
-        return true;
-    }
-    return false;
+/* Spinners on/off */
+function appHideLoadingSpinner() {
+    loadSpinner.style.display = "none";
 }
 
-//Validate form elements on submit
-function checkForm() {
-    // let theForm = document.querySelector('form');
-    // theForm.reportValidity();
-    let error_count = 0;
-    error_count = error_count + textValidations(true);
-
-    if (error_count > 0) {
-        let foundErrors = document.querySelector(".slds-has-error");
-        if (foundErrors && isCarousel()) {
-            let carouselItem = foundErrors.closest('.carousel__item');
-            activateCarousel(carouselItem.dataset.slide);
-        }
-        window.scrollTo(0, 0);
-        return false;
-    }
-    return true;
+function appShowLoadingSpinner() {
+    loadSpinner.style.display = "block";
 }
 
-//Input validations
-function textValidations(checkFormValidate, documentStart) {
-    let doc;
-    if (!documentStart) {
-        doc = document;
-    } else {
-        doc = documentStart;
-    }
-    let errors = 0;
-    let allPhones = doc.querySelectorAll('.validatePhone');
-    let allSSN = doc.querySelectorAll('.validateSSN');
-    let allNamCharacters = doc.querySelectorAll('.validateName');
-    let allEmails = doc.querySelectorAll('.validateEmail');
-    let allUrls = doc.querySelectorAll('.validateURL');
-    let allRequiredInputs = doc.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select, .slds-is-required .slds-radio_button-group .slds-radio_button-value");
-
-
-    const re_email = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    const re_url = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/;
-    const re_number = /[^\d-]/;
-    const re_decimal = /[^\d-.]/;
-    const re_phoneIllegals = /[^\d+-/(/)]/;
-    const re_phoneFormat = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
-    const re_phone = /[\d+\-\(\) ]/;
-    const re_snn = /^\d{3}-\d{2}-\d{4}$/;
-    const re_snnFormat = /(\d{3})(\d{2})(\d{4})$/;
-    const re_ssnIllegals = /[^\d+-]/;
-    const re_nameIllegals = /[\d\(\)@#$,]/;
-
-    //Required input check
-    if (checkFormValidate) {
-        allRequiredInputs.forEach(item => {
-            if (item) {
-                if (!item.value) {
-                    activateErrorState(item, 'change')
-                }
-            }
-        });
-
-        doc.querySelectorAll(".selectableOL").forEach(sel => {
-            let selWrap = sel.closest('.slds-form-element');
-            let hiddenData = doc.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
-            if (selWrap.classList.contains("slds-is-required")) {
-                if (!doc.getElementById(hiddenData).value) {
-                    activateErrorState(sel, 'click')
-                }
-            }
-        });
-    }
-
-    //Format and validate phone numbers
-    allPhones.forEach(phone => {
-
-        //format directly after input
-        //Don't allow anything but phone number characters on key-up
-        phone.addEventListener('keyup', function () {
-            phone.value = phone.value.replace(re_phoneIllegals, '');
-        })
-
-        phone.addEventListener('change', function () {
-            let cleaned = String(phone.value).replace(/\D/g, "");
-            let match = cleaned.match(re_phoneFormat);
-            if (match) {
-                let intlCode = match[1] ? "+1 " : "";
-                phone.value = [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join("");
-            }
-        });
-
-        //Check if the final phone number matches correctly before submit
-        if (checkFormValidate && phone.value) {
-            if (!phone.value.match(re_phone)) {
-                activateErrorState(phone, 'change');
-            }
-        }
-
-
-    });
-
-
-    allNamCharacters.forEach(nameInput => {
-        //Don't allow anything but phone number characters on key-up
-        nameInput.addEventListener('keyup', function () {
-            nameInput.value = nameInput.value.replace(re_nameIllegals, '');
-        })
-
-        if (checkFormValidate && nameInput.value) {
-            nameInput.value = nameInput.value.replace(re_nameIllegals, '');
-        }
-    });
-
-    //Social Security Validation
-    allSSN.forEach(ssn => {
-        ssn.addEventListener('keyup', function () {
-            ssn.value = ssn.value.replace(re_ssnIllegals, '');
-        })
-
-        ssn.addEventListener('change', function () {
-            let cleaned = String(ssn.value).replace(/\D/g, "");
-            if (cleaned.length === 9) {
-                let match = cleaned.match(re_snnFormat);
-                if (match) {
-                    ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
-                }
-            } else {
-                activateErrorState(ssn, 'change');
-            }
-        });
-
-        if (checkFormValidate && ssn.value) {
-            if (!ssn.value.match(re_snn)) {
-                activateErrorState(ssn, 'change');
-            }
-        }
-    });
-
-    //Email Validation
-    allEmails.forEach(email => {
-        if (checkFormValidate && email.value) {
-            if (!email.value.match(re_email)) {
-                activateErrorState(email, 'change');
-            }
-        }
-    });
-
-    //URL validation
-    allUrls.forEach(inputUrl => {
-        inputUrl.value = inputUrl.value.replace(' ', '').trim();
-        if (inputUrl.value) {
-            if (!inputUrl.value.startsWith('http')) {
-                inputUrl.value = 'https://' + inputUrl.value;
-            }
-            if (checkFormValidate && inputUrl.value) {
-                if (!inputUrl.value.match(re_url)) {
-                    activateErrorState(inputUrl, 'change');
-                }
-            }
-        }
-    })
-
-    function activateErrorState(errorInput, eventType) {
-        let errorWrap = errorInput.closest('.slds-form-element');
-        errorWrap.classList.add("slds-has-error");
-        errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-            errorHelp.style.display = "block"
-        });
-        errorInput.addEventListener(eventType, () => {
-            errorWrap.classList.remove("slds-has-error");
-            errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-                errorHelp.style.display = "none";
-            });
-        });
-
-        errors++;
-    }
-
-    return errors;
+function hideFormSpinner() {
+    formSpinner.style.display = 'none';
 }
+
+function showFormSpinner() {
+    formSpinner.style.display = 'block';
+}
+
+

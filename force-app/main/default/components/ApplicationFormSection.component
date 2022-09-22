@@ -44,7 +44,7 @@
 
         <apex:outputPanel id="questionGroupWrapper" layout="block">
 
-            <apex:actionRegion >
+            <apex:actionRegion>
 
                 <!-- REGULAR GROUP QUESTIONS - questionGroup -->
                 <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
@@ -55,33 +55,20 @@
                             <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
 
                                 <c:ApplicationFormSectionInput responseObject="{!question.response}"
-                                        questionWrapper="{!question}"
-                                        fieldAPI="{!question.defaultFieldName}"
-                                        inputLabel="{!question.label}"
-                                        inputType="{!question.fieldType}"
-                                        isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
-                                        isRequired="{!isRequired}"
-                                        isEditable="{!question.isEditable}"
-                                        isExternalEmail="{!question.question.External_Email_Field__c}"
-                                        itemId="{!group.item.Id}"
-                                        inputOptions="{!question.options}"
-                                        isRadio="{!question.radio}"
-                                        rerenderGroup="{!if(question.hasDependentQuestions, 'reRenderGroups', 'none')}"
-                                        itemNumber="{!itemNumber}"
+                                                               questionWrapper="{!question}"
+                                                               fieldAPI="{!question.defaultFieldName}"
+                                                               inputLabel="{!question.label}"
+                                                               inputType="{!question.fieldType}"
+                                                               isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
+                                                               isRequired="{!isRequired}"
+                                                               isEditable="{!question.isEditable}"
+                                                               isExternalEmail="{!question.question.External_Email_Field__c}"
+                                                               itemId="{!group.item.Id}"
+                                                               inputOptions="{!question.options}"
+                                                               isRadio="{!question.radio}"
+                                                               rerenderGroup="{!if(question.hasDependentQuestions, 'reRenderGroups', 'none')}"
+                                                               itemNumber="{!itemNumber}"
                                 />
-
-                                <!-- Question Assistive Text -->
-                                <apex:outputPanel layout="none" rendered="{!!ISBLANK(question.assistiveText)}">
-                                    <div class="slds-form-element__help">
-                                        {!question.assistiveText}
-                                    </div>
-                                </apex:outputPanel>
-
-                                <!-- Question Help Text -->
-                                <apex:outputPanel layout="none" rendered="{!!ISBLANK(question.helpText)}">
-                                    <p class="slds-text-body_regular">{!question.helpText}</p>
-                                </apex:outputPanel>
-
 
                             </apex:outputPanel>
 
@@ -132,7 +119,7 @@
             <!-- CREATE REFERENCE RECORD -->
             <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
 
-                <apex:pageMessages />
+                <apex:pageMessages/>
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
                     <p>You haven't created any records yet. Click "New Record" to create one.</p>
@@ -157,8 +144,16 @@
                                             <dt class="slds-item_label slds-text-color_weak slds-truncate" title="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}">
                                                 {!question.question.Label__c} {!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}
                                             </dt>
-                                            <dd class="slds-item_detail slds-truncate" title="Description for first label">
-                                                <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address'}"/>
+                                            <dd class="slds-item_detail" title="Description for first label">
+
+                                                <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address' && question.fieldType!='Date'}"/>
+
+                                                <!--Date record display -->
+                                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" rendered="{!question.fieldType ='Date'}">
+                                                    <apex:param value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}"/>
+                                                </apex:outputText>
+
+                                                <!--Address record display -->
                                                 <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Address'}">
                                                     {!rr.obj['Street__c']},
                                                     {!rr.obj['City__c']}, {!rr.obj['State__c']} {!rr.obj['PostalCode__c']} {!rr.obj['Country__c']}
@@ -174,21 +169,21 @@
 
                                         <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" layout="block">
                                             <c:ApplicationFormSectionInput responseObject="{!rr.obj}"
-                                                    multiPicklist="{!rr['multiPicklistValues'][question.question.Related_Object_Field__c].multiPicklistValues}"
-                                                    questionWrapper="{!question}"
-                                                    fieldAPI="{!question.question.Related_Object_Field__c}"
-                                                    inputLabel="{!question.label}"
-                                                    inputType="{!question.fieldType}"
-                                                    isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
-                                                    isRequired="{!isRequired}"
-                                                    isEditable="{!question.isEditable}"
-                                                    isExternalEmail="{!question.question.External_Email_Field__c}"
-                                                    itemId="{!group.item.Id}"
-                                                    inputOptions="{!question.options}"
-                                                    isRadio="{!question.radio}"
-                                                    rerenderGroup="{!if(question.hasDependentQuestions, 'rerenderTheTable', 'none')}"
-                                                    itemNumber="{!itemNumber}"
-                                                    relatedRecords="true"
+                                                                           multiPicklist="{!rr['multiPicklistValues'][question.question.Related_Object_Field__c].multiPicklistValues}"
+                                                                           questionWrapper="{!question}"
+                                                                           fieldAPI="{!question.question.Related_Object_Field__c}"
+                                                                           inputLabel="{!question.label}"
+                                                                           inputType="{!question.fieldType}"
+                                                                           isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
+                                                                           isRequired="{!isRequired}"
+                                                                           isEditable="{!question.isEditable}"
+                                                                           isExternalEmail="{!question.question.External_Email_Field__c}"
+                                                                           itemId="{!group.item.Id}"
+                                                                           inputOptions="{!question.options}"
+                                                                           isRadio="{!question.radio}"
+                                                                           rerenderGroup="{!if(question.hasDependentQuestions, 'rerenderTheTable', 'none')}"
+                                                                           itemNumber="{!itemNumber}"
+                                                                           relatedRecords="true"
                                             />
 
                                         </apex:outputPanel>
@@ -214,15 +209,16 @@
                             </apex:commandLink>
                         </apex:outputPanel>
 
+                        <!-- This Add Record onclick event was a bear to write. Even though the method was returning true/false you still have to right the logic in the onclick event for it to work correctly-->
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" styleClass="slds-button slds-button_brand slds-m-right-small" onComplete="addRecordValidation(this);pageLoadReRendered();">
+                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" onClick="if(addRecordValidation(this) === false){return false;} else {showFormSpinner();}" styleClass="slds-button slds-button_brand slds-m-right-small add-record-button" onComplete="pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                                 </svg>
                                 Add Record
                                 <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                             </apex:commandLink>
-                            <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand" onComplete="pageLoadReRendered();">
+                            <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand cancel-records-button" onComplete="pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#close")}"></use>
                                 </svg>
@@ -269,7 +265,7 @@
             <!-- CREATE NEW RELATED RECORD -->
             <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
 
-                <apex:pageMessages />
+                <apex:pageMessages/>
 
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                     <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
@@ -278,19 +274,19 @@
                         <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
 
                             <c:ApplicationFormSectionInput responseObject="{!group.newReferenceObject}"
-                                    questionWrapper="{!question}"
-                                    fieldAPI="{!question.question.Related_Object_Field__c}"
-                                    inputLabel="{!question.label}"
-                                    inputType="{!question.fieldType}"
-                                    isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
-                                    isRequired="{!isRequired}"
-                                    isEditable="{!question.isEditable}"
-                                    isExternalEmail="{!question.question.External_Email_Field__c}"
-                                    itemId="{!group.item.Id}"
-                                    inputOptions="{!question.options}"
-                                    isRadio="{!question.radio}"
-                                    rerenderGroup="{!if(question.hasDependentQuestions, 'rerenderTheTable', 'none')}"
-                                    itemNumber="{!itemNumber}"
+                                                           questionWrapper="{!question}"
+                                                           fieldAPI="{!question.question.Related_Object_Field__c}"
+                                                           inputLabel="{!question.label}"
+                                                           inputType="{!question.fieldType}"
+                                                           isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
+                                                           isRequired="{!isRequired}"
+                                                           isEditable="{!question.isEditable}"
+                                                           isExternalEmail="{!question.question.External_Email_Field__c}"
+                                                           itemId="{!group.item.Id}"
+                                                           inputOptions="{!question.options}"
+                                                           isRadio="{!question.radio}"
+                                                           rerenderGroup="{!if(question.hasDependentQuestions, 'rerenderTheTable', 'none')}"
+                                                           itemNumber="{!itemNumber}"
                             />
 
                         </apex:outputPanel>

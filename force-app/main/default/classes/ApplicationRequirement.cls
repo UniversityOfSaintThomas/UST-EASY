@@ -388,7 +388,6 @@ public class ApplicationRequirement {
         }
 
         if (hasError) {
-            System.debug('Has Error: ');
             return pr;
         }
 

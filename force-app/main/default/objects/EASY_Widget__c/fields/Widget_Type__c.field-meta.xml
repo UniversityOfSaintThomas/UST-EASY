@@ -13,26 +13,36 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Custom</fullName>
-                <default>true</default>
-                <label>Custom</label>
-            </value>
+            <sorted>true</sorted>
             <value>
                 <fullName>Application Checklist</fullName>
                 <default>false</default>
                 <label>Application Checklist</label>
             </value>
             <value>
-                <fullName>Progress Bar</fullName>
+                <fullName>Application Checklist Multiple</fullName>
                 <default>false</default>
-                <label>Progress Bar</label>
+                <label>Application Checklist Multiple</label>
             </value>
             <value>
                 <fullName>Application Finder</fullName>
                 <default>false</default>
                 <label>Application Finder</label>
+            </value>
+            <value>
+                <fullName>Custom</fullName>
+                <default>true</default>
+                <label>Custom</label>
+            </value>
+            <value>
+                <fullName>List of Applications</fullName>
+                <default>false</default>
+                <label>List of Applications</label>
+            </value>
+            <value>
+                <fullName>Progress Bar</fullName>
+                <default>false</default>
+                <label>Progress Bar</label>
             </value>
             <value>
                 <fullName>User Info Login/Logout</fullName>

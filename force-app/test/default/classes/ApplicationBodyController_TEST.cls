@@ -220,8 +220,6 @@ public class ApplicationBodyController_TEST {
         ApplicationBodyController.allWidgets allWidgets = controller.getWidgets();
         Test.stopTest();
 
-        System.debug(JSON.serializePretty(allWidgets));
-
         System.assertEquals(1, allWidgets.topWidgets.size());
         //Right includes one login widget
         System.assertEquals(2, allWidgets.rightWidgets.size());

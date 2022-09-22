@@ -9,6 +9,7 @@ public with sharing class ApplicationChecklistComponentController {
     public String nextAt { get; set; }
     public String nextAppId { get; set; }
     public Id nextContactId { get; set; }
+    public String nextPage { get; set; }
     public EASYApplicationInfo appInfoParam { get; set; }
     public Id submitAppId { get; set; }
     public String submitAppStatus { get; set; }
@@ -46,17 +47,27 @@ public with sharing class ApplicationChecklistComponentController {
 
         ApplicationUtilities.createEncryptedCookie(JSON.serialize(nextAppInfo));
 
-        PageReference requirementPage = Page.ApplicationRequirement;
-        requirementPage.getParameters().put('at', nextAppInfo.at);
-        requirementPage.getParameters().put('requirementId', nextRequirementId);
-        requirementPage.setRedirect(true);
-        return requirementPage;
+        PageReference navigateToPage = Page.ApplicationRequirement;
+
+        if (String.isNotBlank(nextPage)) {
+            System.debug(nextPage);
+            if (nextPage.equalsIgnoreCase('applicationhome')) {
+                System.debug('It equals home');
+                navigateToPage = Page.ApplicationHome;
+            }
+            if (nextPage.equalsIgnoreCase('applicationPortal')) {
+                navigateToPage = Page.ApplicationPortal;
+            }
+        }
+
+        navigateToPage.getParameters().put('at', nextAppInfo.at);
+        navigateToPage.getParameters().put('requirementId', nextRequirementId);
+        navigateToPage.setRedirect(true);
+        return navigateToPage;
     }
 
     public PageReference finalSubmitApp() {
         PageReference pr = Page.ApplicationPortal;
-        //System.debug(submitAppId);
-        System.debug(submitAppStatus);
         try {
             update new Application__c(Id = submitAppId, Application_Status__c = submitAppStatus);
         } catch (Exception ex) {

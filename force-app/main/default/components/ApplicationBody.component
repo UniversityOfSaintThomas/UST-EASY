@@ -46,7 +46,7 @@
             </apex:outputPanel>
 
             <!-- TITLE AND SUB TITLE -->
-            <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 " layout="block">
+<!--            <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 " layout="block">
                 <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                     <h2 class="slds-text-heading_large">{!title}</h2>
                 </div>
@@ -55,12 +55,12 @@
                         <h3 class="slds-text-heading_medium">{!subtitle}</h3>
                     </div>
                 </apex:outputPanel>
-            </apex:outputPanel>
+            </apex:outputPanel>-->
 
             <!-- BODY -->
-            <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
+            <div style="slds-col slds-size_1-of-1 slds-large-size_12-of-12" id="mainBody">
                 <apex:componentBody />
-            </apex:outputPanel>
+            </div>
 
             <!-- CONTENT BOTTOM WIDGETS -->
             <apex:outputPanel layout="block" rendered="{!IF(w.contentBottomWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
@@ -68,6 +68,9 @@
                     <c:EasyWidget widget="{!contentBottomWidgets}" appInfo="{!appInfo}" checklistItems="{!checklistItems}"/>
                 </apex:repeat>
             </apex:outputPanel>
+
+            <!-- Load component for modal pop-up -->
+            <c:EasyModal />
 
         </apex:outputPanel>
 

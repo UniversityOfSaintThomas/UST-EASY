@@ -40,6 +40,12 @@
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'User Info Login/Logout' }">
                 <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist Multiple' }">
+                <c:ApplicationChecklistMultiple appInfo="{!appInfo}" widget="{!widget}"/>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'List of Applications' }">
+                <c:ApplicationList appInfo="{!appInfo}" widget="{!widget}"/>
+            </apex:outputPanel>
 
         </div>
     </article>

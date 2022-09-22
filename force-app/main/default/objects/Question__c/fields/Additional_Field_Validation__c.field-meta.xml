@@ -11,11 +11,26 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
+            <value>
+                <fullName>validateACT</fullName>
+                <default>false</default>
+                <label>ACT Score 0-36</label>
+            </value>
             <value>
                 <fullName>validateName</fullName>
                 <default>false</default>
                 <label>Name characters</label>
+            </value>
+            <value>
+                <fullName>validateSATComposite</fullName>
+                <default>false</default>
+                <label>SAT Composite 0-1600</label>
+            </value>
+            <value>
+                <fullName>validateSATSubject</fullName>
+                <default>false</default>
+                <label>SAT Subject 0-800</label>
             </value>
             <value>
                 <fullName>validateSSN</fullName>

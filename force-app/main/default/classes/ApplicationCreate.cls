@@ -151,7 +151,6 @@ public class ApplicationCreate {
                     ORDER BY Name ASC
             ];
 
-            System.debug(JSON.serializePretty(programs));
             intendedPrograms = new Map<Id, Program__c>(programs);
 
             // Create new program question and add to list
@@ -375,7 +374,6 @@ public class ApplicationCreate {
                         FROM Application__c
                         WHERE Contact__c = :app.Contact__c
                 ]) {
-                    System.debug(ip.Number_of_Applications_Limit__c);
                     if (ip.Number_of_Applications_Limit__c.equals('One Application')) {
                         return 'You already have an application. Only one application is allowed.';
                     } else if ((ip.Number_of_Applications_Limit__c.equals('One Application Per Term') || ip.Number_of_Applications_Limit__c.equals('One Application Per Term Per Program')) && app.Intended_Term_of_Entry__c == a.Intended_Term_of_Entry__c) {

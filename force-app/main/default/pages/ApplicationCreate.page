@@ -33,14 +33,14 @@
                             Previous Section
                         </a>
 
-                        <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-m-top_xxx-small slds-button_brand carousel__button--prev">
+                        <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-m-top_xxx-small slds-button_brand carousel__button--prev" id="carouselPreviousButton">
                             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                 <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#back")}"></use>
                             </svg>
                             Back
                         </a>
 
-                        <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-button_brand carousel__button--next">
+                        <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-button_brand" id="carouselNextButton">
                             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                 <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#forward")}"></use>
                             </svg>

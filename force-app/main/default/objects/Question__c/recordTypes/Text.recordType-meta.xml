@@ -7,7 +7,19 @@
     <picklistValues>
         <picklist>Additional_Field_Validation__c</picklist>
         <values>
+            <fullName>validateACT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>validateName</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>validateSATComposite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>validateSATSubject</fullName>
             <default>false</default>
         </values>
         <values>

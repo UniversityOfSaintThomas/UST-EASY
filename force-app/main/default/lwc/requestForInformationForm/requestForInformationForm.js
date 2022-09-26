@@ -439,7 +439,7 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.country_label:
                 this.record_input.fields.Country = event.target.value;
-                if (event.target.value != 'United States') {
+                if (event.target.value != 'United States of America') {
                     this.international_citizen_type = true;
                 } else {
                     this.international_citizen_type = false;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Common_App_Unique_Question_Nickname__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>DO NOT DELETE this field.  DO NOT REMOVE its &quot;external ID&quot; setting.  DO NOT REMOVE its &quot;unique case-insensitive&quot; constraint.  DO NOT CLEAR OUT THE DATA from this field.  MAKE SURE TO MIGRATE the data from this field if going between environments.  All of these requirements are essential to avoid breaking data-loads from CommonApp into Salesforce via Jitterbit.  Thank you!</description>
+    <externalId>true</externalId>
+    <label>Common App Unique Question Nickname</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

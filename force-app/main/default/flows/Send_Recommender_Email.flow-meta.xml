@@ -83,13 +83,20 @@
                     <elementReference>$Record__Prior.Rec_Email__c</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Resend_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Send_Recommender_Reminder_Email</targetReference>
             </connector>
             <label>Send Reminder Email</label>
         </rules>
     </decisions>
-    <description>Send initial Recommendation request when Recommendation object is created or Rec_Email__c is updated. Sends reminder email when Resend__c date is updated</description>
+    <description>Sends initial Recommendation request when Recommendation object is created or Rec_Email__c is updated to a new non-null value. Sends reminder email when Resend__c date is updated</description>
     <interviewLabel>Send Recommender Email {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send Recommender Email</label>
     <processMetadataValues>

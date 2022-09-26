@@ -643,6 +643,7 @@ public class ApplicationQuestionGroup {
         if (response != null && response.Id != null && String.isNotBlank(response.External_Email__c)) {
 
             String externalEmail = response.External_Email__c;
+
             for (ApplicationQuestion q : questions) {
                 if (q.isEditable == true || UserInfo.getUserType() == 'Standard') {
                     if (q.question != null && q.response != null && q.question.External_Email_Field__c && String.isNotBlank(q.response.ValueEmail__c)) {
@@ -652,11 +653,24 @@ public class ApplicationQuestionGroup {
             }
 
             response.Send_Reminder__c = !response.Send_Reminder__c;
-            update new Requirement_Response__c(Id = response.Id, Send_Reminder__c = response.Send_Reminder__c, External_Email__c = externalEmail);
+            response.External_Email__c = externalEmail;
+            update response;
 
-            Requirement_Item__c reqItem = [SELECT Id, Related_List_Object__c FROM Requirement_Item__c WHERE Id =: response.Requirement_Item__c LIMIT 1];
+            Requirement_Item__c reqItem = [
+                    SELECT Id, Related_List_Object__c
+                    FROM Requirement_Item__c
+                    WHERE Id = :response.Requirement_Item__c
+                    LIMIT 1
+            ];
+
             if (reqItem.Related_List_Object__c == 'Recommendation__c') {
-                List<Recommendation__c> recommendation = [SELECT Id, Resend_Date__c, Submitted__c FROM Recommendation__c WHERE Recommendation_Requirement_Response__c =: response.Id LIMIT 1];
+                List<Recommendation__c> recommendation = [
+                        SELECT Id, Resend_Date__c, Submitted__c
+                        FROM Recommendation__c
+                        WHERE Recommendation_Requirement_Response__c = :response.Id
+                        LIMIT 1
+                ];
+
                 if (recommendation.size() > 0 && recommendation[0].Submitted__c == false) {
                     recommendation[0].Resend_Date__c = System.today();
                     update recommendation;

@@ -98,7 +98,7 @@ public class requestForInformationFormController_TEST {
     public static void testCreateLead() {
         String record_input_fields = '{"FirstName":"Testing","LastName":"CreateLead","Company":"Company 123"}';
         Test.startTest();
-        requestForInformationFormController.createLead(record_input_fields, 'Lead');
+        requestForInformationFormController.createLead(record_input_fields, 'Lead', 'RFI Controller 0001');
         Test.stopTest();
         List<Lead> new_lead = [SELECT Id FROM Lead WHERE LastName = 'CreateLead'];
         System.assertEquals(1, new_lead.size());

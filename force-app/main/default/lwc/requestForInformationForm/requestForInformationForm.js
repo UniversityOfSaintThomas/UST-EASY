@@ -773,8 +773,8 @@ export default class RequestForInformationForm extends LightningElement {
             }
             if (this.show_fields.State) {
                 let state_map = this.getStateMap();
-                this.template.querySelector('lightning-combobox[data-id="state"]').value = state_map[state];
-                this.record_input.fields.State = state_map[state];
+                this.template.querySelector('lightning-combobox[data-id="state"]').value = state_map.get(state);
+                this.record_input.fields.State = state_map.get(state);
             }
             if (this.show_fields.Country) {
                 this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States of America';

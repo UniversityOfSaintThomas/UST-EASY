@@ -438,7 +438,7 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.country_label:
                 this.record_input.fields.Country = event.target.value;
-                if (event.target.value != 'United States') {
+                if (event.target.value != 'United States of America') {
                     this.international_citizen_type = true;
                 } else {
                     this.international_citizen_type = false;
@@ -772,12 +772,13 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.City = city;
             }
             if (this.show_fields.State) {
-                this.template.querySelector('lightning-combobox[data-id="state"]').value = state;
-                this.record_input.fields.State = state;
+                let state_map = this.getStateMap();
+                this.template.querySelector('lightning-combobox[data-id="state"]').value = state_map[state];
+                this.record_input.fields.State = state_map[state];
             }
             if (this.show_fields.Country) {
-                this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States';
-                this.record_input.fields.Country = 'United States';
+                this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States of America';
+                this.record_input.fields.Country = 'United States of America';
             }
             this.show_spinner = false;
         })
@@ -787,69 +788,139 @@ export default class RequestForInformationForm extends LightningElement {
         })
     }
 
-    // can't query for global value sets -- would need to be a field
+    // can't query for state picklist values -- would need to be on a field
     get stateOptions() {
         return [
-            { label: 'Alabama', value: 'Alabama' },
-            { label: 'Alaska', value: 'Alaska' },
-            { label: 'American Samoa', value: 'American Samoa' },
-            { label: 'Arizona', value: 'Arizona' },
-            { label: 'Arkansas', value: 'Arkansas' },
-            { label: 'California', value: 'California' },
-            { label: 'Colorado', value: 'Colorado' },
-            { label: 'Connecticut', value: 'Connecticut' },
-            { label: 'Delaware', value: 'Delaware' },
-            { label: 'District of Columbia', value: 'District of Columbia' },
-            { label: 'Micronesia', value: 'Micronesia' },
-            { label: 'Florida', value: 'Florida' },
-            { label: 'Georgia', value: 'Georgia' },
+            { label: 'Alabama', value: 'AL' },
+            { label: 'Alaska', value: 'AK' },
+            { label: 'American Samoa', value: 'AS' },
+            { label: 'Arizona', value: 'AZ' },
+            { label: 'Arkansas', value: 'AK' },
+            { label: 'Armed Forces the Americas', value: 'AA' },
+            { label: 'Armed Forces Europe', value: 'AE' },
+            { label: 'Armed Forces Pacific', value: 'AP' },
+            { label: 'California', value: 'CA' },
+            { label: 'Colorado', value: 'CO' },
+            { label: 'Connecticut', value: 'CT' },
+            { label: 'Delaware', value: 'DE' },
+            { label: 'District of Columbia', value: 'DC' },
+            { label: 'Micronesia', value: 'FM' },
+            { label: 'Florida', value: 'FL' },
+            { label: 'Georgia', value: 'GA' },
             { label: 'Guam', value: 'Guam' },
-            { label: 'Hawaii', value: 'Hawaii' },
-            { label: 'Idaho', value: 'Idaho' },
-            { label: 'Illinois', value: 'Illinois' },
-            { label: 'Indiana', value: 'Indiana' },
-            { label: 'Iowa', value: 'Iowa' },
-            { label: 'Kansas', value: 'Kansas' },
-            { label: 'Kentucky', value: 'Kentucky' },
-            { label: 'Louisiana', value: 'Louisiana' },
-            { label: 'Maine', value: 'Maine' },
-            { label: 'Marshall Islands', value: 'Marshall Islands' },
-            { label: 'Maryland', value: 'Maryland' },
-            { label: 'Massachusetts', value: 'Massachusetts' },
-            { label: 'Michigan', value: 'Michigan' },
-            { label: 'Minnesota', value: 'Minnesota' },
-            { label: 'Mississippi', value: 'Mississippi' },
-            { label: 'Missouri', value: 'Missouri' },
-            { label: 'Montana', value: 'Montana' },
-            { label: 'Nebraska', value: 'Nebraska' },
-            { label: 'Nevada', value: 'Nevada' },
-            { label: 'New Hampshire', value: 'New Hampshire' },
-            { label: 'New Jersey', value: 'New Jersey' },
-            { label: 'New Mexico', value: 'New Mexico' },
-            { label: 'New York', value: 'New York' },
-            { label: 'North Carolina', value: 'North Carolina' },
-            { label: 'North Dakota', value: 'North Dakota' },
-            { label: 'Northern Mariana Islands', value: 'Northern Mariana Islands' },
-            { label: 'Ohio', value: 'Ohio' },
-            { label: 'Oklahoma', value: 'Oklahoma' },
-            { label: 'Oregon', value: 'Oregon' },
-            { label: 'Palau', value: 'Palau' },
-            { label: 'Pennsylvania', value: 'Pennsylvania' },
-            { label: 'Puerto Rico', value: 'Puerto Rico' },
-            { label: 'Rhode Island', value: 'Rhode Island' },
-            { label: 'South Carolina', value: 'South Carolina' },
-            { label: 'South Dakota', value: 'South Dakota' },
-            { label: 'Tennessee', value: 'Tennessee' },
-            { label: 'Texas', value: 'Texas' },
-            { label: 'Utah', value: 'Utah' },
-            { label: 'Vermont', value: 'Vermont' },
-            { label: 'Virgin Islands', value: 'Virgin Islands' },
-            { label: 'Virginia', value: 'Virginia' },
-            { label: 'Washington', value: 'Washington' },
-            { label: 'West Virginia', value: 'West Virginia' },
-            { label: 'Wisconsin', value: 'Wisconsin' },
-            { label: 'Wyoming', value: 'Wyoming' }
+            { label: 'Hawaii', value: 'HI' },
+            { label: 'Idaho', value: 'ID' },
+            { label: 'Illinois', value: 'IL' },
+            { label: 'Indiana', value: 'IN' },
+            { label: 'Iowa', value: 'IA' },
+            { label: 'Kansas', value: 'KS' },
+            { label: 'Kentucky', value: 'KY' },
+            { label: 'Louisiana', value: 'LA' },
+            { label: 'Maine', value: 'ME' },
+            { label: 'Marshall Islands', value: 'MH' },
+            { label: 'Maryland', value: 'MD' },
+            { label: 'Massachusetts', value: 'MA' },
+            { label: 'Michigan', value: 'MI' },
+            { label: 'Minnesota', value: 'MN' },
+            { label: 'Mississippi', value: 'MS' },
+            { label: 'Missouri', value: 'MO' },
+            { label: 'Montana', value: 'MT' },
+            { label: 'Nebraska', value: 'NE' },
+            { label: 'Nevada', value: 'NV' },
+            { label: 'New Hampshire', value: 'NH' },
+            { label: 'New Jersey', value: 'NJ' },
+            { label: 'New Mexico', value: 'NM' },
+            { label: 'New York', value: 'NY' },
+            { label: 'North Carolina', value: 'NC' },
+            { label: 'North Dakota', value: 'ND' },
+            { label: 'Northern Mariana Islands', value: 'MP' },
+            { label: 'Ohio', value: 'OH' },
+            { label: 'Oklahoma', value: 'OK' },
+            { label: 'Oregon', value: 'OR' },
+            { label: 'Palau', value: 'PW' },
+            { label: 'Pennsylvania', value: 'PA' },
+            { label: 'Puerto Rico', value: 'PR' },
+            { label: 'Rhode Island', value: 'RI' },
+            { label: 'South Carolina', value: 'SC' },
+            { label: 'South Dakota', value: 'SD' },
+            { label: 'Tennessee', value: 'TN' },
+            { label: 'Texas', value: 'TX' },
+            { label: 'Utah', value: 'UT' },
+            { label: 'Vermont', value: 'VT' },
+            { label: 'Virgin Islands', value: 'VI' },
+            { label: 'Virginia', value: 'VA' },
+            { label: 'Washington', value: 'WA' },
+            { label: 'West Virginia', value: 'WV' },
+            { label: 'Wisconsin', value: 'WI' },
+            { label: 'Wyoming', value: 'WY' }
         ];
+    }
+
+    getStateMap() {
+        let state_map = new Map();
+        state_map.set('Alabama', 'AL');
+        state_map.set('Alaska', 'AK');
+        state_map.set('American Samoa', 'AS');
+        state_map.set('Arizona', 'AZ');
+        state_map.set('Arkansas', 'AK');
+        state_map.set('Armed Forces the Americas', 'AA');
+        state_map.set('Armed Forces Europe', 'AE');
+        state_map.set('Armed Forces Pacific', 'AP');
+        state_map.set('California', 'CA');
+        state_map.set('Colorado', 'CO');
+        state_map.set('Connecticut', 'CT');
+        state_map.set('Delaware', 'DE');
+        state_map.set('District of Columbia', 'DC');
+        state_map.set('Micronesia', 'FM');
+        state_map.set('Florida', 'FL');
+        state_map.set('Georgia', 'GA');
+        state_map.set('Guam', 'Guam');
+        state_map.set('Hawaii', 'HI');
+        state_map.set('Idaho', 'ID');
+        state_map.set('Illinois', 'IL');
+        state_map.set('Indiana', 'IN');
+        state_map.set('Iowa', 'IA');
+        state_map.set('Kansas', 'KS');
+        state_map.set('Kentucky', 'KY');
+        state_map.set('Louisiana', 'LA');
+        state_map.set('Maine', 'ME');
+        state_map.set('Marshall Islands', 'MH');
+        state_map.set('Maryland', 'MD');
+        state_map.set('Massachusetts', 'MA');
+        state_map.set('Michigan', 'MI');
+        state_map.set('Minnesota', 'MN');
+        state_map.set('Mississippi', 'MS');
+        state_map.set('Missouri', 'MO');
+        state_map.set('Montana', 'MT');
+        state_map.set('Nebraska', 'NE');
+        state_map.set('Nevada', 'NV');
+        state_map.set('New Hampshire', 'NH');
+        state_map.set('New Jersey', 'NJ');
+        state_map.set('New Mexico', 'NM');
+        state_map.set('New York', 'NY');
+        state_map.set('North Carolina', 'NC');
+        state_map.set('North Dakota', 'ND');
+        state_map.set('Northern Mariana Islands', 'MP');
+        state_map.set('Ohio', 'OH');
+        state_map.set('Oklahoma', 'OK');
+        state_map.set('Oregon', 'OR');
+        state_map.set('Palau', 'PW');
+        state_map.set('Pennsylvania', 'PA');
+        state_map.set('Puerto Rico', 'PR');
+        state_map.set('Rhode Island', 'RI');
+        state_map.set('South Carolina', 'SC');
+        state_map.set('South Dakota', 'SD');
+        state_map.set('Tennessee', 'TN');
+        state_map.set('Texas', 'TX');
+        state_map.set('Utah', 'UT');
+        state_map.set('Vermont', 'VT');
+        state_map.set('Virgin Islands', 'VI');
+        state_map.set('Virginia', 'VA');
+        state_map.set('Washington', 'WA');
+        state_map.set('West Virginia', 'WV');
+        state_map.set('Wisconsin', 'WI');
+        state_map.set('Wyoming', 'WY');
+        return state_map;
     }
         /**
     ******************************************

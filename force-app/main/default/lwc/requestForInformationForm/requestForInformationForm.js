@@ -773,8 +773,9 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.City = city;
             }
             if (this.show_fields.State) {
-                this.template.querySelector('lightning-combobox[data-id="state"]').value = state;
-                this.record_input.fields.State = state;
+                let state_map = this.getStateMap();
+                this.template.querySelector('lightning-combobox[data-id="state"]').value = state_map[state];
+                this.record_input.fields.State = state_map[state];
             }
             if (this.show_fields.Country) {
                 this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States of America';
@@ -854,6 +855,73 @@ export default class RequestForInformationForm extends LightningElement {
             { label: 'Wisconsin', value: 'WI' },
             { label: 'Wyoming', value: 'WY' }
         ];
+    }
+
+    getStateMap() {
+        let state_map = new Map();
+        state_map.set('Alabama', 'AL');
+        state_map.set('Alaska', 'AK');
+        state_map.set('American Samoa', 'AS');
+        state_map.set('Arizona', 'AZ');
+        state_map.set('Arkansas', 'AK');
+        state_map.set('Armed Forces the Americas', 'AA');
+        state_map.set('Armed Forces Europe', 'AE');
+        state_map.set('Armed Forces Pacific', 'AP');
+        state_map.set('California', 'CA');
+        state_map.set('Colorado', 'CO');
+        state_map.set('Connecticut', 'CT');
+        state_map.set('Delaware', 'DE');
+        state_map.set('District of Columbia', 'DC');
+        state_map.set('Micronesia', 'FM');
+        state_map.set('Florida', 'FL');
+        state_map.set('Georgia', 'GA');
+        state_map.set('Guam', 'Guam');
+        state_map.set('Hawaii', 'HI');
+        state_map.set('Idaho', 'ID');
+        state_map.set('Illinois', 'IL');
+        state_map.set('Indiana', 'IN');
+        state_map.set('Iowa', 'IA');
+        state_map.set('Kansas', 'KS');
+        state_map.set('Kentucky', 'KY');
+        state_map.set('Louisiana', 'LA');
+        state_map.set('Maine', 'ME');
+        state_map.set('Marshall Islands', 'MH');
+        state_map.set('Maryland', 'MD');
+        state_map.set('Massachusetts', 'MA');
+        state_map.set('Michigan', 'MI');
+        state_map.set('Minnesota', 'MN');
+        state_map.set('Mississippi', 'MS');
+        state_map.set('Missouri', 'MO');
+        state_map.set('Montana', 'MT');
+        state_map.set('Nebraska', 'NE');
+        state_map.set('Nevada', 'NV');
+        state_map.set('New Hampshire', 'NH');
+        state_map.set('New Jersey', 'NJ');
+        state_map.set('New Mexico', 'NM');
+        state_map.set('New York', 'NY');
+        state_map.set('North Carolina', 'NC');
+        state_map.set('North Dakota', 'ND');
+        state_map.set('Northern Mariana Islands', 'MP');
+        state_map.set('Ohio', 'OH');
+        state_map.set('Oklahoma', 'OK');
+        state_map.set('Oregon', 'OR');
+        state_map.set('Palau', 'PW');
+        state_map.set('Pennsylvania', 'PA');
+        state_map.set('Puerto Rico', 'PR');
+        state_map.set('Rhode Island', 'RI');
+        state_map.set('South Carolina', 'SC');
+        state_map.set('South Dakota', 'SD');
+        state_map.set('Tennessee', 'TN');
+        state_map.set('Texas', 'TX');
+        state_map.set('Utah', 'UT');
+        state_map.set('Vermont', 'VT');
+        state_map.set('Virgin Islands', 'VI');
+        state_map.set('Virginia', 'VA');
+        state_map.set('Washington', 'WA');
+        state_map.set('West Virginia', 'WV');
+        state_map.set('Wisconsin', 'WI');
+        state_map.set('Wyoming', 'WY');
+        return state_map;
     }
         /**
     ******************************************

@@ -1,4 +1,4 @@
-<messaging:emailTemplate subject="Please follow the link below to complete the Recommendation:er: Recommendation Request for {!relatedTo.Application__r.Contact__r.Name}" recipientType="Contact" relatedToType="Recommendation__c">
+<messaging:emailTemplate subject="Please follow the link below to complete the Recommendation: Recommendation Request for {!relatedTo.Application__r.Contact__r.Name}" recipientType="Contact" relatedToType="Recommendation__c">
     <messaging:htmlEmailBody>
         <html>
         <body>

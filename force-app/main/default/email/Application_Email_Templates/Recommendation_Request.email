@@ -3,7 +3,7 @@
         <html>
         <body>
         <p>
-            A Recommendation has been Request for {!relatedTo.Application__r.Contact__r.Name}. Please follow the link below to complete the Recommendation:
+            A Recommendation has been requested for {!relatedTo.Application__r.Contact__r.Name}. Please follow the link below to complete the Recommendation:
         </p>
         <p>
             <a href="{!$Setup.Application_Setting__c.Community_URL__c+"/RecommendationForm?recId="+relatedTo.Id}" target="_blank">

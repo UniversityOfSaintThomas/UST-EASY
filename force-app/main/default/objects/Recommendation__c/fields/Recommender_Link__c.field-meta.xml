@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recommender_Link__c</fullName>
     <externalId>false</externalId>
-    <formula>&quot;https://stthomas2.secure.force.com/RecommendationForm?recId=&quot; &amp;  Id</formula>
+    <formula>$Setup.Application_Setting__c.Community_URL__c &amp; &apos;/RecommendationForm?recId=&apos; &amp;  Id</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Recommender Link</label>
     <required>false</required>

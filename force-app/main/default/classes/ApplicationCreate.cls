@@ -65,6 +65,7 @@ public class ApplicationCreate {
 
         // Add first group to beginning
         if (firstGroup != null) {
+            firstGroup = addDependencyToQuestions(firstGroup);
             groups.add(firstGroup);
         }
 
@@ -125,7 +126,9 @@ public class ApplicationCreate {
         // Create question groups for requirements we should display
         for (Requirement_Item__c i : items) {
             if ((String.isBlank(i.Requirement__r.Application_Creation_Display_Order__c) || i.Requirement__r.Application_Creation_Display_Order__c.equals('Before Term/Program Questions')) && ApplicationFilter.filter(app, i)) {
-                groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
+                ApplicationQuestionGroup middleGroup = ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true);
+                middleGroup = addDependencyToQuestions(middleGroup);
+                groups.add(middleGroup);
             }
         }
 
@@ -148,24 +151,14 @@ public class ApplicationCreate {
                     ORDER BY Name ASC
             ];
 
-            // Original EASY query, that does not limit program list by application control
-            // List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Application_Control__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true  ORDER BY Name ASC];
-
+            System.debug(JSON.serializePretty(programs));
             intendedPrograms = new Map<Id, Program__c>(programs);
 
             // Create new program question and add to list
             programQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Program__c');
             programQuestion.addQuestionObject(new Question__c(Label__c = 'What program are you applying to?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Program'));
             programQuestion.addIntendedProgramFilteringList(programs);
-
-
-            // Get map of term names with id as key
-            //List<Id> termIds = new List<Id>();
-            //List<String> termNames = new List<String>();
-            //for (Academic_Term__c at : [SELECT Id, Name FROM Academic_Term__c WHERE Application_Status__c = :'Active' ORDER BY Activate_Application_Date__c ASC]) {
-            //    termIds.add(at.Id);
-            //    termNames.add(at.Name);
-            // }
+            programQuestion.hasDependentQuestions = true;
 
             // Get map of term names with id as key - updated by FDF 12/17/2021 to pull a unique list of Academic Terms that have an Intended Program Term for that Application Control
             List<Academic_Term__c> aTermList = new List<Academic_Term__c>();
@@ -174,18 +167,29 @@ public class ApplicationCreate {
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
             AggregateResult[] at = [
-                    SELECT Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c
+                    SELECT Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
                     FROM Intended_Program_Term__c
                     WHERE Intended_Program__r.Application_Control__c = :appControlId
-                    AND Academic_Term__r.Application_Status__c = :'Active'
-                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c
+                    AND Academic_Term__r.Application_Status__c = 'Active'
+                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
                     ORDER BY Academic_Term__r.Term_Start_Date__c
             ];
 
             for (AggregateResult ar : at) {
                 Academic_Term__c aTerm = new Academic_Term__c();
                 aTerm.Id = (Id) ar.get('Id');
-                aTerm.Name = (String) ar.get('Name');
+                String formattedName = '';
+
+                //TODO: Assuming CST here. Maybe make time zone setting for application control to set this or academic term
+                if ((Date) ar.get('Term_Start_Date__c') != null && (Date) ar.get('Term_End_Date__c') != null) {
+                    //Parenthesis around the time zone string because class is used to parsing that out of a generated picklist that includes it.
+                    DateTime startTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_Start_Date__c'), null, '(America/Chicago)');
+                    DateTime endTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_End_Date__c'), null, '(America/Chicago)');
+                    formattedName = ' (Start Date: ' + startTermDateTime.format('MMM dd, yyyy') + ')';
+                }
+
+                aTerm.Name = (String) ar.get('Name') + formattedName;
+
                 aTermList.add(aTerm);
 
                 termIds.add(aTerm.Id);
@@ -197,11 +201,14 @@ public class ApplicationCreate {
             ApplicationQuestion termQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Term_of_Entry__c');
             termQuestion.addQuestionObject(new Question__c(Label__c = 'What term are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Term'));
             termQuestion.setReferenceOptions(termIds, termNames);
+            termQuestion.hasDependentQuestions = true;
 
             // Create question group out of term/program questions and add to list
-            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+            ApplicationQuestionGroup termProgramQuestionGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
                     termQuestion, programQuestion
-            }));
+            });
+            termProgramQuestionGroup = addDependencyToQuestions(termProgramQuestionGroup);
+            groups.add(termProgramQuestionGroup);
         }
 
 
@@ -241,6 +248,18 @@ public class ApplicationCreate {
         if (programQuestion != null) {
             programQuestion.section = section;
         }
+    }
+
+    public ApplicationQuestionGroup addDependencyToQuestions(ApplicationQuestionGroup appQuestionGroup) {
+        if (appQuestionGroup.questions.size() > 0) {
+            for (Integer x = 0; x < appQuestionGroup.questions.size(); x++) {
+                String inputType = appQuestionGroup.questions[x].fieldType;
+                if (inputType.equalsIgnoreCase('picklist') || inputType.equalsIgnoreCase('checkbox')) {
+                    appQuestionGroup.questions[x].hasDependentQuestions = true;
+                }
+            }
+        }
+        return appQuestionGroup;
     }
 
     /* ******************************************************************************
@@ -338,8 +357,10 @@ public class ApplicationCreate {
                             Residency__c, School_College__c, Student_Type__c, Intended_Program__c, Generic_Filter_1__c,
                             Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
                     FROM Intended_Program_Term__c
-                    WHERE Academic_Term__c = :app.Intended_Term_of_Entry__c AND Application_Status__c = :'Inactive'
-                    AND (Intended_Program__c = :app.Intended_Program__c OR Intended_Program__c = :null)
+                    WHERE Academic_Term__c = :app.Intended_Term_of_Entry__c
+                    AND Application_Status__c = :'Inactive'
+                    AND (Intended_Program__c = :app.Intended_Program__c
+                    OR Intended_Program__c = :null)
             ]) {
 
                 if (ApplicationFilter.filter(app, ipt, false)) {
@@ -354,6 +375,7 @@ public class ApplicationCreate {
                         FROM Application__c
                         WHERE Contact__c = :app.Contact__c
                 ]) {
+                    System.debug(ip.Number_of_Applications_Limit__c);
                     if (ip.Number_of_Applications_Limit__c.equals('One Application')) {
                         return 'You already have an application. Only one application is allowed.';
                     } else if ((ip.Number_of_Applications_Limit__c.equals('One Application Per Term') || ip.Number_of_Applications_Limit__c.equals('One Application Per Term Per Program')) && app.Intended_Term_of_Entry__c == a.Intended_Term_of_Entry__c) {

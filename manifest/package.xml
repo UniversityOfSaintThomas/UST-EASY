@@ -72,6 +72,9 @@
         <members>ScholarshipHomeController</members>
         <members>ScholarshipRecommenderController</members>
         <members>ScholarshipSharedUtilities</members>
+        <members>ScholarshipControllerTEST</members>
+        <members>ScholarshipRecommenderController_TEST</members>
+        <members>ScholarshipController_TEST</members>
         <name>ApexClass</name>
     </types>
     <types>

@@ -549,7 +549,7 @@ public class ApplicationRequirement {
 
                 // get existing recommendations
                 List<Recommendation__c> recommendations_related_to_requirement_responses = [
-                    SELECT Id, Recommendation_Requirement_Response__c, Rec_Email__c
+                    SELECT Id, Recommendation_Requirement_Response__c, Rec_Email__c, Submitted__c
                     FROM Recommendation__c 
                     WHERE Recommendation_Requirement_Response__c IN: rr_ids_that_should_have_recommendation
                 ];
@@ -560,11 +560,19 @@ public class ApplicationRequirement {
                 }
 
                 List<Recommendation__c> recs_to_upsert = new List<Recommendation__c>();
+                List<Recommendation__c> recs_to_delete = new List<Recommendation__c>();
                 for (Id rr_id : rr_ids_that_should_have_recommendation) {
                     if (String.isNotBlank(rrMap.get(rr_id).External_Email__c)) {
                         Recommendation__c related_rec;
                         if (requirement_response_to_recommendation_map.get(rr_id) != null) { // recommendation already exists
                             related_rec = requirement_response_to_recommendation_map.get(rr_id);
+                            if (related_rec.Rec_Email__c != rrMap.get(rr_id).External_Email__c && related_rec.Submitted__c != true) { // recommendation exists but email has changed, create new rec and delete old
+                                recs_to_delete.add(related_rec);
+                                related_rec = new Recommendation__c();
+                                related_rec.Application__c = rrMap.get(rr_id).Application__c;
+                                related_rec.Recommendation_Requirement_Response__c = rr_id;
+                                related_rec.Status__c = 'Requested';
+                            }
                         } else { // create new recommendation
                             related_rec = new Recommendation__c();
                             related_rec.Application__c = rrMap.get(rr_id).Application__c;
@@ -579,8 +587,14 @@ public class ApplicationRequirement {
                                     }
                                 }
                             }
-                            recs_to_upsert.add(related_rec);
+                            if (related_rec.Submitted__c != true) {
+                                recs_to_upsert.add(related_rec);
+                            }
                     }
+                }
+
+                if (recs_to_delete != null) {
+                    delete recs_to_delete;
                 }
 
                 if (recs_to_upsert != null) {

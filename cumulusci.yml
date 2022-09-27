@@ -32,6 +32,7 @@ tasks:
       description: EASY application portal
       template: Build Your Own
       url_path_prefix: Admissions
+      retries: 10
 
   permission_guest_user:
     description: 'Applies permission set to guest community guest user'
@@ -69,6 +70,14 @@ tasks:
       apex: setReviewSettings();
 
   load_application_data:
+    description: 'Load data needed to start EASY applications'
+    class_path: cumulusci.tasks.bulkdata.load.LoadData
+    options:
+      mapping: datasets/2022-07-08/mapping.yml
+      sql_path: datasets/2022-07-08/data.sql
+      inject_namespaces: False
+
+  load_fdf_application_data:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
@@ -208,6 +217,12 @@ tasks:
         - record_type: Requirement_Item__c.Question_Group
         - record_type: Requirement_Item__c.Related_Object
           default: true
+        - record_type: Family__c.Parent_Guardian
+          default: true
+        - record_type: Family__c.Sibling
+        - record_type: Family__c.UST_Alumni_Family
+        - record_type: Family__c.UST_Employee_Family
+
 
   add_degree_piciklist:
     description: "Adds more picklist items to the degree earned list of EDA."
@@ -237,84 +252,46 @@ tasks:
 flows:
   config_dev:
     steps:
-      1:
+      3:
         task: create_community
       4:
-        task: configure_community
-      4.5:
-        task: configure_community_settings
-      5:
         task: create_bulk_data_permission_set
-      6:
-        task: deploy_site_config
-      7:
-        task: set_easy_custom_settings
-      8:
-        task: set_hierarchy_custom_settings
-      9:
-        task: set_review_custom_settings
-      10:
-        task: update_admin_profile
-      11:
-        task: turn_off_duplicate_rules
-      12:
-        task: load_application_data
-      12.5:
-        task: create_fake_school_data
-      13:
-        task: turn_on_duplicate_rules
-      14:
-        task: permission_guest_user
-      15:
-        task: permission_admin_user
-      16:
-        task: install_sharing_rules
-      17:
-        task: set_holding_ids
-      18:
-        task: set_user_user_role
-  failure_recovery:
-    steps:
-      4:
-        task: configure_community
-      4.5:
-        task: configure_community_settings
       5:
-        task: create_bulk_data_permission_set
-      6:
-        task: deploy_site_config
-      7:
         task: set_easy_custom_settings
-      8:
-        task: set_hierarchy_custom_settings
-      9:
-        task: set_review_custom_settings
-      10:
-        task: update_admin_profile
-      11:
+      6:
         task: turn_off_duplicate_rules
-      12:
-        task: load_application_data
-      12.5:
-        task: create_fake_school_data
-      13:
+      7:
+        task: load_fdf_application_data
+      #      7.5:
+      #        task: create_fake_school_data
+      8:
         task: turn_on_duplicate_rules
-      14:
-        task: permission_guest_user
-      15:
-        task: permission_admin_user
-      16:
+      9:
+        task: update_admin_profile
+      10:
+        task: set_hierarchy_custom_settings
+      11:
         task: install_sharing_rules
+      12:
+        task: set_review_custom_settings
+      13:
+        task: configure_community
+      14:
+        task: configure_community_settings
+      15:
+        task: deploy_site_config
+      16:
+        task: permission_guest_user
       17:
-        task: set_holding_ids
+        task: permission_admin_user
       18:
-        task: set_user_user_role
+        task: set_holding_ids
       19:
+        task: set_user_user_role
+      20:
         task: load_scholarship_test_data
 
 orgs:
   scratch:
     build:
       config_file: orgs/build.json
-    dev:
-      days: 14

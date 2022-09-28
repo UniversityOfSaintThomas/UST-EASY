@@ -47,12 +47,12 @@
                             Next
                         </a>
 
-                        <a role="button" href="javascript:void(0)" action="{!save}" class="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance">
+						<apex:commandLink action="{!save}" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onClick="appShowLoadingSpinner();" onComplete="appHideLoadingSpinner();">
                             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                 <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                             </svg>
                             Save and Continue
-                        </a>
+                        </apex:commandLink>
                     </nav>
 
                     <nav class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">

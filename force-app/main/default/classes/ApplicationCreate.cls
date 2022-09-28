@@ -167,18 +167,29 @@ public class ApplicationCreate {
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
             AggregateResult[] at = [
-                    SELECT Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c
+                    SELECT Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
                     FROM Intended_Program_Term__c
                     WHERE Intended_Program__r.Application_Control__c = :appControlId
                     AND Academic_Term__r.Application_Status__c = 'Active'
-                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c
+                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
                     ORDER BY Academic_Term__r.Term_Start_Date__c
             ];
 
             for (AggregateResult ar : at) {
                 Academic_Term__c aTerm = new Academic_Term__c();
                 aTerm.Id = (Id) ar.get('Id');
-                aTerm.Name = (String) ar.get('Name');
+                String formattedName = '';
+
+                //TODO: Assuming CST here. Maybe make time zone setting for application control to set this or academic term
+                if ((Date) ar.get('Term_Start_Date__c') != null && (Date) ar.get('Term_End_Date__c') != null) {
+                    //Parenthesis around the time zone string because class is used to parsing that out of a generated picklist that includes it.
+                    DateTime startTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_Start_Date__c'), null, '(America/Chicago)');
+                    DateTime endTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_End_Date__c'), null, '(America/Chicago)');
+                    formattedName = ' (Start Date: ' + startTermDateTime.format('MMM dd, yyyy') + ')';
+                }
+
+                aTerm.Name = (String) ar.get('Name') + formattedName;
+
                 aTermList.add(aTerm);
 
                 termIds.add(aTerm.Id);

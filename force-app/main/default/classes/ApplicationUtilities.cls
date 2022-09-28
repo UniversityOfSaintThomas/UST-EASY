@@ -344,4 +344,39 @@ public class ApplicationUtilities {
         String guid = h.substring(0, 8) + '-' + h.substring(8, 12) + '-' + h.substring(12, 16) + '-' + h.substring(16, 20) + '-' + h.substring(20);
         return guid;
     }
+
+    public static Datetime adjustForTimeZone(Datetime dt, String timezoneString) {
+        timezoneString = ApplicationUtilities.getTimeZonePick(timezoneString);
+        //Get the current GMT time and adjust for our timezone
+        //tz = TimeZone.getTimeZone('America/Chicago');
+        //Timezone adjustment example below:
+        //Datetime NowDate = Datetime.now();
+        //NowDate = NowDate.addSeconds(tz.getOffset(NowDate)/1000);
+        //Central Daylight Time (America/Chicago)
+        TimeZone tz = TimeZone.getTimeZone(timezoneString);
+        dt = dt.addSeconds(tz.getOffset(dt) / 1000);
+        return dt;
+    }
+
+    public static String getTimeZonePick(String pickListTimeZone) {
+        if (String.isNotBlank(pickListTimeZone)) {
+            if (pickListTimeZone.length() > 4 && pickListTimeZone.contains('(')) {
+                pickListTimeZone = pickListTimeZone.substring(pickListTimeZone.indexOf('(') + 1, pickListTimeZone.indexOf(')'));
+                return pickListTimeZone;
+            }
+            return pickListTimeZone;
+        }
+        return '';
+    }
+
+    public static Datetime convertDateToDatetime(Date dateIn, Time timeIn, String timezoneString) {
+        if (timeIn == null) {
+            timeIn = Time.newInstance(1, 12, 3, 4);
+        }
+        Datetime converted = Datetime.newInstance(dateIn.year(), dateIn.month(), dateIn.day(), timeIn.hour(), timeIn.minute(), timeIn.second());
+        if (String.isNotBlank(timezoneString)) {
+            converted = adjustForTimeZone(converted, timezoneString);
+        }
+        return converted;
+    }
 }

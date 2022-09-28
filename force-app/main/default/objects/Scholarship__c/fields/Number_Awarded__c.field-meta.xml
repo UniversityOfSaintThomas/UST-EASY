@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_Awarded__c</fullName>
+    <externalId>false</externalId>
+    <label>Number of Scholarships Awarded</label>
+    <summaryFilterItems>
+        <field>Award__c.Award_Status__c</field>
+        <operation>equals</operation>
+        <value>Accepted, Awarded</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Award__c.Scholarship_Name__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

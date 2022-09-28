@@ -1,0 +1,28 @@
+<apex:page showHeader="false" sidebar="false" controller="ScholarshipClosedController"  action="{!initialize}">
+    <apex:composition template="ScholarshipTemplate">
+        <apex:define name="body">
+            <h2>
+                {!scholarship.Name}
+            </h2>
+
+            <apex:outputText rendered="{!scholarshipAlreadyClosed}" escape="false">
+                <p>
+                    We're sorry. The {!scholarship.Name} closed on {!scholarship.Close_Date__c}. Thank you for
+                    your interest.
+                </p>
+            </apex:outputText>
+            <apex:outputText rendered="{!scholarshipNotYetOpen}" escape="false">
+                <p>
+                    We're sorry. The {!scholarship.Name} has not opened yet. It will open
+                    on {!scholarship.Open_Date__c}. Please return after the open date and fill out your application then.
+                    Thank you for your interest!
+                </p>
+            </apex:outputText>
+            <apex:outputText rendered="{!IF(scholarshipNotYetOpen == false && scholarshipAlreadyClosed == false, true, false)}" escape="false">
+                <p>
+                    We're sorry. The {!scholarship.Name} is currently closed. Thank you for your interest!
+                </p>
+            </apex:outputText>
+        </apex:define>
+    </apex:composition>
+</apex:page>

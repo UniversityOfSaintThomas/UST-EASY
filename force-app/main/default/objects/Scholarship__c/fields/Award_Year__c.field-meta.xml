@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Award_Year__c</fullName>
+    <externalId>false</externalId>
+    <label>Award Year</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1819</fullName>
+                <default>false</default>
+                <label>1819</label>
+            </value>
+            <value>
+                <fullName>1920</fullName>
+                <default>false</default>
+                <label>1920</label>
+            </value>
+            <value>
+                <fullName>2021</fullName>
+                <default>false</default>
+                <label>2021</label>
+            </value>
+            <value>
+                <fullName>2122</fullName>
+                <default>false</default>
+                <label>2122</label>
+            </value>
+            <value>
+                <fullName>2223</fullName>
+                <default>false</default>
+                <label>2223</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

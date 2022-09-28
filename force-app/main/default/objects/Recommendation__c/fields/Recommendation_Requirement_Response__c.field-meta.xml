@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recommendation_Requirement_Response__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup field to the related Requirement Response</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Lookup field to the related Requirement Response</inlineHelpText>
+    <label>Recommendation Requirement Response</label>
+    <referenceTo>Requirement_Response__c</referenceTo>
+    <relationshipLabel>Recommendation</relationshipLabel>
+    <relationshipName>Recommendation</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

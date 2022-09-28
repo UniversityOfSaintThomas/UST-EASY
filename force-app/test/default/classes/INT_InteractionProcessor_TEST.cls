@@ -240,6 +240,9 @@ private class INT_InteractionProcessor_TEST {
         );
         insert testFallTerm;
 
+        Contact student = new Contact(LastName='TestStudent');
+        insert student;
+
         Interaction__c testInt = new Interaction__c(
                 First_Name__c = 'Super',
                 Last_Name__c = 'Gary',
@@ -255,7 +258,8 @@ private class INT_InteractionProcessor_TEST {
                 Lead_Source__c = 'Office Visit',
                 Affiliated_Account__c = testUniversity.Id,
                 Affiliation_Role__c = 'Student',
-                Primary_Affiliation__c = true
+                Primary_Affiliation__c = true,
+                Opportunity_Stage__c = 'Inquired'
         );
 
         // Act
@@ -291,7 +295,6 @@ private class INT_InteractionProcessor_TEST {
         Opportunity assertOppty = [SELECT Name, Career__c, StageName FROM Opportunity WHERE Id = :assertInteraction.Opportunity__c];
         System.assertEquals('Inquired', assertOppty.StageName, 'Stage should be defaulted from processing to \'Inquired\'.');
         System.assertEquals(assertInteraction.Opportunity_Name__c, assertOppty.Name, 'Name should have been copied over to Opportunity.');
-        System.assertEquals(assertInteraction.Career__c, assertOppty.Career__c, 'Career__c should have been copied over to Opportunity.');
     }
 
     @IsTest

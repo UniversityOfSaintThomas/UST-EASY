@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Air Force ROTC</fullName>
+        <default>false</default>
+        <label>Air Force ROTC</label>
+    </customValue>
+    <customValue>
+        <fullName>Aquinas Scholars (Honors Program)</fullName>
+        <default>false</default>
+        <label>Aquinas Scholars (Honors Program)</label>
+    </customValue>
+    <customValue>
+        <fullName>Aquinas Yearbook</fullName>
+        <default>false</default>
+        <label>Aquinas Yearbook</label>
+    </customValue>
+    <customValue>
+        <fullName>Army ROTC</fullName>
+        <default>false</default>
+        <label>Army ROTC</label>
+    </customValue>
+    <customValue>
+        <fullName>Campus Ministry</fullName>
+        <default>false</default>
+        <label>Campus Ministry</label>
+    </customValue>
+    <customValue>
+        <fullName>Cheer Team</fullName>
+        <default>false</default>
+        <label>Cheer Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Dance Team</fullName>
+        <default>false</default>
+        <label>Dance Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Mock Trial Team</fullName>
+        <default>false</default>
+        <label>Mock Trial Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Navy ROTC</fullName>
+        <default>false</default>
+        <label>Navy ROTC</label>
+    </customValue>
+    <customValue>
+        <fullName>Pep Band</fullName>
+        <default>false</default>
+        <label>Pep Band</label>
+    </customValue>
+    <customValue>
+        <fullName>Study Abroad</fullName>
+        <default>false</default>
+        <label>Study Abroad</label>
+    </customValue>
+    <customValue>
+        <fullName>Summit Ave Review (Literary Magazine)</fullName>
+        <default>false</default>
+        <label>Summit Ave Review (Literary Magazine)</label>
+    </customValue>
+    <customValue>
+        <fullName>Theater</fullName>
+        <default>false</default>
+        <label>Theater</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommie Ambassadors (Campus Hosts, Tour Guides)</fullName>
+        <default>false</default>
+        <label>Tommie Ambassadors (Campus Hosts, Tour Guides)</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommiemedia.com (web-based, student-run news)</fullName>
+        <default>false</default>
+        <label>Tommiemedia.com (web-based, student-run news)</label>
+    </customValue>
+    <customValue>
+        <fullName>Tutor/Mentor Program</fullName>
+        <default>false</default>
+        <label>Tutor/Mentor Program</label>
+    </customValue>
+    <customValue>
+        <fullName>Undergraduate Student Government</fullName>
+        <default>false</default>
+        <label>Undergraduate Student Government</label>
+    </customValue>
+    <description>STVINTS</description>
+    <masterLabel>Activity Types</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

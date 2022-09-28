@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Completed</fullName>
+        <fullName>Started App</fullName>
         <default>false</default>
-        <label>Completed</label>
+        <label>Started App</label>
     </customValue>
     <customValue>
-        <fullName>Complete-Decision Made</fullName>
+        <fullName>Submitted App</fullName>
         <default>false</default>
-        <label>Complete-Decision Made</label>
+        <label>Submitted App</label>
     </customValue>
     <customValue>
-        <fullName>Complete-Pending Additional Review</fullName>
+        <fullName>Complete App</fullName>
         <default>false</default>
-        <label>Complete-Pending Additional Review</label>
+        <label>Complete App</label>
     </customValue>
     <customValue>
-        <fullName>Complete-Pending Review</fullName>
+        <fullName>Pending</fullName>
         <default>false</default>
-        <label>Complete-Pending Review</label>
+        <label>Pending</label>
+    </customValue>
+    <customValue>
+        <fullName>Denied</fullName>
+        <default>false</default>
+        <label>Denied</label>
+    </customValue>
+    <customValue>
+        <fullName>Admit</fullName>
+        <default>false</default>
+        <label>Admit</label>
+    </customValue>
+    <customValue>
+        <fullName>Confirmed</fullName>
+        <default>false</default>
+        <label>Confirmed</label>
     </customValue>
     <customValue>
         <fullName>Deferred</fullName>
@@ -26,39 +41,51 @@
         <label>Deferred</label>
     </customValue>
     <customValue>
-        <fullName>Deposit Paid</fullName>
-        <default>false</default>
-        <label>Deposit Paid</label>
-    </customValue>
-    <customValue>
-        <fullName>Deposit Waived</fullName>
-        <default>false</default>
-        <label>Deposit Waived</label>
-    </customValue>
-    <customValue>
-        <fullName>Incomplete</fullName>
-        <default>false</default>
-        <label>Incomplete</label>
-    </customValue>
-    <customValue>
-        <fullName>Started</fullName>
-        <default>false</default>
-        <label>Started</label>
-    </customValue>
-    <customValue>
-        <fullName>Submitted</fullName>
-        <default>false</default>
-        <label>Submitted</label>
-    </customValue>
-    <customValue>
         <fullName>Withdrawn</fullName>
         <default>false</default>
         <label>Withdrawn</label>
     </customValue>
     <customValue>
+        <fullName>Incomplete</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Incomplete</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Paid</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Deposit Paid</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Decision Made</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Decision Made</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Pending Additional Review</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Pending Additional Review</label>
+    </customValue>
+    <customValue>
         <fullName>Cancelled</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Cancelled</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Waived</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Deposit Waived</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Pending Review</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Pending Review</label>
     </customValue>
     <masterLabel>Application Status</masterLabel>
     <sorted>false</sorted>

@@ -3,7 +3,7 @@
     <fullName>Student_Type__c</fullName>
     <description>Type of the student applying.</description>
     <externalId>false</externalId>
-    <label>Academic Level</label>
+    <label>Student Type</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>

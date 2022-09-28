@@ -26,6 +26,11 @@
         <label>Asylee/Refugee</label>
     </customValue>
     <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <customValue>
         <fullName>Domestic</fullName>
         <default>false</default>
         <isActive>false</isActive>

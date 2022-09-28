@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Read Only and Reporting permissions needed for UST Admissions Counselors</description>
+    <label>Admissions - Counselor (Read Only)</label>
+    <permissionSets>Admissions_Reports_and_Dashboards</permissionSets>
+    <permissionSets>Application_Reviewer</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

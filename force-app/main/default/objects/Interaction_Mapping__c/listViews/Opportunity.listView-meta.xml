@@ -5,6 +5,8 @@
     <columns>Active__c</columns>
     <columns>Target_Object_API_Name__c</columns>
     <columns>Target_Field_API_Name__c</columns>
+    <columns>Source_Object_API_Name__c</columns>
+    <columns>Source_Field_API_Name__c</columns>
     <columns>Interaction_Source_Field_API_Name__c</columns>
     <columns>Insert_Null__c</columns>
     <columns>Skip_Mapping__c</columns>
@@ -15,4 +17,5 @@
         <value>Opportunity</value>
     </filters>
     <label>Opportunity</label>
+    <language>en_US</language>
 </ListView>

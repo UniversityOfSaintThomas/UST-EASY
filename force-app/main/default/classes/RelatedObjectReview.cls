@@ -8,6 +8,7 @@ public class RelatedObjectReview {
     public Map<String, List<SObjectWrapper>> objWrappers{get;set;}
     public Map<String,Set<String>> objFieldMap{get;set;}
     public Map<String,String> objReferenceFieldMap{get;set;}
+    public EASYApplicationInfo appInfo {get;set;}
 
     public String createNewRecordId{get;set;}
     public String createNewRecordType{get;set;}
@@ -21,6 +22,7 @@ public class RelatedObjectReview {
         }set;
     }
     public RelatedObjectReview() {
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         objWrappers = new Map<String, List<SObjectWrapper>>();
         objFieldMap = new Map<String, Set<String>>();
         objReferenceFieldMap = new Map<String,String>();
@@ -30,7 +32,7 @@ public class RelatedObjectReview {
         //Find all relevant fields based on questions asked
         for(Question__c q : [
                 SELECT Id, Lookup_Object__c, Related_Object_Field__c, Requirement_Item__c, Requirement_Item__r.Related_List_Object__c, RecordType.DeveloperName,
-                        New_Reference_Field__c ,Static_Text__c
+                        New_Reference_Field__c ,Static_Text__c, Assistive_Text__c, Related_Object__c
                 FROM Question__c
                 WHERE (Lookup_Object__c != NULL OR New_Reference_Field__c = TRUE)
                 AND Active__c = :true AND Requirement_Item__r.Active__c = :true
@@ -178,7 +180,7 @@ public class RelatedObjectReview {
                     }
                     q.Picklist_Values__c = String.join(options,'\n');
                 }
-                relatedObjMap.put(s,new ApplicationQuestion(relatedSObj,q,null));
+                relatedObjMap.put(s, new ApplicationQuestion(relatedSObj, q, null, null));
             }
             fieldKeys = '';
             for(String s : relatedObjMap.keySet()){

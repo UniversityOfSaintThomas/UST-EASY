@@ -10,12 +10,154 @@
 .slds-scope .slds-button_brand {
     background-color: #9E28B5;
     border-color: #9E28B5;
-    border-color: #9E28B5;
+}
+
+.slds-scope .slds-summary-detail.slds-is-open .slds-summary-detail__content {
+    padding-top: 0px;
+}
+
+.slds-scope .slds-summary-detail button {
+    padding: 1px 10px 2px 0;
+}
+
+.slds-scope .slds-summary-detail {
+    padding: 1px 0px 5px 0;
+}
+
+.slds-scope .slds-icon-standard-brand {
+    background-color: #510C76;
+}
+
+.slds-scope table, .slds-scope iframe, .slds-scope img {
+    max-width: 100% !important;
+}
+
+.slds-scope ul.slds-listbox {
+    margin: 0;
+    list-style: none;
+}
+
+.slds-scope .slds-combobox .slds-combobox__form-element .refRemoveButton {
+    padding: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: -0.8rem;
+}
+
+.slds-scope:not(html), .slds-scope body,
+.slds-scope .slds-text-body_regular, .slds-scope label, .slds-scope p,
+.slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select,
+.slds-scope textarea, .slds-scope ul, .slds-scope ol,
+.slds-scope .slds-checkbox .slds-checkbox__label .slds-form-element__label {
+    font-size: 1.02rem;
+    line-height: 1.5rem;
+    font-weight: 400;
+    color: #0a0a0a;
+}
+
+.slds-scope .slds-radio_faux {
+    line-height: 2rem;
+}
+
+.slds-scope .slds-button {
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+    font-weight: 400;
+    padding: 0.3rem 0.7rem;
+}
+
+.slds-scope .slds-button.slds-radio_button {
+    padding: 0;
+}
+
+.slds-scope .slds-progress__item .slds-button {
+    width: 2rem;
+    height: 2rem;
+    padding: 0.1rem 0.1rem;
+}
+
+.slds-scope .slds-progress__item .slds-button__icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: 0;
+}
+
+.slds-scope .slds-progress .slds-progress-bar {
+    margin-top: -0.2rem;
+}
+
+.slds-scope .slds-tabled-checklist td {
+    padding: .4rem .3rem;
+}
+
+.slds-scope .slds-tabled-checklist label {
+    display: block;
+}
+
+.slds-scope .slds-tabled-checklist {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.slds-scope .slds-tabled-checklist tr:nth-child(odd) {
+    background: #f7f7f7;
+}
+
+.slds-scope ul {
+    margin: 0.4rem 0 0.7rem 1.7rem;
+    list-style: disc;
+}
+
+.slds-scope .slds-summary-detail__content ul {
+    margin: 0 0 .5rem 1.7rem;
+}
+
+.slds-scope ol {
+    margin: 0.4rem 0 0.7rem 1.7rem;
+    list-style: number;
+}
+
+.slds-scope slds-text-heading_small {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgb(3, 45, 96);
+}
+
+.slds-scope .slds-card__header-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.slds-scope .slds-text-heading_large {
+    font-weight: 600;
+}
+
+.slds-checkbox .slds-tabled-checklist td [type=checkbox] {
+    margin: 5px 7px 2px 2px !important;
+}
+
+.slds-scope .slds-text-body_regular {
+    margin-top: .2em;
+}
+
+.slds-scope .slds-form-element__help {
+    display: none;
+}
+
+.slds-scope label.slds-radio_button__label {
+    margin-right: 0
+}
+
+.slds-scope .slds-has-error .slds-form-element__help {
+    display: block;
+}
+
+.slds-scope .slds-has-error .slds-radio_button-group {
+    border: solid 2px red;
 }
 
 .slds-scope label.slds-text-body_regular {
-    font-size: 1.1em;
-    font-weight: 400;
+    margin-top: .2em;
 }
 
 .slds-checkbox .slds-tabled-checklist td [type=checkbox] {
@@ -26,13 +168,37 @@
     float: left;
 }
 
-.slds-checkbox {
-    margin-top: 10px;
+.slds-scope .slds-button__icon {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.2rem;
 }
 
 div.slds-progress {
     padding-top: 30px;
     padding-bottom: 30px;
+}
+
+.slds-col img {
+    max-width: 99%;
+}
+
+.slds-scope .messageTable {
+    margin: 1rem 0 !important;
+    border: solid 1px red;
+}
+
+.slds-scope .messageTable td {
+    padding: .2rem;
+}
+
+.slds-scope .messageCell h4 {
+    font-weight: bold;
+    padding-right: .4rem;
+}
+
+.slds-scope .messageTable .msgIcon {
+
 }
 
 /* Carousel styles */
@@ -55,6 +221,7 @@ div.slds-progress {
 .carousel__item {
     opacity: 0;
     position: absolute;
+    overflow: visible;
     top: 0;
     width: 100%;
     margin: auto;
@@ -76,100 +243,4 @@ div.slds-progress {
 
 .carousel__item.prev {
     transform: translateX(-100%);
-}
-
-/*Loading image*/
-#loadSpinner {
-    display: none;
-    background-color: #fff;
-    opacity: 0.60;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 1098;
-    position: fixed;
-    cursor: wait;
-}
-
-#loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -50px;
-    margin-left: -50px;
-    text-align: center;
-    font-size: 1.25rem;
-    margin-bottom: 5px;
-}
-
-#loading .background {
-    width: 105px;
-    height: 125px;
-    background-image: url(../img/loading-shield.gif);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    -webkit-animation: loadspin 2s ease-in-out infinite; /* Safari 4+ */
-    -moz-animation: loadspin 2s ease-in-out infinite; /* Fx 5+ */
-    -o-animation: loadspin 2s ease-in-out infinite; /* Opera 12+ */
-    animation: loadspin 2s ease-in-out infinite; /* IE 10+, Fx 29+ */
-}
-
-#loading span {
-    font-size: 1em;
-}
-
-@-webkit-keyframes loadspin {
-    75% {
-        -webkit-transform: rotateY(360deg);
-        -ms-transform: rotateY(360deg);
-        transform: rotateY(360deg);
-    }
-    100% {
-        -webkit-transform: rotateY(360deg);
-        -ms-transform: rotateY(360deg);
-        transform: rotateY(360deg);
-    }
-}
-
-@-moz-keyframes loadspin {
-    75% {
-        -webkit-transform: rotateY(360deg);
-        -ms-transform: rotateY(360deg);
-        transform: rotateY(360deg);
-    }
-    100% {
-        -webkit-transform: rotateY(360deg);
-        -ms-transform: rotateY(360deg);
-        transform: rotateY(360deg);
-    }
-}
-
-@-o-keyframes loadspin {
-    75% {
-        -webkit-transform: rotateY(360deg);
-        -ms-transform: rotateY(360deg);
-        transform: rotateY(360deg);
-    }
-    100% {
-        -webkit-transform: rotateY(360deg);
-        -ms-transform: rotateY(360deg);
-        transform: rotateY(360deg);
-    }
-}
-
-@keyframes loadspin {
-    75% {
-        -webkit-transform: rotateY(360deg);
-        -ms-transform: rotateY(360deg);
-        transform: rotateY(360deg);
-    }
-    100% {
-        -webkit-transform: rotateY(360deg);
-        -ms-transform: rotateY(360deg);
-        transform: rotateY(360deg);
-    }
 }

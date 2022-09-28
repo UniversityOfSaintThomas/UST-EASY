@@ -163,6 +163,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>U%2ES%2E Citizen</fullName>
             <default>false</default>
         </values>
@@ -2153,19 +2157,19 @@
     <picklistValues>
         <picklist>Generic_Filter_2__c</picklist>
         <values>
-            <fullName>Applicant 25 or over</fullName>
+            <fullName>Add another gender</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Applicant under 25</fullName>
+            <fullName>Female</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Generic Value 1</fullName>
+            <fullName>Male</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Generic Value 2</fullName>
+            <fullName>Nonbinary</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2191,11 +2195,131 @@
     <picklistValues>
         <picklist>Generic_Filter_4__c</picklist>
         <values>
-            <fullName>Generic Value 1</fullName>
+            <fullName>Fall 2022</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Generic Value 2</fullName>
+            <fullName>Fall 2023</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2024</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2025</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2026</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2027</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2028</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2029</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-Term 2024</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2023</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2025</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2026</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2027</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2028</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2029</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2030</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2023</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2024</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2025</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2026</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2027</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2028</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2029</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2030</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2023</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2024</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2025</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2026</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2027</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2028</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2029</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2030</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2242,6 +2366,10 @@
         </values>
         <values>
             <fullName>International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2315,6 +2443,41 @@
         </values>
         <values>
             <fullName>One Application Per Term and Program</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Program_Applicant_Type__c</picklist>
+        <values>
+            <fullName>DFC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>First-Year</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professional %28MDIV%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer DFC</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2405,6 +2568,33 @@
         </values>
         <values>
             <fullName>Teacher Education</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Program_College_of_Interest__c</picklist>
+        <values>
+            <fullName>2 Year College</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 Year College</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
     </picklistValues>

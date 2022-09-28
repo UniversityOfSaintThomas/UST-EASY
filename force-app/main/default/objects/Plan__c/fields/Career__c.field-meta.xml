@@ -22,6 +22,16 @@
                 <default>false</default>
                 <label>Graduate</label>
             </value>
+            <value>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+                <label>Non-Degree</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

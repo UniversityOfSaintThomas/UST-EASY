@@ -5,6 +5,8 @@
 Revision (s):
 *******************************************************************************/
 public class ApplicationChecklist {
+    public void init() {}
+/*
 
     public Map<Id, RequirementWrapper> reqMap { get; set; }
     public List<RequirementWrapper> reqs { get {return reqMap.values();} }
@@ -17,6 +19,7 @@ public class ApplicationChecklist {
     public Boolean allowWithdraw { get; set; }
     public List<Requirement_Item__c> riList { get; set; }
     public Decimal progress { get; set; }
+    public EASYApplicationInfo appInfo { get; set; }
 
     public Application_Control__c appControl {
         get {
@@ -28,11 +31,17 @@ public class ApplicationChecklist {
         set;
     }
 
-    /*******************************************************************************
-    * @description Initialize the page - Checks if requirements have been completed
-    ********************************************************************************/
-    public void init() {
+    public ApplicationChecklist() {
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
+    }
 
+    */
+/*******************************************************************************
+    * @description Initialize the page - Checks if requirements have been completed
+    ********************************************************************************//*
+
+    public void init() {
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
@@ -43,7 +52,13 @@ public class ApplicationChecklist {
         }
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
 
-        app = [SELECT Id, Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c, Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Residency__c, Degree_Type__c, Application_Control__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Application__c WHERE Id = :applicationId];
+        app = [
+                SELECT Id, Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c,
+                        Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Residency__c, Degree_Type__c,
+                        Application_Control__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                FROM Application__c
+                WHERE Id = :applicationId
+        ];
         appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
 
         allowCancel = String.isNotBlank(appControl.Allow_Cancel_From__c) && new Set<String>(appControl.Allow_Cancel_From__c.split(';')).contains(app.Application_Status__c);
@@ -73,20 +88,19 @@ public class ApplicationChecklist {
 
         Set<Id> riIds = new Set<Id>();
         riList = [
-                SELECT Id, File_Types__c, Required__c, Requirement__c, Internal_Only__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c,
-                        Active__c, Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Requirement__r.Label__c,
-                        Name, Label__c, Instructions__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c,
-                        Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
-                        Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_Object_Record_Type_ID__c,
-                        Related_List_Where_Clause__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Allow_Supporting_Documentation_Upload__c,
-                        Required_Supporting_Documentation__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (
-                        SELECT Id, Active__c, Hardcoded_Value__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c,
-                                Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
-                                Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c,
-                                Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Contact_Field__c, Application_Field__c, External_Email_Field__c,
-                                Editable_Application_Status__c, New_Reference_Field__c, URL_Parameter__c,Static_Text__c, Display_as_Picklist__c, Generic_Filter_1__c,
-                                Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                SELECT Id, File_Types__c, Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Active__c, Required__c,
+                        Required_Number_of_Children__c, Maximum_Number_of_Children__c, Requirement__r.Name, Requirement__r.Label__c, Name, Label__c, Instructions__c, Intended_Program__c,
+                        Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
+                        Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Related_Object_Record_Type_ID__c,
+                        Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
+                        Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c, Requirement__c, (
+                        SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c,
+                                Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c,
+                                Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Contact_Field__c,
+                                Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Editable_Application_Status__c, URL_Parameter__c, New_Reference_Field__c, Static_Text__c, Display_as_Picklist__c,
+                                Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, RecordType.Name, Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c
                         FROM Questions__r
+                        WHERE Active__c = TRUE
                         ORDER BY Display_Order__c ASC NULLS LAST
                 )
                 FROM Requirement_Item__c
@@ -102,10 +116,10 @@ public class ApplicationChecklist {
 
         checkRequirementCompletion();
         for (Requirement_Response__c rr : [
-                SELECT Id, Requirement_Item__r.Required__c,Requirement_Item__c,Requirement_Item__r.RecordType.DeveloperName,Requirement_Item__r.Requirement__c,
-                        Fulfilled_On__c,Incomplete_Questions__c,Question_Group_Requirement_Fulfilled_On__c, HasDocument__c, Waive_Requirement__c,
-                        Document_Requirement_Fulfilled_On__c,Has_Child_Requirement__c,Child_Requirement_Fulfilled_On__c,Send_Reminder__c,
-                        External_Email__c,Viewed__c,Requirement_Item__r.Viewing_Requirement_Formula__c
+                SELECT Id, Requirement_Item__r.Required__c, Requirement_Item__c, Requirement_Item__r.RecordType.DeveloperName, Requirement_Item__r.Requirement__c,
+                        Fulfilled_On__c, Incomplete_Questions__c, Question_Group_Requirement_Fulfilled_On__c, HasDocument__c, Waive_Requirement__c,
+                        Document_Requirement_Fulfilled_On__c, Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c, Send_Reminder__c,
+                        External_Email__c, Viewed__c, Requirement_Item__r.Viewing_Requirement_Formula__c
                 FROM Requirement_Response__c
                 WHERE Application__c = :applicationId
                 AND Requirement_Item__r.Requirement__c IN :reqIds
@@ -183,9 +197,11 @@ public class ApplicationChecklist {
 
     }
 
-    /*******************************************************************************
+    */
+/*******************************************************************************
     * @description Checks to see if requirements have been completed. Checks related list items too (Even if they are not marked completed on the Requirement Response)
-    ********************************************************************************/
+    ********************************************************************************//*
+
     public void checkRequirementCompletion() {
 
         Set<Id> requirementIds = new Set<Id>();
@@ -214,7 +230,7 @@ public class ApplicationChecklist {
                         SELECT Id, IsPopulated__c, PopulatedOn__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c,
                                 ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c,
                                 ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c,
-                                Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c
+                                Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c
                         FROM Question_Responses__r
                 ), (
                         SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title
@@ -236,7 +252,7 @@ public class ApplicationChecklist {
         Map<Id, Id> qdReqMap = new Map<Id, Id>(); //Maps Question Dependencies to their original Requirement
         Map<Id, List<Question_Dependency__c>> qdMap = new Map<Id, List<Question_Dependency__c>>();
         for (Question_Dependency__c qd : [
-                SELECT Id, Question__c, Question__r.Required__c, Question__r.Requirement_Item__c,Question__r.Requirement_Item__r.Requirement__c,
+                SELECT Id, Question__c, Question__r.Required__c, Question__r.Requirement_Item__c, Question__r.Requirement_Item__r.Requirement__c,
                         Controlling_Question__c, Controlling_Question__r.Requirement_Item__r.Requirement__c, Value__c, ValueCheckbox__c,
                         RecordType.DeveloperName
                 FROM Question_Dependency__c
@@ -254,7 +270,7 @@ public class ApplicationChecklist {
 
         //Question responses
         Map<Id, List<Question_Response__c>> qrMap = new Map<Id, List<Question_Response__c>>();
-        for (Question_Response__c qr : [SELECT Id, IsPopulated__c, PopulatedOn__c, Question__r.Requirement_Item__r.Requirement__c,Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c,Requirement_Response__c FROM Question_Response__c WHERE Question__c IN :questionItemSet AND Requirement_Response__r.Application__c = :applicationId]) {
+        for (Question_Response__c qr : [SELECT Id, IsPopulated__c, PopulatedOn__c, Question__r.Requirement_Item__r.Requirement__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c FROM Question_Response__c WHERE Question__c IN :questionItemSet AND Requirement_Response__r.Application__c = :applicationId]) {
             if (!qrMap.containsKey(qdReqMap.get(qr.Question__c))) {
                 qrMap.put(qdReqMap.get(qr.Question__c), new List<Question_Response__c>());
             }
@@ -299,7 +315,7 @@ public class ApplicationChecklist {
             ar.preventUpdates = true;
             ar.ignoreExternalFilter = true;
             arLst.add(ar);
-            ar.init();
+            ar.applicationRequirementInit();
             responses.addAll(ar.newResponses);
         }
         if (responses.size() > 0) {
@@ -343,9 +359,11 @@ public class ApplicationChecklist {
         }
 
     }
-    /* ******************************************************************************
+    */
+/* ******************************************************************************
     * @description Submits the application if the application is in the correct status
-    ********************************************************************************/
+    ********************************************************************************//*
+
     public PageReference submit() {
         PageReference pr;
         if (allowSubmit && app != null) {
@@ -362,9 +380,11 @@ public class ApplicationChecklist {
         }
         return pr;
     }
-    /* ******************************************************************************
+    */
+/* ******************************************************************************
     * @description Cancels the application if the application is in the correct status
-    ********************************************************************************/
+    ********************************************************************************//*
+
     public PageReference cancelApp() {
         PageReference pr;
         if (allowCancel && app != null) {
@@ -381,9 +401,11 @@ public class ApplicationChecklist {
         }
         return pr;
     }
-    /* ******************************************************************************
+    */
+/* ******************************************************************************
     * @description Withdraws the application if the application is in the correct status
-    ********************************************************************************/
+    ********************************************************************************//*
+
     public PageReference withdrawApp() {
         PageReference pr;
         if (allowWithdraw && app != null) {
@@ -400,5 +422,6 @@ public class ApplicationChecklist {
         }
         return pr;
     }
+*/
 
 }

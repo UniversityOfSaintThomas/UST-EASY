@@ -8,46 +8,36 @@ public class ApplicationCreate {
     public Contact con { get; set; }
     public Application__c app { get; set; }
     public ApplicationQuestionSection section { get; set; }
+    public List<RequirementWrapper> checklistItems { get; set; }
     public List<Requirement_Item__c> items { get; set; }
     public Map<Id, Program__c> intendedPrograms { get; set; }
     public transient String additionalDataString { get; set; }
     public Set<String> contactFields { get; set; }
     public String degreeType { get; set; }
-    public Id academictermId { get; set; }
-
-    public Application_Control__c appControl {
-        get {
-            if (appControl == null) {
-                appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
-            }
-            return appControl;
-        }
-        set;
-    }
+    public EASYApplicationInfo appInfo { get; set; }
+    public String template { get; set; }
 
     /* ******************************************************************************
     * @description Initialize the page - Sets up requirements
     ********************************************************************************/
-    public PageReference init() {
+
+    public ApplicationCreate() {
+        if (appInfo == null) {
+            appInfo = ApplicationUtilities.createShellAppInfo();
+        }
+    }
+
+    public PageReference ApplicationCreateInit() {
+
+        appInfo = ApplicationUtilities.createShellAppInfo();
 
         // Exit if there is no Application Control to reference
-        if (appControl == null) {
+        if (String.isBlank(appInfo.appControlId)) {
             return null;
         }
-        // Get contact id from user or URL parameter if standard user
-        contactId = [
-                SELECT Id, ContactId
-                FROM User
-                WHERE Id = :UserInfo.getUserId()
-        ].ContactId;
 
-        if (UserInfo.getUserType().equals('Standard')) {
-            contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
-        }
-
-        setup(null, null); // Do setup of all objects
-
-        app.Contact__c = contactId; // Assign contact to application
+        applicationCreateSetup(null, null); // Do setup of all objects
+        app.Contact__c = appInfo.contactId; // Assign contact to application
 
         // Take user straight to checklist if we don't want to ask any questions
         if (section.groups.isEmpty()) {
@@ -58,19 +48,24 @@ public class ApplicationCreate {
     }
 
     /*******************************************************************************
-    * @description 
+    * @description
     ********************************************************************************/
-    public void setup(ApplicationQuestionGroup firstGroup, ApplicationQuestionGroup lastGroup) {
+    public void applicationCreateSetup(ApplicationQuestionGroup firstGroup, ApplicationQuestionGroup lastGroup) {
 
         // Initialize contact and application
+        Id appControlId = appInfo.appControlId;
+        Id contactId = appInfo.contactId;
+
         con = new Contact();
-        app = new Application__c(Application_Control__c = appControl.Id, Application_Status__c = appControl.Application_Start_Status__c);
+        app = new Application__c(Application_Control__c = appControlId, Application_Status__c = appInfo.appStartStatus);
+        appInfo.appId = app.id;
 
         // List of question groups to display
         List<ApplicationQuestionGroup> groups = new List<ApplicationQuestionGroup>();
 
         // Add first group to beginning
         if (firstGroup != null) {
+            firstGroup = addDependencyToQuestions(firstGroup);
             groups.add(firstGroup);
         }
 
@@ -81,22 +76,23 @@ public class ApplicationCreate {
                         Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_Object_Record_Type_ID__c,
                         Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Holding_Record_Id__c, Internal_Requirement_Item__c, Editable_Application_Status__c,
                         Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
-                        Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (
+                        Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c, Requirement__c, (
                         SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c,
                                 Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
                                 Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Name_Field_API_Name__c,
-                                Lookup_Object__c, Lookup_Where_Clause__c, New_Reference_Field__c, Contact_Field__c, Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Static_Text__c,
-                                URL_Parameter__c, Editable_Application_Status__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                                Lookup_Object__c, Lookup_Where_Clause__c, URL_Parameter__c, New_Reference_Field__c, Contact_Field__c, Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Static_Text__c,
+                                Editable_Application_Status__c, Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Assistive_Text__c,
+                                RecordType.Name, Related_Object__c, Additional_Field_Validation__c
                         FROM Questions__r
-                        WHERE Active__c = :true
+                        WHERE Active__c = TRUE
                         ORDER BY Display_Order__c ASC NULLS LAST
                 )
                 FROM Requirement_Item__c
-                WHERE Requirement__r.Application_Control__c = :appControl.Id AND Requirement__r.Show_on_Application_Creation__c = :true
-                AND Requirement__r.Active__c = :true AND Active__c = :true
+                WHERE Requirement__r.Application_Control__c = :appControlId
+                AND Requirement__r.Show_on_Application_Creation__c = TRUE
+                AND Requirement__r.Active__c = TRUE AND Active__c = TRUE
                 ORDER BY Display_Order__c ASC NULLS LAST
         ];
-
 
         // Query for contact if we have one
         if (contactId != null) {
@@ -112,19 +108,7 @@ public class ApplicationCreate {
             }
             // Query for contact
             if (!contactFields.isEmpty()) {
-                contactFields.addAll(new Set<String>{
-                        'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode'
-                });
-                if (Account.SObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode')) {
-                    contactFields.addAll(new Set<String>{
-                            'mailingstatecode', 'mailingcountrycode', 'otherstatecode', 'othercountrycode'
-                    });
-                } else {
-                    contactFields.addAll(new Set<String>{
-                            'mailingstate', 'mailingcountry', 'otherstate', 'othercountry'
-                    });
-                }
-                String query = 'SELECT ' + String.join(new List<String>(contactFields), ',') + ' FROM Contact WHERE Id = :contactId';
+                String query = 'SELECT ' + ApplicationHelper.getApplicationContactFields(items) + ' FROM Contact WHERE Id = :contactId';
                 con = ((List<Contact>) Database.query(query)).get(0);
             }
         }
@@ -142,18 +126,19 @@ public class ApplicationCreate {
         // Create question groups for requirements we should display
         for (Requirement_Item__c i : items) {
             if ((String.isBlank(i.Requirement__r.Application_Creation_Display_Order__c) || i.Requirement__r.Application_Creation_Display_Order__c.equals('Before Term/Program Questions')) && ApplicationFilter.filter(app, i)) {
-                groups.add(ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true));
+                ApplicationQuestionGroup middleGroup = ApplicationQuestionSection.createQuestionGroup(con, app, i, null, responses.get(i.Id), null, fields, true);
+                middleGroup = addDependencyToQuestions(middleGroup);
+                groups.add(middleGroup);
             }
         }
-
 
         ApplicationQuestion programQuestion;
 
         // Add term and program questions if not hidden
-        if (!appControl.Hide_Term_Program__c) {
+        if (!appInfo.hideTermProgram) {
 
             // Get map of intended programs with id as key, and only for a specific Application Control
-            List<Program__c> progs = [
+            List<Program__c> programs = [
                     SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Degree__c,
                             Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c,
                             Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c,
@@ -161,27 +146,19 @@ public class ApplicationCreate {
                     FROM Program__c
                     WHERE Hide_from_Application__c = :false
                     AND Active__c = :true
-                    AND Application_Control__c = :appControl.Id
+                    AND Application_Control__c = :appControlId
+                    //AND Degree__c = :degreeType
                     ORDER BY Name ASC
             ];
-            // Original EASY query, that does not limit program list by application control
-            // List<Program__c> progs = [SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, Hide_Applicant_Type__c, Hide_Citizenship__c, Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Application_Control__c FROM Program__c WHERE Hide_from_Application__c = :false AND Active__c = :true  ORDER BY Name ASC];
 
-            intendedPrograms = new Map<Id, Program__c>(progs);
+            System.debug(JSON.serializePretty(programs));
+            intendedPrograms = new Map<Id, Program__c>(programs);
 
             // Create new program question and add to list
             programQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Program__c');
             programQuestion.addQuestionObject(new Question__c(Label__c = 'What program are you applying to?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Program'));
-            programQuestion.addIntendedProgramFilteringList(progs);
-
-
-            // Get map of term names with id as key
-            //List<Id> termIds = new List<Id>();
-            //List<String> termNames = new List<String>();
-            //for (Academic_Term__c at : [SELECT Id, Name FROM Academic_Term__c WHERE Application_Status__c = :'Active' ORDER BY Activate_Application_Date__c ASC]) {
-            //    termIds.add(at.Id);
-            //    termNames.add(at.Name);
-            // }
+            programQuestion.addIntendedProgramFilteringList(programs);
+            programQuestion.hasDependentQuestions = true;
 
             // Get map of term names with id as key - updated by FDF 12/17/2021 to pull a unique list of Academic Terms that have an Intended Program Term for that Application Control
             List<Academic_Term__c> aTermList = new List<Academic_Term__c>();
@@ -189,20 +166,30 @@ public class ApplicationCreate {
             List<String> termNames = new List<String>();
 
             //pull a list of all Academic_Term__c records that are associated to the Application Control
-
-            System.debug('APP CONT ID: ' + appControl.Id);
             AggregateResult[] at = [
-                    SELECT Academic_Term__r.Id, Academic_Term__r.Name
+                    SELECT Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
                     FROM Intended_Program_Term__c
-                    WHERE Intended_Program__r.Application_Control__c = :appControl.Id
+                    WHERE Intended_Program__r.Application_Control__c = :appControlId
                     AND Academic_Term__r.Application_Status__c = 'Active'
-                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name
+                    GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
+                    ORDER BY Academic_Term__r.Term_Start_Date__c
             ];
 
             for (AggregateResult ar : at) {
                 Academic_Term__c aTerm = new Academic_Term__c();
                 aTerm.Id = (Id) ar.get('Id');
-                aTerm.Name = (String) ar.get('Name');
+                String formattedName = '';
+
+                //TODO: Assuming CST here. Maybe make time zone setting for application control to set this or academic term
+                if ((Date) ar.get('Term_Start_Date__c') != null && (Date) ar.get('Term_End_Date__c') != null) {
+                    //Parenthesis around the time zone string because class is used to parsing that out of a generated picklist that includes it.
+                    DateTime startTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_Start_Date__c'), null, '(America/Chicago)');
+                    DateTime endTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_End_Date__c'), null, '(America/Chicago)');
+                    formattedName = ' (Start Date: ' + startTermDateTime.format('MMM dd, yyyy') + ')';
+                }
+
+                aTerm.Name = (String) ar.get('Name') + formattedName;
+
                 aTermList.add(aTerm);
 
                 termIds.add(aTerm.Id);
@@ -214,12 +201,16 @@ public class ApplicationCreate {
             ApplicationQuestion termQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Term_of_Entry__c');
             termQuestion.addQuestionObject(new Question__c(Label__c = 'What term are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Term'));
             termQuestion.setReferenceOptions(termIds, termNames);
+            termQuestion.hasDependentQuestions = true;
 
             // Create question group out of term/program questions and add to list
-            groups.add(new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+            ApplicationQuestionGroup termProgramQuestionGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
                     termQuestion, programQuestion
-            }));
+            });
+            termProgramQuestionGroup = addDependencyToQuestions(termProgramQuestionGroup);
+            groups.add(termProgramQuestionGroup);
         }
+
 
         // Create question groups for requirements we should display
         for (Requirement_Item__c i : items) {
@@ -232,7 +223,7 @@ public class ApplicationCreate {
         for (Question_Dependency__c dq : [
                 SELECT Id, Question__c, Controlling_Question__c, Value__c, ValueCheckbox__c, RecordType.DeveloperName
                 FROM Question_Dependency__c
-                WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appControl.Id
+                WHERE Question__r.Requirement_Item__r.Requirement__r.Application_Control__c = :appControlId
                 AND Question__r.Requirement_Item__r.Requirement__r.Show_on_Application_Creation__c = :true
         ]) {
 
@@ -257,6 +248,18 @@ public class ApplicationCreate {
         if (programQuestion != null) {
             programQuestion.section = section;
         }
+    }
+
+    public ApplicationQuestionGroup addDependencyToQuestions(ApplicationQuestionGroup appQuestionGroup) {
+        if (appQuestionGroup.questions.size() > 0) {
+            for (Integer x = 0; x < appQuestionGroup.questions.size(); x++) {
+                String inputType = appQuestionGroup.questions[x].fieldType;
+                if (inputType.equalsIgnoreCase('picklist') || inputType.equalsIgnoreCase('checkbox')) {
+                    appQuestionGroup.questions[x].hasDependentQuestions = true;
+                }
+            }
+        }
+        return appQuestionGroup;
     }
 
     /* ******************************************************************************
@@ -329,7 +332,7 @@ public class ApplicationCreate {
         section.pushValuesToObjects();
 
         // Check to see if term/program are valid if not hidden
-        if (!appControl.Hide_Term_Program__c) {
+        if (!appInfo.hideTermProgram) {
 
             // Throw exception if invalid program was selected
             String programError = 'The selected program is not available.';
@@ -354,8 +357,10 @@ public class ApplicationCreate {
                             Residency__c, School_College__c, Student_Type__c, Intended_Program__c, Generic_Filter_1__c,
                             Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
                     FROM Intended_Program_Term__c
-                    WHERE Academic_Term__c = :app.Intended_Term_of_Entry__c AND Application_Status__c = :'Inactive'
-                    AND (Intended_Program__c = :app.Intended_Program__c OR Intended_Program__c = :null)
+                    WHERE Academic_Term__c = :app.Intended_Term_of_Entry__c
+                    AND Application_Status__c = :'Inactive'
+                    AND (Intended_Program__c = :app.Intended_Program__c
+                    OR Intended_Program__c = :null)
             ]) {
 
                 if (ApplicationFilter.filter(app, ipt, false)) {
@@ -370,6 +375,7 @@ public class ApplicationCreate {
                         FROM Application__c
                         WHERE Contact__c = :app.Contact__c
                 ]) {
+                    System.debug(ip.Number_of_Applications_Limit__c);
                     if (ip.Number_of_Applications_Limit__c.equals('One Application')) {
                         return 'You already have an application. Only one application is allowed.';
                     } else if ((ip.Number_of_Applications_Limit__c.equals('One Application Per Term') || ip.Number_of_Applications_Limit__c.equals('One Application Per Term Per Program')) && app.Intended_Term_of_Entry__c == a.Intended_Term_of_Entry__c) {
@@ -444,50 +450,47 @@ public class ApplicationCreate {
         }
 
         upsert qResponses; // Insert question responses
+
         // Return URL for checklist page for new application
-        return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appControl.URL_Parameter__c) ? '' : ('&at=' + appControl.URL_Parameter__c));
+        appInfo = ApplicationUtilities.setApplicationInfo(appInfo, app);
+        ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
+        return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appInfo.at) ? '' : ('&at=' + appInfo.at));
     }
 
     @RemoteAction
     public static List<SObject> lookupSearch(String sObj, String sObjFilter, String sObjNameField, String term) {
-        return new ActionWithSharing().lookupSearchWithSharing(sObj, sObjFilter, sObjNameField, term);
-    }
-    public with sharing class ActionWithSharing {
-        public List<SObject> lookupSearchWithSharing(String sObj, String sObjFilter, String sObjNameField, String term) {
-            if (Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()) {
-                if (String.isBlank(sObjNameField)) {
-                    sObjNameField = 'Name';
-                }
-                List<String> sObjNameFields = sObjNameField.split(',');
-
-                for (Integer x = 0; x < sObjNameFields.size(); x++) {
-                    sObjNameFields[x] = sObjNameFields[x].trim();
-                }
-
-                String fieldList = String.join(sObjNameFields, ', ');
-                String likeStatement = '';
-
-                for (String sField : sObjNameFields) {
-                    likeStatement += sField + ' LIKE \'%' + String.escapeSingleQuotes(term) + '%\' OR ';
-                }
-                likeStatement = ' ( ' + likeStatement.removeEnd(' OR ') + ' )';
-
-                String query = 'Select Id, ' + fieldList;
-                query += ' FROM ' + sObj;
-                query += ' WHERE ' + likeStatement;
-                if (String.isNotBlank(sObjFilter)) {
-                    query += ' AND (' + sObjFilter + ')';
-                }
-                query += ' ORDER BY ' + fieldList + ' ASC';
-                query += ' LIMIT 50';
-                System.debug(query);
-                try {
-                    return Database.query(query);
-                } catch (Exception e) {
-                    return new List<SObject>();
-                }
+        if (Schema.getGlobalDescribe().get(sObj).getDescribe().isAccessible()) {
+            if (String.isBlank(sObjNameField)) {
+                sObjNameField = 'Name';
             }
-            return new List<SObject>();
+            List<String> sObjNameFields = sObjNameField.split(',');
+
+            for (Integer x = 0; x < sObjNameFields.size(); x++) {
+                sObjNameFields[x] = sObjNameFields[x].trim();
+            }
+
+            String fieldList = String.join(sObjNameFields, ', ');
+            String likeStatement = '';
+
+            for (String sField : sObjNameFields) {
+                likeStatement += sField + ' LIKE \'%' + String.escapeSingleQuotes(term) + '%\' OR ';
+            }
+            likeStatement = ' ( ' + likeStatement.removeEnd(' OR ') + ' )';
+
+            String query = 'Select Id, ' + fieldList;
+            query += ' FROM ' + sObj;
+            query += ' WHERE ' + likeStatement;
+            if (String.isNotBlank(sObjFilter)) {
+                query += ' AND (' + sObjFilter + ')';
+            }
+            query += ' ORDER BY ' + fieldList + ' ASC';
+            query += ' LIMIT 50';
+            try {
+                return Database.query(query);
+            } catch (Exception e) {
+                return new List<SObject>();
+            }
         }
+        return new List<SObject>();
     }
 }

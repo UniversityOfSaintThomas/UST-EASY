@@ -13,7 +13,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Manual Entry</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Manual Entry</label>
             </value>
             <value>
@@ -30,6 +30,11 @@
                 <fullName>Webform</fullName>
                 <default>false</default>
                 <label>Webform</label>
+            </value>
+            <value>
+                <fullName>Application</fullName>
+                <default>true</default>
+                <label>Application</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -20,6 +20,7 @@
         <default>false</default>
         <label>Generic Value 2</label>
     </customValue>
-    <masterLabel>Generic Filter 3</masterLabel>
+    <description>Used for Undergraduate Applications</description>
+    <masterLabel>Test Score Preference</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

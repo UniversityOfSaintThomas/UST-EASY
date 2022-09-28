@@ -8,5 +8,13 @@
         <members>hed__Education_History__c</members>
         <name>CustomObject</name>
     </types>
+    <types>
+        <members>OpportunityStage</members>
+        <name>StandardValueSet</name>
+    </types>
+    <types>
+        <members>ContactRole</members>
+        <name>StandardValueSet</name>
+    </types>
     <version>52.0</version>
 </Package>

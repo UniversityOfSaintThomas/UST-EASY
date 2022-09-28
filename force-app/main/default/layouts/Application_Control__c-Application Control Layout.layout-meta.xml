@@ -39,6 +39,14 @@
                 <behavior>Edit</behavior>
                 <field>Degree_Levels__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Template__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Show_on_App_Finder__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -169,21 +177,31 @@
         <fields>Label__c</fields>
         <fields>Display_Order__c</fields>
         <fields>Show_on_Application_Creation__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <fields>LAST_UPDATE</fields>
         <relatedList>Requirement__c.Application_Control__c</relatedList>
         <sortField>Display_Order__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
         <fields>Intended_Program__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Application__c.Application_Control__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Program_Major_Concentration__c</fields>
+        <fields>Degree_Type__c</fields>
+        <fields>Student_Type__c</fields>
+        <fields>RECORDTYPE</fields>
         <fields>Active__c</fields>
-        <fields>Career__c</fields>
-        <fields>Department__c</fields>
-        <fields>Program_Code__c</fields>
         <relatedList>Program__c.Application_Control__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -192,7 +210,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h19000002AE17</masterLabel>
+        <masterLabel>00hJ0000007pOaF</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

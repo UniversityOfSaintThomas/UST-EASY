@@ -161,7 +161,18 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Question Responses</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <customTabListAdditionalFields>Question__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Requirement_Response__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Question_Label__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Question_Response__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Question__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Requirement_Response__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Question_Label__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Question_Response__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

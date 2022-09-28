@@ -1,39 +1,83 @@
-<apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0">
-    <apex:composition template="Capricorn2020">
+<apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0" action="{!applicationRegistrationInit}">
+    <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead />
+            <c:ApplicationHead/>
             <script>
-                function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm, callback, originObjId) {
-                    Visualforce.remoting.Manager.invokeAction(
-                        '{!$RemoteAction.ApplicationRegistration.lookupSearch}',
-                        sObj, sObjFilter, sObjNameField, searchTerm,
-                        function (result, event) {
-                            if (event.status) {
-                                callback(result, originObjId)
-                            } else if (event.type === 'exception') {
-                            } else {
-                            }
-                        },
-                        {escape: true}
-                    );
+                async function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm) {
+                    return new Promise((resolve, reject) => {
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.ApplicationRegistration.lookupSearch}',
+                            sObj, sObjFilter, sObjNameField, searchTerm,
+                            (result, event) => {
+                                event.status ? resolve(result) : reject(event.message);
+                            },
+                            {escape: true}
+                        );
+                    });
                 }
             </script>
         </apex:define>
+        <apex:define name="metaPageTitle">New Application: {!appInfo.academicLevel}</apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="New Application" appControl="{!appCreate.appControl}" loadingText="Building Your Application...">
-                <c:ApplicationForm section="{!appCreate.section}" appControl="{!appCreate.appControl}">
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                        <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="login();">
+
+            <!-- This only runs after initial install and generates the cookie encryption key unique to each org -->
+            <apex:outputPanel layout="none" rendered="{!!cookieKeyPresent}">
+                <apex:form>
+                    <p>This is the first time you are running EASY and a unique encryption key must be generated for your org.</p>
+                    <p style="margin-bottom: 30px;">
+                        <apex:commandButton action="{!testCookieKey}" value="Click to generate encryption key" title="Click to generate encryption key"/>
+                    </p>
+                </apex:form>
+            </apex:outputPanel>
+
+            <apex:outputPanel layout="none" rendered="{!cookieKeyPresent}">
+                <c:ApplicationBody title="New Application" appInfo="{!appInfo}" loadingText="Building Your Application..." vfPageName="ApplicationRegistration">
+                    <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}" title="New Application" vfPageName="ApplicationRegistration">
+                        <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
                             <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
                         </apex:actionFunction>
-                        <apex:actionFunction name="login" action="{!login}" oncomplete="appHideLoadingSpinner();"/>
-                        <a href="javascript:null;" class="slds-button slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">Back</a>
-                        <a href="javascript:null;" class="slds-button slds-button_brand carousel__button--prev">Back</a>
-                        <a href="javascript:null;" class="slds-button slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">Save and Continue</a>
-                        <a href="javascript:null;" class="slds-button slds-button_brand carousel__button--next">Next</a>
-                    </div>
-                </c:ApplicationForm>
-            </c:ApplicationBody>
+                        <nav class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_x-small">
+                            <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">
+                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#arrow_left")}"></use>
+                                </svg>
+                                Previous Section
+                            </a>
+
+                            <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-m-top_xxx-small slds-button_brand carousel__button--prev">
+                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#back")}"></use>
+                                </svg>
+                                Back
+                            </a>
+
+                            <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-button_brand carousel__button--next">
+                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#forward")}"></use>
+                                </svg>
+                                Next
+                            </a>
+
+                            <a href="javascript:void(0)" class="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">
+                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
+                                </svg>
+                                Save and Continue
+                            </a>
+                        </nav>
+
+                        <nav class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
+                            <a href="{!$Site.BaseUrl}/apex/ApplicationPortal" class="slds-button slds-button_neutral slds-p-horizontal_medium slds-p-vertical_xxx-small">
+                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#shortcuts")}"></use>
+                                </svg>
+                                Return to Application Portal
+                            </a>
+                        </nav>
+
+                    </c:ApplicationForm>
+                </c:ApplicationBody>
+            </apex:outputPanel>
         </apex:define>
     </apex:composition>
 </apex:page>

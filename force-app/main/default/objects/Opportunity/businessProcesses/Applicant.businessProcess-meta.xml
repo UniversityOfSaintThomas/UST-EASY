@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Applicant</fullName>
+    <description>Sales process for Applicant Opportunity</description>
     <isActive>true</isActive>
     <values>
-        
-            <fullName>Closed Lost</fullName>
-        
-            <default>false</default>
-        
-        </values>
+        <fullName>Admit</fullName>
+        <default>false</default>
+    </values>
     <values>
-        
-            <fullName>Closed Won</fullName>
-        
-            <default>false</default>
-        
-        </values>
+        <fullName>Complete App</fullName>
+        <default>false</default>
+    </values>
     <values>
-        
-            <fullName>Prospecting</fullName>
-        
-            <default>false</default>
-        
-        </values>
+        <fullName>Confirmed</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Denied</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Enrolled</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Pending Admit</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Pending Decision</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Started App</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Submitted App</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Withdrawn</fullName>
+        <default>false</default>
+    </values>
 </BusinessProcess>

@@ -12,44 +12,64 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Inquired</fullName>
+                <fullName>Suspect</fullName>
                 <default>true</default>
-                <label>Inquired</label>
+                <label>Suspect</label>
             </value>
             <value>
-                <fullName>Confirmed Interest</fullName>
+                <fullName>Moderately Suspect</fullName>
                 <default>false</default>
-                <label>Confirmed Interest</label>
+                <label>Moderately Suspect</label>
             </value>
             <value>
-                <fullName>Applied</fullName>
+                <fullName>Inquiry</fullName>
                 <default>false</default>
-                <label>Applied</label>
+                <label>Inquiry</label>
             </value>
             <value>
-                <fullName>Evaluated</fullName>
+                <fullName>Engaged</fullName>
                 <default>false</default>
-                <label>Evaluated</label>
-            </value>
-            <value>
-                <fullName>Admitted</fullName>
-                <default>false</default>
-                <label>Admitted</label>
-            </value>
-            <value>
-                <fullName>Deposit Received</fullName>
-                <default>false</default>
-                <label>Deposit Received</label>
-            </value>
-            <value>
-                <fullName>Enrolled</fullName>
-                <default>false</default>
-                <label>Enrolled</label>
+                <label>Engaged</label>
             </value>
             <value>
                 <fullName>No Longer Interested</fullName>
                 <default>false</default>
                 <label>No Longer Interested</label>
+            </value>
+            <value>
+                <fullName>Started App</fullName>
+                <default>false</default>
+                <label>Started App</label>
+            </value>
+            <value>
+                <fullName>Submitted App</fullName>
+                <default>false</default>
+                <label>Submitted App</label>
+            </value>
+            <value>
+                <fullName>Complete App</fullName>
+                <default>false</default>
+                <label>Complete App</label>
+            </value>
+            <value>
+                <fullName>Pending Decision</fullName>
+                <default>false</default>
+                <label>Pending Decision</label>
+            </value>
+            <value>
+                <fullName>Pending Admit</fullName>
+                <default>false</default>
+                <label>Pending Admit</label>
+            </value>
+            <value>
+                <fullName>Admit</fullName>
+                <default>false</default>
+                <label>Admit</label>
+            </value>
+            <value>
+                <fullName>Confirmed</fullName>
+                <default>false</default>
+                <label>Confirmed</label>
             </value>
             <value>
                 <fullName>Withdrawn</fullName>
@@ -60,6 +80,11 @@
                 <fullName>Denied</fullName>
                 <default>false</default>
                 <label>Denied</label>
+            </value>
+            <value>
+                <fullName>Enrolled</fullName>
+                <default>false</default>
+                <label>Enrolled</label>
             </value>
         </valueSetDefinition>
     </valueSet>

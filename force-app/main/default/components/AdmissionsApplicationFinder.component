@@ -1,0 +1,46 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 7/5/2022.
+ -->
+
+<apex:component id="AdmissionsApplicationFinder" controller="AdmissionsApplicationFinderComponent">
+    <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true"/>
+    <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
+    <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
+    <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:form>
+            <apex:actionFunction name="selectSchool" reRender="appArea">
+                <apex:param name="p1" assignTo="{!selectedSchool}" value=""/>
+            </apex:actionFunction>
+            <apex:actionFunction name="selectApp" reRender="appArea">
+                <apex:param name="p1" assignTo="{!selectedApp}" value=""/>
+            </apex:actionFunction>
+            <apex:outputLabel styleClass="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular" for="schoolPicklist">
+                Select a college
+            </apex:outputLabel>
+            <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                    <apex:selectList id="schoolPicklist" value="{!selectedSchool}" size="1" styleClass="slds-select" onChange="selectSchool(this.value);">
+                        <apex:selectOptions value="{!Schools}"/>
+                    </apex:selectList>
+                </div>
+            </div>
+            <apex:outputPanel id="appArea">
+
+                <apex:outputLabel styleClass="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular" for="AppPicklist">
+                    Select application type
+                </apex:outputLabel>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <apex:selectList id="AppPicklist" value="{!selectedApp}" size="1" styleClass="slds-select" onChange="selectApp(this.value);" disabled="{!ISBLANK(selectedSchool)}">
+                            <apex:selectOptions value="{!Apps}"/>
+                        </apex:selectList>
+                    </div>
+                </div>
+
+                <div class="slds-p-vertical_medium">
+                    <apex:commandButton action="{!goToApp}" styleClass="slds-button slds-button_brand" value="Start New App" disabled="{!ISBLANK(selectedApp)}"/>
+                </div>
+            </apex:outputPanel>
+        </apex:form>
+    </div>
+</apex:component>

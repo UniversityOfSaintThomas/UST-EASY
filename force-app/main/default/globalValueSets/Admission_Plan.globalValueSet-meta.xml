@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Early Action</fullName>
+        <default>false</default>
+        <label>Early Action</label>
+    </customValue>
+    <customValue>
+        <fullName>Regular Decision</fullName>
+        <default>false</default>
+        <label>Regular Decision</label>
+    </customValue>
+    <customValue>
+        <fullName>Rolling Admission</fullName>
+        <default>false</default>
+        <label>Rolling Admission</label>
+    </customValue>
+    <description>Used for Undergraduate Applications</description>
+    <masterLabel>Admission Plan</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>School_College__c</fullName>
+    <description>Used to filter programs shown for selection</description>
+    <externalId>false</externalId>
+    <label>School / College</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Academic_Level__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>School_College</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>College of Arts and Sciences</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>Morrison Family College of Health</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>Opus College of Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>School of Education</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>School of Engineering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>School of Law</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>The Saint Paul Seminary School of Divinity</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>The Murray Institute</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>School of Social Work</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>College of Education, Leadership and Counseling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>Graduate School of Professional Psychology</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <controllingFieldValue>U</controllingFieldValue>
+            <valueName>Dougherty Family College</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>G</controllingFieldValue>
+            <valueName>College of Health Professions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>U</controllingFieldValue>
+            <valueName>Undergraduate</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

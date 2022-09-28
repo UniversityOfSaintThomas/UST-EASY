@@ -1,0 +1,193 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 6/7/2022.
+ -->
+
+<apex:component id="ApplicationFormSectionInput">
+    <apex:attribute name="inputLabel" description="" type="String" required="false"/>
+    <apex:attribute name="multiPicklist" description="" type="List" required="false"/>
+    <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
+    <apex:attribute name="questionWrapper" description="" type="ApplicationQuestion" required="false"/>
+    <apex:attribute name="fieldAPI" description="" type="String" required="false"/>
+    <apex:attribute name="inputType" description="" type="String" required="false"/>
+    <apex:attribute name="isReadOnly" description="" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="isRequired" description="" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="preventUpdates" description="" type="Boolean" required="false"/>
+    <apex:attribute name="isEditable" description="" type="Boolean" required="false"/>
+    <apex:attribute name="isExternalEmail" description="" type="Boolean" required="false"/>
+    <apex:attribute name="itemId" description="" type="Id" required="false"/>
+    <apex:attribute name="isRadio" description="" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="inputOptions" description="" type="SelectOption" required="false"/>
+    <apex:attribute name="rerenderGroup" description="" type="String" required="false" default="none"/>
+    <apex:attribute name="itemNumber" description="iterating number of current displayed questions" type="Integer" required="false"/>
+    <apex:attribute name="relatedRecords" description="Is part of a related records question" type="Boolean" required="false" default="false"/>
+
+    <apex:outputPanel rendered="{!inputType != 'Address' && !ISBLANK(inputLabel) && inputType != 'Checkbox' && inputType != 'Hidden'}" layout="none">
+        <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
+            {!inputLabel}
+            <apex:outputPanel rendered="{!isRequired}" layout="none">
+                <abbr class='slds-required' title='required'>* </abbr>
+            </apex:outputPanel>
+        </label>
+    </apex:outputPanel>
+
+    <!-- Hidden Field -->
+    <apex:inputHidden value="{!responseObject[fieldAPI]}" rendered="{!inputType == 'Hidden'}"/>
+
+    <!-- Static for Address label -->
+    <apex:outputPanel rendered="{!inputType == 'Address'}" layout="block" styleClass="slds-text-body_regular validate{!inputType} ">
+        <p>
+            {!inputLabel}
+        </p>
+    </apex:outputPanel>
+
+    <!-- Text -->
+    <apex:outputPanel rendered="{!inputType == 'Text'}" layout="block" styleClass="slds-form-element__control">
+        <apex:inputText id="textField" styleClass="slds-input validate{!inputType} {!questionWrapper['additionalValidation']}" value="{!responseObject[fieldAPI]}"/>
+    </apex:outputPanel>
+
+    <!-- Email -->
+    <apex:outputPanel rendered="{!inputType == 'Email'}" layout="block" styleClass="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+        <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
+            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#email")}"></use>
+        </svg>
+        <apex:inputField type="email" id="emailField" styleClass="slds-input validate{!inputType}" value="{!responseObject[fieldAPI]}"/>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!inputType == 'Email' && isEditable  && isExternalEmail && !ISBLANK(responseObject[fieldAPI])}" layout="none">
+        <a href="#" class="slds-button slds-button_brand slds-m-top_small" onclick="showFormSpinner();sendTheReminder{!itemId}();" id="reminder{!itemId}">Send Reminder</a>
+        <p style="display:none" class="oneReminderPerDay slds-p-top_x-small"><strong>A reminder has been sent!</strong><br/><em>Note: only one reminder can be sent within a 24-hour period.</em></p>
+    </apex:outputPanel>
+
+    <!--Date Box-->
+    <apex:outputPanel rendered="{!inputType == 'Date'}" layout="block" styleClass="slds-form-element__control">
+        <apex:InputField type="date" id="DateField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+    </apex:outputPanel>
+
+    <!--Plain Picklist - no radio -->
+    <apex:outputPanel rendered="{!inputType == 'Picklist' && !isRadio}" layout="block" styleClass="slds-form-element__control">
+        <div class="slds-select_container">
+            <apex:selectList id="picklistField" value="{!responseObject[fieldAPI]}" size="1" styleClass="slds-select validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" onChange="reRenderAllGroups('{!rerenderGroup}')">
+                <apex:selectOptions value="{!inputOptions}"/>
+            </apex:selectList>
+        </div>
+    </apex:outputPanel>
+
+    <!-- Multi Picklist -->
+    <apex:outputPanel rendered="{!inputType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
+        <div class="slds-checkbox">
+            <apex:selectCheckboxes id="multiPicklistFieldRelated" value="{!multiPicklist}" rendered="{!relatedRecords}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" onChange="reRenderAllGroups('{!rerenderGroup}')">
+                <apex:selectOptions value="{!inputOptions}"/>
+            </apex:selectCheckboxes>
+            <apex:selectCheckboxes id="multiPicklistField" value="{!questionWrapper[fieldAPI]}" rendered="{!!relatedRecords}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" onChange="reRenderAllGroups('{!rerenderGroup}')">
+                <apex:selectOptions value="{!inputOptions}"/>
+            </apex:selectCheckboxes>
+        </div>
+    </apex:outputPanel>
+
+    <!-- Checkbox -->
+    <apex:outputPanel rendered="{!inputType == 'Checkbox'}" layout="block" styleClass="slds-form-element__control">
+        <apex:outputPanel layout="block" styleClass="slds-checkbox single-checkbox validate{!inputType}">
+            <apex:inputCheckbox id="checkBoxField" value="{!responseObject[fieldAPI]}" onChange="reRenderAllGroups('{!rerenderGroup}')"/>
+            <label class="slds-checkbox__label">
+                <span class="slds-checkbox_faux"></span>
+                <span class="slds-form-element__label">
+                    {!inputLabel}
+                </span>
+            </label>
+        </apex:outputPanel>
+    </apex:outputPanel>
+
+    <!-- TextEncrypted -->
+    <apex:outputPanel rendered="{!inputType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
+        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+    </apex:outputPanel>
+
+    <!-- Currency -->
+    <apex:outputPanel rendered="{!inputType == 'Currency'}" layout="block" styleClass="slds-form-element__control">
+        <apex:inputField id="CurrencyField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+    </apex:outputPanel>
+
+    <!-- Date Time -->
+    <apex:outputPanel rendered="{!inputType == 'DateTime'}" layout="block" styleClass="slds-form-element__control">
+        <apex:inputField id="dateTimeField" type="datetime-local" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+    </apex:outputPanel>
+
+    <!-- Decimal -->
+    <apex:outputPanel rendered="{!inputType == 'Decimal' || inputType == 'Integer' || inputType == 'Number'}" layout="block" styleClass="slds-form-element__control">
+        <apex:inputText id="numberField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+    </apex:outputPanel>
+
+    <!-- Percent -->
+    <apex:outputPanel rendered="{!inputType == 'Percent'}" layout="block" styleClass="slds-form-element__control">
+        <apex:inputText id="percentField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+    </apex:outputPanel>
+
+    <!-- Phone -->
+    <apex:outputPanel rendered="{!inputType == 'Phone'}" layout="block" styleClass="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+        <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
+            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#call")}"></use>
+        </svg>
+        <apex:inputField id="phoneField" type="tel" value="{!responseObject[fieldAPI]}" styleClass="slds-input  validate{!inputType}" html-pattern="[0-9-+ ().]+"/>
+    </apex:outputPanel>
+
+    <!-- Picklist Radio -->
+    <apex:outputPanel rendered="{!(inputType == 'Picklist' && isRadio) || inputType == 'Radio'}" layout="block" styleClass="slds-form-element__control">
+        <div class="slds-form-element__control">
+            <div class="slds-radio_button-group">
+                <apex:variable var="num" value="{!0}"/>
+                <apex:repeat var="radioQuestion" value="{!inputOptions}">
+                    <apex:variable var="num" value="{!num + 1}"/>
+                    <span class="slds-button slds-radio_button" data-radiovalue="{!radioQuestion.value}" data-rerendergroup="{!rerenderGroup}">
+                        <input type="radio" name="radio-group-{!itemNumber}" id="radio-group-{!itemNumber}-{!num}" value="{!radioQuestion.value}" class="faux-radio-value"/>
+                        <label class="slds-radio_button__label this" for="radio-group-{!itemNumber}-{!num}">
+                          <span class="slds-radio_faux">{!radioQuestion.label}</span>
+                        </label>
+                    </span>
+                </apex:repeat>
+                <apex:inputHidden value="{!responseObject[fieldAPI]}" id="radioField1" html-class="slds-radio_button-value"/>
+            </div>
+        </div>
+    </apex:outputPanel>
+
+    <!-- TextArea -->
+    <apex:outputPanel rendered="{!inputType == 'TextArea'}" layout="block" styleClass="slds-form-element__control">
+        <apex:inputField id="textAreaField" value="{!responseObject[fieldAPI]}" styleClass="slds-textarea validate{!inputType}"/>
+    </apex:outputPanel>
+
+    <!-- LongTextArea -->
+    <apex:outputPanel rendered="{!inputType == 'LongTextArea'}" layout="block" styleClass="slds-form-element__control">
+        <apex:inputTextarea id="textAreaFieldLong" rows="10" value="{!responseObject[fieldAPI]}" styleClass="slds-textarea validate{!inputType}"/>
+    </apex:outputPanel>
+
+    <!-- URL -->
+    <apex:outputPanel rendered="{!inputType == 'URL'}" layout="block" styleClass="slds-form-element__control">
+        <apex:inputField id="urlField" type="url" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+    </apex:outputPanel>
+
+    <!-- Static -->
+    <apex:outputPanel rendered="{!inputType == 'Static'}" layout="block" styleClass="slds-text-body_regular validate{!inputType}">
+        <p>
+            <apex:outputText value="{!questionWrapper['question']['Static_Text__c']}" escape="false"/>
+        </p>
+    </apex:outputPanel>
+
+    <!-- Address Question -->
+    <c:ApplicationFormSectionInputAddress responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" inputType="{!inputType}"/>
+
+
+    <!-- Reference Question -->
+    <apex:outputPanel layout="none" rendered="{!!questionWrapper['question']['Display_As_Picklist__c'] && inputType == 'Reference' && LOWER($CurrentPage.Name) != 'applicationregistration' && LOWER($CurrentPage.Name) != 'applicationcreate'}">
+        <c:ApplicationFormSectionInputReference responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" itemId="{!itemId}" inputType="{!inputType}" fieldAPI="{!fieldAPI}"/>
+    </apex:outputPanel>
+
+    <!-- Reference Question as Picklist -->
+    <apex:outputPanel layout="none" rendered="{!(questionWrapper['question']['Display_As_Picklist__c'] || LOWER($CurrentPage.Name) == 'applicationregistration' || LOWER($CurrentPage.Name) == 'applicationcreate')  && inputType == 'Reference'}">
+        <div class="slds-select_container">
+            <apex:selectList id="referenceField" value="{!responseObject[fieldAPI]}" size="1" styleClass="slds-select" onChange="reRenderAllGroups('{!rerenderGroup}')">
+                <apex:selectOptions value="{!inputOptions}"/>
+            </apex:selectList>
+        </div>
+    </apex:outputPanel>
+
+
+</apex:component>

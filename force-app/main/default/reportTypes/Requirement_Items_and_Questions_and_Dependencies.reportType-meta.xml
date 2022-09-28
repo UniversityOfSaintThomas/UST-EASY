@@ -259,6 +259,11 @@
             <field>Viewing_Requirement__c</field>
             <table>Requirement_Item__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>File_Name_Prefix__c</field>
+            <table>Requirement_Item__c</table>
+        </columns>
         <masterLabel>Requirement Items</masterLabel>
     </sections>
     <sections>
@@ -495,6 +500,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>URL_Parameter__c</field>
+            <table>Requirement_Item__c.Questions__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Related_Object__c</field>
+            <table>Requirement_Item__c.Questions__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Assistive_Text__c</field>
+            <table>Requirement_Item__c.Questions__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Additional_Field_Validation__c</field>
             <table>Requirement_Item__c.Questions__r</table>
         </columns>
         <masterLabel>Questions</masterLabel>

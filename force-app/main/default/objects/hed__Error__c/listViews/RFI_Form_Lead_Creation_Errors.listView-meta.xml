@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RFI_Form_Lead_Creation_Errors</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>hed__Error_Type__c</field>
+        <operation>equals</operation>
+        <value>ERROR: RFI Form Lead creation failed</value>
+    </filters>
+    <label>RFI Form Lead Creation Errors</label>
+</ListView>

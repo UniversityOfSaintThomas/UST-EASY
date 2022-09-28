@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Band</fullName>
+        <default>false</default>
+        <label>Band</label>
+    </customValue>
+    <customValue>
+        <fullName>Choir</fullName>
+        <default>false</default>
+        <label>Choir</label>
+    </customValue>
+    <customValue>
+        <fullName>Orchestra</fullName>
+        <default>false</default>
+        <label>Orchestra</label>
+    </customValue>
+    <description>STVINTS</description>
+    <masterLabel>Music</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

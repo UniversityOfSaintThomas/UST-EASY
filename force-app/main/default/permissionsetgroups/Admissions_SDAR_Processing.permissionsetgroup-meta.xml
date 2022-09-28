@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Student Data and Registrar Processing permissions needed to support Admissions</description>
+    <label>Admissions - SDAR Processing</label>
+    <permissionSets>Admissions_Email_Template_Management</permissionSets>
+    <permissionSets>Admissions_Reports_and_Dashboards</permissionSets>
+    <permissionSets>Application_Config_Admin</permissionSets>
+    <permissionSets>Application_Decision</permissionSets>
+    <permissionSets>Application_Processing</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

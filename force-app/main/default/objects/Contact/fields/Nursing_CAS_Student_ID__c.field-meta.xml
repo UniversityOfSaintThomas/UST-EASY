@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nursing_CAS_Student_ID__c</fullName>
+    <description>Nursing CAS Student Unique ID</description>
+    <externalId>true</externalId>
+    <label>Nursing CAS Student ID</label>
+    <length>10</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

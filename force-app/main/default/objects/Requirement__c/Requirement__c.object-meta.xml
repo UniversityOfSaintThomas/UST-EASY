@@ -159,7 +159,22 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Requirements</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <customTabListAdditionalFields>Application_Control__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Label__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Active__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Display_Order__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Application_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATEDBY_USER</customTabListAdditionalFields>
+        <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Application_Control__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Label__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Active__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Display_Order__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Application_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -13,6 +13,7 @@ public class ApplicationAdminView {
     public Set<Id> requirementIds { get; set; }
     public List<ApplicationRequirement> arLst { get; set; }
     public transient String additionalDataString { get; set; }
+    public EASYApplicationInfo appInfo {get;set;}
 
     public Contact con {
         get {
@@ -40,13 +41,14 @@ public class ApplicationAdminView {
     }
 
     public ApplicationAdminView() {
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
     }
 
     /*******************************************************************************
     * @description Initialize the page - Creates ApplicationRequirement for each requirement that is applicible to this application
     ********************************************************************************/
     public void init() {
-
+        appInfo = ApplicationUtilities.gatherApplicationInfo();
         applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
         contactId = [
                 SELECT Contact__c
@@ -98,7 +100,8 @@ public class ApplicationAdminView {
                                 Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c,
                                 Lookup_Where_Clause__c, Name_Field_API_Name__c, Contact_Field__c, Application_Field__c, External_Email_Field__c,
                                 Editable_Application_Status__c,URL_Parameter__c,New_Reference_Field__c,Static_Text__c, Display_as_Picklist__c,
-                                Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                                Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Assistive_Text__c, Related_Object__c,
+                                Additional_Field_Validation__c
                         FROM Questions__r
                         WHERE Active__c = :true
                         AND Display_on_Admin_Review_Pages__c = :true
@@ -200,7 +203,7 @@ public class ApplicationAdminView {
             ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid, items, requirementResponses, questionResponses, questionDependencies);
             ar.preventUpdates = true;
             arLst.add(ar);
-            ar.init();
+            ar.applicationRequirementInit();
         }
     }
 
@@ -235,7 +238,6 @@ public class ApplicationAdminView {
                     if (aqg.questionGroup == true && aqg.questions != null) {
                         for (ApplicationQuestion q : aqg.questions) {
                             if (q.response != null) {
-                                System.debug(q.response);
                                 questionToResponseMap.put(q.response, aqg.response);
                                 qResponses.add(q.response);
                             }

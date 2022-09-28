@@ -10,7 +10,8 @@
         <criteriaItems>
             <field>Name</field>
             <operation>notEqual</operation>
-            <value/>
+            <value>null</value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
 </SharingRules>

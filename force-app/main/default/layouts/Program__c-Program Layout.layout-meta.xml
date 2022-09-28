@@ -41,6 +41,18 @@
                 <behavior>Readonly</behavior>
                 <field>Program_Major_Concentration__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Program_Applicant_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Program_College_of_Interest__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Application_Control_URL__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -316,7 +328,54 @@
         <fields>Academic_Term__c</fields>
         <fields>Activate_Application_Date__c</fields>
         <fields>End_Application_Date__c</fields>
+        <fields>Degree_Type__c</fields>
+        <fields>Student_Type__c</fields>
+        <fields>Application_Status__c</fields>
         <relatedList>Intended_Program_Term__c.Intended_Program__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
+        <fields>Intended_Program__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Application__c.Major_1__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
+        <fields>Intended_Program__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Application__c.Major_2__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
+        <fields>Intended_Program__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Application__c.Major_3__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
+        <fields>Intended_Program__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Application__c.Pre_Professional_Program__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Active__c</fields>
+        <fields>Career__c</fields>
+        <fields>Department__c</fields>
+        <fields>Plan_Code__c</fields>
+        <relatedList>Plan__c.Program__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -324,7 +383,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h75000000Ijkn</masterLabel>
+        <masterLabel>00hJ0000007pOaP</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

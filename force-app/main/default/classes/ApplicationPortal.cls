@@ -6,43 +6,70 @@ Revision (s):
 *******************************************************************************/
 public class ApplicationPortal {
 
-    public Id contactId { get; set; }
     public Map<Id, Application__c> applicationsByIds { get; set; }
-    public Map<id, Application_Control__c> applicationControlsByIds { get; set; }
-    public List<Id> applicationOrder { get; set; }
-    public List<RequirementWrapper> rList { get; set; }
-    public Application__c currentApp { get; set; }
-
-    public Application_Control__c appControl {
-        get {
-            if (appControl == null) {
-                appControl = ApplicationUtilities.getApplicationControls(ApexPages.currentPage().getParameters().get('at'));
-            }
-            return appControl;
-        }
-        set;
-    }
+    public Integer applicationMapSize { get; set; }
+    public Map<Id, Application_Control__c> appControlsByAppIds { get; set; }
+    public Map<Id, List<RequirementWrapper>> checklistsByAppIds { get; set; }
+    public EASYApplicationInfo appInfo { get; set; }
+    public Map<Id, EASYApplicationInfo> appInfoMapByAppId { get; set; }
+    public String template { get; set; }
 
     public ApplicationPortal() {
-        contactId = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId;
-        if (UserInfo.getUserType().equals('Standard')) {
-            contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
+        if (appInfo == null) {
+            appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
-        if (String.isNotBlank(contactId)) {
-            applicationsByIds = new Map<Id, Application__c>([
-                    SELECT Id, Application_Control__c, Application_Control__r.Id
-                    FROM Application__c
-                    WHERE Contact__c = :contactId
-                    //TODO: reinstate FUTURE in this query
-                    //AND Intended_Term_of_Entry__r.Term_Status_Type__c = 'FUTURE'
-                    ORDER BY Name
-            ]);
+        Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+        template = AppSettings.Default_Template__c;
+    }
 
-            //currentApp = applicationsByOrder[0];
-            //rList = checklistHelper.checklistRequirements(currentApp, contactId, appControl);
+    public PageReference applicationPortalInit() {
 
-            //system.debug(JSON.serializePretty(rList));
+        String userType = UserInfo.getUserType();
+        PageReference pageRef = null;
 
+        if (userType.equalsIgnoreCase('CSPLitePortal') || userType.equalsIgnoreCase('standard')) {
+            appInfo = ApplicationUtilities.gatherApplicationInfo();
+            appInfoMapByAppId = new Map<Id, EASYApplicationInfo>();
+            checklistsByAppIds = new Map<Id, List<RequirementWrapper>>();
+            Id contactId = appInfo.contactId;
+
+            if (String.isNotBlank(contactId)) {
+                //Get Application Controls for all apps
+                appControlsByAppIds = new Map<Id, Application_Control__c>([
+                        SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
+                                Cancel_Status__c, Submit_Status__c, Withdraw_Status__c, URL_Parameter__c, Default__c, Academic_Level__c,
+                                School_College__c, Degree_Levels__c, Template__c
+                        FROM Application_Control__c
+                        WHERE Id IN (
+                                SELECT Application_Control__c
+                                FROM Application__c
+                                WHERE Contact__r.Id = :contactId
+                        )
+                ]);
+
+                List<Id> appControlIdsList = new List<Id>(appControlsByAppIds.keySet());
+                String appFields = ApplicationHelper.getAllItemApplicationFieldsByAppControlId(appControlIdsList);
+
+                String query = 'SELECT ' + appFields + ' FROM Application__c WHERE Contact__c = \'' + contactId + '\''; //+ '\' AND Application_Control__r.Id IN :appControlIdsList';
+
+                applicationsByIds = new Map<Id, Application__c>((List<Application__c>) Database.query(query));
+                applicationMapSize = applicationsByIds.size();
+
+                for (Application__c app : applicationsByIds.values()) {
+                    EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
+                    List<RequirementWrapper> checklist = checklistHelper.checklistRequirements(app, newAppInfo);
+                    Boolean allowSubmit = checklistHelper.allowSubmit(checklist, appInfo);
+                    newAppInfo.allowSubmit = allowSubmit;
+                    appInfoMapByAppId.put(app.Id, newAppInfo);
+                    checklistsByAppIds.put(app.Id, checklist);
+                }
+            }
+        } else {
+            pageRef = Page.ApplicationLogin;
+            pageRef.setRedirect(true);
+            return pageRef;
         }
+
+        return pageRef;
     }
 }

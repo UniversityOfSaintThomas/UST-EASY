@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Documents_Missing__c</fullName>
+    <description>Displays the admissions documents needed for a particular application to be &apos;complete&apos;</description>
+    <externalId>false</externalId>
+    <inlineHelpText>populated by flow depending on status</inlineHelpText>
+    <label>Documents Missing</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

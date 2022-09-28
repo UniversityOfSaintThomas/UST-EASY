@@ -1,0 +1,393 @@
+Insert Application_Control__c:
+  sf_object: Application_Control__c
+  fields:
+  - Academic_Level__c
+  - Active__c
+  - Allow_Cancel_From__c
+  - Allow_Submit_From__c
+  - Allow_Withdraw_From__c
+  - Application_Start_Status__c
+  - Arrow_Color__c
+  - Button_Color__c
+  - Button_Text_Color__c
+  - Cancel_Status__c
+  - Default__c
+  - Degree_Levels__c
+  - Hide_Term_Program__c
+  - Line_Color__c
+  - Link_Color__c
+  - Logo_Static_Resource_Path__c
+  - Logo_Static_Resource__c
+  - Name
+  - School_College__c
+  - Submit_Status__c
+  - Template__c
+  - Text_Color__c
+  - URL_Parameter__c
+  - Withdraw_Status__c
+Insert Interaction_Mapping__c:
+  sf_object: Interaction_Mapping__c
+  fields:
+  - Active__c
+  - Insert_Null__c
+  - Interaction_Source_Field_API_Name__c
+  - Skip_Mapping__c
+  - Source_Field_API_Name__c
+  - Source_Object_API_Name__c
+  - Target_Field_API_Name__c
+  - Target_Object_API_Name__c
+Insert hed__Language__c:
+  sf_object: hed__Language__c
+  fields:
+  - Holding_Name__c
+  - Name
+  - Related_Object_JSON__c
+Insert EASY_Widget__c:
+  sf_object: EASY_Widget__c
+  fields:
+  - Activation_State__c
+  - Display_Heading__c
+  - Display_Text__c
+  - Display_Widget_On_Citizenship__c
+  - Display_Widget_On_Pages__c
+  - Display_Widget_On_Status__c
+  - Display_Widget_On_Sub_Status__c
+  - End_Date__c
+  - End_Time__c
+  - Name
+  - Scripts__c
+  - Sort_Order__c
+  - Start_Date__c
+  - Start_Time__c
+  - Widget_Screen_Location__c
+  - Widget_Time_Zone__c
+  - Widget_Type__c
+  lookups:
+    Application_Control__c:
+      table: Application_Control__c
+Insert Academic_Term__c:
+  sf_object: Academic_Term__c
+  fields:
+  - Academic_Year_Code__c
+  - Activate_Application_Date__c
+  - Banner_Term_Code__c
+  - Early_Action_End_Date__c
+  - Early_Decision_End_Date__c
+  - Early_Decision_Start_Date__c
+  - End_Application_Date__c
+  - Financial_Aid_Processing_Year__c
+  - Housing_End_Date__c
+  - Housing_Start_Date__c
+  - Name
+  - Regular_Decision_End_Date__c
+  - Term_10th_Day__c
+  - Term_End_Date__c
+  - Term_Start_Date__c
+  lookups:
+    Term__c:
+      table: hed__Term__c
+      after: Insert hed__Term__c
+Insert Account:
+  sf_object: Account
+  fields:
+  - Banner_Code__c
+  - Banner_Key__c
+  - CEEB_Code__c
+  - CEEB_Integration_Code__c
+  - Inactive_School__c
+  - Name
+  - RecordTypeId
+  - Surrogate_ID__c
+  - hed__Billing_Address_Inactive__c
+  - hed__Billing_County__c
+  - hed__School_Code__c
+  - hed__Shipping_County__c
+  lookups:
+    ParentId:
+      table: Account
+      after: Insert Account
+Insert Program__c:
+  sf_object: Program__c
+  fields:
+  - Academic_Level__c
+  - Active__c
+  - Applicant_Type__c
+  - Application_Fee_Amount__c
+  - Associated_Schools__c
+  - Banner_Major_Name__c
+  - Banner_Program_Code__c
+  - Banner_Program_Name__c
+  - CIP_Code__c
+  - Career__c
+  - Citizenship__c
+  - College_Code__c
+  - Concentration_Code__c
+  - Concentration_Description__c
+  - Degree_Type__c
+  - Degree__c
+  - Delivery_Type__c
+  - Department_Code__c
+  - Description__c
+  - First_License__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Hide_Applicant_Type__c
+  - Hide_Citizenship__c
+  - Hide_Student_Type__c
+  - Hide_from_Application__c
+  - Integration_Program_Code__c
+  - License_Area__c
+  - Major_Code__c
+  - Name
+  - Number_of_Applications_Limit__c
+  - Pre_Professional_Program__c
+  - Program_Applicant_Type__c
+  - Program_Areas_of_Interest__c
+  - Program_Bucket__c
+  - Program_Code__c
+  - Program_College_of_Interest__c
+  - Program_Degree_Code__c
+  - Program_Display__c
+  - Program_Keywords__c
+  - Program_Learning_Style__c
+  - Program_Name_on_Application__c
+  - Program_Offered_Name__c
+  - Program_Record_Type__c
+  - Program_Type__c
+  - Program_URL__c
+  - RecordTypeId
+  - Residency__c
+  - STEM_Major__c
+  - STVMAJR_CIPC_CODE__c
+  - STVMAJR_VALID_CONCENTRATN_IND__c
+  - STVMAJR_VALID_MAJOR_IND__c
+  - STVMAJR_VALID_MINOR_IND__c
+  - School_College__c
+  - Student_Type__c
+  lookups:
+    Application_Control__c:
+      table: Application_Control__c
+    Department__c:
+      table: Account
+    Effective_Term__c:
+      table: Academic_Term__c
+    Recruitment_Program__c:
+      table: Program__c
+      after: Insert Program__c
+Insert hed__Term__c:
+  sf_object: hed__Term__c
+  fields:
+    - Activate_Application_Date__c
+    - Banner_Term_Code__c
+    - End_Application_Date__c
+    - Housing_End_Date__c
+    - Housing_Start_Date__c
+    - Name
+    - Term_Code__c
+    - Term_End_Date__c
+    - Term_Friendly_Name__c
+    - Term_Key__c
+    - Term_Start_Date__c
+    - hed__End_Date__c
+    - hed__Grading_Period_Sequence__c
+    - hed__Instructional_Days__c
+    - hed__Start_Date__c
+    - hed__Type__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Parent_Term__c:
+      table: hed__Term__c
+      after: Insert hed__Term__c
+Insert Intended_Program_Term__c:
+  sf_object: Intended_Program_Term__c
+  fields:
+  - Activate_Application_Date__c
+  - Applicant_Type__c
+  - Citizenship__c
+  - Degree_Type__c
+  - Delivery_Type__c
+  - End_Application_Date__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Intended_Program_Term_Integration_Ext_Id__c
+  - Name
+  - Period_Id__c
+  - Residency__c
+  - School_College__c
+  - Student_Type__c
+  lookups:
+    Academic_Term__c:
+      table: Academic_Term__c
+    Intended_Program__c:
+      table: Program__c
+    Term_Academic__c:
+      table: hed__Term__c
+Insert Plan__c:
+  sf_object: Plan__c
+  fields:
+  - Active__c
+  - CIP_Code__c
+  - Career__c
+  - Degree__c
+  - Name
+  - Plan_Code__c
+  - Plan_Type__c
+  - Type__c
+  lookups:
+    Department__c:
+      table: Account
+    Program__c:
+      table: Program__c
+    Recruitment_Interest__c:
+      table: Plan__c
+      after: Insert Plan__c
+Insert Requirement__c:
+  sf_object: Requirement__c
+  fields:
+  - Active__c
+  - Applicant_Type__c
+  - Application_Creation_Display_Order__c
+  - Application_Status__c
+  - Citizenship__c
+  - Degree_Type__c
+  - Delivery_Type__c
+  - Display_Order__c
+  - Display_on_Admin_Review_Pages__c
+  - Display_on_Checklist__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Internal_Only_Show_on_Checklist__c
+  - Internal_Only__c
+  - Label__c
+  - Name
+  - Residency__c
+  - School_College__c
+  - Show_on_Application_Creation__c
+  - Student_Type__c
+  - Viewing_Requirement__c
+  lookups:
+    Application_Control__c:
+      table: Application_Control__c
+    Intended_Program__c:
+      table: Program__c
+Insert Requirement_Item__c:
+  sf_object: Requirement_Item__c
+  fields:
+  - Active__c
+  - Allow_Supporting_Documentation_Upload__c
+  - Allow_Text_Entry__c
+  - Applicant_Type__c
+  - Application_Status__c
+  - Citizenship__c
+  - Degree_Type__c
+  - Delivery_Type__c
+  - Display_Order__c
+  - Display_on_Admin_Review_Pages__c
+  - Display_on_Checklist__c
+  - Editable_Application_Status__c
+  - File_Name_Prefix__c
+  - File_Types__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Holding_Record_Id__c
+  - Instructions__c
+  - Internal_Only_Applicant_Instructions__c
+  - Internal_Only_Show_on_Checklist__c
+  - Internal_Only__c
+  - Label__c
+  - Maximum_Number_of_Children__c
+  - Name
+  - RI_UID__c
+  - R_UID__c
+  - RecordTypeId
+  - Related_List_Object_Master_Field__c
+  - Related_List_Object_Master__c
+  - Related_List_Object__c
+  - Related_List_Where_Clause__c
+  - Related_Object_Record_Type_ID__c
+  - Required_Number_of_Children__c
+  - Required_Supporting_Documentation__c
+  - Required__c
+  - Requirement_Item_Integration_Ext_Id__c
+  - Residency__c
+  - School_College__c
+  - Student_Type__c
+  - Viewing_Requirement__c
+  lookups:
+    Intended_Program__c:
+      table: Program__c
+    Internal_Requirement_Item__c:
+      table: Requirement_Item__c
+      after: Insert Requirement_Item__c
+    Requirement__c:
+      table: Requirement__c
+Insert Question__c:
+  sf_object: Question__c
+  fields:
+  - Active__c
+  - Additional_Field_Validation__c
+  - Applicant_Type__c
+  - Application_Field__c
+  - Application_Status__c
+  - Assistive_Text__c
+  - Citizenship__c
+  - Contact_Field__c
+  - Date_Stamp__c
+  - Degree_Type__c
+  - Delivery_Type__c
+  - Dependency_Behavior__c
+  - Dependency_Logic__c
+  - Display_Order__c
+  - Display_as_Picklist__c
+  - Display_on_Admin_Review_Pages__c
+  - Editable_Application_Status__c
+  - External_Email_Field__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - Hardcoded_Value__c
+  - Help_Text__c
+  - Hide_from_Application__c
+  - Label__c
+  - Length__c
+  - Lookup_Object__c
+  - Lookup_Where_Clause__c
+  - Name
+  - Name_Field_API_Name__c
+  - New_Reference_Field__c
+  - Picklist_Values__c
+  - Placeholder__c
+  - RecordTypeId
+  - Related_Object_Field__c
+  - Required__c
+  - Residency__c
+  - School_College__c
+  - Static_Text__c
+  - Student_Type__c
+  - URL_Parameter__c
+  lookups:
+    Intended_Program__c:
+      table: Program__c
+    Requirement_Item__c:
+      table: Requirement_Item__c
+Insert Question_Dependency__c:
+  sf_object: Question_Dependency__c
+  fields:
+  - RecordTypeId
+  - ValueCheckbox__c
+  - Value__c
+  lookups:
+    Controlling_Question__c:
+      table: Question__c
+    Question__c:
+      table: Question__c

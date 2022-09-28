@@ -31,6 +31,16 @@
                 <default>false</default>
                 <label>Mrs.</label>
             </value>
+            <value>
+                <fullName>Mx.</fullName>
+                <default>false</default>
+                <label>Mx.</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

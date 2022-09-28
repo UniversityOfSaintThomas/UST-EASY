@@ -8,10 +8,17 @@
     <label>Department</label>
     <lookupFilter>
         <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <errorMessage>Record Type value does not exist or does not match filter criteria on Accounts</errorMessage>
         <filterItems>
             <field>Account.RecordType.Name</field>
             <operation>equals</operation>
             <value>University Department</value>
+        </filterItems>
+        <filterItems>
+            <field>Account.RecordType.Name</field>
+            <operation>equals</operation>
+            <value>Administrative</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

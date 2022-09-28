@@ -2210,6 +2210,6 @@
         <default>false</default>
         <label>Generic Value 2</label>
     </customValue>
-    <masterLabel>Generic Filter 1</masterLabel>
+    <masterLabel>Program(s)</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

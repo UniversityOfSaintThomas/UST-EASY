@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Distance_from_St_Thomas_Miles__c</fullName>
+    <description>Distance from St. Thomas using latitude and longitude data points</description>
+    <externalId>false</externalId>
+    <formula>DISTANCE(MailingAddress,GEOLOCATION(44.9437701,-93.1934074), &apos;mi&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Distance from St. Thomas using latitude and longitude data points</inlineHelpText>
+    <label>Distance from St. Thomas (Miles)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -5,39 +5,65 @@
 
 public with sharing class ApplicationChecklistComponentController {
 
-    public Id appId { get; set; }
-    public Id contactId { get; set; }
-    public Application__c app { get; set; }
-    public Id appControlId { get; set; }
-    public Id currentApp { get; set; }
+    public Id nextRequirementId { get; set; }
+    public String nextAt { get; set; }
+    public String nextAppId { get; set; }
+    public Id nextContactId { get; set; }
+    public EASYApplicationInfo appInfoParam { get; set; }
+    public Id submitAppId { get; set; }
+    public String submitAppStatus { get; set; }
 
     public ApplicationChecklistComponentController() {
 
     }
 
-    public List<RequirementWrapper> getChecklistItems() {
-        contactId = [
-                SELECT Id, ContactId
-                FROM User
-                WHERE Id = :UserInfo.getUserId()
-        ].ContactId;
+    public PageReference goToRequirement() {
+        //set the cookie with current appInfo and new requirement;
+        EASYApplicationInfo nextAppInfo = appInfoParam;
+        Application_Control__c appControl = null;
+        Application__c app = null;
 
-        if (UserInfo.getUserType().equals('Standard')) {
-            contactId = Id.valueOf(ApexPages.currentPage().getParameters().get('contactId'));
+        //next at != previous at
+        if (nextAt != appInfoParam.at) {
+            appControl = ApplicationUtilities.getApplicationControls(nextAt);
         }
-        if (String.isNotBlank(contactId) && String.isNotBlank(appId)) {
-            app = [
-                    SELECT Id, Name,Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name,
-                            Intended_Term_of_Entry__r.Term_Status_Type__c, Application_Status__c, Application_Control__c, Citizenship__c,
-                            Generic_Filter_1__c,Generic_Filter_2__c,Generic_Filter_3__c,Generic_Filter_4__c
-                    FROM Application__c
-                    WHERE Id = :appId
-                    ORDER BY Name
-            ];
 
-            return checklistHelper.checklistRequirements(app, contactId, appControlId);
+        if (nextAppId != appInfoParam.appId) {
+            app = ApplicationUtilities.getApplicationInfo(nextAppId, nextContactId);
         }
-        return null;
 
+        if (app != null && appControl != null) {
+            nextAppInfo = ApplicationUtilities.setApplicationInfo(appControl, app);
+        } else if (app != null) {
+            nextAppInfo = ApplicationUtilities.setApplicationInfo(appInfoParam, app);
+        } else if (appControl != null) {
+            nextAppInfo = ApplicationUtilities.flattenAppControl(appControl, appInfoParam);
+        } else {
+            nextAppInfo = appInfoParam;
+        }
+
+        nextAppInfo.requirementId = nextRequirementId;
+
+        ApplicationUtilities.createEncryptedCookie(JSON.serialize(nextAppInfo));
+
+        PageReference requirementPage = Page.ApplicationRequirement;
+        requirementPage.getParameters().put('at', nextAppInfo.at);
+        requirementPage.getParameters().put('requirementId', nextRequirementId);
+        requirementPage.setRedirect(true);
+        return requirementPage;
     }
+
+    public PageReference finalSubmitApp() {
+        PageReference pr = Page.ApplicationPortal;
+        //System.debug(submitAppId);
+        System.debug(submitAppStatus);
+        try {
+            update new Application__c(Id = submitAppId, Application_Status__c = submitAppStatus);
+        } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            return null;
+        }
+        return pr;
+    }
+
 }

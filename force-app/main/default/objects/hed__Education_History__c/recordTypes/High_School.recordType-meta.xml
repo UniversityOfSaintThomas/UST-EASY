@@ -38,6 +38,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Transcript_Evaluator__c</picklist>
+        <values>
+            <fullName>ECE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WES</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Transcripts_Evaluated_Previously__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>hed__Class_Rank_Scale__c</picklist>
         <values>
             <fullName>Decile</fullName>

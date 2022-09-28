@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Widget_Type__c</fullName>
-    <description>Choose what type of widget you want to create. Typically this will be set to custom unless you wish a pre-programmed widget.</description>
+    <description>Choose what type of widget you want to create. Typically this will be set to custom unless you wish a
+        pre-programmed widget.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Choose what type of widget you want to create. Typically this will be set to custom unless you wish a pre-programmed widget.</inlineHelpText>
+    <inlineHelpText>Choose what type of widget you want to create. Typically this will be set to custom unless you wish
+        a pre-programmed widget.</inlineHelpText>
     <label>Widget Type</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
@@ -21,6 +23,21 @@
                 <fullName>Application Checklist</fullName>
                 <default>false</default>
                 <label>Application Checklist</label>
+            </value>
+            <value>
+                <fullName>Progress Bar</fullName>
+                <default>false</default>
+                <label>Progress Bar</label>
+            </value>
+            <value>
+                <fullName>Application Finder</fullName>
+                <default>false</default>
+                <label>Application Finder</label>
+            </value>
+            <value>
+                <fullName>User Info Login/Logout</fullName>
+                <default>false</default>
+                <label>User Info Login/Logout</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -6,6 +6,5 @@
     <inlineHelpText>STVMAJR_AID_ELIGIBILITY_IND</inlineHelpText>
     <label>Aid Eligibility</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

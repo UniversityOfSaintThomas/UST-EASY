@@ -2,7 +2,14 @@
     "packageDirectories": [
         {
             "path": "force-app",
-            "default": true,
+            "package": "UST-Easy",
+            "versionName": "August 2022",
+            "versionNumber": "0.25.0.NEXT",
+            "default": true
+        },
+        {
+            "path": "force-app",
+            "default": false,
             "package": "USTEasy",
             "versionName": "February 2022",
             "versionNumber": "1.0.0.NEXT"
@@ -12,11 +19,25 @@
     "sourceApiVersion": "52.0",
     "packageAliases": {
         "USTEasy": "0Ho4P000000fxa0SAA",
-        "USTEasy@1.0.0-1": "04t4P000002OxeKQAS",
-        "USTEasy@1.0.0-2": "04t4P000002OxePQAS",
-        "USTEasy@1.0.0-3": "04t4P000002OxeUQAS",
-        "USTEasy@1.0.0-4": "04t4P000002OxeZQAS",
-        "USTEasy@1.0.0-5": "04t4P000002OxeeQAC",
-        "USTEasy@1.0.0-6": "04t4P000002OxejQAC"
+        "USTEasy@1.0.0-7": "04t4P000002KnOtQAK",
+        "UST-Easy": "0Ho4P000000GmlMSAS",
+        "UST-Easy@0.1.0-1": "04t4P000002KnOyQAK",
+        "UST-Easy@0.11.0-1": "04t4P000002KnP3QAK",
+        "UST-Easy@0.12.0-1": "04t4P000002KnP8QAK",
+        "UST-Easy@0.13.0-1": "04t4P000002KnPDQA0",
+        "UST-Easy@0.13.0-2": "04t4P000002KnPIQA0",
+        "UST-Easy@0.14.0-1": "04t4P000002KnPNQA0",
+        "UST-Easy@0.15.0-1": "04t4P000002KnQQQA0",
+        "UST-Easy@0.16.0-1": "04t4P000002KnQVQA0",
+        "UST-Easy@0.17.0-1": "04t4P000002KnQaQAK",
+        "UST-Easy@0.18.0-1": "04t4P000002KnQfQAK",
+        "UST-Easy@0.19.0-1": "04t4P000002KnQpQAK",
+        "UST-Easy@0.20.0-1": "04t4P000002KnQuQAK",
+        "UST-Easy@0.21.0-1": "04t4P000002KnQzQAK",
+        "UST-Easy@0.22.0-6": "04t4P000002KnRYQA0",
+        "UST-Easy@0.23.0-1": "04t4P000002KnRdQAK",
+        "UST-Easy@0.24.0-1": "04t4P000002KnRiQAK",
+        "UST-Easy@0.25.0-1": "04t4P000002KnRnQAK",
+        "UST-Easy@0.25.0-2": "04t4P000002KnRsQAK"
     }
 }

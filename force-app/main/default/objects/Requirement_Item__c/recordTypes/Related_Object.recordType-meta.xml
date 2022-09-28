@@ -33,23 +33,15 @@
     <picklistValues>
         <picklist>Application_Status__c</picklist>
         <values>
-            <fullName>Cancelled</fullName>
+            <fullName>Admit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Decision Made</fullName>
+            <fullName>Complete App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Pending Additional Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Complete-Pending Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
+            <fullName>Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -57,23 +49,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Paid</fullName>
+            <fullName>Denied</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Waived</fullName>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Incomplete</fullName>
+            <fullName>Started App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Started</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Submitted</fullName>
+            <fullName>Submitted App</fullName>
             <default>false</default>
         </values>
         <values>
@@ -89,6 +77,10 @@
         </values>
         <values>
             <fullName>International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
@@ -169,23 +161,15 @@
     <picklistValues>
         <picklist>Editable_Application_Status__c</picklist>
         <values>
-            <fullName>Cancelled</fullName>
+            <fullName>Admit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Decision Made</fullName>
+            <fullName>Complete App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Pending Additional Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Complete-Pending Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
+            <fullName>Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -193,23 +177,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Paid</fullName>
+            <fullName>Denied</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Waived</fullName>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Incomplete</fullName>
+            <fullName>Started App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Started</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Submitted</fullName>
+            <fullName>Submitted App</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2010,11 +1990,19 @@
     <picklistValues>
         <picklist>Generic_Filter_2__c</picklist>
         <values>
-            <fullName>Applicant 25 or over</fullName>
+            <fullName>Add another gender</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Applicant under 25</fullName>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nonbinary</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2032,11 +2020,131 @@
     <picklistValues>
         <picklist>Generic_Filter_4__c</picklist>
         <values>
-            <fullName>Generic Value 1</fullName>
+            <fullName>Fall 2022</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Generic Value 2</fullName>
+            <fullName>Fall 2023</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2024</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2025</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2026</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2027</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2028</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall 2029</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-Term 2024</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2023</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2025</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2026</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2027</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2028</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2029</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-term 2030</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2023</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2024</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2025</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2026</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2027</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2028</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2029</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spring 2030</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2023</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2024</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2025</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2026</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2027</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2028</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2029</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer 2030</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2062,6 +2170,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Family_Member%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Recommendation%5F%5Fc</fullName>
             <default>false</default>
         </values>
@@ -2081,23 +2193,15 @@
     <picklistValues>
         <picklist>Required_Supporting_Documentation__c</picklist>
         <values>
-            <fullName>Cancelled</fullName>
+            <fullName>Admit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Decision Made</fullName>
+            <fullName>Complete App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Pending Additional Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Complete-Pending Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
+            <fullName>Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2105,23 +2209,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Paid</fullName>
+            <fullName>Denied</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Waived</fullName>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Incomplete</fullName>
+            <fullName>Started App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Started</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Submitted</fullName>
+            <fullName>Submitted App</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2132,23 +2232,15 @@
     <picklistValues>
         <picklist>Required__c</picklist>
         <values>
-            <fullName>Cancelled</fullName>
+            <fullName>Admit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Decision Made</fullName>
+            <fullName>Complete App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Complete-Pending Additional Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Complete-Pending Review</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completed</fullName>
+            <fullName>Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2156,23 +2248,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Paid</fullName>
+            <fullName>Denied</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deposit Waived</fullName>
+            <fullName>Pending</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Incomplete</fullName>
+            <fullName>Started App</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Started</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Submitted</fullName>
+            <fullName>Submitted App</fullName>
             <default>false</default>
         </values>
         <values>

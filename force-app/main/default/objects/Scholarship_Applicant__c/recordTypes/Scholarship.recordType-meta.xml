@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scholarship</fullName>
+    <active>true</active>
+    <description>Utilize for Scholarship students apply to</description>
+    <label>Scholarship</label>
+    <picklistValues>
+        <picklist>Scholarship_Award_Type__c</picklist>
+        <values>
+            <fullName>Flat Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Tuition</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Scholarship_Status__c</picklist>
+        <values>
+            <fullName>Accepted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alternate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Awarded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Declined</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finalist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Interested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Qualified</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qualified</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semi Finalist- Alternate Test</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semi-Finalist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Started App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted App</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

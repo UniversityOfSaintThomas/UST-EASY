@@ -1,0 +1,33 @@
+<apex:page showheader="false" sidebar="false" id="ScholarshipTemplate" docType="html-5.0" cache="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false">
+    <apex:stylesheet value="https://static.stthomas.edu/trueno/ust-fonts.css"/>  
+    <apex:stylesheet value="https://static.stthomas.edu/ust-style/dist2/style-sheets/ust.min.css"/>
+    <apex:stylesheet value="https://static.stthomas.edu/ust-style/dist-castor3/style-sheets/castor-full.min.css"/>
+    <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <apex:stylesheet value="https://static.stthomas.edu/undergraduate-admissions/js/jquery-ui/jquery-ui.min.css"/>
+    <apex:stylesheet value="{!$Resource.scholarshipStyles}"/>
+    <apex:includeScript value="https://static.stthomas.edu/ust-style/dist2/js/ust-full.min.js"/>
+    <apex:includeScript value="https://static.stthomas.edu/ust-style/dist-castor3/js/castor-full.js"/>
+    <apex:includeScript value="{!$Resource.scholarshipScripts}"/>
+    
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <nav class="tab-navigation" id="access" role="navigation">
+        <a href="#content" tabindex="1">Skip to primary content</a>
+    </nav>
+    <c:ScholarshipHeader />
+    <main id="content">
+        <div class="castor-top">
+            <div class="row">
+                <div class="main-body column">
+                    <apex:insert name="body"/> 
+                </div>
+            </div>
+        </div>  
+    </main>
+    <footer>
+        <apex:insert name="footer">
+            <c:ScholarshipFooter />
+            <site:googleAnalyticsTracking />
+        </apex:insert>
+    </footer>
+</apex:page>

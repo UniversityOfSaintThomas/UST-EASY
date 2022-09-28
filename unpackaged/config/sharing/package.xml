@@ -24,5 +24,13 @@
         <members>Program__c</members>
         <name>SharingRules</name>
     </types>
+    <types>
+        <members>Scholarship__c</members>
+        <name>SharingRules</name>
+    </types>
+    <types>
+        <members>Scholarship_Applicant__c</members>
+        <name>SharingRules</name>
+    </types>
     <version>52.0</version>
 </Package>

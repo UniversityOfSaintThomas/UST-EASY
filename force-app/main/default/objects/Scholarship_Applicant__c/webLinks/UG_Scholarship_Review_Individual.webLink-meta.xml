@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UG_Scholarship_Review_Individual</fullName>
+    <availability>online</availability>
+    <description>Creates an individual scholarship application review document with attachments.</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>UG Scholarship Review Individual</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>https://composer.congamerge.com?SolMgr=1
+&amp;sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;Id={!Scholarship_Applicant__c.Id}
+&amp;ReportId=[SCHLRSHP]00O0a000004XAgF
+&amp;SelectAttachments=1
+&amp;QVAR0id=a210a00000VgcG9
+&amp;TemplateId={!Scholarship_Applicant__c.Review_Template_ID__c},{QVAR0}
+&amp;AC0=1
+&amp;AC1=Application+Review+Document+Generated
+&amp;SC0=1
+&amp;SC1=Attachments
+&amp;DefaultPDF=1</url>
+</WebLink>

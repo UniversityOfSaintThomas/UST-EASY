@@ -1,0 +1,26 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 9/28/2022.
+ -->
+
+<apex:page id="ApplicationDeposit" controller="ApplicationRequirement" extensions="ApplicationDepositController" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!applicationRequirementInit}">
+    <apex:composition template="{!appInfo.template}">
+        <apex:define name="scriptsHead">
+            <c:ApplicationHead/>
+        </apex:define>
+        <apex:define name="metaPageTitle">St. Thomas Application Portal</apex:define>
+        <apex:define name="body">
+            <c:ApplicationBody title="Application Home" appInfo="{!appInfo}" checklistItems="{!checklistItems}" vfPageName="ApplicationHome">
+
+                <form action="https://test.secure.touchnet.net:8443/C20237test_upay/web/index.jsp" method="POST">
+                    <apex:repeat value="{!parameterMap}" var="paramKey">
+                        <apex:repeat value="{!parameterMap[paramKey]}" var="paramValue">
+                            <input type="hidden" name="{!paramKey}" value="{!paramValue}"/>
+                        </apex:repeat>
+                    </apex:repeat>
+                    <button type="submit">Make Payment 2</button>
+                </form>
+
+            </c:ApplicationBody>
+        </apex:define>
+    </apex:composition>
+</apex:page>

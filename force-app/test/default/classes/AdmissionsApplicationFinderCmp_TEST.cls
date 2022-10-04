@@ -15,7 +15,7 @@ public class AdmissionsApplicationFinderCmp_TEST {
                 Withdraw_Status__c = Application_Control__c.Withdraw_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 School_College__c = 'Undergraduate',
                 Name = 'Name',
-                Show_on_App_Finder__c = true 
+                Show_on_App_Finder__c = true
         );
         insert appControl;
     }

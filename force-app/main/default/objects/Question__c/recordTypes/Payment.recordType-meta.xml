@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Phone</fullName>
+    <fullName>Payment</fullName>
     <active>true</active>
-    <description>Phone</description>
-    <label>Phone</label>
+    <description>A credit card payment is required with this question.</description>
+    <label>Payment</label>
     <picklistValues>
         <picklist>Additional_Field_Validation__c</picklist>
         <values>
@@ -30,7 +30,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professional %28MDIV%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1846,6 +1854,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>LW_GR_JD%7CLAWS</fullName>
             <default>false</default>
         </values>
@@ -2021,6 +2037,14 @@
         </values>
         <values>
             <fullName>Apply Without Standardized Test</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2243,6 +2267,10 @@
         </values>
         <values>
             <fullName>Graduate School of Professional Psychology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morrison Family College of Health</fullName>
             <default>false</default>
         </values>
         <values>

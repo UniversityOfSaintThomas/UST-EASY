@@ -19,7 +19,8 @@ public with sharing class applicationHelper {
                                 Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c,
                                 Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Contact_Field__c,
                                 Application_Field__c, External_Email_Field__c, Hardcoded_Value__c, Editable_Application_Status__c, URL_Parameter__c, New_Reference_Field__c, Static_Text__c, Display_as_Picklist__c,
-                                Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, RecordType.Name, Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c
+                                Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, RecordType.Name, Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c,
+                                Payment_Custom_Amount__c, Payment_Gateway__c, Payment_Type__c
                         FROM Questions__r
                         WHERE Active__c = TRUE
                         ORDER BY Display_Order__c ASC NULLS LAST

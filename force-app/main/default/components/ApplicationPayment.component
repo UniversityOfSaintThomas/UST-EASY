@@ -1,0 +1,36 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/4/2022.
+ -->
+
+<apex:component id="ApplicationPayment" controller="ApplicationPaymentComponentController" allowDML="true">
+    <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true" assignTo="{!appInfoParam}"/>
+    <apex:attribute name="questionWrapper" description="" type="ApplicationQuestion" required="false" assignTo="{!question}"/>
+    <script>
+        //Create a dynamic form to break free of apex:form
+        let payForm = document.createElement('form');
+        payForm.setAttribute('method', 'POST');
+        payForm.setAttribute('action', 'https://test.secure.touchnet.net:8443/C20237test_upay/web/index.jsp');
+        const parameterValues = {!formParameters};
+        for (const key in parameterValues) {
+            let formInput = document.createElement('input');
+            if (parameterValues.hasOwnProperty(key)) {
+                formInput.type = 'hidden';
+                formInput.name = key;
+                formInput.value = parameterValues[key];
+                payForm.appendChild(formInput);
+            }
+        }
+        document.body.appendChild(payForm);
+    </script>
+
+    <P>${!paymentAmount}</P>
+
+    <p class="">
+        <a href="javascript:payForm.submit();" class="slds-button slds-button_brand">Make Deposit</a>
+    </p>
+
+    <apex:outputPanel layout="none" rendered="{!!ISBLANK(configurationMessage)}">
+        <p>{!configurationMessage}</p>
+    </apex:outputPanel>
+
+</apex:component>

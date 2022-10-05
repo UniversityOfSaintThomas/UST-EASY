@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scholarship_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Scholarship Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Started App</fullName>
+                <default>false</default>
+                <label>Started App</label>
+            </value>
+            <value>
+                <fullName>Submitted App</fullName>
+                <default>false</default>
+                <label>Submitted App</label>
+            </value>
+            <value>
+                <fullName>Not Qualified</fullName>
+                <default>false</default>
+                <label>Not Qualified</label>
+            </value>
+            <value>
+                <fullName>Qualified</fullName>
+                <default>false</default>
+                <label>Qualified</label>
+            </value>
+            <value>
+                <fullName>Semi-Finalist</fullName>
+                <default>false</default>
+                <label>Semi-Finalist</label>
+            </value>
+            <value>
+                <fullName>Finalist</fullName>
+                <default>false</default>
+                <label>Finalist</label>
+            </value>
+            <value>
+                <fullName>Alternate</fullName>
+                <default>false</default>
+                <label>Alternate</label>
+            </value>
+            <value>
+                <fullName>Denied</fullName>
+                <default>false</default>
+                <label>Denied</label>
+            </value>
+            <value>
+                <fullName>Awarded</fullName>
+                <default>false</default>
+                <label>Awarded</label>
+            </value>
+            <value>
+                <fullName>Accepted</fullName>
+                <default>false</default>
+                <label>Accepted</label>
+            </value>
+            <value>
+                <fullName>Not Interested</fullName>
+                <default>false</default>
+                <label>Not Interested</label>
+            </value>
+            <value>
+                <fullName>Declined</fullName>
+                <default>false</default>
+                <label>Declined</label>
+            </value>
+            <value>
+                <fullName>Semi Finalist- Alternate Test</fullName>
+                <default>false</default>
+                <label>Semi Finalist- Alternate Test</label>
+            </value>
+            <value>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Withdrawn</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

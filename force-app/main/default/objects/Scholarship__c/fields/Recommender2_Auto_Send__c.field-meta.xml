@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recommender2_Auto_Send__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>When recommender name and email is collected auto send a request for a recommendation with a link to the recommender form.</description>
+    <externalId>false</externalId>
+    <label>Recommender2 Auto Send</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

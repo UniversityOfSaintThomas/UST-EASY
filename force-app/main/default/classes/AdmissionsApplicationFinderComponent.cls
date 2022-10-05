@@ -8,6 +8,7 @@ public with sharing class AdmissionsApplicationFinderComponent {
     public String schoolURLParameter { get; set; }
     public String selectedSchool { get; set; }
     public String selectedApp { get; set; }
+    public String selectedAcs {get; set; }
     public Map<String, List<Application_Control__c>> acMapBySchool { get; set; }
 
     public AdmissionsApplicationFinderComponent() {
@@ -30,6 +31,22 @@ public with sharing class AdmissionsApplicationFinderComponent {
         }
     }
 
+    public List<SelectOption> getACs(){
+        List<SelectOption> options = new List<SelectOption>();
+        try{
+            options.add(new SelectOption('','Select application type'));
+            List<Application_Control__c> allACs = [SELECT URL_Parameter__c, Name FROM Application_Control__c WHERE Active__c = TRUE AND Show_on_App_Finder__c = TRUE ORDER BY Name ];
+
+            for(Application_Control__c acs : allAcs) {
+                options.add(new SelectOption(acs.URL_Parameter__c, acs.Name));
+            }
+
+        } catch(Exception e){
+            Apexpages.addMessage(new Apexpages.Message(Apexpages.severity.ERROR, e.getMessage() + '*' + e.getStackTraceString()));
+        }
+        return options;
+    }
+
     public List<SelectOption> getSchools() {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('', 'Select a college'));
@@ -41,7 +58,7 @@ public with sharing class AdmissionsApplicationFinderComponent {
         }
         return options;
     }
-
+    /**
     public List<SelectOption> getApps() {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('', 'Select application type'));
@@ -52,10 +69,10 @@ public with sharing class AdmissionsApplicationFinderComponent {
         }
         return options;
     }
-
+     */
     public PageReference goToApp() {
         PageReference appCreate = Page.ApplicationCreate;
-        appCreate.getParameters().put('at', selectedApp);
+        appCreate.getParameters().put('at', selectedAcs);
         appCreate.setRedirect(true);
         return appCreate;
     }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recommender__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>The gathering of a recommender name and email is required.</description>
+    <externalId>false</externalId>
+    <label>Recommender</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

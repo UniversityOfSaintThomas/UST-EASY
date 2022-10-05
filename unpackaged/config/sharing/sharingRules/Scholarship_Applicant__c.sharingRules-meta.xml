@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingGuestRules>
+        <fullName>Applicant_Recommender_Access</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>This rule provides guest user access to the Applicant for Scholarship Recommenders.</description>
+        <label>Applicant Recommender Access</label>
+        <sharedTo>
+            <guestUser>EASY_Applicant_Portal</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>Contact__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
+    </sharingGuestRules>
+</SharingRules>

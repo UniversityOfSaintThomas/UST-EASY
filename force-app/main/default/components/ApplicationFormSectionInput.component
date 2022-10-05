@@ -20,6 +20,7 @@
     <apex:attribute name="rerenderGroup" description="" type="String" required="false" default="none"/>
     <apex:attribute name="itemNumber" description="iterating number of current displayed questions" type="Integer" required="false"/>
     <apex:attribute name="relatedRecords" description="Is part of a related records question" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
 
     <apex:outputPanel rendered="{!inputType != 'Address' && !ISBLANK(inputLabel) && inputType != 'Checkbox' && inputType != 'Hidden'}" layout="none">
         <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
@@ -179,6 +180,9 @@
     <apex:outputPanel layout="none" rendered="{!!questionWrapper['question']['Display_As_Picklist__c'] && inputType == 'Reference' && LOWER($CurrentPage.Name) != 'applicationregistration' && LOWER($CurrentPage.Name) != 'applicationcreate'}">
         <c:ApplicationFormSectionInputReference responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" itemId="{!itemId}" inputType="{!inputType}" fieldAPI="{!fieldAPI}"/>
     </apex:outputPanel>
+
+    <!-- Payment Question -->
+    <c:ApplicationPayment rendered="{!inputType == 'Payment'}" appInfo="{!appInfo}" questionWrapper="{!questionWrapper}"/>
 
     <!-- Reference Question as Picklist -->
     <apex:outputPanel layout="none" rendered="{!(questionWrapper['question']['Display_As_Picklist__c'] || LOWER($CurrentPage.Name) == 'applicationregistration' || LOWER($CurrentPage.Name) == 'applicationcreate')  && inputType == 'Reference'}">

@@ -2164,6 +2164,20 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Payment_Gateway__c</picklist>
+        <values>
+            <fullName>First_Year_Undergraduate_Deposit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payment_Type__c</picklist>
+        <values>
+            <fullName>Program Application Fee Amount</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Required__c</picklist>
         <values>
             <fullName>Admit</fullName>

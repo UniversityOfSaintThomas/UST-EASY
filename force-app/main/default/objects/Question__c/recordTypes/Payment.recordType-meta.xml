@@ -2189,6 +2189,10 @@
     <picklistValues>
         <picklist>Payment_Type__c</picklist>
         <values>
+            <fullName>Custom Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Program Application Fee Amount</fullName>
             <default>false</default>
         </values>

@@ -3,7 +3,7 @@
  */
 
 @RestResource(urlMapping='/applicaitondepositreceive/*')
-global with sharing class ApplicationDepositRest {
+global with sharing class ApplicationPaymentRest {
 
     @HttpPost
     global static String receiptDeposit() {

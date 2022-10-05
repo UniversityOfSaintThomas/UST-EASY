@@ -79,7 +79,7 @@ public with sharing class ApplicationPaymentComponentController {
                     }
                     parameterMap.put('AMT', paymentAmount);
 
-                    String exTransId = EncodingUtil.urlEncode(app.Contact__r.FirstName + ' ' + app.Contact__r.LastName + ' | ' + app.Name + ' | ' + question.question.Id, 'utf-8');
+                    String exTransId = app.Contact__r.FirstName + ' ' + app.Contact__r.LastName + ' | ' + app.Name + ' | ' + question.question.Id;
 
                     if (String.isNotBlank(gatewayInfo.UPay_Site_Id__c)) {
                         parameterMap.put('UPAY_SITE_ID', gatewayInfo.UPay_Site_Id__c);

@@ -3581,10 +3581,6 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>ApplicationDeposit</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>ApplicationForgotPassword</apexPage>
         <enabled>true</enabled>
     </pageAccesses>

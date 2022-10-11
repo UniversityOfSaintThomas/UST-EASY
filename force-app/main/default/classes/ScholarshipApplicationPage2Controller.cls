@@ -94,17 +94,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
         essay.name = 'Essay' + essayNum + ext;
         essay.Description = 'Essay ' + essayNum + ' Upload. Original Filename was ' + filename;
 
-        /*
-        String essayName = 'Essay' + essayNum + ext;
-        String essayDescription = 'Essay ' + essayNum + ' Upload. Original Filename was ' + filename;
-        Attachment essayQuick = new Attachment(Id = null, OwnerId = UserInfo.getUserId(), IsPrivate = false, name = essayName, Description = essayDescription );
-        if (essayQuick.ParentId != this.applicant.Id) { // If user deletes and re-uploads, and it tries writing this field, it will find it already written, then explode. This SHOULD therefore only pass on first upload, but it COULD in theory pass if the second uploader somehow doesn't have the same applicant ID as the first uploader. That will still cause it to explode, and rightly so.
-            essayQuick.ParentId = this.applicant.Id; // the scholarship applicant record the file is attached to
-        }*/
-
         try {
-            insert essay;
-
             // I'm sure these field names can be accessed programmatically at some point, but for now we're just doing
             // straight adaptation from the original code until it's working! Until then, I know, kinda grody. -JJH
             if (essayNum == 1) {
@@ -114,6 +104,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
                 this.applicant.Essay_2_Uploaded__c = true;
                 this.applicant.Essay_2_Uploaded_Orig_Filename__c = filename;
             }
+            insert essay;
             upsert this.applicant;
             result = true;
         } catch (DMLException e) {
@@ -182,9 +173,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
             if (xx == 1
                     && this.scholarship.Recommender_Auto_Send__c
-                    && String.isNotBlank(this.applicant.Recommender_Email__c)
-                    && String.isNotBlank(this.applicant.Recommender_Name__c)
-                    && this.applicant.Recommendation_Request_Date__c == null
+                    && String.isNotBlank(this.applicant.Recommender_Email__c) && String.isNotBlank(this.applicant.Recommender_Name__c) && this.applicant.Recommendation_Request_Date__c == null
                     ) {
 
                 RecEmail = this.applicant.Recommender_Email__c;
@@ -197,9 +186,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
             }
             if (xx == 2
                     && this.scholarship.Recommender2_Auto_Send__c
-                    && String.isNotBlank(this.applicant.Recommender2_Email__c)
-                    && String.isNotBlank(this.applicant.Recommender2_Name__c)
-                    && this.applicant.Recommendation2_Request_Date__c == null
+                    && String.isNotBlank(this.applicant.Recommender2_Email__c) && String.isNotBlank(this.applicant.Recommender2_Name__c) && this.applicant.Recommendation2_Request_Date__c == null
                     ) {
                 RecEmail = this.applicant.Recommender2_Email__c;
                 RecName = this.applicant.Recommender2_Name__c;
@@ -252,14 +239,19 @@ public with sharing class ScholarshipApplicationPage2Controller {
         } finally {
             String styledP = '<p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: rgb(85, 85, 85);font-family: Palatino Linotype, Georgia, serif;font-size: 16px;line-height: 150%;text-align: left;">';
             String cMessage = '<h2>Your scholarship application has been received!</h2>';
+            String firstName = 'FirstName';
+            String lastName = 'LastName';
+            String email = 'EmailAddress@InsertEmailDomain.Unknown';
 
             List<Contact> contactMatches = [select Id, Name, FirstName, LastName, Email from Contact where id = :this.applicant.Contact__c];
             Contact applicantContactRecord = null;
             for (Contact contact : contactMatches) {
-                applicantContactRecord = contact;
+                firstName = applicantContactRecord.FirstName;
+                lastName = applicantContactRecord.LastName;
+                email = applicantContactRecord.Email;
             }
 
-            cMessage += styledP + applicantContactRecord.FirstName + ' ' + applicantContactRecord.LastName + ',</p>';
+            cMessage += styledP + firstName + ' ' + lastName + ',</p>';
             cMessage += styledP + 'Your application to the ' + this.scholarship.Name + ' has been received.</p>';
             if (this.scholarship.Description__c != null) {
                 cMessage += styledP + '<strong>Scholarship Description</strong><br/>' + this.scholarship.Description__c + '</p>';
@@ -267,7 +259,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
             if (this.scholarship.Review_Award_Process_Description__c != null) {
                 cMessage += styledP + '<strong>What happens next?</strong><br/>' + this.scholarship.Review_Award_Process_Description__c + '</p>';
             }
-            ScholarshipSharedUtilities.sendEmail(applicantContactRecord.FirstName + ' ' + applicantContactRecord.LastName, applicantContactRecord.Email, 'University of St. Thomas Scholarship', cMessage, cMessage, this.scholarship.Name);
+            ScholarshipSharedUtilities.sendEmail(firstName + ' ' + lastName, email, 'University of St. Thomas Scholarship', cMessage, cMessage, this.scholarship.Name);
         }
         ScholarshipSharedUtilities.setHistoryPage(this.scholarship.Scholarship_ID__c);
         return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, this.scholarship.Scholarship_ID__c);

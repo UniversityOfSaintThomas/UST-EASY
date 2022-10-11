@@ -8,6 +8,7 @@ public class INT_InteractionProcessor {
     private List<Interaction__c> dupeInteractions = new List<Interaction__c>();
     private List<Lead> leadsToDelete = new List<Lead>();
     private List<Opportunity> opportunitiesToUpsert = new List<Opportunity>();
+    Map<String, Id> oppKeyToContactMap = new Map<String, Id>();
     private Map<Id, Lead> interactionIdToLead = new Map<Id, Lead>();
     private Map<Id, Interaction__c> interactionMap = new Map<Id, Interaction__c>();
     private Map<Id, Interaction__c> leadIdToInteractionMap = new Map<Id, Interaction__c>();
@@ -61,13 +62,11 @@ public class INT_InteractionProcessor {
         get {
             if (campaignMemberMap == null) {
                 campaignMemberMap = new Map<String, CampaignMember>();
-
+                List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('CampaignMember');
+                List<String> additionalFields = new List<String>{', Campaign.Campaign_Key__c', ', Lead_Contact_ID__c', ', CampaignId'};
+                List<CampaignMember> campaignMembers = (List<CampaignMember>)queryForSObjectMappedFields(interactionMappings, 'CampaignMember', contactIds, additionalFields, 'WHERE ContactId IN :SObjectIds');
                 // Loop through current Campaign Members and build campaignMemberMap
-                for (CampaignMember cm : [
-                        SELECT Status, CampaignId, Campaign.Campaign_Key__c, Lead_Contact_ID__c
-                        FROM CampaignMember
-                        WHERE ContactId IN :contactIds
-                ]) {
+                for (CampaignMember cm : campaignMembers) {
                     if (!String.isEmpty(cm.Campaign.Campaign_Key__c)) {
                         campaignMemberMap.put(String.valueOf(cm.Lead_Contact_ID__c + '.' + cm.Campaign.Campaign_Key__c), cm);
                     } else {
@@ -122,6 +121,18 @@ public class INT_InteractionProcessor {
         set;
     }
 
+    private Map<String, OpportunityStage> oppStageMap {
+        get {
+            List<OpportunityStage> stages = [SELECT ApiName, DefaultProbability, ForecastCategoryName FROM OpportunityStage];
+            Map<String, OpportunityStage> oppStageMap = new Map<String, OpportunityStage>();
+            for (OpportunityStage stage : stages) {
+                oppStageMap.put(stage.ApiName, stage);
+            }
+            return oppStageMap;
+        }
+        set;
+    }
+
     /**
      * @description Inserts Leads only from new Interaction__c records.
      * @param interactionsToProcess, the List of new Interaction__c objects to process.
@@ -138,9 +149,10 @@ public class INT_InteractionProcessor {
 
         // Apply Interaction Mappings to all Leads
         List<Lead> leadsToUpdate = new List<Lead>();
-        for (String leadId : leadIdToInteractionMap.keySet()) {
-            Lead leadToUpdate = new Lead(Id = leadId);
-            intMappingService.applyDataToSObject(leadIdToInteractionMap.get(leadId), leadToUpdate);
+        List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Lead');
+        List<Lead> leadsMappedFields = (List<Lead>)queryForSObjectMappedFields(interactionMappings, 'Lead', leadIdToInteractionMap.keySet(), new List<String>(), 'WHERE Id IN :SObjectIds');
+        for (Lead leadToUpdate : leadsMappedFields) {
+            intMappingService.applyDataToSObject(leadIdToInteractionMap.get(leadToUpdate.Id), leadToUpdate);
             leadsToUpdate.add(leadToUpdate);
         }
 
@@ -202,13 +214,32 @@ public class INT_InteractionProcessor {
 
         // Upsert associated Opportunities using Opportunity_Key__c as the lookup Id.
         if (opportunitiesToUpsert.size() > 0) {
-            logPossibleErrors(Database.upsert(opportunitiesToUpsert, Opportunity.Opportunity_Key__c, false));
+            logPossibleErrors(Database.upsert(opportunitiesToUpsert, false));
         }
+
+        List<OpportunityContactRole> oppContactRolestoInsert = new List<OpportunityContactRole>();
+        for (Opportunity opp : opportunitiesToUpsert) {
+            if (oppKeyToContactMap.get(opp.Opportunity_Key__c) != null) {
+                Id contactId = oppKeyToContactMap.get(opp.Opportunity_Key__c); 
+                OpportunityContactRole oppContactRole = new OpportunityContactRole(ContactId = contactId, OpportunityId =opp.Id, Role = 'Opportunity Contact');
+                oppContactRolestoInsert.add(oppContactRole);
+            }
+        }
+        insert oppContactRolestoInsert;
+
+        Set<Id> contactIdsToQuery = new Set<Id>();
+        for (Interaction__c interactionToProcess : interactionsToProcess) {
+            if (!String.isEmpty(interactionToProcess.Contact__c)) {
+                contactIdsToQuery.add(interactionToProcess.Contact__c);
+            }
+        }
+        List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Contact');
+        Map<Id, Contact> contactMappedFields = new Map<Id, Contact>((List<Contact>)queryForSObjectMappedFields(interactionMappings, 'Contact', contactIdsToQuery, new List<String>(), 'WHERE Id IN :SObjectIds'));
 
         // Finally, associate referenced Opportunity and set Interaction_Status__c after processing and flag if errored.
         for (Interaction__c interaction : interactionsToProcess) {
             if (!String.isEmpty(interaction.Contact__c)) {
-                Contact newCont = new Contact(Id = interaction.Contact__c);
+                Contact newCont = contactMappedFields.get(interaction.Contact__c);
                 intMappingService.applyDataToSObject(interaction, newCont);
                 contactsToUpdate.add(newCont);
             }
@@ -412,6 +443,11 @@ public class INT_InteractionProcessor {
         List<Database.LeadConvert> leadsToReconvert = new List<Database.LeadConvert>();
         Database.LeadConvertResult[] leadConvertResults = Database.convertLead(leadsToConvert, false); // Convert Leads
 
+        List<Map<Id, String>> termsAndPrograms = getTermsAndProgramNames(leadConvertResults);
+        Map<Id, String> leadIdToTermNameMap = termsAndPrograms[0];
+        Map<Id, String> leadIdToProgramNameMap = termsAndPrograms[1];
+        Map<String, List<Opportunity>> contactOppMap = getContactsOpportunities(leadConvertResults);
+
         for (Database.LeadConvertResult lcr : leadConvertResults) {
             Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
 
@@ -427,15 +463,62 @@ public class INT_InteractionProcessor {
 
                 // Create new Opportunity for upsert if Opportunity Key is populated.
                 if (!String.isEmpty(interaction.Opportunity_Key__c)) {
-                    Opportunity newOppty = new Opportunity(
-                            CloseDate = System.today(),
-                            StageName = interaction.Opportunity_Stage__c,
-                            Opportunity_Key__c = lcr.getContactId() + interaction.Opportunity_Key__c,
-                            AccountId = lcr.getAccountId()
-                    );
-                    intMappingService.applyDataToSObject(interaction, newOppty);
-                    interaction.Opportunity__r = newOppty;
-                    opportunitiesToUpsert.add(newOppty);
+                    String lastName = interaction.Last_Name__c;
+                    String termName = '';
+                    String programName = '';
+                    if (leadIdToTermNameMap.get(lcr.getLeadId()) != null) {
+                        termName = leadIdToTermNameMap.get(lcr.getLeadId());
+                    }
+                    if (leadIdToProgramNameMap.get(lcr.getLeadId()) != null) {
+                        programName = leadIdToProgramNameMap.get(lcr.getLeadId());
+                    }
+                    List<Opportunity> matchingOpps = new List<Opportunity>();
+                    // check for matching opportunities
+                    if (contactOppMap.get(interaction.Contact__c) != null) {
+                        Pattern matchingPattern;
+                        if (String.isBlank(termName) && String.isBlank(programName)) {
+                            // matches: any opportunities with or without term or program information
+                            matchingPattern = Pattern.compile('^(?:' + lastName + ')\\|.*\\|.*$');
+                        } else if (String.isBlank(termName) && !String.isBlank(programName)) {
+                            // matches: any opportunities without program information, or opportunities with exact program
+                            matchingPattern = Pattern.compile('^(?:' + lastName + ')\\|.*\\|(?:' + programName + ')*$');
+                        } else if (!String.isBlank(termName) && String.isBlank(programName)) {
+                            // matches: any opportunities without term information, or opportunities  with exact term
+                            matchingPattern = Pattern.compile('^(?:' + lastName + ')\\|(?:' + termName + ')*\\|.*$');
+                        } else if (!String.isBlank(termName) && !String.isBlank(programName)) {
+                            // matches: any opps without program and term information, or opportunities with exact program and term
+                            matchingPattern = Pattern.compile('^(?:' + lastName + ')\\|(?:' + termName + ')*\\|(?:' + programName + ')*$');
+                        }
+                        for (Opportunity opp : contactOppMap.get(interaction.Contact__c)) {
+                            Matcher oppMatch = matchingPattern.matcher(opp.Name);
+                            if (oppMatch.matches()) {
+                                matchingOpps.add(opp);
+                            }
+                        }
+                    }
+                    if (matchingOpps.isEmpty()) {
+                        Opportunity newOppty = new Opportunity();
+                        intMappingService.applyDataToSObject(interaction, newOppty);
+                        newOppty.CloseDate = System.today();
+                        newOppty.StageName = interaction.Opportunity_Stage__c;
+                        newOppty.Opportunity_Key__c = lcr.getContactId() + interaction.Opportunity_Key__c;
+                        newOppty.AccountId = lcr.getAccountId();
+                        newOppty.Name = determineOpportunityName('', lastName, termName, programName);
+                        interaction.Opportunity__r = newOppty;
+                        opportunitiesToUpsert.add(newOppty);
+                        oppKeyToContactMap.put(newOppty.Opportunity_Key__c, interaction.Contact__c);
+                    } else {
+                        for (Opportunity matchingOpp : matchingOpps) {
+                            String oppName = matchingOpp.Name;
+                            intMappingService.applyDataToSObject(interaction, matchingOpp);
+                            matchingOpp.CloseDate = System.today();
+                            matchingOpp.StageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
+                            matchingOpp.AccountId = lcr.getAccountId();
+                            matchingOpp.Name = determineOpportunityName(oppName, lastName, termName, programName);
+                            interaction.Opportunity__r = matchingOpp;
+                            opportunitiesToUpsert.add(matchingOpp);
+                        }
+                    }
                 }
             } else {
                 // Find all of the errors for Lead conversion.
@@ -475,6 +558,118 @@ public class INT_InteractionProcessor {
         }
 
         return leadsToReconvert;
+    }
+
+    private List<Map<Id, String>> getTermsAndProgramNames(Database.LeadConvertResult[] leadConvertResults) {
+        // get Term__c and Academic_Program__c ids related to interaction
+        Map<Id, Id> leadIdToTermIdMap = new Map<Id, Id>();
+        Map<Id, Id> leadIdToProgramIdMap = new Map<Id, Id>();
+        for (Database.LeadConvertResult lcr : leadConvertResults) {
+            Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
+            if (interaction.Term__c != null) {
+                leadIdToTermIdMap.put(lcr.getLeadId(), interaction.Term__c);
+            }
+            if (interaction.Academic_Program__c != null) {
+                leadIdToProgramIdMap.put(lcr.getLeadId(), interaction.Academic_Program__c);
+            }
+        }
+
+        // get term names related to interactions
+        Map<Id, hed__Term__c> terms = new Map<Id, hed__Term__c>([SELECT Id, Name FROM hed__Term__c WHERE Id IN: leadIdToTermIdMap.values()]);
+        Map<Id, String> leadIdToTermNameMap = new Map<Id, String>();
+        for (Id leadId : leadIdToTermIdMap.keySet()) {
+            hed__Term__c term = terms.get(leadIdToTermIdMap.get(leadId));
+            leadIdToTermNameMap.put(leadId, term.Name);
+        }
+
+        // get academic program names related to interactions
+        Map<Id, Program__c> programs = new Map<Id, Program__c>([SELECT Id, Program_Name_on_Application__c FROM Program__c WHERE Id IN: leadIdToProgramIdMap.values()]);
+        Map<Id, String> leadIdToProgramNameMap = new Map<Id, String>();
+        for (Id leadId : leadIdToProgramIdMap.keySet()) {
+            Program__c program = programs.get(leadIdToProgramIdMap.get(leadId));
+            leadIdToProgramNameMap.put(leadId, program.Program_Name_on_Application__c);
+        }
+        List<Map<Id, String>> termsAndPrograms = new List<Map<Id, String>>();
+        termsAndPrograms.add(leadIdToTermNameMap);
+        termsAndPrograms.add(leadIdToProgramNameMap);
+        return termsAndPrograms;
+    }
+
+    private Map<String, List<Opportunity>> getContactsOpportunities(Database.LeadConvertResult[] leadConvertResults) {
+        // get related opportunities
+        Set<Id> contactIds = new Set<Id>();
+        for (Database.LeadConvertResult lcr : leadConvertResults) {
+            Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
+            String lastName = interaction.Last_Name__c;
+            contactIds.add(lcr.getContactId());
+        }
+        
+        List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Opportunity');
+        List<String> additionalFields = new List<String>{', Name', ', Contact__c', ', Opportunity_Key__c'};
+        List<Opportunity> existingOpps = (List<Opportunity>)queryForSObjectMappedFields(interactionMappings, 'Opportunity', contactIds, additionalFields, 'WHERE Contact__c IN :SObjectIds');
+
+        Map<String, List<Opportunity>> contactOppMap = new Map<String, List<Opportunity>>();
+        for (Opportunity opp : existingOpps) {
+            if (contactOppMap.get(opp.Contact__c) != null) {
+                contactOppMap.get(opp.Contact__c).add(opp);
+            } else {
+                List<Opportunity> oppList = new List<Opportunity>();
+                oppList.add(opp);
+                contactOppMap.put(opp.Contact__c, oppList);
+            }
+        }
+        return contactOppMap;
+    }
+
+    private String determineOpportunityName(String currentOppName, String lastName, String termName, String programName) {
+        if (currentOppName != null) {
+            List<String> currentOppNameSplit = currentOppName.split('\\|');
+            switch on currentOppNameSplit.size() {
+                when 2 {
+                    return lastName + '|' + currentOppNameSplit[1] + '|' + programName;
+                }
+                when 3 {
+                    if (String.isEmpty(currentOppNameSplit[1])) {
+                        return lastName + '|' + termName + '|' + currentOppNameSplit[2];
+                    } else {
+                        return currentOppName;
+                    }
+                }
+            }
+        }
+        return lastName + '|' + termName + '|' + programName;
+    }
+
+    private String determineOpportunityStage(String newStageName, String previousStageName) {
+        List<String> names = new List<String>{newStageName, previousStageName};
+        OpportunityStage newStage = oppStageMap.get(newStageName);
+        OpportunityStage previousStage = oppStageMap.get(previousStageName);
+        if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
+            return newStageName;
+        } else if (newStage.ForecastCategoryName == 'Omitted') {
+            return newStageName;
+        } else {
+            return previousStageName;
+        }
+    }
+
+    private List<SObject> queryForSObjectMappedFields(List<Interaction_Mapping__c> interactionMappings, String SObjectName, Set<Id> SObjectIds, List<String> additionalFields, String whereClause) {
+        String queryString = 'SELECT Id, ';
+        for (Interaction_Mapping__c interactionMapping : interactionMappings) {
+            if (interactionMapping != null && interactionMapping.Target_Field_API_Name__c != null) {
+                queryString += interactionMapping.Target_Field_API_Name__c + ', ';
+            }
+        } 
+        queryString = queryString.removeEnd(', ');
+        if (!additionalFields.isEmpty()) {
+            for (String field : additionalFields) {
+                if (!queryString.contains(field)) {
+                    queryString += field;
+                }
+            }
+        }
+        queryString += ' FROM ' + SObjectName + ' ' + whereClause;
+        return Database.query(queryString);
     }
 
     /**

@@ -2,7 +2,7 @@
  - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 6/7/2022.
  -->
 
-<apex:component id="ApplicationFormSectionInput">
+ <apex:component id="ApplicationFormSectionInput">
     <apex:attribute name="inputLabel" description="" type="String" required="false"/>
     <apex:attribute name="multiPicklist" description="" type="List" required="false"/>
     <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
@@ -53,7 +53,7 @@
         <apex:inputField type="email" id="emailField" styleClass="slds-input validate{!inputType}" value="{!responseObject[fieldAPI]}"/>
     </apex:outputPanel>
 
-    <apex:outputPanel rendered="{!inputType == 'Email' && isEditable  && isExternalEmail && !ISBLANK(responseObject[fieldAPI])}" layout="none">
+    <apex:outputPanel rendered="{!inputType == 'Email' && isExternalEmail && !ISBLANK(responseObject[fieldAPI])}" layout="none">
         <a href="#" class="slds-button slds-button_brand slds-m-top_small" onclick="showFormSpinner();sendTheReminder{!itemId}();" id="reminder{!itemId}">Send Reminder</a>
         <p style="display:none" class="oneReminderPerDay slds-p-top_x-small"><strong>A reminder has been sent!</strong><br/><em>Note: only one reminder can be sent within a 24-hour period.</em></p>
     </apex:outputPanel>

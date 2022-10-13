@@ -383,7 +383,11 @@ public class ApplicationRequirement {
                             }
                         }
                     }
-                }
+                } 
+                // else if (addData == null && g.att != null && String.isEmpty(g.att.Title) && g.item.Required__c.contains(app.Application_Status__c)) {
+                //     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Upload required.'));
+                //     hasError = true;
+                // }
             }
         }
 
@@ -579,17 +583,17 @@ public class ApplicationRequirement {
                             related_rec.Recommendation_Requirement_Response__c = rr_id;
                             related_rec.Status__c = 'Requested';
                         }
-                            related_rec.Rec_Email__c = rrMap.get(rr_id).External_Email__c;
-                            if (!requirement_response_to_question_responses_map.isEmpty()) {
-                                for (Question_Response__c question_response : requirement_response_to_question_responses_map.get(rr_id)) {
-                                    if (String.isNotBlank(question_response.Question__r.Related_Object_Field__c)) {
-                                        related_rec.put(question_response.Question__r.Related_Object_Field__c, question_response.Question_Response__c);
-                                    }
+                        related_rec.Rec_Email__c = rrMap.get(rr_id).External_Email__c;
+                        if (!requirement_response_to_question_responses_map.isEmpty()) {
+                            for (Question_Response__c question_response : requirement_response_to_question_responses_map.get(rr_id)) {
+                                if (String.isNotBlank(question_response.Question__r.Related_Object_Field__c)) {
+                                    related_rec.put(question_response.Question__r.Related_Object_Field__c, question_response.Question_Response__c);
                                 }
                             }
-                            if (related_rec.Submitted__c != true) {
-                                recs_to_upsert.add(related_rec);
-                            }
+                        }
+                        if (related_rec.Submitted__c != true) {
+                            recs_to_upsert.add(related_rec);
+                        }
                     }
                 }
 

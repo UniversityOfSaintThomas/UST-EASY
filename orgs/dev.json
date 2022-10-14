@@ -31,9 +31,6 @@
     },
     "communitiesSettings": {
       "enableNetworksEnabled": true
-    },
-    "account": {
-      "defaultRecordType": "default"
     }
   }
 }

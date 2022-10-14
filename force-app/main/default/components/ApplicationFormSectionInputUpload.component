@@ -2,7 +2,7 @@
  - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 6/9/2022.
  -->
 
-<apex:component id="ApplicationFormSectionInputUpload">
+ <apex:component id="ApplicationFormSectionInputUpload">
     <apex:attribute name="isEditable" description="" type="Boolean" required="false"/>
     <apex:attribute name="preventUpdates" description="" type="Boolean" required="false"/>
     <apex:attribute name="allowTextEntry" description="" type="Boolean" required="true"/>
@@ -10,7 +10,8 @@
     <apex:attribute name="odlAttachmentId" description="" type="Id" required="false"/>
     <apex:attribute name="attachmentTitle" description="" type="String" required="false"/>
     <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
-    <apex:attribute name="isRequired" description="Upload is required" type="Boolean" default="false"/>
+    <apex:attribute name="acceptedFileTypes" description="" type="String" required="false"/>
+    <apex:attribute name="isRequiredUpload" description="" type="Boolean" required="false"/>
 
     <!-- Rich Text Editor text-->
     <apex:outputPanel styleClass="slds-form-element" rendered="{!allowTextEntry && (!preventUpdates || isEditable)}">
@@ -29,10 +30,8 @@
         </div>
     </apex:outputPanel>
 
-
     <!-- Upload file button and dropzone -->
     <apex:outputPanel styleClass="slds-form-element" rendered="{!!preventUpdates && isEditable}">
-
         <article class="slds-card slds-m-top_medium">
             <div class="slds-card__header slds-grid">
                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -58,7 +57,7 @@
                 <div class="slds-form-element__control">
                     <div class="slds-file-selector slds-file-selector_files" style="width:100%;">
                         <div class="slds-file-selector__dropzone slds-var-p-around_large" style="width:100%;">
-                            <input class="docUploadInput slds-file-selector__input slds-assistive-text" data-respid="{!itemId}" type="file" aria-labelledby="file-selector-primary-label file-selector-secondary-label"/>
+                            <input class="docUploadInput slds-file-selector__input slds-assistive-text" name="{!itemId}" data-respid="{!itemId}" onChange="return validateFileType(this);" title="{!acceptedFileTypes}" placeholder="{!isRequiredUpload && ISBLANK(attachmentTitle)}" type="file" aria-labelledby="file-selector-primary-label file-selector-secondary-label"/>
                             <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
                                         <span class="slds-file-selector__button slds-button slds-button_neutral">
                                             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
@@ -71,6 +70,7 @@
                         </div>
                     </div>
                 </div>
+                <p style="color:#ea001e;" id="error-108{!itemId}"></p>
                 <p class="slds-text-body_medium slds-m-top_small currentlySelectedFile"><strong>Currently Selected:</strong> None</p>
                 <p class="slds-text-body_medium slds-m-top_small currentlySelectedFile"><em>Currently selected files will be uploaded once the "Save and Continue" button at the end of this grouping.</em></p>
                 <apex:outputPanel styleClass="slds-form-element" rendered="{!(preventUpdates || !isEditable) && NOT(ISBLANK(odlAttachmentId))}">

@@ -80,7 +80,6 @@ public class INT_InteractionMappingService {
      */
     public SObject applyDataToSObject(Interaction__c interaction, SObject theObject) {
         String objectName = theObject.getSObjectType().getDescribe().getName();
-
         if (intMappingMap.containsKey(objectName)) {
             for (Interaction_Mapping__c mapping : intMappingMap.get(objectName)) {
                 // Only copy the field value if the Interaction__c field value is different than the Object field value.
@@ -92,10 +91,13 @@ public class INT_InteractionMappingService {
                         && ((objectCheckboxesMap.containsKey(mapping.Target_Object_API_Name__c)
                         && !objectCheckboxesMap.get(mapping.Target_Object_API_Name__c).contains(mapping.Target_Field_API_Name__c.toLowerCase()))
                         || String.valueOf(interaction.get(mapping.Source_Field_API_Name__c)) != 'false'))
-                        ) {
-                    theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Source_Field_API_Name__c));
+                ) {
+                    if (theObject.Id != null && theObject.get(mapping.Target_Field_API_Name__c) != null) {
+                        continue;
+                    } else {
+                        theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Source_Field_API_Name__c));
+                    }
                 }
-
             }
         }
 

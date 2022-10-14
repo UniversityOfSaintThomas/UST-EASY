@@ -94,6 +94,7 @@ public class ApplicationQuestion {
                     SELECT Id, Intended_Program__c 
                     FROM Intended_Program_Term__c 
                     WHERE Academic_Term__c =: selectedTermId
+                    AND Application_Status__c = 'Active'
                 ];
                 for (Intended_Program_Term__c intendedProgramTerm : intendedProgramTerms) {
                     programsWithSelectedTerm.add(intendedProgramTerm.Intended_Program__c);

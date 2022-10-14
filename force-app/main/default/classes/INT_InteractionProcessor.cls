@@ -224,6 +224,26 @@ public class INT_InteractionProcessor {
                 OpportunityContactRole oppContactRole = new OpportunityContactRole(ContactId = contactId, OpportunityId =opp.Id, Role = 'Opportunity Contact');
                 oppContactRolestoInsert.add(oppContactRole);
             }
+
+        }
+        insert oppContactRolestoInsert;
+
+        Set<Id> contactIdsToQuery = new Set<Id>();
+        for (Interaction__c interactionToProcess : interactionsToProcess) {
+            if (!String.isEmpty(interactionToProcess.Contact__c)) {
+                contactIdsToQuery.add(interactionToProcess.Contact__c);
+            }
+        }
+        List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Contact');
+        Map<Id, Contact> contactMappedFields = new Map<Id, Contact>((List<Contact>)queryForSObjectMappedFields(interactionMappings, 'Contact', contactIdsToQuery, new List<String>(), 'WHERE Id IN :SObjectIds'));
+
+        List<OpportunityContactRole> oppContactRolestoInsert = new List<OpportunityContactRole>();
+        for (Opportunity opp : opportunitiesToUpsert) {
+            if (oppKeyToContactMap.get(opp.Opportunity_Key__c) != null) {
+                Id contactId = oppKeyToContactMap.get(opp.Opportunity_Key__c); 
+                OpportunityContactRole oppContactRole = new OpportunityContactRole(ContactId = contactId, OpportunityId =opp.Id, Role = 'Opportunity Contact', isPrimary = true);
+                oppContactRolestoInsert.add(oppContactRole);
+            }
         }
         insert oppContactRolestoInsert;
 
@@ -472,6 +492,7 @@ public class INT_InteractionProcessor {
                     if (leadIdToProgramNameMap.get(lcr.getLeadId()) != null) {
                         programName = leadIdToProgramNameMap.get(lcr.getLeadId());
                     }
+                    
                     List<Opportunity> matchingOpps = new List<Opportunity>();
                     // check for matching opportunities
                     if (contactOppMap.get(interaction.Contact__c) != null) {

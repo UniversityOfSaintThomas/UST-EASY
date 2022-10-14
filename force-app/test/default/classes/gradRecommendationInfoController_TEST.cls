@@ -373,6 +373,7 @@ public with sharing class gradRecommendationInfoController_TEST {
         );
         insert ipt;
 
+
        // Interaction__c inter = new Interaction__c(
         //        Interaction_Source__c = 'Application',
          //       Interaction_Status__c = 'New',
@@ -396,6 +397,7 @@ public with sharing class gradRecommendationInfoController_TEST {
          //       Intended_Start_Term__c = term.Id
        // );
        // insert opp;
+
 
 
         Application__c app = new Application__c(

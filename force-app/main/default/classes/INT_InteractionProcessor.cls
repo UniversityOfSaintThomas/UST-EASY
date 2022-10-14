@@ -5,15 +5,15 @@
 * updating Contacts, upserting Affiliations, and upserting CampaignMembers
 ******************************************/
 public class INT_InteractionProcessor {
-    private List<Interaction__c> dupeInteractions = new List<Interaction__c>();
-    private List<Lead> leadsToDelete = new List<Lead>();
-    private List<Opportunity> opportunitiesToUpsert = new List<Opportunity>();
-    Map<String, Id> oppKeyToContactMap = new Map<String, Id>();
-    private Map<Id, Lead> interactionIdToLead = new Map<Id, Lead>();
+    private final List<Interaction__c> dupeInteractions = new List<Interaction__c>();
+    private final List<Lead> leadsToDelete = new List<Lead>();
+    private final List<Opportunity> opportunitiesToUpsert = new List<Opportunity>();
+    final Map<String, Id> oppKeyToContactMap = new Map<String, Id>();
+    private final Map<Id, Lead> interactionIdToLead = new Map<Id, Lead>();
     private Map<Id, Interaction__c> interactionMap = new Map<Id, Interaction__c>();
-    private Map<Id, Interaction__c> leadIdToInteractionMap = new Map<Id, Interaction__c>();
-    private Set<Id> contactIds = new Set<Id>();
-    private Set<Id> existingLeadIds = new Set<Id>();
+    private final Map<Id, Interaction__c> leadIdToInteractionMap = new Map<Id, Interaction__c>();
+    private final Set<Id> contactIds = new Set<Id>();
+    private final Set<Id> existingLeadIds = new Set<Id>();
 
     private INT_InteractionMappingService intMappingService {
         get {
@@ -133,7 +133,7 @@ public class INT_InteractionProcessor {
         set;
     }
 
-    /**
+    /*
      * @description Inserts Leads only from new Interaction__c records.
      * @param interactionsToProcess, the List of new Interaction__c objects to process.
      */
@@ -143,9 +143,6 @@ public class INT_InteractionProcessor {
 
         // Set up Interaction Map for reference during processing.
         interactionMap = new Map<Id, Interaction__c>(interactionsToProcess);
-
-        // Insert Leads from the new Interaction records.
-        List<Database.LeadConvert> newLeads = insertLeadsFromInteractions(interactionsToProcess);
 
         // Apply Interaction Mappings to all Leads
         List<Lead> leadsToUpdate = new List<Lead>();
@@ -179,7 +176,7 @@ public class INT_InteractionProcessor {
         logPossibleErrors(Database.update(interactionsToProcess, false));
     }
 
-    /**
+    /*
      * @description Main method for processing new Interaction__c records.
      * @param interactionsToProcess, the List of new Interaction__c objects to process.
      */
@@ -217,17 +214,6 @@ public class INT_InteractionProcessor {
             logPossibleErrors(Database.upsert(opportunitiesToUpsert, false));
         }
 
-        List<OpportunityContactRole> oppContactRolestoInsert = new List<OpportunityContactRole>();
-        for (Opportunity opp : opportunitiesToUpsert) {
-            if (oppKeyToContactMap.get(opp.Opportunity_Key__c) != null) {
-                Id contactId = oppKeyToContactMap.get(opp.Opportunity_Key__c); 
-                OpportunityContactRole oppContactRole = new OpportunityContactRole(ContactId = contactId, OpportunityId =opp.Id, Role = 'Opportunity Contact');
-                oppContactRolestoInsert.add(oppContactRole);
-            }
-
-        }
-        insert oppContactRolestoInsert;
-
         Set<Id> contactIdsToQuery = new Set<Id>();
         for (Interaction__c interactionToProcess : interactionsToProcess) {
             if (!String.isEmpty(interactionToProcess.Contact__c)) {
@@ -241,20 +227,11 @@ public class INT_InteractionProcessor {
         for (Opportunity opp : opportunitiesToUpsert) {
             if (oppKeyToContactMap.get(opp.Opportunity_Key__c) != null) {
                 Id contactId = oppKeyToContactMap.get(opp.Opportunity_Key__c); 
-                OpportunityContactRole oppContactRole = new OpportunityContactRole(ContactId = contactId, OpportunityId =opp.Id, Role = 'Opportunity Contact', isPrimary = true);
+                OpportunityContactRole oppContactRole = new OpportunityContactRole(ContactId = contactId, OpportunityId =opp.Id, Role = 'Opportunity Contact', IsPrimary = true);
                 oppContactRolestoInsert.add(oppContactRole);
             }
         }
         insert oppContactRolestoInsert;
-
-        Set<Id> contactIdsToQuery = new Set<Id>();
-        for (Interaction__c interactionToProcess : interactionsToProcess) {
-            if (!String.isEmpty(interactionToProcess.Contact__c)) {
-                contactIdsToQuery.add(interactionToProcess.Contact__c);
-            }
-        }
-        List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Contact');
-        Map<Id, Contact> contactMappedFields = new Map<Id, Contact>((List<Contact>)queryForSObjectMappedFields(interactionMappings, 'Contact', contactIdsToQuery, new List<String>(), 'WHERE Id IN :SObjectIds'));
 
         // Finally, associate referenced Opportunity and set Interaction_Status__c after processing and flag if errored.
         for (Interaction__c interaction : interactionsToProcess) {
@@ -344,6 +321,7 @@ public class INT_InteractionProcessor {
      */
     private List<Database.LeadConvert> insertLeadsFromInteractions(List<Interaction__c> interactions) {
         List<Database.LeadConvert> leadConverts = new List<Database.LeadConvert>();
+        List<Contact> newCons = new List<Contact>();
 
         // Associate Campaigns and create new Leads from Interaction records.
         for (Interaction__c interaction : interactions) {
@@ -369,6 +347,59 @@ public class INT_InteractionProcessor {
 
             interactionIdToLead.put(interaction.Id, newLead);
             intMappingService.applyDataToSObject(interaction, newLead);
+
+            Contact newCon = new Contact(
+            	FirstName = newLead.FirstName,
+                LastName = newLead.LastName,
+                MailingStreet = newLead.Street,
+                MailingCity = newLead.City,
+                MailingState = newLead.State,
+                MailingCountry = newLead.Country,
+                MailingPostalCode = newLead.PostalCode,
+                Email = newLead.Email,
+                Fax = newLead.Fax,
+                MobilePhone = newLead.MobilePhone,
+                Phone = newLead.Phone,
+                Title = newLead.Title
+            );
+
+            intMappingService.applyDataToSObject(interaction, newCon);
+            newCons.add(newCon);
+        }
+
+        // Break list into list of lists with maximum size of 50 because of duplicate find limits
+        List<List<Contact>> newConsList = new List<List<Contact>>{new List<Contact>()};
+        for (Contact c:newCons) {
+            if (newConsList[newConsList.size() - 1].size() == 50) {
+                newConsList.add(new List<Contact>());
+            }
+            newConsList[newConsList.size() - 1].add(c);
+        }
+
+        // Look for duplicates and add ID if one exists
+        Integer interactionsIndex = 0;
+        for (List<Contact> cons:newConsList) {
+
+            List<Datacloud.FindDuplicatesResult> results = Datacloud.FindDuplicates.findDuplicates(cons);
+
+            for (Integer i = 0; i < cons.size(); i++) {
+                if (interactions[interactionsIndex].Lead_Only__c == false) {
+                    for (Datacloud.DuplicateResult result:results[i].getDuplicateResults()) {
+                        for (Datacloud.MatchResult matchResult:result.getMatchResults()) {
+                            if (matchResult.getEntityType() == 'Contact' && !matchResult.getMatchRecords().isEmpty()) {
+                                interactions[interactionsIndex].Contact__c = matchResult.getMatchRecords()[0].getRecord().Id;
+                                break;
+                            }
+                        }
+
+                        if (interactions[interactionsIndex].Contact__c != null) {
+                            break;
+                        }
+                    }
+                }
+
+                interactionsIndex++;
+            }
         }
 
         leadConverts.addAll(insertLeads(interactionIdToLead.values(), interactions));
@@ -376,7 +407,7 @@ public class INT_InteractionProcessor {
         return leadConverts;
     }
 
-    /**
+    /*
      * @description Inserts a collection of Leads. If there are failures, log issues to Interaction Audit Status.
      * @param leads, a List of Lead objects to insert.
      * @return leadsToConvert, a List of Database.LeadConvert records to convert.
@@ -435,7 +466,7 @@ public class INT_InteractionProcessor {
         return leadsToConvert;
     }
 
-    /**
+    /*
      * @description Creates a Database.LeadConvert Object from supplied Interaction record.
      * @param interaction, the Interaction__c to create Database.LeadConvert from.
      * @param leadId, the Id of the Lead to convert.
@@ -461,6 +492,25 @@ public class INT_InteractionProcessor {
      */
     private List<Database.LeadConvert> convertLeads(List<Database.LeadConvert> leadsToConvert) {
         List<Database.LeadConvert> leadsToReconvert = new List<Database.LeadConvert>();
+
+        // Get set of all lead converts where contact has been specified but not account
+        Set<Id> contactIdsMissingAccount = new Set<Id>();
+        for (Database.LeadConvert lc:leadsToConvert) {
+            if (lc.getContactId() != null && lc.getAccountId() == null) {
+                contactIdsMissingAccount.add(lc.getContactId());
+            }
+        }
+
+        // Query for contact's account and set it on lead convert
+        if (!contactIdsMissingAccount.isEmpty()) {
+            Map<Id, Contact> contacts = new Map<Id, Contact>([SELECT Id, AccountId FROM Contact WHERE Id IN :contactIdsMissingAccount]);
+            for (Database.LeadConvert lc:leadsToConvert) {
+                if (lc.getContactId() != null && lc.getAccountId() == null && contacts.containsKey(lc.getContactId())) {
+                    lc.setAccountId(contacts.get(lc.getContactId()).AccountId);
+                }
+            }
+        }
+
         Database.LeadConvertResult[] leadConvertResults = Database.convertLead(leadsToConvert, false); // Convert Leads
 
         List<Map<Id, String>> termsAndPrograms = getTermsAndProgramNames(leadConvertResults);
@@ -674,7 +724,7 @@ public class INT_InteractionProcessor {
         }
     }
 
-    private List<SObject> queryForSObjectMappedFields(List<Interaction_Mapping__c> interactionMappings, String SObjectName, Set<Id> SObjectIds, List<String> additionalFields, String whereClause) {
+    private static List<SObject> queryForSObjectMappedFields(List<Interaction_Mapping__c> interactionMappings, String SObjectName, Set<Id> SObjectIds, List<String> additionalFields, String whereClause) {
         String queryString = 'SELECT Id, ';
         for (Interaction_Mapping__c interactionMapping : interactionMappings) {
             if (interactionMapping != null && interactionMapping.Target_Field_API_Name__c != null) {
@@ -733,7 +783,7 @@ public class INT_InteractionProcessor {
         return campaignMembersToUpsert;
     }
 
-    /**
+    /*
      * @description Creates a new CampaignMember record for upsert from the data on the Interaction__c provided.
      * @param interaction, the Interaction__c record to copy data from.
      * @param additionalCampaign, a bool telling the method to use Campaign or Additional Campaign fields on the Interaction__c.

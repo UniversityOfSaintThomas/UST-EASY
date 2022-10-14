@@ -79,6 +79,7 @@ public class ApplicationQuestion {
     public List<SelectOption> options {
         get {
             List<Id> programsWithSelectedTerm = new List<Id>();
+            Boolean filterProgramsByTerm = false;
             if (section != null 
                 && !section.groups.isEmpty() 
                 && !section.groups[0].questions.isEmpty()
@@ -87,6 +88,7 @@ public class ApplicationQuestion {
                 && section.groups[0].questions[0].response != null
                 && !String.isEmpty(section.groups[0].questions[0].response.ValueText__c))
             {
+                filterProgramsByTerm = true;
                 Id selectedTermId = Id.valueOf(section.groups[0].questions[0].response.ValueText__c);
                 List<Intended_Program_Term__c> intendedProgramTerms = [
                     SELECT Id, Intended_Program__c 
@@ -104,8 +106,14 @@ public class ApplicationQuestion {
                 };
 
                 for (Program__c ip : intendedPrograms) {
-                    if (showIntendedProgram(ip) &&  programsWithSelectedTerm != null && programsWithSelectedTerm.contains(ip.Id)) {
-                        options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
+                    if (filterProgramsByTerm) {
+                        if (showIntendedProgram(ip) &&  programsWithSelectedTerm != null && programsWithSelectedTerm.contains(ip.Id)) {
+                            options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
+                        }
+                    } else {
+                        if (showIntendedProgram(ip)) {
+                            options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
+                        }
                     }
                 }
                 return options;

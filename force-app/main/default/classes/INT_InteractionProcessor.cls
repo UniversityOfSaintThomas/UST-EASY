@@ -202,7 +202,7 @@ public class INT_InteractionProcessor {
 
         // Upsert associated Opportunities using Opportunity_Key__c as the lookup Id.
         if (opportunitiesToUpsert.size() > 0) {
-            logPossibleErrors(Database.upsert(opportunitiesToUpsert, Opportunity.Opportunity_Key__c, false));
+            logPossibleErrors(Database.upsert(opportunitiesToUpsert, false));
         }
 
         // Finally, associate referenced Opportunity and set Interaction_Status__c after processing and flag if errored.
@@ -412,6 +412,11 @@ public class INT_InteractionProcessor {
         List<Database.LeadConvert> leadsToReconvert = new List<Database.LeadConvert>();
         Database.LeadConvertResult[] leadConvertResults = Database.convertLead(leadsToConvert, false); // Convert Leads
 
+        List<Map<Id, String>> termsAndPrograms = getTermsAndProgramNames(leadConvertResults);
+        Map<Id, String> leadIdToTermNameMap = termsAndPrograms[0];
+        Map<Id, String> leadIdToProgramNameMap = termsAndPrograms[1];
+        Map<String, Opportunity> oppNameMap = getMatchingOpportunities(leadConvertResults, leadIdToTermNameMap, leadIdToProgramNameMap);
+
         for (Database.LeadConvertResult lcr : leadConvertResults) {
             Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
 
@@ -427,12 +432,35 @@ public class INT_InteractionProcessor {
 
                 // Create new Opportunity for upsert if Opportunity Key is populated.
                 if (!String.isEmpty(interaction.Opportunity_Key__c)) {
-                    Opportunity newOppty = new Opportunity(
-                            CloseDate = System.today(),
-                            StageName = interaction.Opportunity_Stage__c,
-                            Opportunity_Key__c = lcr.getContactId() + interaction.Opportunity_Key__c,
-                            AccountId = lcr.getAccountId()
-                    );
+                    Opportunity newOppty = new Opportunity();
+                    String lastName = interaction.Last_Name__c;
+                    String termName = '';
+                    String programName = '';
+                    if (leadIdToTermNameMap.get(lcr.getLeadId()) != null) {
+                        termName = leadIdToTermNameMap.get(lcr.getLeadId());
+                    }
+                    if (leadIdToProgramNameMap.get(lcr.getLeadId()) != null) {
+                        programName = leadIdToProgramNameMap.get(lcr.getLeadId());
+                    }
+                    // check if opportunity already exists
+                    if (!oppNameMap.isEmpty()) {
+                        if (oppNameMap.keySet().contains(lastName + '|' + termName + '|' + programName)) {
+                            newOppty = oppNameMap.get(String.valueOf(lastName + '|' + termName + '|' + programName));
+                        } else if (oppNameMap.keySet().contains(lastName + '|' + termName + '|')) {
+                            newOppty = oppNameMap.get(String.valueOf(lastName + '|' + termName + '|'));
+                        } else if (oppNameMap.keySet().contains(lastName + '||' + programName)) {
+                            newOppty = oppNameMap.get(String.valueOf(lastName + '||' + programName));
+                        } else if (oppNameMap.keySet().contains(lastName + '||')) {
+                            newOppty = oppNameMap.get(String.valueOf(lastName + '||'));
+                        }
+                    }
+                    System.debug('%%% newOppty: ' + newOppty);
+                    newOppty.Name = determineOpportunityName(newOppty.Name, lastName, termName, programName);
+                    newOppty.CloseDate = System.today();
+                    newOppty.StageName = interaction.Opportunity_Stage__c;
+                    newOppty.Opportunity_Key__c = lcr.getContactId() + interaction.Opportunity_Key__c;
+                    newOppty.AccountId = lcr.getAccountId();
+                    System.debug('%%% newOppty assignments: ' + newOppty);
                     intMappingService.applyDataToSObject(interaction, newOppty);
                     interaction.Opportunity__r = newOppty;
                     opportunitiesToUpsert.add(newOppty);
@@ -475,6 +503,116 @@ public class INT_InteractionProcessor {
         }
 
         return leadsToReconvert;
+    }
+
+    private List<Map<Id, String>> getTermsAndProgramNames(Database.LeadConvertResult[] leadConvertResults) {
+        // get Term__c and Academic_Program__c ids related to interaction
+        Map<Id, Id> leadIdToTermIdMap = new Map<Id, Id>();
+        Map<Id, Id> leadIdToProgramIdMap = new Map<Id, Id>();
+        for (Database.LeadConvertResult lcr : leadConvertResults) {
+            Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
+            if (interaction.Term__c != null) {
+                leadIdToTermIdMap.put(lcr.getLeadId(), interaction.Term__c);
+            }
+            if (interaction.Academic_Program__c != null) {
+                leadIdToProgramIdMap.put(lcr.getLeadId(), interaction.Academic_Program__c);
+            }
+        }
+
+        // get term names related to interactions
+        Map<Id, hed__Term__c> terms = new Map<Id, hed__Term__c>([SELECT Id, Name FROM hed__Term__c WHERE Id IN: leadIdToTermIdMap.values()]);
+        Map<Id, String> leadIdToTermNameMap = new Map<Id, String>();
+        for (Id leadId : leadIdToTermIdMap.keySet()) {
+            hed__Term__c term = terms.get(leadIdToTermIdMap.get(leadId));
+            leadIdToTermNameMap.put(leadId, term.Name);
+        }
+
+        // get academic program names related to interactions
+        Map<Id, Program__c> programs = new Map<Id, Program__c>([SELECT Id, Program_Name_on_Application__c FROM Program__c WHERE Id IN: leadIdToProgramIdMap.values()]);
+        Map<Id, String> leadIdToProgramNameMap = new Map<Id, String>();
+        for (Id leadId : leadIdToProgramIdMap.keySet()) {
+            Program__c program = programs.get(leadIdToProgramIdMap.get(leadId));
+            leadIdToProgramNameMap.put(leadId, program.Program_Name_on_Application__c);
+        }
+        List<Map<Id, String>> termsAndPrograms = new List<Map<Id, String>>();
+        termsAndPrograms.add(leadIdToTermNameMap);
+        termsAndPrograms.add(leadIdToProgramNameMap);
+        return termsAndPrograms;
+    }
+
+    private Map<String, Opportunity> getMatchingOpportunities(Database.LeadConvertResult[] leadConvertResults, Map<Id, String> leadIdToTermNameMap, Map<Id, String> leadIdToProgramNameMap) {
+
+        // get related opportunities
+        Map<String, String> oppNamesToQuery = new Map<String, String>(); // using map to avoid duplicate values
+        for (Database.LeadConvertResult lcr : leadConvertResults) {
+            Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
+            String lastName = interaction.Last_Name__c;
+            String termName = '';
+            String programName = '';
+            if (leadIdToTermNameMap.get(lcr.getLeadId()) != null) {
+                termName = leadIdToTermNameMap.get(lcr.getLeadId());
+            }
+            if (leadIdToProgramNameMap.get(lcr.getLeadId()) != null) {
+                programName = leadIdToProgramNameMap.get(lcr.getLeadId());
+            }
+            oppNamesToQuery.put(lastName + '||', '');
+            oppNamesToQuery.put(lastName + '|' + termName + '|', '');
+            oppNamesToQuery.put(lastName + '||' + programName, '');
+            oppNamesToQuery.put(lastName + '|' + termName + '|' + programName, '');
+        }
+        System.debug('%%% oppNamesToQuery: ' + oppNamesToQuery);
+        List<Opportunity> existingOpps = [SELECT Id, Name FROM Opportunity WHERE Name IN: oppNamesToQuery.keySet()];
+        Map<String, Opportunity> oppNameMap = new Map<String, Opportunity>();
+        for (Opportunity opp : existingOpps) {
+            oppNameMap.put(opp.Name, opp);
+            List<String> splitName = opp.Name.split('\\|');
+            oppNameMap.put(splitName[0] + '||', opp);
+        }
+        System.debug('%%% oppNameMap: ' + oppNameMap);
+        return oppNameMap;
+    }
+
+    private String determineOpportunityName(String currentOppName, String lastName, String termName, String programName) {
+        String potentialOppName = lastName + '|' + termName + '|' + programName;
+        if (String.isBlank(currentOppName)) {
+            return potentialOppName;
+        } else {
+            List<String> splitCurrentOppName = currentOppName.split('\\|');
+            List<String> splitPotentialOppName = potentialOppName.split('\\|');
+            switch on splitCurrentOppName.size() {
+                when 1 { // only last name populated on opportunity
+                    return potentialOppName;
+                }
+                when 2 { // last name and term populated on opportunity
+                    if (splitPotentialOppName.size() == 3) {
+                        return currentOppName + splitPotentialOppName[2];
+                    } else {
+                        return currentOppName;
+                    }
+                }
+                when 3 { // last name, term, and program populated OR last name and program
+                    if (String.isBlank(splitCurrentOppName[1])) { // no term populated
+                        if (splitPotentialOppName.size() == 1) {
+                            return currentOppName;
+                        } else if (splitPotentialOppName.size() == 2) {
+                            return splitCurrentOppName[0] + '|' + splitPotentialOppName[1] + '|' + splitCurrentOppName[2];
+                        } else if (splitPotentialOppName.size() == 3) {
+                            if (String.isBlank(splitPotentialOppName[1])) {
+                                return currentOppName;
+                            } else {
+                                return splitCurrentOppName[0] + '|' + splitPotentialOppName[1] + '|' + splitCurrentOppName[2];
+                            }
+                        }
+                    } else { // all values are populated
+                        return currentOppName;
+                    }
+                }
+                when else {
+                    return currentOppName;
+                }
+            }
+        }
+        return currentOppName;
     }
 
     /**

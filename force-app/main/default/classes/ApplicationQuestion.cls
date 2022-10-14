@@ -79,7 +79,6 @@ public class ApplicationQuestion {
     public List<SelectOption> options {
         get {
             List<Id> programsWithSelectedTerm = new List<Id>();
-            System.debug('%%% section: ' + section);
             if (section != null 
                 && !section.groups.isEmpty() 
                 && !section.groups[0].questions.isEmpty()
@@ -105,7 +104,6 @@ public class ApplicationQuestion {
                 };
 
                 for (Program__c ip : intendedPrograms) {
-                    System.debug('%% ip: ' + ip);
                     if (showIntendedProgram(ip) &&  programsWithSelectedTerm != null && programsWithSelectedTerm.contains(ip.Id)) {
                         options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
                     }
@@ -216,31 +214,24 @@ public class ApplicationQuestion {
 
     public Boolean showIntendedProgram(Program__c ip) {
         if ((String.isNotBlank(ip.Hide_Applicant_Type__c) && (String.isNotBlank(application.Applicant_Type__c) && (new Set<String>(ip.Hide_Applicant_Type__c.split(';'))).contains(application.Applicant_Type__c))) || (String.isNotBlank(ip.Applicant_Type__c) && (String.isBlank(application.Applicant_Type__c) || !(new Set<String>(ip.Applicant_Type__c.split(';'))).contains(application.Applicant_Type__c)))) {
-            System.debug('applicant type');
             return false;
         }
         if ((String.isNotBlank(ip.Hide_Citizenship__c) && (String.isNotBlank(application.Citizenship__c) && (new Set<String>(ip.Hide_Citizenship__c.split(';'))).contains(application.Citizenship__c))) || (String.isNotBlank(ip.Citizenship__c) && (String.isBlank(application.Citizenship__c) || !(new Set<String>(ip.Citizenship__c.split(';'))).contains(application.Citizenship__c)))) {
-            System.debug('hide citizenship');
             return false;
         }
         if ((String.isNotBlank(ip.Hide_Student_Type__c) && (String.isNotBlank(application.Student_Type__c) && (new Set<String>(ip.Hide_Student_Type__c.split(';'))).contains(application.Student_Type__c))) || (String.isNotBlank(ip.Student_Type__c) && (String.isBlank(application.Student_Type__c) || !(new Set<String>(ip.Student_Type__c.split(';'))).contains(application.Student_Type__c)))) {
-            System.debug('student type');
             return false;
         }
         if (String.isNotBlank(ip.School_College__c) && (String.isBlank(application.School_College__c) || !(new Set<String>(ip.School_College__c.split(';'))).contains(application.School_College__c))) {
-            System.debug('scool college');
             return false;
         }
         if (String.isNotBlank(ip.Delivery_Type__c) && (String.isBlank(application.Delivery_Type__c) || !(new Set<String>(ip.Delivery_Type__c.split(';'))).contains(application.Delivery_Type__c))) {
-            System.debug('delivery type');
             return false;
         }
         if (String.isNotBlank(ip.Degree_Type__c) && (String.isBlank(application.Degree_Type__c) || !(new Set<String>(ip.Degree_Type__c.split(';'))).contains(application.Degree_Type__c))) {
-            System.debug('degree type');
             return false;
         }
         if (String.isNotBlank(ip.Residency__c) && (String.isBlank(application.Residency__c) || ip.Residency__c.equals(application.Residency__c))) {
-            System.debug('residency');
             return false;
         }
         return true;

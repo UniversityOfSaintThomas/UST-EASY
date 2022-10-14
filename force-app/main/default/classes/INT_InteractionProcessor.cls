@@ -221,7 +221,7 @@ public class INT_InteractionProcessor {
         for (Opportunity opp : opportunitiesToUpsert) {
             if (oppKeyToContactMap.get(opp.Opportunity_Key__c) != null) {
                 Id contactId = oppKeyToContactMap.get(opp.Opportunity_Key__c); 
-                OpportunityContactRole oppContactRole = new OpportunityContactRole(ContactId = contactId, OpportunityId =opp.Id, Role = 'Opportunity Contact');
+                OpportunityContactRole oppContactRole = new OpportunityContactRole(ContactId = contactId, OpportunityId =opp.Id, Role = 'Opportunity Contact', isPrimary = true);
                 oppContactRolestoInsert.add(oppContactRole);
             }
         }

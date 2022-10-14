@@ -448,6 +448,7 @@ public class INT_InteractionProcessor {
         Map<Id, String> leadIdToProgramNameMap = termsAndPrograms[1];
         Map<String, List<Opportunity>> contactOppMap = getContactsOpportunities(leadConvertResults);
 
+
         for (Database.LeadConvertResult lcr : leadConvertResults) {
             Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
 
@@ -472,6 +473,7 @@ public class INT_InteractionProcessor {
                     if (leadIdToProgramNameMap.get(lcr.getLeadId()) != null) {
                         programName = leadIdToProgramNameMap.get(lcr.getLeadId());
                     }
+
                     List<Opportunity> matchingOpps = new List<Opportunity>();
                     // check for matching opportunities
                     if (contactOppMap.get(interaction.Contact__c) != null) {
@@ -519,6 +521,7 @@ public class INT_InteractionProcessor {
                             opportunitiesToUpsert.add(matchingOpp);
                         }
                     }
+
                 }
             } else {
                 // Find all of the errors for Lead conversion.
@@ -595,6 +598,7 @@ public class INT_InteractionProcessor {
         return termsAndPrograms;
     }
 
+
     private Map<String, List<Opportunity>> getContactsOpportunities(Database.LeadConvertResult[] leadConvertResults) {
         // get related opportunities
         Set<Id> contactIds = new Set<Id>();
@@ -631,6 +635,7 @@ public class INT_InteractionProcessor {
                 when 3 {
                     if (String.isEmpty(currentOppNameSplit[1])) {
                         return lastName + '|' + termName + '|' + currentOppNameSplit[2];
+
                     } else {
                         return currentOppName;
                     }
@@ -670,6 +675,7 @@ public class INT_InteractionProcessor {
         }
         queryString += ' FROM ' + SObjectName + ' ' + whereClause;
         return Database.query(queryString);
+
     }
 
     /**

@@ -30,6 +30,7 @@
     <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
     <networkMemberGroups>
         <permissionSet>Application_Community</permissionSet>
+        <permissionSet>UST_Scholarship_Applicant</permissionSet>
         <profile>admin</profile>
         <profile>high volume customer portal user</profile>
         <profile>customer community login user</profile>
@@ -50,6 +51,6 @@
         <defaultTab>home</defaultTab>
         <standardTab>Chatter</standardTab>
     </tabs>
-    <urlPathPrefix>EASYApp</urlPathPrefix>
+    <urlPathPrefix>Admissions</urlPathPrefix>
     <welcomeTemplate>unfiled$public/CommunityWelcomeEmailTemplate</welcomeTemplate>
 </Network>

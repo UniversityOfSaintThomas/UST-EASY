@@ -9,172 +9,172 @@ private class ApplicationCreate_TEST {
         Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl();
 
         Contact con = new Contact(
-            FirstName = 'TestFirst', 
-            LastName = 'test', 
-            Email = 'testfirst@test.com'
+                FirstName = 'TestFirst',
+                LastName = 'test',
+                Email = 'testfirst@test.com'
         );
         insert con;
 
         Account acc = new Account(
-            Name = 'Test Account', 
-            hed__Primary_Contact__c = con.Id
+                Name = 'Test Account',
+                hed__Primary_Contact__c = con.Id
         );
         insert acc;
 
         hed__Term__c hedTerm = new hed__Term__c(
-            Name = 'Test 2022', 
-            hed__Account__c = acc.Id
+                Name = 'Test 2022',
+                hed__Account__c = acc.Id
         );
         insert hedTerm;
 
         Academic_Term__c at = new Academic_Term__c(
-            Name = 'test', 
-            Activate_Application_Date__c = Date.today().addDays(-2), 
-            End_Application_Date__c = Date.TODAY().addDays(2),
-            Term__c = hedTerm.Id
+                Name = 'test',
+                Activate_Application_Date__c = Date.today().addDays(-2),
+                End_Application_Date__c = Date.TODAY().addDays(2),
+                Term__c = hedTerm.Id
         );
         insert at;
 
         Program__c p1 = new Program__c(
-            Name = 'test1', 
-            Application_Control__c = appControl.Id,
-            Number_of_Applications_Limit__c = 'One Application', 
-            Applicant_Type__c = Program__c.Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue(), 
-            Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
-            Program_Name_on_Application__c = 'test1'
+                Name = 'test1',
+                Application_Control__c = appControl.Id,
+                Number_of_Applications_Limit__c = 'One Application',
+                Applicant_Type__c = Program__c.Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue(),
+                Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
+                Program_Name_on_Application__c = 'test1'
         );
         Program__c p2 = new Program__c(
-            Name = 'test2', 
-            Number_of_Applications_Limit__c = 'One Application Per Term', 
-            Hide_Applicant_Type__c = Program__c.Hide_Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue(), 
-            Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
-            Program_Name_on_Application__c = 'test2'
+                Name = 'test2',
+                Number_of_Applications_Limit__c = 'One Application Per Term',
+                Hide_Applicant_Type__c = Program__c.Hide_Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue(),
+                Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
+                Program_Name_on_Application__c = 'test2'
         );
         Program__c p3 = new Program__c(
-            Name = 'test3', 
-            Number_of_Applications_Limit__c = 'One Application Per Program', 
-            Hide_Student_Type__c = Program__c.Hide_Student_Type__c.getDescribe().getPicklistValues()[0].getValue(), 
-            Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
-            Program_Name_on_Application__c = 'test3'
+                Name = 'test3',
+                Number_of_Applications_Limit__c = 'One Application Per Program',
+                Hide_Student_Type__c = Program__c.Hide_Student_Type__c.getDescribe().getPicklistValues()[0].getValue(),
+                Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
+                Program_Name_on_Application__c = 'test3'
         );
         Program__c p4 = new Program__c(
-            Name = 'test4', 
-            Hide_Citizenship__c = Program__c.Hide_Citizenship__c.getDescribe().getPicklistValues()[0].getValue(), 
-            Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
-            Program_Name_on_Application__c = 'test4'
+                Name = 'test4',
+                Hide_Citizenship__c = Program__c.Hide_Citizenship__c.getDescribe().getPicklistValues()[0].getValue(),
+                Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
+                Program_Name_on_Application__c = 'test4'
         );
         Program__c p5 = new Program__c(
-            Name = 'test5', 
-            Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
-            Program_Name_on_Application__c = 'test5'
+                Name = 'test5',
+                Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
+                Program_Name_on_Application__c = 'test5'
         );
         insert new List<Program__c>{
                 p1, p2, p3, p4, p5
         };
 
         Intended_Program_Term__c ipt = new Intended_Program_Term__c(
-            Intended_Program__c = p1.Id,
-            Academic_Term__c = at.Id, 
-            Activate_Application_Date__c = Date.today().addDays(-1), 
-            End_Application_Date__c = Date.TODAY().addDays(-1), 
-            Applicant_Type__c = Intended_Program_Term__c.Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue(), 
-            Intended_Program_Term_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+                Intended_Program__c = p1.Id,
+                Academic_Term__c = at.Id,
+                Activate_Application_Date__c = Date.today().addDays(-1),
+                End_Application_Date__c = Date.TODAY().addDays(-1),
+                Applicant_Type__c = Intended_Program_Term__c.Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue(),
+                Intended_Program_Term_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
         );
         insert ipt;
 
         Id inquiryRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Inquiry_Opportunity').getRecordTypeId();
         Opportunity newOpp = new Opportunity(
-            RecordTypeId = inquiryRT, 
-            Name = 'test|test|test3', 
-            AccountId = acc.Id, 
-            Contact__c = con.Id, 
-            StageName = 'Suspect', 
-            CloseDate = System.today()
+                RecordTypeId = inquiryRT,
+                Name = 'test|test|test3',
+                AccountId = acc.Id,
+                Contact__c = con.Id,
+                StageName = 'Suspect',
+                CloseDate = System.today()
         );
         insert newOpp;
 
         Application__c app2 = new Application__c(
-            Contact__c = con.Id, 
-            Intended_Program__c = p3.Id, 
-            Intended_Term_of_Entry__c = at.Id, 
-            Application_Status__c = 'Started App'
+                Contact__c = con.Id,
+                Intended_Program__c = p3.Id,
+                Intended_Term_of_Entry__c = at.Id,
+                Application_Status__c = 'Started App'
         );
         Application__c app3 = new Application__c(
-            Contact__c = con.Id, 
-            Intended_Program__c = p3.Id, 
-            Intended_Term_of_Entry__c = at.Id, 
-            Application_Status__c = 'Started App'
+                Contact__c = con.Id,
+                Intended_Program__c = p3.Id,
+                Intended_Term_of_Entry__c = at.Id,
+                Application_Status__c = 'Started App'
         );
         insert new List<Application__c>{
                 app2, app3
         };
 
         Requirement__c req1 = new Requirement__c(
-            Application_Control__c = appControl.Id, 
-            Active__c = true, 
-            Name = 'test1', 
-            Show_on_Application_Creation__c = true, 
-            Application_Creation_Display_Order__c = 'Before Term/Program Questions', 
-            Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID()
+                Application_Control__c = appControl.Id,
+                Active__c = true,
+                Name = 'test1',
+                Show_on_Application_Creation__c = true,
+                Application_Creation_Display_Order__c = 'Before Term/Program Questions',
+                Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID()
         );
         Requirement__c req2 = new Requirement__c(
-            Application_Control__c = appControl.Id, 
-            Active__c = true, 
-            Name = 'test2', 
-            Show_on_Application_Creation__c = true, 
-            Application_Creation_Display_Order__c = 'After Term/Program Questions', 
-            Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID()
+                Application_Control__c = appControl.Id,
+                Active__c = true,
+                Name = 'test2',
+                Show_on_Application_Creation__c = true,
+                Application_Creation_Display_Order__c = 'After Term/Program Questions',
+                Requirement_Integration_External_Id__c = ApplicationUtilities.getUUID()
         );
         insert new List<Requirement__c>{
                 req1, req2
         };
 
         Requirement_Item__c item1 = new Requirement_Item__c(
-            Requirement__c = req1.Id, 
-            Name = 'test1', 
-            Active__c = true, 
-            RecordTypeId = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByName().get('Question Group').getRecordTypeId(), 
-            Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+                Requirement__c = req1.Id,
+                Name = 'test1',
+                Active__c = true,
+                RecordTypeId = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByName().get('Question Group').getRecordTypeId(),
+                Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
         );
         Requirement_Item__c item2 = new Requirement_Item__c(
-            Requirement__c = req2.Id, 
-            Name = 'test2', 
-            Active__c = true, 
-            RecordTypeId = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByName().get('Question Group').getRecordTypeId(), 
-            Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+                Requirement__c = req2.Id,
+                Name = 'test2',
+                Active__c = true,
+                RecordTypeId = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByName().get('Question Group').getRecordTypeId(),
+                Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
         );
         insert new List<Requirement_Item__c>{
                 item1, item2
         };
 
         Question__c q1 = new Question__c(
-            Requirement_Item__c = item1.Id, 
-            Name = 'test1', 
-            Label__c = 'test1', 
-            Active__c = true, 
-            Picklist_Values__c = 'One\nTwo', 
-            RecordTypeId = Schema.SObjectType.Question__c.getRecordTypeInfosByName().get('Picklist').getRecordTypeId(), 
-            Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
+                Requirement_Item__c = item1.Id,
+                Name = 'test1',
+                Label__c = 'test1',
+                Active__c = true,
+                Picklist_Values__c = 'One\nTwo',
+                RecordTypeId = Schema.SObjectType.Question__c.getRecordTypeInfosByName().get('Picklist').getRecordTypeId(),
+                Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
         );
         Question__c q2 = new Question__c(
-            Requirement_Item__c = item2.Id, 
-            Name = 'test2', 
-            Label__c = 'test2', 
-            Active__c = true, 
-            Picklist_Values__c = 'One\nTwo', 
-            RecordTypeId = Schema.SObjectType.Question__c.getRecordTypeInfosByName().get('Picklist').getRecordTypeId(), 
-            Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
+                Requirement_Item__c = item2.Id,
+                Name = 'test2',
+                Label__c = 'test2',
+                Active__c = true,
+                Picklist_Values__c = 'One\nTwo',
+                RecordTypeId = Schema.SObjectType.Question__c.getRecordTypeInfosByName().get('Picklist').getRecordTypeId(),
+                Question_Integration_External_Id__c = ApplicationUtilities.getUUID()
         );
         insert new List<Question__c>{
                 q1, q2
         };
 
         insert new Question_Dependency__c(
-            Question__c = q2.Id, 
-            Controlling_Question__c = q1.Id, 
-            Value__c = 'One', 
-            RecordTypeId = Schema.SObjectType.Question_Dependency__c.getRecordTypeInfosByName().get('Picklist').getRecordTypeId(), 
-            Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+                Question__c = q2.Id,
+                Controlling_Question__c = q1.Id,
+                Value__c = 'One',
+                RecordTypeId = Schema.SObjectType.Question_Dependency__c.getRecordTypeInfosByName().get('Picklist').getRecordTypeId(),
+                Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
         );
     }
 
@@ -262,7 +262,7 @@ private class ApplicationCreate_TEST {
 
         Id conId = [SELECT Id FROM Contact WHERE LastName = :'test'].Id;
         PageReference pr = Page.ApplicationCreate;
-        pr.getParameters().put('contactId', conId);
+        //pr.getParameters().put('contactId', conId);
         pr.getParameters().put('at', appControl.Id);
 
         Test.startTest();
@@ -277,7 +277,7 @@ private class ApplicationCreate_TEST {
 
         ac = new ApplicationCreate();
         ac.ApplicationCreateInit();
-        ac.app.Contact__c = null;
+        //ac.app.Contact__c = null;
         PageReference returnPage = ac.save();
         Id appId = ac.app.Id;
 
@@ -288,7 +288,7 @@ private class ApplicationCreate_TEST {
 
         Test.stopTest();
 
-        System.assertEquals(null, returnPage);
+        System.assertEquals('/apex/ApplicationPortal?applicationId=' + appId + '&at=test' + '&contactId=null', returnPage.getUrl());
         System.assertEquals(null, returnPage2);
     }
 

@@ -14,6 +14,7 @@ public class AdmissionsApplicationFinderCmp_TEST {
                 Submit_Status__c = Application_Control__c.Submit_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 Withdraw_Status__c = Application_Control__c.Withdraw_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 School_College__c = 'Undergraduate',
+                Name = 'Name',
                 Show_on_App_Finder__c = true
         );
         insert appControl;
@@ -34,28 +35,26 @@ public class AdmissionsApplicationFinderCmp_TEST {
         System.assertEquals(String.valueOf(expected), String.valueOf(options));
     }
 
-    @isTest
-    public static void testGetApps() {
-        Application_Control__c appControl = [SELECT Name FROM Application_Control__c LIMIT 1];
+    @IsTest
+    public static void testgetACs(){
         AdmissionsApplicationFinderComponent component = new AdmissionsApplicationFinderComponent();
-        component.selectedSchool = 'Undergraduate';
-
-        Test.startTest();
-        List<SelectOption> options = component.getApps();
-        Test.stopTest();
-
         List<SelectOption> expected = new List<SelectOption>();
         expected.add(new SelectOption('', 'Select application type'));
-        expected.add(new SelectOption('st', appControl.Name));
+        expected.add(new SelectOption('st', 'Name'));
+
+        Test.startTest();
+        List<SelectOption> options = component.getACs();
+        Test.stopTest();
 
         System.assertEquals(String.valueOf(expected), String.valueOf(options));
+
 
     }
 
     @isTest
     public static void testGoToApp() {
         AdmissionsApplicationFinderComponent component = new AdmissionsApplicationFinderComponent();
-        component.selectedApp = 'test';
+        component.selectedACs = 'test';
 
         Test.startTest();
         PageReference returnPage = component.goToApp();
@@ -66,4 +65,6 @@ public class AdmissionsApplicationFinderCmp_TEST {
 
         System.assertEquals(String.valueOf(expected), String.valueOf(returnPage));
     }
+
+
 }

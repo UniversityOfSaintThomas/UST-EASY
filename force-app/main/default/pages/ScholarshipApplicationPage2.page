@@ -1,0 +1,292 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ScholarshipApplicationPage2Controller" action="{!initialize}">
+    <apex:composition template="ScholarshipTemplate">
+        <apex:define name="body">
+            <script>
+                var essay1HasText = {!essay1HasText};
+                var essay2HasText = {!essay2HasText};
+                var historyPage = '{!pageURL}';
+            </script>
+            <div class="row">
+                <div class="columns errorMessages">
+                    <apex:messages />
+                </div>
+            </div>
+            <apex:form enctype="multipart/form-data" styleClass="ScholarshipAppForm">
+                <div class="row">
+                    <div class="column">
+                        <h2>
+                            {!scholarship.Name}
+                        </h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <apex:outputText escape="false"
+                                         value="<p><strong>Scholarship description</strong><br/>{!scholarship.Description__c}</p>"
+                                         rendered="{!IF(ISNULL(scholarship.Description__c) , false , true)}"/>
+                    </div>
+                </div>
+                <apex:outputPanel styleClass="row" layout="block"
+                                  rendered="{!IF(ISNULL(scholarship.Question_1_Text__c) , false , true)}">
+                    <div class="column">
+                        <p>
+                            <apex:outputText escape="false" value="{!scholarship.Question_1_Text__c}"/>
+                        </p>
+                        <p>
+                            <apex:inputTextarea rows="10" value="{!applicant.Question_1_Answer__c}" id="question1" styleclass="question question1"/>
+                        </p>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel styleClass="row" layout="block"
+                                  rendered="{!IF(ISNULL(scholarship.Question_2_Text__c) , false , true)}">
+                    <div class="column">
+                        <p>
+                            <apex:outputText escape="false" value="{!scholarship.Question_2_Text__c}"/>
+                        </p>
+                        <p>
+                            <apex:inputTextarea rows="10" value="{!applicant.Question_2_Answer__c}" id="quesiton2" styleclass="question question2"/>
+                        </p>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel styleClass="row" layout="block"
+                                  rendered="{!IF(ISNULL(scholarship.Question_3_Text__c) , false , true)}">
+                    <div class="column">
+                        <p>
+                            <apex:outputText escape="false" value="{!scholarship.Question_3_Text__c}"/>
+                        </p>
+                        <p>
+                            <apex:inputTextarea rows="10" value="{!applicant.Question_3_Answer__c}" id="quesiton3" styleclass="question question3"/>
+                        </p>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel styleClass="row" layout="block"
+                                  rendered="{!IF(ISNULL(scholarship.Question_4_Text__c) , false , true)}">
+                    <div class="column">
+                        <p>
+                            <apex:outputText escape="false" value="{!scholarship.Question_4_Text__c}"/>
+                        </p>
+                        <p>
+                            <apex:inputTextarea rows="10" value="{!applicant.Question_4_Answer__c}" id="quesiton4" styleclass="question question4"/>
+                        </p>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputText escape="false" rendered="{!If((ISNULL(scholarship.Essay_1_Text__c) && ISNULL(scholarship.Essay_2_Text__c)), false, true)}" value='<h4>Additional Information</h4>'/>
+
+                <apex:outputPanel styleClass="essay1input" layout="block" rendered="{!IF(!ISNULL(scholarship.Essay_1_Text__c) && scholarship.Essay_1_Allow_Upload__c , true , false)}">
+                    <apex:outputText escape="false" value="{!scholarship.Essay_1_Text__c}"/>
+                    <apex:outputPanel rendered="{!!applicant.Essay_1_Uploaded__c}">
+                        <div class="row">
+                            <div class="column">
+                                <div class=" essayInputOptions">
+                                    <p>
+                                        I will enter my answer by:
+                                        <select id="Essay1delivery">
+                                            <option value="">--Select--</option>
+                                            <option value="upload">Uploading an essay</option>
+                                            <option value="input">Copy and pasting an essay</option>
+                                        </select>
+                                    </p>
+                                    <div class="row" id="e1input">
+                                        <div class="column">
+                                            <p>
+                                                <apex:inputTextarea rows="15" value="{!applicant.Essay_1_Answer__c}"
+                                                                    StyleClass="essayInput essay1" id="essay1"
+                                                                    richText="true"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="e1upload">
+                                        <div class="column">
+                                            <apex:inputFile value="{!essay1.body}" id="Essay1File"
+                                                            fileName="{!essay1Filename}" accept="doc, txt, pdf"/>
+                                            <apex:commandLink styleClass="button" onclick="return checkForfile('Essay1File');"
+                                                              action="{!UploadEssay1}" value="Upload Essay"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!applicant.Essay_1_Uploaded__c}">
+                        <div class=" essayInputOptions essay1Uploaded">
+                            <p>
+                                <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
+                                You uploaded a file named: <strong>{!applicant.Essay_1_Uploaded_Orig_Filename__c}</strong><br/>
+                                <apex:commandButton action="{!DeleteEssay1}" value="Delete and re-upload"/>
+                            </p>
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+
+                <apex:outputPanel styleClass="essay1input" layout="block" rendered="{!IF(!ISNULL(scholarship.Essay_1_Text__c) && !scholarship.Essay_1_Allow_Upload__c , true , false)}">
+                    <div class="row">
+                        <div class="column">
+                            <apex:outputText escape="false" value="{!scholarship.Essay_1_Text__c}"/>
+                            <p>
+                                <apex:inputTextarea rows="15" value="{!applicant.Essay_1_Answer__c}" richText="true" StyleClass="essayInput essay1"/>
+                            </p>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel styleClass="essay2input" layout="block" rendered="{!IF(!ISNULL(scholarship.Essay_2_Text__c) && scholarship.Essay_2_Allow_Upload__c , true , false)}">
+                    <apex:outputText escape="false" value="{!scholarship.Essay_2_Text__c}"/>
+                    <apex:outputPanel rendered="{!!applicant.Essay_2_Uploaded__c}">
+                        <div class="row">
+                            <div class="column">
+                                <div class=" essayInputOptions">
+                                    <p>
+                                        I will enter my answer by:
+                                        <select id="Essay2delivery">
+                                            <option value="">--Select--</option>
+                                            <option value="upload">Uploading an essay</option>
+                                            <option value="input">Copy and pasting an essay</option>
+                                        </select>
+                                    </p>
+                                    <div class="row" id="e2input">
+                                        <div class="column">
+                                            <p>
+                                                <apex:inputTextarea rows="15"
+                                                                    value="{!applicant.Essay_2_Answer__c}"
+                                                                    StyleClass="essayInput essay2" id="essay2" richText="true"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="e2upload">
+                                        <div class="column">
+                                            <apex:inputFile value="{!essay2.body}" id="Essay2File"
+                                                            fileName="{!essay2Filename}" accept="doc, txt, pdf"/>
+                                            <apex:commandLink styleClass="button" onclick="return checkForfile('Essay2File');" action="{!UploadEssay2}"
+                                                              value="Upload Essay"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!applicant.Essay_2_Uploaded__c}">
+                        <div class=" essayInputOptions essay2Uploaded">
+                            <p>
+                                <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
+                                You uploaded a file named: <strong>{!applicant.Essay_2_Uploaded_Orig_Filename__c}</strong><br/>
+                                <apex:commandButton action="{!DeleteEssay2}" value="Delete and re-upload"/>
+                            </p>
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+
+                <apex:outputPanel styleClass="essay2input" layout="block" rendered="{!IF(!ISNULL(scholarship.Essay_2_Text__c) && !scholarship.Essay_2_Allow_Upload__c , true , false)}">
+                    <div class="row">
+                        <div class="column">
+                            <apex:outputText escape="false" value="{!scholarship.Essay_2_Text__c}"/>
+                            <p>
+                                <apex:inputTextarea rows="15" value="{!applicant.Essay_2_Answer__c}" richText="true" StyleClass="essayInput essay2"/>
+                            </p>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel id="Recommender" styleClass="row recommender" layout="block"
+                                  rendered="{!scholarship.Recommender__c}">
+                    <div class="column">
+                        <h4>
+                            Recommendation
+                        </h4>
+                        <p>
+                            <apex:outputText escape="false"
+                                             value="{!scholarship.Recommender_Description__c}"></apex:outputText>
+                        </p>
+                        <p class="errorMessages2"></p>
+                        <div class="row">
+                            <div class="columns small-6 medium-6 large-6">
+                                Name
+                                <apex:inputText value="{!applicant.Recommender_Name__c}" styleClass="recName" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
+                            </div>
+                            <div class="columns small-6 medium-6 large-6">
+                                Email
+                                <apex:inputText value="{!applicant.Recommender_Email__c}" styleClass="recEmail" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <apex:commandLink action="{!SendRecommenderEmail}" Value="Request Now"
+                                          onClick="return validateRecommender('rec1Button');" id="rec1Button" styleClass="button saveComplete" rendered="{!ISNULL(recommendRequestDate1)}"/>
+                        <apex:outputText value="Recommendation request sent on {0, date, MMMM d',' yyyy hh:mm aaa}." rendered="{!NOT(ISNULL(recommendRequestDate1))}">
+                            <apex:param value="{!recommendRequestDate1}"/>
+                        </apex:outputText>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel id="Recommender2" styleClass="row recommender" layout="block"
+                                  rendered="{!scholarship.Recommender2__c}">
+                    <div class="column">
+                        <h4>
+                            Recommendation
+                        </h4>
+                        <p>
+                            <apex:outputText escape="false"
+                                             value="{!scholarship.Recommender2_Description__c}"></apex:outputText>
+                        </p>
+                        <p class="errorMessages2"></p>
+                        <div class="row">
+                            <div class="columns small-6 medium-6 large-6">
+                                Name
+                                <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"></apex:inputText>
+                            </div>
+                            <div class="columns small-6 medium-6 large-6">
+                                Email
+                                <apex:inputText value="{!applicant.Recommender2_Email__c}" styleClass="recEmail" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <apex:commandLink action="{!SendRecommenderEmail}" Value="Request Now"
+                                          onClick="return validateRecommender('rec2Button');" id="rec2Button" styleClass="button saveComplete" rendered="{!ISNULL(recommendRequestDate2)}"/>
+
+                        <apex:outputText value="Recommendation request sent on {0, date, MMMM d',' yyyy hh:mm aaa}." rendered="{!NOT(ISNULL(recommendRequestDate2))}">
+                            <apex:param value="{!recommendRequestDate2}"/>
+                        </apex:outputText>
+
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel id="CompletionStatment" styleClass="row" layout="block"
+                                  rendered="{!IF(ISNULL(scholarship.Completion_Statement__c) , false , true)}">
+                    <div class="column">
+                        <h4>
+                            Completion Statement
+                        </h4>
+                        <p>
+                            <apex:outputText escape="false" value="{!scholarship.Completion_Statement__c}"/>
+                        </p>
+                        <p>
+                            <strong>By initialing here you agree to the above statement.</strong><br/>
+                            <apex:inputText id="initials" styleClass="initials" value="{!applicant.Signature__c}"/>
+                        </p>
+                    </div>
+                </apex:outputPanel>
+
+                <div class="row">
+                    <p>
+                        &nbsp;
+                    </p>
+                    <div class="column small-3 medium-3 large-3">
+                        <apex:commandLink action="{!SaveComplete}" Value="Save & Complete"
+                                          onClick="return validateApplication();" styleClass="button saveComplete"/>
+                    </div>
+                    <div class="column small-3 medium-3 large-3">
+                        <apex:commandLink action="{!SaveFinishLater}" id="saveFinishLater" Value="Save & Finish Later"
+                                          styleClass="button saveFinishLater"/>
+                    </div>
+                    <div class="columns small-3 medium-3 large-3">
+                        <apex:commandLink action="{!GoCriteria}" Value="Previous Page" styleClass="button"/>
+                    </div>
+
+                </div>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

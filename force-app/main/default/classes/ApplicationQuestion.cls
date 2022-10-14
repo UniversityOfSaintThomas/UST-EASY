@@ -23,6 +23,7 @@ public class ApplicationQuestion {
             Schema.DisplayType.REFERENCE => 'Reference',
             Schema.DisplayType.STRING => 'Text',
             Schema.DisplayType.TEXTAREA => 'TextArea',
+            Schema.DisplayType.LONG => 'LongTextArea',
             Schema.DisplayType.URL => 'URL'
     };
 
@@ -43,6 +44,7 @@ public class ApplicationQuestion {
             'Reference' => 'ValueText__c',
             'Text' => 'ValueText__c',
             'TextArea' => 'ValueTextArea__c',
+            'LongTextArea' => 'ValueLongTextArea__c',
             'URL' => 'ValueURL__c'
     };
 

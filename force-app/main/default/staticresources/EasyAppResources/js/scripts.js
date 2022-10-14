@@ -94,6 +94,12 @@ function summaryDetail() {
     });
 }
 
+function disableReminderEmailButton(button) {
+    button.setAttribute('disabled', 'disabled');
+    let elementWrap = button.closest('.slds-form-element');
+    elementWrap.querySelector('.oneReminderPerDay').style.display = "block";
+}
+
 //Creates droppable file upload areas
 function fileUploadAreas() {
 

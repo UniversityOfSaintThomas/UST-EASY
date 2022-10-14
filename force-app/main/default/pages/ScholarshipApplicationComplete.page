@@ -1,0 +1,24 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ScholarshipApplicationCompleteController" action="{!initialize}">
+    <apex:composition template="ScholarshipTemplate">
+        <apex:define name="body">
+            <div class="row">
+                <div class="columns errorMessages">
+                    <apex:messages />
+                </div>
+            </div>
+            <apex:form enctype="multipart/form-data">
+                <div class="row">
+                    <div class="column">
+                        <h2>
+                            {!scholarship.Name}
+                        </h2>
+                        <p>
+                            Your application for the {!scholarship.Name} has been received and is being reviewed.
+                        </p>
+                        <apex:outputText escape="false" value="<h4>What happens next?</h4>{!scholarship.Review_Award_Process_Description__c}" rendered="{!IF(NOT(ISNULL(scholarship.Review_Award_Process_Description__c)), true, false)}" />
+                    </div>
+                </div>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

@@ -1,0 +1,13 @@
+li.ust-action-link, .ust-action-links li, .first-level-links li{ margin:0px!important; }
+#topNavBar h3 {display:inherit;}
+#topNavBar li {margin-left:auto;}
+.button {background-image:none;}
+.essayInputOptions {border:solid 1px gray; padding:20px; margin-bottom:25px;}
+.initials {width:100px!important;}
+.errorMessages table tr td:first-child, .errorMessages table tr:last-child, .errorMessages2  { display: none; }
+.errorMessages h4, p.errorMessages2 {font-size:16px; margin:0px; padding:0px; color:red;}
+.errorMessages, .validationError {border-color:red!important; margin:0px 0px 15px 0px;}
+.validationErrorRich {border-color:red!important; color:red; margin:0px 0px 15px 0px;}
+#validationErrorList {border:dotted 1px red;padding:10px; color:red; }
+#validationErrorList ul {padding: 0px 0px 0px 20px; margin:0px; font-size: .9em;}
+.text-count-message {font-size: .9em; font-style: italic; margin: -10px 0px 10px 0px; display: block!important; text-align: right;}

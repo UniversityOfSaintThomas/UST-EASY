@@ -94,6 +94,7 @@
 
         <!-- UPLOAD DOCUMENT - REQUIREMENT ITEM LEVEL -->
         <apex:outputPanel rendered="{!group.documentUpload && !group.isInternal}" layout="none">
+            <apex:variable value="{!CONTAINS(group.item.Required__c,group.app.Application_Status__c) && !ISBLANK(group.item.Required__c)}" var="isRequired"/>
             <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
             <c:ApplicationFormSectionInputUpload responseObject="{!group.response['ValueTextEntry__c']}"
                                                  isEditable="{!group.isEditable}"
@@ -102,6 +103,7 @@
                                                  itemId="{!group.item.Id}"
                                                  odlAttachmentId="{!group.oldAttVersion.Id}"
                                                  attachmentTitle="{!group.att.Title}"
+                                                 isRequired="{!isRequired}"
             />
         </apex:outputPanel>
 

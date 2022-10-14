@@ -383,7 +383,11 @@ public class ApplicationRequirement {
                             }
                         }
                     }
-                }
+                } 
+                // else if (addData == null && g.att != null && String.isEmpty(g.att.Title) && g.item.Required__c.contains(app.Application_Status__c)) {
+                //     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Upload required.'));
+                //     hasError = true;
+                // }
             }
         }
 

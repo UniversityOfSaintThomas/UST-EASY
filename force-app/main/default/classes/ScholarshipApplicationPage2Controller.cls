@@ -244,11 +244,10 @@ public with sharing class ScholarshipApplicationPage2Controller {
             String email = 'EmailAddress@InsertEmailDomain.Unknown';
 
             List<Contact> contactMatches = [select Id, Name, FirstName, LastName, Email from Contact where id = :this.applicant.Contact__c];
-            Contact applicantContactRecord = null;
             for (Contact contact : contactMatches) {
-                firstName = applicantContactRecord.FirstName;
-                lastName = applicantContactRecord.LastName;
-                email = applicantContactRecord.Email;
+                firstName = contact.FirstName;
+                lastName = contact.LastName;
+                email = contact.Email;
             }
 
             cMessage += styledP + firstName + ' ' + lastName + ',</p>';

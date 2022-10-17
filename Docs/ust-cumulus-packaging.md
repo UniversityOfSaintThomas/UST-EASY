@@ -24,7 +24,7 @@ the cumulus.yml file and needs to be unique.
 ## Create a release
 
 ```
-cci task run release_unlocked_beta
+cci flow run release_unlocked_beta
 ```
 
 ## Promote a release

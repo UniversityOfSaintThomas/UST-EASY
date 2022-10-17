@@ -91,8 +91,6 @@ public class ApplicationRegistration {
     * @description populates fields on the contact and application through the interactions object.
     ********************************************************************************/
     public PageReference submit() {
-        System.debug('^^^ appCreate: ' + appCreate);
-        System.debug('^^^ appInfo: ' + appInfo);
         System.Savepoint sp = Database.setSavepoint();
         Boolean dmlException = false;
         populateInteraction();
@@ -186,14 +184,24 @@ public class ApplicationRegistration {
         Id application_opp_RT_ID = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
         interaction.Id = null;
         interaction.Contact__c = null;
-        interaction.Academic_Program__c = appCreate.app.Intended_Program__c;
+        for (ApplicationQuestionGroup questionGroup : appCreate.section.groups) {
+            for (ApplicationQuestion question: questionGroup.questions) {
+                if (question.label == 'What term are you applying for?') {
+                    interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
+                    System.debug('resp: ' + question.resp);
+                }
+                if (question.label == 'What program are you applying to?') {
+                    interaction.Academic_Program__c = Id.valueOf(String.valueOf(question.resp));
+                    System.debug('resp: ' + question.resp);
+                }
+            }
+        }
         if (interaction.Academic_Program__c != null) {
             List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c =: interaction.Academic_Program__c LIMIT 1];
             if (!relatedPlan.isEmpty()) {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
             }
         }
-        interaction.Intended_Start_Term__c = appCreate.app.Intended_Term_of_Entry__c;
         if (interaction.Intended_Start_Term__c != null) {
             List<Academic_Term__c> academicTerm = [SELECT Term__c FROM Academic_Term__c WHERE Id =: interaction.Intended_Start_Term__c LIMIT 1];
             if (!academicTerm.isEmpty()) {
@@ -205,7 +213,6 @@ public class ApplicationRegistration {
         interaction.Citizenship__c = appCreate.app.Citizenship__c;
         interaction.Interaction_Source__c = 'Application';
         interaction.Date_Started_App__c = System.Today();
-        System.debug('^^^ interaction: ' + interaction);
     }
 
     public PageReference login() {

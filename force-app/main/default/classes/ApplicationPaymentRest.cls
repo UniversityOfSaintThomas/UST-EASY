@@ -2,7 +2,7 @@
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 9/29/2022.
  */
 
-@RestResource(UrlMapping='/applicaitonpaymentreceive/*')
+@RestResource(urlMapping='/applicaitonpaymentreceive/*')
 global with sharing class ApplicationPaymentRest {
 
     private static Map<String, String> parameters { get; set; }

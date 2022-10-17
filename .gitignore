@@ -10,7 +10,7 @@
 __pycache__
 
 # Robot Framework results
-robot/EASY-Open-Source-Solution/results/
+robot/UST-EASY/results/
 
 # Editors
 *.sublime-project

@@ -1,8 +1,8 @@
 minimum_cumulusci_version: '3.32.1'
 project:
-  name: EASY-Open-Source-Solution
+  name: UST-EASY
   package:
-    name: EASY-Open-Source-Solution
+    name: UST-EASY-Package
     api_version: '52.0'
   dependencies:
     - github: 'https://github.com/SalesforceFoundation/EDA'
@@ -17,8 +17,8 @@ tasks:
 
   robot_testdoc:
     options:
-      path: robot/EASY-Open-Source-Solution/tests
-      output: robot/EASY-Open-Source-Solution/doc/EASY-Open-Source-Solution_tests.html
+      path: robot/UST-EASY/tests
+      output: robot/UST-EASY/doc/EASY-Open-Source-Solution_tests.html
 
   run_tests:
     options:
@@ -173,7 +173,13 @@ tasks:
     description: Makes fake account data to mimic schools with Educaiton as industry
     class_path: cumulusci.tasks.bulkdata.snowfakery.Snowfakery
     options:
-      recipe: datasets/dev22/school_snowfakery_recipe.yml
+      recipe: datasets/snowfakery/fake_schools.yml
+
+  create_fake_contacts:
+    description: Makes fake account data to mimic schools with Educaiton as industry
+    class_path: cumulusci.tasks.bulkdata.snowfakery.Snowfakery
+    options:
+      recipe: datasets/snowfakery/fake_contacts.yml
 
   update_admin_profile:
     options:
@@ -290,6 +296,13 @@ flows:
         task: set_user_user_role
       20:
         task: load_scholarship_test_data
+
+  release_unlocked_beta:
+    steps:
+      1:
+        options:
+          org_dependent: True
+          package_type: Unlocked
 
 orgs:
   scratch:

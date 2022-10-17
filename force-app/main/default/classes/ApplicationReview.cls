@@ -83,14 +83,14 @@ public class ApplicationReview {
                         Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c,
                         Related_List_Object__c, Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Related_Object_Record_Type_ID__c,
                         Holding_Record_Id__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Allow_Supporting_Documentation_Upload__c,
-                        Required_Supporting_Documentation__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, (
+                        Required_Supporting_Documentation__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, RecordType.Name, (
                         SELECT Id, Active__c, Hardcoded_Value__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c,
                                 Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
                                 Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c,
                                 Lookup_Object__c, Lookup_Where_Clause__c, Contact_Field__c, Application_Field__c, External_Email_Field__c,
                                 Editable_Application_Status__c, URL_Parameter__c, New_Reference_Field__c, Static_Text__c, Name_Field_API_Name__c,
                                 Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
-                                Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c
+                                Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c, RecordType.Name
                         FROM Questions__r
                         WHERE Active__c = :true
                         AND Display_on_Admin_Review_Pages__c = :true

@@ -184,9 +184,11 @@ public without sharing class graduateRecommenderInfoController {
             query_string += ' AND (Applicant_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Applicant_Type__c) + '\') OR Applicant_Type__c = null)';
         }
 
+        /* Testing remove app status
         if (app.Application_Status__c != null) {
             query_string += ' AND (Application_Status__c INCLUDES (\'' + String.escapeSingleQuotes(app.Application_Status__c) + '\') OR Application_Status__c = null)';
         }
+        */
 
         if (app.Citizenship__c != null) {
             query_string += ' AND (Citizenship__c INCLUDES (\'' + String.escapeSingleQuotes(app.Citizenship__c) + '\') OR Citizenship__c = null)';

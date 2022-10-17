@@ -455,9 +455,11 @@ function navigateRequirementGroup(redirectTo) {
             appHideLoadingSpinner();
             hideFormSpinner();
         }
-    } else if (redirectTo === 'back') {
+    } 
+    else if (redirectTo === 'back') {
         performDocUploadSave(previousRequirement);
-    } else {
+    } 
+    else {
         performDocUploadSave(redirectTo);
     }
 }
@@ -714,6 +716,15 @@ function textValidations(checkFormValidate, documentStart) {
                 }
             }
         });
+
+        doc.querySelectorAll('.docUploadInput').forEach(docUpload => {
+            if (String(docUpload.placeholder) == 'true' && !Boolean(docUpload.value)) {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
+                activateErrorState(docUpload, 'change');
+            } else {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
+            }
+        })
     }
 
     //Format and validate phone numbers
@@ -822,4 +833,27 @@ function textValidations(checkFormValidate, documentStart) {
     }
 
     return errors;
+}
+
+function validateFileType(obj) {
+    if (Boolean(obj.title)) {
+        console.log(obj);
+        let acceptedTypes = obj.title.split(';');
+        let inputArray = obj.value.split('.');
+        let inputType = inputArray[inputArray.length - 1].toUpperCase();
+        if (!acceptedTypes.includes(inputType)) {
+            obj.value = null;
+            let fileTypeMessage = 'File type not accepted. Please upload one of the following: ';
+            for (const type of acceptedTypes) {
+                fileTypeMessage += type + ', ';
+            }
+            fileTypeMessage = fileTypeMessage.slice(0, fileTypeMessage.length - 2) + '.';
+            document.getElementById('error-108' + String(obj.name)).innerHTML = fileTypeMessage;
+            console.log(document.getElementById('error-108' + String(obj.name)));
+            return false;
+        } else {
+            document.getElementById('error-108' + String(obj.name)).innerHTML = '';
+        }
+    }
+    return true;
 }

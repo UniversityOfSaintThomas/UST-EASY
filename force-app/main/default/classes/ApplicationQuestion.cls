@@ -80,17 +80,29 @@ public class ApplicationQuestion {
         get {
             List<Id> programsWithSelectedTerm = new List<Id>();
             Boolean filterProgramsByTerm = false;
+            Integer groupWithTermQuestion = 0;
+            Integer groupCount = 0;
+            if (section != null) {
+                for (ApplicationQuestionGroup appQuestionGroup : section.groups) {
+                    for (ApplicationQuestion appQuestion : appQuestionGroup.questions) {
+                        if (appQuestion.question.Label__c == 'What term are you applying for?') {
+                            groupWithTermQuestion = groupCount;
+                        }
+                    }
+                    groupCount++;
+                }
+            }
             if (section != null 
-                && !section.groups.isEmpty() 
-                && section.groups.size() > 1
-                && !section.groups[1].questions.isEmpty()
-                && section.groups[1].questions[0].question != null
-                && section.groups[1].questions[0].question.Label__c == 'What term are you applying for?'
-                && section.groups[1].questions[0].response != null
-                && !String.isEmpty(section.groups[1].questions[0].response.ValueText__c))
+                && !section.groups.isEmpty()
+                && groupWithTermQuestion < section.groups.size()
+                && !section.groups[groupWithTermQuestion].questions.isEmpty()
+                && section.groups[groupWithTermQuestion].questions[0].question != null
+                && section.groups[groupWithTermQuestion].questions[0].question.Label__c == 'What term are you applying for?'
+                && section.groups[groupWithTermQuestion].questions[0].response != null
+                && !String.isEmpty(section.groups[groupWithTermQuestion].questions[0].response.ValueText__c))
             {
                 filterProgramsByTerm = true;
-                Id selectedTermId = Id.valueOf(section.groups[1].questions[0].response.ValueText__c);
+                Id selectedTermId = Id.valueOf(section.groups[groupWithTermQuestion].questions[0].response.ValueText__c);
                 List<Intended_Program_Term__c> intendedProgramTerms = [
                     SELECT Id, Intended_Program__c 
                     FROM Intended_Program_Term__c 

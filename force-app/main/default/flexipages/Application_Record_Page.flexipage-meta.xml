@@ -12,6 +12,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -21,6 +22,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-466e0c22-1334-4910-82bc-153b6279fec3</name>
@@ -34,6 +36,7 @@
                     <value>NONE</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-b37e711e-838f-4446-8989-2b3b1d6cdf44</name>
@@ -55,6 +58,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab_detail</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -72,6 +76,7 @@
                     <value>Standard.Tab.relatedLists</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-7917716c-cd13-48fc-9e05-cc4f1e5e7815</name>
@@ -85,6 +90,7 @@
                     <value>Facet-7917716c-cd13-48fc-9e05-cc4f1e5e7815</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
@@ -94,6 +100,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>flexipage_chatter_recordFeedContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

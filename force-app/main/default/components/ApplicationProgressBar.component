@@ -6,7 +6,7 @@
     <apex:attribute name="progress" description="Completion percentage of the app" type="Integer" required="false"/>
     <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true" assignTo="{!appInfoParam}"/>
     <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="true"/>
-    <apex:form>
+    <apex:form >
         <div class="slds-progress slds-p-vertical_x-small" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="max-width:109%">
             <ol class="slds-progress__list">
                 <apex:variable value="{!0}" var="count"/>

@@ -393,10 +393,18 @@ public class ApplicationCreate {
         return null;
     }
 
+    public String saveApplication(Boolean createInteraction) {
+        return saveApplicationHelper(createInteraction);
+    }
+
+    public String saveApplication() {
+        return saveApplicationHelper(true);
+    } 
+
     /* ******************************************************************************
     * @description Saves application and returns URL to new application checklist
     ********************************************************************************/
-    public String saveApplication() {
+    public String saveApplicationHelper(Boolean createInteraction) {
 
         app.Id = null;
         insert app; // Insert application
@@ -452,10 +460,60 @@ public class ApplicationCreate {
 
         upsert qResponses; // Insert question responses
 
+        //create interaction
+        if (createInteraction) {
+            Interaction__c interaction = populateInteraction(new Interaction__c());
+            if (interaction.Email__c != null) {
+                insert interaction;
+            }
+        }
+
         // Return URL for checklist page for new application
         appInfo = ApplicationUtilities.setApplicationInfo(appInfo, app);
         ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
         return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appInfo.at) ? '' : ('&at=' + appInfo.at));
+    }
+
+    public Interaction__c populateInteraction(Interaction__c interaction) {
+        Id application_opp_RT_ID = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
+        interaction.Id = null;
+        interaction.Contact__c = null;
+        interaction.OwnerId = Test.isRunningTest() ? UserInfo.getUserId() : Site.getAdminId();
+        if (con.Id != null) {
+            Contact currentContact = [SELECT FirstName, MiddleName, LastName, Email FROM Contact WHERE Id =: con.Id LIMIT 1];
+            interaction.First_Name__c = currentContact.FirstName;
+            interaction.Middle_Name__c = currentContact.MiddleName;
+            interaction.Last_Name__c = currentContact.LastName;
+            interaction.Email__c = currentContact.Email;
+        }
+        for (ApplicationQuestionGroup questionGroup : section.groups) {
+            for (ApplicationQuestion question: questionGroup.questions) {
+                if (question.label == 'What term are you applying for?') {
+                    interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
+                }
+                if (question.label == 'What program are you applying to?') {
+                    interaction.Academic_Program__c = Id.valueOf(String.valueOf(question.resp));
+                }
+            }
+        }
+        if (interaction.Academic_Program__c != null) {
+            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c =: interaction.Academic_Program__c LIMIT 1];
+            if (!relatedPlan.isEmpty()) {
+                interaction.Recruitment_Interest__c = relatedPlan[0].Id;
+            }
+        }
+        if (interaction.Intended_Start_Term__c != null) {
+            List<Academic_Term__c> academicTerm = [SELECT Term__c FROM Academic_Term__c WHERE Id =: interaction.Intended_Start_Term__c LIMIT 1];
+            if (!academicTerm.isEmpty()) {
+                interaction.Term__c = academicTerm[0].Term__c;
+            } 
+        }
+        interaction.Opportunity_Stage__c = 'Started App';
+        interaction.Opportunity_Record_Type__c = application_opp_RT_ID;
+        interaction.Citizenship__c = app.Citizenship__c;
+        interaction.Interaction_Source__c = 'Application';
+        interaction.Date_Started_App__c = System.Today();
+        return interaction;
     }
 
     @RemoteAction

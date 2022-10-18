@@ -263,7 +263,7 @@ public class ApplicationRegistration {
 
     private without sharing class crudToDo {
         public String returnAppURL(ApplicationCreate appCreate) {
-            String nextURL = appCreate.saveApplication();
+            String nextURL = appCreate.saveApplication(false);
             return nextURL;
         }
 

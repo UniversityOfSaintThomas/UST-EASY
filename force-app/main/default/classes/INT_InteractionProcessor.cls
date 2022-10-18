@@ -342,7 +342,8 @@ public class INT_InteractionProcessor {
             Lead newLead = new Lead(
                     FirstName = interaction.First_Name__c,
                     LastName = interaction.Last_Name__c,
-                    Company = interaction.Last_Name__c + ', ' + interaction.First_Name__c
+                    Company = interaction.Last_Name__c + ', ' + interaction.First_Name__c,
+                    OwnerId = interaction.OwnerId
             );
 
             interactionIdToLead.put(interaction.Id, newLead);

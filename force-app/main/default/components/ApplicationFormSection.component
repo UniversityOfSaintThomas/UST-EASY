@@ -44,7 +44,7 @@
 
         <apex:outputPanel id="questionGroupWrapper" layout="block">
 
-            <apex:actionRegion>
+            <apex:actionRegion >
 
                 <!-- REGULAR GROUP QUESTIONS - questionGroup -->
                 <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
@@ -135,7 +135,7 @@
             <!-- CREATE REFERENCE RECORD -->
             <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
                     <p>You haven't created any records yet. Click "New Record" to create one.</p>
@@ -272,7 +272,7 @@
             <!-- CREATE NEW RELATED RECORD -->
             <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                     <apex:variable value="{!itemNumber+1}" var="itemNumber"/>

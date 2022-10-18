@@ -35,7 +35,7 @@
                 </header>
             </div>
             <div class="slds-card__body {!IF(LOWER($CurrentPage.Name) == 'applicationportal', 'slds-card__body_inner', '')}">
-                <apex:form>
+                <apex:form >
                     <nav>
                         <apex:repeat value="{!checklistItems}" var="r">
                             <apex:outputPanel rendered="{!r.display}" layout="none">
@@ -74,7 +74,7 @@
                                                     <apex:repeat value="{!r.reqItems}" var="ri">
                                                         <apex:outputPanel rendered="{!ri.display}" layout="none">
                                                             <li>
-                                                                <apex:outputText>{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
+                                                                <apex:outputText >{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
                                                             </li>
                                                         </apex:outputPanel>
                                                     </apex:repeat>

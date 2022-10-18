@@ -172,6 +172,7 @@ public class ApplicationCreate {
                     WHERE Intended_Program__r.Application_Control__c = :appControlId
                     AND Intended_Program__c IN: programs
                     AND Academic_Term__r.Application_Status__c = 'Active'
+                    AND Application_Status__c = 'Active'
                     GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
                     ORDER BY Academic_Term__r.Term_Start_Date__c
             ];

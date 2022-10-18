@@ -181,6 +181,9 @@ public class ApplicationRegistration {
     }
 
     public void populateInteraction() {
+        System.debug('*** appCreate: ' + appCreate);
+        System.debug('*** loginUser: ' + loginUser);
+        System.debug('*** appInfo: ' + appInfo);
         Id application_opp_RT_ID = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
         interaction.Id = null;
         interaction.Contact__c = null;
@@ -188,11 +191,9 @@ public class ApplicationRegistration {
             for (ApplicationQuestion question: questionGroup.questions) {
                 if (question.label == 'What term are you applying for?') {
                     interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
-                    System.debug('resp: ' + question.resp);
                 }
                 if (question.label == 'What program are you applying to?') {
                     interaction.Academic_Program__c = Id.valueOf(String.valueOf(question.resp));
-                    System.debug('resp: ' + question.resp);
                 }
             }
         }
@@ -213,6 +214,22 @@ public class ApplicationRegistration {
         interaction.Citizenship__c = appCreate.app.Citizenship__c;
         interaction.Interaction_Source__c = 'Application';
         interaction.Date_Started_App__c = System.Today();
+        interaction.Lead_Source__c = 'Application';
+        // interaction.Admissions_Application__c;
+        // interaction.Admit_Type__c;
+        // interaction.Birthdate__c;
+        // interaction.College_of_Interest__c;
+        // interaction.Country__c;
+        // interaction.Degree_Level__c;
+        // interaction.Gender__c;
+        // interaction.Home_Phone__c;
+        interaction.Interaction_Status__c = 'New';
+        // interaction.Mailing_City__c;
+        // interaction.Mailing_Street__c;
+        // interaction.Major_Program_1__c;
+        // interaction.Major_Program_2__c;
+        // interaction.Major_Program_3__c;
+        // interaction.State__c;
     }
 
     public PageReference login() {

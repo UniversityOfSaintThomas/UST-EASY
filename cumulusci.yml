@@ -3,6 +3,7 @@ project:
   name: UST-EASY
   package:
     name: UST-EASY-Package
+    namespace: null
     api_version: '52.0'
   dependencies:
     - github: 'https://github.com/SalesforceFoundation/EDA'
@@ -296,12 +297,6 @@ flows:
         task: set_user_user_role
       20:
         task: load_scholarship_test_data
-  release_unlocked_beta:
-    steps:
-      1:
-        options:
-          org_dependent: True
-          package_type: Unlocked
 
   release_unlocked_beta:
     steps:
@@ -309,6 +304,7 @@ flows:
         options:
           org_dependent: True
           package_type: Unlocked
+          version_type: patch
 
 orgs:
   scratch:

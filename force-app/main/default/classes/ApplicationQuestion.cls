@@ -110,7 +110,7 @@ public class ApplicationQuestion {
 
                 for (Program__c ip : intendedPrograms) {
                     if (filterProgramsByTerm) {
-                        if (showIntendedProgram(ip) &&  programsWithSelectedTerm != null && programsWithSelectedTerm.contains(ip.Id)) {
+                        if (showIntendedProgram(ip) && !programsWithSelectedTerm.isEmpty() && programsWithSelectedTerm.contains(ip.Id)) {
                             options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
                         }
                     } else {

@@ -98,7 +98,7 @@
                             </apex:commandLink>
                         </div>
                     </apex:outputPanel>
-gi
+
                     <!--<apex:outputPanel rendered="{!appInfo.appStatus != 'Started App'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
                             <p class="slds-text-color_success"><strong>Status: Submitted</strong></p>

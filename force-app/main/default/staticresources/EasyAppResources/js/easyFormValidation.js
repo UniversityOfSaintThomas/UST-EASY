@@ -85,6 +85,15 @@ function textValidations(formWrap, errorsOff) {
         }
     });
 
+    formWrap.querySelectorAll('.docUploadInput').forEach(docUpload => {
+            if (String(docUpload.placeholder) == 'true' && !Boolean(docUpload.value)) {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
+                activateErrorState(docUpload, 'change');
+            } else {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
+            }
+        });
+
     //ACT/SAT Test score validation
     allTestScores.forEach(testScore => {
         let minScore = parseInt(testScore.getAttribute('min'));
@@ -210,4 +219,27 @@ function textValidations(formWrap, errorsOff) {
     }
 
     return errors;
+}
+
+function validateFileType(obj) {
+    if (Boolean(obj.title)) {
+        console.log(obj);
+        let acceptedTypes = obj.title.split(';');
+        let inputArray = obj.value.split('.');
+        let inputType = inputArray[inputArray.length - 1].toUpperCase();
+        if (!acceptedTypes.includes(inputType)) {
+            obj.value = null;
+            let fileTypeMessage = 'File type not accepted. Please upload one of the following: ';
+            for (const type of acceptedTypes) {
+                fileTypeMessage += type + ', ';
+            }
+            fileTypeMessage = fileTypeMessage.slice(0, fileTypeMessage.length - 2) + '.';
+            document.getElementById('error-108' + String(obj.name)).innerHTML = fileTypeMessage;
+            console.log(document.getElementById('error-108' + String(obj.name)));
+            return false;
+        } else {
+            document.getElementById('error-108' + String(obj.name)).innerHTML = '';
+        }
+    }
+    return true;
 }

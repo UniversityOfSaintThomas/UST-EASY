@@ -167,15 +167,11 @@ public with sharing class ScholarshipApplicationPage2Controller {
             RecName = '';
             RecLink = Site.getBaseSecureUrl() + '/ScholarshipRecommender';
             recMessage = styledP + UserInfo.getFirstName() + ' ' + UserInfo.getLastName() + ' has applied for the ' + this.scholarship.Name + ' at the University of St. Thomas and indicated that you would be willing to write a recommendation. </p>';
-            if (this.scholarship.Description__c != null) {
-                recMessage += styledP + '<strong>Scholarship Description</strong><br/>' + this.scholarship.Description__c + '</p>';
-            }
 
             if (xx == 1
-                    && this.scholarship.Recommender_Auto_Send__c
+                    //&& this.scholarship.Recommender_Auto_Send__c
                     && String.isNotBlank(this.applicant.Recommender_Email__c) && String.isNotBlank(this.applicant.Recommender_Name__c) && this.applicant.Recommendation_Request_Date__c == null
-                    ) {
-
+            ) {
                 RecEmail = this.applicant.Recommender_Email__c;
                 RecName = this.applicant.Recommender_Name__c;
                 RecLink += '?recid=' + this.applicant.Id + '1';
@@ -185,9 +181,9 @@ public with sharing class ScholarshipApplicationPage2Controller {
                 recMessage += styledP + '<a href="' + RecLink + '" class="button">Submit your recommendation</a></p>';
             }
             if (xx == 2
-                    && this.scholarship.Recommender2_Auto_Send__c
+                    //&& this.scholarship.Recommender2_Auto_Send__c
                     && String.isNotBlank(this.applicant.Recommender2_Email__c) && String.isNotBlank(this.applicant.Recommender2_Name__c) && this.applicant.Recommendation2_Request_Date__c == null
-                    ) {
+            ) {
                 RecEmail = this.applicant.Recommender2_Email__c;
                 RecName = this.applicant.Recommender2_Name__c;
                 RecLink += '?recid=' + this.applicant.Id + '2';
@@ -197,6 +193,12 @@ public with sharing class ScholarshipApplicationPage2Controller {
                 recMessage += styledP + '<a href="' + RecLink + '" class="button">Submit your recommendation</a></p>';
             }
 
+            if (this.scholarship.Description__c != null) {
+                String descr = this.scholarship.Description__c;
+                System.debug(descr);
+                recMessage += styledP + '<strong>Scholarship Description</strong><br/>' + descr + '</p>';
+
+            }
 
             if (!String.isEmpty(RecEmail)) {
                 ScholarshipSharedUtilities.sendEmail(RecName, RecEmail, RecSubject, RecMessage, RecMessage, this.scholarship.Name);

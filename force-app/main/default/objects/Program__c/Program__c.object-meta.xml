@@ -165,8 +165,8 @@
         <customTabListAdditionalFields>Career__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Department__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Program_Code__c</customTabListAdditionalFields>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Active__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Career__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Program_Code__c</lookupDialogsAdditionalFields>

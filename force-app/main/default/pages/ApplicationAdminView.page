@@ -1,6 +1,6 @@
 <apex:page controller="ApplicationAdminView" action="{!init}" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" cache="false" standardStylesheets="false" docType="html-5.0">
     <apex:composition template="GeneralSLDS">
-        <c:ApplicationHead/>
+        <c:ApplicationHead />
         <apex:define name="scriptsHead">
             <script>
                 async function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm) {
@@ -30,7 +30,7 @@
             </div>
 
             <apex:outputPanel id="themessages">
-                <apex:pageMessages/>
+                <apex:pageMessages />
             </apex:outputPanel>
 
             <!--    <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}" vfPageName="ApplicationAdminView">-->
@@ -38,7 +38,7 @@
             <apex:repeat value="{!arLst}" var="req">
 
                 <apex:variable var="itemCount" value="0"/>
-                <apex:form>
+                <apex:form >
                     <apex:repeat value="{!req.section.groups}" var="g" rendered="{!req.section.groups != null && req.section.groups.size > 0}">
                         <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
                             <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appInfo="{!appInfo}"/>
@@ -52,7 +52,7 @@
 
             <apex:outputLink styleClass="btn-lightning btn-lg" value="/{!applicationId}">Back to Application</apex:outputLink>
 
-            <apex:form>
+            <apex:form >
                 <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
                     <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
                 </apex:actionFunction>

@@ -107,6 +107,7 @@ public class ApplicationRegistration {
             }
 
             // Insert interaction to create/update Contact
+            System.debug('$$$ interaction: ' + interaction);
             insert interaction;
             interaction = [SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
             Contact con = [SELECT Id, FirstName, MiddleName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
@@ -198,6 +199,11 @@ public class ApplicationRegistration {
             }
         }
         if (interaction.Academic_Program__c != null) {
+            List<Program__c> program = [SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c FROM Program__c WHERE Id =: interaction.Academic_Program__c LIMIT 1];
+            if (!program.isEmpty()) {
+                interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
+                interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
+            }
             List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c =: interaction.Academic_Program__c LIMIT 1];
             if (!relatedPlan.isEmpty()) {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
@@ -215,21 +221,7 @@ public class ApplicationRegistration {
         interaction.Interaction_Source__c = 'Application';
         interaction.Date_Started_App__c = System.Today();
         interaction.Lead_Source__c = 'Application';
-        // interaction.Admissions_Application__c;
-        // interaction.Admit_Type__c;
-        // interaction.Birthdate__c;
-        // interaction.College_of_Interest__c;
-        // interaction.Country__c;
-        // interaction.Degree_Level__c;
-        // interaction.Gender__c;
-        // interaction.Home_Phone__c;
         interaction.Interaction_Status__c = 'New';
-        // interaction.Mailing_City__c;
-        // interaction.Mailing_Street__c;
-        // interaction.Major_Program_1__c;
-        // interaction.Major_Program_2__c;
-        // interaction.Major_Program_3__c;
-        // interaction.State__c;
     }
 
     public PageReference login() {

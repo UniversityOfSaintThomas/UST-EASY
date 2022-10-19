@@ -467,6 +467,8 @@ public class ApplicationCreate {
             if (interaction.Email__c != null) {
                 insert interaction;
             }
+        } else {
+            updateInteraction();
         }
 
         // Return URL for checklist page for new application
@@ -480,13 +482,59 @@ public class ApplicationCreate {
         interaction.Id = null;
         interaction.Contact__c = null;
         interaction.OwnerId = Test.isRunningTest() ? UserInfo.getUserId() : Site.getAdminId();
+        // populate interaction with contact information
         if (con.Id != null) {
-            Contact currentContact = [SELECT FirstName, MiddleName, LastName, Email FROM Contact WHERE Id =: con.Id LIMIT 1];
+            Contact currentContact = [
+                SELECT Id,
+                    FirstName, 
+                    MiddleName, 
+                    LastName, 
+                    Email,
+                    Birthdate, 
+                    MailingCountry, 
+                    MailingCity,
+                    MailingPostalCode, 
+                    MailingStreet, 
+                    MailingState,
+                    HomePhone
+                FROM Contact 
+                WHERE Id =: con.Id LIMIT 1
+            ];
             interaction.First_Name__c = currentContact.FirstName;
             interaction.Middle_Name__c = currentContact.MiddleName;
             interaction.Last_Name__c = currentContact.LastName;
             interaction.Email__c = currentContact.Email;
+            interaction.Birthdate__c = currentContact.Birthdate;
+            interaction.Mailing_Country__c = currentContact.MailingCountry;
+            interaction.Mailing_City__c = currentContact.MailingCity;
+            interaction.Mailing_Postal_Code__c = currentContact.MailingPostalCode;
+            interaction.Mailing_Street__c = currentContact.MailingStreet;
+            interaction.Mailing_State__c = currentContact.MailingState;
+            interaction.Home_Phone__c = currentContact.HomePhone;
         }
+        // populate interaction with application information
+        if (app != null) {
+            if (app.Id != null) {
+                Application__c currentApplication = [
+                    SELECT Id, 
+                        Generic_Filter_2__c, 
+                        Degree_Level__c, 
+                        Major_1__c, 
+                        Major_2__c, 
+                        Major_3__c 
+                    FROM Application__c 
+                    WHERE Id =: app.Id 
+                    LIMIT 1
+                ];
+                interaction.Admissions_Application__c = app.Id;
+                interaction.Gender__c = currentApplication.Generic_Filter_2__c;
+                interaction.Degree_Level__c = currentApplication.Degree_Level__c;
+                interaction.Major_Program_1__c = currentApplication.Major_1__c;
+                interaction.Major_Program_2__c = currentApplication.Major_2__c;
+                interaction.Major_Program_3__c = currentApplication.Major_3__c;
+            }
+        }
+        // populate interaction with additional information
         for (ApplicationQuestionGroup questionGroup : section.groups) {
             for (ApplicationQuestion question: questionGroup.questions) {
                 if (question.label == 'What term are you applying for?') {
@@ -498,6 +546,11 @@ public class ApplicationCreate {
             }
         }
         if (interaction.Academic_Program__c != null) {
+            List<Program__c> program = [SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c FROM Program__c WHERE Id =: interaction.Academic_Program__c LIMIT 1];
+            if (!program.isEmpty()) {
+                interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
+                interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
+            }
             List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c =: interaction.Academic_Program__c LIMIT 1];
             if (!relatedPlan.isEmpty()) {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
@@ -515,6 +568,81 @@ public class ApplicationCreate {
         interaction.Interaction_Source__c = 'Application';
         interaction.Date_Started_App__c = System.Today();
         return interaction;
+    }
+
+    public void updateInteraction() {
+        // get previously created interaction and update with info on application and contact
+        Interaction__c interaction;
+        Id currentContactId;
+        Id intendedStartTermId;
+        Id academicProgramId;
+        if (con.Id != null) {
+            currentContactId = currentContactId;
+        }
+        for (ApplicationQuestionGroup questionGroup : section.groups) {
+            for (ApplicationQuestion question: questionGroup.questions) {
+                if (question.label == 'What term are you applying for?') {
+                    intendedStartTermId = Id.valueOf(String.valueOf(question.resp));
+                }
+                if (question.label == 'What program are you applying to?') {
+                    academicProgramId = Id.valueOf(String.valueOf(question.resp));
+                }
+            }
+        }
+        if (currentContactId != null && intendedStartTermId != null && academicProgramId != null) {
+            interaction = [
+                SELECT Id 
+                FROM Interaction__c 
+                WHERE Contact__c =: currentContactId 
+                AND Intended_Start_Term__c =: intendedStartTermId 
+                AND Academic_Program__c =: academicProgramId 
+                LIMIT 1
+            ];
+            Contact currentContact = [
+                SELECT Id, 
+                    Birthdate, 
+                    MailingCountry, 
+                    MailingCity,
+                    MailingPostalCode, 
+                    MailingStreet, 
+                    MailingState,
+                    HomePhone
+                FROM Contact 
+                WHERE Id =: currentContactId
+                LIMIT 1
+            ];
+            interaction.Birthdate__c = currentContact.Birthdate;
+            interaction.Mailing_Country__c = currentContact.MailingCountry;
+            interaction.Mailing_City__c = currentContact.MailingCity;
+            interaction.Mailing_Postal_Code__c = currentContact.MailingPostalCode;
+            interaction.Mailing_Street__c = currentContact.MailingStreet;
+            interaction.Mailing_State__c = currentContact.MailingState;
+            interaction.Home_Phone__c = currentContact.HomePhone;
+            if (app != null) {
+                if (app.Id != null) {
+                    Application__c currentApplication = [
+                        SELECT Id, 
+                            Generic_Filter_2__c, 
+                            Degree_Level__c, 
+                            Major_1__c, 
+                            Major_2__c, 
+                            Major_3__c 
+                        FROM Application__c 
+                        WHERE Id =: app.Id 
+                        LIMIT 1
+                    ];
+                    interaction.Admissions_Application__c = app.Id;
+                    interaction.Gender__c = currentApplication.Generic_Filter_2__c;
+                    interaction.Degree_Level__c = currentApplication.Degree_Level__c;
+                    interaction.Major_Porgram_1__c = currentApplication.Major_1__c;
+                    interaction.Major_Program_2__c = currentApplication.Major_2__c;
+                    interaction.Major_Program_3__c = currentApplication.Major_3__c;
+                }
+            }
+        }
+        if (interaction != null) {
+            update interaction;
+        }
     }
 
     @RemoteAction

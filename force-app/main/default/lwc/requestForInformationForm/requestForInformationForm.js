@@ -27,7 +27,7 @@ import LEAD_MAJOR4 from '@salesforce/schema/Lead.Major_Program_4__c';
 import LEAD_EMAIL from '@salesforce/schema/Lead.Email';
 import LEAD_PHONE from '@salesforce/schema/Lead.Phone';
 import LEAD_MOBILE_PHONE from '@salesforce/schema/Lead.MobilePhone';
-import LEAD_SMS_OPT_OUT from '@salesforce/schema/Lead.hed__SMS_Opt_Out__c';
+import LEAD_TEXTS from '@salesforce/schema/Lead.Receive_Texts__c';
 import LEAD_BIRTHDATE from '@salesforce/schema/Lead.Birthdate__c';
 import LEAD_PREFERRED_ENROLLMENT from '@salesforce/schema/Lead.hed__Preferred_Enrollment_Date__c';
 import LEAD_INTENDED_START_TERM from '@salesforce/schema/Lead.Intended_Start_Term__c';
@@ -36,7 +36,7 @@ import LEAD_CITY from '@salesforce/schema/Lead.City';
 import LEAD_STATE from '@salesforce/schema/Lead.State';
 import LEAD_POSTAL_CODE from '@salesforce/schema/Lead.PostalCode';
 import LEAD_COUNTRY from '@salesforce/schema/Lead.Country';
-import LEAD_ACCOUNT from '@salesforce/schema/Lead.Affiliated_Account__c';
+import LEAD_HIGH_SCHOOL_OR_COLLEGE from '@salesforce/schema/Lead.High_School_or_College__c';
 import LEAD_HIGH_SCHOOL_GRAD_YEAR from '@salesforce/schema/Lead.Expected_Graduate_Date__c';
 import LEAD_TIMELINE from '@salesforce/schema/Lead.Timeline__c';
 import LEAD_QUESTION from '@salesforce/schema/Lead.Has_Question__c';
@@ -45,7 +45,7 @@ import LEAD_MAIL_INFO from '@salesforce/schema/Lead.Mail_Information_Requested__
 import LEAD_COLLEGE_SCHOOL from '@salesforce/schema/Lead.St_Thomas_College_School__c';
 import LEAD_RECENT_SCHOOL from '@salesforce/schema/Lead.hed__Most_Recent_School__c';
 
-import FAMILY_OBJECT from '@salesforce/schema/Family__c'; //using to get Country global picklist value set
+import FAMILY_OBJECT from '@salesforce/schema/Family_Member__c'; //using to get Country global picklist value set
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
@@ -71,7 +71,7 @@ const ADDITIONAL_FIELDS = [
     LEAD_EMAIL,
     LEAD_PHONE,
     LEAD_MOBILE_PHONE,
-    LEAD_SMS_OPT_OUT,
+    LEAD_TEXTS,
     LEAD_BIRTHDATE,
     LEAD_PREFERRED_ENROLLMENT,
     LEAD_INTENDED_START_TERM,
@@ -80,7 +80,7 @@ const ADDITIONAL_FIELDS = [
     LEAD_STATE,
     LEAD_POSTAL_CODE,
     LEAD_COUNTRY,
-    LEAD_ACCOUNT,
+    LEAD_HIGH_SCHOOL_OR_COLLEGE,
     LEAD_HIGH_SCHOOL_GRAD_YEAR,
     LEAD_TIMELINE,
     LEAD_QUESTION,
@@ -113,8 +113,8 @@ export default class RequestForInformationForm extends LightningElement {
 
     // maps to populate picklists, where value is name and key is id of object
     program_id_to_name_map; // for Recruitment_Program__c
-    term_id_to_name_map; // for Term__c
-    account_id_to_name_map; // for Affiliated_Account__c
+    term_id_to_name_map; // for Intended_Start_Term__c
+    account_id_to_name_map; // for High_School_or_College__c
 
     //front-end display
     @track show_spinner = true;
@@ -367,7 +367,6 @@ export default class RequestForInformationForm extends LightningElement {
     output(result) {
         if (result.data) {
             this.record_input = generateRecordInputForCreate(result.data.record);
-            this.record_input.fields.hed__SMS_Opt_Out__c = true; // since question asks if user wants to opt-in, should default to true (opt-out)
             getPresetValues({rfi_controller_name : this.rfi_controller})
             .then(preset_values => {
                 for (const preset_value of preset_values) {
@@ -439,7 +438,7 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.country_label:
                 this.record_input.fields.Country = event.target.value;
-                if (event.target.value != 'United States') {
+                if (event.target.value != 'United States of America') {
                     this.international_citizen_type = true;
                 } else {
                     this.international_citizen_type = false;
@@ -447,9 +446,9 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.text_messages_label:
                 if (event.target.checked) {
-                    this.record_input.fields.hed__SMS_Opt_Out__c = false;
+                    this.record_input.fields.Receive_Texts__c = 'Yes';
                 } else {
-                    this.record_input.fields.hed__SMS_Opt_Out__c = true;
+                    this.record_input.fields.Receive_Texts__c = 'No';
                 }
                 break;
             case this.field_labels.birthdate_label:
@@ -480,7 +479,7 @@ export default class RequestForInformationForm extends LightningElement {
             case this.field_labels.high_school_not_found_label:
                 this.manually_enter_high_school = event.target.checked;
                 if (event.target.checked) {
-                    this.record_input.fields.Affiliated_Account__c = '';
+                    this.record_input.fields.High_School_or_College__c = '';
                     this.high_school_search_results = null;
                     this.high_school_data = false;
                 }
@@ -516,7 +515,7 @@ export default class RequestForInformationForm extends LightningElement {
 
         if (event.target.name == this.field_labels.high_school_datatable_name) {
             var selected_row = this.template.querySelector('lightning-datatable').getSelectedRows();
-            this.record_input.fields.Affiliated_Account__c = selected_row[0].account_id;
+            this.record_input.fields.High_School_or_College__c = selected_row[0].account_id;
             this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
         }
     }
@@ -640,7 +639,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     createLead() {
         console.log(this.record_input.fields);
-        createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead'})
+        createLead({ record : JSON.stringify(this.record_input.fields), objectApiName : 'Lead', rfiController : this.rfi_controller})
         .then(() => {
             this.show_spinner = false;
             this.form_submitted_successfully = true;
@@ -773,12 +772,13 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.City = city;
             }
             if (this.show_fields.State) {
-                this.template.querySelector('lightning-combobox[data-id="state"]').value = state;
-                this.record_input.fields.State = state;
+                let state_map = this.getStateMap();
+                this.template.querySelector('lightning-combobox[data-id="state"]').value = state_map.get(state);
+                this.record_input.fields.State = state_map.get(state);
             }
             if (this.show_fields.Country) {
-                this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States';
-                this.record_input.fields.Country = 'United States';
+                this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States of America';
+                this.record_input.fields.Country = 'United States of America';
             }
             this.show_spinner = false;
         })
@@ -788,69 +788,139 @@ export default class RequestForInformationForm extends LightningElement {
         })
     }
 
-    // can't query for global value sets -- would need to be a field
+    // can't query for state picklist values -- would need to be on a field
     get stateOptions() {
         return [
-            { label: 'Alabama', value: 'Alabama' },
-            { label: 'Alaska', value: 'Alaska' },
-            { label: 'American Samoa', value: 'American Samoa' },
-            { label: 'Arizona', value: 'Arizona' },
-            { label: 'Arkansas', value: 'Arkansas' },
-            { label: 'California', value: 'California' },
-            { label: 'Colorado', value: 'Colorado' },
-            { label: 'Connecticut', value: 'Connecticut' },
-            { label: 'Delaware', value: 'Delaware' },
-            { label: 'District of Columbia', value: 'District of Columbia' },
-            { label: 'Micronesia', value: 'Micronesia' },
-            { label: 'Florida', value: 'Florida' },
-            { label: 'Georgia', value: 'Georgia' },
+            { label: 'Alabama', value: 'AL' },
+            { label: 'Alaska', value: 'AK' },
+            { label: 'American Samoa', value: 'AS' },
+            { label: 'Arizona', value: 'AZ' },
+            { label: 'Arkansas', value: 'AK' },
+            { label: 'Armed Forces the Americas', value: 'AA' },
+            { label: 'Armed Forces Europe', value: 'AE' },
+            { label: 'Armed Forces Pacific', value: 'AP' },
+            { label: 'California', value: 'CA' },
+            { label: 'Colorado', value: 'CO' },
+            { label: 'Connecticut', value: 'CT' },
+            { label: 'Delaware', value: 'DE' },
+            { label: 'District of Columbia', value: 'DC' },
+            { label: 'Micronesia', value: 'FM' },
+            { label: 'Florida', value: 'FL' },
+            { label: 'Georgia', value: 'GA' },
             { label: 'Guam', value: 'Guam' },
-            { label: 'Hawaii', value: 'Hawaii' },
-            { label: 'Idaho', value: 'Idaho' },
-            { label: 'Illinois', value: 'Illinois' },
-            { label: 'Indiana', value: 'Indiana' },
-            { label: 'Iowa', value: 'Iowa' },
-            { label: 'Kansas', value: 'Kansas' },
-            { label: 'Kentucky', value: 'Kentucky' },
-            { label: 'Louisiana', value: 'Louisiana' },
-            { label: 'Maine', value: 'Maine' },
-            { label: 'Marshall Islands', value: 'Marshall Islands' },
-            { label: 'Maryland', value: 'Maryland' },
-            { label: 'Massachusetts', value: 'Massachusetts' },
-            { label: 'Michigan', value: 'Michigan' },
-            { label: 'Minnesota', value: 'Minnesota' },
-            { label: 'Mississippi', value: 'Mississippi' },
-            { label: 'Missouri', value: 'Missouri' },
-            { label: 'Montana', value: 'Montana' },
-            { label: 'Nebraska', value: 'Nebraska' },
-            { label: 'Nevada', value: 'Nevada' },
-            { label: 'New Hampshire', value: 'New Hampshire' },
-            { label: 'New Jersey', value: 'New Jersey' },
-            { label: 'New Mexico', value: 'New Mexico' },
-            { label: 'New York', value: 'New York' },
-            { label: 'North Carolina', value: 'North Carolina' },
-            { label: 'North Dakota', value: 'North Dakota' },
-            { label: 'Northern Mariana Islands', value: 'Northern Mariana Islands' },
-            { label: 'Ohio', value: 'Ohio' },
-            { label: 'Oklahoma', value: 'Oklahoma' },
-            { label: 'Oregon', value: 'Oregon' },
-            { label: 'Palau', value: 'Palau' },
-            { label: 'Pennsylvania', value: 'Pennsylvania' },
-            { label: 'Puerto Rico', value: 'Puerto Rico' },
-            { label: 'Rhode Island', value: 'Rhode Island' },
-            { label: 'South Carolina', value: 'South Carolina' },
-            { label: 'South Dakota', value: 'South Dakota' },
-            { label: 'Tennessee', value: 'Tennessee' },
-            { label: 'Texas', value: 'Texas' },
-            { label: 'Utah', value: 'Utah' },
-            { label: 'Vermont', value: 'Vermont' },
-            { label: 'Virgin Islands', value: 'Virgin Islands' },
-            { label: 'Virginia', value: 'Virginia' },
-            { label: 'Washington', value: 'Washington' },
-            { label: 'West Virginia', value: 'West Virginia' },
-            { label: 'Wisconsin', value: 'Wisconsin' },
-            { label: 'Wyoming', value: 'Wyoming' }
+            { label: 'Hawaii', value: 'HI' },
+            { label: 'Idaho', value: 'ID' },
+            { label: 'Illinois', value: 'IL' },
+            { label: 'Indiana', value: 'IN' },
+            { label: 'Iowa', value: 'IA' },
+            { label: 'Kansas', value: 'KS' },
+            { label: 'Kentucky', value: 'KY' },
+            { label: 'Louisiana', value: 'LA' },
+            { label: 'Maine', value: 'ME' },
+            { label: 'Marshall Islands', value: 'MH' },
+            { label: 'Maryland', value: 'MD' },
+            { label: 'Massachusetts', value: 'MA' },
+            { label: 'Michigan', value: 'MI' },
+            { label: 'Minnesota', value: 'MN' },
+            { label: 'Mississippi', value: 'MS' },
+            { label: 'Missouri', value: 'MO' },
+            { label: 'Montana', value: 'MT' },
+            { label: 'Nebraska', value: 'NE' },
+            { label: 'Nevada', value: 'NV' },
+            { label: 'New Hampshire', value: 'NH' },
+            { label: 'New Jersey', value: 'NJ' },
+            { label: 'New Mexico', value: 'NM' },
+            { label: 'New York', value: 'NY' },
+            { label: 'North Carolina', value: 'NC' },
+            { label: 'North Dakota', value: 'ND' },
+            { label: 'Northern Mariana Islands', value: 'MP' },
+            { label: 'Ohio', value: 'OH' },
+            { label: 'Oklahoma', value: 'OK' },
+            { label: 'Oregon', value: 'OR' },
+            { label: 'Palau', value: 'PW' },
+            { label: 'Pennsylvania', value: 'PA' },
+            { label: 'Puerto Rico', value: 'PR' },
+            { label: 'Rhode Island', value: 'RI' },
+            { label: 'South Carolina', value: 'SC' },
+            { label: 'South Dakota', value: 'SD' },
+            { label: 'Tennessee', value: 'TN' },
+            { label: 'Texas', value: 'TX' },
+            { label: 'Utah', value: 'UT' },
+            { label: 'Vermont', value: 'VT' },
+            { label: 'Virgin Islands', value: 'VI' },
+            { label: 'Virginia', value: 'VA' },
+            { label: 'Washington', value: 'WA' },
+            { label: 'West Virginia', value: 'WV' },
+            { label: 'Wisconsin', value: 'WI' },
+            { label: 'Wyoming', value: 'WY' }
         ];
+    }
+
+    getStateMap() {
+        let state_map = new Map();
+        state_map.set('Alabama', 'AL');
+        state_map.set('Alaska', 'AK');
+        state_map.set('American Samoa', 'AS');
+        state_map.set('Arizona', 'AZ');
+        state_map.set('Arkansas', 'AK');
+        state_map.set('Armed Forces the Americas', 'AA');
+        state_map.set('Armed Forces Europe', 'AE');
+        state_map.set('Armed Forces Pacific', 'AP');
+        state_map.set('California', 'CA');
+        state_map.set('Colorado', 'CO');
+        state_map.set('Connecticut', 'CT');
+        state_map.set('Delaware', 'DE');
+        state_map.set('District of Columbia', 'DC');
+        state_map.set('Micronesia', 'FM');
+        state_map.set('Florida', 'FL');
+        state_map.set('Georgia', 'GA');
+        state_map.set('Guam', 'Guam');
+        state_map.set('Hawaii', 'HI');
+        state_map.set('Idaho', 'ID');
+        state_map.set('Illinois', 'IL');
+        state_map.set('Indiana', 'IN');
+        state_map.set('Iowa', 'IA');
+        state_map.set('Kansas', 'KS');
+        state_map.set('Kentucky', 'KY');
+        state_map.set('Louisiana', 'LA');
+        state_map.set('Maine', 'ME');
+        state_map.set('Marshall Islands', 'MH');
+        state_map.set('Maryland', 'MD');
+        state_map.set('Massachusetts', 'MA');
+        state_map.set('Michigan', 'MI');
+        state_map.set('Minnesota', 'MN');
+        state_map.set('Mississippi', 'MS');
+        state_map.set('Missouri', 'MO');
+        state_map.set('Montana', 'MT');
+        state_map.set('Nebraska', 'NE');
+        state_map.set('Nevada', 'NV');
+        state_map.set('New Hampshire', 'NH');
+        state_map.set('New Jersey', 'NJ');
+        state_map.set('New Mexico', 'NM');
+        state_map.set('New York', 'NY');
+        state_map.set('North Carolina', 'NC');
+        state_map.set('North Dakota', 'ND');
+        state_map.set('Northern Mariana Islands', 'MP');
+        state_map.set('Ohio', 'OH');
+        state_map.set('Oklahoma', 'OK');
+        state_map.set('Oregon', 'OR');
+        state_map.set('Palau', 'PW');
+        state_map.set('Pennsylvania', 'PA');
+        state_map.set('Puerto Rico', 'PR');
+        state_map.set('Rhode Island', 'RI');
+        state_map.set('South Carolina', 'SC');
+        state_map.set('South Dakota', 'SD');
+        state_map.set('Tennessee', 'TN');
+        state_map.set('Texas', 'TX');
+        state_map.set('Utah', 'UT');
+        state_map.set('Vermont', 'VT');
+        state_map.set('Virgin Islands', 'VI');
+        state_map.set('Virginia', 'VA');
+        state_map.set('Washington', 'WA');
+        state_map.set('West Virginia', 'WV');
+        state_map.set('Wisconsin', 'WI');
+        state_map.set('Wyoming', 'WY');
+        return state_map;
     }
         /**
     ******************************************

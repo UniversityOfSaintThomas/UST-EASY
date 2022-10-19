@@ -5,6 +5,7 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>UST Admissions</label>
     <logo>EASY_Shared_Documents/UST_Logo.jpg</logo>
     <tabs>Interaction__c</tabs>

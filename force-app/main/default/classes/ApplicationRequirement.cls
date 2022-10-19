@@ -340,8 +340,8 @@ public class ApplicationRequirement {
     ******************************************************************************* */
     public PageReference submit() {
         PageReference pr = Page.ApplicationRequirement;
-
         Boolean hasError = false;
+
         for (ApplicationQuestionGroup g : section.groups) {
             if (g.relatedObject == true) {
                 if (g.creatingNewRelatedRecord == true) {
@@ -370,10 +370,12 @@ public class ApplicationRequirement {
                     addData = (Map<String, Object>) additionalData.get(g.item.Id);
                 }
 
+                //Uploaded data evaluated
                 if (addData != null && addData.containsKey('attData')) {
                     Map<String, Object> attData = (Map<String, Object>) addData.get('attData');
                     if (attData != null && attData.containsKey('fileName')) {
                         String fileName = (String) attData.get('fileName');
+                        //Check for file types
                         if (String.isNotBlank(fileName) && String.isNotBlank(g.item.File_Types__c)) {
                             String ext = fileName.substringAfterLast('.').toUpperCase();
                             Set<String> allowedTypes = new Set<String>(g.item.File_Types__c.toUpperCase().split(';'));
@@ -383,22 +385,33 @@ public class ApplicationRequirement {
                             }
                         }
                     }
-                }
+                } 
+                // else if (addData == null && g.att != null && String.isEmpty(g.att.Title) && g.item.Required__c.contains(app.Application_Status__c)) {
+                //     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Upload required.'));
+                //     hasError = true;
+                // }
             }
         }
 
         if (hasError) {
-            return pr;
+            return null;
         }
 
         section.processValues(additionalData);
         List<Requirement_Response__c> rrLst = new List<Requirement_Response__c>();
+        Map<Id, Requirement_Response__c> rrMap = new Map<Id, Requirement_Response__c>();
+        Map<Id, Id> requirement_item_ids_of_external_email_rrs = new Map<Id, Id>();
         for (ApplicationQuestionGroup aqg : section.groups) {
             if (aqg.response != null && aqg.isEditable) {
                 aqg.response.Viewed__c = true;
+                if (String.isNotBlank(aqg.response.External_Email__c)) {
+                    requirement_item_ids_of_external_email_rrs.put(aqg.response.Requirement_Item__c, aqg.response.Id);
+                }
+                rrMap.put(aqg.response.Id, aqg.response);
                 rrLst.add(aqg.response);
             }
         }
+
         try {
             upsert rrLst;
         } catch (Exception ex) {
@@ -433,6 +446,8 @@ public class ApplicationRequirement {
         } catch (Exception ex) {
             System.debug(ex.getMessage());
         }
+
+        handleRecommendations(rrMap, requirement_item_ids_of_external_email_rrs);
 
         section.pushValuesToObjects();
 
@@ -501,5 +516,96 @@ public class ApplicationRequirement {
             return null;
         }
         return pr;
+    }
+
+    public static void handleRecommendations(Map<Id, Requirement_Response__c> rrMap, Map<Id, Id> requirement_item_ids_of_external_email_rrs) {
+        // Check if external email is for recommendation object
+        if (!requirement_item_ids_of_external_email_rrs.isEmpty()) {
+            List<Requirement_Item__c> requirement_items_of_external_email_rrs = [
+                SELECT Id
+                FROM Requirement_Item__c 
+                WHERE Id IN: requirement_item_ids_of_external_email_rrs.keySet() 
+                AND Related_List_Object__c = 'Recommendation__c'
+            ];
+
+            if (!requirement_items_of_external_email_rrs.isEmpty()) {
+                // get corresponding requirement responses
+                List<Id> rr_ids_that_should_have_recommendation = new List<Id>();
+                for (Requirement_Item__c requirement_item : requirement_items_of_external_email_rrs) {
+                    rr_ids_that_should_have_recommendation.add(requirement_item_ids_of_external_email_rrs.get(requirement_item.Id));
+                }
+
+                // get Question Response info to populate fields on recommendation
+                List<Question_Response__c> related_question_responses = [
+                    SELECT Question_Response__c, Requirement_Response__c, Question__r.Related_Object_Field__c
+                    FROM Question_Response__c 
+                    WHERE Requirement_Response__c IN: rr_ids_that_should_have_recommendation
+                ];
+                Map<Id, List<Question_Response__c>> requirement_response_to_question_responses_map = new Map<Id, List<Question_Response__c>>();
+                for (Question_Response__c question_response : related_question_responses) {
+                    if (requirement_response_to_question_responses_map.get(question_response.Requirement_Response__c) == null) {
+                        List<Question_Response__c> question_response_list = new List<Question_Response__c>();
+                        question_response_list.add(question_response);
+                        requirement_response_to_question_responses_map.put(question_response.Requirement_Response__c, question_response_list);
+                    } else {
+                        requirement_response_to_question_responses_map.get(question_response.Requirement_Response__c).add(question_response);
+                    }
+                }
+
+                // get existing recommendations
+                List<Recommendation__c> recommendations_related_to_requirement_responses = [
+                    SELECT Id, Recommendation_Requirement_Response__c, Rec_Email__c, Submitted__c
+                    FROM Recommendation__c 
+                    WHERE Recommendation_Requirement_Response__c IN: rr_ids_that_should_have_recommendation
+                ];
+
+                Map<Id, Recommendation__c> requirement_response_to_recommendation_map = new Map<Id, Recommendation__c>();
+                for (Recommendation__c rec : recommendations_related_to_requirement_responses) {
+                    requirement_response_to_recommendation_map.put(rec.Recommendation_Requirement_Response__c, rec);
+                }
+
+                List<Recommendation__c> recs_to_upsert = new List<Recommendation__c>();
+                List<Recommendation__c> recs_to_delete = new List<Recommendation__c>();
+                for (Id rr_id : rr_ids_that_should_have_recommendation) {
+                    if (String.isNotBlank(rrMap.get(rr_id).External_Email__c)) {
+                        Recommendation__c related_rec;
+                        if (requirement_response_to_recommendation_map.get(rr_id) != null) { // recommendation already exists
+                            related_rec = requirement_response_to_recommendation_map.get(rr_id);
+                            if (related_rec.Rec_Email__c != rrMap.get(rr_id).External_Email__c && related_rec.Submitted__c != true) { // recommendation exists but email has changed, create new rec and delete old
+                                recs_to_delete.add(related_rec);
+                                related_rec = new Recommendation__c();
+                                related_rec.Application__c = rrMap.get(rr_id).Application__c;
+                                related_rec.Recommendation_Requirement_Response__c = rr_id;
+                                related_rec.Status__c = 'Requested';
+                            }
+                        } else { // create new recommendation
+                            related_rec = new Recommendation__c();
+                            related_rec.Application__c = rrMap.get(rr_id).Application__c;
+                            related_rec.Recommendation_Requirement_Response__c = rr_id;
+                            related_rec.Status__c = 'Requested';
+                        }
+                        related_rec.Rec_Email__c = rrMap.get(rr_id).External_Email__c;
+                        if (!requirement_response_to_question_responses_map.isEmpty()) {
+                            for (Question_Response__c question_response : requirement_response_to_question_responses_map.get(rr_id)) {
+                                if (String.isNotBlank(question_response.Question__r.Related_Object_Field__c)) {
+                                    related_rec.put(question_response.Question__r.Related_Object_Field__c, question_response.Question_Response__c);
+                                }
+                            }
+                        }
+                        if (related_rec.Submitted__c != true) {
+                            recs_to_upsert.add(related_rec);
+                        }
+                    }
+                }
+
+                if (recs_to_delete != null) {
+                    delete recs_to_delete;
+                }
+
+                if (recs_to_upsert != null) {
+                    upsert recs_to_upsert;
+                }
+            }
+        }
     }
 }

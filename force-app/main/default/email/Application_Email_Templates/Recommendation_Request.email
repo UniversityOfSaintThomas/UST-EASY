@@ -1,0 +1,16 @@
+<messaging:emailTemplate subject="Recommendation Request for {!relatedTo.Application__r.Contact__r.Name}" recipientType="Contact" relatedToType="Recommendation__c" replyTo="noreply@stthomas.edu">
+    <messaging:htmlEmailBody >
+        <html>
+        <body>
+        <p>
+            A Recommendation has been requested for {!relatedTo.Application__r.Contact__r.Name}. Please follow the link below to complete the Recommendation:
+        </p>
+        <p>
+            <a href="{!$Setup.Application_Setting__c.Community_URL__c+"/RecommendationForm?recId="+relatedTo.Id}" target="_blank">
+                {!$Setup.Application_Setting__c.Community_URL__c+"/RecommendationForm?recId="+relatedTo.Id}
+            </a>
+        </p>
+        </body>
+        </html>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

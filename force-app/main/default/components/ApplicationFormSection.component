@@ -13,7 +13,7 @@
 
     <apex:actionFunction name="rerenderTheTable" rerender="theTable" onComplete="pageLoadReRendered();"/>
 
-    <apex:actionFunction name="sendTheReminder{!group.item.Id}" action="{!group.sendReminder}" reRender="none"/>
+    <apex:actionFunction name="sendTheReminder{!group.item.Id}" action="{!group.sendReminder}" reRender="none" onComplete="hideFormSpinner();disableReminderEmailButton(this);"/>
 
     <apex:outputPanel styleClass="{!if(group.isEditable,'','fieldNotEditable')}" id="theSection" layout="block">
 
@@ -82,6 +82,7 @@
         <!-- UPLOAD DOCUMENT - REQUIREMENT ITEM LEVEL -->
         <apex:outputPanel rendered="{!group.documentUpload && !group.isInternal}" layout="none">
             <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
+            <apex:variable value="{!CONTAINS(group.item.Required__c,appInfo.appStatus) && !ISBLANK(group.item.Required__c)}" var="isRequiredUpload"/>
             <c:ApplicationFormSectionInputUpload responseObject="{!group.response['ValueTextEntry__c']}"
                                                  isEditable="{!group.isEditable}"
                                                  preventUpdates="{!preventUpdates}"
@@ -89,6 +90,8 @@
                                                  itemId="{!group.item.Id}"
                                                  odlAttachmentId="{!group.oldAttVersion.Id}"
                                                  attachmentTitle="{!group.att.Title}"
+                                                 acceptedFileTypes="{!group.item.File_Types__c}"
+                                                 isRequiredUpload="{!isRequiredUpload}"
             />
         </apex:outputPanel>
 

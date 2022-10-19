@@ -2,22 +2,17 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 08-29-2022
+ * @last modified on  : 09-08-2022
  * @last modified by  : nicole.b@digitalmass.com
 **/
 public without sharing class graduateRecommenderInfoController {
     
     @AuraEnabled(cacheable=true)
-    public static Map<String, String> getRelatedObjectInfo() {
+    public static Map<String, String> getRelatedObjectInfo(String recId) {
         try {
             Map<String, String> id_map = new Map<String, String>();
 
-            Id recommendation_id;
-            try {
-                recommendation_id = ApexPages.currentPage().getParameters().get('recId');
-            } catch (Exception e) {
-                recommendation_id = [SELECT Id FROM Recommendation__c LIMIT 1].Id; // FOR TESTING ONLY - WILL NEED TO REMOVE
-            }
+            Id recommendation_id = Id.valueOf(recId);
             id_map.put('recommendation_id', recommendation_id);
     
             Recommendation__c recommendation_object = [
@@ -27,7 +22,9 @@ public without sharing class graduateRecommenderInfoController {
                     Application__r.Application_Control__r.Id,
                     Application__r.Intended_Program__r.Application_Control__r.Id,
                     Display_Instructive_Text__c,
-                    Submitted__c
+                    Submitted__c,
+                    Recommendation_Requirement_Response__r.Requirement_Item__c,
+                    Rec_Email__c
                 FROM Recommendation__c 
                 WHERE Id =: recommendation_id
                 LIMIT 1
@@ -47,6 +44,7 @@ public without sharing class graduateRecommenderInfoController {
 
             id_map.put('display_instructive_text', String.valueOf(recommendation_object.Display_Instructive_Text__c));
             id_map.put('submitted', String.valueOf(recommendation_object.Submitted__c));
+            id_map.put('rec_email', String.valueOf(recommendation_object.Rec_Email__c));
 
             Application__c app = [
                 SELECT Id,
@@ -84,7 +82,7 @@ public without sharing class graduateRecommenderInfoController {
                                   'FROM Requirement_Item__c ' + 
                                   'WHERE Application_Control_Id__c = \'' + app_control_case_sensitive_id + '\' ' +
                                   'AND Requirement__c IN: applicable_requirement_ids ' +
-                                  'AND Internal_Requirement_Item__c != null ' +
+                                  'AND Internal_Requirement_Item__c = \'' + recommendation_object.Recommendation_Requirement_Response__r.Requirement_Item__c + '\' ' +
                                   'AND (RecordTypeId = \'' + related_object_RT + '\' ' +
                                         'OR RecordTypeId = \'' + document_upload_RT + '\') ' +
                                   'AND Active__c = true ';
@@ -186,9 +184,11 @@ public without sharing class graduateRecommenderInfoController {
             query_string += ' AND (Applicant_Type__c INCLUDES (\'' + String.escapeSingleQuotes(app.Applicant_Type__c) + '\') OR Applicant_Type__c = null)';
         }
 
+        /* Testing remove app status
         if (app.Application_Status__c != null) {
             query_string += ' AND (Application_Status__c INCLUDES (\'' + String.escapeSingleQuotes(app.Application_Status__c) + '\') OR Application_Status__c = null)';
         }
+        */
 
         if (app.Citizenship__c != null) {
             query_string += ' AND (Citizenship__c INCLUDES (\'' + String.escapeSingleQuotes(app.Citizenship__c) + '\') OR Citizenship__c = null)';
@@ -272,60 +272,58 @@ public without sharing class graduateRecommenderInfoController {
         }
     }
 
-    // adapted from https://www.salesforcetroop.com/custom_file_upload_using_lwc
     // can't use built-in lightning-file-upload element as it is not supported with Lightning Out
     @AuraEnabled
-    public static Id uploadFile(String base64, String filename, String recordId, String application_id, String document_upload_requirement_item_id) {
-        try {   
-            ContentVersion cv = createContentVersion(base64, filename);
-            ContentDocumentLink document_link = createContentLink(cv.Id, recordId);
-            Requirement_Response__c req_response = new Requirement_Response__c(
-                Application__c = application_id, 
-                Requirement_Item__c = document_upload_requirement_item_id, 
-                HasDocument__c = true, 
-                Document_Requirement_Fulfilled_On__c = System.now()
+    public static Id uploadFile(String base_64, String file_name, String recommendation_id){
+        try {
+            ContentVersion cv = new ContentVersion(
+                VersionData = EncodingUtil.base64Decode(base_64),
+                Title = file_name,
+                PathOnClient = file_name,
+                OwnerId = UserInfo.getUserId(),
+                FirstPublishLocationId = recommendation_id
             );
-            insert req_response;
-            ContentDocumentLink req_response_document_link = createContentLink(cv.Id, req_response.Id);
-            if (cv == null || document_link == null) {
-                return null;
-            } else {
-                return cv.Id;
+            if (!Test.isRunningTest()) {
+                cv.NetworkId = Network.getNetworkId();
             }
+            insert cv;
+            return cv.Id;
         } catch (Exception e) {
             throw new AuraHandledException('Error uploading file: ' + e.getMessage());
         }
     }
 
-    private static ContentVersion createContentVersion(String base64, String filename) {
-        ContentVersion cv = new ContentVersion();
-        cv.VersionData = EncodingUtil.base64Decode(base64);
-        cv.Title = filename;
-        cv.PathOnClient = filename;
+    @AuraEnabled
+    public static void updateRequirementResponses(String related_object_requirement_item_id, String document_upload_requirement_item_id){
         try {
-            insert cv;
-            return cv;
-        } catch (DMLException e) {
-            System.debug(e);
-            return null;
-        }
-    }
-
-    private static ContentDocumentLink createContentLink(String content_version_id, String recordId) {
-        if (content_version_id != null || recordId != null) {
-            ContentDocumentLink document_link = new ContentDocumentLink();
-            document_link.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: content_version_id].ContentDocumentId;
-            document_link.LinkedEntityId = recordId;
-            document_link.ShareType = 'V';
-            try {
-                insert document_link;
-                return document_link;
-            } catch (DMLException e) {
-                System.debug(e);
-                return null;
+            List<String> ids_to_query = new List<String>();
+            if (related_object_requirement_item_id != null) {
+                ids_to_query.add(related_object_requirement_item_id);
             }
-        } else {
-            return null;
+            if (document_upload_requirement_item_id != null) {
+                ids_to_query.add(document_upload_requirement_item_id);
+            }
+            List<Requirement_Response__c> req_responses = [
+                SELECT Id, 
+                    Document_Requirement_Fulfilled_On__c, 
+                    Child_Requirement_Fulfilled_On__c, 
+                    Requirement_Item__r.RecordTypeId 
+                FROM Requirement_Response__c 
+                WHERE Requirement_Item__c IN: ids_to_query
+            ];
+            Id related_object_RT = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByDeveloperName().get('Related_Object').getRecordTypeId();
+            Id document_upload_RT = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByDeveloperName().get('Document_Upload').getRecordTypeId();
+            for (Requirement_Response__c req_response : req_responses) {
+                if (req_response.Requirement_Item__r.RecordTypeId == related_object_RT) {
+                    req_response.Child_Requirement_Fulfilled_On__c = System.now();
+                } else if (req_response.Requirement_Item__r.RecordTypeId == document_upload_RT) {
+                    req_response.Document_Requirement_Fulfilled_On__c = System.now();
+                }
+            }
+            update req_responses;
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Short_Description__c</fullName>
+    <description>A very short description of the scholarship and it&apos;s attributes for display.</description>
+    <externalId>false</externalId>
+    <label>Short Description</label>
+    <length>250</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

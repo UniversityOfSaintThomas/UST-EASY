@@ -2,7 +2,7 @@
  - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 6/7/2022.
  -->
 
-<apex:component id="ApplicationFormSectionInput">
+ <apex:component id="ApplicationFormSectionInput">
     <apex:attribute name="inputLabel" description="" type="String" required="false"/>
     <apex:attribute name="multiPicklist" description="" type="List" required="false"/>
     <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
@@ -51,7 +51,11 @@
             <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#email")}"></use>
         </svg>
         <apex:inputField type="email" id="emailField" styleClass="slds-input validate{!inputType}" value="{!responseObject[fieldAPI]}"/>
-        <apex:commandLink styleClass="btn-lightning" value="Send Reminder" onclick="appShowLoadingSpinner();sendTheReminder{!itemId}();" reRender="none" rendered="{!!preventUpdates && isEditable && isExternalEmail}"/>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!inputType == 'Email' && isExternalEmail && !ISBLANK(responseObject[fieldAPI])}" layout="none">
+        <a href="#" class="slds-button slds-button_brand slds-m-top_small" onclick="showFormSpinner();sendTheReminder{!itemId}();" id="reminder{!itemId}">Send Reminder</a>
+        <p style="display:none" class="oneReminderPerDay slds-p-top_x-small"><strong>A reminder has been sent!</strong><br/><em>Note: only one reminder can be sent within a 24-hour period.</em></p>
     </apex:outputPanel>
 
     <!--Date Box-->

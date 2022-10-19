@@ -557,6 +557,77 @@ public class ApplicationRequirement_TEST {
                 System.assertEquals(null, agq.questions);
             }
         }
+        appInfo.submitStatus = 'Submitted App';
+        ac.appInfo = appInfo;
+        ac.finalSubmitApp();
+        Application__c submittedApp = [SELECT Application_Status__c FROM Application__c WHERE Id =: app.Id LIMIT 1];
+        System.assertEquals('Started App', submittedApp.Application_Status__c);
+    }
+
+    @IsTest
+    public static void testHandleRecommendations() {
+        List<Recommendation__c> recommendation_before = [SELECT Id FROM Recommendation__c LIMIT 1];
+        System.assertEquals(0, recommendation_before.size());
+
+        Application_Control__c app_control = [SELECT Id FROM Application_Control__c LIMIT 1];
+        Application__c app = [SELECT Id FROM Application__c LIMIT 1];
+
+        Requirement__c recommendation_requirement = new Requirement__c(
+                Application_Control__c = app_control.Id,
+                Name = 'Letter of Recommendation',
+                Active__c = true
+        );
+        insert recommendation_requirement;
+
+        Id question_group_RT = Schema.SObjectType.Requirement_Item__c.getRecordTypeInfosByDeveloperName().get('Question_Group').getRecordTypeId();
+        Requirement_Item__c request_recommendation_ri = new Requirement_Item__c(
+                Requirement__c = recommendation_requirement.Id, 
+                RecordTypeId = question_group_RT,
+                Active__c = true,
+                Name = 'Request Recommendation',
+                Related_List_Object__c = 'Recommendation__c'
+        );
+        insert request_recommendation_ri;
+
+        Id email_RT = Schema.SObjectType.Question__c.getRecordTypeInfosByDeveloperName().get('Email').getRecordTypeId();
+        Question__c request_question = new Question__c(
+                Requirement_Item__c = request_recommendation_ri.Id,
+                RecordTypeId = email_RT,
+                Active__c = true,
+                Name = 'Recommender Email',
+                Related_Object_Field__c = 'Rec_Email__c',
+                External_Email_Field__c = true
+        );
+        insert request_question;
+
+        Requirement_Response__c request_rr = new Requirement_Response__c(
+            Requirement_Item__c = request_recommendation_ri.Id,
+            Application__c = app.Id,
+            External_Email__c = 'testrecommender@test.com'
+        );
+        insert request_rr;
+
+        Question_Response__c question_response = new Question_Response__c(
+                Requirement_Response__c = request_rr.Id,
+                ValueEmail__c = 'testrecommender@test.com',
+                Question__c = request_question.Id,
+                Application__c = app.Id,
+                IsPopulated__c = true
+        );
+        insert question_response;
+
+        Map<Id, Requirement_Response__c> rr_map = new Map<Id, Requirement_Response__c>();
+        rr_map.put(request_rr.Id, request_rr);
+
+        Map<Id, Id> requirement_item_ids_of_external_email_rrs = new Map<Id, Id>();
+        requirement_item_ids_of_external_email_rrs.put(request_recommendation_ri.Id, request_rr.Id);
+
+        Test.startTest();
+        ApplicationRequirement.handleRecommendations(rr_map, requirement_item_ids_of_external_email_rrs);
+        Test.stopTest();
+
+        List<Recommendation__c> recommendation = [SELECT Id FROM Recommendation__c LIMIT 1];
+        System.assertEquals(1, recommendation.size());
     }
 
     // @IsTest

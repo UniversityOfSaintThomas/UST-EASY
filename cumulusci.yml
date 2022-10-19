@@ -1,8 +1,9 @@
 minimum_cumulusci_version: '3.32.1'
 project:
-  name: EASY-Open-Source-Solution
+  name: UST-EASY
   package:
-    name: EASY-Open-Source-Solution
+    name: UST-EASY-Package
+    namespace: null
     api_version: '52.0'
   dependencies:
     - github: 'https://github.com/SalesforceFoundation/EDA'
@@ -17,8 +18,8 @@ tasks:
 
   robot_testdoc:
     options:
-      path: robot/EASY-Open-Source-Solution/tests
-      output: robot/EASY-Open-Source-Solution/doc/EASY-Open-Source-Solution_tests.html
+      path: robot/UST-EASY/tests
+      output: robot/UST-EASY/doc/EASY-Open-Source-Solution_tests.html
 
   run_tests:
     options:
@@ -31,7 +32,7 @@ tasks:
       name: EASY Applicant Portal
       description: EASY application portal
       template: Build Your Own
-      url_path_prefix: EASYApp
+      url_path_prefix: Admissions
       retries: 10
 
   permission_guest_user:
@@ -85,6 +86,13 @@ tasks:
       sql_path: datasets/fdfdata/data.sql
       inject_namespaces: False
 
+  load_scholarship_test_data:
+    description: 'Load test data associated with EASY scholarships'
+    class_path: cumulusci.tasks.bulkdata.load.LoadData
+    options:
+      mapping: datasets/scholarships/scholarships-mapping.yml
+      sql_path: datasets/scholarships/scholarships-data.sql
+      inject_namespaces: False
 
   load_prod_application_data:
     description: 'Load data needed to start EASY applications'
@@ -166,7 +174,13 @@ tasks:
     description: Makes fake account data to mimic schools with Educaiton as industry
     class_path: cumulusci.tasks.bulkdata.snowfakery.Snowfakery
     options:
-      recipe: datasets/dev22/school_snowfakery_recipe.yml
+      recipe: datasets/snowfakery/fake_schools.yml
+
+  create_fake_contacts:
+    description: Makes fake account data to mimic schools with Educaiton as industry
+    class_path: cumulusci.tasks.bulkdata.snowfakery.Snowfakery
+    options:
+      recipe: datasets/snowfakery/fake_contacts.yml
 
   update_admin_profile:
     options:
@@ -281,6 +295,16 @@ flows:
         task: set_holding_ids
       19:
         task: set_user_user_role
+      20:
+        task: load_scholarship_test_data
+
+  release_unlocked_beta:
+    steps:
+      1:
+        options:
+          org_dependent: True
+          package_type: Unlocked
+          version_type: patch
 
 orgs:
   scratch:

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UG_Scholarship_App_Review_Batch__c</fullName>
+    <description>##Conga created btn:00b0a000001RJ5X
+##Conga updated btn:00b0a000001RJ5X</description>
+    <externalId>false</externalId>
+    <formula>&quot;&amp;solmgr=1&quot; +
+&quot;&amp;id=&quot; + Id +
+&quot;&amp;reportid=[SCHLRSHP]00O0a000004XAgP&quot; +
+&quot;&amp;selectattachments=1&quot; +
+&quot;&amp;qvar0id=a210a00000VgcG9&quot; +
+&quot;&amp;templateid=a290a0000032s5B,{QVAR0}&quot; +
+&quot;&amp;ac0=1&quot; +
+&quot;&amp;ac1=Application Review Document Generated&quot; +
+&quot;&amp;sc0=1&quot; +
+&quot;&amp;sc1=SalesforceFile&quot; +
+&quot;&amp;defaultpdf=1&quot; +
+&quot;&amp;apdf=1&quot; +
+&quot;&amp;qmode=Download&quot;</formula>
+    <label>UG Scholarship App Review Batch</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

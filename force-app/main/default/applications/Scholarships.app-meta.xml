@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <defaultLandingTab>standard-home</defaultLandingTab>
+    <description>St. Thomas Scholarships</description>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Scholarships</label>
+    <tabs>Scholarship_Applicant__c</tabs>
+    <tabs>Scholarship__c</tabs>
+    <tabs>standard-report</tabs>
+</CustomApplication>

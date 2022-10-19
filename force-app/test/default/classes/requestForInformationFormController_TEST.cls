@@ -78,21 +78,27 @@ public class requestForInformationFormController_TEST {
         search_results.add(high_school2.Id);
         Test.setFixedSearchResults(search_results);
 
-        List<hed__Term__c> terms_to_insert = new List<hed__Term__c>();
         hed__Term__c term1 = new hed__Term__c(
                 Name = 'Spring 2024',
                 hed__Start_Date__c = System.today().addMonths(3),
                 hed__Account__c = college_account1.Id
         );
-        terms_to_insert.add(term1);
-        insert terms_to_insert;
+        insert term1;
+
+        Academic_Term__c academic_term = new Academic_Term__c(
+            Term__c = term1.Id,
+            Name = 'Spring 2024',
+            Term_Start_Date__c = System.today()
+        );
+        insert academic_term;
+
     }
 
     @isTest
     public static void testCreateLead() {
         String record_input_fields = '{"FirstName":"Testing","LastName":"CreateLead","Company":"Company 123"}';
         Test.startTest();
-        requestForInformationFormController.createLead(record_input_fields, 'Lead');
+        requestForInformationFormController.createLead(record_input_fields, 'Lead', 'RFI Controller 0001');
         Test.stopTest();
         List<Lead> new_lead = [SELECT Id FROM Lead WHERE LastName = 'CreateLead'];
         System.assertEquals(1, new_lead.size());
@@ -169,9 +175,7 @@ public class requestForInformationFormController_TEST {
         Test.startTest();
         List<Lead_Preset_Value__mdt> presets = requestForInformationFormController.getPresetValues('RFI Controller 0000');
         Test.stopTest();
-        //TODO: This is supposed to be zero
-        //System.assertEquals(0, presets.size());
-        System.assertEquals(1, presets.size());
+        System.assertEquals(0, presets.size());
     }
 
     @isTest
@@ -181,5 +185,44 @@ public class requestForInformationFormController_TEST {
         Test.stopTest();
         String school_of_law_id = Id.valueOf([SELECT Id FROM Account WHERE Name = 'School of Law'].Id);
         System.assertEquals(school_of_law_id, school_id);
+    }
+
+    @IsTest
+    public static void testGetRecruitmentProgram() {
+        Id academic_program_RT_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Academic_Program').getRecordTypeId();
+        Program__c new_program1 = new Program__c(
+            RecordTypeId = academic_program_RT_id, 
+            Name = 'Undergraduate Transfer',
+            Active__c = true,
+            Banner_Program_Code__c = 'AS_UN_BA'
+        );
+        Program__c new_program2 = new Program__c(
+            RecordTypeId = academic_program_RT_id, 
+            Name = 'Undergraduate Transfer (INTL)',
+            Active__c = true,
+            Banner_Program_Code__c = 'AS_UN_BA'
+        );
+        Program__c new_program3 = new Program__c(
+            RecordTypeId = academic_program_RT_id, 
+            Name = 'Undergraduate First-Year',
+            Active__c = true,
+            Banner_Program_Code__c = 'AS_UN_BA'
+        );
+        insert new List<Program__c>{new_program1, new_program2, new_program3};
+
+        Program__c program1 = [SELECT Id FROM Program__c WHERE Name = 'Undergraduate Transfer' LIMIT 1];
+        Program__c program2 = [SELECT Id FROM Program__c WHERE Name = 'Undergraduate Transfer (INTL)' LIMIT 1];
+        Program__c program3 = [SELECT Id FROM Program__c WHERE Name = 'Undergraduate First-Year' LIMIT 1];
+
+
+        Test.startTest();
+        Id program_id1 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'Transfer');
+        Id program_id2 = requestForInformationFormController.getRecruitmentProgram('U', 'International', 'Transfer');
+        Id program_id3 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'First-Year');
+        Test.stopTest();
+
+        System.assertEquals(program1.Id, program_id1);
+        System.assertEquals(program2.Id, program_id2);
+        System.assertEquals(program3.Id, program_id3);
     }
 }

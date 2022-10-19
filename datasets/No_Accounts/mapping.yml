@@ -94,6 +94,7 @@ Insert Account:
   - Banner_Key__c
   - CEEB_Code__c
   - CEEB_Integration_Code__c
+  - EASY_Validation_Record__c
   - Inactive_School__c
   - Name
   - RecordTypeId
@@ -102,6 +103,7 @@ Insert Account:
   - hed__Billing_County__c
   - hed__School_Code__c
   - hed__Shipping_County__c
+  soql_filter: "EASY_Validation_Record__c = TRUE"
   lookups:
     ParentId:
       table: Account

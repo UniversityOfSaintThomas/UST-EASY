@@ -5,6 +5,7 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>UST Admissions - App Configuration</label>
     <logo>EASY_Shared_Documents/UST_Admin_Logo.jpg</logo>
     <tabs>standard-report</tabs>

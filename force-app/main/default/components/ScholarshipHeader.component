@@ -1,0 +1,54 @@
+<apex:component id="headerComponent">
+    <header>
+        <div id="ustTopBarWrap" class="ust-row">
+            <div class="ust-column" id="iconSearchMenu">
+                <a class="st-thomas-logo" href="http://www.stthomas.edu/">
+                    University of St. Thomas &ndash; Minnesota &ndash;
+                    A private, Catholic liberal arts university
+                </a>
+            </div>
+        </div>
+        <script>
+        $(document).ready(function () {
+            ust.init();
+        });
+        </script>
+    </header>
+    <header>
+        <div id="mainHeaderWrap">
+            <div class="purple-bar pb-one-level ">
+                <div class="white-bar-wrap row">
+                    <div class="white-bar">
+                        <h1>
+                            <a href="/enrollevent/admin/events"><strong>Scholarships</strong></a>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <div class="site-navigation-wrap">
+                    <ul class="site-navigation row" id="topNavBar">
+                    <li><h3>
+                        <a href="javascript:;"> Site Navigation</a>
+                        </h3>
+                        <ul class="castor-first-level-links">
+                            <li><apex:outputLink value="{!$Page.ScholarshipHome}">Scholarship List</apex:outputLink></li>
+                            <li><apex:outputLink value="{!$Page.ApplicationPortal}">Your Admissions Application Portal</apex:outputLink></li>
+                            <!--<li><apex:outputLink value="{!$Page.MyProfile}">My Profile</apex:outputLink></li>-->
+                            <!--<li><apex:outputLink value="{!$Page.MyApplication}">My Applications</apex:outputLink></li>-->
+                            <li><apex:outputLink value="{!$Site.Prefix}/ApplicationLogin" rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">{!$Label.site.login}</apex:outputLink></li>
+                        </ul></li>
+                    </ul>
+                </div>
+                <script>
+                $("#topNavBar").navBar();
+                </script>
+                <div class="breadcrumbs clearfix">
+                    <div class="breadcrumbs-inner row clearfix">
+                        <div class="column"></div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+</apex:component>

@@ -107,7 +107,6 @@ public class ApplicationRegistration {
             }
 
             // Insert interaction to create/update Contact
-            System.debug('$$$ interaction: ' + interaction);
             insert interaction;
             interaction = [SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
             Contact con = [SELECT Id, FirstName, MiddleName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
@@ -182,9 +181,6 @@ public class ApplicationRegistration {
     }
 
     public void populateInteraction() {
-        System.debug('*** appCreate: ' + appCreate);
-        System.debug('*** loginUser: ' + loginUser);
-        System.debug('*** appInfo: ' + appInfo);
         Id application_opp_RT_ID = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
         interaction.Id = null;
         interaction.Contact__c = null;

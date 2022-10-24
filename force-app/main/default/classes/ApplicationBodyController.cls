@@ -56,6 +56,7 @@ public with sharing class ApplicationBodyController {
                             Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c
                     FROM Application__c
                     WHERE Contact__c = :appInfoParam.contactId
+                    AND Application_Status__c != 'Wrong Application'
             ]) {
                 appInfoIds.add(app.Application_Control__r.Id);
                 String atURL = app.Application_Control__r.URL_Parameter__c;
@@ -107,7 +108,8 @@ public with sharing class ApplicationBodyController {
                     SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
                             Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
                             Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
-                            Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c
+                            Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
+                            Only_One_Widget_Key__c
                     FROM EASY_Widget__c
                     WHERE Application_Control__c IN :appInfoIds
                     AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
@@ -160,6 +162,14 @@ public with sharing class ApplicationBodyController {
                         skipWidget = true;
                     } else {
                         onlyOneWidgetPerPage.put(widget.Widget_Type__c, onlyOneWidgetPerPage.get(widget.Widget_Type__c) + 1);
+                    }
+                }
+
+                if (String.isNotBlank(widget.Only_One_Widget_Key__c) & !skipWidget) {
+                    if (onlyOneWidgetPerPage.containsKey(widget.Only_One_Widget_Key__c)) {
+                        skipWidget = true;
+                    } else {
+                        onlyOneWidgetPerPage.put(widget.Only_One_Widget_Key__c, 1);
                     }
                 }
 

@@ -50,7 +50,7 @@ public class ApplicationPortal {
                 List<Id> appControlIdsList = new List<Id>(appControlsByAppIds.keySet());
                 String appFields = ApplicationHelper.getAllItemApplicationFieldsByAppControlId(appControlIdsList);
 
-                String query = 'SELECT ' + appFields + ' FROM Application__c WHERE Contact__c = \'' + contactId + '\''; //+ '\' AND Application_Control__r.Id IN :appControlIdsList';
+                String query = 'SELECT ' + appFields + ' FROM Application__c WHERE Contact__c = \'' + contactId + '\' AND Application_Status__c != \'Wrong Application\'' ; //+ '\' AND Application_Control__r.Id IN :appControlIdsList';
 
                 applicationsByIds = new Map<Id, Application__c>((List<Application__c>) Database.query(query));
                 applicationMapSize = applicationsByIds.size();

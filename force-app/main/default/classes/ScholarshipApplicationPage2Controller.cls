@@ -161,7 +161,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
         String RecLink = '';
         String RecMessage = '';
         String RecSubject = 'University of St. Thomas ' + this.scholarship.Name;
-        String styledP = '<p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: rgb(85, 85, 85);font-family: Palatino Linotype, Georgia, serif;font-size: 16px;line-height: 150%;text-align: left;">';
+        String styles = ' style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: rgb(85, 85, 85);font-family: Palatino Linotype, Georgia, serif;font-size: 16px;line-height: 150%;text-align: left;"';
+        String styledP = '<p ' + styles + '>';
         for (Integer xx = 1; xx < 3; xx++) {
             RecEmail = '';
             RecName = '';
@@ -195,9 +196,10 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
             if (this.scholarship.Description__c != null) {
                 String descr = this.scholarship.Description__c;
-                System.debug(descr);
+                descr = descr.replaceAll('<p>', styledP);
+                descr = descr.replaceAll('<ul>', '<ul ' + styles + '>');
+                descr = descr.replaceAll('<li>', '<li ' + styles + '>');
                 recMessage += styledP + '<strong>Scholarship Description</strong><br/>' + descr + '</p>';
-
             }
 
             if (!String.isEmpty(RecEmail)) {

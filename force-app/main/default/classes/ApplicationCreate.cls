@@ -452,7 +452,9 @@ public class ApplicationCreate {
             Id rrId = rrLst[i].Id;
 
             for (Question_Response__c qr : qrReqList[i]) {
-                qr.Question__c = questionResponseToQuestionMap.get(qr).Id;
+                if (questionResponseToQuestionMap.get(qr) != null) {
+                    qr.Question__c = questionResponseToQuestionMap.get(qr).Id;
+                }
                 qr.Requirement_Response__c = rrId;
                 qr.Application__c = app.Id;
                 qr.PopulatedOn__c = Datetime.now();

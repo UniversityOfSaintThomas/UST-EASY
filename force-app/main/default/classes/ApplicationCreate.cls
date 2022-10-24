@@ -540,17 +540,18 @@ public class ApplicationCreate {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
             }
         }
+        
         interaction.Opportunity_Stage__c = 'Started App';
         interaction.Opportunity_Record_Type__c = application_opp_RT_ID;
         interaction.Interaction_Source__c = 'Application';
         interaction.Date_Started_App__c = System.Today();
         interaction.Lead_Source__c = 'Application';
-        
+
         return interaction;
     }
 
     public void updateInteraction() {
-        // get previously created interactionn (from ApplicationRegistration) and update with info on application and contact
+        // get previously created interaction (from ApplicationRegistration) and update with info on application and contact
         Interaction__c interaction;
         Id currentContactId;
         Id intendedStartTermId;

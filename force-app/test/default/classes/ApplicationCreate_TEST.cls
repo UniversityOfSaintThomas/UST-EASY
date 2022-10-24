@@ -88,10 +88,19 @@ private class ApplicationCreate_TEST {
                 Name = 'test|test|test3',
                 AccountId = acc.Id,
                 Contact__c = con.Id,
-                StageName = 'Suspect',
+                StageName = 'Started App',
                 CloseDate = System.today()
         );
         insert newOpp;
+
+        Opportunity newOpp2 = new Opportunity(
+                Name = 'test|test|test3',
+                AccountId = acc.Id,
+                Contact__c = con.Id,
+                StageName = 'Started App',
+                CloseDate = System.today()
+        );
+        insert newOpp2;
 
         Application__c app2 = new Application__c(
                 Contact__c = con.Id,

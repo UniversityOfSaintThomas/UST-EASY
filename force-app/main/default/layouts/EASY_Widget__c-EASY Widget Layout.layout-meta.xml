@@ -26,6 +26,10 @@
                 <behavior>Edit</behavior>
                 <field>Scripts__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Only_One_Widget_Key__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -186,10 +186,10 @@ public class ApplicationRegistration {
         interaction.Contact__c = null;
         for (ApplicationQuestionGroup questionGroup : appCreate.section.groups) {
             for (ApplicationQuestion question: questionGroup.questions) {
-                if (question.label == 'What term are you applying for?') {
-                    interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
+                if (question.label == 'What term are you applying for?' && question.resp != null) {
+                        interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
                 }
-                if (question.label == 'What program are you applying to?') {
+                if (question.label == 'What program are you applying to?' && question.resp != null) {
                     interaction.Academic_Program__c = Id.valueOf(String.valueOf(question.resp));
                 }
             }

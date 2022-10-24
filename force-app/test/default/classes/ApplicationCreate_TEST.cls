@@ -97,13 +97,15 @@ private class ApplicationCreate_TEST {
                 Contact__c = con.Id,
                 Intended_Program__c = p3.Id,
                 Intended_Term_of_Entry__c = at.Id,
-                Application_Status__c = 'Started App'
+                Application_Status__c = 'Started App',
+                Application_Control__c = appControl.Id
         );
         Application__c app3 = new Application__c(
                 Contact__c = con.Id,
                 Intended_Program__c = p3.Id,
                 Intended_Term_of_Entry__c = at.Id,
-                Application_Status__c = 'Started App'
+                Application_Status__c = 'Started App',
+                Application_Control__c = appControl.Id
         );
         insert new List<Application__c>{
                 app2, app3

@@ -65,6 +65,7 @@ public class INT_InteractionProcessor {
                 List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('CampaignMember');
                 List<String> additionalFields = new List<String>{', Campaign.Campaign_Key__c', ', Lead_Contact_ID__c', ', CampaignId'};
                 List<CampaignMember> campaignMembers = (List<CampaignMember>)queryForSObjectMappedFields(interactionMappings, 'CampaignMember', contactIds, additionalFields, 'WHERE ContactId IN :SObjectIds');
+                System.debug('&&& campaignMembers: ' + campaignMembers);
                 // Loop through current Campaign Members and build campaignMemberMap
                 for (CampaignMember cm : campaignMembers) {
                     if (!String.isEmpty(cm.Campaign.Campaign_Key__c)) {
@@ -148,6 +149,7 @@ public class INT_InteractionProcessor {
         List<Lead> leadsToUpdate = new List<Lead>();
         List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Lead');
         List<Lead> leadsMappedFields = (List<Lead>)queryForSObjectMappedFields(interactionMappings, 'Lead', leadIdToInteractionMap.keySet(), new List<String>(), 'WHERE Id IN :SObjectIds');
+        System.debug('&&& leadsMappedFields: ' + leadsMappedFields);
         for (Lead leadToUpdate : leadsMappedFields) {
             intMappingService.applyDataToSObject(leadIdToInteractionMap.get(leadToUpdate.Id), leadToUpdate);
             leadsToUpdate.add(leadToUpdate);
@@ -186,15 +188,18 @@ public class INT_InteractionProcessor {
 
         // Run duplicate pre-processing
         List<Interaction__c> interactionsToProcess = duplicatePreProcessing(newInteractions);
+        System.debug('&&& interactionsToProcess: ' + interactionsToProcess);
 
         // Set up Interaction Map for reference during processing.
         interactionMap = new Map<Id, Interaction__c>(interactionsToProcess);
 
         // Create Leads from new Interactions records.
         List<Database.LeadConvert> newLeads = insertLeadsFromInteractions(interactionsToProcess);
+        System.debug('&&& newLeads: ' + newLeads);
 
         // Attempt initial conversion of leads.
         List<Database.LeadConvert> possibleLeadsToReconvert = convertLeads(newLeads);
+        System.debug('&&& possibleLeadsToReconvert: ' + possibleLeadsToReconvert);
 
         // Reconvert Leads with matched Contacts if duplicate errors.
         if (possibleLeadsToReconvert.size() > 0) {
@@ -210,6 +215,7 @@ public class INT_InteractionProcessor {
         }
 
         // Upsert associated Opportunities using Opportunity_Key__c as the lookup Id.
+        System.debug('&&& opportunitiesToUpsert: ' + opportunitiesToUpsert);
         if (opportunitiesToUpsert.size() > 0) {
             logPossibleErrors(Database.upsert(opportunitiesToUpsert, false));
         }
@@ -222,6 +228,7 @@ public class INT_InteractionProcessor {
         }
         List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Contact');
         Map<Id, Contact> contactMappedFields = new Map<Id, Contact>((List<Contact>)queryForSObjectMappedFields(interactionMappings, 'Contact', contactIdsToQuery, new List<String>(), 'WHERE Id IN :SObjectIds'));
+        System.debug('&&& contactMappedFields: ' + contactMappedFields);
 
         List<OpportunityContactRole> oppContactRolestoInsert = new List<OpportunityContactRole>();
         for (Opportunity opp : opportunitiesToUpsert) {
@@ -278,6 +285,7 @@ public class INT_InteractionProcessor {
         logPossibleErrors(Database.update(interactionsToProcess, false));
 
         // Cleanup converted Leads.
+        System.debug('&&& leadsToDelete: ' + leadsToDelete);
         if (leadsToDelete.size() > 0) {
             Database.delete(leadsToDelete, false);
         }
@@ -520,6 +528,7 @@ public class INT_InteractionProcessor {
         Map<Id, String> leadIdToTermNameMap = termsAndPrograms[0];
         Map<Id, String> leadIdToProgramNameMap = termsAndPrograms[1];
         Map<String, List<Opportunity>> contactOppMap = getContactsOpportunities(leadConvertResults);
+        System.debug('&&& leadConvertResults: ' + leadConvertResults);
 
         for (Database.LeadConvertResult lcr : leadConvertResults) {
             Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
@@ -535,6 +544,8 @@ public class INT_InteractionProcessor {
                 }
 
                 // Create new Opportunity for upsert if Opportunity Key is populated.
+                System.debug('&&& interaction: ' + interaction);
+                System.debug(' && !String.isEmpty(interaction.Opportunity_Key__c): ' + !String.isEmpty(interaction.Opportunity_Key__c));
                 if (!String.isEmpty(interaction.Opportunity_Key__c)) {
                     String lastName = interaction.Last_Name__c;
                     String termName = '';
@@ -573,6 +584,7 @@ public class INT_InteractionProcessor {
                     if (matchingOpps.isEmpty()) {
                         Opportunity newOppty = new Opportunity();
                         intMappingService.applyDataToSObject(interaction, newOppty);
+                        System.debug('&&& newOppty: ' + newOppty);
                         newOppty.CloseDate = System.today();
                         newOppty.StageName = interaction.Opportunity_Stage__c;
                         newOppty.Opportunity_Key__c = lcr.getContactId() + interaction.Opportunity_Key__c;
@@ -681,6 +693,7 @@ public class INT_InteractionProcessor {
         List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Opportunity');
         List<String> additionalFields = new List<String>{', Name', ', Contact__c', ', Opportunity_Key__c'};
         List<Opportunity> existingOpps = (List<Opportunity>)queryForSObjectMappedFields(interactionMappings, 'Opportunity', contactIds, additionalFields, 'WHERE Contact__c IN :SObjectIds');
+        System.debug('&&& existingOpps: ' + existingOpps);
 
         Map<String, List<Opportunity>> contactOppMap = new Map<String, List<Opportunity>>();
         for (Opportunity opp : existingOpps) {

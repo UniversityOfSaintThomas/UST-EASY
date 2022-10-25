@@ -600,7 +600,7 @@ public class ApplicationCreate {
             interaction.Mailing_Street__c = currentApplication.Contact__r.MailingStreet;
             interaction.Mailing_State__c = currentApplication.Contact__r.MailingState;
             interaction.Home_Phone__c = currentApplication.Contact__r.HomePhone;
-
+            interaction.Interaction_Status__c = 'New';
             update interaction;
         }
     }

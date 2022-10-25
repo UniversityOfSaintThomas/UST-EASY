@@ -19,7 +19,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professional %28MDIV%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1840,6 +1848,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>LW_GR_JD%7CLAWS</fullName>
             <default>false</default>
         </values>
@@ -2017,6 +2033,14 @@
             <fullName>Apply Without Standardized Test</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Generic_Filter_4__c</picklist>
@@ -2167,11 +2191,35 @@
     <picklistValues>
         <picklist>Related_List_Object__c</picklist>
         <values>
-            <fullName>Family%5F%5Fc</fullName>
+            <fullName>Admissions_Document%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Family_Member%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recommendation%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Work_History%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>hed%5F%5FAttribute%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>hed%5F%5FContact_Language%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>hed%5F%5FEducation_History%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>hed%5F%5FTest%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2288,6 +2336,10 @@
         </values>
         <values>
             <fullName>Graduate School of Professional Psychology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morrison Family College of Health</fullName>
             <default>false</default>
         </values>
         <values>

@@ -359,6 +359,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Change_Likelihood__c</picklist>
+        <values>
+            <fullName>Green</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Purple</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Red</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yellow</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Citizenship__c</picklist>
         <values>
             <fullName>International</fullName>
@@ -366,6 +385,25 @@
         </values>
         <values>
             <fullName>U%2ES%2E Citizen</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Confidence_Level__c</picklist>
+        <values>
+            <fullName>Certain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moderate</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -470,6 +508,109 @@
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Likelihood_Stoplight__c</picklist>
+        <values>
+            <fullName>Green</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Purple</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Red</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yellow</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lost_Reason__c</picklist>
+        <values>
+            <fullName>Budget</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Interest</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Timing</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Opportunity_Citizenship__c</picklist>
+        <values>
+            <fullName>Asylee%2FRefugee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>U%2ES%2E Citizen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>U%2ES%2E Dual Citizen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>U%2ES%2E Permanent Resident</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Proposal_Type__c</picklist>
+        <values>
+            <fullName>Capital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Planned Gift</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Restricted</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Prospect_Rating__c</picklist>
+        <values>
+            <fullName>Level 1%2FTop Tier</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 2%2FPipeline 2 Yrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 3%2FPipeline 3-5 Yrs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 4%2FDiscovery-Qualify</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 5%2FVolunteer%2FNetworker</fullName>
             <default>false</default>
         </values>
     </picklistValues>

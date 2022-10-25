@@ -378,6 +378,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>EASY_Widget__c.Only_One_Widget_Key__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>EASY_Widget__c.Scripts__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1749,18 +1754,6 @@
     </objectPermissions>
     <pageAccesses>
         <apexPage>ApplicationChangePassword</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>ApplicationForgotPassword</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>ApplicationForgotPasswordConfirm</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>ApplicationLogin</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

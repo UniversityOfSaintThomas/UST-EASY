@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Permissions for UST Admissions Counselors who will update applications excluding statuses</description>
+    <hasActivationRequired>false</hasActivationRequired>
     <label>Admissions - Counselor Edit App</label>
     <permissionSets>Admissions_Reports_and_Dashboards</permissionSets>
     <permissionSets>Application_Updates</permissionSets>

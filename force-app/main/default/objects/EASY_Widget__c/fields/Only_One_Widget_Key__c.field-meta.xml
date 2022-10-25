@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_One_Widget_Key__c</fullName>
+    <description>If entered, the text in this field will be used to find matching text in this field among widgets. If a widget with the same key is found it will skip showing that widget allowing only one of this key type to appear on a page.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If entered, the text in this field will be used to find matching text in this field among widgets. If a widget with the same key is found it will skip showing that widget allowing only one of this key type to appear on a page.</inlineHelpText>
+    <label>Only One Widget Key</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

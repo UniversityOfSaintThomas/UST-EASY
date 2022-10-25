@@ -216,6 +216,6 @@ public class ApplicationQuestion_TEST {
         System.assertEquals(app.Id, appQuestion.controllingQuestion.application.Id);
         System.assertEquals(new Set<String>{'test value'}, appQuestion.showValues);
         System.assertEquals(1, appQuestion.multiControllingQuestions.size());
-        System.assertEquals(false, enabled);
+        System.assertEquals(true, enabled);
     }
 }

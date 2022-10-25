@@ -145,9 +145,13 @@ public class INT_InteractionProcessor {
         // Set up Interaction Map for reference during processing.
         interactionMap = new Map<Id, Interaction__c>(interactionsToProcess);
 
+        // Insert Leads from the new Interaction records.
+        List<Database.LeadConvert> newLeads = insertLeadsFromInteractions(interactionsToProcess);
+
         // Apply Interaction Mappings to all Leads
         List<Lead> leadsToUpdate = new List<Lead>();
         List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Lead');
+        System.debug('&&& leadIdToInteractionMap: ' + leadIdToInteractionMap);
         List<Lead> leadsMappedFields = (List<Lead>)queryForSObjectMappedFields(interactionMappings, 'Lead', leadIdToInteractionMap.keySet(), new List<String>(), 'WHERE Id IN :SObjectIds');
         System.debug('&&& leadsMappedFields: ' + leadsMappedFields);
         for (Lead leadToUpdate : leadsMappedFields) {

@@ -52,7 +52,7 @@
                         <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
                         <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="isRequired"/>
                         <apex:outputPanel rendered="{!If(question.showQuestion, true, false)}" styleClass="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                            <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
+                            <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
 
                                 <c:ApplicationFormSectionInput responseObject="{!question.response}"
                                                                questionWrapper="{!question}"
@@ -278,7 +278,7 @@
                     <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
                     <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="isRequired"/>
                     <apex:outputPanel rendered="{!question.showQuestion}" styleClass="slds-p-vertical_xxx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                        <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" html-tabindex="{!itemNumber}">
+                        <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
 
                             <c:ApplicationFormSectionInput responseObject="{!group.newReferenceObject}"
                                                            questionWrapper="{!question}"

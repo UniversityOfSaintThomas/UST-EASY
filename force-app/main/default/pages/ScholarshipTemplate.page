@@ -8,9 +8,11 @@
     <apex:includeScript value="https://static.stthomas.edu/ust-style/dist2/js/ust-full.min.js"/>
     <apex:includeScript value="https://static.stthomas.edu/ust-style/dist-castor3/js/castor-full.js"/>
     <apex:includeScript value="{!$Resource.scholarshipScripts}"/>
-    
-    <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <html class="no-js" lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    </head>
     <nav class="tab-navigation" id="access" role="navigation">
         <a href="#content" tabindex="1">Skip to primary content</a>
     </nav>

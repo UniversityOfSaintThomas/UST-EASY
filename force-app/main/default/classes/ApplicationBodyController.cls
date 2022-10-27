@@ -21,6 +21,7 @@ public with sharing class ApplicationBodyController {
     }
 
     public allWidgets getWidgets() {
+
         List<String> pagesWithMultipleAppInfo = new List<String>{
                 'applicationportal'
         };
@@ -56,6 +57,7 @@ public with sharing class ApplicationBodyController {
                             Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c
                     FROM Application__c
                     WHERE Contact__c = :appInfoParam.contactId
+                    AND Application_Status__c != 'Wrong Application'
             ]) {
                 appInfoIds.add(app.Application_Control__r.Id);
                 String atURL = app.Application_Control__r.URL_Parameter__c;
@@ -242,3 +244,4 @@ public with sharing class ApplicationBodyController {
     }
 
 }
+

@@ -56,6 +56,8 @@ public class ApplicationUtilities {
         appInfo = flattenAppControl(appControl, appInfo);
         appInfo.contactId = ApplicationUtilities.getAppContactId();
         appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
+        appInfo.appSubStatus = 'none';
+        appInfo.appStatus = 'none';
         appInfo.allowSubmit = false;
         if (String.isBlank(appControl.Template__c)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
@@ -237,19 +239,24 @@ public class ApplicationUtilities {
 
 
     public static String createEncryptedCookie(String stringToEncrypt) {
-        String encodedCipherText = '';
+        String encodedCipherText = createEncryptedString(stringToEncrypt);
+        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'strict');
+        ApexPages.currentPage().setCookies(new Cookie[]{
+                EASYCookie
+        });
+        return encodedCipherText;
+    }
+
+    public static String createEncryptedString(String stringToEncrypt) {
+        String encryptedString = '';
         String key = getCookieKey();
         if (String.isNotBlank(String.valueOf(key))) {
             Blob data = Blob.valueOf(stringToEncrypt);
             Blob encrypted = Crypto.encryptWithManagedIV('AES256', Blob.valueOf(key), data);
-            encodedCipherText = EncodingUtil.base64Encode(encrypted);
-            encodedCipherText = EncodingUtil.urlEncode(encodedCipherText, 'UTF-8');
-            Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'strict');
-            ApexPages.currentPage().setCookies(new Cookie[]{
-                    EASYCookie
-            });
+            encryptedString = EncodingUtil.base64Encode(encrypted);
+            encryptedString = EncodingUtil.urlEncode(encryptedString, 'UTF-8');
         }
-        return encodedCipherText;
+        return encryptedString;
     }
 
     public static String getDecryptCookie() {

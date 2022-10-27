@@ -182,7 +182,7 @@
     </apex:outputPanel>
 
     <!-- Payment Question -->
-    <c:ApplicationPayment rendered="{!inputType == 'Payment'}" appInfo="{!appInfo}" questionWrapper="{!questionWrapper}"/>
+    <c:ApplicationPayment rendered="{!inputType == 'Payment'}" appInfo="{!appInfo}" questionWrapper="{!questionWrapper}" responseObject="{!responseObject}" fieldAPI="{!fieldAPI}"/>
 
     <!-- Reference Question as Picklist -->
     <apex:outputPanel layout="none" rendered="{!(questionWrapper['question']['Display_As_Picklist__c'] || LOWER($CurrentPage.Name) == 'applicationregistration' || LOWER($CurrentPage.Name) == 'applicationcreate')  && inputType == 'Reference'}">

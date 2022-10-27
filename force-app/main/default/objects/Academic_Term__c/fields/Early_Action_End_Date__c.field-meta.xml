@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Early_Action_End_Date__c</fullName>
+    <deprecated>false</deprecated>
     <description>After this date, decision status flips to Regular Decision; todaysDate &lt;Early_Action_End_Date;</description>
     <externalId>false</externalId>
     <label>Early Action End Date</label>

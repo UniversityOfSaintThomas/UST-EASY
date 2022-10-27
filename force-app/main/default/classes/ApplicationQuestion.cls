@@ -70,7 +70,7 @@ public class ApplicationQuestion {
     public Account acc { get; set; }
     public Boolean placeholderQuestion { get; set; }
     public Object resp { get; set; }
-    private Requirement_Response__c reqResponse;
+    public Requirement_Response__c reqResponse;
     public ApplicationQuestionSection section { private get; set; }
 
     /*******************************************************************************
@@ -822,9 +822,9 @@ public class ApplicationQuestion {
             return obj.get(question.Related_Object_Field__c);
         } else if (response == null) {
             return null;
-        } else if (String.isNotBlank(response.ValueText__c)) {
+        } else if (String.isNotBlank(response.ValueText__c) && !fieldType.equalsIgnoreCase('payment')) {
             return response.ValueText__c;
-        } else if (fieldType != null && fieldType.equals('Checkbox')) {
+        } else if (fieldType != null && (fieldType.equals('Checkbox')||fieldType.equalsIgnoreCase('payment'))) {
             return response.ValueCheckbox__c;
         } else if (String.isNotBlank(response.ValuePhone__c)) {
             return response.ValuePhone__c;

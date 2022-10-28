@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Admissions_Application__c</columns>
+    <columns>Requirement_Response__c</columns>
+    <columns>Name_On_Account__c</columns>
+    <columns>Method_of_Payment__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

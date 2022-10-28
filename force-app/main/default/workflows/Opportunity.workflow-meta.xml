@@ -270,23 +270,7 @@ IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academ
         </actions>
         <active>false</active>
         <description>Sets the Opportunity Key based on the Career, Recruitment Program or Academic Program, and Term, according to the formula used in the Opportunity Key field on the Interactions object.</description>
-        <formula>/*The below formula allows for a centralized and decentralized recruitment model.*/
- 
-/*If the Academic Career from the Academic Program = Undergraduate or the Academic Program is blank and the Recruitment Program Career = Undergraduate, this formula uses the centralized model (one Opportunity per Term). If the same is true for the Graduate Career, this formula uses the decentralized model (one Opportunity per Opportunity Program and Term). Otherwise, the formula is blank, which means the Opportunity is missing important information.*/
-
-Opportunity_Key__c &lt;&gt; CASESAFEID(Contact__r.Id)+ IF(Academic_Program__c + Recruitment_Program__c = &quot;&quot;,&quot;&quot;,   
-
-/*If the Academic Program Career = Undergraduate, or Academic Program is blank and the Recruitment Program Career = Undergraduate, this formula uses the centralized model (one Opportunity per Term)*/  
-
-IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Undergraduate&quot;), AND(ISBLANK(Academic_Program__c), ISPICKVAL(Recruitment_Program__r.Career__c, &quot;Undergraduate&quot;))), &quot;.Undergraduate&quot; + Term__r.Id,   
-
-/*Otherwise, this formula uses the decentralized model (one Opportunity per Academic Program or Recruitment Program and Term)*/  
-
-&quot;.Graduate.&quot; + Term__r.Id +   
-
-/*If there is no Academic Program, the decentralized model adds the Recruitment Program Id. Otherwise, the model uses the Recruitment Program ID from the Academic Program, or if there is none, the Academic Program ID is used as a last resort. Most Academic Programs should have a Recruitment Program ID to ensure a smooth process from inquiry to application.*/  
-
-IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academic_Program__r.Recruitment_Program__c), Academic_Program__r.Id, Academic_Program__r.Recruitment_Program__r.Id))))</formula>
+        <formula>/*The below formula allows for a centralized and decentralized recruitment model.*/   /*If the Academic Career from the Academic Program = Undergraduate or the Academic Program is blank and the Recruitment Program Career = Undergraduate, this formula uses the centralized model (one Opportunity per Term). If the same is true for the Graduate Career, this formula uses the decentralized model (one Opportunity per Opportunity Program and Term). Otherwise, the formula is blank, which means the Opportunity is missing important information.*/  Opportunity_Key__c &lt;&gt; CASESAFEID(Contact__r.Id)+ IF(Academic_Program__c + Recruitment_Program__c = &quot;&quot;,&quot;&quot;,     /*If the Academic Program Career = Undergraduate, or Academic Program is blank and the Recruitment Program Career = Undergraduate, this formula uses the centralized model (one Opportunity per Term)*/    IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Undergraduate&quot;), AND(ISBLANK(Academic_Program__c), ISPICKVAL(Recruitment_Program__r.Career__c, &quot;Undergraduate&quot;))), &quot;.Undergraduate&quot; + Term__r.Id,     /*Otherwise, this formula uses the decentralized model (one Opportunity per Academic Program or Recruitment Program and Term)*/    &quot;.Graduate.&quot; + Term__r.Id +     /*If there is no Academic Program, the decentralized model adds the Recruitment Program Id. Otherwise, the model uses the Recruitment Program ID from the Academic Program, or if there is none, the Academic Program ID is used as a last resort. Most Academic Programs should have a Recruitment Program ID to ensure a smooth process from inquiry to application.*/    IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academic_Program__r.Recruitment_Program__c), Academic_Program__r.Id, Academic_Program__r.Recruitment_Program__r.Id))))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

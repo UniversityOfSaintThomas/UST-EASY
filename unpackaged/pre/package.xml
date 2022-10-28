@@ -10,9 +10,6 @@
     </types>
     <types>
         <members>OpportunityStage</members>
-        <name>StandardValueSet</name>
-    </types>
-    <types>
         <members>ContactRole</members>
         <name>StandardValueSet</name>
     </types>

@@ -4,6 +4,7 @@
     <description>St. Thomas Scholarships</description>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Scholarships</label>
     <tabs>Scholarship_Applicant__c</tabs>
     <tabs>Scholarship__c</tabs>

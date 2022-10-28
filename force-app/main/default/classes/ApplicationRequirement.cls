@@ -353,8 +353,8 @@ public class ApplicationRequirement {
     ******************************************************************************* */
     public PageReference submit() {
         PageReference pr = Page.ApplicationRequirement;
-
         Boolean hasError = false;
+
         for (ApplicationQuestionGroup g : section.groups) {
             if (g.relatedObject == true) {
                 if (g.creatingNewRelatedRecord == true) {
@@ -383,10 +383,12 @@ public class ApplicationRequirement {
                     addData = (Map<String, Object>) additionalData.get(g.item.Id);
                 }
 
+                //Uploaded data evaluated
                 if (addData != null && addData.containsKey('attData')) {
                     Map<String, Object> attData = (Map<String, Object>) addData.get('attData');
                     if (attData != null && attData.containsKey('fileName')) {
                         String fileName = (String) attData.get('fileName');
+                        //Check for file types
                         if (String.isNotBlank(fileName) && String.isNotBlank(g.item.File_Types__c)) {
                             String ext = fileName.substringAfterLast('.').toUpperCase();
                             Set<String> allowedTypes = new Set<String>(g.item.File_Types__c.toUpperCase().split(';'));
@@ -396,13 +398,16 @@ public class ApplicationRequirement {
                             }
                         }
                     }
-                }
+                } 
+                // else if (addData == null && g.att != null && String.isEmpty(g.att.Title) && g.item.Required__c.contains(app.Application_Status__c)) {
+                //     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Upload required.'));
+                //     hasError = true;
+                // }
             }
         }
 
         if (hasError) {
-            System.debug('Has Error: ');
-            return pr;
+            return null;
         }
 
         section.processValues(additionalData);

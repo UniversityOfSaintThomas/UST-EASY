@@ -150,6 +150,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
                         .catch(error => {
                             console.log(error);
                             this.show_spinner = false;
+                            this.disable_submit = false; // no related object requirement item
                         })
                     }
                 }

@@ -24,7 +24,7 @@ public class ApplicationBodyController_TEST {
         insert student;
 
         Opportunity opp = new Opportunity(
-                Contact__c = student.id,
+                Contact__c = student.Id,
                 Name = student.LastName + '||',
                 StageName = 'Started App',
                 CloseDate = Date.today().addDays(30)
@@ -189,8 +189,6 @@ public class ApplicationBodyController_TEST {
         );
         widgets.add(contentBottomWidget2);
 
-        //System.debug(JSON.serializePretty(widgets));
-
         insert widgets;
     }
 
@@ -228,6 +226,7 @@ public class ApplicationBodyController_TEST {
         System.assertEquals(1, allWidgets.bottomWidgets.size());
         System.assertEquals(1, allWidgets.leftWidgets.size());
         System.assertEquals(1, allWidgets.contentTopWidgets.size());
-        System.assertEquals(2, allWidgets.contentBottomWidgets.size());
+        //Bottom widget is one because application status is started and the second widget in this location is submitted
+        System.assertEquals(1, allWidgets.contentBottomWidgets.size());
     }
 }

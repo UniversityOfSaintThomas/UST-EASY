@@ -99,6 +99,18 @@
                         </div>
                     </apex:outputPanel>
 
+                    <apex:outputPanel rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" layout="none">
+                        <div class="slds-p-bottom_small slds-p-top_medium">
+                            <p>This application meets all the requirements to confirm your enrollment.</p>
+                        </div>
+                        <div class="slds-p-bottom_small">
+                            <apex:commandLink action="{!confirmEnrollment}" rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" value="Confirm Enrollment" styleClass="slds-button slds-button_success">
+                                <apex:param name="confirmedAppId" value="{!appInfoParam.appId}" assignTo="{!confirmedAppId}"/>
+                                <apex:param name="confirmedAppStatus" value="{!appInfoParam.confirmStatus}" assignTo="{!confirmedAppStatus}"/>
+                            </apex:commandLink>
+                        </div>
+                    </apex:outputPanel>
+
                     <!--<apex:outputPanel rendered="{!appInfo.appStatus != 'Started App'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
                             <p class="slds-text-color_success"><strong>Status: Submitted</strong></p>

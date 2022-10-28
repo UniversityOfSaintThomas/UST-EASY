@@ -12,6 +12,8 @@ public with sharing class ApplicationChecklistComponentController {
     public EASYApplicationInfo appInfoParam { get; set; }
     public Id submitAppId { get; set; }
     public String submitAppStatus { get; set; }
+    public Id confirmedAppid { get; set; }
+    public String confirmedAppStatus { get; set; }
 
     public ApplicationChecklistComponentController() {
 
@@ -59,6 +61,17 @@ public with sharing class ApplicationChecklistComponentController {
         System.debug(submitAppStatus);
         try {
             update new Application__c(Id = submitAppId, Application_Status__c = submitAppStatus);
+        } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            return null;
+        }
+        return pr;
+    }
+
+    public PageReference confirmEnrollment() {
+        PageReference pr = Page.ApplicationPortal;
+        try {
+            update new Application__c(Id = confirmedAppId, Application_Status__c = confirmedAppStatus);
         } catch (Exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
             return null;

@@ -9,6 +9,7 @@ public with sharing class checklistHelper {
     public static Boolean allowSubmit { get; set; }
     public static Boolean allowCancel { get; set; }
     public static Boolean allowWithdraw { get; set; }
+    public static Boolean allowConfirm { get; set; }
     public static List<Requirement_Item__c> riList { get; set; }
     public static Decimal progress { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
@@ -17,6 +18,7 @@ public with sharing class checklistHelper {
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
+        allowConfirm = false;
 
         allowCancel = String.isNotBlank(appInfo.allowCancelFrom) && new Set<String>(appInfo.allowCancelFrom.split(';')).contains(app.Application_Status__c);
         allowWithdraw = String.isNotBlank(appInfo.allowWithdrawFrom) && new Set<String>(appInfo.allowWithdrawFrom.split(';')).contains(app.Application_Status__c);
@@ -138,6 +140,27 @@ public with sharing class checklistHelper {
         allowSubmit = true;
 
         return allowSubmit;
+    }
+
+    public static Boolean allowConfirm (List<RequirementWrapper> requirements, EASYApplicationInfo appInfo) {
+
+        allowConfirm = false;
+
+        for (RequirementWrapper rw : requirements) {
+            if (!rw.reqStatus) {
+                return allowConfirm;
+            }
+        }
+
+        if (String.isNotBlank(appInfo.appControlId) && String.isNotBlank(appInfo.allowConfirmFrom)) {
+            if (!(new Set<String>(appInfo.allowConfirmFrom.split(';'))).contains(appInfo.appStatus)) {
+                return allowConfirm;
+            }
+        }
+        
+        allowConfirm = true;
+
+        return allowConfirm;
     }
 
     /*******************************************************************************

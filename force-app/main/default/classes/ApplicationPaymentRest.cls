@@ -110,6 +110,8 @@ global with sharing class ApplicationPaymentRest {
                         payment.TouchnetReceiptNumber__c = evaluateResponse('tpg_trans_id');
                         //UPAY_SITE_ID : 2
                         payment.Method_of_Payment__c = 'Credit Card';
+                        //EXT_TRANS_ID : Johnny Applicant | A-0122222 | Fall 2023
+                        payment.TouchNet_Ext_Trans_Id__c = evaluateResponse('EXT_TRANS_ID');
                         System.debug(JSON.serializePretty(payment));
 
                         if (crudToDo.savePayment(payment)) {

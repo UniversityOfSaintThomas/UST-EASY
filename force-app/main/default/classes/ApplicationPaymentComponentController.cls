@@ -40,7 +40,8 @@ public with sharing class ApplicationPaymentComponentController {
                                 Contact__r.MailingCountry,
                                 Contact__r.MailingState,
                                 Contact__r.MailingPostalCode,
-                                Application_Control__r.URL_Parameter__c
+                                Application_Control__r.URL_Parameter__c,
+                                Intended_Term_of_Entry__r.Term__r.Name
                         FROM Application__c
                         WHERE Id = :appInfoParam.appId
                 ];
@@ -76,7 +77,7 @@ public with sharing class ApplicationPaymentComponentController {
                         }
                         parameterMap.put('AMT', paymentAmount);
 
-                        String exTransId = app.Contact__r.FirstName + ' ' + app.Contact__r.LastName + ' | ' + app.Name;
+                        String exTransId = app.Contact__r.FirstName + ' ' + app.Contact__r.LastName + ' | ' + app.Name + ' | ' + app.Intended_Term_of_Entry__r.Term__r.Name;
 
                         if (String.isNotBlank(gatewayInfo[0].UPay_Site_Id__c)) {
                             parameterMap.put('UPAY_SITE_ID', gatewayInfo[0].UPay_Site_Id__c);

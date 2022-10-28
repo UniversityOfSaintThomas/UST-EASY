@@ -538,11 +538,17 @@ function activateCarousel(slideMoveTo) {
                         prev.style.display = "none"
                     }
 
+                    // For the transition animation to work, we need all these boxes to (briefly) have display: block, which will put inactive boxes in "slider" position with 0 opacity.
+                    for (let i = 0; i < items.length; i++) {
+                        items[i].style.display = "block";
+                    }
+
                     for (let i = 0; i < items.length; i++) {
                         items[i].classList.remove('prev');
                         items[i].classList.remove('next');
                         items[i].classList.remove('active');
                     }
+
                     if (items[newPrevious]) {
                         items[newPrevious].classList.add("prev");
                     }
@@ -552,6 +558,14 @@ function activateCarousel(slideMoveTo) {
                     if (items[newNext]) {
                         items[newNext].classList.add("next");
                     }
+
+                    // Okay, transition's done. Now reset to styles so what screenreaders see matches what other users see.
+                    window.setTimeout(function() {
+                        let items = document.getElementsByClassName("carousel__item");
+                        for (let i = 0; i < items.length; i++) {
+                            items[i].style.display = "";
+                        }
+                    }, 1000);
 
                 }
             }

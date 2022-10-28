@@ -58,7 +58,7 @@
                                 Next Questions
                             </a>
 
-                            <a role="button" href="javascript:void(0)" class="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">
+                            <a href="javascript:void(0)" class="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                                 </svg>

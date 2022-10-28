@@ -227,6 +227,7 @@ div.slds-progress {
     margin: auto;
     z-index: 100;
     transition: transform .5s, opacity .5s, z-index .5s;
+    display: none;
 }
 
 .carousel__item.initial,
@@ -234,6 +235,7 @@ div.slds-progress {
     opacity: 1;
     position: relative;
     z-index: 900;
+    display: block;
 }
 
 .carousel__item.prev,

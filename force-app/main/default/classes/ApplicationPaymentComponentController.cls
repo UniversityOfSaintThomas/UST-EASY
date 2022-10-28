@@ -65,7 +65,7 @@ public with sharing class ApplicationPaymentComponentController {
                                 paymentAmount = String.valueOf(app.Intended_Program__r.Application_Fee_Amount__c.format());
                             }
                             if (paymentAmount.equals('0.00')) {
-                                String protectedIds = ApplicationUtilities.createEncryptedString('{"appId":"' + app.Id + '","responseId":"' + question.reqResponse.Id + '","questionId":"' + question.question.Id + '"}');          configurationMessage = 'Program Application Fee is not set program: ' + app.Intended_Program__c;
+                                String protectedIds = ApplicationUtilities.createEncryptedString('{"appId":"' + app.Id + '","responseId":"' + question.reqResponse.Id + '","questionId":"' + question.question.Id + '"}'); configurationMessage = 'Program Application Fee is not set program: ' + app.Intended_Program__c;
                             }
                         } else if (paymentType.equalsIgnoreCase('Custom Amount')) {
                             if (question.question.Payment_Custom_Amount__c != null) {
@@ -78,6 +78,9 @@ public with sharing class ApplicationPaymentComponentController {
                         parameterMap.put('AMT', paymentAmount);
 
                         String exTransId = app.Contact__r.FirstName + ' ' + app.Contact__r.LastName + ' | ' + app.Name + ' | ' + app.Intended_Term_of_Entry__r.Term__r.Name;
+                        if (String.isNotBlank(question.question.Payment_Name__c)) {
+                            exTransId = exTransId + ' | ' + question.question.Payment_Name__c;
+                        }
 
                         if (String.isNotBlank(gatewayInfo[0].UPay_Site_Id__c)) {
                             parameterMap.put('UPAY_SITE_ID', gatewayInfo[0].UPay_Site_Id__c);

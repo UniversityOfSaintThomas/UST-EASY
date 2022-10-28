@@ -7,7 +7,7 @@
     <inlineHelpText>Secret key set in the payment settings of your TouchNet UPay site. This is used to help encrypt a key for more secure data posting. To be set first in &quot;Passed Amount Validation Key&quot; in your touchnet Payment settings and recorded identically here.</inlineHelpText>
     <label>Validation Key</label>
     <length>255</length>
-    <required>false</required>
+    <required>true</required>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

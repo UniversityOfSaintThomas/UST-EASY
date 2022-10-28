@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Hardcoded_Value__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>If this is a new reference field, this field can be populated with a hardcoded value that will be automatically applied to all new records (e.g. Record Type on Account)</inlineHelpText>
     <label>Hardcoded Value</label>

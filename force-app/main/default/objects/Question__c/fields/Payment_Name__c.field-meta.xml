@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Name__c</fullName>
+    <description>A short, one or two word description of this payment. This will be passed through to the Payment gateway along with the applicant name, application Name Id and term. It will help differentiate if there are two types of deposits (example: housing or confirmation).</description>
+    <externalId>false</externalId>
+    <inlineHelpText>A short, one or two word description of this payment. This will be passed through to the Payment gateway along with the applicant name, application Name Id and term. It will help differentiate if there are two types of deposits (example: housing or confirmation).</inlineHelpText>
+    <label>Payment Name</label>
+    <length>25</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

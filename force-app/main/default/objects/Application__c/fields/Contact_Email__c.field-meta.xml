@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Logo_Static_Resource__c</fullName>
-    <deprecated>false</deprecated>
+    <fullName>Contact_Email__c</fullName>
     <externalId>false</externalId>
-    <inlineHelpText>Name of the static resource that holds the logo  (e.g. &quot;FFFFFF&quot;)</inlineHelpText>
-    <label>Logo Static Resource</label>
-    <length>255</length>
+    <formula>Contact__r.Email</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Contact Email</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

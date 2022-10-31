@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Show_on_App_Finder__c</fullName>
     <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
     <description>If checked, this Application Control will appear on the App Finder.</description>
     <externalId>false</externalId>
     <inlineHelpText>If checked, this Application Control will appear on the App Finder.</inlineHelpText>

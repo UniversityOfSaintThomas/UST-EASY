@@ -11,16 +11,84 @@
         <label>Engineering</label>
     </customValue>
     <customValue>
-        <fullName>Adult</fullName>
+        <fullName>Art History</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Adult</label>
+        <label>Art History</label>
     </customValue>
     <customValue>
-        <fullName>Undergraduate</fullName>
+        <fullName>Catholic Studies</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Undergraduate</label>
+        <label>Catholic Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>English</fullName>
+        <default>false</default>
+        <label>English</label>
+    </customValue>
+    <customValue>
+        <fullName>Spanish</fullName>
+        <default>false</default>
+        <label>Spanish</label>
+    </customValue>
+    <customValue>
+        <fullName>Music Education</fullName>
+        <default>false</default>
+        <label>Music Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Business Administration</fullName>
+        <default>false</default>
+        <label>Master of Business Administration</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Science</fullName>
+        <default>false</default>
+        <label>Master of Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Certificate</fullName>
+        <default>false</default>
+        <label>Certificate</label>
+    </customValue>
+    <customValue>
+        <fullName>Accelerated</fullName>
+        <default>false</default>
+        <label>Accelerated</label>
+    </customValue>
+    <customValue>
+        <fullName>Advanced</fullName>
+        <default>false</default>
+        <label>Advanced</label>
+    </customValue>
+    <customValue>
+        <fullName>Regular</fullName>
+        <default>false</default>
+        <label>Regular</label>
+    </customValue>
+    <customValue>
+        <fullName>District Partnerships</fullName>
+        <default>false</default>
+        <label>District Partnerships</label>
+    </customValue>
+    <customValue>
+        <fullName>Teacher Education</fullName>
+        <default>false</default>
+        <label>Teacher Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Educational Leadership</fullName>
+        <default>false</default>
+        <label>Educational Leadership</label>
+    </customValue>
+    <customValue>
+        <fullName>Special Education</fullName>
+        <default>false</default>
+        <label>Special Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Non-Degree</fullName>
+        <default>false</default>
+        <label>Non-Degree</label>
     </customValue>
     <customValue>
         <fullName>Traditional</fullName>
@@ -29,16 +97,22 @@
         <label>Traditional</label>
     </customValue>
     <customValue>
+        <fullName>Undergraduate</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Undergraduate</label>
+    </customValue>
+    <customValue>
         <fullName>Graduate</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Graduate</label>
     </customValue>
     <customValue>
-        <fullName>Non-Degree</fullName>
+        <fullName>Adult</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Non-Degree</label>
+        <label>Adult</label>
     </customValue>
     <description>Student types for admissions.</description>
     <masterLabel>Student Types</masterLabel>

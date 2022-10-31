@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Auto_Accept_Audit__c</fullName>
+    <description>Used to display the logic that went into the auto accept process for auditing purposes</description>
+    <externalId>false</externalId>
+    <inlineHelpText>populated by Completed App Flow Auto async process with the values used to determine if applicant is qualified for the auto accept process</inlineHelpText>
+    <label>Auto Accept Audit</label>
+    <length>131072</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
+</CustomField>

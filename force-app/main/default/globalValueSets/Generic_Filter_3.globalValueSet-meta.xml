@@ -20,6 +20,16 @@
         <default>false</default>
         <label>Generic Value 2</label>
     </customValue>
+    <customValue>
+        <fullName>Yes</fullName>
+        <default>false</default>
+        <label>Yes</label>
+    </customValue>
+    <customValue>
+        <fullName>No</fullName>
+        <default>false</default>
+        <label>No</label>
+    </customValue>
     <description>Used for Undergraduate Applications</description>
     <masterLabel>Test Score Preference</masterLabel>
     <sorted>false</sorted>

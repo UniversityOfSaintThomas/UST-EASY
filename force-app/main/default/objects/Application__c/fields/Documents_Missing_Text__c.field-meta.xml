@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>User_Created__c</fullName>
-    <defaultValue>false</defaultValue>
-    <deprecated>false</deprecated>
-    <description>Only used for test classes</description>
+    <fullName>Documents_Missing_Text__c</fullName>
     <externalId>false</externalId>
-    <label>User Created</label>
+    <inlineHelpText>Rich text field populated by application status driven flows</inlineHelpText>
+    <label>Documents Missing Text</label>
+    <length>131072</length>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Checkbox</type>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
 </CustomField>

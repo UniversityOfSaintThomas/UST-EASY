@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>User_Created__c</fullName>
+    <fullName>Force_Recalc_Owner__c</fullName>
     <defaultValue>false</defaultValue>
-    <deprecated>false</deprecated>
-    <description>Only used for test classes</description>
     <externalId>false</externalId>
-    <label>User Created</label>
+    <inlineHelpText>When checked forces the Admissions Application through the counselor assignment flow</inlineHelpText>
+    <label>Force Recalc Owner</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

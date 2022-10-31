@@ -107,6 +107,18 @@ public class ApplicationRequirement {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
 
+        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('UPAY_SITE_ID'))) {
+            PageReference pr = Page.ApplicationRequirement;
+            if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
+                pr.getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
+            }
+            if (String.isNotBlank(ApexPages.currentPage().getParameters().get('requirementId'))) {
+                pr.getParameters().put('requirementId', ApexPages.currentPage().getParameters().get('requirementId'));
+            }
+            pr.setRedirect(true);
+            return pr;
+        }
+
         if (String.isBlank(appInfo.appControlId)) {
             PageReference portalPage = Page.ApplicationPortal;
             return portalPage;

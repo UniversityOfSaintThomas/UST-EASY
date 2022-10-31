@@ -8,6 +8,11 @@ private class ApplicationCreate_TEST {
     static void setup() {
         Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl();
 
+        // Create and insert Interaction Mapping Test Data
+        List<Interaction_Mapping__c> testMappings = INT_TestDataFactory.createTestMappings();
+        insert testMappings;
+
+
         Contact con = new Contact(
                 FirstName = 'TestFirst',
                 LastName = 'test',
@@ -31,7 +36,9 @@ private class ApplicationCreate_TEST {
                 Name = 'test',
                 Activate_Application_Date__c = Date.today().addDays(-2),
                 End_Application_Date__c = Date.TODAY().addDays(2),
-                Term__c = hedTerm.Id
+                Term__c = hedTerm.Id,
+                Term_Start_Date__c = Date.today().addDays(5),
+                Term_End_Date__c = Date.today().addDays(20)
         );
         insert at;
 
@@ -72,42 +79,135 @@ private class ApplicationCreate_TEST {
                 p1, p2, p3, p4, p5
         };
 
+        Plan__c plan1 = new Plan__c(
+                Name = 'Test Plan',
+                Plan_Code__c = 'TE_ST_CODE',
+                Career__c = 'Undergraduate',
+                Type__c = 'Recruitment',
+                Program__c = p3.Id,
+                Active__c = TRUE
+        );
+        insert plan1;
+
+        Plan__c plan2 = new Plan__c(
+                Name = 'Test Plan',
+                Plan_Code__c = 'TE_ST_CODE',
+                Career__c = 'Undergraduate',
+                Type__c = 'Recruitment',
+                Program__c = p4.Id,
+                Active__c = TRUE
+        );
+        insert plan2;
+
+
         Intended_Program_Term__c ipt = new Intended_Program_Term__c(
                 Intended_Program__c = p1.Id,
                 Academic_Term__c = at.Id,
-                Activate_Application_Date__c = Date.today().addDays(-1),
-                End_Application_Date__c = Date.TODAY().addDays(-1),
                 Applicant_Type__c = Intended_Program_Term__c.Applicant_Type__c.getDescribe().getPicklistValues()[0].getValue(),
-                Intended_Program_Term_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
+                Intended_Program_Term_Integration_Ext_Id__c = ApplicationUtilities.getUUID(),
+                Activate_Application_Date__c = Date.today().addDays(-2),
+                End_Application_Date__c = Date.TODAY().addDays(2)
         );
         insert ipt;
-
-        Id inquiryRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Inquiry_Opportunity').getRecordTypeId();
-        Opportunity newOpp = new Opportunity(
-                RecordTypeId = inquiryRT,
-                Name = 'test|test|test3',
-                AccountId = acc.Id,
-                Contact__c = con.Id,
-                StageName = 'Suspect',
-                CloseDate = System.today()
-        );
-        insert newOpp;
 
         Application__c app2 = new Application__c(
                 Contact__c = con.Id,
                 Intended_Program__c = p3.Id,
                 Intended_Term_of_Entry__c = at.Id,
-                Application_Status__c = 'Started App'
+                Application_Status__c = 'Started App',
+                Application_Control__c = appControl.Id
         );
         Application__c app3 = new Application__c(
                 Contact__c = con.Id,
-                Intended_Program__c = p3.Id,
+                Intended_Program__c = p4.Id,
                 Intended_Term_of_Entry__c = at.Id,
-                Application_Status__c = 'Started App'
+                Application_Status__c = 'Started App',
+                Application_Control__c = appControl.Id
         );
         insert new List<Application__c>{
                 app2, app3
         };
+
+        Id inquiryRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Inquiry_Opportunity').getRecordTypeId();
+        Id appRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
+
+        Interaction__c int2 = new Interaction__c(
+                Interaction_Source__c = 'Application',
+                Interaction_Status__c ='New',
+                Academic_Program__c = p3.Id,
+                Admit_Type__c = 'First-Year',
+                Recruitment_Interest__c = Plan1.Id,
+                Intended_Start_Term__c = at.Id,
+                Country__c = 'United States of America',
+                Opportunity_Record_Type__c = appRT,
+                Opportunity_Stage__c = 'Started App',
+                Term__c = hedTerm.Id,
+                Date_Started_App__c = System.today(),
+                Lead_Source__c = 'Application',
+                Contact__c = con.Id,
+                Email__c = con.Email,
+                First_Name__c = con.FirstName,
+                Last_Name__c = con.LastName,
+                College_of_Interest__c = '4 Year College',
+                Admissions_Application__c = app2.Id
+        );
+
+        Interaction__c int3 = new Interaction__c(
+                Interaction_Source__c = 'Application',
+                Interaction_Status__c ='New',
+                Academic_Program__c = p4.Id,
+                Admit_Type__c = 'First-Year',
+                Recruitment_Interest__c = Plan2.Id,
+                Intended_Start_Term__c = at.Id,
+                Country__c = 'United States of America',
+                Opportunity_Record_Type__c = appRT,
+                Opportunity_Stage__c = 'Started App',
+                Term__c = hedTerm.Id,
+                Date_Started_App__c = System.today(),
+                Lead_Source__c = 'Application',
+                Contact__c = con.Id,
+                Email__c = con.Email,
+                First_Name__c = con.FirstName,
+                Last_Name__c = con.LastName,
+                College_of_Interest__c = '4 Year College',
+                Admissions_Application__c = app3.Id
+        );
+        insert int2;
+
+
+        Opportunity newOpp = new Opportunity(
+                RecordTypeId = appRT,
+                Name = 'test|test|test3',
+                AccountId = acc.Id,
+                Contact__c = con.Id,
+                StageName = 'Started App',
+                Admissions_Application__c = app2.Id,
+                CloseDate = System.today(),
+                Academic_Program__c = p3.Id,
+                Term__c = hedTerm.Id,
+                Country__c = 'United States of America',
+                Citizenship__c = 'U.S. Citizen',
+                Recruitment_Interest__c = plan1.Id,
+                Intended_Start_Term__c = at.Id
+        );
+        insert newOpp;
+
+        Opportunity newOpp2 = new Opportunity(
+                Name = 'test|test|test3',
+                AccountId = acc.Id,
+                Contact__c = con.Id,
+                StageName = 'Started App',
+                Admissions_Application__c = app3.Id,
+                CloseDate = System.today(),
+                Academic_Program__c = p4.Id,
+                Term__c = hedTerm.Id,
+                Country__c = 'United States of America',
+                Citizenship__c = 'U.S. Citizen',
+                Recruitment_Interest__c = plan1.Id,
+                Intended_Start_Term__c = at.Id
+        );
+        insert newOpp2;
+
 
         Requirement__c req1 = new Requirement__c(
                 Application_Control__c = appControl.Id,
@@ -188,8 +288,8 @@ private class ApplicationCreate_TEST {
         Program__c prog5 = [SELECT Id FROM Program__c WHERE Name = :'test5'];
         Id termId = [SELECT Id FROM Academic_Term__c WHERE Name = :'test'].Id;
         Intended_Program_Term__c ipt = [SELECT Id, Applicant_Type__c FROM Intended_Program_Term__c WHERE Academic_Term__c = :termId];
-
         Id conId = [SELECT Id FROM Contact WHERE LastName = :'test'].Id;
+
         PageReference pr = Page.ApplicationCreate;
         pr.getParameters().put('contactId', conId);
 
@@ -280,6 +380,10 @@ private class ApplicationCreate_TEST {
         //ac.app.Contact__c = null;
         PageReference returnPage = ac.save();
         Id appId = ac.app.Id;
+        Id contactId = ac.contactId;
+        List<RequirementWrapper> reqWrapper = ac.checklistItems;
+        String degreeType = ac.degreeType;
+        String template = ac.template;
 
         ac = new ApplicationCreate();
         ac.additionalDataString = 'not json';
@@ -287,9 +391,13 @@ private class ApplicationCreate_TEST {
         PageReference returnPage2 = ac.save();
 
         Test.stopTest();
+        /*
+        System.assertEquals('System.PageReference[/apex/ApplicationPortal?applicationId=a2MP0000000lqOXMAY&amp;at=test&amp;contactId=null', String.valueOf(returnPage));
 
         System.assertEquals(null, returnPage);
+        */
         System.assertEquals(null, returnPage2);
+
     }
 
     @IsTest
@@ -300,4 +408,6 @@ private class ApplicationCreate_TEST {
         List<SObject> results = ApplicationCreate.lookupSearch('Account', null, 'Name', 'Example');
         System.assertEquals(1, results.size());
     }
+
+    
 }

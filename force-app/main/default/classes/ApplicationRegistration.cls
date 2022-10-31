@@ -91,11 +91,9 @@ public class ApplicationRegistration {
     * @description populates fields on the contact and application through the interactions object.
     ********************************************************************************/
     public PageReference submit() {
-
         System.Savepoint sp = Database.setSavepoint();
         Boolean dmlException = false;
-        interaction.Id = null;
-        interaction.Contact__c = null;
+        populateInteraction();
         loginUser = null;
         loginPassword = null;
         loginUrl = null;
@@ -182,6 +180,46 @@ public class ApplicationRegistration {
         return null;
     }
 
+    public void populateInteraction() {
+        Id application_opp_RT_ID = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
+        interaction.Id = null;
+        interaction.Contact__c = null;
+        for (ApplicationQuestionGroup questionGroup : appCreate.section.groups) {
+            for (ApplicationQuestion question: questionGroup.questions) {
+                if (question.label == 'What term are you applying for?' && question.resp != null) {
+                        interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
+                }
+                if (question.label == 'What program are you applying to?' && question.resp != null) {
+                    interaction.Academic_Program__c = Id.valueOf(String.valueOf(question.resp));
+                }
+            }
+        }
+        if (interaction.Academic_Program__c != null) {
+            List<Program__c> program = [SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c FROM Program__c WHERE Id =: interaction.Academic_Program__c LIMIT 1];
+            if (!program.isEmpty()) {
+                interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
+                interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
+            }
+            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c =: interaction.Academic_Program__c LIMIT 1];
+            if (!relatedPlan.isEmpty()) {
+                interaction.Recruitment_Interest__c = relatedPlan[0].Id;
+            }
+        }
+        if (interaction.Intended_Start_Term__c != null) {
+            List<Academic_Term__c> academicTerm = [SELECT Term__c FROM Academic_Term__c WHERE Id =: interaction.Intended_Start_Term__c LIMIT 1];
+            if (!academicTerm.isEmpty()) {
+                interaction.Term__c = academicTerm[0].Term__c;
+            } 
+        }
+        interaction.Opportunity_Stage__c = 'Started App';
+        interaction.Opportunity_Record_Type__c = application_opp_RT_ID;
+        interaction.Citizenship__c = appCreate.app.Citizenship__c;
+        interaction.Interaction_Source__c = 'Application';
+        interaction.Date_Started_App__c = System.Today();
+        interaction.Lead_Source__c = 'Application';
+        interaction.Interaction_Status__c = 'New';
+    }
+
     public PageReference login() {
         if (String.isNotBlank(loginUrl)) {
             return Site.login(loginUser.Username, loginPassword, loginUrl);
@@ -230,7 +268,7 @@ public class ApplicationRegistration {
 
     private without sharing class crudToDo {
         public String returnAppURL(ApplicationCreate appCreate) {
-            String nextURL = appCreate.saveApplication();
+            String nextURL = appCreate.saveApplication(false);
             return nextURL;
         }
 

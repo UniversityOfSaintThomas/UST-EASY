@@ -246,3 +246,10 @@ div.slds-progress {
 .carousel__item.prev {
     transform: translateX(-100%);
 }
+
+.carousel__item.carousel__disable {
+    display: block;
+    opacity: 100;
+    position: initial;
+    transform: initial;
+}

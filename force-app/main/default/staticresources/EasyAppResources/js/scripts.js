@@ -464,6 +464,78 @@ function navigateRequirementGroup(redirectTo) {
     }
 }
 
+function disableCarousel() {
+    let items = document.getElementsByClassName("carousel__item");
+    for (let i = 0; i < items.length; i++) {
+        items[i].classList.add('carousel__disable');
+    }
+
+    let groupCountTexts = document.getElementsByClassName("questionGroupCount");
+    for (let i = 0; i < groupCountTexts.length; i++) {
+        groupCountTexts[i].style.display = "none";
+    }
+
+    let groupWarnTexts = document.getElementsByClassName("questionGroupWarning");
+    for (let i = 0; i < groupWarnTexts.length; i++) {
+        groupWarnTexts[i].style.display = "none";
+    }
+
+    let nextButtons = document.getElementsByClassName("carousel__button--next");
+    for (let i = 0; i < nextButtons.length; i++) {
+        nextButtons[i].style.display = "none";
+    }
+
+    let prevButtons = document.getElementsByClassName("carousel__button--prev");
+    for (let i = 0; i < prevButtons.length; i++) {
+        prevButtons[i].style.display = "none";
+    }
+
+    let saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]');
+    saveAndAdvance.style.display = "inline-flex";
+
+    if (previousRequirement) {
+        let saveAndGoBack = document.getElementById('saveAndGoBack');
+        saveAndGoBack.style.display = "inline-flex";
+    }
+}
+
+function enableCarousel() {
+    let items = document.getElementsByClassName("carousel__item");
+    for (let i = 0; i < items.length; i++) {
+        items[i].classList.remove('carousel__disable');
+    }
+
+    let groupCountTexts = document.getElementsByClassName("questionGroupCount");
+    for (let i = 0; i < groupCountTexts.length; i++) {
+        groupCountTexts[i].style.display = "";
+    }
+
+    let groupWarnTexts = document.getElementsByClassName("questionGroupWarning");
+    for (let i = 0; i < groupWarnTexts.length; i++) {
+        groupWarnTexts[i].style.display = "";
+    }
+
+    let nextButtons = document.getElementsByClassName("carousel__button--next");
+    for (let i = 0; i < nextButtons.length; i++) {
+        nextButtons[i].style.display = "";
+    }
+
+    let prevButtons = document.getElementsByClassName("carousel__button--prev");
+    for (let i = 0; i < prevButtons.length; i++) {
+        prevButtons[i].style.display = "";
+    }
+
+    let saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]');
+    saveAndAdvance.style.display = "";
+
+    if (previousRequirement) {
+        let saveAndGoBack = document.getElementById('saveAndGoBack');
+        saveAndGoBack.style.display = "inline-flex";
+    }
+
+    activateCarousel(0);
+}
+
 /* Carousel Script */
 function activateCarousel(slideMoveTo) {
     // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.

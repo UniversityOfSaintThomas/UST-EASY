@@ -182,7 +182,7 @@ private class ApplicationPaymentComponentCtrl_TEST {
     static void testEmptyParameters2() {
 
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
-        Application__c app = [SELECT Id, Name, Contact__r.FirstName, Contact__r.LastName FROM Application__c LIMIT 1];
+        Application__c app = [SELECT Id, Name, Contact__r.FirstName, Contact__r.LastName, Intended_Term_of_Entry__r.Name FROM Application__c LIMIT 1];
         Application_Control__c appControl = [SELECT Id, URL_Parameter__c FROM Application_Control__c WHERE URL_Parameter__c = 'st'];
         Contact student = [SELECT Id FROM Contact LIMIT 1];
         Requirement_Item__c ri = [SELECT Id FROM Requirement_Item__c LIMIT 1];
@@ -223,7 +223,8 @@ private class ApplicationPaymentComponentCtrl_TEST {
                         Display_as_Picklist__c,
                         Payment_Gateway__c,
                         Payment_Type__c,
-                        Payment_Custom_Amount__c
+                        Payment_Custom_Amount__c,
+                        Payment_name__c
                 FROM Question__c
                 WHERE Name = 'Deposit'
         ];
@@ -250,11 +251,14 @@ private class ApplicationPaymentComponentCtrl_TEST {
 
         String formParameters = payController.getFormParameters();
 
-        String exTransId = app.Contact__r.FirstName + ' ' + app.Contact__r.LastName + ' | ' + app.Name;
+        String exTransId = app.Contact__r.FirstName + ' ' + app.Contact__r.LastName + ' | ' + app.Name + ' | ' + app.Intended_Term_of_Entry__r.Name;
 
-        String valCode = '';
+        String valCode = 'tommiesValidate';
 
-        valCode = gatewayInfo[0].Validation_Key__c;
+        if (gatewayInfo.size() > 0 ) {
+            valCode = gatewayInfo[0].Validation_Key__c;
+        }
+
         // EXT_TRANS_ID passed from payment form and can be used to track in our business office
         valCode += exTransId;//ac.appInfo.appId;
 

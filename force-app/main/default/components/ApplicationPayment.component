@@ -18,6 +18,7 @@
             console.log('here');
             document.getElementById('saveAndAdvance').style.display = 'none';
             document.getElementById('saveAndGoBack').style.display = 'none';
+            document.querySelector('.questionGroupDescription').style.display = 'none';
         });
     </script>
 

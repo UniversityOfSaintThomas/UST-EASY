@@ -213,6 +213,8 @@ private static void setUserRole() {
     List<UserRole> roles = [SELECT Name, Id FROM UserRole WHERE Name = 'EASY Applicant'];
 
     if (userUsers.size() > 0) {
+        userUsers[0].Country = 'United States';
+        update userUsers;
         if (roles.size() > 0) {
             userUsers[0].UserRoleId = roles[0].Id;
             update userUsers[0];

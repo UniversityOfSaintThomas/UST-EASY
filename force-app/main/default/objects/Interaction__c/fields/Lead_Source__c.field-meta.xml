@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Lead_Source__c</fullName>
+    <deprecated>false</deprecated>
     <description>The way in which the Lead or Contact&apos;s information was first received.</description>
     <externalId>false</externalId>
     <inlineHelpText>Indicate the initial source of this data.</inlineHelpText>
@@ -122,6 +123,141 @@
                 <fullName>Application</fullName>
                 <default>false</default>
                 <label>Application</label>
+            </value>
+            <value>
+                <fullName>RaiseMe</fullName>
+                <default>false</default>
+                <label>RaiseMe</label>
+            </value>
+            <value>
+                <fullName>Workshop</fullName>
+                <default>false</default>
+                <label>Workshop</label>
+            </value>
+            <value>
+                <fullName>UG High School Visit</fullName>
+                <default>false</default>
+                <label>UG High School Visit</label>
+            </value>
+            <value>
+                <fullName>UG Email</fullName>
+                <default>false</default>
+                <label>UG Email</label>
+            </value>
+            <value>
+                <fullName>UG Group Visit</fullName>
+                <default>false</default>
+                <label>UG Group Visit</label>
+            </value>
+            <value>
+                <fullName>UG Group Visit request</fullName>
+                <default>false</default>
+                <label>UG Group Visit request</label>
+            </value>
+            <value>
+                <fullName>UG Phone</fullName>
+                <default>false</default>
+                <label>UG Phone</label>
+            </value>
+            <value>
+                <fullName>UG College Fair</fullName>
+                <default>false</default>
+                <label>UG College Fair</label>
+            </value>
+            <value>
+                <fullName>UG IQ</fullName>
+                <default>false</default>
+                <label>UG IQ</label>
+            </value>
+            <value>
+                <fullName>Coach List</fullName>
+                <default>false</default>
+                <label>Coach List</label>
+            </value>
+            <value>
+                <fullName>SAT</fullName>
+                <default>false</default>
+                <label>SAT</label>
+            </value>
+            <value>
+                <fullName>Hobsons</fullName>
+                <default>false</default>
+                <label>Hobsons</label>
+            </value>
+            <value>
+                <fullName>MPCW</fullName>
+                <default>false</default>
+                <label>MPCW</label>
+            </value>
+            <value>
+                <fullName>Common App Partial</fullName>
+                <default>false</default>
+                <label>Common App Partial</label>
+            </value>
+            <value>
+                <fullName>Fire Engine Red Respondent</fullName>
+                <default>false</default>
+                <label>Fire Engine Red Respondent</label>
+            </value>
+            <value>
+                <fullName>FAFSA Suspense</fullName>
+                <default>false</default>
+                <label>FAFSA Suspense</label>
+            </value>
+            <value>
+                <fullName>Virtual HSV/AVID Presentation</fullName>
+                <default>false</default>
+                <label>Virtual HSV/AVID Presentation</label>
+            </value>
+            <value>
+                <fullName>Alumni Referral Program</fullName>
+                <default>false</default>
+                <label>Alumni Referral Program</label>
+            </value>
+            <value>
+                <fullName>Fire Engine Red</fullName>
+                <default>false</default>
+                <label>Fire Engine Red</label>
+            </value>
+            <value>
+                <fullName>Net Price Calculator</fullName>
+                <default>false</default>
+                <label>Net Price Calculator</label>
+            </value>
+            <value>
+                <fullName>Undergraduate Schulze</fullName>
+                <default>false</default>
+                <label>Undergraduate Schulze</label>
+            </value>
+            <value>
+                <fullName>GHR Fellows and Schulze Scholarship Programs</fullName>
+                <default>false</default>
+                <label>GHR Fellows and Schulze Scholarship Programs</label>
+            </value>
+            <value>
+                <fullName>MN State Fair</fullName>
+                <default>false</default>
+                <label>MN State Fair</label>
+            </value>
+            <value>
+                <fullName>GHR Fellows RFI</fullName>
+                <default>false</default>
+                <label>GHR Fellows RFI</label>
+            </value>
+            <value>
+                <fullName>Test Score</fullName>
+                <default>false</default>
+                <label>Test Score</label>
+            </value>
+            <value>
+                <fullName>Search</fullName>
+                <default>false</default>
+                <label>Search</label>
+            </value>
+            <value>
+                <fullName>Stealth Application</fullName>
+                <default>false</default>
+                <label>Stealth Application</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -112,6 +112,7 @@ global with sharing class ApplicationPaymentRest {
                         payment.Method_of_Payment__c = 'Credit Card';
                         //EXT_TRANS_ID : Johnny Applicant | A-0122222 | Fall 2023
                         payment.TouchNet_Ext_Trans_Id__c = evaluateResponse('EXT_TRANS_ID');
+                        payment.Payment_Status__c = 'Received';
                         System.debug(JSON.serializePretty(payment));
 
                         if (crudToDo.savePayment(payment)) {

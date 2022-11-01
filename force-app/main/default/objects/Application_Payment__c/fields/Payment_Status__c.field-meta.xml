@@ -33,7 +33,7 @@
             </value>
             <value>
                 <fullName>Received</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Received</label>
             </value>
             <value>

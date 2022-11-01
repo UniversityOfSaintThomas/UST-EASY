@@ -99,8 +99,6 @@ private class ApplicationPaymentComponentCtrl_TEST {
         for (RecordType qt : [SELECT Id, DeveloperName FROM RecordType WHERE SobjectType = 'Question__c']) {
             questionTypeMap.put(qt.DeveloperName, qt.Id);
         }
-        system.debug(questionTypeMap);
-
 
         Requirement_Item__c riQG = new Requirement_Item__c(
                 Requirement__c = req.Id,

@@ -30,6 +30,10 @@ public with sharing class ApplicationPaymentComponentController {
                 }
                 currentUrl += 'ApplicationRequirement?at=' + appInfoParam.at + '&requirementId=' + appInfoParam.requirementId;
 
+                if (!currentUrl.startsWith('http')) {
+                    currentUrl = 'https://' + currentUrl;
+                }
+
                 //Get application for dtails to add to ticket
                 Application__c app = [
                         SELECT Id, Name, Contact__r.FirstName, Contact__r.LastName,

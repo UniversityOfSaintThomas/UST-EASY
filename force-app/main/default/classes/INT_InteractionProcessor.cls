@@ -144,6 +144,9 @@ public class INT_InteractionProcessor {
         // Set up Interaction Map for reference during processing.
         interactionMap = new Map<Id, Interaction__c>(interactionsToProcess);
 
+        // Insert Leads from the new Interaction records.
+        List<Database.LeadConvert> newLeads = insertLeadsFromInteractions(interactionsToProcess);
+
         // Apply Interaction Mappings to all Leads
         List<Lead> leadsToUpdate = new List<Lead>();
         List<Interaction_Mapping__c> interactionMappings = intMappingService.intMappingMap.get('Lead');
@@ -237,8 +240,10 @@ public class INT_InteractionProcessor {
         for (Interaction__c interaction : interactionsToProcess) {
             if (!String.isEmpty(interaction.Contact__c)) {
                 Contact newCont = contactMappedFields.get(interaction.Contact__c);
-                intMappingService.applyDataToSObject(interaction, newCont);
-                contactsToUpdate.add(newCont);
+                if (newCont != null) {
+                    intMappingService.applyDataToSObject(interaction, newCont);
+                    contactsToUpdate.add(newCont);
+                }
             }
 
             if (interaction.Affiliation_Key__c != null) {
@@ -342,7 +347,8 @@ public class INT_InteractionProcessor {
             Lead newLead = new Lead(
                     FirstName = interaction.First_Name__c,
                     LastName = interaction.Last_Name__c,
-                    Company = interaction.Last_Name__c + ', ' + interaction.First_Name__c
+                    Company = interaction.Last_Name__c + ', ' + interaction.First_Name__c,
+                    OwnerId = interaction.OwnerId
             );
 
             interactionIdToLead.put(interaction.Id, newLead);
@@ -726,11 +732,13 @@ public class INT_InteractionProcessor {
 
     private static List<SObject> queryForSObjectMappedFields(List<Interaction_Mapping__c> interactionMappings, String SObjectName, Set<Id> SObjectIds, List<String> additionalFields, String whereClause) {
         String queryString = 'SELECT Id, ';
-        for (Interaction_Mapping__c interactionMapping : interactionMappings) {
-            if (interactionMapping != null && interactionMapping.Target_Field_API_Name__c != null) {
-                queryString += interactionMapping.Target_Field_API_Name__c + ', ';
-            }
-        } 
+        if (interactionMappings != null) {
+            for (Interaction_Mapping__c interactionMapping : interactionMappings) {
+                if (interactionMapping != null && interactionMapping.Target_Field_API_Name__c != null) {
+                    queryString += interactionMapping.Target_Field_API_Name__c + ', ';
+                }
+            } 
+        }
         queryString = queryString.removeEnd(', ');
         if (!additionalFields.isEmpty()) {
             for (String field : additionalFields) {

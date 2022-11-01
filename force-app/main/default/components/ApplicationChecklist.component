@@ -101,7 +101,7 @@
 
                     <apex:outputPanel rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
-                            <p>Confirm your enrollment decision.</p>
+                            <p>All requirements have been met.</p>
                         </div>
                         <div class="slds-p-bottom_small">
                             <apex:commandLink action="{!confirmEnrollment}" rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" value="Submit" styleClass="slds-button slds-button_success">

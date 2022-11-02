@@ -48,6 +48,7 @@
 
             <!-- TITLE AND SUB TITLE -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 " layout="block">
+                <button type="button" class="slds-button slds-button_brand small-header-button" id="carousel-killer">Single-Page Form</button>
                 <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
                     <h1 class="slds-text-heading_large">{!title}</h1>
                 </div>

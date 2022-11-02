@@ -464,7 +464,15 @@ function navigateRequirementGroup(redirectTo) {
     }
 }
 
+var carouselOn = false;
 function disableCarousel() {
+    carouselOn = false;
+
+    let killerButton = document.getElementById('carousel-killer');
+    killerButton.innerText = "Restore Form";
+    killerButton.removeEventListener('click', disableCarousel);
+    killerButton.addEventListener('click', enableCarousel);
+
     let items = document.getElementsByClassName("carousel__item");
     for (let i = 0; i < items.length; i++) {
         items[i].classList.add('carousel__disable');
@@ -500,6 +508,13 @@ function disableCarousel() {
 }
 
 function enableCarousel() {
+    carouselOn = true;
+
+    let killerButton = document.getElementById('carousel-killer');
+    killerButton.innerText = "Single-Page Form";
+    killerButton.removeEventListener('click', enableCarousel);
+    killerButton.addEventListener('click', disableCarousel);
+
     let items = document.getElementsByClassName("carousel__item");
     for (let i = 0; i < items.length; i++) {
         items[i].classList.remove('carousel__disable');
@@ -533,6 +548,19 @@ function enableCarousel() {
         saveAndGoBack.style.display = "inline-flex";
     }
 
+    let activeSlides = document.querySelectorAll(".carousel__item.prev, .carousel__item.active, .carousel__item.next");
+    for (let i = 0; i < activeSlides.length; i++) {
+        activeSlides[i].classList.remove("prev");
+        activeSlides[i].classList.remove("active");
+        activeSlides[i].classList.remove("next");
+    }
+
+    let firstSlide = document.querySelector(".carousel__item.slide-0");
+    firstSlide.classList.add("active");
+
+    let secondSlide = document.querySelector(".carousel__item.slide-1");
+    secondSlide.classList.add("next");
+
     activateCarousel(0);
 }
 
@@ -545,6 +573,7 @@ function activateCarousel(slideMoveTo) {
         moving = true,
         saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]'),
         saveAndGoBack = document.getElementById('saveAndGoBack'),
+        killerButton = document.getElementById('carousel-killer'),
         next = document.getElementsByClassName('carousel__button--next')[0],
         prev = document.getElementsByClassName('carousel__button--prev')[0];
 
@@ -554,6 +583,7 @@ function activateCarousel(slideMoveTo) {
         function setEventListeners() {
             next.addEventListener('click', moveNext);
             prev.addEventListener('click', movePrev);
+            killerButton.addEventListener('click', disableCarousel);
             if (totalItems === 1) {
                 next.style.display = 'none';
                 prev.style.display = 'none';
@@ -669,6 +699,7 @@ function activateCarousel(slideMoveTo) {
         function initCarousel() {
             setEventListeners();
             moving = false;
+            carouselOn = true;
         }
 
         initCarousel();
@@ -678,6 +709,8 @@ function activateCarousel(slideMoveTo) {
                 moveCarouselTo(parseInt(slideMoveTo));
             }
         }
+    } else {
+        killerButton.parentNode.removeChild(killerButton);
     }
 }
 

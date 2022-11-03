@@ -70,7 +70,7 @@ public class ApplicationQuestion {
     public Account acc { get; set; }
     public Boolean placeholderQuestion { get; set; }
     public Object resp { get; set; }
-    private Requirement_Response__c reqResponse;
+    public Requirement_Response__c reqResponse;
     public ApplicationQuestionSection section { private get; set; }
 
     /*******************************************************************************
@@ -92,7 +92,7 @@ public class ApplicationQuestion {
                     groupCount++;
                 }
             }
-            if (section != null 
+            if (section != null
                 && !section.groups.isEmpty()
                 && groupWithTermQuestion < section.groups.size()
                 && !section.groups[groupWithTermQuestion].questions.isEmpty()
@@ -104,8 +104,8 @@ public class ApplicationQuestion {
                 filterProgramsByTerm = true;
                 Id selectedTermId = Id.valueOf(section.groups[groupWithTermQuestion].questions[0].response.ValueText__c);
                 List<Intended_Program_Term__c> intendedProgramTerms = [
-                    SELECT Id, Intended_Program__c 
-                    FROM Intended_Program_Term__c 
+                    SELECT Id, Intended_Program__c
+                    FROM Intended_Program_Term__c
                     WHERE Academic_Term__c =: selectedTermId
                     AND Application_Status__c = 'Active'
                     AND Intended_Program__r.Application_Control__c =: application.Application_Control__c
@@ -126,10 +126,10 @@ public class ApplicationQuestion {
                             options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
                         }
                     } else {
-                        if (showIntendedProgram(ip)) {
-                            options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
-                        }
+                    if (showIntendedProgram(ip)) {
+                        options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
                     }
+                }
                 }
                 return options;
 
@@ -257,7 +257,7 @@ public class ApplicationQuestion {
         if (String.isNotBlank(ip.Residency__c) && (String.isBlank(application.Residency__c) || ip.Residency__c.equals(application.Residency__c))) {
             return false;
         }
-                
+
         /**** FDF 10/3/2022 - adding in generic filters so they can be used as pre-app filters between program & intended program term     ****/
         if (String.isNotBlank(ip.Generic_Filter_1__c) && (String.isBlank(application.Generic_Filter_1__c) || !(new Set<String>(ip.Generic_Filter_1__c.split(';'))).contains(application.Generic_Filter_1__c))) {
             return false;
@@ -270,7 +270,7 @@ public class ApplicationQuestion {
         if (String.isNotBlank(ip.Generic_Filter_3__c) && (String.isBlank(application.Generic_Filter_3__c) || !(new Set<String>(ip.Generic_Filter_3__c.split(';'))).contains(application.Generic_Filter_3__c))) {
             return false;
         }
-        
+
         if (String.isNotBlank(ip.Generic_Filter_4__c) && (String.isBlank(application.Generic_Filter_4__c) || !(new Set<String>(ip.Generic_Filter_4__c.split(';'))).contains(application.Generic_Filter_4__c))) {
             return false;
         }
@@ -822,9 +822,9 @@ public class ApplicationQuestion {
             return obj.get(question.Related_Object_Field__c);
         } else if (response == null) {
             return null;
-        } else if (String.isNotBlank(response.ValueText__c)) {
+        } else if (String.isNotBlank(response.ValueText__c) && fieldType != null && !fieldType.equalsIgnoreCase('payment')) {
             return response.ValueText__c;
-        } else if (fieldType != null && fieldType.equals('Checkbox')) {
+        } else if (fieldType != null && (fieldType.equals('Checkbox')||fieldType.equalsIgnoreCase('payment'))) {
             return response.ValueCheckbox__c;
         } else if (String.isNotBlank(response.ValuePhone__c)) {
             return response.ValuePhone__c;

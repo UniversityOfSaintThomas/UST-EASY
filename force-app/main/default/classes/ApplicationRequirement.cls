@@ -119,7 +119,6 @@ public class ApplicationRequirement {
             return pr;
         }
 
-
         if (String.isBlank(appInfo.appControlId)) {
             PageReference portalPage = Page.ApplicationPortal;
             return portalPage;

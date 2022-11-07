@@ -60,17 +60,17 @@
                                 <header>
                                     <div class="slds-media__body">
                                         <h3 class="slds-card__header-title">
-                                            Confirm Enrollment
+                                            Submit This Application
                                         </h3>
                                     </div>
                                 </header>
                             </div>
                             <div class="slds-card__body slds-card__body_inner">
                                 <div class="slds-p-bottom_small">
-                                    <p>This application meets all the requirements to confirm your enrollment.</p>
+                                    <p>All requirements have been met.</p>
                                 </div>
                                 <div class="slds-p-bottom_small">
-                                    <apex:commandButton action="{!confirmEnrollment}" rendered="{!appInfo.allowConfirm}" value="Confirm Enrollment" styleClass="slds-button slds-button_success"/>
+                                    <apex:commandButton action="{!confirmEnrollment}" rendered="{!appInfo.allowConfirm}" value="Submit" styleClass="slds-button slds-button_success"/>
                                 </div>
                             </div>
                         </article>

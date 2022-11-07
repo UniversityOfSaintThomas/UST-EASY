@@ -820,7 +820,7 @@ public class ApplicationQuestion {
             return obj.get(question.Related_Object_Field__c);
         } else if (response == null) {
             return null;
-        } else if (String.isNotBlank(response.ValueText__c) && !fieldType.equalsIgnoreCase('payment')) {
+        } else if (String.isNotBlank(response.ValueText__c) && fieldType != null && !fieldType.equalsIgnoreCase('payment')) {
             return response.ValueText__c;
         } else if (fieldType != null && (fieldType.equals('Checkbox')||fieldType.equalsIgnoreCase('payment'))) {
             return response.ValueCheckbox__c;

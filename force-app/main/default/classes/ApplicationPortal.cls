@@ -6,7 +6,12 @@ Revision (s):
 *******************************************************************************/
 public class ApplicationPortal {
 
+    public Map<Id, Application__c> applicationsByIds { get; set; }
+    public Integer applicationMapSize { get; set; }
+    public Map<Id, Application_Control__c> appControlsByAppIds { get; set; }
+    public Map<Id, List<RequirementWrapper>> checklistsByAppIds { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
+    public Map<Id, EASYApplicationInfo> appInfoMapByAppId { get; set; }
     public String template { get; set; }
 
     public ApplicationPortal() {

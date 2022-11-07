@@ -98,6 +98,8 @@ public class ApplicationChecklistComponentCtrl_TEST {
         controller.nextAppId = app.Id;
         controller.nextRequirementId = req.Id;
         controller.nextAt = 'teststring';
+        controller.confirmedAppId = app.Id;
+        controller.confirmedAppStatus = 'Confirmed';
 
         PageReference requirementPage = Page.ApplicationRequirement;
         PageReference portalPage = Page.ApplicationPortal;
@@ -110,11 +112,16 @@ public class ApplicationChecklistComponentCtrl_TEST {
 
         PageReference submitPage = controller.finalSubmitApp();
 
+        PageReference confirmPage = controller.confirmEnrollment();
+
         Test.stopTest();
 
         System.assertEquals(submitPage, null);
 
         System.assertEquals(requirementPage.getUrl(), returnPage.getUrl());
+
+        Application__c updatedApp = [SELECT Id, Application_Status__c FROM Application__c LIMIT 1];
+        System.assertEquals('Confirmed', updatedApp.Application_Status__c);
 
     }
 }

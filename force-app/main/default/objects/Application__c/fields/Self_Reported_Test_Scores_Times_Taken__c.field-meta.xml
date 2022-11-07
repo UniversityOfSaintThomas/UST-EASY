@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Self_Reported_Test_Scores_Times_Taken__c</fullName>
+    <deprecated>false</deprecated>
     <description>How many times have you taken the ACT/SAT?</description>
     <externalId>false</externalId>
     <inlineHelpText>How many times have you taken the ACT/SAT?</inlineHelpText>
     <label>Self Reported Test Scores Times Taken</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

@@ -16,6 +16,16 @@
         <label>Complete App</label>
     </customValue>
     <customValue>
+        <fullName>File Hold</fullName>
+        <default>false</default>
+        <label>File Hold</label>
+    </customValue>
+    <customValue>
+        <fullName>Second Review</fullName>
+        <default>false</default>
+        <label>Second Review</label>
+    </customValue>
+    <customValue>
         <fullName>Pending</fullName>
         <default>false</default>
         <label>Pending</label>
@@ -31,14 +41,19 @@
         <label>Admit</label>
     </customValue>
     <customValue>
+        <fullName>Deferred - Admit</fullName>
+        <default>false</default>
+        <label>Deferred - Admit</label>
+    </customValue>
+    <customValue>
         <fullName>Confirmed</fullName>
         <default>false</default>
         <label>Confirmed</label>
     </customValue>
     <customValue>
-        <fullName>Deferred</fullName>
+        <fullName>Deferred - Confirmed</fullName>
         <default>false</default>
-        <label>Deferred</label>
+        <label>Deferred - Confirmed</label>
     </customValue>
     <customValue>
         <fullName>Withdrawn</fullName>
@@ -46,34 +61,19 @@
         <label>Withdrawn</label>
     </customValue>
     <customValue>
-        <fullName>Deposit Waived</fullName>
+        <fullName>Wrong Application</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Deposit Waived</label>
+        <label>Wrong Application</label>
     </customValue>
     <customValue>
-        <fullName>Cancelled</fullName>
+        <fullName>Do Not Contact</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Cancelled</label>
+        <label>Do Not Contact</label>
     </customValue>
     <customValue>
-        <fullName>Complete-Pending Additional Review</fullName>
+        <fullName>Enrolled</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Complete-Pending Additional Review</label>
-    </customValue>
-    <customValue>
-        <fullName>Complete-Decision Made</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Complete-Decision Made</label>
-    </customValue>
-    <customValue>
-        <fullName>Deposit Paid</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Deposit Paid</label>
+        <label>Enrolled</label>
     </customValue>
     <customValue>
         <fullName>Incomplete</fullName>
@@ -82,10 +82,52 @@
         <label>Incomplete</label>
     </customValue>
     <customValue>
+        <fullName>Deferred</fullName>
+        <default>false</default>
+        <isActive>true</isActive>
+        <label>Deferred</label>
+    </customValue>
+    <customValue>
+        <fullName>Committee</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Committee</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Paid</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Deposit Paid</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Decision Made</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Decision Made</label>
+    </customValue>
+    <customValue>
         <fullName>Complete-Pending Review</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Complete-Pending Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cancelled</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Waived</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Deposit Waived</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Pending Additional Review</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Pending Additional Review</label>
     </customValue>
     <masterLabel>Application Status</masterLabel>
     <sorted>false</sorted>

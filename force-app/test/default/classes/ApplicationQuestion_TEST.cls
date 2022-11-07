@@ -72,9 +72,10 @@ public class ApplicationQuestion_TEST {
         Requirement_Item__c riQG2 = new Requirement_Item__c(Requirement__c = req2.Id, Name = 'Test RI', Active__c = true, RecordTypeId = rtMapRI.get('Question_Group'), Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
         insert riQG2;
 
-        Question__c q1 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test', Label__c = 'Test', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName');
+        Question__c q1 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test', Label__c = 'Test', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', Dependency_Logic__c = 'AND');
         Question__c q2 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test2', Label__c = 'Test2', Requirement_Item__c = riQG2.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName');
-        Question__c q3 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test3', Label__c = 'Test3', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName');
+        Question__c q5 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Radio'), Name = 'Test5', Label__c = 'Test5', Picklist_Values__c = 'Test1;Test2', Requirement_Item__c = riQG2.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', URL_Parameter__c = 'test');
+        Question__c q3 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test3', Label__c = 'Test3', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', Hardcoded_Value__c = 'Test', Contact_Field__c = 'Additional_Family_Members__c');
         Question__c q4 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Reference'), Name = 'Test4', Label__c = 'Test3', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', Lookup_Object__c = 'Contact', Display_as_Picklist__c = true, URL_Parameter__c = 'test', Lookup_Where_Clause__c = 'Name != null');
         insert new List<Question__c>{
                 q1, q2, q3, q4
@@ -82,8 +83,9 @@ public class ApplicationQuestion_TEST {
 
         Question_Dependency__c qd1 = new Question_Dependency__c(Question__c = q1.Id, Controlling_Question__c = q2.Id, Value__c = 'Test', Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
         Question_Dependency__c qd2 = new Question_Dependency__c(Question__c = q1.Id, Controlling_Question__c = q3.Id, Value__c = 'Test;Test2;Test3', RecordTypeId = rtMapQD.get('Multi_Select_Picklist'), Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
+        Question_Dependency__c qd3 = new Question_Dependency__c(Question__c = q2.Id, Controlling_Question__c = q3.Id, Value__c = 'Test;Test2', RecordTypeId = rtMapQD.get('Radio'), Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
         insert new List<Question_Dependency__c>{
-                qd1, qd2
+                qd1, qd2, qd3
         };
 
 
@@ -101,9 +103,36 @@ public class ApplicationQuestion_TEST {
         Contact student = [SELECT Id FROM Contact LIMIT 1];
         Application__c app = [SELECT Id, Applicant_Type__c, Citizenship__c, Student_Type__c, School_College__c, Delivery_Type__c, Degree_Type__c, Residency__c FROM Application__c LIMIT 1];
         Account acc = [SELECT Id FROM Account LIMIT 1];
-        Question__c question = [SELECT Id, Lookup_Where_Clause__c, Name_Field_API_Name__c, Additional_Field_Validation__c, URL_Parameter__c, Lookup_Object__c, Display_as_Picklist__c, RecordType.DeveloperName FROM Question__c WHERE Name = 'Test4' LIMIT 1];
+        List<Question__c> questions = [
+            SELECT Id, 
+                Name, 
+                Lookup_Where_Clause__c, 
+                Name_Field_API_Name__c, 
+                Additional_Field_Validation__c, 
+                URL_Parameter__c, 
+                Lookup_Object__c, 
+                Display_as_Picklist__c, 
+                RecordType.DeveloperName, 
+                Placeholder__c,
+                Label__c,
+                Help_Text__c,
+                Assistive_Text__c
+            FROM Question__c 
+            WHERE Name = 'Test4' OR Name = 'Test5' 
+            LIMIT 2
+        ];
+        Question__c question;
+        Question__c question2;
+        for (Question__c q : questions) {
+            if (q.Name == 'Test4') {
+                question = q;
+            } else {
+                question2 = q;
+            }
+        }
 
         ApplicationQuestion appQuestion = new ApplicationQuestion(student, app, 'Test Label', app, 'Contact__c', 'Test Placeholder');
+
         Program__c program = new Program__c(
             Name = 'Test Program',
             Hide_Citizenship__c = 'International',
@@ -123,6 +152,10 @@ public class ApplicationQuestion_TEST {
         Test.setCurrentPage(pageRef);
 
         Test.startTest();
+        ApplicationQuestionGroup appQuestionGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{appQuestion});
+
+        ApplicationQuestionSection appQuestionSection = new ApplicationQuestionSection(new List<ApplicationQuestionGroup>{appQuestionGroup});
+        appQuestion.section = appQuestionSection;
         appQuestion.addIntendedProgramFilteringList(new List<Program__c>{program, program2});
         
         appQuestion.acc = acc;
@@ -131,6 +164,7 @@ public class ApplicationQuestion_TEST {
         Map<String, Map<String, String>> depOptions = new Map<String, Map<String, String>>();
         submap.put('test dep key', 'test dep value');
         depOptions.put('test dep key', submap);
+        appQuestion.addQuestionObject(question);
         appQuestion.addDependentOptions(depOptions);
 
         List<SelectOption> selectOptions = appQuestion.options;

@@ -25,6 +25,11 @@
         <default>false</default>
         <label>Athletic Revision</label>
     </customValue>
+    <customValue>
+        <fullName>Regular</fullName>
+        <default>false</default>
+        <label>Regular</label>
+    </customValue>
     <description>It indicates the type of athlete classification by a recruiter.</description>
     <masterLabel>Athlete Type</masterLabel>
     <sorted>false</sorted>

@@ -68,6 +68,7 @@
                                                                isRadio="{!question.radio}"
                                                                rerenderGroup="{!if(question.hasDependentQuestions, 'reRenderGroups', 'none')}"
                                                                itemNumber="{!itemNumber}"
+                                                               appInfo="{!appInfo}"
                                 />
 
                             </apex:outputPanel>
@@ -187,6 +188,7 @@
                                                                            rerenderGroup="{!if(question.hasDependentQuestions, 'rerenderTheTable', 'none')}"
                                                                            itemNumber="{!itemNumber}"
                                                                            relatedRecords="true"
+                                                                           appInfo="{!appInfo}"
                                             />
 
                                         </apex:outputPanel>
@@ -290,6 +292,7 @@
                                                            isRadio="{!question.radio}"
                                                            rerenderGroup="{!if(question.hasDependentQuestions, 'rerenderTheTable', 'none')}"
                                                            itemNumber="{!itemNumber}"
+                                                           appInfo="{!appInfo}"
                             />
 
                         </apex:outputPanel>

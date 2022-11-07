@@ -105,6 +105,16 @@
         <default>false</default>
         <label>Women&apos;s Varsity Volleyball</label>
     </customValue>
+    <customValue>
+        <fullName>Women&apos;s Varsity Track and Field</fullName>
+        <default>false</default>
+        <label>Women&apos;s Varsity Track and Field</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Varsity Track and Field</fullName>
+        <default>false</default>
+        <label>Men&apos;s Varsity Track and Field</label>
+    </customValue>
     <description>STVINTS</description>
     <masterLabel>Varsity Sports</masterLabel>
     <sorted>true</sorted>

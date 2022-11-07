@@ -18,7 +18,7 @@ public with sharing class checklistHelper {
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
-        allowConfirm = false;
+        allowConfirm = true;
 
         allowCancel = String.isNotBlank(appInfo.allowCancelFrom) && new Set<String>(appInfo.allowCancelFrom.split(';')).contains(app.Application_Status__c);
         allowWithdraw = String.isNotBlank(appInfo.allowWithdrawFrom) && new Set<String>(appInfo.allowWithdrawFrom.split(';')).contains(app.Application_Status__c);

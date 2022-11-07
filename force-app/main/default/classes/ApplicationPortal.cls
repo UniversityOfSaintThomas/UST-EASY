@@ -59,7 +59,9 @@ public class ApplicationPortal {
                     EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
                     List<RequirementWrapper> checklist = checklistHelper.checklistRequirements(app, newAppInfo);
                     Boolean allowSubmit = checklistHelper.allowSubmit(checklist, appInfo);
+                    Boolean allowConfirm = checklistHelper.allowConfirm(checklist, appInfo);
                     newAppInfo.allowSubmit = allowSubmit;
+                    newAppInfo.allowConfirm = allowConfirm;
                     appInfoMapByAppId.put(app.Id, newAppInfo);
                     checklistsByAppIds.put(app.Id, checklist);
                 }

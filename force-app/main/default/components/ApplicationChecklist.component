@@ -101,10 +101,10 @@
 
                     <apex:outputPanel rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
-                            <p>This application meets all the requirements to confirm your enrollment.</p>
+                            <p>All requirements have been met.</p>
                         </div>
                         <div class="slds-p-bottom_small">
-                            <apex:commandLink action="{!confirmEnrollment}" rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" value="Confirm Enrollment" styleClass="slds-button slds-button_success">
+                            <apex:commandLink action="{!confirmEnrollment}" rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" value="Submit" styleClass="slds-button slds-button_success">
                                 <apex:param name="confirmedAppId" value="{!appInfoParam.appId}" assignTo="{!confirmedAppId}"/>
                                 <apex:param name="confirmedAppStatus" value="{!appInfoParam.confirmStatus}" assignTo="{!confirmedAppStatus}"/>
                             </apex:commandLink>

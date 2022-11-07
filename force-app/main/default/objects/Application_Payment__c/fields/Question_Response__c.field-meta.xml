@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <inlineHelpText>Question Response the payment fulfils.</inlineHelpText>
     <label>Question Response</label>
-    <referenceTo>Mogli_SMS__QuestionResponse__c</referenceTo>
+    <referenceTo>Question_Response__c</referenceTo>
     <relationshipLabel>Application Payments</relationshipLabel>
     <relationshipName>Application_Payments</relationshipName>
     <required>false</required>

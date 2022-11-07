@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Admission_Plan__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Admission Plan</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -12,14 +14,25 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Early Decision</fullName>
-                <default>false</default>
-                <label>Early Decision</label>
+                <fullName>Early Action</fullName>
+                <default>true</default>
+                <label>Early Action</label>
             </value>
             <value>
                 <fullName>Regular Decision</fullName>
                 <default>false</default>
                 <label>Regular Decision</label>
+            </value>
+            <value>
+                <fullName>Rolling Admission</fullName>
+                <default>false</default>
+                <label>Rolling Admission</label>
+            </value>
+            <value>
+                <fullName>Early Decision</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Early Decision</label>
             </value>
         </valueSetDefinition>
     </valueSet>

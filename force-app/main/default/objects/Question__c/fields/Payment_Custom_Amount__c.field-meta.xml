@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Custom_Amount__c</fullName>
+    <description>If custom amount is selected for payment type the amount provided here will populate on the payment question as well as be sent over to the payment gateway.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If custom amount is selected for payment type the amount provided here will populate on the payment question as well as be sent over to the payment gateway.</inlineHelpText>
+    <label>Payment Custom Amount</label>
+    <precision>10</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

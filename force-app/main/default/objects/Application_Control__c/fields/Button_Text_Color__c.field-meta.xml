@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Button_Text_Color__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Hex color code for the text that&apos;s displayed on the buttons (e.g. &quot;FFFFFF&quot;)</inlineHelpText>
     <label>Button Text Color</label>

@@ -40,6 +40,31 @@
         <default>false</default>
         <label>Professional (MDIV)</label>
     </customValue>
+    <customValue>
+        <fullName>Yes</fullName>
+        <default>false</default>
+        <label>Yes</label>
+    </customValue>
+    <customValue>
+        <fullName>No</fullName>
+        <default>false</default>
+        <label>No</label>
+    </customValue>
+    <customValue>
+        <fullName>St. Paul Urban Teacher Residency</fullName>
+        <default>false</default>
+        <label>St. Paul Urban Teacher Residency</label>
+    </customValue>
+    <customValue>
+        <fullName>Charter School Residency</fullName>
+        <default>false</default>
+        <label>Charter School Residency</label>
+    </customValue>
+    <customValue>
+        <fullName>Minneapolis Special Education Residency</fullName>
+        <default>false</default>
+        <label>Minneapolis Special Education Residency</label>
+    </customValue>
     <description>Types of an applicant.</description>
     <masterLabel>Applicant Types</masterLabel>
     <sorted>false</sorted>

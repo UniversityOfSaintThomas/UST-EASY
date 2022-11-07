@@ -257,7 +257,6 @@ public class ApplicationQuestion {
         if (String.isNotBlank(ip.Residency__c) && (String.isBlank(application.Residency__c) || ip.Residency__c.equals(application.Residency__c))) {
             return false;
         }
-
         /**** FDF 10/3/2022 - adding in generic filters so they can be used as pre-app filters between program & intended program term     ****/
         if (String.isNotBlank(ip.Generic_Filter_1__c) && (String.isBlank(application.Generic_Filter_1__c) || !(new Set<String>(ip.Generic_Filter_1__c.split(';'))).contains(application.Generic_Filter_1__c))) {
             return false;
@@ -270,7 +269,6 @@ public class ApplicationQuestion {
         if (String.isNotBlank(ip.Generic_Filter_3__c) && (String.isBlank(application.Generic_Filter_3__c) || !(new Set<String>(ip.Generic_Filter_3__c.split(';'))).contains(application.Generic_Filter_3__c))) {
             return false;
         }
-
         if (String.isNotBlank(ip.Generic_Filter_4__c) && (String.isBlank(application.Generic_Filter_4__c) || !(new Set<String>(ip.Generic_Filter_4__c.split(';'))).contains(application.Generic_Filter_4__c))) {
             return false;
         }

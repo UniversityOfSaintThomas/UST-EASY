@@ -15,6 +15,26 @@
         <default>false</default>
         <label>Evenings and Weekends</label>
     </customValue>
+    <customValue>
+        <fullName>Yes</fullName>
+        <default>false</default>
+        <label>Yes</label>
+    </customValue>
+    <customValue>
+        <fullName>No</fullName>
+        <default>false</default>
+        <label>No</label>
+    </customValue>
+    <customValue>
+        <fullName>Teacher Residency</fullName>
+        <default>false</default>
+        <label>Teacher Residency</label>
+    </customValue>
+    <customValue>
+        <fullName>Work and Learn</fullName>
+        <default>false</default>
+        <label>Work and Learn</label>
+    </customValue>
     <description>Types that a program can be delivered.</description>
     <masterLabel>Delivery Types</masterLabel>
     <sorted>false</sorted>

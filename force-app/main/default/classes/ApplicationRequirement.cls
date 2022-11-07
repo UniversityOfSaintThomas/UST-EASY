@@ -548,10 +548,10 @@ public class ApplicationRequirement {
         // Check if external email is for recommendation object
         if (!requirement_item_ids_of_external_email_rrs.isEmpty()) {
             List<Requirement_Item__c> requirement_items_of_external_email_rrs = [
-                SELECT Id
-                FROM Requirement_Item__c 
-                WHERE Id IN: requirement_item_ids_of_external_email_rrs.keySet() 
-                AND Related_List_Object__c = 'Recommendation__c'
+                    SELECT Id
+                    FROM Requirement_Item__c
+                    WHERE Id IN :requirement_item_ids_of_external_email_rrs.keySet()
+                    AND Related_List_Object__c = 'Recommendation__c'
             ];
 
             if (!requirement_items_of_external_email_rrs.isEmpty()) {
@@ -563,9 +563,9 @@ public class ApplicationRequirement {
 
                 // get Question Response info to populate fields on recommendation
                 List<Question_Response__c> related_question_responses = [
-                    SELECT Question_Response__c, Requirement_Response__c, Question__r.Related_Object_Field__c
-                    FROM Question_Response__c 
-                    WHERE Requirement_Response__c IN: rr_ids_that_should_have_recommendation
+                        SELECT Question_Response__c, Requirement_Response__c, Question__r.Related_Object_Field__c
+                        FROM Question_Response__c
+                        WHERE Requirement_Response__c IN :rr_ids_that_should_have_recommendation
                 ];
                 Map<Id, List<Question_Response__c>> requirement_response_to_question_responses_map = new Map<Id, List<Question_Response__c>>();
                 for (Question_Response__c question_response : related_question_responses) {
@@ -580,9 +580,9 @@ public class ApplicationRequirement {
 
                 // get existing recommendations
                 List<Recommendation__c> recommendations_related_to_requirement_responses = [
-                    SELECT Id, Recommendation_Requirement_Response__c, Rec_Email__c, Submitted__c
-                    FROM Recommendation__c 
-                    WHERE Recommendation_Requirement_Response__c IN: rr_ids_that_should_have_recommendation
+                        SELECT Id, Recommendation_Requirement_Response__c, Rec_Email__c, Submitted__c
+                        FROM Recommendation__c
+                        WHERE Recommendation_Requirement_Response__c IN :rr_ids_that_should_have_recommendation
                 ];
 
                 Map<Id, Recommendation__c> requirement_response_to_recommendation_map = new Map<Id, Recommendation__c>();

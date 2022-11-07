@@ -21,6 +21,7 @@ public with sharing class ApplicationBodyController {
     }
 
     public allWidgets getWidgets() {
+
         List<String> pagesWithMultipleAppInfo = new List<String>{
                 'applicationportal'
         };
@@ -267,3 +268,4 @@ public with sharing class ApplicationBodyController {
     }
 
 }
+

@@ -29,6 +29,7 @@ public class ApplicationRequirement {
     public EASYApplicationInfo appInfo { get; set; }
 
     public Boolean allowSubmit { get; set; }
+    public Boolean allowConfirm { get; set; }
     public transient String additionalDataString { get; set; }
     public String redirectPage { get; set; }
     public String userType { get; set; }
@@ -106,6 +107,18 @@ public class ApplicationRequirement {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
 
+        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('UPAY_SITE_ID'))) {
+            PageReference pr = Page.ApplicationRequirement;
+            if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
+                pr.getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
+            }
+            if (String.isNotBlank(ApexPages.currentPage().getParameters().get('requirementId'))) {
+                pr.getParameters().put('requirementId', ApexPages.currentPage().getParameters().get('requirementId'));
+            }
+            pr.setRedirect(true);
+            return pr;
+        }
+
         if (String.isBlank(appInfo.appControlId)) {
             PageReference portalPage = Page.ApplicationPortal;
             return portalPage;
@@ -136,6 +149,8 @@ public class ApplicationRequirement {
             checklistItems = checklistHelper.checklistRequirements(app, appInfo);
             allowSubmit = checklistHelper.allowSubmit(checklistItems, appInfo);
             appInfo.allowSubmit = allowSubmit;
+            allowConfirm = checklistHelper.allowConfirm(checklistItems, appInfo);
+            appInfo.allowConfirm = allowConfirm;
         }
 
         //Get needed values from Contact record
@@ -518,14 +533,25 @@ public class ApplicationRequirement {
         return pr;
     }
 
+    public PageReference confirmEnrollment() {
+        PageReference pr = Page.ApplicationPortal;
+        try {
+            update new Application__c(Id = appInfo.appId, Application_Status__c = appInfo.confirmStatus);
+        } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            return null;
+        }
+        return pr;
+    }
+
     public static void handleRecommendations(Map<Id, Requirement_Response__c> rrMap, Map<Id, Id> requirement_item_ids_of_external_email_rrs) {
         // Check if external email is for recommendation object
         if (!requirement_item_ids_of_external_email_rrs.isEmpty()) {
             List<Requirement_Item__c> requirement_items_of_external_email_rrs = [
-                SELECT Id
-                FROM Requirement_Item__c 
-                WHERE Id IN: requirement_item_ids_of_external_email_rrs.keySet() 
-                AND Related_List_Object__c = 'Recommendation__c'
+                    SELECT Id
+                    FROM Requirement_Item__c
+                    WHERE Id IN :requirement_item_ids_of_external_email_rrs.keySet()
+                    AND Related_List_Object__c = 'Recommendation__c'
             ];
 
             if (!requirement_items_of_external_email_rrs.isEmpty()) {
@@ -537,9 +563,9 @@ public class ApplicationRequirement {
 
                 // get Question Response info to populate fields on recommendation
                 List<Question_Response__c> related_question_responses = [
-                    SELECT Question_Response__c, Requirement_Response__c, Question__r.Related_Object_Field__c
-                    FROM Question_Response__c 
-                    WHERE Requirement_Response__c IN: rr_ids_that_should_have_recommendation
+                        SELECT Question_Response__c, Requirement_Response__c, Question__r.Related_Object_Field__c
+                        FROM Question_Response__c
+                        WHERE Requirement_Response__c IN :rr_ids_that_should_have_recommendation
                 ];
                 Map<Id, List<Question_Response__c>> requirement_response_to_question_responses_map = new Map<Id, List<Question_Response__c>>();
                 for (Question_Response__c question_response : related_question_responses) {
@@ -554,9 +580,9 @@ public class ApplicationRequirement {
 
                 // get existing recommendations
                 List<Recommendation__c> recommendations_related_to_requirement_responses = [
-                    SELECT Id, Recommendation_Requirement_Response__c, Rec_Email__c, Submitted__c
-                    FROM Recommendation__c 
-                    WHERE Recommendation_Requirement_Response__c IN: rr_ids_that_should_have_recommendation
+                        SELECT Id, Recommendation_Requirement_Response__c, Rec_Email__c, Submitted__c
+                        FROM Recommendation__c
+                        WHERE Recommendation_Requirement_Response__c IN :rr_ids_that_should_have_recommendation
                 ];
 
                 Map<Id, Recommendation__c> requirement_response_to_recommendation_map = new Map<Id, Recommendation__c>();

@@ -382,7 +382,7 @@ public class ApplicationQuestionGroup_TEST {
             FROM Requirement_Response__c 
             WHERE Requirement_Item__c =: reqItem.Id
         ];
-        List<Question_Response__c> questionResponses = [SELECT Id FROM Question_Response__c WHERE Requirement_Response__c =: reqResponse.Id];
+        List<Question_Response__c> questionResponses = [SELECT Id, ValueText__c FROM Question_Response__c WHERE Requirement_Response__c =: reqResponse.Id];
         Schema.DescribeFieldResult describeField = Question__c.Additional_Field_Validation__c.getDescribe();
         Schema.sObjectField field = describeField.getSObjectField();
         Map<String, Schema.sObjectField> sobjectFieldMap = new Map<String, Schema.sObjectField>();
@@ -545,6 +545,15 @@ public class ApplicationQuestionGroup_TEST {
         );
         insert qd;
 
+        Question_Dependency__c qd2 = new Question_Dependency__c(
+            Question__c = q1.Id, 
+            Controlling_Question__c = q2.Id, 
+            Value__c = 'Test Address 2', 
+            Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID(),
+            RecordTypeId = rtMapQD.get('Radio')
+        );
+        insert qd2;
+
         Requirement_Response__c rr = new Requirement_Response__c(
             Application__c = app.Id, 
             Requirement_Item__c = reqItem.Id,
@@ -650,7 +659,27 @@ public class ApplicationQuestionGroup_TEST {
         ];
         qd = [SELECT Id FROM Question_Dependency__c WHERE Value__c = 'Test Address' LIMIT 1];
         rr = [SELECT Id FROM Requirement_Response__c WHERE External_Email__c = 'testaddress@test.com' LIMIT 1];
-        qr = [SELECT Id, State__c, Country__c FROM Question_Response__c WHERE Question__c =: q1.Id LIMIT 1];
+        qr = [
+                SELECT Id, 
+                    State__c, 
+                    Country__c, 
+                    ValueText__c, 
+                    ValuePhone__c, 
+                    ValueEmail__c, 
+                    ValueCurrency__c, 
+                    ValueDate__c, 
+                    ValueCheckbox__c, 
+                    ValueDateTime__c, 
+                    ValueLongTextArea__c, 
+                    ValueNumber__c, 
+                    ValuePercent__c, 
+                    ValueTextArea__c, 
+                    ValueTextEncrypted__c, 
+                    ValueURL__c 
+                FROM Question_Response__c 
+                WHERE Question__c =: q1.Id 
+                LIMIT 1
+            ];
 
         Requirement_Item__c newReqItem = new Requirement_Item__c(
             Requirement__c = req.Id, 
@@ -831,6 +860,7 @@ public class ApplicationQuestionGroup_TEST {
         Question_Response__c query_qr = [SELECT Id, Question__c FROM Question_Response__c WHERE Id =: qr.Id];
         dResponses.add(query_qr);
         appQuestionGroup.addQuestionDependencies(qMap, dQuestions, dResponses);
+        appQuestion.getShowQuestion(family);
 
         ApplicationQuestionGroup appQuestionGroup2 = new ApplicationQuestionGroup(
             student, app, newRI, dependentQuestions, rr, qrList, sobjectFieldMap, true

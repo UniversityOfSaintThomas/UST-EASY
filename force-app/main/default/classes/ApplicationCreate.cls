@@ -170,7 +170,9 @@ public class ApplicationCreate {
                     SELECT Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
                     FROM Intended_Program_Term__c
                     WHERE Intended_Program__r.Application_Control__c = :appControlId
+                    AND Intended_Program__c IN: programs
                     AND Academic_Term__r.Application_Status__c = 'Active'
+                    AND Application_Status__c = 'Active'
                     GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
                     ORDER BY Academic_Term__r.Term_Start_Date__c
             ];
@@ -392,10 +394,18 @@ public class ApplicationCreate {
         return null;
     }
 
+    public String saveApplication(Boolean createInteraction) {
+        return saveApplicationHelper(createInteraction);
+    }
+
+    public String saveApplication() {
+        return saveApplicationHelper(true);
+    } 
+
     /* ******************************************************************************
     * @description Saves application and returns URL to new application checklist
     ********************************************************************************/
-    public String saveApplication() {
+    public String saveApplicationHelper(Boolean createInteraction) {
 
         app.Id = null;
         insert app; // Insert application
@@ -451,10 +461,148 @@ public class ApplicationCreate {
 
         upsert qResponses; // Insert question responses
 
+        //create interaction
+        if (createInteraction) {
+            Interaction__c interaction = populateInteraction(new Interaction__c());
+            if (interaction.Email__c != null) {
+                insert interaction;
+            }
+        } else {
+            updateInteraction();
+        }
+
         // Return URL for checklist page for new application
         appInfo = ApplicationUtilities.setApplicationInfo(appInfo, app);
         ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
         return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appInfo.at) ? '' : ('&at=' + appInfo.at));
+    }
+
+    public Interaction__c populateInteraction(Interaction__c interaction) {
+        Id application_opp_RT_ID = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
+        interaction.Id = null;
+        interaction.Contact__c = null;
+        interaction.OwnerId = Test.isRunningTest() ? UserInfo.getUserId() : Site.getAdminId();
+        // populate interaction with contact, application, program, and term information
+        if (app != null && app.Id != null) {
+            Application__c currentApplication = [
+                SELECT Id, 
+                    Generic_Filter_2__c, 
+                    Degree_Level__c, 
+                    Major_1__c, 
+                    Major_2__c, 
+                    Major_3__c,
+                    Contact__c,
+                    Contact__r.FirstName, 
+                    Contact__r.MiddleName, 
+                    Contact__r.LastName, 
+                    Contact__r.Email,
+                    Contact__r.Birthdate, 
+                    Contact__r.MailingCountry, 
+                    Contact__r.MailingCity,
+                    Contact__r.MailingPostalCode, 
+                    Contact__r.MailingStreet, 
+                    Contact__r.MailingState,
+                    Contact__r.HomePhone,
+                    Intended_Term_of_Entry__c,
+                    Intended_Program__c,
+                    Intended_Program__r.Program_College_of_Interest__c,
+                    Intended_Program__r.Program_Applicant_Type__c,
+                    Intended_Term_of_Entry__r.Term__c
+                FROM Application__c 
+                WHERE Id =: app.Id 
+                LIMIT 1
+            ];
+            interaction.Admissions_Application__c = app.Id;
+            interaction.Citizenship__c = app.Citizenship__c;
+            interaction.Gender__c = currentApplication.Generic_Filter_2__c;
+            interaction.Degree_Level__c = currentApplication.Degree_Level__c;
+            interaction.Major_Program_1__c = currentApplication.Major_1__c;
+            interaction.Major_Program_2__c = currentApplication.Major_2__c;
+            interaction.Major_Program_3__c = currentApplication.Major_3__c;
+            interaction.First_Name__c = currentApplication.Contact__r.FirstName;
+            interaction.Middle_Name__c = currentApplication.Contact__r.MiddleName;
+            interaction.Last_Name__c = currentApplication.Contact__r.LastName;
+            interaction.Email__c = currentApplication.Contact__r.Email;
+            interaction.Birthdate__c = currentApplication.Contact__r.Birthdate;
+            interaction.Mailing_Country__c = currentApplication.Contact__r.MailingCountry;
+            interaction.Mailing_City__c = currentApplication.Contact__r.MailingCity;
+            interaction.Mailing_Postal_Code__c = currentApplication.Contact__r.MailingPostalCode;
+            interaction.Mailing_Street__c = currentApplication.Contact__r.MailingStreet;
+            interaction.Mailing_State__c = currentApplication.Contact__r.MailingState;
+            interaction.Home_Phone__c = currentApplication.Contact__r.HomePhone;
+            interaction.Intended_Start_Term__c = currentApplication.Intended_Term_of_Entry__c;
+            interaction.Academic_Program__c = currentApplication.Intended_Program__c;
+            interaction.College_of_Interest__c = currentApplication.Intended_Program__r.Program_College_of_Interest__c;
+            interaction.Admit_Type__c = currentApplication.Intended_Program__r.Program_Applicant_Type__c;
+            interaction.Term__c = currentApplication.Intended_Term_of_Entry__r.Term__c;
+            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c =: currentApplication.Intended_Program__c LIMIT 1];
+            if (!relatedPlan.isEmpty()) {
+                interaction.Recruitment_Interest__c = relatedPlan[0].Id;
+            }
+        }
+        
+        interaction.Opportunity_Stage__c = 'Started App';
+        interaction.Opportunity_Record_Type__c = application_opp_RT_ID;
+        interaction.Interaction_Source__c = 'Application';
+        interaction.Date_Started_App__c = System.Today();
+        interaction.Lead_Source__c = 'Application';
+
+        return interaction;
+    }
+
+    public void updateInteraction() {
+        // get previously created interaction (from ApplicationRegistration) and update with info on application and contact
+        Interaction__c interaction;
+        Id currentContactId;
+        Id intendedStartTermId;
+        Id academicProgramId;
+        if (app != null && app.Id != null) {
+            Application__c currentApplication = [
+                SELECT Id, 
+                    Intended_Term_of_Entry__c,
+                    Intended_Program__c,
+                    Generic_Filter_2__c, 
+                    Degree_Level__c, 
+                    Major_1__c, 
+                    Major_2__c, 
+                    Major_3__c,
+                    Contact__c,
+                    Contact__r.Birthdate, 
+                    Contact__r.MailingCountry, 
+                    Contact__r.MailingCity,
+                    Contact__r.MailingPostalCode, 
+                    Contact__r.MailingStreet, 
+                    Contact__r.MailingState,
+                    Contact__r.HomePhone
+                FROM Application__c 
+                WHERE Id =: app.Id 
+                LIMIT 1
+            ];
+
+            interaction = [
+                SELECT Id 
+                FROM Interaction__c 
+                WHERE Contact__c =: currentApplication.Contact__c 
+                AND Intended_Start_Term__c =: currentApplication.Intended_Term_of_Entry__c 
+                AND Academic_Program__c =: currentApplication.Intended_Program__c 
+                LIMIT 1
+            ];
+            interaction.Admissions_Application__c = app.Id;
+            interaction.Gender__c = currentApplication.Generic_Filter_2__c;
+            interaction.Degree_Level__c = currentApplication.Degree_Level__c;
+            interaction.Major_Program_1__c = currentApplication.Major_1__c;
+            interaction.Major_Program_2__c = currentApplication.Major_2__c;
+            interaction.Major_Program_3__c = currentApplication.Major_3__c;
+            interaction.Birthdate__c = currentApplication.Contact__r.Birthdate;
+            interaction.Mailing_Country__c = currentApplication.Contact__r.MailingCountry;
+            interaction.Mailing_City__c = currentApplication.Contact__r.MailingCity;
+            interaction.Mailing_Postal_Code__c = currentApplication.Contact__r.MailingPostalCode;
+            interaction.Mailing_Street__c = currentApplication.Contact__r.MailingStreet;
+            interaction.Mailing_State__c = currentApplication.Contact__r.MailingState;
+            interaction.Home_Phone__c = currentApplication.Contact__r.HomePhone;
+            interaction.Interaction_Status__c = 'New';
+            update interaction;
+        }
     }
 
     @RemoteAction

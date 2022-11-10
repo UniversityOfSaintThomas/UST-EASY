@@ -38,7 +38,7 @@ public class ApplicationPortal {
                 appControlsByAppIds = new Map<Id, Application_Control__c>([
                         SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
                                 Cancel_Status__c, Submit_Status__c, Withdraw_Status__c, URL_Parameter__c, Default__c, Academic_Level__c,
-                                School_College__c, Degree_Levels__c, Template__c
+                                School_College__c, Degree_Levels__c, Template__c, Confirm_Status__c, Allow_Confirm_From__c
                         FROM Application_Control__c
                         WHERE Id IN (
                                 SELECT Application_Control__c
@@ -59,7 +59,9 @@ public class ApplicationPortal {
                     EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
                     List<RequirementWrapper> checklist = checklistHelper.checklistRequirements(app, newAppInfo);
                     Boolean allowSubmit = checklistHelper.allowSubmit(checklist, appInfo);
+                    Boolean allowConfirm = checklistHelper.allowConfirm(checklist, appInfo);
                     newAppInfo.allowSubmit = allowSubmit;
+                    newAppInfo.allowConfirm = allowConfirm;
                     appInfoMapByAppId.put(app.Id, newAppInfo);
                     checklistsByAppIds.put(app.Id, checklist);
                 }

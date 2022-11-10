@@ -39,6 +39,8 @@ public class ApplicationUtilities {
         appInfo.allowWithdrawFrom = appControl.Allow_Withdraw_From__c;
         appInfo.allowSubmitFrom = appControl.Allow_Submit_From__c;
         appInfo.submitStatus = appControl.Submit_Status__c;
+        appInfo.allowConfirmFrom = appControl.Allow_Confirm_From__c;
+        appInfo.confirmStatus = appControl.Confirm_Status__c;
         appInfo.withdrawStatus = appControl.Withdraw_Status__c;
         appInfo.academicLevel = appControl.Academic_Level__c;
         appInfo.schoolCollege = appControl.School_College__c;
@@ -56,6 +58,8 @@ public class ApplicationUtilities {
         appInfo = flattenAppControl(appControl, appInfo);
         appInfo.contactId = ApplicationUtilities.getAppContactId();
         appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
+        appInfo.appSubStatus = 'none';
+        appInfo.appStatus = 'none';
         appInfo.allowSubmit = false;
         if (String.isBlank(appControl.Template__c)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
@@ -200,7 +204,7 @@ public class ApplicationUtilities {
                     SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
                             Arrow_Color__c, Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c,
                             Logo_Static_Resource_Path__c, Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c,
-                            School_College__c, Degree_Levels__c, Template__c
+                            School_College__c, Degree_Levels__c, Template__c, Confirm_Status__c, Allow_Confirm_From__c
                     FROM Application_Control__c
                     WHERE Id = :acId
             ];
@@ -211,7 +215,7 @@ public class ApplicationUtilities {
                 SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c, Arrow_Color__c,
                         Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c, Logo_Static_Resource_Path__c,
                         Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c,
-                        Template__c
+                        Template__c, Confirm_Status__c, Allow_Confirm_From__c
                 FROM Application_Control__c
                 WHERE Active__c = TRUE
                 AND (URL_Parameter__c = :param OR Default__c = TRUE)
@@ -237,19 +241,24 @@ public class ApplicationUtilities {
 
 
     public static String createEncryptedCookie(String stringToEncrypt) {
-        String encodedCipherText = '';
+        String encodedCipherText = createEncryptedString(stringToEncrypt);
+        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'strict');
+        ApexPages.currentPage().setCookies(new Cookie[]{
+                EASYCookie
+        });
+        return encodedCipherText;
+    }
+
+    public static String createEncryptedString(String stringToEncrypt) {
+        String encryptedString = '';
         String key = getCookieKey();
         if (String.isNotBlank(String.valueOf(key))) {
             Blob data = Blob.valueOf(stringToEncrypt);
             Blob encrypted = Crypto.encryptWithManagedIV('AES256', Blob.valueOf(key), data);
-            encodedCipherText = EncodingUtil.base64Encode(encrypted);
-            encodedCipherText = EncodingUtil.urlEncode(encodedCipherText, 'UTF-8');
-            Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'strict');
-            ApexPages.currentPage().setCookies(new Cookie[]{
-                    EASYCookie
-            });
+            encryptedString = EncodingUtil.base64Encode(encrypted);
+            encryptedString = EncodingUtil.urlEncode(encryptedString, 'UTF-8');
         }
-        return encodedCipherText;
+        return encryptedString;
     }
 
     public static String getDecryptCookie() {

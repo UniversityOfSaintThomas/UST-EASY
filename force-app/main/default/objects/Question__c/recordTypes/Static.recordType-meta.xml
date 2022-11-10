@@ -17,6 +17,10 @@
     <picklistValues>
         <picklist>Applicant_Type__c</picklist>
         <values>
+            <fullName>Charter School Residency</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>DFC</fullName>
             <default>false</default>
         </values>
@@ -29,7 +33,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minneapolis Special Education Residency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professional %28MDIV%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>St%2E Paul Urban Teacher Residency</fullName>
             <default>false</default>
         </values>
         <values>
@@ -38,6 +62,10 @@
         </values>
         <values>
             <fullName>Transfer DFC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -56,7 +84,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deferred</fullName>
+            <fullName>Deferred - Admit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred - Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -64,7 +96,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Do Not Contact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enrolled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>File Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Second Review</fullName>
             <default>false</default>
         </values>
         <values>
@@ -77,6 +125,10 @@
         </values>
         <values>
             <fullName>Withdrawn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong Application</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -138,6 +190,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Master in the Study of Law %28MSL%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Laws %28LLM%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Master%27s</fullName>
             <default>false</default>
         </values>
@@ -161,11 +221,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>On-Campus</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teacher Residency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Work and Learn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -206,10 +282,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deferred</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Denied</fullName>
             <default>false</default>
         </values>
@@ -233,6 +305,14 @@
     <picklistValues>
         <picklist>Generic_Filter_1__c</picklist>
         <values>
+            <fullName>AS_AH_CER%7CAHCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_AH_CER%7CMSCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>AS_AH_MA%7CARTH</fullName>
             <default>false</default>
         </values>
@@ -241,11 +321,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>AS_CS_CER%7CMCCE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>AS_CS_MA%7CCATH</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>AS_CS_NDO%7CNDCS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_EN_CER%7CENCT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -282,6 +370,18 @@
         </values>
         <values>
             <fullName>AS_GR_CER%7CSPCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_MC_CER%7CSPCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_MC_MA%7CGSPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_MC_NDO%7CNDSP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -961,7 +1061,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>BU_GR_CER%7CBUIT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BU_GR_CER%7CBUMC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BU_GR_CER%7CBUOC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -974,6 +1082,10 @@
         </values>
         <values>
             <fullName>BU_GR_CER%7CMSRL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BU_GR_CPM%7CBUAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1018,6 +1130,10 @@
         </values>
         <values>
             <fullName>DV_LY_DIV%7CLDIV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DV_PS_MA%7CMAPL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1077,7 +1193,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ED_EL_EDS%7CELPR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ED_EL_EDS%7CESEA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_EL_EDS%7CSADI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1090,6 +1214,10 @@
         </values>
         <values>
             <fullName>ED_EL_LIC%7CESSU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_EL_LIC%7CSADI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1121,7 +1249,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ED_ES_MA%7CTECI%7CTEED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_ES_MA%7CTECI%7CTEND</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_ES_MA%7CTECI%7CTMED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_ES_MA%7CTECI%7CTRED</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ED_GR_NDO%7CNDND</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_GR_NDO_NDND</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1150,6 +1298,30 @@
         </values>
         <values>
             <fullName>ED_OL_MA%7CSEAM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SEA_MA%7CSPAB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SEA_MA%7CSPAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SEA_MA%7CSPDD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SEA_MA%7CSPEC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SEA_MA%7CSPEM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SEA_MA%7CSPLD</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1229,6 +1401,30 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ED_SE_MAT%7CSPAB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SE_MAT%7CSPAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SE_MAT%7CSPDD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SE_MAT%7CSPEC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SE_MAT%7CSPEM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_SE_MAT%7CSPLD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ED_SP_LIC%7CSPAB</fullName>
             <default>false</default>
         </values>
@@ -1257,6 +1453,30 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ED_STA_MA%7CSPAB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_STA_MA%7CSPAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_STA_MA%7CSPDD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_STA_MA%7CSPEC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_STA_MA%7CSPEM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_STA_MA%7CSPLD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ED_TER_MA%7CTPEL</fullName>
             <default>false</default>
         </values>
@@ -1266,6 +1486,10 @@
         </values>
         <values>
             <fullName>ED_TE_CER%7CCRSE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_CER%7CLTLI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1637,6 +1861,46 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ED_TE_MAT%7CTPEL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_MAT%7CTPKT%7CELSP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_MAT%7CTPKT%7CMEIN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_MAT%7CTPKT%7CMEVO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_MAT%7CTPST%7CMSCH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_MAT%7CTPST%7CMSCL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_MAT%7CTPST%7CMSLS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_MAT%7CTPST%7CMSMA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_MAT%7CTPST%7CMSPH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ED_TE_MAT%7CTPST%7CMSSS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ET_GR_CER%7CMCCS</fullName>
             <default>false</default>
         </values>
@@ -1845,6 +2109,26 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HL_GR_MSN%7CNRSG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LW_CIC_NDO%7CNDND</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LW_CRP_NDO%7CNDND</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>LW_GR_JD%7CLAWS</fullName>
             <default>false</default>
         </values>
@@ -1913,7 +2197,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SE_GR_CER%7CDAAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SE_GR_CER%7CDBIR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SE_GR_CER%7CDITR</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1926,6 +2218,10 @@
         </values>
         <values>
             <fullName>SE_GR_CER%7CEMSY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SE_GR_CER%7CFSDV</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2022,6 +2318,22 @@
             <fullName>Apply Without Standardized Test</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Generic_Filter_4__c</picklist>
@@ -2090,6 +2402,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Spring 2023</fullName>
             <default>false</default>
         </values>
@@ -2153,6 +2469,28 @@
             <fullName>Summer 2030</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payment_Gateway__c</picklist>
+        <values>
+            <fullName>First_Year_Undergraduate_Deposit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payment_Type__c</picklist>
+        <values>
+            <fullName>Custom Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Program Application Fee Amount</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Required__c</picklist>
@@ -2166,10 +2504,6 @@
         </values>
         <values>
             <fullName>Confirmed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Deferred</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2231,6 +2565,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Morrison Family College of Health</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Opus College of Business</fullName>
             <default>false</default>
         </values>
@@ -2266,11 +2604,75 @@
     <picklistValues>
         <picklist>Student_Type__c</picklist>
         <values>
+            <fullName>Accelerated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Advanced</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Art History</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Catholic Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>District Partnerships</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Educational Leadership</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Engineering</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>English</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Business Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Music Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regular</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Software</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spanish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Special Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teacher Education</fullName>
             <default>false</default>
         </values>
     </picklistValues>

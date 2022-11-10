@@ -561,7 +561,7 @@ public class ApplicationRequirement_TEST {
         ac.appInfo = appInfo;
         ac.finalSubmitApp();
         Application__c submittedApp = [SELECT Application_Status__c FROM Application__c WHERE Id =: app.Id LIMIT 1];
-        System.assertEquals('Started App', submittedApp.Application_Status__c);
+        System.assertEquals('Submitted App', submittedApp.Application_Status__c);
     }
 
     @IsTest

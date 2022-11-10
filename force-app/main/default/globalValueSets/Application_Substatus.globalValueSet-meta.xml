@@ -11,6 +11,11 @@
         <label>Accept</label>
     </customValue>
     <customValue>
+        <fullName>Accept Waitlist</fullName>
+        <default>false</default>
+        <label>Accept Waitlist</label>
+    </customValue>
+    <customValue>
         <fullName>After Accept</fullName>
         <default>false</default>
         <label>After Accept</label>
@@ -21,14 +26,19 @@
         <label>After Confirm</label>
     </customValue>
     <customValue>
-        <fullName>Appeal</fullName>
+        <fullName>Appeal Completed</fullName>
         <default>false</default>
-        <label>Appeal</label>
+        <label>Appeal Completed</label>
     </customValue>
     <customValue>
         <fullName>Appeal Denied</fullName>
         <default>false</default>
         <label>Appeal Denied</label>
+    </customValue>
+    <customValue>
+        <fullName>Appeal Started</fullName>
+        <default>false</default>
+        <label>Appeal Started</label>
     </customValue>
     <customValue>
         <fullName>Before Complete App</fullName>
@@ -46,6 +56,11 @@
         <label>Conditional</label>
     </customValue>
     <customValue>
+        <fullName>Counselor Hold</fullName>
+        <default>false</default>
+        <label>Counselor Hold</label>
+    </customValue>
+    <customValue>
         <fullName>Deferred from Previous Term</fullName>
         <default>false</default>
         <label>Deferred from Previous Term</label>
@@ -54,6 +69,11 @@
         <fullName>Deny</fullName>
         <default>false</default>
         <label>Deny</label>
+    </customValue>
+    <customValue>
+        <fullName>Deny - Recommend to DFC</fullName>
+        <default>false</default>
+        <label>Deny - Recommend to DFC</label>
     </customValue>
     <customValue>
         <fullName>Disciplinary</fullName>
@@ -66,11 +86,6 @@
         <label>Exchange</label>
     </customValue>
     <customValue>
-        <fullName>From Waitlist for Inst Acc</fullName>
-        <default>false</default>
-        <label>From Waitlist for Inst Acc</label>
-    </customValue>
-    <customValue>
         <fullName>From Waitlist into Class</fullName>
         <default>false</default>
         <label>From Waitlist into Class</label>
@@ -81,19 +96,44 @@
         <label>Full</label>
     </customValue>
     <customValue>
-        <fullName>Hold</fullName>
-        <default>false</default>
-        <label>Hold</label>
-    </customValue>
-    <customValue>
-        <fullName>Inactive</fullName>
-        <default>false</default>
-        <label>Inactive</label>
-    </customValue>
-    <customValue>
         <fullName>Incomplete</fullName>
         <default>false</default>
         <label>Incomplete</label>
+    </customValue>
+    <customValue>
+        <fullName>In Review</fullName>
+        <default>false</default>
+        <label>In Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Completed</fullName>
+        <default>false</default>
+        <label>Interview Completed</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Invited</fullName>
+        <default>false</default>
+        <label>Interview Invited</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Reviewed</fullName>
+        <default>false</default>
+        <label>Interview Reviewed</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Scheduled</fullName>
+        <default>false</default>
+        <label>Interview Scheduled</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual Update</fullName>
+        <default>false</default>
+        <label>Manual Update</label>
+    </customValue>
+    <customValue>
+        <fullName>NAR (Not Actively Recruting)</fullName>
+        <default>false</default>
+        <label>NAR (Not Actively Recruting)</label>
     </customValue>
     <customValue>
         <fullName>Needs Items</fullName>
@@ -104,6 +144,11 @@
         <fullName>Needs Review</fullName>
         <default>false</default>
         <label>Needs Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Off Waitlist</fullName>
+        <default>false</default>
+        <label>Off Waitlist</label>
     </customValue>
     <customValue>
         <fullName>On Appeal</fullName>
@@ -126,29 +171,46 @@
         <label>Unsubscribe</label>
     </customValue>
     <customValue>
-        <fullName>Waitlist</fullName>
+        <fullName>Appeal</fullName>
         <default>false</default>
-        <label>Waitlist</label>
+        <isActive>false</isActive>
+        <label>Appeal</label>
     </customValue>
     <customValue>
         <fullName>With Concern</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>With Concern</label>
+    </customValue>
+    <customValue>
+        <fullName>From Waitlist for Inst Acc</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>From Waitlist for Inst Acc</label>
+    </customValue>
+    <customValue>
+        <fullName>Hold</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Hold</label>
+    </customValue>
+    <customValue>
+        <fullName>Inactive</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Inactive</label>
+    </customValue>
+    <customValue>
+        <fullName>Waitlist</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Waitlist</label>
     </customValue>
     <customValue>
         <fullName>Withdraw</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Withdraw</label>
-    </customValue>
-    <customValue>
-        <fullName>NAR (Not Actively Recruting)</fullName>
-        <default>false</default>
-        <label>NAR (Not Actively Recruting)</label>
-    </customValue>
-    <customValue>
-        <fullName>Manual Update</fullName>
-        <default>false</default>
-        <label>Manual Update</label>
     </customValue>
     <description>Used in conjunction with Application Status</description>
     <masterLabel>Application Substatus</masterLabel>

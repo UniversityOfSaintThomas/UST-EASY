@@ -18,6 +18,10 @@
     <picklistValues>
         <picklist>Applicant_Type__c</picklist>
         <values>
+            <fullName>Charter School Residency</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>DFC</fullName>
             <default>false</default>
         </values>
@@ -30,7 +34,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minneapolis Special Education Residency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professional %28MDIV%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>St%2E Paul Urban Teacher Residency</fullName>
             <default>false</default>
         </values>
         <values>
@@ -39,6 +63,10 @@
         </values>
         <values>
             <fullName>Transfer DFC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -57,7 +85,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deferred</fullName>
+            <fullName>Deferred - Admit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred - Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -65,7 +97,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Do Not Contact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enrolled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>File Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Second Review</fullName>
             <default>false</default>
         </values>
         <values>
@@ -78,6 +126,10 @@
         </values>
         <values>
             <fullName>Withdrawn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong Application</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -136,6 +188,14 @@
         </values>
         <values>
             <fullName>Licensure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master in the Study of Law %28MSL%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Laws %28LLM%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -207,10 +267,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deferred</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Denied</fullName>
             <default>false</default>
         </values>
@@ -234,6 +290,14 @@
     <picklistValues>
         <picklist>Generic_Filter_1__c</picklist>
         <values>
+            <fullName>AS_AH_CER%7CAHCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_AH_CER%7CMSCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>AS_AH_MA%7CARTH</fullName>
             <default>false</default>
         </values>
@@ -242,11 +306,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>AS_CS_CER%7CMCCE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>AS_CS_MA%7CCATH</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>AS_CS_NDO%7CNDCS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_EN_CER%7CENCT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -283,6 +355,18 @@
         </values>
         <values>
             <fullName>AS_GR_CER%7CSPCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_MC_CER%7CSPCT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_MC_MA%7CGSPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS_MC_NDO%7CNDSP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1918,6 +2002,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SE_GR_CER%7CDITR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SE_GR_CER%7CDSAI</fullName>
             <default>false</default>
         </values>
@@ -2156,6 +2244,24 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Payment_Gateway__c</picklist>
+        <values>
+            <fullName>First_Year_Undergraduate_Deposit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payment_Type__c</picklist>
+        <values>
+            <fullName>Custom Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Program Application Fee Amount</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Required__c</picklist>
         <values>
             <fullName>Admit</fullName>
@@ -2167,10 +2273,6 @@
         </values>
         <values>
             <fullName>Confirmed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Deferred</fullName>
             <default>false</default>
         </values>
         <values>

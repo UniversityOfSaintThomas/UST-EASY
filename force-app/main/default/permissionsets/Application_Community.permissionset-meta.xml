@@ -171,12 +171,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Admission_Decision__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Admission_Plan__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -196,17 +196,17 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Application_Decision_Team__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Application_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Application_Substatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -221,7 +221,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Degree_Level__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -246,17 +246,17 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.External_Application_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.External_Appliction_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.First_License__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -326,7 +326,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.License_Area__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -346,7 +346,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Needs_Item_s__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -356,7 +356,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Program_Bucket__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -406,7 +406,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Text_for_Testing__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1898,6 +1898,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Question__c.New_Reference_Field__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Payment_Custom_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Payment_Gateway__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Question__c.Payment_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -32,4 +32,5 @@
             <site:googleAnalyticsTracking />
         </apex:insert>
     </footer>
+    </html>
 </apex:page>

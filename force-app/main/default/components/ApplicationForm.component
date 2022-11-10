@@ -44,7 +44,8 @@
                                 </div>
                                 <div class="slds-text-body_regular slds-p-bottom_small">
                                     <p>This question group will not be saved and finished until you click the "Save and Continue" button at the end of this grouping.</p>
-                                </div>                            
+                                </div>
+                            </div>
                         </div>
                     </apex:repeat>
                 </div>

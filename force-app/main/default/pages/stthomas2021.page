@@ -44,7 +44,7 @@
     <body>
 
     <nav aria-label="Skip navigation" class="tab-navigation" id="access">
-    	<a href="#main-content" tabindex="-1">Skip to primary content</a>
+    	<a href="#main-content" tabindex="1">Skip to primary content</a>
     </nav>
 
     <!-- Google Tag Manager (noscript) -->

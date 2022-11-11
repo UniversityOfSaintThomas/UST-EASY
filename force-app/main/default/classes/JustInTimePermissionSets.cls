@@ -2,7 +2,7 @@
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 1/25/2021.
  */
 
-global with sharing class JustInTimePermissionSets {
+global without sharing class JustInTimePermissionSets {
 
     @InvocableMethod(
             Label='JIT Permission Sets'
@@ -10,7 +10,6 @@ global with sharing class JustInTimePermissionSets {
             Category= 'User'
     )
     public static void jitPermission(List<userWithPermissionRequests> permissionRequests) {
-        System.debug('Invocable Apex Reached!');
         List<String> allRequestedPermissionSetNames = new List<String>();
         List<String> userIdsAffected = new List<String>();
 
@@ -23,34 +22,35 @@ global with sharing class JustInTimePermissionSets {
 
         List<Id> contactAffectedIds = new List<Id>();
 
-        List<User> usersAffected = [
-            SELECT Id, ContactId
+        List<User> usersAffected = 
+        [
+            SELECT 
+                Id, 
+                ContactId,
+                Contact.Portal_User_First_Login__c,
+                Contact.Portal_User_Latest_Login__c
             FROM User
             WHERE Id IN :userIdsAffected
         ];
 
-        for (User u : usersAffected) {
-            System.debug(u);
-            contactAffectedIds.add(u.ContactId);
-        }
-
-        List<Contact> contactsAffected = [
-            Select Id, Portal_User_First_Login__c, Portal_User_Latest_Login__c 
-            FROM Contact
-            WHERE Id IN :contactAffectedIds
-        ];
-
+        List<Contact> contactsToUpdate = new List<Contact>();
         //Populate Portal User First Login and Portal User Latest Login on Contact for each UserID
-        for(Contact contact : contactsAffected) {
-            contact.Portal_User_Latest_Login__c = System.today();
-            if (contact.Portal_User_First_Login__c == null) {
-                contact.Portal_User_First_Login__c = System.today();
+        for(User user : usersAffected) {
+            Contact new_contact = new Contact(
+                Id = user.ContactId,
+                Portal_User_First_Login__c = user.Contact.Portal_User_First_Login__c,
+                Portal_User_Latest_Login__c = user.Contact.Portal_User_Latest_Login__c
+                );
+            if (new_contact.Portal_User_First_Login__c == null) {
+                new_contact.Portal_User_First_Login__c = System.today();
             }
+            new_contact.Portal_User_Latest_Login__c = System.today();
+            contactsToUpdate.add(new_contact);
         }
 
-        System.debug(contactsAffected);
-        System.debug(contactsAffected.size());
-        System.debug(contactAffectedIds);
+        if(contactsToUpdate.size() > 0){
+            upsert contactsToUpdate;
+        }
 
         //Map permission sets by name as key id as value
         List<PermissionSet> requestedPermissionSets = [
@@ -105,8 +105,6 @@ global with sharing class JustInTimePermissionSets {
                 }
             }
         }
-
-        Database.update(contactsAffected, false);
 
         if (permissionsToInsert.size() > 0) {
             try {

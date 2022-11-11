@@ -21,6 +21,37 @@ global with sharing class JustInTimePermissionSets {
             userIdsAffected.add(userPermRequest.userId);
         }
 
+        List<Id> contactAffectedIds = new List<Id>();
+
+        List<User> usersAffected = [
+            SELECT Id, ContactId
+            FROM User
+            WHERE Id IN :userIdsAffected
+        ];
+
+        for (User u : usersAffected) {
+            System.debug(u);
+            contactAffectedIds.add(u.ContactId);
+        }
+
+        List<Contact> contactsAffected = [
+            Select Id, Portal_User_First_Login__c, Portal_User_Latest_Login__c 
+            FROM Contact
+            WHERE Id IN :contactAffectedIds
+        ];
+
+        //Populate Portal User First Login and Portal User Latest Login on Contact for each UserID
+        for(Contact contact : contactsAffected) {
+            contact.Portal_User_Latest_Login__c = System.today();
+            if (contact.Portal_User_First_Login__c == null) {
+                contact.Portal_User_First_Login__c = System.today();
+            }
+        }
+
+        System.debug(contactsAffected);
+        System.debug(contactsAffected.size());
+        System.debug(contactAffectedIds);
+
         //Map permission sets by name as key id as value
         List<PermissionSet> requestedPermissionSets = [
                 SELECT Id, Name
@@ -74,6 +105,8 @@ global with sharing class JustInTimePermissionSets {
                 }
             }
         }
+
+        Database.update(contactsAffected, false);
 
         if (permissionsToInsert.size() > 0) {
             try {

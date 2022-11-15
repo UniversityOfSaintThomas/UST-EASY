@@ -39,10 +39,10 @@
                             </div>
                             <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
                             <div class="questionGroupDescription">
-                                <div class="slds-text-body_regular slds-p-vertical_medium slds-m-top_medium ">
+                                <div class="slds-text-body_regular slds-p-vertical_medium slds-m-top_medium questionGroupCount">
                                     <p>Question Group {!itemCount} of {!section.groups.size} in the {!title} section.</p>
                                 </div>
-                                <div class="slds-text-body_regular slds-p-bottom_small">
+                                <div class="slds-text-body_regular slds-p-bottom_small questionGroupWarning">
                                     <p>This question group will not be saved and finished until you click the "Save and Continue" button at the end of this grouping.</p>
                                 </div>
                             </div>

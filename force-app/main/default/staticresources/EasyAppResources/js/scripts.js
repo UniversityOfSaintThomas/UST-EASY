@@ -762,7 +762,7 @@ function activateTooltips() {
 
 function isCarousel() {
     let items = document.getElementsByClassName("carousel__item");
-    if (items.length > 0) {
+    if (items.length > 0 && carouselOn != false) {
         return true;
     }
     return false;

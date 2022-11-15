@@ -19,6 +19,7 @@ global with sharing class JustInTimePermissionSets {
             allRequestedPermissionSetNames.addAll(userPermRequest.permissionSetNames.split(';'));
             userIdsAffected.add(userPermRequest.userId);
         }
+
         //Map permission sets by name as key id as value
         List<PermissionSet> requestedPermissionSets = [
                 SELECT Id, Name
@@ -80,6 +81,8 @@ global with sharing class JustInTimePermissionSets {
                 System.debug(e.getMessage());
             }
         }
+
+        //Update Portal_User_First_Login__c and Portal_User_Latest_Login__c for each user 
         PortalUserLoginDate.upsertContacts(userIdsAffected);
     }
 

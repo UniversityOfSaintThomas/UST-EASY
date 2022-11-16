@@ -96,7 +96,6 @@ function moveCarouselTo(slide) {
         if (slide === 0) {
             carouselPrev.style.display = "none";
             if (previousRequirement) {
-                alert(previousRequirement);
                 saveAndGoBack.style.display = 'inline-flex';
             }
             newPrevious = (carouselTotalItems - 1);

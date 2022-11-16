@@ -85,14 +85,14 @@ function textValidations(formWrap, errorsOff) {
         }
     });
 
-    formWrap.querySelectorAll('.docUploadInput').forEach(docUpload => {
-            if (String(docUpload.placeholder) == 'true' && !Boolean(docUpload.value)) {
-                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
-                activateErrorState(docUpload, 'change');
-            } else {
-                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
-            }
-        });
+    document.querySelectorAll('.docUploadInput').forEach(docUpload => {
+        if (String(docUpload.placeholder) === 'true' && !Boolean(docUpload.value)) {
+            document.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
+            activateErrorState(docUpload, 'change');
+        } else {
+            document.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
+        }
+    });
 
     //ACT/SAT Test score validation
     allTestScores.forEach(testScore => {

@@ -656,6 +656,10 @@ function activateCarousel(slideMoveTo) {
                     }
                     if (items[slide]) {
                         items[slide].classList.add("active");
+                        let inputElements = items[slide].querySelectorAll("select, input");
+                        if (inputElements.length > 0) {
+                            inputElements[0].focus(); // focus on the first focusable form element, so we aren't stuck on the next/prev buttons.
+                        }
                     }
                     if (items[newNext]) {
                         items[newNext].classList.add("next");

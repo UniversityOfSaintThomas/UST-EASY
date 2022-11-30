@@ -10,20 +10,26 @@ public class JustInTimePermissionSets_TEST {
     @TestSetup
     public static void setup(){
         Id profileId = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1].Id;
-        User newUser = new User(
-            Username = 'usertest85920@test.com',
-            Email = 'usertest85920@test.com',
-            Alias = 'usert',
-            LocaleSidKey = 'en_US',
-            EmailEncodingKey = 'UTF-8',
-            ProfileId = profileId,
-            LanguageLocaleKey = 'en_US',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            FirstName = 'User', 
-            LastName = 'Test85920'
-        );
-        insert newUser;
-        System.debug('new user id: ' + newUser.Id);
+        System.runAs(new User(Id = UserInfo.getUserId())){  
+            Contact newContact = new Contact(
+                FirstName = 'User', 
+                LastName = 'Test85920'
+            );
+            User newUser = new User(
+                Username = 'usertest85920@test.com',
+                Email = 'usertest85920@test.com',
+                Alias = 'usert',
+                LocaleSidKey = 'en_US',
+                EmailEncodingKey = 'UTF-8',
+                ProfileId = profileId,
+                LanguageLocaleKey = 'en_US',
+                TimeZoneSidKey = 'America/Los_Angeles',
+                FirstName = 'User', 
+                LastName = 'Test85920',
+                ContactId = newContact.Id
+            );
+            insert newUser;
+          
 
         PermissionSet permSet1 = new PermissionSet(
             Name = 'Test_Perm_Set_14353',
@@ -48,6 +54,7 @@ public class JustInTimePermissionSets_TEST {
             PermissionSetId = permSet2.Id
         );
         insert new List<PermissionSetAssignment>{permSetAssignment1, permSetAssignment2};
+    	}
     }
 
     @IsTest

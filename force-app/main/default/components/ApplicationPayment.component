@@ -46,7 +46,7 @@
         <P>Amount: ${!paymentAmount}</P>
 
         <p class="slds-m-vertical_small">
-            <a href="javascript:payForm{!question.question.id}.submit();" class="slds-button slds-button_brand">Make Deposit</a>
+            <a href="javascript:payForm{!question.question.id}.submit();" class="slds-button slds-button_brand">Submit Deposit</a>
         </p>
 
         <apex:outputPanel layout="none" rendered="{!!ISBLANK(configurationMessage)}">

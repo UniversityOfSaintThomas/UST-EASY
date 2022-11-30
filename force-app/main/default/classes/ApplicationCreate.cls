@@ -29,6 +29,17 @@ public class ApplicationCreate {
 
     public PageReference ApplicationCreateInit() {
 
+        String userType = UserInfo.getUserType();
+        if (userType.endsWithIgnoreCase('guest')) {
+            PageReference regPage = Page.ApplicationRegistration;
+            If (String.isNOtBlank(ApexPages.currentPage().getParameters().get('at'))) {
+                regPage.getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
+            }
+            regPage.setRedirect(true);
+            return regPage;
+        }
+        //return null;
+
         appInfo = ApplicationUtilities.createShellAppInfo();
 
         // Exit if there is no Application Control to reference

@@ -804,6 +804,10 @@ function checkForm() {
             let carouselItem = foundErrors.closest('.carousel__item');
             activateCarousel(carouselItem.dataset.slide);
         }
+        let errorInputs = foundErrors.querySelector("select, input");
+        if (errorInputs) {
+            errorInputs.focus();
+        }
         window.scrollTo(0, 0);
         return false;
     }

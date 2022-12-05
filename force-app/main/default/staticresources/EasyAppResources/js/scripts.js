@@ -719,21 +719,30 @@ function activateCarousel(slideMoveTo) {
 }
 
 /* Spinners on/off */
+var spinnerFocusElement = null;
 function appHideLoadingSpinner() {
     document.getElementById('loadSpinner').style.display = "none";
+    if (spinnerFocusElement != null) {
+        document.getElementById(spinnerFocusElement).focus();
+    }
     return true;
 }
 
 function appShowLoadingSpinner() {
+    spinnerFocusElement = document.activeElement.id;
     document.getElementById('loadSpinner').style.display = "block";
     return true;
 }
 
 function hideFormSpinner() {
     document.getElementById("form-spinner").style.display = 'none';
+    if (spinnerFocusElement != null) {
+        document.getElementById(spinnerFocusElement).focus();
+    }
 }
 
 function showFormSpinner() {
+    spinnerFocusElement = document.activeElement.id;
     document.getElementById("form-spinner").style.display = 'block';
 }
 

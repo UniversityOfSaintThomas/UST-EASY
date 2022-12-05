@@ -31,6 +31,7 @@ function pageLoadReRendered() {
     });
 
     //Arranging Visualforce inputs to achieve SLDS accessibility
+    findApplicationLinkTargetSelf();
     vfCountryPicklist();
     summaryDetail();
     adjustLabelsFor();
@@ -43,6 +44,15 @@ function pageLoadReRendered() {
     //Hide the form spinner if it is active
     hideFormSpinner();
 }
+
+function findApplicationLinkTargetSelf() {
+    document.querySelectorAll('.slds-scope a').forEach(link => {
+        if (link.href.toLowerCase().includes('/applicationlink?')) {
+            link.setAttribute('target', '_self');
+        }
+    });
+}
+
 
 //Add record action
 function addRecordValidation(elem, rrIndex) {
@@ -156,23 +166,25 @@ function findFileName(filePath) {
 //Makes sure all labels have id associations to the inputs
 function adjustLabelsFor() {
     document.querySelectorAll('.slds-input, .slds-select, .slds-radio').forEach(inputFound => {
-        let inputWrapper = inputFound.closest('.slds-form-element'),
-            inputLabel = inputWrapper.querySelector('label'),
-            helpText = inputWrapper.querySelector('.slds-form-element__help');
+        let inputWrapper = inputFound.closest('.slds-form-element');
+        if (inputWrapper) {
+            let inputLabel = inputWrapper.querySelector('label');
+            let helpText = inputWrapper.querySelector('.slds-form-element__help');
 
-        if (inputLabel) {
-            inputLabel.htmlFor = inputFound.getAttribute('id');
-            if (inputWrapper.dataset.placeholder) {
-                inputFound.setAttribute('placeholder', inputWrapper.dataset.placeholder);
+            if (inputLabel) {
+                inputLabel.htmlFor = inputFound.getAttribute('id');
+                if (inputWrapper.dataset.placeholder) {
+                    inputFound.setAttribute('placeholder', inputWrapper.dataset.placeholder);
+                }
+                if (inputWrapper.dataset.maxlength) {
+                    inputFound.setAttribute('maxlength', inputWrapper.dataset.maxlength);
+                }
             }
-            if (inputWrapper.dataset.maxlength) {
-                inputFound.setAttribute('maxlength', inputWrapper.dataset.maxlength);
-            }
-        }
 
-        if (inputFound && helpText) {
-            inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
-            inputFound.setAttribute('aria-invalid', 'false');
+            if (inputFound && helpText) {
+                inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
+                inputFound.setAttribute('aria-invalid', 'false');
+            }
         }
     });
 }
@@ -455,11 +467,9 @@ function navigateRequirementGroup(redirectTo) {
             appHideLoadingSpinner();
             hideFormSpinner();
         }
-    } 
-    else if (redirectTo === 'back') {
+    } else if (redirectTo === 'back') {
         performDocUploadSave(previousRequirement);
-    } 
-    else {
+    } else {
         performDocUploadSave(redirectTo);
     }
 }
@@ -969,7 +979,6 @@ function textValidations(checkFormValidate, documentStart) {
 
 function validateFileType(obj) {
     if (Boolean(obj.title)) {
-        console.log(obj);
         let acceptedTypes = obj.title.split(';');
         let inputArray = obj.value.split('.');
         let inputType = inputArray[inputArray.length - 1].toUpperCase();
@@ -981,7 +990,6 @@ function validateFileType(obj) {
             }
             fileTypeMessage = fileTypeMessage.slice(0, fileTypeMessage.length - 2) + '.';
             document.getElementById('error-108' + String(obj.name)).innerHTML = fileTypeMessage;
-            console.log(document.getElementById('error-108' + String(obj.name)));
             return false;
         } else {
             document.getElementById('error-108' + String(obj.name)).innerHTML = '';

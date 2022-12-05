@@ -1,0 +1,6 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 11/21/2022.
+ -->
+
+<apex:page id="ApplicationLink" controller="ApplicationLinkController" action="{!goToRequirement}" showHeader="false" standardStylesheets="false" cache="false">
+</apex:page>

@@ -1,14 +1,14 @@
 <apex:page controller="ApplicationPortal" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!applicationPortalInit}">
     <apex:composition template="{!template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead />
+            <c:ApplicationHead/>
         </apex:define>
         <apex:define name="metaPageTitle">St. Thomas Application Portal</apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="Application(s)" appInfo="{!appInfo}" vfPageName="ApplicationPortal">
+            <c:ApplicationBody title="Application(s)" appInfo="{!appInfo}" con="{!con}" vfPageName="ApplicationPortal">
                 <apex:variable var="howManyApps" value="{!IF(!ISBLANK(applicationMapSize), applicationMapSize, 0)}"/>
                 <div class="slds-grid slds-wrap {!IF(howManyApps >= 2, ' slds-gutters','')}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <apex:pageMessages />
+                    <apex:pageMessages/>
                     <apex:variable var="checklistStyle" value="{!IF(howManyApps == 2, ' slds-large-size_6-of-12', ' slds-large-size_12-of-12')}"/>
                     <apex:variable var="checklistStyle" value="{!IF(howManyApps == 3, ' slds-large-size_4-of-12', checklistStyle)}"/>
                     <apex:repeat value="{!applicationsByIds}" var="key">

@@ -129,7 +129,7 @@ public with sharing class applicationHelper {
     public static String getApplicationContactFields(List<Requirement_Item__c> items) {
         String fields = '';
         Set<String> contactFields = new Set<String>{
-                'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode'
+                'id', 'mailingstreet', 'mailingcity', 'mailingpostalcode', 'otherstreet', 'othercity', 'otherpostalcode', 'University_Banner_ID__c'
         };
         if (Account.SObjectType.getDescribe().fields.getMap().containsKey('BillingCountryCode')) {
             contactFields.addAll(new Set<String>{

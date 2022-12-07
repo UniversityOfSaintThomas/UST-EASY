@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>What_I_Love_About_St_Thomas__c</fullName>
+    <description>Used for Locate Counselor.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used for Locate Counselor.</inlineHelpText>
+    <label>What I Love About St. Thomas</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

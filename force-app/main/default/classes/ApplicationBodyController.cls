@@ -7,6 +7,7 @@ public with sharing class ApplicationBodyController {
 
     public EASYApplicationInfo appInfoParam { get; set; }
     public String currentPageName { get; set; }
+    public Contact con { get; set; }
 
     public ApplicationBodyController() {
     }
@@ -268,4 +269,3 @@ public with sharing class ApplicationBodyController {
     }
 
 }
-

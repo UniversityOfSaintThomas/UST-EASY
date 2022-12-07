@@ -346,6 +346,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Message_To_Applicant__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Application__c.Needs_Item_s__c</field>
         <readable>true</readable>
@@ -418,6 +423,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.MailingAddress</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.University_Banner_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

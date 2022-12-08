@@ -58,12 +58,11 @@ function findApplicationLinkTargetSelf() {
 function addRecordValidation(elem, rrIndex) {
     showFormSpinner();
     let recWrap = elem.closest('.slds-card');
+    hideFormSpinner();
     window.scrollTo(0, 0);
     if (textValidations(true, recWrap) === 0) {
-        hideFormSpinner();
         return true;
     }
-    hideFormSpinner();
     return false;
 }
 
@@ -723,16 +722,17 @@ function activateCarousel(slideMoveTo) {
                 moveCarouselTo(parseInt(slideMoveTo));
             }
         }
-    } else {
-        killerButton.parentNode.removeChild(killerButton);
+    }
+    if (items.length <= 1) {
+        killerButton.style.display = 'none';
     }
 }
 
 /* Spinners on/off */
 var spinnerFocusElement = null;
-function appHideLoadingSpinner() {
+function appHideLoadingSpinner(restoreFocus = true) {
     document.getElementById('loadSpinner').style.display = "none";
-    if (spinnerFocusElement != null) {
+    if (restoreFocus == true && spinnerFocusElement != null) {
         document.getElementById(spinnerFocusElement).focus();
     }
     return true;
@@ -744,9 +744,9 @@ function appShowLoadingSpinner() {
     return true;
 }
 
-function hideFormSpinner() {
+function hideFormSpinner(restoreFocus = true) {
     document.getElementById("form-spinner").style.display = 'none';
-    if (spinnerFocusElement != null) {
+    if (restoreFocus == true && spinnerFocusElement != null) {
         document.getElementById(spinnerFocusElement).focus();
     }
 }
@@ -804,11 +804,17 @@ function checkForm() {
             let carouselItem = foundErrors.closest('.carousel__item');
             activateCarousel(carouselItem.dataset.slide);
         }
+
+        window.scrollTo(0, 0); // Scroll to the top if you can't find a focus, but you should find a focus.
+
         let errorInputs = foundErrors.querySelector("select, input");
         if (errorInputs) {
             errorInputs.focus();
+            spinnerFocusElement = errorInputs;  // checkForm() MAY be happening while the appSpinner is up; if so,
+                                                // you might set focus here but will lose it again when appSpinner goes
+                                                // down, as focus reverts to whatever was focused when appSpinner started.
+                                                // So hijack the appSpinner's memory to make sure it sticks.
         }
-        window.scrollTo(0, 0);
         return false;
     }
     return true;

@@ -7,26 +7,29 @@ public with sharing class LocateCounselorAPITest {
     @IsTest static void testCounselorLookup() {
         createTestData();
         Test.startTest();
-        //studentType, schoolId, state, transferType
-        getLookupFeed( 'High School Student', '0014P00002DoYt6QAF', 'MN', 'SCHTYPE-4PUBM'); // Private 4 Year College MN, Private 4 Year College Non-Mn, Public 2 Year College, Public 4 Year College MN 
-        getLookupFeed( 'High School Student', '', '', '');                                  // Public 4 Year College Non-MN
-        getLookupFeed( 'High School Student', '', '', '');
-        getLookupFeed( 'Transfer Student', '', '', 'SCHTYPE-4PUBM');
-        getLookupFeed( 'Transfer Student', '', '', 'SCHTYPE-2PRI');
-        getLookupFeed( 'Veteran', '', '', '');
-        getLookupFeed( 'International Student', '', '', 'SCHTYPE-INTLC');
-        getLookupFeed( 'Bernardi Student', '', '', '');
+        //urlEnding, highschoolId, collegeId studentType
+
+        //Test Counselor Lookup
+        getLookupFeed( '', '', '', 'High School Student'); 
+        getLookupFeed( '', '', '', 'High School Student');                                  
+        getLookupFeed( '', '', '', 'High School Student');
+        getLookupFeed( '', '', '', 'Transfer Student');
+        getLookupFeed( '', '', '', 'International Student');
+        getLookupFeed( '', '', '', 'Bernardi Student');
+        //Test High School Lookup
+        getLookupFeed( '/highschools', '', '', ''); 
+        //Test College Lookup
+        getLookupFeed( '/colleges', '', '', ''); 
         Test.stopTest();
     }
 
-    private static void getLookupFeed(String studentType, String schoolId, String state, String transferType) {
+    private static void getLookupFeed(String urlEnding, String highschoolId, String collegeId, String studentType) {
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        req.requestURI = '/applicantportal/services/apexrest/admissioncounselor';
+        req.requestURI = '/applicantportal/services/apexrest/admissioncounselor' + urlEnding;
         req.params.put('studentType', studentType);
-        req.params.put('schoolId', schoolId);
-        req.params.put('state', state);
-        req.params.put('transferType', transferType);
+        req.params.put('highschoolId', highschoolId);
+        req.params.put('collegeId', collegeId);
         req.httpMethod = 'GET';
         req.addHeader('Content-Type', 'application/json');
         System.debug(req);
@@ -42,7 +45,7 @@ public with sharing class LocateCounselorAPITest {
         Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
       
         List<User> uu = new List<User>();
-        List<String> codes = new List<String> {'U45', 'U15', 'U1', 'U24', 'U3', 'U4', 'U20', 'U10', 'U12', 'D05', 'U41'};
+        List<String> codes = new List<String> {'U45', 'U15', 'U1', 'U24', 'U3', 'U4', 'U20', 'U10', 'U42', 'D05', 'U41'};
         for(String c : codes) {
             Blob b = Crypto.generateAesKey(128);
             String h = EncodingUtil.convertToHex(b);

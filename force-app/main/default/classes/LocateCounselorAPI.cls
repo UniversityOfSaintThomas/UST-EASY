@@ -2,12 +2,12 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 12-05-2022
+ * @last modified on  : 12-08-2022
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 @RestResource(UrlMapping='/admissioncounselor/*')
 
-global with sharing class LocateCounselorAPI {
+global without sharing class LocateCounselorAPI {
 
     private class CounselorInfo {
         // SF API NAMES: Name, Email, College__c, Major__c, Hometown__c, About_Me__c, What_I_Love_About_St_Thomas__c, Words_of_Advice__c
@@ -36,20 +36,18 @@ global with sharing class LocateCounselorAPI {
         if (String.isNotBlank(RestContext.request.params.get('callback'))) {
             callback = String.escapeSingleQuotes(RestContext.request.params.get('callback'));
         }
-        if (String.isNotBlank(RestContext.request.params.get('state'))) {
-            state = String.escapeSingleQuotes(RestContext.request.params.get('state'));
-        }
         if (String.isBlank(callback)) {
             res.addHeader('Content-Type', 'application/json');
             callback = '';
         } else {
             res.addHeader('Content-Type', 'application/javascript');
         }
-        if (RestContext.request.requestUri.endsWith('/high_schools')) {
-            serialized_json = getHighschools(state);
+        if (RestContext.request.requestUri.endsWith('/highschools')) {
+            serialized_json = JSON.serialize(getHighschools());
+            
         } 
         else if (RestContext.request.requestUri.endsWith('/colleges')) {
-            serialized_json = getColleges(search_term);
+            serialized_json = JSON.serialize(getColleges());
         } 
         else {
             String counselor_id = getCounselorId();
@@ -58,7 +56,7 @@ global with sharing class LocateCounselorAPI {
             System.debug(counselor_info);
             serialized_json = JSON.serialize(counselor_info);
         }
-
+        //serialized_json = JSON.serialize(getHighschools());
         if (!String.isBlank(callback)) {
             serialized_json = callback + '(' + serialized_json + ')';
         }
@@ -66,9 +64,8 @@ global with sharing class LocateCounselorAPI {
     
     }
 
-    private static String getCounselorId() {
+    public static String getCounselorId() {
         String student_type;
-        String state;
         String high_school_or_college;
         String citizenship;
         String country;
@@ -77,9 +74,6 @@ global with sharing class LocateCounselorAPI {
         //Get URL variables
         if (String.isNotBlank(RestContext.request.params.get('studentType'))) {
             student_type = String.escapeSingleQuotes(RestContext.request.params.get('studentType')).toUpperCase();
-        }
-        if (String.isNotBlank(RestContext.request.params.get('state'))) {
-            state = String.escapeSingleQuotes(RestContext.request.params.get('state')).toUpperCase();
         }
         if (String.isNotBlank(RestContext.request.params.get('highschoolId'))) {
             high_school_or_college = String.escapeSingleQuotes(RestContext.request.params.get('highschoolId')).toLowerCase();
@@ -90,17 +84,17 @@ global with sharing class LocateCounselorAPI {
 
         //Populate flow variables
         switch on student_type {
-            when 'High School Student' {
+            when 'HIGH SCHOOL STUDENT' {
                 citizenship = 'US Citizen';
                 country = 'United States';
             }
-            when 'Transfer Student' {
+            when 'TRANSFER STUDENT' {
                 admit_type = 'Transfer';
             }
-            when 'International Student' {
+            when 'INTERNATIONAL STUDENT' {
                 citizenship = 'International';
             }
-            when 'Bernardi Student' {
+            when 'BERNARDI STUDENT' {
                 citizenship = 'US Citizen';
                 country = 'Italy';
             }
@@ -111,19 +105,18 @@ global with sharing class LocateCounselorAPI {
                 'Citizenship' => citizenship,
                 'Country' => country,
                 'Admit_Type' => admit_Type,
-                'State' => state,
                 'HS_or_College' => high_school_or_college,
                 'College_of_Interest' => 'Undergrad'
             }
         );
         flw.start();
         String counselor_id = (String) flw.getVariableValue('Opportunity_Owner_Id');
-
+        System.debug('counselor Id: ' + counselor_id);
         return counselor_id;
     }
 
 
-    private static CounselorInfo getCounselorInfo(String counselor_id) {
+    public static CounselorInfo getCounselorInfo(String counselor_id) {
         doCRUD CRUDToDO = new doCRUD();
         User new_counselor = new User();
         String cascade_user_image = '';
@@ -149,49 +142,62 @@ global with sharing class LocateCounselorAPI {
         return new_counselor_info;
     }
 
-    private static List<Account> getHighschools(String state) {
+   
+
+    public static Map<String, String> getHighschools(){
         Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-        List<Account> high_schools = [
-            SELECT Id, Name
-            FROM Account
-            WHERE RecordTypeId =: educational_institution_id
-            AND Type = 'High School'
-            AND State IN ('MN', 'WI')
-            ORDER BY Name
-        ];
-        return high_schools;
+        Map<String, String> highschools_map = new Map<String, String>();
+            List<Account> highschools = [
+                SELECT Id, Name
+                FROM Account
+                WHERE RecordTypeId = :educational_institution_id
+                AND Type =: 'High School'
+                ORDER BY NAME DESC
+            ];
+           
+            for (Account highschool : highschools) {
+                highschools_map.put(String.valueOf(highschool.Id), highschool.name);
+            }
+            
+        //highschools_map.put('123456789', 'Blaine High School');   
+        return highschools_map;
     }
 
-    public static List<Account> getColleges(String searchTerm){
+
+    public static Map<String, String> getColleges(){
         Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-        List<Account> colleges = [
-            FIND :search_term 
-            IN NAME FIELDS 
-            RETURNING Account(
-                            Id, 
-                            Name 
-                        WHERE Type =: 'College' 
-                        AND RecordTypeId =: educational_institution_id
-                        ORDER BY Name
-        )];
-        return colleges;
+        Map<String, String> colleges_map = new Map<String, String>();
+            List<Account> colleges = [
+                SELECT Id, Name
+                FROM Account
+                WHERE RecordTypeId = :educational_institution_id
+                AND Type =: 'College'
+                ORDER BY NAME DESC
+            ];
+           
+            for (Account college : colleges) {
+                colleges_map.put(String.valueOf(college.Id), college.name);
+            }
+            
+        //highschools_map.put('123456789', 'Blaine High School');   
+        return colleges_map;
     }
 
-    private without sharing class doCRUD {
+    public without sharing class doCRUD {
 
         public User getCounselorById(String counselor_id) {
             User counselor_user = [
                     SELECT Name,
-                           Title,
-                           Phone,
-                           Email,
-                           Address,
-                           College__c,
-                           Major__c,
-                           Hometown__c,
-                           About_Me__c,
-                           What_I_Love_About_St_Thomas__c,
-                           Words_of_Advice__c  
+                        Title,
+                        Phone,
+                        Email,
+                        Address,
+                        College__c,
+                        Major__c,
+                        Hometown__c,
+                        About_Me__c,
+                        What_I_Love_About_St_Thomas__c,
+                        Words_of_Advice__c  
                     FROM User
                     WHERE Id = :counselor_id
                     AND Admissions_Counselor__c = TRUE
@@ -200,3 +206,54 @@ global with sharing class LocateCounselorAPI {
         }
     }
 }
+    // public static Map<String, String> getColleges(){
+    //     String search_term = '';
+    //     if (String.isNotBlank(RestContext.request.params.get('searchTerm'))) {
+    //         search_term = String.escapeSingleQuotes(RestContext.request.params.get('searchTerm'));
+    //     }
+    //     Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
+    //     Map<String, String> colleges_map = new Map<String, String>();
+    //         List<List<Account>> colleges = [
+    //             FIND :search_term 
+    //             IN NAME FIELDS 
+    //             RETURNING Account(
+    //                             Id,
+    //                             Name
+    //                         WHERE Type =: 'College' 
+    //                         AND RecordTypeId =: educational_institution_id
+    //                         ORDER BY Name
+    //         )];
+    //         for (List<Account> account_list : colleges) {
+    //             for (Account college : account_list) {
+    //                 colleges_map.put(String.valueOf(college.Id), college.Name);
+    //             }
+    //         }
+            
+    //     return colleges_map;
+    // }
+
+     // public static Map<String, String> getHighschools(){
+    //     String search_term = '';
+    //     if (String.isNotBlank(RestContext.request.params.get('searchTerm'))) {
+    //         search_term = String.escapeSingleQuotes(RestContext.request.params.get('searchTerm'));
+    //     }
+    //     Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
+    //     Map<String, String> highschools_map = new Map<String, String>();
+    //         List<List<Account>> highschools = [
+    //             FIND :search_term 
+    //             IN NAME FIELDS 
+    //             RETURNING Account(
+    //                             Id,
+    //                             Name
+    //                         WHERE Type =: 'High School' 
+    //                         AND RecordTypeId =: educational_institution_id
+    //                         ORDER BY Name
+    //         )];
+    //         for (List<Account> account_list : highschools) {
+    //             for (Account highschool : account_list) {
+    //                 highschools_map.put(String.valueOf(highschool.Id), highschool.name);
+    //             }
+    //         }
+            
+    //     return highschools_map;
+    // }

@@ -56,7 +56,7 @@ public with sharing class ApplicationBodyController {
                 apps = [
                         SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
                                 Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,
-                                Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c
+                                Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c
                         FROM Application__c
                         WHERE Contact__c = :appInfoParam.contactId
                         AND Application_Status__c != 'Wrong Application'
@@ -65,7 +65,7 @@ public with sharing class ApplicationBodyController {
                 apps = [
                         SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
                                 Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,
-                                Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c
+                                Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c
                         FROM Application__c
                         WHERE Id = :appInfoParam.appId
                         AND Application_Status__c != 'Wrong Application'

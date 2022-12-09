@@ -12,4 +12,7 @@ public with sharing class EASYPersonalDataTags {
     public String Orientation { get; set; }
     public String Housing_Pref { get; set; }
     public String UGFYClass { get; set; }
+    public String Documents_Missing { get; set; }
+    public String First_Name { get; set; }
+    public String Last_Name { get; set; }
 }

@@ -8,6 +8,7 @@ public with sharing class ApplicationBodyController {
     public EASYApplicationInfo appInfoParam { get; set; }
     public String currentPageName { get; set; }
     public Contact con { get; set; }
+    public EASYPersonalDataTags tags { get; set; }
 
     public ApplicationBodyController() {
     }
@@ -22,6 +23,11 @@ public with sharing class ApplicationBodyController {
     }
 
     public allWidgets getWidgets() {
+
+        tags = new EASYPersonalDataTags();
+        tags.Banner_ID = con.University_Banner_ID__c;
+        tags.Applicant_Email = con.Email;
+
 
         List<String> pagesWithMultipleAppInfo = new List<String>{
                 'applicationportal'
@@ -223,6 +229,14 @@ public with sharing class ApplicationBodyController {
 
 
             if (!skipWidget) {
+                //Process data tags here
+                EASYPersonalDataTags epdt = new EASYPersonalDataTags();
+                if (String.isNotBlank(widget.Display_Text__c)) {
+                    widget.Display_Text__c = replaceDataTags(widget.Display_Text__c, epdt);
+                }
+                if (String.isNotBlank(widget.Display_Heading__c)) {
+                    widget.Display_Heading__c = replaceDataTags(widget.Display_Heading__c, epdt);
+                }
 
                 switch on widget.Widget_Screen_Location__c.toLowerCase() {
                     when 'left' {
@@ -249,6 +263,55 @@ public with sharing class ApplicationBodyController {
         }
 
         return foundWidgets;
+    }
+
+    public String replaceDataTags(String widgetContent, EASYPersonalDataTags tagWrapper) {
+        //widgetContent = 'This is a {{Banner <strong>Id</strong>}} in the middle of something. {<strong>{Nothing here</strong>}}. asdfsdfa {{Banner Id}}. Then what if you find a tag like {{This one<strong>}</strong>}';
+
+        //Serialize EASYPersonalDataTags data so we can get field names and retrieve with get method
+        Map<String, Object> tagMap = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(tagWrapper));
+
+        //Create lower/uppercase of EASYPersonalDataTags fields so that we can find them case insensitive
+        Map<String, String> lowerCaseUppercaseTagMap = new Map<String, String>();
+        for (String k : tagMap.keySet()) {
+            lowerCaseUppercaseTagMap.put(k.toLowerCase(), k);
+        }
+
+        //Get all tags in content that start with {{ and end with }} even if interrupted with html
+        Pattern tagPattern = Pattern.compile('\\{.(.*?)\\}(.*?|)[\\}\\s]');
+        Matcher tagMatcher = tagPattern.matcher(widgetContent);
+        Set<String> matchingTags = new Set<String>();
+        while (tagMatcher.find()) {
+            matchingTags.add(tagMatcher.group().trim());
+        }
+
+        //Loop through tag matches set to sanitize and replace all
+        for (String tag : matchingTags) {
+
+            //Remove all HTML elements from the tag to avoid things like this {<em>{</em>Tag}}
+            String tab_data = tag.replaceAll('<[^>]*>', '');
+
+            //Remove tag delineators to get at data identifier
+            tab_data = tab_data.removeStart('{{');
+            tab_data = tab_data.removeEnd('}}');
+            tab_data = tab_data.trim();
+
+            //Add underscore to space in so that user can be agnostic of the need
+            tab_data = tab_data.replace(' ', '_');
+
+            //Find if lowercase version of tag is in our map of lower/uppercase tags and use uppercase to grab data
+            if (lowerCaseUppercaseTagMap.keySet().contains(tab_data.toLowerCase())) {
+                String caseSensitiveTag = lowerCaseUppercaseTagMap.get(tab_data.toLowerCase());
+
+                //If the value is blank we want to replace tag with an empty string
+                String valueForTag = String.isNotBlank((String) tagMap.get(caseSensitiveTag)) ? (String) tagMap.get(caseSensitiveTag) : '' ;
+
+                //Replace the original tag (as it may contain html,ect, with the found value)
+                widgetContent = widgetContent.replace(tag, valueForTag);
+            }
+        }
+
+        return widgetContent;
     }
 
 

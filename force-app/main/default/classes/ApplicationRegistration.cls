@@ -67,7 +67,7 @@ public class ApplicationRegistration {
         userType = UserInfo.getUserType();
         if (!userType.endsWithIgnoreCase('guest')) {
             PageReference createApp;
-            If (String.isNOtBlank(ApexPages.currentPage().getParameters().get('at'))) {
+            If (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
                 createApp = Page.ApplicationCreate;
                 createApp.getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
             } else {
@@ -81,7 +81,7 @@ public class ApplicationRegistration {
 
     public PageReference testCookieKey() {
         ApplicationUtilities.getCookieKey();
-        PageReference pageRef = ApexPages.CurrentPage();
+        PageReference pageRef = ApexPages.currentPage();
         ApexPages.currentPage().getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
         pageRef.setRedirect(true);
         return pageRef;

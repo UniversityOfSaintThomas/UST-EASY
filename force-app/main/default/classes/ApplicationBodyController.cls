@@ -56,16 +56,51 @@ public with sharing class ApplicationBodyController {
             appInfoParam.appStatus = 'none';
         }
 
+        List<Application__c> apps = new List<Application__c>();
+        Map<String, EASYPersonalDataTags> dataTagsMap = new Map<String, EASYPersonalDataTags>();
+        if (String.isNotBlank(appInfoParam.contactId)) {
+            if (pagesWithMultipleAppInfo.contains(currentPageName)) {
+                apps = [
+                        SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
+                                Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,
+                                Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c
+                        FROM Application__c
+                        WHERE Contact__c = :appInfoParam.contactId
+                        AND Application_Status__c != 'Wrong Application'
+                ];
+            } else {
+                apps = [
+                        SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
+                                Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,
+                                Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c
+                        FROM Application__c
+                        WHERE Id = :appInfoParam.appId
+                        AND Application_Status__c != 'Wrong Application'
+                ];
+            }
+
+            //Create map of application control URLs and tag data associated with them for processing below.
+            for (Application__c app : apps) {
+                EASYPersonalDataTags dataTags = new EASYPersonalDataTags();
+                if (dataTagsMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
+                    //Some tag data will be additive if a person has two apps of the same type. This will become an issue to explain, ugh.
+                    dataTags = dataTagsMap.get(app.Application_Control__r.URL_Parameter__c);
+                    dataTags.UGAQUSCHLRS = dataTags.UGAQUSCHLRS + ', ' + app.Aquinas_Scholars_Portal_Text__c;
+                    dataTags.UGAcctClaimTxt = dataTags.UGAcctClaimTxt + ', ' + app.Account_Claimed_Portal_Text__c;
+                } else {
+                    dataTags.Banner_ID = app.Applicant_Banner_Id__c;
+                    dataTags.UGAQUSCHLRS = app.Aquinas_Scholars_Portal_Text__c;
+                    dataTags.Applicant_Email = app.Contact_Email__c;
+                    dataTags.UGAcctClaimTxt = app.Account_Claimed_Portal_Text__c;
+                }
+                dataTagsMap.put(app.Application_Control__r.URL_Parameter__c, dataTags);
+            }
+
+        }
+
         /* Some pages may have multiple app contexts */
         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
-
-            for (Application__c app : [
-                    SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
-                            Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c
-                    FROM Application__c
-                    WHERE Contact__c = :appInfoParam.contactId
-                    AND Application_Status__c != 'Wrong Application'
-            ]) {
+            for (Application__c app : apps) {
                 appInfoIds.add(app.Application_Control__r.Id);
                 String atURL = app.Application_Control__r.URL_Parameter__c;
 
@@ -229,13 +264,15 @@ public with sharing class ApplicationBodyController {
 
 
             if (!skipWidget) {
+
                 //Process data tags here
-                EASYPersonalDataTags epdt = new EASYPersonalDataTags();
-                if (String.isNotBlank(widget.Display_Text__c)) {
-                    widget.Display_Text__c = replaceDataTags(widget.Display_Text__c, epdt);
-                }
-                if (String.isNotBlank(widget.Display_Heading__c)) {
-                    widget.Display_Heading__c = replaceDataTags(widget.Display_Heading__c, epdt);
+                if (dataTagsMap.containsKey(widget.Application_Control__r.URL_Parameter__c)) {
+                    if (String.isNotBlank(widget.Display_Text__c)) {
+                        widget.Display_Text__c = replaceDataTags(widget.Display_Text__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                    }
+                    if (String.isNotBlank(widget.Display_Heading__c)) {
+                        widget.Display_Heading__c = replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                    }
                 }
 
                 switch on widget.Widget_Screen_Location__c.toLowerCase() {

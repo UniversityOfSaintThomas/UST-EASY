@@ -810,10 +810,10 @@ function checkForm() {
         let errorInputs = foundErrors.querySelector("select, input");
         if (errorInputs) {
             errorInputs.focus();
-            spinnerFocusElement = errorInputs;  // checkForm() MAY be happening while the appSpinner is up; if so,
-                                                // you might set focus here but will lose it again when appSpinner goes
-                                                // down, as focus reverts to whatever was focused when appSpinner started.
-                                                // So hijack the appSpinner's memory to make sure it sticks.
+            spinnerFocusElement = errorInputs.id;   // checkForm() MAY be happening while the appSpinner is up; if so,
+                                                    // you might set focus here but will lose it again when appSpinner goes
+                                                    // down, as focus reverts to whatever was focused when appSpinner started.
+                                                    // So hijack the appSpinner's memory to make sure it sticks.
         }
         return false;
     }

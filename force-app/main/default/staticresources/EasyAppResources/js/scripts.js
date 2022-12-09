@@ -834,7 +834,7 @@ function textValidations(checkFormValidate, documentStart) {
     let allNamCharacters = doc.querySelectorAll('.validateName');
     let allEmails = doc.querySelectorAll('.validateEmail');
     let allUrls = doc.querySelectorAll('.validateURL');
-    let allRequiredInputs = doc.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select, .slds-is-required .slds-radio_button-group .slds-radio_button-value");
+    let allRequiredInputs = doc.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select, .slds-is-required .slds-checkbox, .slds-is-required .slds-radio_button-group .slds-radio_button-value");
 
 
     const re_email = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

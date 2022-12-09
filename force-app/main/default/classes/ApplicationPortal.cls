@@ -13,7 +13,6 @@ public class ApplicationPortal {
     public EASYApplicationInfo appInfo { get; set; }
     public Map<Id, EASYApplicationInfo> appInfoMapByAppId { get; set; }
     public String template { get; set; }
-    public Contact con { get; set; }
 
     public ApplicationPortal() {
         if (appInfo == null) {
@@ -33,15 +32,6 @@ public class ApplicationPortal {
             appInfoMapByAppId = new Map<Id, EASYApplicationInfo>();
             checklistsByAppIds = new Map<Id, List<RequirementWrapper>>();
             Id contactId = appInfo.contactId;
-
-            //Get needed values from Contact record
-
-            if (appInfo.contactId != null) {
-                String query = applicationHelper.getApplicationContactFields(new List<Requirement_Item__c>());
-                query = 'SELECT ' + query + ' FROM Contact WHERE Id = \'' + contactId + '\'';
-                con = ((List<Contact>) Database.query(query)).get(0);
-            }
-
 
             if (String.isNotBlank(contactId)) {
                 //Get Application Controls for all apps

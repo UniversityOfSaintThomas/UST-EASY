@@ -20,7 +20,7 @@
         <apex:define name="metaPageTitle">{!appInfo.intendedProgram} : {!title}</apex:define>
         <apex:define name="body">
 
-            <c:ApplicationBody title="{!if(isInvalid,'An Error has occurred',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}" vfPageName="ApplicationRequirement" con="{!con}">
+            <c:ApplicationBody title="{!if(isInvalid,'An Error has occurred',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}" vfPageName="ApplicationRequirement">
                 <apex:outputPanel id="formPageMessages">
                     <apex:messages />
                 </apex:outputPanel>

@@ -6,7 +6,6 @@
     <apex:attribute name="widget" description="Widget to process" type="EASY_Widget__c" required="true"/>
     <apex:attribute name="appInfo" description="Wrapper with Application control and app information" required="true" type="EASYApplicationInfo"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="true"/>
-    <apex:attribute name="con" type="Contact" required="false" description="Contact information about applicant"/>
 
     <article class="slds-card slds-m-bottom_medium">
         <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">
@@ -39,10 +38,10 @@
                 <c:AdmissionsApplicationFinder appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'User Info Login/Logout' }">
-                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}" con="{!con}"/>
+                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}" />
             </apex:outputPanel>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Counselor Information' }">
-                <c:CounselorInfoWidget appInfo="{!appInfo}" widget="{!widget}" con="{!con}"/>
+                <c:CounselorInfoWidget appInfo="{!appInfo}" widget="{!widget}" />
             </apex:outputPanel>
 
         </div>

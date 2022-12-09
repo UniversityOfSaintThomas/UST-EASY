@@ -20,7 +20,7 @@ public class ApplicationBodyController_TEST {
         );
         insert appControl;
 
-        Contact student = new Contact(LastName = 'TestStudent', FirstName = 'TestFirst', Email = 'test@email.com');
+        Contact student = new Contact(LastName = 'TestStudent', FirstName = 'TestFirst', Email = 'test@email.com', University_Banner_ID__c = '111111111');
         insert student;
 
         Opportunity opp = new Opportunity(
@@ -56,8 +56,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Top Widget',
                 Widget_Screen_Location__c = 'Top',
                 Widget_Type__c = 'Custom',
-                Display_Heading__c = 'Heading',
-                Display_Text__c = 'Display Text',
+                Display_Heading__c = 'Heading {<em>{</em>Banner Id}}',
+                Display_Text__c = 'Display Text {{Banner_id}}',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Active',
                 Display_Widget_On_Pages__c = 'ApplicationPortal'
@@ -68,8 +68,8 @@ public class ApplicationBodyController_TEST {
                 Name = 'Test Top Widget 2',
                 Widget_Screen_Location__c = 'Top',
                 Widget_Type__c = 'Custom',
-                Display_Heading__c = 'Heading',
-                Display_Text__c = 'Display Text',
+                Display_Heading__c = 'Heading {<em>{</em>Banner Id}}',
+                Display_Text__c = 'Display Text {{Banner_id}}',
                 Application_Control__c = appControl.Id,
                 Activation_State__c = 'Date Activated',
                 Display_Widget_On_Pages__c = 'ApplicationPortal',
@@ -223,6 +223,7 @@ public class ApplicationBodyController_TEST {
         System.debug(JSON.serializePretty(allWidgets));
 
         System.assertEquals(1, allWidgets.topWidgets.size());
+        System.assertEquals('Display Text 111111111', allWidgets.topWidgets[0].Display_Text__c);
         //Right includes one login widget
         System.assertEquals(2, allWidgets.rightWidgets.size());
         System.assertEquals(1, allWidgets.bottomWidgets.size());

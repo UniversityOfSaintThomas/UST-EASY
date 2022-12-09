@@ -7,8 +7,6 @@ public with sharing class ApplicationBodyController {
 
     public EASYApplicationInfo appInfoParam { get; set; }
     public String currentPageName { get; set; }
-    public Contact con { get; set; }
-    public EASYPersonalDataTags tags { get; set; }
 
     public ApplicationBodyController() {
     }
@@ -23,11 +21,6 @@ public with sharing class ApplicationBodyController {
     }
 
     public allWidgets getWidgets() {
-
-        tags = new EASYPersonalDataTags();
-        tags.Banner_ID = con.University_Banner_ID__c;
-        tags.Applicant_Email = con.Email;
-
 
         List<String> pagesWithMultipleAppInfo = new List<String>{
                 'applicationportal'

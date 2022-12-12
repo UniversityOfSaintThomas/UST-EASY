@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 12-11-2022
+ * @last modified on  : 12-12-2022
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 @RestResource(UrlMapping='/admissioncounselor/*')
@@ -26,19 +26,17 @@ global without sharing class LocateCounselorAPI {
         String address { get; set; }
     }
 
+    
     @HttpGet
     global static void getAdmissionsCounselorLookup() {
         String serialized_json = '';
-
         RestResponse res = RestContext.response;
         String callback = '';
-
         String state = '';
 
         if (String.isNotBlank(RestContext.request.params.get('state'))) {
             state = String.escapeSingleQuotes(RestContext.request.params.get('state')).toUpperCase();
         }
-
         if (String.isNotBlank(RestContext.request.params.get('callback'))) {
             callback = String.escapeSingleQuotes(RestContext.request.params.get('callback'));
         }
@@ -49,34 +47,33 @@ global without sharing class LocateCounselorAPI {
             res.addHeader('Content-Type', 'application/javascript');
         }
         if (RestContext.request.requestUri.endsWith('/highschools')) {
-            serialized_json = JSON.serialize(getHighschools(state));
-            
+            String school_type = 'High School';
+            serialized_json = JSON.serialize(getSchools(school_type, state));  
         } 
         else if (RestContext.request.requestUri.endsWith('/colleges')) {
-            serialized_json = JSON.serialize(getColleges(state));
+            String school_type = 'College';
+            serialized_json = JSON.serialize(getSchools(school_type, state));
         } 
         else {
             String counselor_id = getCounselorId();
-            System.debug('counselor Id: ' + counselor_id);
             CounselorInfo counselor_info = getCounselorInfo(counselor_id);
-            System.debug(counselor_info);
             serialized_json = JSON.serialize(counselor_info);
         }
-        //serialized_json = JSON.serialize(getHighschools());
         if (!String.isBlank(callback)) {
             serialized_json = callback + '(' + serialized_json + ')';
         }
+
         res.responseBody = Blob.valueOf(serialized_json);
-    
     }
 
+
     public static String getCounselorId() {
-        String student_type = '';
-        String high_school_or_college = '';
-        String citizenship = '';
-        String country = '';
-        String admit_type = '';
-        String state = '';
+        String student_type;
+        String high_school_or_college;
+        String citizenship;
+        String country;
+        String admit_type;
+        String state;
     
         //Get URL variables
         if (String.isNotBlank(RestContext.request.params.get('studentType'))) {
@@ -111,7 +108,7 @@ global without sharing class LocateCounselorAPI {
         Flow.Interview flw = new Flow.Interview.Locate_Your_Counselor_Subflow(
             new Map<String, String>{
                 'Citizenship' => citizenship,
-                //'Country' => '', Error occurs when passing blank country with intl student
+                'Country' => country,
                 'Admit_Type' => admit_type,
                 'HS_or_College' => high_school_or_college,
                 'College_of_Interest' => '4 Year College',
@@ -120,9 +117,7 @@ global without sharing class LocateCounselorAPI {
         );
         flw.start();
         String counselor_id = (String) flw.getVariableValue('Opportunity_Owner_Id');
-        System.debug('counselor Id: ' + counselor_id);
         return counselor_id;
-        //return '005P0000009nndT';
     }
 
 
@@ -152,48 +147,25 @@ global without sharing class LocateCounselorAPI {
         return new_counselor_info;
     }
 
-   
 
-    public static Map<String, String> getHighschools(String state){
+    public static Map<String, String> getSchools(String school_type, String state){
         Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-        Map<String, String> highschools_map = new Map<String, String>();
-            List<Account> highschools = [
+        Map<String, String> schools_map = new Map<String, String>();
+            List<Account> schools = [
                 SELECT Id, Name
                 FROM Account
                 WHERE RecordTypeId = :educational_institution_id
-                AND Type =: 'High School'
+                AND Type = :school_type 
                 AND BillingState = :state
                 ORDER BY NAME DESC
             ];
            
-            for (Account highschool : highschools) {
-                highschools_map.put(String.valueOf(highschool.Id), highschool.name);
+            for (Account school : schools) {
+                schools_map.put(String.valueOf(school.Id), school.name);
             }
-            
-        //highschools_map.put('123456789', 'Blaine High School');   
-        return highschools_map;
+        return schools_map;
     }
 
-
-    public static Map<String, String> getColleges(String state){
-        Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-        Map<String, String> colleges_map = new Map<String, String>();
-            List<Account> colleges = [
-                SELECT Id, Name
-                FROM Account
-                WHERE RecordTypeId = :educational_institution_id
-                AND Type =: 'College'
-                AND BillingState = :state
-                ORDER BY NAME DESC
-            ];
-           
-            for (Account college : colleges) {
-                colleges_map.put(String.valueOf(college.Id), college.name);
-            }
-            
-        //highschools_map.put('123456789', 'Blaine High School');   
-        return colleges_map;
-    }
 
     public without sharing class doCRUD {
 
@@ -218,54 +190,3 @@ global without sharing class LocateCounselorAPI {
         }
     }
 }
-    // public static Map<String, String> getColleges(){
-    //     String search_term = '';
-    //     if (String.isNotBlank(RestContext.request.params.get('searchTerm'))) {
-    //         search_term = String.escapeSingleQuotes(RestContext.request.params.get('searchTerm'));
-    //     }
-    //     Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-    //     Map<String, String> colleges_map = new Map<String, String>();
-    //         List<List<Account>> colleges = [
-    //             FIND :search_term 
-    //             IN NAME FIELDS 
-    //             RETURNING Account(
-    //                             Id,
-    //                             Name
-    //                         WHERE Type =: 'College' 
-    //                         AND RecordTypeId =: educational_institution_id
-    //                         ORDER BY Name
-    //         )];
-    //         for (List<Account> account_list : colleges) {
-    //             for (Account college : account_list) {
-    //                 colleges_map.put(String.valueOf(college.Id), college.Name);
-    //             }
-    //         }
-            
-    //     return colleges_map;
-    // }
-
-     // public static Map<String, String> getHighschools(){
-    //     String search_term = '';
-    //     if (String.isNotBlank(RestContext.request.params.get('searchTerm'))) {
-    //         search_term = String.escapeSingleQuotes(RestContext.request.params.get('searchTerm'));
-    //     }
-    //     Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-    //     Map<String, String> highschools_map = new Map<String, String>();
-    //         List<List<Account>> highschools = [
-    //             FIND :search_term 
-    //             IN NAME FIELDS 
-    //             RETURNING Account(
-    //                             Id,
-    //                             Name
-    //                         WHERE Type =: 'High School' 
-    //                         AND RecordTypeId =: educational_institution_id
-    //                         ORDER BY Name
-    //         )];
-    //         for (List<Account> account_list : highschools) {
-    //             for (Account highschool : account_list) {
-    //                 highschools_map.put(String.valueOf(highschool.Id), highschool.name);
-    //             }
-    //         }
-            
-    //     return highschools_map;
-    // }

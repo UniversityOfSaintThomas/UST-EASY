@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 12-08-2022
+ * @last modified on  : 12-11-2022
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 @RestResource(UrlMapping='/admissioncounselor/*')
@@ -33,6 +33,12 @@ global without sharing class LocateCounselorAPI {
         RestResponse res = RestContext.response;
         String callback = '';
 
+        String state = '';
+
+        if (String.isNotBlank(RestContext.request.params.get('state'))) {
+            state = String.escapeSingleQuotes(RestContext.request.params.get('state')).toUpperCase();
+        }
+
         if (String.isNotBlank(RestContext.request.params.get('callback'))) {
             callback = String.escapeSingleQuotes(RestContext.request.params.get('callback'));
         }
@@ -43,11 +49,11 @@ global without sharing class LocateCounselorAPI {
             res.addHeader('Content-Type', 'application/javascript');
         }
         if (RestContext.request.requestUri.endsWith('/highschools')) {
-            serialized_json = JSON.serialize(getHighschools());
+            serialized_json = JSON.serialize(getHighschools(state));
             
         } 
         else if (RestContext.request.requestUri.endsWith('/colleges')) {
-            serialized_json = JSON.serialize(getColleges());
+            serialized_json = JSON.serialize(getColleges(state));
         } 
         else {
             String counselor_id = getCounselorId();
@@ -65,21 +71,22 @@ global without sharing class LocateCounselorAPI {
     }
 
     public static String getCounselorId() {
-        String student_type;
-        String high_school_or_college;
-        String citizenship;
-        String country;
-        String admit_type;
+        String student_type = '';
+        String high_school_or_college = '';
+        String citizenship = '';
+        String country = '';
+        String admit_type = '';
+        String state = '';
     
         //Get URL variables
         if (String.isNotBlank(RestContext.request.params.get('studentType'))) {
             student_type = String.escapeSingleQuotes(RestContext.request.params.get('studentType')).toUpperCase();
         }
-        if (String.isNotBlank(RestContext.request.params.get('highschoolId'))) {
-            high_school_or_college = String.escapeSingleQuotes(RestContext.request.params.get('highschoolId')).toLowerCase();
+        if (String.isNotBlank(RestContext.request.params.get('state'))) {
+            state = String.escapeSingleQuotes(RestContext.request.params.get('state')).toUpperCase();
         }
-        else if (String.isNotBlank(RestContext.request.params.get('collegeId'))) {
-            high_school_or_college = String.escapeSingleQuotes(RestContext.request.params.get('collegeId')).toLowerCase();
+        if (String.isNotBlank(RestContext.request.params.get('schoolId'))) {
+            high_school_or_college = RestContext.request.params.get('schoolId');
         }
 
         //Populate flow variables
@@ -87,6 +94,7 @@ global without sharing class LocateCounselorAPI {
             when 'HIGH SCHOOL STUDENT' {
                 citizenship = 'US Citizen';
                 country = 'United States';
+                admit_type = 'First-Year';
             }
             when 'TRANSFER STUDENT' {
                 admit_type = 'Transfer';
@@ -103,16 +111,18 @@ global without sharing class LocateCounselorAPI {
         Flow.Interview flw = new Flow.Interview.Locate_Your_Counselor_Subflow(
             new Map<String, String>{
                 'Citizenship' => citizenship,
-                'Country' => country,
-                'Admit_Type' => admit_Type,
+                //'Country' => '', Error occurs when passing blank country with intl student
+                'Admit_Type' => admit_type,
                 'HS_or_College' => high_school_or_college,
-                'College_of_Interest' => 'Undergrad'
+                'College_of_Interest' => '4 Year College',
+                'State' => state
             }
         );
         flw.start();
         String counselor_id = (String) flw.getVariableValue('Opportunity_Owner_Id');
         System.debug('counselor Id: ' + counselor_id);
         return counselor_id;
+        //return '005P0000009nndT';
     }
 
 
@@ -144,7 +154,7 @@ global without sharing class LocateCounselorAPI {
 
    
 
-    public static Map<String, String> getHighschools(){
+    public static Map<String, String> getHighschools(String state){
         Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
         Map<String, String> highschools_map = new Map<String, String>();
             List<Account> highschools = [
@@ -152,6 +162,7 @@ global without sharing class LocateCounselorAPI {
                 FROM Account
                 WHERE RecordTypeId = :educational_institution_id
                 AND Type =: 'High School'
+                AND BillingState = :state
                 ORDER BY NAME DESC
             ];
            
@@ -164,7 +175,7 @@ global without sharing class LocateCounselorAPI {
     }
 
 
-    public static Map<String, String> getColleges(){
+    public static Map<String, String> getColleges(String state){
         Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
         Map<String, String> colleges_map = new Map<String, String>();
             List<Account> colleges = [
@@ -172,6 +183,7 @@ global without sharing class LocateCounselorAPI {
                 FROM Account
                 WHERE RecordTypeId = :educational_institution_id
                 AND Type =: 'College'
+                AND BillingState = :state
                 ORDER BY NAME DESC
             ];
            

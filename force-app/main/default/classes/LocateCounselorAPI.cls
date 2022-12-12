@@ -151,18 +151,17 @@ global without sharing class LocateCounselorAPI {
     public static Map<String, String> getSchools(String school_type, String state){
         Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
         Map<String, String> schools_map = new Map<String, String>();
-            List<Account> schools = [
-                SELECT Id, Name
-                FROM Account
-                WHERE RecordTypeId = :educational_institution_id
-                AND Type = :school_type 
-                AND BillingState = :state
-                ORDER BY NAME DESC
-            ];
-           
-            for (Account school : schools) {
-                schools_map.put(String.valueOf(school.Id), school.name);
-            }
+        List<Account> schools = [
+            SELECT Id, Name
+            FROM Account
+            WHERE RecordTypeId = :educational_institution_id
+            AND Type = :school_type 
+            AND BillingState = :state
+            ORDER BY NAME DESC
+        ];  
+        for (Account school : schools) {
+            schools_map.put(String.valueOf(school.Id), school.name);
+        }
         return schools_map;
     }
 

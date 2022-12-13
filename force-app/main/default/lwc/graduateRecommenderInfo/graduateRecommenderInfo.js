@@ -2,8 +2,8 @@
  * @description       : 
  * @author            : nicole.b@digitalmass.com
  * @group             : 
- * @last modified on  : 09-06-2022
- * @last modified by  : nicole.b@digitalmass.com
+ * @last modified on  : 12-13-2022
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 
 import { LightningElement, api, wire, track } from 'lwc';
@@ -435,35 +435,25 @@ export default class GraduateRecommenderInfo extends LightningElement {
     */
 
     handleSubmit() {
-        let email_mismatch = false;
-        for (let property in this.recommendation_input.fields) {
-            if (property == 'Rec_Email__c' && this.recommendation_input.fields[property] != this.rec_email && this.recommendation_input.fields[property] != null) {
-                email_mismatch = true;
-            }
-        }
-        if (!email_mismatch) {
-            this.required_fields_missing = '';
-            if (this.validateInput()) {
-                this.show_spinner = true;
-                if (Boolean(this.file_data)) {
-                    const {base_64, file_name} = this.file_data;
-                    uploadFile({base_64 : base_64, file_name : file_name, recommendation_id: this.recommendation_id})
-                    .then(result => {
-                        this.file_data = null;
-                        this.submitUpdates();
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.file_name = 'Upload failed. Please try again or type below.';
-                        this.show_spinner = false;
-                        this.file_data = null;
-                    })
-                } else {
+        this.required_fields_missing = '';
+        if (this.validateInput()) {
+            this.show_spinner = true;
+            if (Boolean(this.file_data)) {
+                const {base_64, file_name} = this.file_data;
+                uploadFile({base_64 : base_64, file_name : file_name, recommendation_id: this.recommendation_id})
+                .then(result => {
+                    this.file_data = null;
                     this.submitUpdates();
-                }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.file_name = 'Upload failed. Please try again or type below.';
+                    this.show_spinner = false;
+                    this.file_data = null;
+                })
+            } else {
+                this.submitUpdates();
             }
-        } else {
-            this.required_fields_missing = 'The Recommender Email entered above does not match the email recipient of this request.';
         }
     }
 

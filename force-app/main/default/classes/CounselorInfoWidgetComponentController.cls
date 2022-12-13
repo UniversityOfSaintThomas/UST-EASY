@@ -42,10 +42,12 @@ public with sharing class CounselorInfoWidgetComponentController {
                     WHERE Id = :appInfoParam.appId
             ];
 
+            System.debug('APP ID:' + appInfoParam.appId);
+            System.debug(JSON.serializePretty(app));
+
             if (app != null) {
                 //Get app owner user record
                 doCRUD crud = new doCRUD();
-                String myDomain = crud.getDomain();
                 if (String.isNotBlank(app.OwnerId)) {
                     User u = crud.readUserById(app.OwnerId);
 
@@ -72,8 +74,7 @@ public with sharing class CounselorInfoWidgetComponentController {
                             cw.phone = (String.isNotBlank(u.Phone) ? u.Phone : '');
                         }
                         cw.address = (String.isNotBlank(u.Street) ? (u.Street.replace('\n', '<br>') + ' <br>' + u.City + ', ' + u.State + ' ' + u.PostalCode) : '');
-                        cw.smallPhoto = 'https://' + myDomain + (String.isNotBlank(u.SmallPhotoUrl) ? u.SmallPhotoUrl : '');
-                        //cw.largePhoto = 'https://' + myDomain + (String.isNotBlank(u.FullPhotoUrl) ? u.FullPhotoUrl : '');
+                        cw.smallPhoto = '';
                         cw.largePhoto = 'https://www.stthomas.edu/_media-library/_locate-counselor/' + cascadeUserImage;
                     }
                 }
@@ -99,13 +100,5 @@ public with sharing class CounselorInfoWidgetComponentController {
             }
         }
 
-        public String getDomain() {
-            List<Domain> DomainList = [SELECT Domain FROM Domain];
-            String myDomain = '';
-            if (DomainList.size() > 0) {
-                myDomain = DomainList[0].Domain;
-            }
-            return myDomain;
-        }
     }
 }

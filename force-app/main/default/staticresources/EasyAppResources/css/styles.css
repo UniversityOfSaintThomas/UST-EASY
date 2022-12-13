@@ -24,6 +24,20 @@
     padding: 1px 0px 5px 0;
 }
 
+.slds-scope .slds-summary-detail .summary-detail-toggle {
+    text-decoration: none;
+}
+
+.slds-scope .slds-summary-detail .summary-detail-toggle svg {
+    transform: rotate(-90deg);
+    margin-top: -2px;
+}
+
+.slds-scope .slds-summary-detail.slds-is-open .summary-detail-toggle svg {
+    transform: rotate(0deg);
+    transform-origin: 45%;
+}
+
 .slds-scope .slds-icon-standard-brand {
     background-color: #510C76;
 }
@@ -53,6 +67,10 @@
     line-height: 1.5rem;
     font-weight: 400;
     color: #0a0a0a;
+}
+
+.slds-scope .slds-text-body_small {
+    font-size: .85rem;
 }
 
 .slds-scope .slds-radio_faux {
@@ -243,4 +261,10 @@ div.slds-progress {
 
 .carousel__item.prev {
     transform: translateX(-100%);
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
 }

@@ -8,8 +8,96 @@
     <apex:attribute name="con" type="Contact" description="Contact info about applicant" required="false" assignTo="{!conParam}"/>
 
     <apex:variable value="{!admissionsCounselor}" var="counselor"/>
-    {!counselor.CounselorName}
 
+    <apex:outputPanel layout="none" rendered="{!ISBLANK(counselor.CounselorName)}">
+        <p>Counselor assigment coming soon!</p>
+    </apex:outputPanel>
+
+    <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.CounselorName)}">
+        <img src="{!counselor.largePhoto}" onerror="this.error=null;this.src='{!URLFOR($Resource.EasyAppResources, '/img/fall-back-image.jpg')}';" style="max-width:100%" class="slds-clearfix"/>
+
+        <p class="slds-text-body slds-p-top_x-small" style="font-weight: bold">{!counselor.CounselorName}</p>
+
+        <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.title)}">
+            <p class="slds-text-body"><em>{!counselor.title}</em></p>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.phone)}">
+            <p class="slds-text-body_small slds-m-top_x-small">Phone</p>
+            <p class="slds-text-body">
+                <a href="tel:{!counselor.phone}">0-589-0000111</a>
+            </p>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.phone)}">
+            <p class="slds-text-body_small slds-m-top_x-small">Email</p>
+            <p class="slds-text-body slds-truncate" title="{!counselor.email}">
+                <a href="mailto:{!counselor.email}">{!counselor.email}</a>
+            </p>
+        </apex:outputPanel>
+
+        <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.message)}">
+            <p class="slds-text-body_small slds-m-top_x-small">A message from {!counselor.CounselorName} to you</p>
+            <p class="slds-text-body">
+                <apex:outputText value="{!counselor.message}" escape="false"/>
+            </p>
+        </apex:outputPanel>
+
+        <div class="slds-summary-detail slds-m-top_small" style="display:block;">
+            <a href="javascript:;" class="summary-detail-toggle">
+                <svg class="slds-button__icon">
+                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}"></use>
+                </svg>
+                About me
+            </a>
+
+            <div class="slds-summary-detail__content slds-m-top_small" style="display:none;">
+                <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.about)}">
+                    <p class="slds-text-body slds-p-bottom_small">
+                        {!counselor.about}
+                    </p>
+                </apex:outputPanel>
+
+                <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.college)}">
+                    <p class="slds-text-body_small">College</p>
+                    <p class="slds-text-body slds-p-bottom_small">
+                        {!counselor.college}
+                    </p>
+                </apex:outputPanel>
+
+                <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.major)}">
+                    <p class="slds-text-body_small">Major</p>
+                    <p class="slds-text-body slds-p-bottom_small">
+                        {!counselor.major}
+                    </p>
+                </apex:outputPanel>
+
+                <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.hometown)}">
+                    <p class="slds-text-body_small">Hometown</p>
+                    <p class="slds-text-body slds-p-bottom_small">
+                        {!counselor.hometown}
+                    </p>
+                </apex:outputPanel>
+
+                <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.USTLove)}">
+                    <p class="slds-text-body_small">Why I choose St. Thomas</p>
+                    <p class="slds-text-body slds-p-bottom_small">
+                        {!counselor.USTLove}
+                    </p>
+                </apex:outputPanel>
+
+                <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.advice)}">
+                    <p class="slds-text-body_small">A word of advice when choosing a college</p>
+                    <p class="slds-text-body slds-p-bottom_small">
+                        {!counselor.advice}
+                    </p>
+                </apex:outputPanel>
+
+
+            </div>
+
+        </div>
+    </apex:outputPanel>
 
 
 </apex:component>

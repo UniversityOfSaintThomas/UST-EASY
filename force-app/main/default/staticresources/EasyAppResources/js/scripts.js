@@ -90,7 +90,7 @@ function reRenderAllGroups(rerenderName) {
 // SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
 function summaryDetail() {
     document.querySelectorAll('.slds-summary-detail').forEach(item => {
-        item.querySelector("button.slds-button").addEventListener('click', function (e) {
+        item.querySelector(".slds-button, .summary-detail-toggle").addEventListener('click', function (e) {
             e.preventDefault();
             let content = item.querySelector('.slds-summary-detail__content');
             if (content.style.display === 'none') {

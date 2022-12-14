@@ -6,7 +6,6 @@
 public with sharing class CounselorInfoWidgetComponentController {
 
     public EASYApplicationInfo appInfoParam { get; set; }
-    public Contact conParam { get; set; }
 
     public class counselorWrap {
         //Name,Email, College__c,Major__c, Hometown__c,About_Me__c,What_I_Love_About_St_Thomas__c,Words_of_Advice__c

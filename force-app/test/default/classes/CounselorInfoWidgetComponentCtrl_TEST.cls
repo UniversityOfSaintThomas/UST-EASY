@@ -39,13 +39,18 @@ private class CounselorInfoWidgetComponentCtrl_TEST {
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         appInfo.appControlId = appControl.Id;
         appInfo.contactId = student.Id;
+        appInfo.appId = app.Id;
         appInfo.citizenship = 'U.S. Citizen';
 
-        CounselorInfoWidgetComponentController controller = new CounselorInfoWidgetComponentController();
-        controller.appInfoParam = appInfo;
 
         Test.startTest();
+        CounselorInfoWidgetComponentController controller = new CounselorInfoWidgetComponentController();
+        controller.appInfoParam = appInfo;
         CounselorInfoWidgetComponentController.counselorWrap cWrap = controller.getAdmissionsCounselor();
+        System.assertEquals(cWrap.USTLove, 'I like all for the common good.');
+        System.assertEquals(cWrap.about, 'I like to unit test apps. Weird eh?');
+        System.assertEquals(cWRap.smallPhoto,'');
+        System.assertEquals(cWrap.largePhoto, 'https://www.stthomas.edu/_media-library/_locate-counselor/unit_tester.jpg');
         Test.stopTest();
 
         System.debug(JSON.serializePretty(cWrap));
@@ -75,7 +80,8 @@ private class CounselorInfoWidgetComponentCtrl_TEST {
                 Hometown__c = 'Testville, MA',
                 About_Me__c = 'I like to unit test apps. Weird eh?',
                 What_I_Love_About_St_Thomas__c = 'I like all for the common good.',
-                Words_of_Advice__c = 'A poor carpenter blames their tools.'
+                Words_of_Advice__c = 'A poor carpenter blames their tools.',
+                Admissions_Counselor__c = true
         );
         return tuser;
     }

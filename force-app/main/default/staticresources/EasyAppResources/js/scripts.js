@@ -474,6 +474,106 @@ function navigateRequirementGroup(redirectTo) {
     }
 }
 
+var carouselOn = false;
+function disableCarousel() {
+    carouselOn = false;
+
+    let killerButton = document.getElementById('carousel-killer');
+    killerButton.innerText = "Restore Form";
+    killerButton.removeEventListener('click', disableCarousel);
+    killerButton.addEventListener('click', enableCarousel);
+
+    let items = document.getElementsByClassName("carousel__item");
+    for (let i = 0; i < items.length; i++) {
+        items[i].classList.add('carousel__disable');
+    }
+
+    let groupCountTexts = document.getElementsByClassName("questionGroupCount");
+    for (let i = 0; i < groupCountTexts.length; i++) {
+        groupCountTexts[i].style.display = "none";
+    }
+
+    let groupWarnTexts = document.getElementsByClassName("questionGroupWarning");
+    for (let i = 0; i < groupWarnTexts.length; i++) {
+        groupWarnTexts[i].style.display = "none";
+    }
+
+    let nextButtons = document.getElementsByClassName("carousel__button--next");
+    for (let i = 0; i < nextButtons.length; i++) {
+        nextButtons[i].style.display = "none";
+    }
+
+    let prevButtons = document.getElementsByClassName("carousel__button--prev");
+    for (let i = 0; i < prevButtons.length; i++) {
+        prevButtons[i].style.display = "none";
+    }
+
+    let saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]');
+    saveAndAdvance.style.display = "inline-flex";
+
+    if (previousRequirement) {
+        let saveAndGoBack = document.getElementById('saveAndGoBack');
+        saveAndGoBack.style.display = "inline-flex";
+    }
+}
+
+function enableCarousel() {
+    carouselOn = true;
+
+    let killerButton = document.getElementById('carousel-killer');
+    killerButton.innerText = "Single-Page Form";
+    killerButton.removeEventListener('click', enableCarousel);
+    killerButton.addEventListener('click', disableCarousel);
+
+    let items = document.getElementsByClassName("carousel__item");
+    for (let i = 0; i < items.length; i++) {
+        items[i].classList.remove('carousel__disable');
+    }
+
+    let groupCountTexts = document.getElementsByClassName("questionGroupCount");
+    for (let i = 0; i < groupCountTexts.length; i++) {
+        groupCountTexts[i].style.display = "";
+    }
+
+    let groupWarnTexts = document.getElementsByClassName("questionGroupWarning");
+    for (let i = 0; i < groupWarnTexts.length; i++) {
+        groupWarnTexts[i].style.display = "";
+    }
+
+    let nextButtons = document.getElementsByClassName("carousel__button--next");
+    for (let i = 0; i < nextButtons.length; i++) {
+        nextButtons[i].style.display = "";
+    }
+
+    let prevButtons = document.getElementsByClassName("carousel__button--prev");
+    for (let i = 0; i < prevButtons.length; i++) {
+        prevButtons[i].style.display = "";
+    }
+
+    let saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]');
+    saveAndAdvance.style.display = "";
+
+    if (previousRequirement) {
+        let saveAndGoBack = document.getElementById('saveAndGoBack');
+        saveAndGoBack.style.display = "inline-flex";
+    }
+
+    let activeSlides = document.querySelectorAll(".carousel__item.prev, .carousel__item.active, .carousel__item.next");
+    for (let i = 0; i < activeSlides.length; i++) {
+        activeSlides[i].classList.remove("prev");
+        activeSlides[i].classList.remove("active");
+        activeSlides[i].classList.remove("next");
+    }
+
+    let firstSlide = document.querySelector(".carousel__item.slide-0");
+    firstSlide.classList.add("active");
+
+    let secondSlide = document.querySelector(".carousel__item.slide-1");
+    secondSlide.classList.add("next");
+
+    activateCarousel(0);
+}
+
 /* Carousel Script */
 function activateCarousel(slideMoveTo) {
     // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
@@ -483,6 +583,7 @@ function activateCarousel(slideMoveTo) {
         moving = true,
         saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]'),
         saveAndGoBack = document.getElementById('saveAndGoBack'),
+        killerButton = document.getElementById('carousel-killer'),
         next = document.getElementsByClassName('carousel__button--next')[0],
         prev = document.getElementsByClassName('carousel__button--prev')[0];
 
@@ -492,6 +593,7 @@ function activateCarousel(slideMoveTo) {
         function setEventListeners() {
             next.addEventListener('click', moveNext);
             prev.addEventListener('click', movePrev);
+            killerButton.addEventListener('click', disableCarousel);
             if (totalItems === 1) {
                 next.style.display = 'none';
                 prev.style.display = 'none';
@@ -548,6 +650,11 @@ function activateCarousel(slideMoveTo) {
                         prev.style.display = "none"
                     }
 
+                    // For the transition animation to work, we need all these boxes to (briefly) have display: block, which will put inactive boxes in "slider" position with 0 opacity.
+                    for (let i = 0; i < items.length; i++) {
+                        items[i].style.display = "block";
+                    }
+
                     for (let i = 0; i < items.length; i++) {
                         items[i].classList.remove('prev');
                         items[i].classList.remove('next');
@@ -558,10 +665,22 @@ function activateCarousel(slideMoveTo) {
                     }
                     if (items[slide]) {
                         items[slide].classList.add("active");
+                        let inputElements = items[slide].querySelectorAll("select, input");
+                        if (inputElements.length > 0) {
+                            inputElements[0].focus(); // focus on the first focusable form element, so we aren't stuck on the next/prev buttons.
+                        }
                     }
                     if (items[newNext]) {
                         items[newNext].classList.add("next");
                     }
+
+                    // Okay, transition's done. Now reset to styles so what screenreaders see matches what other users see.
+                    window.setTimeout(function() {
+                        let items = document.getElementsByClassName("carousel__item");
+                        for (let i = 0; i < items.length; i++) {
+                            items[i].style.display = "";
+                        }
+                    }, 1000);
 
                 }
             }
@@ -593,6 +712,7 @@ function activateCarousel(slideMoveTo) {
         function initCarousel() {
             setEventListeners();
             moving = false;
+            carouselOn = true;
         }
 
         initCarousel();
@@ -603,24 +723,36 @@ function activateCarousel(slideMoveTo) {
             }
         }
     }
+    if (items.length <= 1) {
+        killerButton.style.display = 'none';
+    }
 }
 
 /* Spinners on/off */
-function appHideLoadingSpinner() {
+var spinnerFocusElement = null;
+function appHideLoadingSpinner(restoreFocus = true) {
     document.getElementById('loadSpinner').style.display = "none";
+    if (restoreFocus == true && spinnerFocusElement != null) {
+        document.getElementById(spinnerFocusElement).focus();
+    }
     return true;
 }
 
 function appShowLoadingSpinner() {
+    spinnerFocusElement = document.activeElement.id;
     document.getElementById('loadSpinner').style.display = "block";
     return true;
 }
 
-function hideFormSpinner() {
+function hideFormSpinner(restoreFocus = true) {
     document.getElementById("form-spinner").style.display = 'none';
+    if (restoreFocus == true && spinnerFocusElement != null) {
+        document.getElementById(spinnerFocusElement).focus();
+    }
 }
 
 function showFormSpinner() {
+    spinnerFocusElement = document.activeElement.id;
     document.getElementById("form-spinner").style.display = 'block';
 }
 
@@ -653,7 +785,7 @@ function activateTooltips() {
 
 function isCarousel() {
     let items = document.getElementsByClassName("carousel__item");
-    if (items.length > 0) {
+    if (items.length > 0 && carouselOn != false) {
         return true;
     }
     return false;
@@ -672,7 +804,17 @@ function checkForm() {
             let carouselItem = foundErrors.closest('.carousel__item');
             activateCarousel(carouselItem.dataset.slide);
         }
-        window.scrollTo(0, 0);
+
+        window.scrollTo(0, 0); // Scroll to the top if you can't find a focus, but you should find a focus.
+
+        let errorInputs = foundErrors.querySelector("select, input");
+        if (errorInputs) {
+            errorInputs.focus();
+            spinnerFocusElement = errorInputs.id;   // checkForm() MAY be happening while the appSpinner is up; if so,
+                                                    // you might set focus here but will lose it again when appSpinner goes
+                                                    // down, as focus reverts to whatever was focused when appSpinner started.
+                                                    // So hijack the appSpinner's memory to make sure it sticks.
+        }
         return false;
     }
     return true;
@@ -692,7 +834,7 @@ function textValidations(checkFormValidate, documentStart) {
     let allNamCharacters = doc.querySelectorAll('.validateName');
     let allEmails = doc.querySelectorAll('.validateEmail');
     let allUrls = doc.querySelectorAll('.validateURL');
-    let allRequiredInputs = doc.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select, .slds-is-required .slds-radio_button-group .slds-radio_button-value");
+    let allRequiredInputs = doc.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select, .slds-is-required .slds-checkbox, .slds-is-required .slds-radio_button-group .slds-radio_button-value");
 
 
     const re_email = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

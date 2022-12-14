@@ -126,6 +126,9 @@ public class ApplicationUtilities {
                             Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
+                    AND Application_Status__c != 'Wrong Application'
+                    AND (Application_Status__c != 'Withdrawn' AND Application_Substatus__c != 'Wrong App')
+                    AND (Application_Status__c != 'Withdrawn' AND Application_Substatus__c != 'Multiple App')
                     ORDER BY LastModifiedDate
             ];
             if (lastApps.size() > 0) {

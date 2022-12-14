@@ -43,7 +43,6 @@ public with sharing class CounselorInfoWidgetComponentController {
             ];
 
             System.debug('APP ID:' + appInfoParam.appId);
-            System.debug(JSON.serializePretty(app));
 
             if (app != null) {
                 //Get app owner user record
@@ -85,8 +84,9 @@ public with sharing class CounselorInfoWidgetComponentController {
 
     private without sharing class doCRUD {
 
-        public User readUserById(Id userId) {
+        private User readUserById(Id userId) {
             try {
+                System.debug('OWNER ID: ' + userId);
                 User cUser = [
                         SELECT Name, Email, College__c, Major__c, Hometown__c, About_Me__c, What_I_Love_About_St_Thomas__c, Words_of_Advice__c,
                                 SmallPhotoUrl, FullPhotoUrl, Title, Phone, Street, State, City, PostalCode, Extension, Admissions_Counselor__c

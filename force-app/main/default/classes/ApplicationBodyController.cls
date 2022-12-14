@@ -6,10 +6,12 @@
 public with sharing class ApplicationBodyController {
 
     public EASYApplicationInfo appInfoParam { get; set; }
+    public Map<String, EASYApplicationInfo> mapAtAppInfo { get; set; }
     public String currentPageName { get; set; }
 
     public ApplicationBodyController() {
     }
+
 
     public class allWidgets {
         public List<EASY_Widget__c> topWidgets { get; set; }
@@ -31,10 +33,10 @@ public with sharing class ApplicationBodyController {
                 'User Info Login/Logout' => 0
         };
 
-        Set<Id> appInfoIds = new Set<Id>();
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atSubStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atCitizenshipMap = new Map<String, Set<String>>();
+        mapAtAppInfo = new Map<String, EASYApplicationInfo>();
         currentPageName = currentPageName.toLowerCase();
         allWidgets foundWidgets = new allWidgets();
         foundWidgets.topWidgets = new List<EASY_Widget__c>();
@@ -44,27 +46,36 @@ public with sharing class ApplicationBodyController {
         foundWidgets.contentTopWidgets = new List<EASY_Widget__c>();
         foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
-
-        if (String.isBlank(appInfoParam.appStatus)) {
-            appInfoParam.appStatus = 'none';
-        }
-
-        List<Application__c> apps = new List<Application__c>();
+        Map<Id, Application__c> apps = new Map<Id, Application__c>();
         Map<String, EASYPersonalDataTags> dataTagsMap = new Map<String, EASYPersonalDataTags>();
-        if (String.isNotBlank(appInfoParam.contactId)) {
 
-            apps = [
-                    SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,
-                            Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,
-                            Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,
-                            Contact_Mailing_First_Name__c, Contact__r.LastName
-                    FROM Application__c
-                    WHERE (Contact__c = :appInfoParam.contactId OR Id = :appInfoParam.appId)
-                    AND Application_Status__c != 'Wrong Application'
-            ];
+        if (appInfoParam != null) {
+
+            if (String.isBlank(appInfoParam.appStatus)) {
+                appInfoParam.appStatus = 'none';
+            }
+
+            String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,';
+            appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,';
+            appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
+            appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Intended_Program__r.Program_Name_on_Application__c';
+            appsQuery += ' FROM Application__c';
+            appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
+            appsQuery += ' AND (Application_Status__c != \'Withdrawn\' AND Application_Substatus__c != \'Wrong App\')';
+            appsQuery += ' AND (Application_Status__c != \'Withdrawn\' AND Application_Substatus__c != \'Multiple App\')';
+            if (pagesWithMultipleAppInfo.contains(currentPageName)) {
+                appsQuery += ' AND Contact__c = \'' + appInfoParam.contactId + '\'';
+            } else {
+                appsQuery += ' AND Id = \'' + appInfoParam.appId + '\'';
+            }
+            try {
+                apps = new Map<Id, Application__c>((List<Application__c>) Database.query(appsQuery));
+            } catch (Exception e) {
+                System.debug(e.getMessage());
+            }
 
             //Create map of application control URLs and tag data associated with them for processing below.
-            for (Application__c app : apps) {
+            for (Application__c app : apps.values()) {
                 EASYPersonalDataTags dataTags = new EASYPersonalDataTags();
                 if (dataTagsMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
                     //Some tag data will be additive if a person has two apps of the same type. This will become an issue to explain, ugh.
@@ -81,211 +92,216 @@ public with sharing class ApplicationBodyController {
                     dataTags.Last_Name = app.Contact__r.LastName;
                 }
                 dataTagsMap.put(app.Application_Control__r.URL_Parameter__c, dataTags);
-            }
 
-        }
+                //Create appInfo per appControl
+                //Query App Controls
+                Map<Id, Application_Control__c> appControlsByAppIds = new Map<Id, Application_Control__c>([
+                        SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
+                                Cancel_Status__c, Submit_Status__c, Withdraw_Status__c, URL_Parameter__c, Default__c, Academic_Level__c,
+                                School_College__c, Degree_Levels__c, Template__c, Confirm_Status__c, Allow_Confirm_From__c
+                        FROM Application_Control__c
+                        WHERE Id IN (
+                                SELECT Application_Control__c
+                                FROM Application__c
+                                WHERE Id = :apps.keySet()
+                        )
+                ]);
 
-        /* Some pages may have multiple app contexts */
-        if (pagesWithMultipleAppInfo.contains(currentPageName)) {
-            for (Application__c app : apps) {
-                appInfoIds.add(app.Application_Control__r.Id);
-                String atURL = app.Application_Control__r.URL_Parameter__c;
-
-                //atStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
-                if (String.isNotBlank(app.Application_Status__c)) {
-                    if (atStatusMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
-                        atStatusMap.get(atURL).addAll(new Set<String>(app.Application_Status__c.split(';')));
-                    } else {
-                        atStatusMap.put(atURL, new Set<String>(app.Application_Status__c.split(';')));
-                    }
+                //setApplicationInfo
+                if (!mapAtAppInfo.containsKey(app.Application_Control__r.URL_Parameter__c)) {
+                    EASYApplicationInfo tempAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
+                    mapAtAppInfo.put(app.Application_Control__r.URL_Parameter__c, tempAppInfo);
                 }
 
-                //atSubStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
-                if (String.isNotBlank(app.Application_Substatus__c)) {
-                    if (atSubStatusMap.containsKey(atURL)) {
-                        atSubStatusMap.get(atURL).addAll(new Set<String>(app.Application_Substatus__c.split(';')));
-                    } else {
-                        atSubStatusMap.put(atURL, new Set<String>(app.Application_Substatus__c.split(';')));
-                    }
-                }
+                if (pagesWithMultipleAppInfo.contains(currentPageName)) {
+                    String atURL = app.Application_Control__r.URL_Parameter__c;
 
-                if (String.isNotBlank(app.Citizenship__c)) {
-                    if (atCitizenshipMap.containsKey(atURL)) {
-                        atCitizenshipMap.get(atURL).add(app.Citizenship__c);
-                    } else {
-                        atCitizenshipMap.put(atURL, new Set<String>{
-                                app.Citizenship__c
-                        });
-                    }
-                }
-            }
-        } else {
-            atStatusMap.put(appInfoParam.at, new Set<String>{
-                    appInfoParam.appStatus
-            });
-            atSubStatusMap.put(appInfoParam.at, new Set<String>{
-                    appInfoParam.appSubStatus
-            });
-            atCitizenshipMap.put(appInfoParam.at, new Set<String>{
-                    appInfoParam.citizenship
-            });
-            appInfoIds.add(appInfoParam.appControlId);
-        }
-
-        /* Gather up all the widgets */
-        try {
-            allPositionWidgets = [
-                    SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
-                            Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
-                            Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
-                            Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
-                            Only_One_Widget_Key__c
-                    FROM EASY_Widget__c
-                    WHERE Application_Control__c IN :appInfoIds
-                    AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
-                    WITH SECURITY_ENFORCED
-                    ORDER BY Sort_Order__c
-            ];
-        } catch (DmlException e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
-        } catch (Exception e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
-        }
-
-        /* Start/End date filter if defined */
-        for (EASY_Widget__c widget : allPositionWidgets) {
-
-
-            Boolean skipWidget = false;
-            if (widget.Activation_State__c.equalsIgnoreCase('Inactive')) {
-                skipWidget = true;
-            } else if (widget.Activation_State__c.equalsIgnoreCase('Date activated')) {
-                Datetime nowDateTime = ApplicationUtilities.adjustForTimeZone(Datetime.now(), widget.Widget_Time_Zone__c);
-                if (String.isNotBlank(widget.Widget_Time_Zone__c)) {
-                    if (widget.Start_Date__c != null && widget.Start_Time__c != null) {
-                        Datetime widgetStartDateTime = ApplicationUtilities.convertDateToDatetime(widget.Start_Date__c, widget.Start_Time__c, null);
-                        if (nowDateTime <= widgetStartDateTime) {
-                            skipWidget = true;
+                    //atStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
+                    if (String.isNotBlank(app.Application_Status__c)) {
+                        if (atStatusMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
+                            atStatusMap.get(atURL).addAll(new Set<String>(app.Application_Status__c.split(';')));
+                        } else {
+                            atStatusMap.put(atURL, new Set<String>(app.Application_Status__c.split(';')));
                         }
                     }
-                    if (widget.End_Date__c != null && widget.End_Time__c != null) {
-                        Datetime widgetEndDateTime = ApplicationUtilities.convertDateToDatetime(widget.End_Date__c, widget.End_Time__c, null);
-                        if (nowDateTime >= widgetEndDateTime) {
-                            skipWidget = true;
+
+                    //atSubStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
+                    if (String.isNotBlank(app.Application_Substatus__c)) {
+                        if (atSubStatusMap.containsKey(atURL)) {
+                            atSubStatusMap.get(atURL).addAll(new Set<String>(app.Application_Substatus__c.split(';')));
+                        } else {
+                            atSubStatusMap.put(atURL, new Set<String>(app.Application_Substatus__c.split(';')));
+                        }
+                    }
+
+                    if (String.isNotBlank(app.Citizenship__c)) {
+                        if (atCitizenshipMap.containsKey(atURL)) {
+                            atCitizenshipMap.get(atURL).add(app.Citizenship__c);
+                        } else {
+                            atCitizenshipMap.put(atURL, new Set<String>{
+                                    app.Citizenship__c
+                            });
                         }
                     }
                 }
             }
 
-            //If it is a custom widget and there is nothing in the widget don't show it
-            if (widget.Widget_Type__c.equalsIgnoreCase('custom')) {
-                if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
-                    skipWidget = true;
-                }
+            /* Gather up all the widgets */
+            try {
+                allPositionWidgets = [
+                        SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
+                                Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
+                                Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
+                                Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
+                                Only_One_Widget_Key__c
+                        FROM EASY_Widget__c
+                        WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
+                        AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
+                        AND Activation_State__c != 'Inactive'
+                        WITH SECURITY_ENFORCED
+                        ORDER BY Sort_Order__c
+                ];
+            } catch (DmlException e) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
+            } catch (Exception e) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
             }
 
-            if (!skipWidget) {
-                /* Only show one widget of type hard coded above. Admission App finder should only show once on a portal even if defined for several apps */
+            /* Start/End date filter if defined */
+            for (EASY_Widget__c widget : allPositionWidgets) {
 
-                if (onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
-                    if (onlyOneWidgetPerPage.get(widget.Widget_Type__c) > 0) {
-                        skipWidget = true;
-                    } else {
-                        onlyOneWidgetPerPage.put(widget.Widget_Type__c, onlyOneWidgetPerPage.get(widget.Widget_Type__c) + 1);
+                Boolean skipWidget = false;
+                if (widget.Activation_State__c.equalsIgnoreCase('Date activated')) {
+                    Datetime nowDateTime = ApplicationUtilities.adjustForTimeZone(Datetime.now(), widget.Widget_Time_Zone__c);
+                    if (String.isNotBlank(widget.Widget_Time_Zone__c)) {
+                        if (widget.Start_Date__c != null && widget.Start_Time__c != null) {
+                            Datetime widgetStartDateTime = ApplicationUtilities.convertDateToDatetime(widget.Start_Date__c, widget.Start_Time__c, null);
+                            if (nowDateTime <= widgetStartDateTime) {
+                                skipWidget = true;
+                            }
+                        }
+                        if (widget.End_Date__c != null && widget.End_Time__c != null) {
+                            Datetime widgetEndDateTime = ApplicationUtilities.convertDateToDatetime(widget.End_Date__c, widget.End_Time__c, null);
+                            if (nowDateTime >= widgetEndDateTime) {
+                                skipWidget = true;
+                            }
+                        }
                     }
                 }
 
-                if (String.isNotBlank(widget.Only_One_Widget_Key__c) & !skipWidget) {
-                    if (onlyOneWidgetPerPage.containsKey(widget.Only_One_Widget_Key__c)) {
+                //If it is a custom widget and there is nothing in the widget don't show it
+                if (widget.Widget_Type__c.equalsIgnoreCase('custom')) {
+                    if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
                         skipWidget = true;
-                    } else {
-                        onlyOneWidgetPerPage.put(widget.Only_One_Widget_Key__c, 1);
                     }
                 }
 
-                if (!skipWidget && String.isNotBlank(widget.Application_Control__r.URL_Parameter__c)) {
+                if (!skipWidget) {
+                    /* Only show one widget of type hard coded above. Admission App finder should only show once on a portal even if defined for several apps */
 
-                    String widgetUrlParam = widget.Application_Control__r.URL_Parameter__c;
-                    String widgetStatus = String.isNotBlank(widget.Display_Widget_On_Status__c) ? widget.Display_Widget_On_Status__c : '';
-                    String widgetSubStatus = String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) ? widget.Display_Widget_On_Sub_Status__c : '';
-                    String widgetCitizen = String.isNotBlank(widget.Display_Widget_On_Citizenship__c) ? widget.Display_Widget_On_Citizenship__c : '';
-
-                    if (String.isNotBlank(widgetStatus) && String.isBlank(widgetSubStatus)) {
-                        if (atStatusMap.get(widgetUrlParam) == null) {
+                    if (onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
+                        if (onlyOneWidgetPerPage.get(widget.Widget_Type__c) > 0) {
                             skipWidget = true;
                         } else {
-                            if (!doesListContainItem(new List<String>(atStatusMap.get(widgetUrlParam)), widgetStatus.split(';'))) {
-                                skipWidget = true;
-                            }
+                            onlyOneWidgetPerPage.put(widget.Widget_Type__c, onlyOneWidgetPerPage.get(widget.Widget_Type__c) + 1);
                         }
                     }
 
-                    /* Sub Status filter */
-                    if (String.isNotBlank(widgetStatus) && String.isNotBlank(widgetSubStatus) && !skipWidget) {
-                        if (atSubStatusMap.get(widgetUrlParam) == null) {
+                    if (!skipWidget && String.isNotBlank(widget.Only_One_Widget_Key__c)) {
+                        if (onlyOneWidgetPerPage.containsKey(widget.Only_One_Widget_Key__c)) {
                             skipWidget = true;
                         } else {
-                            if (!doesListContainItem(new List<String>(atSubStatusMap.get(widgetUrlParam)), widgetSubStatus.split(';'))) {
+                            onlyOneWidgetPerPage.put(widget.Only_One_Widget_Key__c, 1);
+                        }
+                    }
+
+                    if (!skipWidget && String.isNotBlank(widget.Application_Control__r.URL_Parameter__c)) {
+
+                        String widgetUrlParam = widget.Application_Control__r.URL_Parameter__c;
+                        String widgetStatus = String.isNotBlank(widget.Display_Widget_On_Status__c) ? widget.Display_Widget_On_Status__c : '';
+                        String widgetSubStatus = String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) ? widget.Display_Widget_On_Sub_Status__c : '';
+                        String widgetCitizen = String.isNotBlank(widget.Display_Widget_On_Citizenship__c) ? widget.Display_Widget_On_Citizenship__c : '';
+                        EASYApplicationInfo widgetAppInfo = mapAtAppInfo.get(widgetUrlParam);
+
+                        System.debug(JSON.serializePretty(widgetAppInfo));
+
+                        if (String.isNotBlank(widgetStatus) && String.isBlank(widgetSubStatus)) {
+                            if (String.isBlank(widgetAppInfo.appStatus)) {
+                                skipWidget = true;
+                            } else {
+                                if (!doesListContainItem(widgetAppInfo.appStatus.split(';'), widgetStatus.split(';'))) {
+                                    skipWidget = true;
+                                }
+                            }
+                        }
+
+                        /* Sub Status filter */
+                        if (String.isNotBlank(widgetStatus) && String.isNotBlank(widgetSubStatus) && !skipWidget) {
+                            if (String.isBlank(widgetAppInfo.appSubStatus)) {
+                                skipWidget = true;
+                            } else {
+                                if (!doesListContainItem(widgetAppInfo.appSubStatus.split(';'), widgetSubStatus.split(';'))) {
+                                    skipWidget = true;
+                                }
+                            }
+                        }
+
+                        /* Citizenship filter */
+                        if (String.isNotBlank(widgetCitizen)) {
+                            if (String.isNotBlank(widgetAppInfo.citizenship)) {
+                                if (!doesListContainItem(widgetAppInfo.citizenship.split(';'), widgetCitizen.split(';'))) {
+                                    skipWidget = true;
+                                }
+                            }
+                        }
+
+                        /* Display on pages filter */
+                        if (String.isNotBlank(widget.Display_Widget_On_Pages__c) && !skipWidget) {
+                            if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
                                 skipWidget = true;
                             }
                         }
                     }
+                }
 
-                    /* Citizenship filter */
-                    if (String.isNotBlank(widgetCitizen)) {
-                        if (atCitizenshipMap.get(widgetUrlParam) != null) {
-                            if (!doesListContainItem(new List<String>(atCitizenshipMap.get(widgetUrlParam)), widgetCitizen.split(';'))) {
-                                skipWidget = true;
-                            }
+
+                if (!skipWidget) {
+
+                    //Process data tags here
+                    if (dataTagsMap.containsKey(widget.Application_Control__r.URL_Parameter__c)) {
+                        if (String.isNotBlank(widget.Display_Text__c)) {
+                            widget.Display_Text__c = replaceDataTags(widget.Display_Text__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                        }
+                        if (String.isNotBlank(widget.Display_Heading__c)) {
+                            widget.Display_Heading__c = replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                         }
                     }
 
-                    /* Display on pages filter */
-                    if (String.isNotBlank(widget.Display_Widget_On_Pages__c) && !skipWidget) {
-                        if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
-                            skipWidget = true;
+                    switch on widget.Widget_Screen_Location__c.toLowerCase() {
+                        when 'left' {
+                            foundWidgets.leftWidgets.add(widget);
+                        }
+                        when 'right' {
+                            foundWidgets.rightWidgets.add(widget);
+                        }
+                        when 'top' {
+                            foundWidgets.topWidgets.add(widget);
+                        }
+                        when 'bottom' {
+                            foundWidgets.bottomWidgets.add(widget);
+                        }
+                        when 'content top' {
+                            foundWidgets.contentTopWidgets.add(widget);
+                        }
+                        when 'content bottom' {
+                            foundWidgets.contentBottomWidgets.add(widget);
                         }
                     }
+
                 }
             }
 
-
-            if (!skipWidget) {
-
-                //Process data tags here
-                if (dataTagsMap.containsKey(widget.Application_Control__r.URL_Parameter__c)) {
-                    if (String.isNotBlank(widget.Display_Text__c)) {
-                        widget.Display_Text__c = replaceDataTags(widget.Display_Text__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
-                    }
-                    if (String.isNotBlank(widget.Display_Heading__c)) {
-                        widget.Display_Heading__c = replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
-                    }
-                }
-
-                switch on widget.Widget_Screen_Location__c.toLowerCase() {
-                    when 'left' {
-                        foundWidgets.leftWidgets.add(widget);
-                    }
-                    when 'right' {
-                        foundWidgets.rightWidgets.add(widget);
-                    }
-                    when 'top' {
-                        foundWidgets.topWidgets.add(widget);
-                    }
-                    when 'bottom' {
-                        foundWidgets.bottomWidgets.add(widget);
-                    }
-                    when 'content top' {
-                        foundWidgets.contentTopWidgets.add(widget);
-                    }
-                    when 'content bottom' {
-                        foundWidgets.contentBottomWidgets.add(widget);
-                    }
-                }
-
-            }
         }
-
         return foundWidgets;
     }
 
@@ -305,8 +321,8 @@ public with sharing class ApplicationBodyController {
         Pattern tagPattern = Pattern.compile('\\{.(.*?)\\}(.*?|)[\\}\\s]');
         Matcher tagMatcher = tagPattern.matcher(widgetContent);
         Set<String> matchingTags = new Set<String>();
-        while (tagMatcher.find()) {
-            matchingTags.add(tagMatcher.group().trim());
+        while (tagMatcher.find ()) {
+            matchingTags.add(tagMatcher.group() .trim());
         }
 
         //Loop through tag matches set to sanitize and replace all

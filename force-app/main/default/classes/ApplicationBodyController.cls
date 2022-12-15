@@ -68,11 +68,13 @@ public with sharing class ApplicationBodyController {
             } else {
                 appsQuery += ' AND Id = \'' + appInfoParam.appId + '\'';
             }
+            //System.debug(appsQuery);
             try {
                 apps = new Map<Id, Application__c>((List<Application__c>) Database.query(appsQuery));
             } catch (Exception e) {
                 System.debug(e.getMessage());
             }
+
 
             //Create map of application control URLs and tag data associated with them for processing below.
             for (Application__c app : apps.values()) {
@@ -109,8 +111,13 @@ public with sharing class ApplicationBodyController {
 
                 //setApplicationInfo
                 if (!mapAtAppInfo.containsKey(app.Application_Control__r.URL_Parameter__c)) {
+                    //System.debug('at=' + app.Application_Control__r.URL_Parameter__c);
                     EASYApplicationInfo tempAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
-                    mapAtAppInfo.put(app.Application_Control__r.URL_Parameter__c, tempAppInfo);
+                    if (pagesWithMultipleAppInfo.contains(currentPageName)) {
+                        mapAtAppInfo.put(app.Application_Control__r.URL_Parameter__c, tempAppInfo);
+                    } else {
+                        mapAtAppInfo.put(app.Application_Control__r.URL_Parameter__c, appInfoParam);
+                    }
                 }
 
                 if (pagesWithMultipleAppInfo.contains(currentPageName)) {
@@ -313,7 +320,7 @@ public with sharing class ApplicationBodyController {
                     }
 
                 }
-                System.debug('---------------------------');
+/*                System.debug('---------------------------');
                 System.debug('ID: ' + widget.Id);
                 System.debug('Name: ' + widget.Name);
                 System.debug('AT: ' + widget.Application_Control__r.URL_Parameter__c);
@@ -323,7 +330,7 @@ public with sharing class ApplicationBodyController {
                 System.debug('On Status: ' + widget.Display_Widget_On_Status__c);
                 System.debug('On Sub Status: ' + widget.Display_Widget_On_Sub_Status__c);
                 System.debug('Skipped: ' + skipWidget);
-                System.debug('Skip Reason: ' + skipReason);
+                System.debug('Skip Reason: ' + skipReason);*/
             }
 
         }

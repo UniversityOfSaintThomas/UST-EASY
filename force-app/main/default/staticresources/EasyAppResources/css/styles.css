@@ -192,6 +192,15 @@
     margin-top: 0.2rem;
 }
 
+.slds-button.small-header-button {
+    float: right;
+    font-size: 0.75rem;
+    padding: 0.1rem;
+    line-height: initial;
+    top: 1.5rem;
+    position: relative;
+}
+
 div.slds-progress {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -245,6 +254,7 @@ div.slds-progress {
     margin: auto;
     z-index: 100;
     transition: transform .5s, opacity .5s, z-index .5s;
+    display: none;
 }
 
 .carousel__item.initial,
@@ -252,6 +262,7 @@ div.slds-progress {
     opacity: 1;
     position: relative;
     z-index: 900;
+    display: block;
 }
 
 .carousel__item.prev,
@@ -261,6 +272,13 @@ div.slds-progress {
 
 .carousel__item.prev {
     transform: translateX(-100%);
+}
+
+.carousel__item.carousel__disable {
+    display: block;
+    opacity: 100;
+    position: initial;
+    transform: initial;
 }
 
 .clearfix::after {

@@ -122,7 +122,7 @@
     <customValue>
         <fullName>Deferred</fullName>
         <default>false</default>
-        <isActive>false</isActive>
+        <isActive>true</isActive>
         <label>Deferred</label>
     </customValue>
     <customValue>

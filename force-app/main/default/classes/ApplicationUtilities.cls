@@ -127,8 +127,8 @@ public class ApplicationUtilities {
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     AND Application_Status__c != 'Wrong Application'
-                    AND (Application_Status__c != 'Withdrawn' AND Application_Substatus__c != 'Wrong App')
-                    AND (Application_Status__c != 'Withdrawn' AND Application_Substatus__c != 'Multiple App')
+                    AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
+                    AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
                     ORDER BY LastModifiedDate
             ];
             if (lastApps.size() > 0) {

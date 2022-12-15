@@ -37,6 +37,7 @@
         </apex:outputPanel>
 
         <!-- MAIN BODY -->
+        <a id="main-content"></a>
         <apex:outputPanel layout="block" styleClass="{!IF(col=='lr','slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-medium-size_6-of-12',IF(col=='l' || col=='r', 'slds-col slds-size_1-of-1 slds-large-size_9-of-12 slds-medium-size_9-of-12', 'slds-col slds-size_1-of-1 slds-large-size_12-of-12'))}">
 
             <!-- CONTENT TOP WIDGETS -->
@@ -49,12 +50,13 @@
 
             <!-- TITLE AND SUB TITLE -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 " layout="block">
+                <button type="button" class="slds-button slds-button_brand small-header-button" id="carousel-killer">Single-Page Form</button>
                 <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                    <h2 class="slds-text-heading_large">{!title}</h2>
+                    <h1 class="slds-text-heading_large">{!title}</h1>
                 </div>
                 <apex:outputPanel rendered="{!subtitle != null}" layout="none">
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small">
-                        <h3 class="slds-text-heading_medium">{!subtitle}</h3>
+                        <h2 class="slds-text-heading_medium">{!subtitle}</h2>
                     </div>
                 </apex:outputPanel>
             </apex:outputPanel>

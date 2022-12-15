@@ -58,12 +58,11 @@ function findApplicationLinkTargetSelf() {
 function addRecordValidation(elem, rrIndex) {
     showFormSpinner();
     let recWrap = elem.closest('.slds-card');
+    hideFormSpinner();
     window.scrollTo(0, 0);
     if (textValidations(true, recWrap) === 0) {
-        hideFormSpinner();
         return true;
     }
-    hideFormSpinner();
     return false;
 }
 

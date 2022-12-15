@@ -28,7 +28,7 @@
             </p>
         </apex:outputPanel>
 
-        <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.phone)}">
+        <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.email)}">
             <p class="slds-text-body_small slds-m-top_x-small">Email</p>
             <p class="slds-text-body slds-truncate" title="{!counselor.email}">
                 <a href="mailto:{!counselor.email}">{!counselor.email}</a>
@@ -42,7 +42,7 @@
             </p>
         </apex:outputPanel>
 
-        <div class="slds-summary-detail slds-m-top_small" style="display:block;">
+        <apex:outputPanel styleClass="slds-summary-detail slds-m-top_small" style="display:block;" layout="block" rendered="{!!ISBLANK(counselor.about) || !ISBLANK(counselor.advice) || !ISBLANK(counselor.USTLove) || !ISBLANK(counselor.hometown) || !ISBLANK(counselor.college) || !ISBLANK(counselor.major)}">
             <a href="javascript:;" class="summary-detail-toggle">
                 <svg class="slds-button__icon">
                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}"></use>
@@ -95,7 +95,7 @@
 
             </div>
 
-        </div>
+        </apex:outputPanel>
     </apex:outputPanel>
 
 

@@ -59,17 +59,17 @@ public with sharing class CounselorInfoWidgetComponentController {
                         cw.message = app.Message_To_Applicant__c;
                         cw.CounselorName = u.Name;
                         cw.email = u.Email;
-                        cw.college = (String.isNotBlank(u.College__c) ? u.College__c : '');
-                        cw.major = (String.isNotBlank(u.Major__c) ? u.Major__c : '');
-                        cw.hometown = (String.isNotBlank(u.Hometown__c) ? u.Hometown__c : '');
-                        cw.about = (String.isNotBlank(u.About_Me__c) ? u.About_Me__c : '');
-                        cw.USTLove = (String.isNotBlank(u.What_I_Love_About_St_Thomas__c) ? u.What_I_Love_About_St_Thomas__c : '');
-                        cw.advice = (String.isNotBlank(u.Words_of_Advice__c) ? u.Words_of_Advice__c : '');
-                        cw.title = (String.isNotBlank(u.Title) ? u.Title : '');
+                        cw.college = u.College__c;
+                        cw.major = u.Major__c;
+                        cw.hometown = u.Hometown__c;
+                        cw.about = u.About_Me__c;
+                        cw.USTLove = u.What_I_Love_About_St_Thomas__c;
+                        cw.advice = u.Words_of_Advice__c;
+                        cw.title = u.Title;
                         if (String.isNotBlank(u.Extension)) {
                             cw.phone = u.Phone + ' ext ' + u.Extension;
                         } else {
-                            cw.phone = (String.isNotBlank(u.Phone) ? u.Phone : '');
+                            cw.phone = u.Phone;
                         }
                         cw.address = (String.isNotBlank(u.Street) ? (u.Street.replace('\n', '<br>') + ' <br>' + u.City + ', ' + u.State + ' ' + u.PostalCode) : '');
                         cw.smallPhoto = '';

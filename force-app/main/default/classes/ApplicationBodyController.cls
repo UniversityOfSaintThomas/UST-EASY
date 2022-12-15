@@ -61,8 +61,8 @@ public with sharing class ApplicationBodyController {
             appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Intended_Program__r.Program_Name_on_Application__c';
             appsQuery += ' FROM Application__c';
             appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
-            appsQuery += ' AND (Application_Status__c != \'Withdrawn\' AND Application_Substatus__c != \'Wrong App\')';
-            appsQuery += ' AND (Application_Status__c != \'Withdrawn\' AND Application_Substatus__c != \'Multiple App\')';
+            appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
+            appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
             if (pagesWithMultipleAppInfo.contains(currentPageName)) {
                 appsQuery += ' AND Contact__c = \'' + appInfoParam.contactId + '\'';
             } else {
@@ -158,7 +158,6 @@ public with sharing class ApplicationBodyController {
                         WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
                         AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
                         AND Activation_State__c != 'Inactive'
-                        WITH SECURITY_ENFORCED
                         ORDER BY Sort_Order__c
                 ];
             } catch (DmlException e) {
@@ -167,41 +166,48 @@ public with sharing class ApplicationBodyController {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
             }
 
+
             /* Start/End date filter if defined */
             for (EASY_Widget__c widget : allPositionWidgets) {
 
+                String skipReason = '';
                 Boolean skipWidget = false;
+
                 if (widget.Activation_State__c.equalsIgnoreCase('Date activated')) {
                     Datetime nowDateTime = ApplicationUtilities.adjustForTimeZone(Datetime.now(), widget.Widget_Time_Zone__c);
                     if (String.isNotBlank(widget.Widget_Time_Zone__c)) {
-                        if (widget.Start_Date__c != null && widget.Start_Time__c != null) {
+                        if (!skipWidget && widget.Start_Date__c != null && widget.Start_Time__c != null) {
                             Datetime widgetStartDateTime = ApplicationUtilities.convertDateToDatetime(widget.Start_Date__c, widget.Start_Time__c, null);
                             if (nowDateTime <= widgetStartDateTime) {
                                 skipWidget = true;
+                                skipReason += 'DateTime, ';
                             }
                         }
-                        if (widget.End_Date__c != null && widget.End_Time__c != null) {
+                        if (!skipWidget && widget.End_Date__c != null && widget.End_Time__c != null) {
                             Datetime widgetEndDateTime = ApplicationUtilities.convertDateToDatetime(widget.End_Date__c, widget.End_Time__c, null);
                             if (nowDateTime >= widgetEndDateTime) {
                                 skipWidget = true;
+                                skipReason += 'DateTime, ';
                             }
                         }
                     }
                 }
 
                 //If it is a custom widget and there is nothing in the widget don't show it
-                if (widget.Widget_Type__c.equalsIgnoreCase('custom')) {
+                if (!skipWidget && widget.Widget_Type__c.equalsIgnoreCase('custom')) {
                     if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
                         skipWidget = true;
+                        skipReason += 'Blank content on custom, ';
                     }
                 }
 
                 if (!skipWidget) {
                     /* Only show one widget of type hard coded above. Admission App finder should only show once on a portal even if defined for several apps */
 
-                    if (onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
+                    if (!skipWidget && onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
                         if (onlyOneWidgetPerPage.get(widget.Widget_Type__c) > 0) {
                             skipWidget = true;
+                            skipReason += 'One widget hardcoded, ';
                         } else {
                             onlyOneWidgetPerPage.put(widget.Widget_Type__c, onlyOneWidgetPerPage.get(widget.Widget_Type__c) + 1);
                         }
@@ -210,6 +216,7 @@ public with sharing class ApplicationBodyController {
                     if (!skipWidget && String.isNotBlank(widget.Only_One_Widget_Key__c)) {
                         if (onlyOneWidgetPerPage.containsKey(widget.Only_One_Widget_Key__c)) {
                             skipWidget = true;
+                            skipReason += 'One widget key, ';
                         } else {
                             onlyOneWidgetPerPage.put(widget.Only_One_Widget_Key__c, 1);
                         }
@@ -223,42 +230,49 @@ public with sharing class ApplicationBodyController {
                         String widgetCitizen = String.isNotBlank(widget.Display_Widget_On_Citizenship__c) ? widget.Display_Widget_On_Citizenship__c : '';
                         EASYApplicationInfo widgetAppInfo = mapAtAppInfo.get(widgetUrlParam);
 
-                        System.debug(JSON.serializePretty(widgetAppInfo));
+                        //System.debug(JSON.serializePretty(widgetAppInfo));
 
-                        if (String.isNotBlank(widgetStatus) && String.isBlank(widgetSubStatus)) {
+
+                        if (!skipWidget && String.isNotBlank(widgetStatus) && String.isBlank(widgetSubStatus)) {
                             if (String.isBlank(widgetAppInfo.appStatus)) {
                                 skipWidget = true;
+                                skipReason += 'App Status on app is blank, but widget has one, ';
                             } else {
-                                if (!doesListContainItem(widgetAppInfo.appStatus.split(';'), widgetStatus.split(';'))) {
+                                if (!doesListContainItem(widgetStatus.split(';'), widgetAppInfo.appStatus.split(';'))) {
                                     skipWidget = true;
+                                    skipReason += 'status not met, ';
                                 }
                             }
                         }
 
                         /* Sub Status filter */
-                        if (String.isNotBlank(widgetStatus) && String.isNotBlank(widgetSubStatus) && !skipWidget) {
+                        if (!skipWidget && String.isNotBlank(widgetStatus) && String.isNotBlank(widgetSubStatus)) {
                             if (String.isBlank(widgetAppInfo.appSubStatus)) {
                                 skipWidget = true;
+                                skipReason += 'App substatus on app is blank but widget has one, ';
                             } else {
-                                if (!doesListContainItem(widgetAppInfo.appSubStatus.split(';'), widgetSubStatus.split(';'))) {
+                                if (!doesListContainItem(widgetSubStatus.split(';'), widgetAppInfo.appSubStatus.split(';'))) {
                                     skipWidget = true;
+                                    skipReason += 'substatus not met, ';
                                 }
                             }
                         }
 
                         /* Citizenship filter */
-                        if (String.isNotBlank(widgetCitizen)) {
+                        if (!skipWidget && String.isNotBlank(widgetCitizen)) {
                             if (String.isNotBlank(widgetAppInfo.citizenship)) {
-                                if (!doesListContainItem(widgetAppInfo.citizenship.split(';'), widgetCitizen.split(';'))) {
+                                if (!doesListContainItem(widgetCitizen.split(';'), widgetAppInfo.citizenship.split(';'))) {
                                     skipWidget = true;
+                                    skipReason += 'citizenship status not met, ';
                                 }
                             }
                         }
 
                         /* Display on pages filter */
-                        if (String.isNotBlank(widget.Display_Widget_On_Pages__c) && !skipWidget) {
+                        if (!skipWidget && String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
                             if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
                                 skipWidget = true;
+                                skipReason += 'Wrong Page, ';
                             }
                         }
                     }
@@ -299,9 +313,21 @@ public with sharing class ApplicationBodyController {
                     }
 
                 }
+                System.debug('---------------------------');
+                System.debug('ID: ' + widget.Id);
+                System.debug('Name: ' + widget.Name);
+                System.debug('AT: ' + widget.Application_Control__r.URL_Parameter__c);
+                System.debug('Title: ' + widget.Display_Heading__c);
+                System.debug('Type: ' + widget.Widget_Type__c);
+                System.debug('Key: ' + widget.Only_One_Widget_Key__c);
+                System.debug('On Status: ' + widget.Display_Widget_On_Status__c);
+                System.debug('On Sub Status: ' + widget.Display_Widget_On_Sub_Status__c);
+                System.debug('Skipped: ' + skipWidget);
+                System.debug('Skip Reason: ' + skipReason);
             }
 
         }
+
         return foundWidgets;
     }
 
@@ -356,11 +382,15 @@ public with sharing class ApplicationBodyController {
 
 
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
+        // System.debug('LIST 1:' + list1);
+        //   System.debug('LIST 2:' + list2);
         for (String l : list1) {
             if (list2.contains(l)) {
+                //System.debug('List match!!!');
                 return true;
             }
         }
+        //    System.debug('NO Match');
         return false;
     }
 

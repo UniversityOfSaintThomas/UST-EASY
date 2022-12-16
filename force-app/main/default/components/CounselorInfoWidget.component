@@ -24,7 +24,7 @@
         <apex:outputPanel layout="none" rendered="{!!ISBLANK(counselor.phone)}">
             <p class="slds-text-body_small slds-m-top_x-small">Phone</p>
             <p class="slds-text-body">
-                <a href="tel:{!counselor.phone}">0-589-0000111</a>
+                <a href="tel:{!counselor.phone}">{!counselor.phone}</a>
             </p>
         </apex:outputPanel>
 

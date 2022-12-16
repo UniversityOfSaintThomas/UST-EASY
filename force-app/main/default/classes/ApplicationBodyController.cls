@@ -92,7 +92,12 @@ public with sharing class ApplicationBodyController {
                     dataTags.Documents_Missing = app.Documents_Missing_Text__c;
                     dataTags.First_Name = app.Contact_Mailing_First_Name__c;
                     dataTags.Last_Name = app.Contact__r.LastName;
+                    dataTags.LastTranscript = '';
+                    dataTags.Course_Pref = '';
+                    dataTags.Housing_Pref = '';
+                    dataTags.UGFYClass = '';
                 }
+
                 dataTagsMap.put(app.Application_Control__r.URL_Parameter__c, dataTags);
 
                 //Create appInfo per appControl

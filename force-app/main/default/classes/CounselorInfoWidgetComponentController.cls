@@ -66,10 +66,9 @@ public with sharing class CounselorInfoWidgetComponentController {
                         cw.USTLove = u.What_I_Love_About_St_Thomas__c;
                         cw.advice = u.Words_of_Advice__c;
                         cw.title = u.Title;
+                        cw.phone = u.Phone;
                         if (String.isNotBlank(u.Extension)) {
-                            cw.phone = u.Phone + ' ext ' + u.Extension;
-                        } else {
-                            cw.phone = u.Phone;
+                            cw.phone = cw.phone + ' ext ' + u.Extension;
                         }
                         cw.address = (String.isNotBlank(u.Street) ? (u.Street.replace('\n', '<br>') + ' <br>' + u.City + ', ' + u.State + ' ' + u.PostalCode) : '');
                         cw.smallPhoto = '';

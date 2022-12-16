@@ -189,8 +189,6 @@ public class ApplicationBodyController_TEST {
         );
         widgets.add(contentBottomWidget2);
 
-        //System.debug(JSON.serializePretty(widgets));
-
         insert widgets;
     }
 

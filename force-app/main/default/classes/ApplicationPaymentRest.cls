@@ -13,18 +13,13 @@ global with sharing class ApplicationPaymentRest {
 
         if (req.requestBody.size() > 0) {
 
-            System.debug(JSON.serializePretty(req));
             String contentBody = EncodingUtil.base64Decode(EncodingUtil.base64Encode(req.requestBody)).toString();
-            System.debug(contentBody);
-
             parameters = (Map<String, String>) JSON.deserialize(contentBody, Map<String, String>.class);
 
-            System.debug(JSON.serializePretty(parameters));
-
             //Debug all passed values
-            for (String key : parameters.keySet()) {
+            /*for (String key : parameters.keySet()) {
                 System.debug(key + ' : ' + parameters.get(key));
-            }
+            }*/
 
             if (parameters.containsKey('pmt_status')) {
                 if (String.isNotBlank(parameters.get('pmt_status'))) {
@@ -34,13 +29,11 @@ global with sharing class ApplicationPaymentRest {
 
                         //EASY_APP is a encrypted string and needs to be decrypted and Ids confirmed
                         String protectedIds = evaluateResponse('EASY_APP');
-                        System.debug(protectedIds);
                         Id appId = null;
                         Id responseId = null;
                         Id questionId = null;
                         if (String.isNotBlank(protectedIds)) {
                             protectedIds = ApplicationUtilities.decryptString(protectedIds, true);
-                            System.debug(protectedIds);
                             Map<String, String> appIds = (Map<String, String>) JSON.deserialize(protectedIds, Map<String, String>.class);
                             appId = evaluateIdResponse(appIds.get('appId'));
                             responseId = evaluateIdResponse(appIds.get('responseId'));
@@ -58,7 +51,6 @@ global with sharing class ApplicationPaymentRest {
                             questionResponse.PopulatedOn__c = evaluateDateResponse('pmt_date');
                             questionResponse.ValueCurrency__c = evaluateDecimalResponse('pmt_amt');
                             questionResponse.ValueCheckbox__c = true;
-                            System.debug(JSON.serialize(questionResponse));
                             questionResponse = crudToDo.saveQuestionResponse(questionResponse);
                         }
 
@@ -74,8 +66,6 @@ global with sharing class ApplicationPaymentRest {
                         payment.Admissions_Application__c = appId;
                         payment.Question__c = questionId;
                         payment.Requirement_Response__c = responseId;
-                        System.debug(questionResponse.Id);
-                        //payment.Question_Response__c = questionResponse.Id;
 
                         //acct_addr : 123 Electric Ave
                         payment.Address_1__c = evaluateResponse('acct_addr');
@@ -89,7 +79,7 @@ global with sharing class ApplicationPaymentRest {
                         //acct_country : US
                         payment.Country__c = evaluateResponse('acct_country');
                         //acct_email_address : thad@valleyhill.net
-                        payment.Email_Address__c = evaluateResponse('acct_email_address');
+                        payment.Payment_Email_Address__c = evaluateResponse('acct_email_address');
                         //acct_phone_day : +1 555-555-5555
                         payment.Phone__c = evaluateResponse('acct_phone_day');
                         //BILL_EMAIL_ADDRESS : thad@valleyhill.net"
@@ -113,7 +103,6 @@ global with sharing class ApplicationPaymentRest {
                         //EXT_TRANS_ID : Johnny Applicant | A-0122222 | Fall 2023
                         payment.TouchNet_Ext_Trans_Id__c = evaluateResponse('EXT_TRANS_ID');
                         payment.Payment_Status__c = 'Received';
-                        System.debug(JSON.serializePretty(payment));
 
                         if (crudToDo.savePayment(payment)) {
                             return 'HTTP_OK';

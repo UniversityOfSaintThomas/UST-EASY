@@ -130,12 +130,6 @@
         <label>Incomplete</label>
     </customValue>
     <customValue>
-        <fullName>Deferred</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Deferred</label>
-    </customValue>
-    <customValue>
         <fullName>Deposit Waived</fullName>
         <default>false</default>
         <isActive>false</isActive>

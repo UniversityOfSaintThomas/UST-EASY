@@ -46,9 +46,19 @@
         <label>Admit</label>
     </customValue>
     <customValue>
+        <fullName>Deferred</fullName>
+        <default>false</default>
+        <label>Deferred</label>
+    </customValue>
+    <customValue>
         <fullName>Deferred Admit</fullName>
         <default>false</default>
         <label>Deferred Admit</label>
+    </customValue>
+    <customValue>
+        <fullName>Deferred - Admit</fullName>
+        <default>false</default>
+        <label>Deferred - Admit</label>
     </customValue>
     <customValue>
         <fullName>Post-Admit (System)</fullName>

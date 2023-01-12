@@ -92,6 +92,9 @@ Insert Account:
   fields:
   - Banner_Code__c
   - Banner_Key__c
+  - BillingStreet
+  - BillingCity
+  - BillingPostalCode
   - CEEB_Code__c
   - CEEB_Integration_Code__c
   - EASY_Validation_Record__c

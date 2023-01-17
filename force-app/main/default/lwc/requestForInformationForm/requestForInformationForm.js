@@ -99,6 +99,7 @@ export default class RequestForInformationForm extends LightningElement {
     school_college;
     citizenship_type;
     lead_owner;
+    lead_source;
     redirect_url;
     fields_to_display;
     required_fields;
@@ -245,12 +246,12 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             if (Boolean(result.data)) {
                 this.academic_level_api = result.data.Academic_Level__c;
-                if (this.academic_level_api == 'U') {
+                if (this.academic_level_api === 'U') {
                     this.is_undergraduate = true;
                 }
                 if (Boolean(result.data.School_College__c)
-                    && result.data.School_College__c != 'Graduate' 
-                    && result.data.School_College__c != 'Undergraduate') {
+                    && result.data.School_College__c !== 'Graduate'
+                    && result.data.School_College__c !== 'Undergraduate') {
                         this.school_college_title = 'from the ' + result.data.School_College__c;
                 }
                 this.school_college = result.data.School_College__c;
@@ -258,6 +259,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.fields_to_display = result.data.Fields_to_Display__c;
                 this.required_fields = result.data.Required_Fields__c;
                 this.lead_owner = result.data.Lead_Owner__c;
+                this.lead_source = result.data.Lead_Source__c;
                 this.redirect_url = result.data.Redirect_URL__c;
                 this.hide_form_title = result.data.Hide_Form_Title__c;
                 this.redirect_after_submit = result.data.Redirect_After_Form_Submission__c;
@@ -270,13 +272,13 @@ export default class RequestForInformationForm extends LightningElement {
                     this.academic_level = level;
                 })
                 .catch(error => {
-                    console.log(error);
+                    console.log(error + ' ACADEMIC LEVEL');
                 });
                 getTerms({account_name : this.school_college})
                 .then(terms => {
                     if (Boolean(terms)) {
                         this.term_id_to_name_map = terms;
-                        var values = [];
+                        let values = [];
                         for (const term in terms) {
                             values.push(
                                 {label: terms[term].Name, value: terms[term].Id}
@@ -286,7 +288,7 @@ export default class RequestForInformationForm extends LightningElement {
                     }
                 })
                 .catch(error => {
-                    console.log(error);
+                    console.log(error + ' TERMS');
                 })
                 if (Boolean(this.academic_level_api)) {
                     // gets programs based on academic level
@@ -294,7 +296,7 @@ export default class RequestForInformationForm extends LightningElement {
                     .then((programs) => {
                         this.program_id_to_name_map = programs;
                         var values = [];
-                        if (this.academic_level == 'U') {
+                        if (this.academic_level === 'U') {
                             for (const program in programs) {
                                 values.push(
                                     {label: programs[program].Name, value: programs[program].Id}
@@ -310,7 +312,7 @@ export default class RequestForInformationForm extends LightningElement {
                         this.academic_interest_picklist_values = values;
                     })
                     .catch(error => {
-                        console.log(error);
+                        console.log(error + ' ACADEMIC INTEREST');
                     });
                 }
                 this.show_spinner = false;
@@ -330,7 +332,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.all_lead_field_api_names.push(field[0]);
             }
         } else {
-            console.log(result.error);
+            console.log(result.error + ' LEAD OBJECT RECORD TYPE');
         }
     }
 
@@ -341,7 +343,7 @@ export default class RequestForInformationForm extends LightningElement {
             this.admit_type_picklist_values = result.data.picklistFieldValues.Admit_Type__c.values;
             this.timeline_picklist_values = result.data.picklistFieldValues.Timeline__c.values;
         } else {
-            console.log(result.error);
+            console.log(result.error + ' LEAD OBJECT');
         }
     }
 
@@ -350,7 +352,7 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             this.family_default_record_type = result.data.defaultRecordTypeId;
         } else {
-            console.log(result.error);
+            console.log(JSON.stringify(result.error) + ' FAMILY_OBJECT Record Type');
         }
     }
 
@@ -359,7 +361,7 @@ export default class RequestForInformationForm extends LightningElement {
         if (result.data) {
             this.country_picklist_values = result.data.picklistFieldValues.Birth_Country_Region_Territory__c.values;
         } else {
-            console.log(result.error);
+            console.log(result.error + ' FAMILY_OBJECT');
         }
     }
 
@@ -438,7 +440,7 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.country_label:
                 this.record_input.fields.Country = event.target.value;
-                if (event.target.value != 'United States of America') {
+                if (event.target.value !== 'United States of America') {
                     this.international_citizen_type = true;
                 } else {
                     this.international_citizen_type = false;
@@ -456,7 +458,7 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.citizenship_label:
                 this.record_input.fields.Citizenship_Type__c = event.target.value;
-                if (event.target.value == 'International') {
+                if (event.target.value === 'International') {
                     this.international_citizen_type = true;
                 } else {
                     this.international_citizen_type = false;
@@ -572,6 +574,7 @@ export default class RequestForInformationForm extends LightningElement {
         if (this.validateInput()) {
             this.show_spinner = true;
             this.record_input.fields.OwnerId = this.lead_owner;
+            this.record_input.fields.LeadSource = this.lead_source;
             if (!Boolean(this.record_input.fields.Company)) {
                 this.record_input.fields.Company = this.record_input.fields.FirstName + ' ' + this.record_input.fields.LastName;
             }
@@ -607,14 +610,14 @@ export default class RequestForInformationForm extends LightningElement {
     */
 
     handleRecruitmentProgram() {
-        var count = 0;
+        let count = 0;
         if (this.is_undergraduate) {
             for (const program_id of this.academic_interest_id_list) {
-                if (count == 0) {
+                if (count === 0) {
                     this.record_input.fields.Major_Program__c = program_id;
-                } else if (count == 1) {
+                } else if (count === 1) {
                     this.record_input.fields.Major_Program_2__c = program_id;
-                } else if (count == 2) {
+                } else if (count === 2) {
                     this.record_input.fields.Major_Program_3__c = program_id;
                 } else {
                     this.record_input.fields.Major_Program_4__c = program_id;
@@ -655,9 +658,9 @@ export default class RequestForInformationForm extends LightningElement {
 
     // used Fields_to_Display__c field on RFI_Controller__c to determine which fields to display on form
     handleFieldsToDisplay() {
-        var fields = this.fields_to_display.split(';');
+        let fields = this.fields_to_display.split(';');
         for (const field of fields) {
-            var object_property = field.replaceAll(' ', '_');
+            let object_property = field.replaceAll(' ', '_');
             this.show_fields[object_property] = true;
         }
     }

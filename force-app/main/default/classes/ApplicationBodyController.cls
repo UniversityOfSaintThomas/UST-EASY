@@ -36,6 +36,10 @@ public with sharing class ApplicationBodyController {
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atSubStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atCitizenshipMap = new Map<String, Set<String>>();
+        Map<String, Set<String>> atGenericFilter1Map = new Map<String, Set<String>>();
+        Map<String, Set<String>> atGenericFilter2Map = new Map<String, Set<String>>();
+        Map<String, Set<String>> atGenericFilter3Map = new Map<String, Set<String>>();
+        Map<String, Set<String>> atGenericFilter4Map = new Map<String, Set<String>>();
         mapAtAppInfo = new Map<String, EASYApplicationInfo>();
         currentPageName = currentPageName.toLowerCase();
         allWidgets foundWidgets = new allWidgets();
@@ -58,7 +62,8 @@ public with sharing class ApplicationBodyController {
             String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,';
             appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,';
             appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
-            appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Intended_Program__r.Program_Name_on_Application__c';
+            appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Intended_Program__r.Program_Name_on_Application__c,';
+            appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c';
             appsQuery += ' FROM Application__c';
             appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
             appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
@@ -155,6 +160,46 @@ public with sharing class ApplicationBodyController {
                             });
                         }
                     }
+
+                    if (String.isNotBlank(app.Generic_Filter_1__c)) {
+                        if (atGenericFilter1Map.containsKey(atURL)) {
+                            atGenericFilter1Map.get(atURL).add(app.Generic_Filter_1__c);
+                        } else {
+                            atGenericFilter1Map.put(atURL, new Set<String>{
+                                    app.Generic_Filter_1__c
+                            });
+                        }
+                    }
+
+                    if (String.isNotBlank(app.Generic_Filter_2__c)) {
+                        if (atGenericFilter2Map.containsKey(atURL)) {
+                            atGenericFilter2Map.get(atURL).add(app.Generic_Filter_2__c);
+                        } else {
+                            atGenericFilter2Map.put(atURL, new Set<String>{
+                                    app.Generic_Filter_2__c
+                            });
+                        }
+                    }
+
+                    if (String.isNotBlank(app.Generic_Filter_3__c)) {
+                        if (atGenericFilter3Map.containsKey(atURL)) {
+                            atGenericFilter3Map.get(atURL).add(app.Generic_Filter_3__c);
+                        } else {
+                            atGenericFilter3Map.put(atURL, new Set<String>{
+                                    app.Generic_Filter_3__c
+                            });
+                        }
+                    }
+
+                    if (String.isNotBlank(app.Generic_Filter_4__c)) {
+                        if (atGenericFilter4Map.containsKey(atURL)) {
+                            atGenericFilter4Map.get(atURL).add(app.Generic_Filter_4__c);
+                        } else {
+                            atGenericFilter4Map.put(atURL, new Set<String>{
+                                    app.Generic_Filter_4__c
+                            });
+                        }
+                    }
                 }
             }
 
@@ -165,7 +210,7 @@ public with sharing class ApplicationBodyController {
                                 Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
                                 Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
                                 Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
-                                Only_One_Widget_Key__c
+                                Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
                         FROM EASY_Widget__c
                         WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
                         AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
@@ -205,14 +250,6 @@ public with sharing class ApplicationBodyController {
                     }
                 }
 
-                //If it is a custom widget and there is nothing in the widget don't show it
-                if (!skipWidget && widget.Widget_Type__c.equalsIgnoreCase('custom')) {
-                    if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
-                        skipWidget = true;
-                        skipReason += 'Blank content on custom, ';
-                    }
-                }
-
                 if (!skipWidget) {
                     /* Only show one widget of type hard coded above. Admission App finder should only show once on a portal even if defined for several apps */
 
@@ -240,10 +277,23 @@ public with sharing class ApplicationBodyController {
                         String widgetStatus = String.isNotBlank(widget.Display_Widget_On_Status__c) ? widget.Display_Widget_On_Status__c : '';
                         String widgetSubStatus = String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) ? widget.Display_Widget_On_Sub_Status__c : '';
                         String widgetCitizen = String.isNotBlank(widget.Display_Widget_On_Citizenship__c) ? widget.Display_Widget_On_Citizenship__c : '';
+                        String genericFilter1 = String.isNotBlank(widget.Generic_Filter_1__c) ? widget.Generic_Filter_1__c : '';
+                        String genericFilter2 = String.isNotBlank(widget.Generic_Filter_2__c) ? widget.Generic_Filter_2__c : '';
+                        String genericFilter3 = String.isNotBlank(widget.Generic_Filter_3__c) ? widget.Generic_Filter_3__c : '';
+                        String genericFilter4 = String.isNotBlank(widget.Generic_Filter_4__c) ? widget.Generic_Filter_4__c : '';
+
+
                         EASYApplicationInfo widgetAppInfo = mapAtAppInfo.get(widgetUrlParam);
 
                         //System.debug(JSON.serializePretty(widgetAppInfo));
 
+                        /* Display on pages filter */
+                        if (!skipWidget && String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
+                            if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
+                                skipWidget = true;
+                                skipReason += 'Wrong Page, ';
+                            }
+                        }
 
                         if (!skipWidget && String.isNotBlank(widgetStatus) && String.isBlank(widgetSubStatus)) {
                             if (String.isBlank(widgetAppInfo.appStatus)) {
@@ -267,7 +317,7 @@ public with sharing class ApplicationBodyController {
                                     skipWidget = true;
                                     skipReason += 'substatus not met, ';
                                 }
-                            }
+                            } 
                         }
 
                         /* Citizenship filter */
@@ -280,13 +330,46 @@ public with sharing class ApplicationBodyController {
                             }
                         }
 
-                        /* Display on pages filter */
-                        if (!skipWidget && String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
-                            if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
-                                skipWidget = true;
-                                skipReason += 'Wrong Page, ';
+                        /* Generic filter 1 */
+                        if (!skipWidget && String.isNotBlank(genericFilter1)) {
+                            if (atGenericFilter1Map.containsKey(widgetUrlParam)) {
+                                if (!doesListContainItem(genericFilter1.split(';'),  new List<String>(atGenericFilter1Map.get(widgetUrlParam)))) {
+                                    skipWidget = true;
+                                    skipReason += 'Generic Filter one not met, ';
+                                }
                             }
                         }
+
+                        /* Generic filter 2 */
+                        if (!skipWidget && String.isNotBlank(genericFilter2)) {
+                            if (atGenericFilter2Map.containsKey(widgetUrlParam)) {
+                                if (!doesListContainItem(genericFilter2.split(';'),  new List<String>(atGenericFilter2Map.get(widgetUrlParam)))) {
+                                    skipWidget = true;
+                                    skipReason += 'Generic Filter two not met, ';
+                                }
+                            }
+                        }
+
+                        /* Generic filter 3 */
+                        if (!skipWidget && String.isNotBlank(genericFilter3)) {
+                            if (atGenericFilter3Map.containsKey(widgetUrlParam)) {
+                                if (!doesListContainItem(genericFilter3.split(';'),  new List<String>(atGenericFilter3Map.get(widgetUrlParam)))) {
+                                    skipWidget = true;
+                                    skipReason += 'Generic Filter three not met, ';
+                                }
+                            }
+                        }
+
+                        /* Generic filter 2 */
+                        if (!skipWidget && String.isNotBlank(genericFilter4)) {
+                            if (atGenericFilter4Map.containsKey(widgetUrlParam)) {
+                                if (!doesListContainItem(genericFilter4.split(';'),  new List<String>(atGenericFilter4Map.get(widgetUrlParam)))) {
+                                    skipWidget = true;
+                                    skipReason += 'Generic Filter four not met, ';
+                                }
+                            }
+                        }
+
                     }
                 }
 
@@ -301,7 +384,21 @@ public with sharing class ApplicationBodyController {
                         if (String.isNotBlank(widget.Display_Heading__c)) {
                             widget.Display_Heading__c = replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                         }
+                        if (String.isNotBlank(widget.Scripts__c)) {
+                            widget.Scripts__c = replaceDataTags(widget.Scripts__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                        }
                     }
+                }
+
+                //If it is a custom widget and there is nothing in the widget don't show it
+                if (!skipWidget && widget.Widget_Type__c.equalsIgnoreCase('custom')) {
+                    if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
+                        skipWidget = true;
+                        skipReason += 'Blank content on custom, ';
+                    }
+                }
+
+                if (!skipWidget) {
 
                     switch on widget.Widget_Screen_Location__c.toLowerCase() {
                         when 'left' {

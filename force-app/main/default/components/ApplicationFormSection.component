@@ -44,7 +44,7 @@
 
         <apex:outputPanel id="questionGroupWrapper" layout="block">
 
-            <apex:actionRegion >
+            <apex:actionRegion>
 
                 <!-- REGULAR GROUP QUESTIONS - questionGroup -->
                 <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
@@ -136,7 +136,7 @@
             <!-- CREATE REFERENCE RECORD -->
             <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
 
-                <apex:pageMessages />
+                <apex:pageMessages/>
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
                     <p>You haven't created any records yet. Click "New Record" to create one.</p>
@@ -161,8 +161,28 @@
                                             <dt class="slds-item_label slds-text-color_weak slds-truncate" title="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}">
                                                 {!question.question.Label__c} {!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}
                                             </dt>
+
                                             <dd class="slds-item_detail slds-truncate" title="Description for first label">
-                                                <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address'}"/>
+
+                                                <!-- <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address'}"/>-->
+
+                                                <apex:outputText value="{!rr.obj['Holding_Name__c']}" rendered="{!question.fieldType!='Address' && NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
+
+                                                <apex:outputPanel layout="none" rendered="{!ISBLANK(rr.obj['Holding_Name__c']) && question.fieldType!='Address' && lower(question.question.Related_Object_Field__c) == 'hed__account__c' && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}">
+                                                    {!rr.obj['hed__Account__r']['Name']}
+                                                </apex:outputPanel>
+
+                                                <apex:outputPanel layout="none" rendered="{!question.fieldType!='Address' && !group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}">
+                                                    <apex:outputPanel layout="none" rendered="{!question.fieldType != 'Date'}">
+                                                       {!rr.obj[question.question.Related_Object_Field__c]}
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Date'}">
+                                                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                            <apex:param value="{!rr.obj[question.question.Related_Object_Field__c]}" />
+                                                        </apex:outputText>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+
                                                 <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Address'}">
                                                     {!rr.obj['Street__c']},
                                                     {!rr.obj['City__c']}, {!rr.obj['State__c']} {!rr.obj['PostalCode__c']} {!rr.obj['Country__c']}
@@ -274,7 +294,7 @@
             <!-- CREATE NEW RELATED RECORD -->
             <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
 
-                <apex:pageMessages />
+                <apex:pageMessages/>
 
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                     <apex:variable value="{!itemNumber+1}" var="itemNumber"/>

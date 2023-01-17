@@ -19,12 +19,7 @@
         </apex:define>
         <apex:define name="metaPageTitle">{!appInfo.intendedProgram} : {!title}</apex:define>
         <apex:define name="body">
-
             <c:ApplicationBody title="{!if(isInvalid,'An Error has occurred',title)}" subtitle="{!if(isInvalid,'An error has occurred and you do not have access to this page.','')}" appInfo="{!appInfo}" checklistItems="{!checklistItems}" vfPageName="ApplicationRequirement">
-                <apex:outputPanel id="formPageMessages">
-                    <apex:messages />
-                </apex:outputPanel>
-
                 <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}" title="{!title}" vfPageName="ApplicationRequirement">
 
                     <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
@@ -49,28 +44,6 @@
                                 </div>
                                 <div class="slds-p-bottom_small">
                                     <apex:commandButton action="{!finalSubmitApp}" rendered="{!appInfo.allowSubmit}" value="Submit Application" styleClass="slds-button slds-button_success"/>
-                                </div>
-                            </div>
-                        </article>
-                    </apex:outputPanel>
-
-                    <apex:outputPanel rendered="{!appInfo.allowConfirm}" layout="none">
-                        <article class="slds-card slds-m-bottom_medium">
-                            <div class="slds-card__header slds-grid">
-                                <header>
-                                    <div class="slds-media__body">
-                                        <h3 class="slds-card__header-title">
-                                            Submit This Application
-                                        </h3>
-                                    </div>
-                                </header>
-                            </div>
-                            <div class="slds-card__body slds-card__body_inner">
-                                <div class="slds-p-bottom_small">
-                                    <p>All requirements have been met.</p>
-                                </div>
-                                <div class="slds-p-bottom_small">
-                                    <apex:commandButton action="{!confirmEnrollment}" rendered="{!appInfo.allowConfirm}" value="Submit" styleClass="slds-button slds-button_success"/>
                                 </div>
                             </div>
                         </article>

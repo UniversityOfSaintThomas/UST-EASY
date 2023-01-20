@@ -38,10 +38,7 @@
                 <c:AdmissionsApplicationFinder appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'User Info Login/Logout' }">
-                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}" />
-            </apex:outputPanel>
-            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Counselor Information' }">
-                <c:CounselorInfoWidget appInfo="{!appInfo}" widget="{!widget}" />
+                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
 
         </div>

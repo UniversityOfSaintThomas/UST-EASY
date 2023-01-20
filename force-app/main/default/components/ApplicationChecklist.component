@@ -99,10 +99,6 @@
                         </div>
                     </apex:outputPanel>
 
-                    <apex:outputPanel rendered="{!appInfo.appStatus = 'Withdrawn'}" layout="none">
-                        <p>Status: Withdrawn</p>
-                    </apex:outputPanel>
-
                     <apex:outputPanel rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
                             <p>All requirements have been met.</p>

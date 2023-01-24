@@ -32,7 +32,7 @@ public class ApplicationCreate {
         String userType = UserInfo.getUserType();
         if (userType.endsWithIgnoreCase('guest')) {
             PageReference regPage = Page.ApplicationRegistration;
-            If (String.isNOtBlank(ApexPages.currentPage().getParameters().get('at'))) {
+            if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
                 regPage.getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
             }
             regPage.setRedirect(true);
@@ -69,7 +69,7 @@ public class ApplicationCreate {
 
         con = new Contact();
         app = new Application__c(Application_Control__c = appControlId, Application_Status__c = appInfo.appStartStatus);
-        appInfo.appId = app.id;
+        appInfo.appId = app.Id;
 
         // List of question groups to display
         List<ApplicationQuestionGroup> groups = new List<ApplicationQuestionGroup>();
@@ -119,7 +119,7 @@ public class ApplicationCreate {
             }
             // Query for contact
             if (!contactFields.isEmpty()) {
-                String query = 'SELECT ' + ApplicationHelper.getApplicationContactFields(items) + ' FROM Contact WHERE Id = :contactId';
+                String query = 'SELECT ' + applicationHelper.getApplicationContactFields(items) + ' FROM Contact WHERE Id = :contactId';
                 con = ((List<Contact>) Database.query(query)).get(0);
             }
         }
@@ -196,8 +196,8 @@ public class ApplicationCreate {
                 //TODO: Assuming CST here. Maybe make time zone setting for application control to set this or academic term
                 if ((Date) ar.get('Term_Start_Date__c') != null && (Date) ar.get('Term_End_Date__c') != null) {
                     //Parenthesis around the time zone string because class is used to parsing that out of a generated picklist that includes it.
-                    DateTime startTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_Start_Date__c'), null, '(America/Chicago)');
-                    DateTime endTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_End_Date__c'), null, '(America/Chicago)');
+                    Datetime startTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_Start_Date__c'), null, '(America/Chicago)');
+                    Datetime endTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_End_Date__c'), null, '(America/Chicago)');
                     formattedName = ' (Start Date: ' + startTermDateTime.format('MMM dd, yyyy') + ')';
                 }
 
@@ -422,6 +422,14 @@ public class ApplicationCreate {
     public String saveApplicationHelper(Boolean createInteraction) {
 
         app.Id = null;
+
+        if (String.isNotBlank(app.Intended_Term_of_Entry__c)) {
+            Academic_Term__c termInfo = [SELECT Id, Name FROM Academic_Term__c WHERE Id = :app.Intended_Term_of_Entry__c];
+            if (termInfo != null) {
+                app.Generic_Filter_4__c = termInfo.Name;
+            }
+        }
+
         insert app; // Insert application
 
         if (con.Id != null) update con; // Update contact
@@ -558,7 +566,7 @@ public class ApplicationCreate {
         interaction.Opportunity_Stage__c = 'Started App';
         interaction.Opportunity_Record_Type__c = application_opp_RT_ID;
         interaction.Interaction_Source__c = 'Application';
-        interaction.Date_Started_App__c = System.Today();
+        interaction.Date_Started_App__c = System.today();
         interaction.Lead_Source__c = 'Application';
 
         return interaction;

@@ -59,145 +59,149 @@ public with sharing class ApplicationBodyController {
                 appInfoParam.appStatus = 'none';
             }
 
-            String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,';
-            appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,';
-            appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
-            appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Intended_Program__r.Program_Name_on_Application__c,';
-            appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c';
-            appsQuery += ' FROM Application__c';
-            appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
-            appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
-            appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
-            if (pagesWithMultipleAppInfo.contains(currentPageName)) {
-                appsQuery += ' AND Contact__c = \'' + appInfoParam.contactId + '\'';
+            if (currentPageName.equalsIgnoreCase('applicationregistration')) {
+                mapAtAppInfo.put(appInfoParam.at, appInfoParam);
             } else {
-                appsQuery += ' AND Id = \'' + appInfoParam.appId + '\'';
-            }
-            //System.debug(appsQuery);
-            try {
-                apps = new Map<Id, Application__c>((List<Application__c>) Database.query(appsQuery));
-            } catch (Exception e) {
-                System.debug(e.getMessage());
-            }
-
-
-            //Create map of application control URLs and tag data associated with them for processing below.
-            for (Application__c app : apps.values()) {
-                EASYPersonalDataTags dataTags = new EASYPersonalDataTags();
-                if (dataTagsMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
-                    //Some tag data will be additive if a person has two apps of the same type. This will become an issue to explain, ugh.
-                    dataTags = dataTagsMap.get(app.Application_Control__r.URL_Parameter__c);
-                    dataTags.UGAQUSCHLRS = dataTags.UGAQUSCHLRS + '<br/><br/>' + app.Aquinas_Scholars_Portal_Text__c;
-                    dataTags.Documents_Missing = dataTags.Documents_Missing + '<br/><br/>' + app.Documents_Missing_Text__c;
-                } else {
-                    dataTags.Banner_ID = app.Applicant_Banner_Id__c;
-                    dataTags.UGAQUSCHLRS = app.Aquinas_Scholars_Portal_Text__c;
-                    dataTags.Applicant_Email = app.Contact_Email__c;
-                    dataTags.UGAcctClaimTxt = app.Account_Claimed_Portal_Text__c;
-                    dataTags.Documents_Missing = app.Documents_Missing_Text__c;
-                    dataTags.First_Name = app.Contact_Mailing_First_Name__c;
-                    dataTags.Last_Name = app.Contact__r.LastName;
-                    dataTags.LastTranscript = '';
-                    dataTags.Course_Pref = '';
-                    dataTags.Housing_Pref = '';
-                    dataTags.UGFYClass = '';
-                }
-
-                dataTagsMap.put(app.Application_Control__r.URL_Parameter__c, dataTags);
-
-                //Create appInfo per appControl
-                //Query App Controls
-                Map<Id, Application_Control__c> appControlsByAppIds = new Map<Id, Application_Control__c>([
-                        SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
-                                Cancel_Status__c, Submit_Status__c, Withdraw_Status__c, URL_Parameter__c, Default__c, Academic_Level__c,
-                                School_College__c, Degree_Levels__c, Template__c, Confirm_Status__c, Allow_Confirm_From__c
-                        FROM Application_Control__c
-                        WHERE Id IN (
-                                SELECT Application_Control__c
-                                FROM Application__c
-                                WHERE Id = :apps.keySet()
-                        )
-                ]);
-
-                //setApplicationInfo
-                if (!mapAtAppInfo.containsKey(app.Application_Control__r.URL_Parameter__c)) {
-                    //System.debug('at=' + app.Application_Control__r.URL_Parameter__c);
-                    EASYApplicationInfo tempAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
-                    if (pagesWithMultipleAppInfo.contains(currentPageName)) {
-                        mapAtAppInfo.put(app.Application_Control__r.URL_Parameter__c, tempAppInfo);
-                    } else {
-                        mapAtAppInfo.put(app.Application_Control__r.URL_Parameter__c, appInfoParam);
-                    }
-                }
-
+                String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,';
+                appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,';
+                appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
+                appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Intended_Program__r.Program_Name_on_Application__c,';
+                appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c';
+                appsQuery += ' FROM Application__c';
+                appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
+                appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
+                appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
                 if (pagesWithMultipleAppInfo.contains(currentPageName)) {
-                    String atURL = app.Application_Control__r.URL_Parameter__c;
+                    appsQuery += ' AND Contact__c = \'' + appInfoParam.contactId + '\'';
+                } else {
+                    appsQuery += ' AND Id = \'' + appInfoParam.appId + '\'';
+                }
+                //System.debug(appsQuery);
+                try {
+                    apps = new Map<Id, Application__c>((List<Application__c>) Database.query(appsQuery));
+                } catch (Exception e) {
+                    System.debug(e.getMessage());
+                }
 
-                    //atStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
-                    if (String.isNotBlank(app.Application_Status__c)) {
-                        if (atStatusMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
-                            atStatusMap.get(atURL).addAll(new Set<String>(app.Application_Status__c.split(';')));
+
+                //Create map of application control URLs and tag data associated with them for processing below.
+                for (Application__c app : apps.values()) {
+                    EASYPersonalDataTags dataTags = new EASYPersonalDataTags();
+                    if (dataTagsMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
+                        //Some tag data will be additive if a person has two apps of the same type. This will become an issue to explain, ugh.
+                        dataTags = dataTagsMap.get(app.Application_Control__r.URL_Parameter__c);
+                        dataTags.UGAQUSCHLRS = dataTags.UGAQUSCHLRS + '<br/><br/>' + app.Aquinas_Scholars_Portal_Text__c;
+                        dataTags.Documents_Missing = dataTags.Documents_Missing + '<br/><br/>' + app.Documents_Missing_Text__c;
+                    } else {
+                        dataTags.Banner_ID = app.Applicant_Banner_Id__c;
+                        dataTags.UGAQUSCHLRS = app.Aquinas_Scholars_Portal_Text__c;
+                        dataTags.Applicant_Email = app.Contact_Email__c;
+                        dataTags.UGAcctClaimTxt = app.Account_Claimed_Portal_Text__c;
+                        dataTags.Documents_Missing = app.Documents_Missing_Text__c;
+                        dataTags.First_Name = app.Contact_Mailing_First_Name__c;
+                        dataTags.Last_Name = app.Contact__r.LastName;
+                        dataTags.LastTranscript = '';
+                        dataTags.Course_Pref = '';
+                        dataTags.Housing_Pref = '';
+                        dataTags.UGFYClass = '';
+                    }
+
+                    dataTagsMap.put(app.Application_Control__r.URL_Parameter__c, dataTags);
+
+                    //Create appInfo per appControl
+                    //Query App Controls
+                    Map<Id, Application_Control__c> appControlsByAppIds = new Map<Id, Application_Control__c>([
+                            SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
+                                    Cancel_Status__c, Submit_Status__c, Withdraw_Status__c, URL_Parameter__c, Default__c, Academic_Level__c,
+                                    School_College__c, Degree_Levels__c, Template__c, Confirm_Status__c, Allow_Confirm_From__c
+                            FROM Application_Control__c
+                            WHERE Id IN (
+                                    SELECT Application_Control__c
+                                    FROM Application__c
+                                    WHERE Id = :apps.keySet()
+                            )
+                    ]);
+
+                    //setApplicationInfo
+                    if (!mapAtAppInfo.containsKey(app.Application_Control__r.URL_Parameter__c)) {
+                        //System.debug('at=' + app.Application_Control__r.URL_Parameter__c);
+                        EASYApplicationInfo tempAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
+                        if (pagesWithMultipleAppInfo.contains(currentPageName)) {
+                            mapAtAppInfo.put(app.Application_Control__r.URL_Parameter__c, tempAppInfo);
                         } else {
-                            atStatusMap.put(atURL, new Set<String>(app.Application_Status__c.split(';')));
+                            mapAtAppInfo.put(app.Application_Control__r.URL_Parameter__c, appInfoParam);
                         }
                     }
 
-                    //atSubStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
-                    if (String.isNotBlank(app.Application_Substatus__c)) {
-                        if (atSubStatusMap.containsKey(atURL)) {
-                            atSubStatusMap.get(atURL).addAll(new Set<String>(app.Application_Substatus__c.split(';')));
-                        } else {
-                            atSubStatusMap.put(atURL, new Set<String>(app.Application_Substatus__c.split(';')));
-                        }
-                    }
+                    if (pagesWithMultipleAppInfo.contains(currentPageName)) {
+                        String atURL = app.Application_Control__r.URL_Parameter__c;
 
-                    if (String.isNotBlank(app.Citizenship__c)) {
-                        if (atCitizenshipMap.containsKey(atURL)) {
-                            atCitizenshipMap.get(atURL).add(app.Citizenship__c);
-                        } else {
-                            atCitizenshipMap.put(atURL, new Set<String>{
-                                    app.Citizenship__c
-                            });
+                        //atStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
+                        if (String.isNotBlank(app.Application_Status__c)) {
+                            if (atStatusMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
+                                atStatusMap.get(atURL).addAll(new Set<String>(app.Application_Status__c.split(';')));
+                            } else {
+                                atStatusMap.put(atURL, new Set<String>(app.Application_Status__c.split(';')));
+                            }
                         }
-                    }
 
-                    if (String.isNotBlank(app.Generic_Filter_1__c)) {
-                        if (atGenericFilter1Map.containsKey(atURL)) {
-                            atGenericFilter1Map.get(atURL).add(app.Generic_Filter_1__c);
-                        } else {
-                            atGenericFilter1Map.put(atURL, new Set<String>{
-                                    app.Generic_Filter_1__c
-                            });
+                        //atSubStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
+                        if (String.isNotBlank(app.Application_Substatus__c)) {
+                            if (atSubStatusMap.containsKey(atURL)) {
+                                atSubStatusMap.get(atURL).addAll(new Set<String>(app.Application_Substatus__c.split(';')));
+                            } else {
+                                atSubStatusMap.put(atURL, new Set<String>(app.Application_Substatus__c.split(';')));
+                            }
                         }
-                    }
 
-                    if (String.isNotBlank(app.Generic_Filter_2__c)) {
-                        if (atGenericFilter2Map.containsKey(atURL)) {
-                            atGenericFilter2Map.get(atURL).add(app.Generic_Filter_2__c);
-                        } else {
-                            atGenericFilter2Map.put(atURL, new Set<String>{
-                                    app.Generic_Filter_2__c
-                            });
+                        if (String.isNotBlank(app.Citizenship__c)) {
+                            if (atCitizenshipMap.containsKey(atURL)) {
+                                atCitizenshipMap.get(atURL).add(app.Citizenship__c);
+                            } else {
+                                atCitizenshipMap.put(atURL, new Set<String>{
+                                        app.Citizenship__c
+                                });
+                            }
                         }
-                    }
 
-                    if (String.isNotBlank(app.Generic_Filter_3__c)) {
-                        if (atGenericFilter3Map.containsKey(atURL)) {
-                            atGenericFilter3Map.get(atURL).add(app.Generic_Filter_3__c);
-                        } else {
-                            atGenericFilter3Map.put(atURL, new Set<String>{
-                                    app.Generic_Filter_3__c
-                            });
+                        if (String.isNotBlank(app.Generic_Filter_1__c)) {
+                            if (atGenericFilter1Map.containsKey(atURL)) {
+                                atGenericFilter1Map.get(atURL).add(app.Generic_Filter_1__c);
+                            } else {
+                                atGenericFilter1Map.put(atURL, new Set<String>{
+                                        app.Generic_Filter_1__c
+                                });
+                            }
                         }
-                    }
 
-                    if (String.isNotBlank(app.Generic_Filter_4__c)) {
-                        if (atGenericFilter4Map.containsKey(atURL)) {
-                            atGenericFilter4Map.get(atURL).add(app.Generic_Filter_4__c);
-                        } else {
-                            atGenericFilter4Map.put(atURL, new Set<String>{
-                                    app.Generic_Filter_4__c
-                            });
+                        if (String.isNotBlank(app.Generic_Filter_2__c)) {
+                            if (atGenericFilter2Map.containsKey(atURL)) {
+                                atGenericFilter2Map.get(atURL).add(app.Generic_Filter_2__c);
+                            } else {
+                                atGenericFilter2Map.put(atURL, new Set<String>{
+                                        app.Generic_Filter_2__c
+                                });
+                            }
+                        }
+
+                        if (String.isNotBlank(app.Generic_Filter_3__c)) {
+                            if (atGenericFilter3Map.containsKey(atURL)) {
+                                atGenericFilter3Map.get(atURL).add(app.Generic_Filter_3__c);
+                            } else {
+                                atGenericFilter3Map.put(atURL, new Set<String>{
+                                        app.Generic_Filter_3__c
+                                });
+                            }
+                        }
+
+                        if (String.isNotBlank(app.Generic_Filter_4__c)) {
+                            if (atGenericFilter4Map.containsKey(atURL)) {
+                                atGenericFilter4Map.get(atURL).add(app.Generic_Filter_4__c);
+                            } else {
+                                atGenericFilter4Map.put(atURL, new Set<String>{
+                                        app.Generic_Filter_4__c
+                                });
+                            }
                         }
                     }
                 }
@@ -237,14 +241,14 @@ public with sharing class ApplicationBodyController {
                             Datetime widgetStartDateTime = ApplicationUtilities.convertDateToDatetime(widget.Start_Date__c, widget.Start_Time__c, null);
                             if (nowDateTime <= widgetStartDateTime) {
                                 skipWidget = true;
-                                skipReason += 'DateTime, ';
+                                //skipReason += 'DateTime, ';
                             }
                         }
                         if (!skipWidget && widget.End_Date__c != null && widget.End_Time__c != null) {
                             Datetime widgetEndDateTime = ApplicationUtilities.convertDateToDatetime(widget.End_Date__c, widget.End_Time__c, null);
                             if (nowDateTime >= widgetEndDateTime) {
                                 skipWidget = true;
-                                skipReason += 'DateTime, ';
+                                //skipReason += 'DateTime, ';
                             }
                         }
                     }
@@ -291,7 +295,7 @@ public with sharing class ApplicationBodyController {
                         if (!skipWidget && String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
                             if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
                                 skipWidget = true;
-                                skipReason += 'Wrong Page, ';
+                                //skipReason += 'Wrong Page, ';
                             }
                         }
 
@@ -302,7 +306,7 @@ public with sharing class ApplicationBodyController {
                             } else {
                                 if (!doesListContainItem(widgetStatus.split(';'), widgetAppInfo.appStatus.split(';'))) {
                                     skipWidget = true;
-                                    skipReason += 'status not met, ';
+                                    //skipReason += 'status not met, ';
                                 }
                             }
                         }
@@ -315,9 +319,9 @@ public with sharing class ApplicationBodyController {
                             } else {
                                 if (!doesListContainItem(widgetSubStatus.split(';'), widgetAppInfo.appSubStatus.split(';'))) {
                                     skipWidget = true;
-                                    skipReason += 'substatus not met, ';
+                                    //skipReason += 'substatus not met, ';
                                 }
-                            } 
+                            }
                         }
 
                         /* Citizenship filter */
@@ -325,7 +329,7 @@ public with sharing class ApplicationBodyController {
                             if (String.isNotBlank(widgetAppInfo.citizenship)) {
                                 if (!doesListContainItem(widgetCitizen.split(';'), widgetAppInfo.citizenship.split(';'))) {
                                     skipWidget = true;
-                                    skipReason += 'citizenship status not met, ';
+                                    //skipReason += 'citizenship status not met, ';
                                 }
                             }
                         }
@@ -333,9 +337,9 @@ public with sharing class ApplicationBodyController {
                         /* Generic filter 1 */
                         if (!skipWidget && String.isNotBlank(genericFilter1)) {
                             if (atGenericFilter1Map.containsKey(widgetUrlParam)) {
-                                if (!doesListContainItem(genericFilter1.split(';'),  new List<String>(atGenericFilter1Map.get(widgetUrlParam)))) {
+                                if (!doesListContainItem(genericFilter1.split(';'), new List<String>(atGenericFilter1Map.get(widgetUrlParam)))) {
                                     skipWidget = true;
-                                    skipReason += 'Generic Filter one not met, ';
+                                    //skipReason += 'Generic Filter one not met, ';
                                 }
                             }
                         }
@@ -343,9 +347,9 @@ public with sharing class ApplicationBodyController {
                         /* Generic filter 2 */
                         if (!skipWidget && String.isNotBlank(genericFilter2)) {
                             if (atGenericFilter2Map.containsKey(widgetUrlParam)) {
-                                if (!doesListContainItem(genericFilter2.split(';'),  new List<String>(atGenericFilter2Map.get(widgetUrlParam)))) {
+                                if (!doesListContainItem(genericFilter2.split(';'), new List<String>(atGenericFilter2Map.get(widgetUrlParam)))) {
                                     skipWidget = true;
-                                    skipReason += 'Generic Filter two not met, ';
+                                    //skipReason += 'Generic Filter two not met, ';
                                 }
                             }
                         }
@@ -353,9 +357,9 @@ public with sharing class ApplicationBodyController {
                         /* Generic filter 3 */
                         if (!skipWidget && String.isNotBlank(genericFilter3)) {
                             if (atGenericFilter3Map.containsKey(widgetUrlParam)) {
-                                if (!doesListContainItem(genericFilter3.split(';'),  new List<String>(atGenericFilter3Map.get(widgetUrlParam)))) {
+                                if (!doesListContainItem(genericFilter3.split(';'), new List<String>(atGenericFilter3Map.get(widgetUrlParam)))) {
                                     skipWidget = true;
-                                    skipReason += 'Generic Filter three not met, ';
+                                    //skipReason += 'Generic Filter three not met, ';
                                 }
                             }
                         }
@@ -363,9 +367,9 @@ public with sharing class ApplicationBodyController {
                         /* Generic filter 2 */
                         if (!skipWidget && String.isNotBlank(genericFilter4)) {
                             if (atGenericFilter4Map.containsKey(widgetUrlParam)) {
-                                if (!doesListContainItem(genericFilter4.split(';'),  new List<String>(atGenericFilter4Map.get(widgetUrlParam)))) {
+                                if (!doesListContainItem(genericFilter4.split(';'), new List<String>(atGenericFilter4Map.get(widgetUrlParam)))) {
                                     skipWidget = true;
-                                    skipReason += 'Generic Filter four not met, ';
+                                    //skipReason += 'Generic Filter four not met, ';
                                 }
                             }
                         }
@@ -394,7 +398,7 @@ public with sharing class ApplicationBodyController {
                 if (!skipWidget && widget.Widget_Type__c.equalsIgnoreCase('custom')) {
                     if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
                         skipWidget = true;
-                        skipReason += 'Blank content on custom, ';
+                        //skipReason += 'Blank content on custom, ';
                     }
                 }
 

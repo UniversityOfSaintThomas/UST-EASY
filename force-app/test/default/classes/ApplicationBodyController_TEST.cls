@@ -36,7 +36,11 @@ public class ApplicationBodyController_TEST {
                 Contact__c = student.Id,
                 Application_Status__c = Application__c.Application_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 Application_Control__c = appControl.Id,
-                Citizenship__c = 'U.S. Citizen'
+                Citizenship__c = 'U.S. Citizen',
+                Generic_Filter_1__c = Application__c.Generic_Filter_1__c.getDescribe().getPicklistValues()[0].getValue(),
+                Generic_Filter_2__c = Application__c.Generic_Filter_2__c.getDescribe().getPicklistValues()[0].getValue(),
+                Generic_Filter_3__c = Application__c.Generic_Filter_3__c.getDescribe().getPicklistValues()[0].getValue(),
+                Generic_Filter_4__c = Application__c.Generic_Filter_4__c.getDescribe().getPicklistValues()[0].getValue()
         );
         apps.add(app);
 
@@ -80,6 +84,36 @@ public class ApplicationBodyController_TEST {
                 End_Time__c = System.now().time().addHours(20)
         );
         widgets.add(topWidget2);
+
+        EASY_Widget__c topWidget3 = new EASY_Widget__c(
+                Name = 'Test Top Widget 3',
+                Widget_Screen_Location__c = 'Top',
+                Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading {<em>{</em>Banner Id}}',
+                Display_Text__c = 'Display Text {{Banner_id}}',
+                Application_Control__c = appControl.Id,
+                Activation_State__c = 'Date Activated',
+                Display_Widget_On_Pages__c = 'ApplicationPortal',
+                Display_Widget_On_Sub_Status__c = Application__c.Application_Substatus__c.getDescribe().getPicklistValues()[0].getValue()
+        );
+        widgets.add(topWidget3);
+
+        EASY_Widget__c topWidget4 = new EASY_Widget__c(
+                Name = 'Test Top Widget 3',
+                Widget_Screen_Location__c = 'Top',
+                Widget_Type__c = 'Custom',
+                Display_Heading__c = 'Heading {<em>{</em>Banner Id}}',
+                Display_Text__c = 'Display Text {{Banner_id}}',
+                Application_Control__c = appControl.Id,
+                Activation_State__c = 'Date Activated',
+                Display_Widget_On_Pages__c = 'ApplicationPortal',
+                Generic_Filter_1__c = Application__c.Generic_Filter_1__c.getDescribe().getPicklistValues()[0].getValue(),
+                Generic_Filter_2__c = Application__c.Generic_Filter_2__c.getDescribe().getPicklistValues()[0].getValue(),
+                Generic_Filter_3__c = Application__c.Generic_Filter_3__c.getDescribe().getPicklistValues()[0].getValue(),
+                Generic_Filter_4__c = Application__c.Generic_Filter_4__c.getDescribe().getPicklistValues()[0].getValue(),
+                Display_Widget_On_Sub_Status__c = Application__c.Application_Substatus__c.getDescribe().getPicklistValues()[0].getValue()
+        );
+        widgets.add(topWidget4);
 
         EASY_Widget__c bottomWidget = new EASY_Widget__c(
                 Name = 'Test Bottom Widget',
@@ -220,7 +254,7 @@ public class ApplicationBodyController_TEST {
 
         System.debug(JSON.serializePretty(allWidgets));
 
-        System.assertEquals(1, allWidgets.topWidgets.size());
+        System.assertEquals(3, allWidgets.topWidgets.size());
         System.assertEquals('Display Text 111111111', allWidgets.topWidgets[0].Display_Text__c);
         //Right includes one login widget
         System.assertEquals(2, allWidgets.rightWidgets.size());

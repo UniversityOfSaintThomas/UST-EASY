@@ -193,5 +193,13 @@
         </div>
     </apex:outputPanel>
 
+     <div class="slds-form-element__help">
+         {!IF(ISBLANK(question.assistiveText), 'This field is required.', question.assistiveText)}
+     </div>
+
+     <!-- Question Help Text -->
+     <apex:outputPanel layout="none" rendered="{!!ISBLANK(questionWrapper['helpText'])}">
+         <p class="slds-text-body_regular">{!questionWrapper['helpText']}</p>
+     </apex:outputPanel>
 
 </apex:component>

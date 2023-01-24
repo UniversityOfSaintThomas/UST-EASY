@@ -481,6 +481,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Application__c.Message_To_Applicant__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Application__c.Needs_Item_s__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1022,6 +1027,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EASY_Widget__c.End_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Generic_Filter_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Generic_Filter_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Generic_Filter_3__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Generic_Filter_4__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

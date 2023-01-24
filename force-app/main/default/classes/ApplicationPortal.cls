@@ -44,13 +44,20 @@ public class ApplicationPortal {
                                 SELECT Application_Control__c
                                 FROM Application__c
                                 WHERE Contact__r.Id = :contactId
+                                AND Application_Status__c != 'Wrong App'
+                                AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
+                                AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
                         )
                 ]);
 
                 List<Id> appControlIdsList = new List<Id>(appControlsByAppIds.keySet());
                 String appFields = ApplicationHelper.getAllItemApplicationFieldsByAppControlId(appControlIdsList);
 
-                String query = 'SELECT ' + appFields + ' FROM Application__c WHERE Contact__c = \'' + contactId + '\' AND Application_Status__c != \'Wrong Application\'' ; //+ '\' AND Application_Control__r.Id IN :appControlIdsList';
+                String query = 'SELECT ' + appFields + ' FROM Application__c WHERE Contact__c = \'' + contactId + '\'';
+                query += ' AND Application_Status__c != \'Wrong Application\'';
+                query += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
+                query += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
+                //+ '\' AND Application_Control__r.Id IN :appControlIdsList';
 
                 applicationsByIds = new Map<Id, Application__c>((List<Application__c>) Database.query(query));
                 applicationMapSize = applicationsByIds.size();

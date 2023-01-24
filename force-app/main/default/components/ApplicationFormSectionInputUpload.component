@@ -65,8 +65,7 @@
                                             </svg>
                                             Upload Files
                                         </span>
-                                <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
-                            </label>
+                                <span class="slds-file-selector__text slds-medium-show">or Drop Files</span></label>
                         </div>
                     </div>
                 </div>

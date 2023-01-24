@@ -9,8 +9,7 @@
                 <apex:variable var="howManyApps" value="{!IF(!ISBLANK(applicationMapSize), applicationMapSize, 0)}"/>
                 <div class="slds-grid slds-wrap {!IF(howManyApps >= 2, ' slds-gutters','')}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <apex:pageMessages />
-                    <apex:variable var="checklistStyle" value="{!IF(howManyApps == 2, ' slds-large-size_6-of-12', ' slds-large-size_12-of-12')}"/>
-                    <apex:variable var="checklistStyle" value="{!IF(howManyApps == 3, ' slds-large-size_4-of-12', checklistStyle)}"/>
+                    <apex:variable var="checklistStyle" value="{!IF(howManyApps >= 2, ' slds-large-size_6-of-12', ' slds-large-size_12-of-12')}"/>
                     <apex:repeat value="{!applicationsByIds}" var="key">
                         <apex:variable var="thisAppInfo" value="{!appInfoMapByAppId[key]}"/>
                         <apex:variable var="thisApp" value="{!applicationsByIds[key]}"/>

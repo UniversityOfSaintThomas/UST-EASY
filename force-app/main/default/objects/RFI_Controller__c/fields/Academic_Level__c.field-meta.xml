@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Academic_Level__c</fullName>
+    <deprecated>false</deprecated>
     <description>Used to filter programs shown for selection</description>
     <externalId>false</externalId>
     <label>Academic Level</label>
@@ -20,6 +21,41 @@
                 <fullName>U</fullName>
                 <default>false</default>
                 <label>Undergraduate</label>
+            </value>
+            <value>
+                <fullName>N</fullName>
+                <default>false</default>
+                <label>Undergrad-no career</label>
+            </value>
+            <value>
+                <fullName>C</fullName>
+                <default>false</default>
+                <label>Continuing Education</label>
+            </value>
+            <value>
+                <fullName>D</fullName>
+                <default>false</default>
+                <label>Graduate (Doctoral)</label>
+            </value>
+            <value>
+                <fullName>L</fullName>
+                <default>false</default>
+                <label>Law</label>
+            </value>
+            <value>
+                <fullName>O</fullName>
+                <default>false</default>
+                <label>Grad-no career</label>
+            </value>
+            <value>
+                <fullName>P</fullName>
+                <default>false</default>
+                <label>Professional (MDIV)</label>
+            </value>
+            <value>
+                <fullName>X</fullName>
+                <default>false</default>
+                <label>No Data</label>
             </value>
         </valueSetDefinition>
     </valueSet>

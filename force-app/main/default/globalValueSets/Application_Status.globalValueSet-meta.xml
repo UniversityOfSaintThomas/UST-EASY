@@ -21,6 +21,11 @@
         <label>File Hold</label>
     </customValue>
     <customValue>
+        <fullName>Committee</fullName>
+        <default>false</default>
+        <label>Committee</label>
+    </customValue>
+    <customValue>
         <fullName>Second Review</fullName>
         <default>false</default>
         <label>Second Review</label>
@@ -41,9 +46,14 @@
         <label>Admit</label>
     </customValue>
     <customValue>
-        <fullName>Deferred - Admit</fullName>
+        <fullName>Deferred Admit</fullName>
         <default>false</default>
-        <label>Deferred - Admit</label>
+        <label>Deferred Admit</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-Admit (System)</fullName>
+        <default>false</default>
+        <label>Post-Admit (System)</label>
     </customValue>
     <customValue>
         <fullName>Confirmed</fullName>
@@ -51,9 +61,19 @@
         <label>Confirmed</label>
     </customValue>
     <customValue>
-        <fullName>Deferred - Confirmed</fullName>
+        <fullName>Deferred Confirmed</fullName>
         <default>false</default>
-        <label>Deferred - Confirmed</label>
+        <label>Deferred Confirmed</label>
+    </customValue>
+    <customValue>
+        <fullName>Do Not Contact</fullName>
+        <default>false</default>
+        <label>Do Not Contact</label>
+    </customValue>
+    <customValue>
+        <fullName>Enrolled</fullName>
+        <default>false</default>
+        <label>Enrolled</label>
     </customValue>
     <customValue>
         <fullName>Withdrawn</fullName>
@@ -66,14 +86,32 @@
         <label>Wrong Application</label>
     </customValue>
     <customValue>
-        <fullName>Do Not Contact</fullName>
+        <fullName>Temporary Hold</fullName>
         <default>false</default>
-        <label>Do Not Contact</label>
+        <label>Temporary Hold</label>
     </customValue>
     <customValue>
-        <fullName>Enrolled</fullName>
+        <fullName>System Admin</fullName>
         <default>false</default>
-        <label>Enrolled</label>
+        <label>System Admin</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cancelled</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Decision Made</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Decision Made</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Paid</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Deposit Paid</label>
     </customValue>
     <customValue>
         <fullName>Incomplete</fullName>
@@ -88,40 +126,16 @@
         <label>Deferred</label>
     </customValue>
     <customValue>
-        <fullName>Committee</fullName>
+        <fullName>Deposit Waived</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Committee</label>
-    </customValue>
-    <customValue>
-        <fullName>Deposit Paid</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Deposit Paid</label>
-    </customValue>
-    <customValue>
-        <fullName>Complete-Decision Made</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Complete-Decision Made</label>
+        <label>Deposit Waived</label>
     </customValue>
     <customValue>
         <fullName>Complete-Pending Review</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Complete-Pending Review</label>
-    </customValue>
-    <customValue>
-        <fullName>Cancelled</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Cancelled</label>
-    </customValue>
-    <customValue>
-        <fullName>Deposit Waived</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Deposit Waived</label>
     </customValue>
     <customValue>
         <fullName>Complete-Pending Additional Review</fullName>

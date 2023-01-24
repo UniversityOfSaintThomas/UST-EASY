@@ -45,6 +45,8 @@ public with sharing class ApplicationLinkController {
                         WHERE Contact__c = :appInfo.contactId
                         AND Application_Control__c = :applicationControl.Id
                         AND Application_Status__c != 'Wrong Application'
+                        AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
+                        AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
                         ORDER BY LastModifiedDate
                 ];
                 if(app.size() > 0 && applicationControl != null) {

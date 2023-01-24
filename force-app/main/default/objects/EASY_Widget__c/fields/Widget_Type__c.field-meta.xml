@@ -25,6 +25,11 @@
                 <label>Application Checklist</label>
             </value>
             <value>
+                <fullName>Counselor Information</fullName>
+                <default>false</default>
+                <label>Counselor Information</label>
+            </value>
+            <value>
                 <fullName>Progress Bar</fullName>
                 <default>false</default>
                 <label>Progress Bar</label>

@@ -2,7 +2,7 @@
  - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 6/7/2022.
  -->
 
- <apex:component id="ApplicationFormSectionInput">
+<apex:component id="ApplicationFormSectionInput">
     <apex:attribute name="inputLabel" description="" type="String" required="false"/>
     <apex:attribute name="multiPicklist" description="" type="List" required="false"/>
     <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
@@ -193,13 +193,13 @@
         </div>
     </apex:outputPanel>
 
-     <div class="slds-form-element__help">
-         {!IF(ISBLANK(question.assistiveText), 'This field is required.', question.assistiveText)}
-     </div>
+    <div class="slds-form-element__help">
+        {!IF(ISBLANK(question.assistiveText), 'This field is required.', question.assistiveText)}
+    </div>
 
-     <!-- Question Help Text -->
-     <apex:outputPanel layout="none" rendered="{!!ISBLANK(questionWrapper['helpText'])}">
-         <p class="slds-text-body_regular">{!questionWrapper['helpText']}</p>
-     </apex:outputPanel>
+    <!-- Question Help Text -->
+    <apex:outputPanel layout="none" rendered="{!!ISBLANK(questionWrapper['helpText'])}">
+        <p class="slds-text-body_regular">{!questionWrapper['helpText']}</p>
+    </apex:outputPanel>
 
 </apex:component>

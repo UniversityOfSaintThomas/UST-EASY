@@ -214,7 +214,6 @@ export default class RequestForInformationForm extends LightningElement {
     //picklist values
     @track state_picklist_values;
     @track country_picklist_values;
-    @track state_code;
     @track citizenship_picklist_values;
     @track admit_type_picklist_values;
     @track academic_level_picklist_values;
@@ -222,7 +221,6 @@ export default class RequestForInformationForm extends LightningElement {
     @track academic_interest_picklist_values;
     @track high_school_search_results; // populate via SOSL
     @track timeline_picklist_values;
-    @track state_codes;
 
     //intermediate values
     address1;
@@ -275,7 +273,7 @@ export default class RequestForInformationForm extends LightningElement {
                         this.academic_level = level;
                     })
                     .catch(error => {
-                        console.log(error + ' ACADEMIC LEVEL');
+                    console.log(error);
                     });
                 getTerms({account_name: this.school_college})
                     .then(terms => {
@@ -291,7 +289,7 @@ export default class RequestForInformationForm extends LightningElement {
                         }
                     })
                     .catch(error => {
-                        console.log(error + ' TERMS');
+                    console.log(error);
                     })
                 if (Boolean(this.academic_level_api)) {
                     // gets programs based on academic level
@@ -319,7 +317,7 @@ export default class RequestForInformationForm extends LightningElement {
                             this.academic_interest_picklist_values = values;
                         })
                         .catch(error => {
-                            console.log(error + ' ACADEMIC INTEREST');
+                        console.log(error);
                         });
                 }
                 this.show_spinner = false;
@@ -351,7 +349,6 @@ export default class RequestForInformationForm extends LightningElement {
             this.admit_type_picklist_values = result.data.picklistFieldValues.Admit_Type__c.values;
             this.timeline_picklist_values = result.data.picklistFieldValues.Timeline__c.values;
             this.country_picklist_values = result.data.picklistFieldValues.CountryCode.values;
-            this.state_codes = result.data.picklistFieldValues.staeCode.values[this.country_picklist_values];
         } else {
             console.log(result.error + ' LEAD OBJECT');
         }
@@ -452,7 +449,7 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.country_label:
                 this.record_input.fields.Country = event.target.value;
-                if (event.target.value !== 'United States of America' || event.target.value !== 'United States') {
+                if (event.target.value != 'United States of America') {
                     this.international_citizen_type = true;
                 } else {
                     this.international_citizen_type = false;

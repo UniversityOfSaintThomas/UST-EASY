@@ -194,7 +194,7 @@
     </apex:outputPanel>
 
     <div class="slds-form-element__help">
-        {!IF(ISBLANK(question.assistiveText), 'This field is required.', question.assistiveText)}
+        {!IF(ISBLANK(questionWrapper['question']['assistiveText']), 'This field is required.', questionWrapper['question']['assistiveText'])}
     </div>
 
     <!-- Question Help Text -->

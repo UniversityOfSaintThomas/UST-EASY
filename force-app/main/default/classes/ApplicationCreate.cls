@@ -167,7 +167,7 @@ public class ApplicationCreate {
 
             // Create new program question and add to list
             programQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Program__c');
-            programQuestion.addQuestionObject(new Question__c(Label__c = 'What program are you applying to?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Program'));
+            programQuestion.addQuestionObject(new Question__c(Label__c = 'What program are you applying to?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Program', Assistive_Text__c = 'You must select the program you are applying for.'));
             programQuestion.addIntendedProgramFilteringList(programs);
             programQuestion.hasDependentQuestions = true;
 
@@ -212,7 +212,7 @@ public class ApplicationCreate {
 
             // Create new term question and add to list
             ApplicationQuestion termQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Term_of_Entry__c');
-            termQuestion.addQuestionObject(new Question__c(Label__c = 'What term are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Term'));
+            termQuestion.addQuestionObject(new Question__c(Label__c = 'What term are you applying for?', Required__c = app.Application_Status__c, Active__c = true, URL_Parameter__c = 'Term', Assistive_Text__c = 'You must select the term you are applying for.'));
             termQuestion.setReferenceOptions(termIds, termNames);
             termQuestion.hasDependentQuestions = true;
 

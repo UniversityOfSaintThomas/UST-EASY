@@ -660,6 +660,7 @@ function activateCarousel(slideMoveTo) {
                         items[i].classList.remove('next');
                         items[i].classList.remove('active');
                     }
+
                     if (items[newPrevious]) {
                         items[newPrevious].classList.add("prev");
                     }
@@ -759,8 +760,8 @@ function showFormSpinner() {
 
 /* Tooltip */
 function activateTooltips() {
-    document.querySelectorAll('.aria-describedby-tooltip').forEach(item => {
-        let toolTipElement = document.getElementById(item.getAttribute('aria-describedby'));
+    document.querySelectorAll('.has-data-tooltip').forEach(item => {
+        let toolTipElement = document.getElementById(item.getAttribute('data-tooltip'));
         item.addEventListener('mousemove', function (e) {
             let toolTipOffsetElem = toolTipElement.offsetParent;
             toolTipElement.classList.remove('slds-fall-into-ground', 'slds-nubbin_left', 'slds-nubbin_right');

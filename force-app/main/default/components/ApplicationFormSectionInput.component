@@ -193,6 +193,8 @@
         </div>
     </apex:outputPanel>
 
+<<<<<<< accessibility_2022_08
+=======
     <div class="slds-form-element__help">
         {!IF(ISBLANK(questionWrapper['question']['assistiveText']), 'This field is required.', questionWrapper['question']['assistiveText'])}
     </div>
@@ -203,4 +205,5 @@
     </apex:outputPanel>
 
 
+>>>>>>> counselor_info_widget
 </apex:component>

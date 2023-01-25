@@ -19,9 +19,9 @@
                     <li class="slds-progress__item {!IF(appInfoParam.requirementId == r.req.Id,IF(r.reqStatus,'slds-is-completed','slds-is-active'),'')}">
                         <apex:commandLink action="{!goToRequirement}"
                                             onclick="appShowLoadingSpinner();"
-                                            styleClass="slds-button slds-progress__marker {!IF(appInfoParam.requirementId == r.req.Id || r.reqStatus,'slds-button_icon slds-progress__marker_icon','')} aria-describedby-tooltip"
-                                            html-aria-describedby="tooltip-{!r.req.Id}"
-                        >
+                                            styleClass="slds-button slds-progress__marker {!IF(appInfoParam.requirementId == r.req.Id || r.reqStatus,'slds-button_icon slds-progress__marker_icon','')} has-data-tooltip"
+                                            html-aria-label="Progress: {!r.req.Name}: {!IF(r.reqStatus == true, 'complete', 'not complete')}"
+                                            html-data-tooltip="tooltip-{!r.req.Id}">
                             <apex:param name="nextRequirementId" value="{!r.req.Id}" assignTo="{!nextRequirementId}"/>
                             <apex:param name="nextAt" value="{!appInfoParam.at}" assignTo="{!nextAt}"/>
                             <apex:param name="nextAppId" value="{!appInfoParam.appId}" assignTo="{!nextAppId}"/>

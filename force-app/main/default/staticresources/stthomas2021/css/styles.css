@@ -34,6 +34,27 @@ body {
     }
 }
 
+.tab-navigation {
+    position:absolute;
+    left:-1000px;
+    top:-1000px;
+    width:1px;
+    height:1px;
+    text-align: left;
+    overflow:hidden;
+}
+
+.tab-navigation:focus, .tab-navigation:active, .tab-navigation:hover {
+    position:absolute;
+    left:0;
+    top:0;
+    width:auto;
+    height:auto;
+    overflow:visible;
+    background-color:#FF3;
+    border: 1px dotted #000;
+}
+
 .capricorn-header {
     position: fixed;
     top: 0;

@@ -62,7 +62,7 @@
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-lg-8 col-md-10 col-xs-12">
-                                                    <h2>{!$ObjectType[ot].Label}</h2>
+                                                    <h1>{!$ObjectType[ot].Label}</h1>
                                                 </div>
                                             </div>
                                             <table class="table" id="table">

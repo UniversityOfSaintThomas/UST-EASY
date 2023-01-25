@@ -383,23 +383,6 @@
                         </div>
                     </template>
                 </div>
-
-                <template if:true={show_fields.Country}>
-                    <lightning-input-address
-                            address-label="Address"
-                            street-label="Street"
-                            city-label="City"
-                            address-lookup-label="Search for address"
-                            country-label="Country"
-                            country-options={country_picklist_values}
-                            province-label="State"
-                            province-options={state_codes}
-                            postal-code-label="PostalCode"
-                            show-address-lookup
-                    >
-                    </lightning-input-address>
-                </template>
-
                 <template if:true={show_fields.I_would_like_program_information_to_be_mailed_to_me}>
                     <div class="slds-grid slds-gutters_medium slds-p-top_x-small">
                         <div class="slds-col">

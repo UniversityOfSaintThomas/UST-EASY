@@ -1,5 +1,8 @@
 <apex:page showHeader="false" sidebar="false" controller="ScholarshipApplicationPage1Controller" action="{!sanityCheck}">
     <apex:composition template="ScholarshipTemplate">
+        <apex:define name="head-extras">
+            <title>{!scholarship.Name} - Page 1 | Scholarships at St. Thomas</title>
+        </apex:define>
         <apex:define name="body">
             <script>
                 var historyPage = '{!PageURL}';

@@ -288,6 +288,11 @@
         </values>
         <values>
             <fullName>Deferred Confirmed</fullName>
+            <fullName>Deferred</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred</fullName>
             <default>false</default>
         </values>
         <values>

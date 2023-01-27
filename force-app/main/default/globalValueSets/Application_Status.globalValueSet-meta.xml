@@ -46,9 +46,24 @@
         <label>Admit</label>
     </customValue>
     <customValue>
+        <fullName>Deferred</fullName>
+        <default>false</default>
+        <label>Deferred</label>
+    </customValue>
+    <customValue>
         <fullName>Deferred Admit</fullName>
         <default>false</default>
         <label>Deferred Admit</label>
+    </customValue>
+    <customValue>
+        <fullName>Deferred - Admit</fullName>
+        <default>false</default>
+        <label>Deferred Admit</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-Admit (System)</fullName>
+        <default>false</default>
+        <label>Post-Admit (System)</label>
     </customValue>
     <customValue>
         <fullName>Post-Admit (System)</fullName>
@@ -114,16 +129,48 @@
         <label>Deposit Paid</label>
     </customValue>
     <customValue>
+        <fullName>Withdrawn</fullName>
+        <default>false</default>
+        <label>Withdrawn</label>
+    </customValue>
+    <customValue>
+        <fullName>Wrong Application</fullName>
+        <default>false</default>
+        <label>Wrong Application</label>
+    </customValue>
+    <customValue>
+        <fullName>Temporary Hold</fullName>
+        <default>false</default>
+        <label>Temporary Hold</label>
+    </customValue>
+    <customValue>
+        <fullName>System Admin</fullName>
+        <default>false</default>
+        <label>System Admin</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cancelled</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Decision Made</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Decision Made</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Paid</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Deposit Paid</label>
+    </customValue>
+    <customValue>
         <fullName>Incomplete</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Incomplete</label>
-    </customValue>
-    <customValue>
-        <fullName>Deferred</fullName>
-        <default>false</default>
-        <isActive>true</isActive>
-        <label>Deferred</label>
     </customValue>
     <customValue>
         <fullName>Deposit Waived</fullName>

@@ -34,20 +34,24 @@ public class ApplicationRegistration {
             }
 
             // Create questions for first name, middle name, last name, email, password, and password confirmation
+            // Required__c is usually tied to Required__c = appCreate.app.Application_Status__c, but that won't work here, since the app isn't created properly until appCreate.applicationCreateSetup(). -JJH
             ApplicationQuestion firstName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'First_Name__c');
-            firstName.addQuestionObject(new Question__c(Label__c = 'First Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
+            firstName.addQuestionObject(new Question__c(Label__c = 'First Name', Required__c = 'yep', Active__c = true));
 
             ApplicationQuestion middleName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Middle_Name__c');
             middleName.addQuestionObject(new Question__c(Label__c = 'Middle Name', Active__c = true));
 
             ApplicationQuestion lastName = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Last_Name__c');
-            lastName.addQuestionObject(new Question__c(Label__c = 'Last Name', Required__c = appCreate.app.Application_Status__c, Active__c = true));
+            lastName.addQuestionObject(new Question__c(Label__c = 'Last Name', Required__c = 'yep', Active__c = true));
+
             ApplicationQuestion email = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'Email__c');
-            email.addQuestionObject(new Question__c(Label__c = 'Email', Required__c = appCreate.app.Application_Status__c, Active__c = true));
+            email.addQuestionObject(new Question__c(Label__c = 'Email', Required__c = 'yep', Active__c = true));
+
             ApplicationQuestion portalPassword = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'Last_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
-            portalPassword.addQuestionObject(new Question__c(Label__c = 'What password would you like to use for saving your application?', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
+            portalPassword.addQuestionObject(new Question__c(Label__c = 'What password would you like to use for saving your application?', Required__c = 'yep', Active__c = true, Length__c = 40));
+
             ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'First_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
-            portalPasswordConfirmation.addQuestionObject(new Question__c(Label__c = 'Please enter your password again.', Required__c = appCreate.app.Application_Status__c, Active__c = true, Length__c = 40));
+            portalPasswordConfirmation.addQuestionObject(new Question__c(Label__c = 'Please enter your password again.', Required__c = 'yep', Active__c = true, Length__c = 40));
 
             // Create question groups
             ApplicationQuestionGroup firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{

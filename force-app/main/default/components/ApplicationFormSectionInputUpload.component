@@ -44,11 +44,11 @@
                                 </span>
                     </div>
                     <div class="slds-media__body">
-                        <h2 class="slds-card__header-title">
+                        <h1 class="slds-card__header-title">
                             <span class="slds-card__header-link slds-truncate" title="Upload file">
                                 <span>Upload file</span>
                             </span>
-                        </h2>
+                        </h1>
                     </div>
                 </header>
             </div>
@@ -65,8 +65,7 @@
                                             </svg>
                                             Upload Files
                                         </span>
-                                <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
-                            </label>
+                                <span class="slds-file-selector__text slds-medium-show">or Drop Files</span></label>
                         </div>
                     </div>
                 </div>

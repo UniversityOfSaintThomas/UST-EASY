@@ -8,7 +8,7 @@
     <label>Application Substatus</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -16,17 +16,77 @@
         <restricted>true</restricted>
         <valueSetName>Application_Substatus</valueSetName>
         <valueSettings>
-            <controllingFieldValue>Pending</controllingFieldValue>
-            <valueName>Accept</valueName>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Test Scores</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Grades &amp; Test Scores</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Grades</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>College Transcript(s)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Dean&apos;s Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Interview Invited</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Interview Scheduled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Interview Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Pending English</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Pending</controllingFieldValue>
-            <controllingFieldValue>Admit</controllingFieldValue>
-            <valueName>Conditional</valueName>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Academic</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Pending</controllingFieldValue>
-            <valueName>Deny</valueName>
+            <valueName>Committee Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Committee Deny</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Referred to DFC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Committee Accept Waitlist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Counselor Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Counselor Accept Waitlist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Counselor Deny</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Pending</controllingFieldValue>
@@ -34,24 +94,25 @@
             <valueName>Provisional</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Denied</controllingFieldValue>
-            <valueName>Academic</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Denied</controllingFieldValue>
-            <valueName>Appeal Denied</valueName>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Conditional</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Denied</controllingFieldValue>
             <valueName>Disciplinary</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Admit</controllingFieldValue>
-            <valueName>Deferred from Previous Term</valueName>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Appeal Started</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Admit</controllingFieldValue>
-            <valueName>Exchange</valueName>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Appeal Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Appeal Denied</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Admit</controllingFieldValue>
@@ -59,15 +120,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Admit</controllingFieldValue>
-            <valueName>Manual Update</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Admit</controllingFieldValue>
-            <valueName>Needs Review</valueName>
+            <valueName>Deferred from Previous Term</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Admit</controllingFieldValue>
             <valueName>On Appeal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Needs Review</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Withdrawn</controllingFieldValue>
@@ -87,7 +148,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>From Waitlist into Class</valueName>
+            <valueName>From Committee Accept Waitlist</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Withdrawn</controllingFieldValue>
@@ -100,6 +161,16 @@
         <valueSettings>
             <controllingFieldValue>Withdrawn</controllingFieldValue>
             <valueName>Unsubscribe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <controllingFieldValue>Wrong Application</controllingFieldValue>
+            <valueName>Multiple App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <controllingFieldValue>Wrong Application</controllingFieldValue>
+            <valueName>Wrong App</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

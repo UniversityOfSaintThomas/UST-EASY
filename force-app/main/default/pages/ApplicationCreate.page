@@ -1,7 +1,7 @@
 <apex:page controller="ApplicationCreate" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!ApplicationCreateInit}">
     <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead />
+            <c:ApplicationHead/>
             <script>
                 async function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm) {
                     return new Promise((resolve, reject) => {
@@ -20,6 +20,10 @@
         <apex:define name="metaPageTitle">New Application: {!appInfo.academicLevel}</apex:define>
         <apex:define name="body">
             <c:ApplicationBody title="New Application" loadingText="Building Your Application..." appInfo="{!appInfo}" checklistItems="{!checklistItems}" vfPageName="ApplicationCreate">
+                <apex:outputPanel id="formPageMessages">
+                    <apex:messages/>
+                </apex:outputPanel>
+
                 <c:ApplicationForm section="{!section}" nextID="{!nextReqId}" prevId="{!prevReqId}" appInfo="{!appInfo}" title="New Application" vfPageName="ApplicationCreate">
                     <apex:actionFunction name="saveWithDocs" action="{!save}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
                         <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
@@ -37,17 +41,17 @@
                             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                 <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#back")}"></use>
                             </svg>
-                            Back
+                            Previous Questions
                         </a>
 
                         <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-button_brand carousel__button--next">
                             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                 <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#forward")}"></use>
                             </svg>
-                            Next
+                            Next Questions
                         </a>
 
-                        <apex:commandLink action="{!save}" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onClick="appShowLoadingSpinner();" onComplete="appHideLoadingSpinner();">
+                        <apex:commandLink action="{!save}" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onClick="appShowLoadingSpinner();" onComplete="appHideLoadingSpinner();" reRender="formPageMessages">
                             <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                 <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                             </svg>

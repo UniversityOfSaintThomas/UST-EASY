@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Claimed_Portal_Text__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(Contact__r.UST_Account_Claimed__c = FALSE,
+
+&quot;Your next step is to claim your St. Thomas account. This process establishes one password to access all online services at St. Thomas.&quot; &amp; BR() &amp; BR()&amp;
+
+
+&quot;To claim your account, &quot; &amp; HYPERLINK(&quot;https://accountclaim.stthomas.edu&quot;, &quot;click here.&quot;, &apos;_blank&apos;) &amp; &quot; You will need to enter &quot; &amp; Applicant_Banner_Id__c &amp; &quot; as your 9-digit St. Thomas ID number.&quot; &amp; BR() &amp; BR()&amp;
+
+&quot;Be sure to save your St. Thomas ID and the password you create in a safe place. You will need it in the future.&quot;, &quot;&quot;)</formula>
+    <label>Account Claimed Portal Text</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

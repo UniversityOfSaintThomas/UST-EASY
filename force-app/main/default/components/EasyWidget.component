@@ -12,9 +12,9 @@
             <div class="slds-card__header slds-grid">
                 <header>
                     <div class="slds-media__body">
-                        <h3 class="slds-card__header-title">
+                        <h2 class="slds-card__header-title">
                             {!widget.Display_Heading__c}
-                        </h3>
+                        </h2>
                     </div>
                 </header>
             </div>
@@ -25,7 +25,6 @@
                     <apex:outputText escape="false" value="{!widget.Display_Text__c}"/>
                 </div>
             </apex:outputPanel>
-
 
             <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist' }">
@@ -38,7 +37,10 @@
                 <c:AdmissionsApplicationFinder appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'User Info Login/Logout' }">
-                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}"/>
+                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}" />
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Counselor Information' }">
+                <c:CounselorInfoWidget appInfo="{!appInfo}" widget="{!widget}" />
             </apex:outputPanel>
 
         </div>

@@ -4,7 +4,7 @@
 
 <apex:page id="stthomas2021" sidebar="false" lightningStyleSheets="true" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false" docType="html-5.0">
     <apex:slds />
-    <html class="no-js" lang="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <html class="no-js" lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <head>
         <meta charset="UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -42,10 +42,16 @@
         <apex:insert name="scriptsHead"/>
     </head>
     <body>
+
+    <nav aria-label="Skip navigation" class="tab-navigation" id="access">
+    	<a href="#main-content" tabindex="1">Skip to primary content</a>
+    </nav>
+
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BKTTT2"
                       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
     <header class="capricorn-header">
         <div class="header capricorn header_dark">
             <div class="header__inner">

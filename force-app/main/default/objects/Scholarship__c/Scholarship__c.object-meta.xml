@@ -160,6 +160,7 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Scholarships</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts>
         <customTabListAdditionalFields>Scholarship_ID__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>

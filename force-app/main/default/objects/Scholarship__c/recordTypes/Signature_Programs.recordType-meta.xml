@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Signature_Programs</fullName>
+    <active>true</active>
+    <description>Used to track Signature Programs</description>
+    <label>Signature Programs</label>
+    <picklistValues>
+        <picklist>Award_Year__c</picklist>
+        <values>
+            <fullName>1819</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1920</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2021</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2122</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2223</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2324</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2425</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2526</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2627</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

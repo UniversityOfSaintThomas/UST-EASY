@@ -1,29 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Test Scores</fullName>
+        <default>false</default>
+        <label>Test Scores</label>
+    </customValue>
+    <customValue>
+        <fullName>Grades &amp; Test Scores</fullName>
+        <default>false</default>
+        <label>Grades &amp; Test Scores</label>
+    </customValue>
+    <customValue>
+        <fullName>Grades</fullName>
+        <default>false</default>
+        <label>Grades</label>
+    </customValue>
+    <customValue>
+        <fullName>College Transcript(s)</fullName>
+        <default>false</default>
+        <label>College Transcript(s)</label>
+    </customValue>
+    <customValue>
+        <fullName>Dean&apos;s Form</fullName>
+        <default>false</default>
+        <label>Dean&apos;s Form</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Invited</fullName>
+        <default>false</default>
+        <label>Interview Invited</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Scheduled</fullName>
+        <default>false</default>
+        <label>Interview Scheduled</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Completed</fullName>
+        <default>false</default>
+        <label>Interview Completed</label>
+    </customValue>
+    <customValue>
+        <fullName>Pending English</fullName>
+        <default>false</default>
+        <label>Pending English</label>
+    </customValue>
+    <customValue>
         <fullName>Academic</fullName>
         <default>false</default>
         <label>Academic</label>
     </customValue>
     <customValue>
-        <fullName>Accept</fullName>
+        <fullName>Committee Accept</fullName>
         <default>false</default>
-        <label>Accept</label>
+        <label>Committee Accept</label>
     </customValue>
     <customValue>
-        <fullName>Accept Waitlist</fullName>
+        <fullName>Committee Deny</fullName>
         <default>false</default>
-        <label>Accept Waitlist</label>
+        <label>Committee Deny</label>
     </customValue>
     <customValue>
-        <fullName>After Accept</fullName>
+        <fullName>Referred to DFC</fullName>
         <default>false</default>
-        <label>After Accept</label>
+        <label>Referred to DFC</label>
     </customValue>
     <customValue>
-        <fullName>After Confirm</fullName>
+        <fullName>Committee Accept Waitlist</fullName>
         <default>false</default>
-        <label>After Confirm</label>
+        <label>Committee Accept Waitlist</label>
+    </customValue>
+    <customValue>
+        <fullName>Counselor Accept</fullName>
+        <default>false</default>
+        <label>Counselor Accept</label>
+    </customValue>
+    <customValue>
+        <fullName>Counselor Accept Waitlist</fullName>
+        <default>false</default>
+        <label>Counselor Accept Waitlist</label>
+    </customValue>
+    <customValue>
+        <fullName>Counselor Deny</fullName>
+        <default>false</default>
+        <label>Counselor Deny</label>
+    </customValue>
+    <customValue>
+        <fullName>Disciplinary</fullName>
+        <default>false</default>
+        <label>Disciplinary</label>
+    </customValue>
+    <customValue>
+        <fullName>Appeal Started</fullName>
+        <default>false</default>
+        <label>Appeal Started</label>
     </customValue>
     <customValue>
         <fullName>Appeal Completed</fullName>
@@ -36,9 +111,44 @@
         <label>Appeal Denied</label>
     </customValue>
     <customValue>
-        <fullName>Appeal Started</fullName>
+        <fullName>Full</fullName>
         <default>false</default>
-        <label>Appeal Started</label>
+        <label>Full</label>
+    </customValue>
+    <customValue>
+        <fullName>Deferred from Previous Term</fullName>
+        <default>false</default>
+        <label>Deferred from Previous Term</label>
+    </customValue>
+    <customValue>
+        <fullName>Provisional</fullName>
+        <default>false</default>
+        <label>Provisional</label>
+    </customValue>
+    <customValue>
+        <fullName>Conditional</fullName>
+        <default>false</default>
+        <label>Conditional</label>
+    </customValue>
+    <customValue>
+        <fullName>On Appeal</fullName>
+        <default>false</default>
+        <label>On Appeal</label>
+    </customValue>
+    <customValue>
+        <fullName>Off Waitlist</fullName>
+        <default>false</default>
+        <label>Off Waitlist</label>
+    </customValue>
+    <customValue>
+        <fullName>After Accept</fullName>
+        <default>false</default>
+        <label>After Accept</label>
+    </customValue>
+    <customValue>
+        <fullName>After Confirm</fullName>
+        <default>false</default>
+        <label>After Confirm</label>
     </customValue>
     <customValue>
         <fullName>Before Complete App</fullName>
@@ -51,84 +161,9 @@
         <label>Before Decision</label>
     </customValue>
     <customValue>
-        <fullName>Conditional</fullName>
+        <fullName>From Committee Accept Waitlist</fullName>
         <default>false</default>
-        <label>Conditional</label>
-    </customValue>
-    <customValue>
-        <fullName>Counselor Hold</fullName>
-        <default>false</default>
-        <label>Counselor Hold</label>
-    </customValue>
-    <customValue>
-        <fullName>Deferred from Previous Term</fullName>
-        <default>false</default>
-        <label>Deferred from Previous Term</label>
-    </customValue>
-    <customValue>
-        <fullName>Deny</fullName>
-        <default>false</default>
-        <label>Deny</label>
-    </customValue>
-    <customValue>
-        <fullName>Deny - Recommend to DFC</fullName>
-        <default>false</default>
-        <label>Deny - Recommend to DFC</label>
-    </customValue>
-    <customValue>
-        <fullName>Disciplinary</fullName>
-        <default>false</default>
-        <label>Disciplinary</label>
-    </customValue>
-    <customValue>
-        <fullName>Exchange</fullName>
-        <default>false</default>
-        <label>Exchange</label>
-    </customValue>
-    <customValue>
-        <fullName>From Waitlist into Class</fullName>
-        <default>false</default>
-        <label>From Waitlist into Class</label>
-    </customValue>
-    <customValue>
-        <fullName>Full</fullName>
-        <default>false</default>
-        <label>Full</label>
-    </customValue>
-    <customValue>
-        <fullName>Incomplete</fullName>
-        <default>false</default>
-        <label>Incomplete</label>
-    </customValue>
-    <customValue>
-        <fullName>In Review</fullName>
-        <default>false</default>
-        <label>In Review</label>
-    </customValue>
-    <customValue>
-        <fullName>Interview Completed</fullName>
-        <default>false</default>
-        <label>Interview Completed</label>
-    </customValue>
-    <customValue>
-        <fullName>Interview Invited</fullName>
-        <default>false</default>
-        <label>Interview Invited</label>
-    </customValue>
-    <customValue>
-        <fullName>Interview Reviewed</fullName>
-        <default>false</default>
-        <label>Interview Reviewed</label>
-    </customValue>
-    <customValue>
-        <fullName>Interview Scheduled</fullName>
-        <default>false</default>
-        <label>Interview Scheduled</label>
-    </customValue>
-    <customValue>
-        <fullName>Manual Update</fullName>
-        <default>false</default>
-        <label>Manual Update</label>
+        <label>From Committee Accept Waitlist</label>
     </customValue>
     <customValue>
         <fullName>NAR (Not Actively Recruting)</fullName>
@@ -136,34 +171,9 @@
         <label>NAR (Not Actively Recruting)</label>
     </customValue>
     <customValue>
-        <fullName>Needs Items</fullName>
-        <default>false</default>
-        <label>Needs Items</label>
-    </customValue>
-    <customValue>
-        <fullName>Needs Review</fullName>
-        <default>false</default>
-        <label>Needs Review</label>
-    </customValue>
-    <customValue>
-        <fullName>Off Waitlist</fullName>
-        <default>false</default>
-        <label>Off Waitlist</label>
-    </customValue>
-    <customValue>
-        <fullName>On Appeal</fullName>
-        <default>false</default>
-        <label>On Appeal</label>
-    </customValue>
-    <customValue>
         <fullName>Prior to Interview</fullName>
         <default>false</default>
         <label>Prior to Interview</label>
-    </customValue>
-    <customValue>
-        <fullName>Provisional</fullName>
-        <default>false</default>
-        <label>Provisional</label>
     </customValue>
     <customValue>
         <fullName>Unsubscribe</fullName>
@@ -171,10 +181,55 @@
         <label>Unsubscribe</label>
     </customValue>
     <customValue>
-        <fullName>Appeal</fullName>
+        <fullName>Needs Review</fullName>
+        <default>false</default>
+        <label>Needs Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Multiple App</fullName>
+        <default>false</default>
+        <label>Multiple App</label>
+    </customValue>
+    <customValue>
+        <fullName>Wrong App</fullName>
+        <default>false</default>
+        <label>Wrong App</label>
+    </customValue>
+    <customValue>
+        <fullName>From Waitlist for Inst Acc</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Appeal</label>
+        <label>From Waitlist for Inst Acc</label>
+    </customValue>
+    <customValue>
+        <fullName>Incomplete</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Incomplete</label>
+    </customValue>
+    <customValue>
+        <fullName>Needs Items</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Needs Items</label>
+    </customValue>
+    <customValue>
+        <fullName>Waitlist</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Waitlist</label>
+    </customValue>
+    <customValue>
+        <fullName>Exchange</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Exchange</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Reviewed</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Interview Reviewed</label>
     </customValue>
     <customValue>
         <fullName>With Concern</fullName>
@@ -183,10 +238,34 @@
         <label>With Concern</label>
     </customValue>
     <customValue>
-        <fullName>From Waitlist for Inst Acc</fullName>
+        <fullName>Withdraw</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>From Waitlist for Inst Acc</label>
+        <label>Withdraw</label>
+    </customValue>
+    <customValue>
+        <fullName>In Review</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>In Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual Update</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Manual Update</label>
+    </customValue>
+    <customValue>
+        <fullName>Appeal</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Appeal</label>
+    </customValue>
+    <customValue>
+        <fullName>Counselor Hold</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Counselor Hold</label>
     </customValue>
     <customValue>
         <fullName>Hold</fullName>
@@ -200,19 +279,7 @@
         <isActive>false</isActive>
         <label>Inactive</label>
     </customValue>
-    <customValue>
-        <fullName>Waitlist</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Waitlist</label>
-    </customValue>
-    <customValue>
-        <fullName>Withdraw</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Withdraw</label>
-    </customValue>
     <description>Used in conjunction with Application Status</description>
     <masterLabel>Application Substatus</masterLabel>
-    <sorted>true</sorted>
+    <sorted>false</sorted>
 </GlobalValueSet>

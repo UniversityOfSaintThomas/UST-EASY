@@ -85,11 +85,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deferred - Admit</fullName>
+            <fullName>Deferred Admit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deferred - Confirmed</fullName>
+            <fullName>Deferred Confirmed</fullName>
             <default>false</default>
         </values>
         <values>
@@ -283,11 +283,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Deferred - Admit</fullName>
+            <fullName>Deferred</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Deferred - Confirmed</fullName>
+            <fullName>Deferred</fullName>
             <default>false</default>
         </values>
         <values>

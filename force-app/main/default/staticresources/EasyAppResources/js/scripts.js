@@ -89,7 +89,7 @@ function reRenderAllGroups(rerenderName) {
 // SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
 function summaryDetail() {
     document.querySelectorAll('.slds-summary-detail').forEach(item => {
-        item.querySelector("button.slds-button").addEventListener('click', function (e) {
+        item.querySelector(".slds-button, .summary-detail-toggle").addEventListener('click', function (e) {
             e.preventDefault();
             let content = item.querySelector('.slds-summary-detail__content');
             if (content.style.display === 'none') {
@@ -474,6 +474,7 @@ function navigateRequirementGroup(redirectTo) {
 }
 
 var carouselOn = false;
+
 function disableCarousel() {
     carouselOn = false;
 
@@ -675,7 +676,7 @@ function activateCarousel(slideMoveTo) {
                     }
 
                     // Okay, transition's done. Now reset to styles so what screenreaders see matches what other users see.
-                    window.setTimeout(function() {
+                    window.setTimeout(function () {
                         let items = document.getElementsByClassName("carousel__item");
                         for (let i = 0; i < items.length; i++) {
                             items[i].style.display = "";
@@ -730,6 +731,7 @@ function activateCarousel(slideMoveTo) {
 
 /* Spinners on/off */
 var spinnerFocusElement = null;
+
 function appHideLoadingSpinner(restoreFocus = true) {
     document.getElementById('loadSpinner').style.display = "none";
     if (restoreFocus == true && spinnerFocusElement != null) {
@@ -853,7 +855,13 @@ function textValidations(checkFormValidate, documentStart) {
     if (checkFormValidate) {
         allRequiredInputs.forEach(item => {
             if (item) {
-                if (!item.value) {
+                if (item.classList.contains('slds-checkbox')) {
+                    let checkBoxChecked = item.querySelector('input');
+                    if (!checkBoxChecked.checked) {
+                        activateErrorState(checkBoxChecked, 'change')
+                    }
+                } else if (!item.value) {
+                    console.log('error logged');
                     activateErrorState(item, 'change')
                 }
             }
@@ -866,6 +874,15 @@ function textValidations(checkFormValidate, documentStart) {
                 if (!doc.getElementById(hiddenData).value) {
                     activateErrorState(sel, 'click')
                 }
+            }
+        });
+
+        doc.querySelectorAll('.docUploadInput').forEach(docUpload => {
+            if (String(docUpload.placeholder) === 'true' && !Boolean(docUpload.value)) {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
+                activateErrorState(docUpload, 'change');
+            } else {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
             }
         });
 
@@ -1000,6 +1017,29 @@ function validateFileType(obj) {
             }
             fileTypeMessage = fileTypeMessage.slice(0, fileTypeMessage.length - 2) + '.';
             document.getElementById('error-108' + String(obj.name)).innerHTML = fileTypeMessage;
+            return false;
+        } else {
+            document.getElementById('error-108' + String(obj.name)).innerHTML = '';
+        }
+    }
+    return true;
+}
+
+function validateFileType(obj) {
+    if (Boolean(obj.title)) {
+        console.log(obj);
+        let acceptedTypes = obj.title.split(';');
+        let inputArray = obj.value.split('.');
+        let inputType = inputArray[inputArray.length - 1].toUpperCase();
+        if (!acceptedTypes.includes(inputType)) {
+            obj.value = null;
+            let fileTypeMessage = 'File type not accepted. Please upload one of the following: ';
+            for (const type of acceptedTypes) {
+                fileTypeMessage += type + ', ';
+            }
+            fileTypeMessage = fileTypeMessage.slice(0, fileTypeMessage.length - 2) + '.';
+            document.getElementById('error-108' + String(obj.name)).innerHTML = fileTypeMessage;
+            console.log(document.getElementById('error-108' + String(obj.name)));
             return false;
         } else {
             document.getElementById('error-108' + String(obj.name)).innerHTML = '';

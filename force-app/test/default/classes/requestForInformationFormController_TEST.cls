@@ -106,6 +106,16 @@ public class requestForInformationFormController_TEST {
     }
 
     @isTest
+    public static void testCreateBadLead() {
+        String record_input_fields = '{"FirstName":"","LastName":"","Company":""}';
+        Test.startTest();
+        requestForInformationFormController.createLead(record_input_fields, 'Lead', 'RFI Controller 0001');
+        Test.stopTest();
+        List<Lead> new_lead = [SELECT Id FROM Lead WHERE LastName = 'CreateLead'];
+        System.assertEquals(0, new_lead.size());
+    }
+
+    @isTest
     public static void testGetRFIController() {
         RFI_Controller__c rfic = [SELECT Name FROM RFI_Controller__c];
         Test.startTest();

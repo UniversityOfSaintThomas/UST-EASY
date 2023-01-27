@@ -157,7 +157,7 @@ public with sharing class checklistHelper {
                 return allowConfirm;
             }
         }
-        
+
         allowConfirm = true;
 
         return allowConfirm;

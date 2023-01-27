@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admissions_Counselor__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check this box if the user is an UG admissions counselor.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check this box if the user is an UG admissions counselor.</inlineHelpText>
+    <label>Admissions Counselor?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

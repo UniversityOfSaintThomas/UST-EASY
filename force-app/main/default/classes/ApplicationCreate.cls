@@ -32,7 +32,7 @@ public class ApplicationCreate {
         String userType = UserInfo.getUserType();
         if (userType.endsWithIgnoreCase('guest')) {
             PageReference regPage = Page.ApplicationRegistration;
-            If (String.isNOtBlank(ApexPages.currentPage().getParameters().get('at'))) {
+            if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
                 regPage.getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
             }
             regPage.setRedirect(true);
@@ -69,7 +69,7 @@ public class ApplicationCreate {
 
         con = new Contact();
         app = new Application__c(Application_Control__c = appControlId, Application_Status__c = appInfo.appStartStatus);
-        appInfo.appId = app.id;
+        appInfo.appId = app.Id;
 
         // List of question groups to display
         List<ApplicationQuestionGroup> groups = new List<ApplicationQuestionGroup>();
@@ -119,7 +119,7 @@ public class ApplicationCreate {
             }
             // Query for contact
             if (!contactFields.isEmpty()) {
-                String query = 'SELECT ' + ApplicationHelper.getApplicationContactFields(items) + ' FROM Contact WHERE Id = :contactId';
+                String query = 'SELECT ' + applicationHelper.getApplicationContactFields(items) + ' FROM Contact WHERE Id = :contactId';
                 con = ((List<Contact>) Database.query(query)).get(0);
             }
         }
@@ -181,7 +181,7 @@ public class ApplicationCreate {
                     SELECT Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
                     FROM Intended_Program_Term__c
                     WHERE Intended_Program__r.Application_Control__c = :appControlId
-                    AND Intended_Program__c IN: programs
+                    AND Intended_Program__c IN :programs
                     AND Academic_Term__r.Application_Status__c = 'Active'
                     AND Application_Status__c = 'Active'
                     GROUP BY Academic_Term__r.Id, Academic_Term__r.Name, Academic_Term__r.Term_Start_Date__c, Academic_Term__r.Term_End_Date__c
@@ -196,8 +196,8 @@ public class ApplicationCreate {
                 //TODO: Assuming CST here. Maybe make time zone setting for application control to set this or academic term
                 if ((Date) ar.get('Term_Start_Date__c') != null && (Date) ar.get('Term_End_Date__c') != null) {
                     //Parenthesis around the time zone string because class is used to parsing that out of a generated picklist that includes it.
-                    DateTime startTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_Start_Date__c'), null, '(America/Chicago)');
-                    DateTime endTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_End_Date__c'), null, '(America/Chicago)');
+                    Datetime startTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_Start_Date__c'), null, '(America/Chicago)');
+                    Datetime endTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_End_Date__c'), null, '(America/Chicago)');
                     formattedName = ' (Start Date: ' + startTermDateTime.format('MMM dd, yyyy') + ')';
                 }
 
@@ -289,7 +289,7 @@ public class ApplicationCreate {
 
             // Throw exception if not all required fields have been filled-out
             String errorMessage = checkFields();
-            if (errorMessage != null) {
+            if (String.isNotBlank(errorMessage)) {
                 throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
             }
 
@@ -384,9 +384,12 @@ public class ApplicationCreate {
             // Check to make sure selections are valid for number of applications limit
             if (app.Contact__c != null && String.isNotBlank(ip.Number_of_Applications_Limit__c)) {
                 for (Application__c a : [
-                        SELECT Id, Intended_Program__c, Intended_Term_of_Entry__c
+                        SELECT Id, Intended_Program__c, Intended_Term_of_Entry__c, Application_Status__c, Application_Substatus__c
                         FROM Application__c
                         WHERE Contact__c = :app.Contact__c
+                        AND Application_Status__c != 'Wrong Application'
+                        AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
+                        AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
                 ]) {
                     System.debug(ip.Number_of_Applications_Limit__c);
                     if (ip.Number_of_Applications_Limit__c.equals('One Application')) {
@@ -411,7 +414,7 @@ public class ApplicationCreate {
 
     public String saveApplication() {
         return saveApplicationHelper(true);
-    } 
+    }
 
     /* ******************************************************************************
     * @description Saves application and returns URL to new application checklist
@@ -419,6 +422,14 @@ public class ApplicationCreate {
     public String saveApplicationHelper(Boolean createInteraction) {
 
         app.Id = null;
+
+        if (String.isNotBlank(app.Intended_Term_of_Entry__c)) {
+            Academic_Term__c termInfo = [SELECT Id, Name FROM Academic_Term__c WHERE Id = :app.Intended_Term_of_Entry__c];
+            if (termInfo != null) {
+                app.Generic_Filter_4__c = termInfo.Name;
+            }
+        }
+
         insert app; // Insert application
 
         if (con.Id != null) update con; // Update contact
@@ -485,7 +496,7 @@ public class ApplicationCreate {
         // Return URL for checklist page for new application
         appInfo = ApplicationUtilities.setApplicationInfo(appInfo, app);
         ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));
-        return '/apex/ApplicationPortal?applicationId=' + app.Id + '&contactId=' + app.Contact__c + (String.isBlank(appInfo.at) ? '' : ('&at=' + appInfo.at));
+        return '/apex/ApplicationPortal?applicationId=' + app.Id + (String.isBlank(appInfo.at) ? '' : ('&at=' + appInfo.at));
     }
 
     public Interaction__c populateInteraction(Interaction__c interaction) {
@@ -496,32 +507,32 @@ public class ApplicationCreate {
         // populate interaction with contact, application, program, and term information
         if (app != null && app.Id != null) {
             Application__c currentApplication = [
-                SELECT Id, 
-                    Generic_Filter_2__c, 
-                    Degree_Level__c, 
-                    Major_1__c, 
-                    Major_2__c, 
-                    Major_3__c,
-                    Contact__c,
-                    Contact__r.FirstName, 
-                    Contact__r.MiddleName, 
-                    Contact__r.LastName, 
-                    Contact__r.Email,
-                    Contact__r.Birthdate, 
-                    Contact__r.MailingCountry, 
-                    Contact__r.MailingCity,
-                    Contact__r.MailingPostalCode, 
-                    Contact__r.MailingStreet, 
-                    Contact__r.MailingState,
-                    Contact__r.HomePhone,
-                    Intended_Term_of_Entry__c,
-                    Intended_Program__c,
-                    Intended_Program__r.Program_College_of_Interest__c,
-                    Intended_Program__r.Program_Applicant_Type__c,
-                    Intended_Term_of_Entry__r.Term__c
-                FROM Application__c 
-                WHERE Id =: app.Id 
-                LIMIT 1
+                    SELECT Id,
+                            Generic_Filter_2__c,
+                            Degree_Level__c,
+                            Major_1__c,
+                            Major_2__c,
+                            Major_3__c,
+                            Contact__c,
+                            Contact__r.FirstName,
+                            Contact__r.MiddleName,
+                            Contact__r.LastName,
+                            Contact__r.Email,
+                            Contact__r.Birthdate,
+                            Contact__r.MailingCountry,
+                            Contact__r.MailingCity,
+                            Contact__r.MailingPostalCode,
+                            Contact__r.MailingStreet,
+                            Contact__r.MailingState,
+                            Contact__r.HomePhone,
+                            Intended_Term_of_Entry__c,
+                            Intended_Program__c,
+                            Intended_Program__r.Program_College_of_Interest__c,
+                            Intended_Program__r.Program_Applicant_Type__c,
+                            Intended_Term_of_Entry__r.Term__c
+                    FROM Application__c
+                    WHERE Id = :app.Id
+                    LIMIT 1
             ];
             interaction.Admissions_Application__c = app.Id;
             interaction.Citizenship__c = app.Citizenship__c;
@@ -546,16 +557,16 @@ public class ApplicationCreate {
             interaction.College_of_Interest__c = currentApplication.Intended_Program__r.Program_College_of_Interest__c;
             interaction.Admit_Type__c = currentApplication.Intended_Program__r.Program_Applicant_Type__c;
             interaction.Term__c = currentApplication.Intended_Term_of_Entry__r.Term__c;
-            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c =: currentApplication.Intended_Program__c LIMIT 1];
+            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c = :currentApplication.Intended_Program__c LIMIT 1];
             if (!relatedPlan.isEmpty()) {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
             }
         }
-        
+
         interaction.Opportunity_Stage__c = 'Started App';
         interaction.Opportunity_Record_Type__c = application_opp_RT_ID;
         interaction.Interaction_Source__c = 'Application';
-        interaction.Date_Started_App__c = System.Today();
+        interaction.Date_Started_App__c = System.today();
         interaction.Lead_Source__c = 'Application';
 
         return interaction;
@@ -569,34 +580,34 @@ public class ApplicationCreate {
         Id academicProgramId;
         if (app != null && app.Id != null) {
             Application__c currentApplication = [
-                SELECT Id, 
-                    Intended_Term_of_Entry__c,
-                    Intended_Program__c,
-                    Generic_Filter_2__c, 
-                    Degree_Level__c, 
-                    Major_1__c, 
-                    Major_2__c, 
-                    Major_3__c,
-                    Contact__c,
-                    Contact__r.Birthdate, 
-                    Contact__r.MailingCountry, 
-                    Contact__r.MailingCity,
-                    Contact__r.MailingPostalCode, 
-                    Contact__r.MailingStreet, 
-                    Contact__r.MailingState,
-                    Contact__r.HomePhone
-                FROM Application__c 
-                WHERE Id =: app.Id 
-                LIMIT 1
+                    SELECT Id,
+                            Intended_Term_of_Entry__c,
+                            Intended_Program__c,
+                            Generic_Filter_2__c,
+                            Degree_Level__c,
+                            Major_1__c,
+                            Major_2__c,
+                            Major_3__c,
+                            Contact__c,
+                            Contact__r.Birthdate,
+                            Contact__r.MailingCountry,
+                            Contact__r.MailingCity,
+                            Contact__r.MailingPostalCode,
+                            Contact__r.MailingStreet,
+                            Contact__r.MailingState,
+                            Contact__r.HomePhone
+                    FROM Application__c
+                    WHERE Id = :app.Id
+                    LIMIT 1
             ];
 
             interaction = [
-                SELECT Id 
-                FROM Interaction__c 
-                WHERE Contact__c =: currentApplication.Contact__c 
-                AND Intended_Start_Term__c =: currentApplication.Intended_Term_of_Entry__c 
-                AND Academic_Program__c =: currentApplication.Intended_Program__c 
-                LIMIT 1
+                    SELECT Id
+                    FROM Interaction__c
+                    WHERE Contact__c = :currentApplication.Contact__c
+                    AND Intended_Start_Term__c = :currentApplication.Intended_Term_of_Entry__c
+                    AND Academic_Program__c = :currentApplication.Intended_Program__c
+                    LIMIT 1
             ];
             interaction.Admissions_Application__c = app.Id;
             interaction.Gender__c = currentApplication.Generic_Filter_2__c;

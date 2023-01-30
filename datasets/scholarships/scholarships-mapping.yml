@@ -1,37 +1,38 @@
 Insert Scholarship__c:
   sf_object: Scholarship__c
   fields:
-  - Amount__c
-  - Award_Year__c
-  - Close_Date__c
-  - Completion_Statement__c
-  - CreatedDate
-  - Criteria_Statement__c
-  - Description__c
-  - Essay_1_Allow_Upload__c
-  - Essay_1_Text__c
-  - Essay_2_Allow_Upload__c
-  - Essay_2_Text__c
-  - LastModifiedDate
-  - Name
-  - Number_of_Scholarships__c
-  - Open_Date__c
-  - Question_1_Text__c
-  - Question_2_Text__c
-  - Question_3_Text__c
-  - Question_4_Text__c
-  - Recommender2_Auto_Send__c
-  - Recommender2_Description__c
-  - Recommender2_Question__c
-  - Recommender2__c
-  - Recommender_Auto_Send__c
-  - Recommender_Description__c
-  - Recommender_Question__c
-  - Recommender__c
-  - Review_Award_Process_Description__c
-  - Scholarship_Budget__c
-  - Self_Report_ACT_GPA_Criteria__c
-  - Short_Description__c
+    - Amount__c
+    - Award_Year__c
+    - Close_Date__c
+    - Completion_Statement__c
+    - CreatedDate
+    - Criteria_Statement__c
+    - Description__c
+    - Essay_1_Allow_Upload__c
+    - Essay_1_Text__c
+    - Essay_2_Allow_Upload__c
+    - Essay_2_Text__c
+    - LastModifiedDate
+    - Name
+    - Number_of_Scholarships__c
+    - Open_Date__c
+    - Question_1_Text__c
+    - Question_2_Text__c
+    - Question_3_Text__c
+    - Question_4_Text__c
+    - Recommender2_Auto_Send__c
+    - Recommender2_Description__c
+    - Recommender2_Question__c
+    - Recommender2__c
+    - Recommender_Auto_Send__c
+    - Recommender_Description__c
+    - Recommender_Question__c
+    - Recommender__c
+    - RecordTypeId
+    - Review_Award_Process_Description__c
+    - Scholarship_Budget__c
+    - Self_Report_ACT_GPA_Criteria__c
+    - Short_Description__c
 Insert Award__c:
   sf_object: Award__c
   fields:

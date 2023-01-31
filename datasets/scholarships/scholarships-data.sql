@@ -16,7 +16,6 @@ CREATE TABLE "Contact" (
 	"Preferred_First_Name__c" VARCHAR(255), 
 	PRIMARY KEY (id)
 );
-INSERT INTO "Contact" VALUES(1,'Test','Testerman','');
 CREATE TABLE "Scholarship_Applicant__c" (
 	id INTEGER NOT NULL, 
 	"App_Attachment_SF_ID__c" VARCHAR(255), 
@@ -66,14 +65,11 @@ CREATE TABLE "Scholarship_Applicant__c" (
 	"Scholarship__c" VARCHAR(255), 
 	PRIMARY KEY (id)
 );
-INSERT INTO "Scholarship_Applicant__c" VALUES(1,'','True','2023-01-30T21:17:40.000+0000','35.0','3.8','yes','','False','yes','','False','2023-01-30T21:18:08.000+0000','yes','','','','','','','','2023-01-30T21:18:04.000+0000','','','','jjheaney@stthomas.edu','Jim Henley','01252000002cqEZAAY','','','True','','','','','','','','2023-01-30T21:17:40.000+0000','2023-01-30T21:18:08.000+0000','','','Submitted App','jjh','1','1');
 CREATE TABLE "Scholarship_Applicant__c_rt_mapping" (
 	record_type_id VARCHAR(18) NOT NULL, 
 	developer_name VARCHAR(255), 
 	PRIMARY KEY (record_type_id)
 );
-INSERT INTO "Scholarship_Applicant__c_rt_mapping" VALUES('01252000002cqEYAAY','Grant');
-INSERT INTO "Scholarship_Applicant__c_rt_mapping" VALUES('01252000002cqEZAAY','Scholarship');
 CREATE TABLE "Scholarship__c" (
 	id INTEGER NOT NULL, 
 	"Amount__c" VARCHAR(255), 
@@ -103,20 +99,11 @@ CREATE TABLE "Scholarship__c" (
 	"Recommender_Description__c" VARCHAR(255), 
 	"Recommender_Question__c" VARCHAR(255), 
 	"Recommender__c" VARCHAR(255), 
-	"RecordTypeId" VARCHAR(255), 
 	"Review_Award_Process_Description__c" VARCHAR(255), 
 	"Scholarship_Budget__c" VARCHAR(255), 
 	"Self_Report_ACT_GPA_Criteria__c" VARCHAR(255), 
 	"Short_Description__c" VARCHAR(255), 
 	PRIMARY KEY (id)
 );
-INSERT INTO "Scholarship__c" VALUES(1,'1000000.0','2223','2028-10-21','<p>Thanks, Smith!</p>','2022-05-24T19:22:30.000+0000','<p>Are you named Smith?</p>','<p>For Smiths</p>','False','<p>Are you REALLY named Smith?</p>','True','<p>What does Smith mean to you?</p>','2023-01-30T21:14:40.000+0000','Smith Scholars','75.0','2022-05-01','<p>How long have you been a Smith?</p>','','','','False','','','False','True','<p>Another Smith</p>','<p>Is this person a good Smith?</p>','True','01252000002cqEaAAI','<p>We will check your birth certificate to make sure you are a Smith.</p>','','True','Smiths only');
-CREATE TABLE "Scholarship__c_rt_mapping" (
-	record_type_id VARCHAR(18) NOT NULL, 
-	developer_name VARCHAR(255), 
-	PRIMARY KEY (record_type_id)
-);
-INSERT INTO "Scholarship__c_rt_mapping" VALUES('01252000002cqEaAAI','Scholarship');
-INSERT INTO "Scholarship__c_rt_mapping" VALUES('01252000002cqEbAAI','Signature_Programs');
-INSERT INTO "Scholarship__c_rt_mapping" VALUES('01252000002cqEcAAI','UG_Merit');
+INSERT INTO "Scholarship__c" VALUES(1,'1000000.0','2223','2022-10-21','<p>Thanks, Smith!</p>','2022-05-24T19:22:30.000+0000','<p>Are you named Smith?</p>','<p>For Smiths</p>','False','<p>Are you REALLY named Smith?</p>','True','<p>What does Smith mean to you?</p>','2022-05-24T19:22:30.000+0000','Smith Scholars','75.0','2022-05-01','<p>How long have you been a Smith?</p>','','','','False','','','False','True','<p>Another Smith</p>','<p>Is this person a good Smith?</p>','True','<p>We will check your birth certificate to make sure you are a Smith.</p>','','True','Smiths only');
 COMMIT;

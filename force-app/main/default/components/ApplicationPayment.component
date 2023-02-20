@@ -23,13 +23,14 @@
     </script>
 
     <apex:outputPanel layout="none" rendered="{!ISBLANK(responseObject[fieldAPI])}">
+        <div id="div{!question.question.id}"></div>
         <script>
             const parameterValues{!question.question.id} = {!formParameters};
-
             //Create a dynamic form to break free of apex:form
             let payForm{!question.question.id} = document.createElement('form');
             payForm{!question.question.id}.setAttribute('method', 'POST');
             payForm{!question.question.id}.setAttribute('action', '{!gatewayURL}');
+            payForm{!question.question.id}.setAttribute("id", "payForm{!question.question.id}");
 
             for (const key in parameterValues{!question.question.id}) {
                 let formInput = document.createElement('input');
@@ -40,13 +41,13 @@
                     payForm{!question.question.id}.appendChild(formInput);
                 }
             }
-            document.body.appendChild(payForm{!question.question.id});
+            document.getElementById('div{!question.question.id}').appendChild(payForm{!question.question.id});
         </script>
 
         <P>Amount: ${!paymentAmount}</P>
 
         <p class="slds-m-vertical_small">
-            <a href="javascript:payForm{!question.question.id}.submit();" class="slds-button slds-button_brand">Submit Deposit</a>
+            <a href="javascript:document.getElementById('payForm{!question.question.id}').submit();" class="slds-button slds-button_brand">Submit Deposit</a>
         </p>
 
         <apex:outputPanel layout="none" rendered="{!!ISBLANK(configurationMessage)}">

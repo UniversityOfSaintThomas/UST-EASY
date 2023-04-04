@@ -11,22 +11,35 @@ ready(() => {
 
 function pageLoadReRendered() {
     //Disable fields that are set to not be editable
-    document.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
+    let sldsScope = document.querySelector('.slds-scope');
+    sldsScope.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
     });
 
-    document.querySelector('form').onkeypress = checkEnter;
+    sldsScope.querySelector('form').onkeypress = checkEnter;
 
     //Make sure inputs are typed with HTML5 standards
-    document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
+    sldsScope.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
         item.required = true;
     });
 
-    document.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent").forEach(item => {
+    sldsScope.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent, .validateACT, .validateSATComposite, .validateSATSubject").forEach(item => {
         item.type = "number";
+        if (item.classList.contains('validateACT')) {
+            item.setAttribute('min', '0');
+            item.setAttribute('max', '36');
+        }
+        if (item.classList.contains('validateSATComposite')) {
+            item.setAttribute('min', '0');
+            item.setAttribute('max', '1600');
+        }
+        if (item.classList.contains('validateSATSubject')) {
+            item.setAttribute('min', '0');
+            item.setAttribute('max', '800');
+        }
     });
 
-    document.querySelectorAll(".validatePhone").forEach(item => {
+    sldsScope.querySelectorAll(".validatePhone").forEach(item => {
         item.type = "tel";
     });
 
@@ -298,6 +311,15 @@ function activateAutoComplete() {
         let objectTypeFilter = comboBox.dataset.objtypefilter;
         let objectTypeNameField = comboBox.dataset.objtypenamefield;
 
+        let clearField = document.createElement('li');
+        clearField.classList.add('clear-search-field');
+        clearField.classList.add('slds-listbox__item');
+        let clearFieldLInk = document.createElement('a');
+        clearFieldLInk.innerText = ' Clear search. '
+        clearFieldLInk.addEventListener('click', function () {
+            refValueRemoved()
+        });
+
         /* Remote reference lookup */
         const resultListTemplate = (title, subtitle, icon, originObjId, resultId) => `
             <li role="presentation" class="slds-listbox__item" data-title="${title}, ${subtitle}" data-origId="${originObjId}" data-resultId="${resultId}">
@@ -379,7 +401,8 @@ function activateAutoComplete() {
                     if (subTitle) {
                         subTitle = subTitle.substr(0, subTitle.length - 2);
                     }
-
+                    subTitle = removeStartTrailComma(subTitle);
+                    resultName = removeStartTrailComma(resultName);
                     outputList += resultListTemplate(resultName, subTitle, comboBox.dataset.listicon, originObjId, resultId);
                 });
 
@@ -400,12 +423,21 @@ function activateAutoComplete() {
                             }
                         } else {
                             hiddenInput.value = refItem.dataset.resultid;
-                            autoItem.value = refItem.dataset.title;
+                            autoItem.value = removeStartTrailComma(refItem.dataset.title);
                             refValueAdded();
                         }
                     });
                 });
 
+                clearField.innerText = ''
+                clearField.appendChild(clearFieldLInk);
+                resultList.appendChild(clearField);
+
+            } else {
+                resultList.innerHTML = '';
+                clearField.innerText = 'No matching results...'
+                clearField.appendChild(clearFieldLInk);
+                resultList.appendChild(clearField);
             }
         }
 
@@ -435,6 +467,12 @@ function activateAutoComplete() {
         });
 
     });
+}
+
+function removeStartTrailComma(stringIn) {
+    stringIn = stringIn.trim();
+    stringIn = stringIn.replace(/(^,)|(,$)/g, '');
+    return stringIn;
 }
 
 //Visualforce state/country picklist enabled does not style correctly. This observes mutations and styles the picklsit.

@@ -6,6 +6,7 @@ Insert Application_Control__c:
   - Allow_Cancel_From__c
   - Allow_Submit_From__c
   - Allow_Withdraw_From__c
+  - Application_Control_External_ID__c
   - Application_Start_Status__c
   - Arrow_Color__c
   - Button_Color__c
@@ -20,11 +21,67 @@ Insert Application_Control__c:
   - Logo_Static_Resource__c
   - Name
   - School_College__c
+  - Show_on_App_Finder__c
   - Submit_Status__c
   - Template__c
   - Text_Color__c
   - URL_Parameter__c
   - Withdraw_Status__c
+Insert Campaign:
+  sf_object: Campaign
+Insert External_License__c:
+  sf_object: External_License__c
+  fields:
+  - Admin_Licenses__c
+  - Name
+  - total_licenses__c
+  lookups:
+    Related_License__c:
+      table: External_License__c
+      after: Insert External_License__c
+Insert FlowPersonalConfiguration__c:
+  sf_object: FlowPersonalConfiguration__c
+  fields:
+  - ActorId__c
+  - Config1Name__c
+  - Config1Value__c
+  - Config2Name__c
+  - Config2Value__c
+  - Config3Name__c
+  - Config3Value__c
+  - Config4Name__c
+  - Config4Value__c
+  - Config5Name__c
+  - Config5Value__c
+  - Config6Name__c
+  - Config6Value__c
+  - Config7Name__c
+  - Config7Value__c
+  - Config8Name__c
+  - Config8Value__c
+  - Config9Name__c
+  - Config9Value__c
+  - LocationId__c
+Insert FlowTableViewDefinition__c:
+  sf_object: FlowTableViewDefinition__c
+  fields:
+  - Active__c
+  - Alignments__c
+  - Cell_Attributes__c
+  - Edits__c
+  - Field_API_Names__c
+  - Field_Sorting__c
+  - Filters__c
+  - Icons__c
+  - Labels__c
+  - Name
+  - Object_API_Name__c
+  - Other_Attributes__c
+  - Selection_Method__c
+  - Type_Attributes__c
+  - View_Name__c
+  - Widths__c
+  - Wraps__c
 Insert Interaction_Mapping__c:
   sf_object: Interaction_Mapping__c
   fields:
@@ -36,12 +93,365 @@ Insert Interaction_Mapping__c:
   - Source_Object_API_Name__c
   - Target_Field_API_Name__c
   - Target_Object_API_Name__c
+Insert Knowledge__kav:
+  sf_object: Knowledge__kav
+  fields:
+  - RecordTypeId
+Insert Mogli_SMS__FormTemplate__c:
+  sf_object: Mogli_SMS__FormTemplate__c
+  fields:
+  - Mogli_SMS__Query_String__c
+  - Mogli_SMS__Status__c
+  - Name
+Insert Mogli_SMS__Gateway__c:
+  sf_object: Mogli_SMS__Gateway__c
+  fields:
+  - Description__c
+  - Mogli_SMS__CustomSMSServiceHandler__c
+  - Mogli_SMS__CustomWebServiceHandler__c
+  - Mogli_SMS__DisplaySequence__c
+  - Mogli_SMS__Inactive__c
+  - Mogli_SMS__Language__c
+  - Mogli_SMS__Loop__c
+  - Mogli_SMS__Messaging_Profile_ID__c
+  - Mogli_SMS__OpenFNProject__c
+  - Mogli_SMS__OpenFnSecret__c
+  - Mogli_SMS__Pause__c
+  - Mogli_SMS__PhoneNumber__c
+  - Mogli_SMS__Sender_Pool__c
+  - Mogli_SMS__TelerivetAPIKey__c
+  - Mogli_SMS__TelerivetPhoneId__c
+  - Mogli_SMS__TelerivetProjectID__c
+  - Mogli_SMS__TelerivetSecret__c
+  - Mogli_SMS__Telnyx_Api_key__c
+  - Mogli_SMS__TwilioAccountSid__c
+  - Mogli_SMS__TwilioAuthToken__c
+  - Mogli_SMS__TwilioUseNotifyService__c
+  - Mogli_SMS__Twilio_Notify_ServiceSid__c
+  - Mogli_SMS__TxtWireNumber__c
+  - Mogli_SMS__TxtwireAPIKey__c
+  - Mogli_SMS__TxtwireProgramID__c
+  - Mogli_SMS__TxtwireSourceAddress__c
+  - Mogli_SMS__TxtwireVersion__c
+  - Mogli_SMS__Voice_Type__c
+  - Mogli_SMS__WebHookIdentifier__c
+  - Name
+  - Owning_Department__c
+  - RecordTypeId
+Insert Object_Merge_Handler__c:
+  sf_object: Object_Merge_Handler__c
+  fields:
+  - Active__c
+  - Child_Relationship_Name__c
+  - Clone_Reparented_Victim__c
+  - Merge_Action__c
+  - Name
+  - Object_Lookup_Field_API_Name__c
+  - Order_of_Execution__c
+  - RecordTypeId
+  - Standard_Action__c
+  lookups:
+    Parent_Handler__c:
+      table: Object_Merge_Handler__c
+      after: Insert Object_Merge_Handler__c
+Insert Object_Merge_Pair__c:
+  sf_object: Object_Merge_Pair__c
+  fields:
+  - Error_Reason__c
+  - Master_ID__c
+  - Merge_Date__c
+  - Status__c
+  - Victim_ID__c
+Insert Product2:
+  sf_object: Product2
+  fields:
+  - ETL_External_ID__c
+  - IsActive
+  - Name
+Insert RFI_Controller__c:
+  sf_object: RFI_Controller__c
+  fields:
+  - Academic_Level__c
+  - Citizenship_Type__c
+  - Descriptive_Name__c
+  - Fields_to_Display__c
+  - Hide_Form_Title__c
+  - Redirect_URL__c
+  - Required_Fields__c
+  - School_College__c
+Insert Scholarship__c:
+  sf_object: Scholarship__c
+  fields:
+  - Amount__c
+  - Award_Year__c
+  - Close_Date__c
+  - Completion_Statement__c
+  - Criteria_Statement__c
+  - Description__c
+  - Essay_1_Allow_Upload__c
+  - Essay_1_Text__c
+  - Essay_2_Allow_Upload__c
+  - Essay_2_Text__c
+  - Name
+  - Number_of_Scholarships__c
+  - Open_Date__c
+  - Question_1_Text__c
+  - Question_2_Text__c
+  - Question_3_Text__c
+  - Question_4_Text__c
+  - Recommender2_Auto_Send__c
+  - Recommender2_Description__c
+  - Recommender2_Question__c
+  - Recommender2__c
+  - Recommender_Auto_Send__c
+  - Recommender_Description__c
+  - Recommender_Question__c
+  - Recommender__c
+  - RecordTypeId
+  - Review_Award_Process_Description__c
+  - Scholarship_Budget__c
+  - Self_Report_ACT_GPA_Criteria__c
+  - Short_Description__c
+Insert Staging_Record__c:
+  sf_object: Staging_Record__c
+  fields:
+  - ACT_Composite_Score__c
+  - ACT_English_Score__c
+  - ACT_Mathematics_Score__c
+  - ACT_Reading_Score__c
+  - ACT_Science_Score__c
+  - ACT_Writing_EW_Score__c
+  - ACT_Writing_WR_Score__c
+  - AP_Banner_Code__c
+  - AP_Test_Score__c
+  - AP_Test_Type__c
+  - AP_Test_origin__c
+  - Academic_Interests__c
+  - Admissions_Status__c
+  - Alumni_Class_Year__c
+  - Applicant_Type__c
+  - Application_Common_App_ID__c
+  - Application_Stage__c
+  - Attended_College_End__c
+  - Attended_College_Start__c
+  - Banner_Admission_Type__c
+  - Banner_ID__c
+  - Banner_Student_Type__c
+  - Birthdate__c
+  - Booking__c
+  - Business_Email__c
+  - CEEB_Code__c
+  - Campaign_ID__c
+  - Cheer__c
+  - Citizenship_Status__c
+  - City__c
+  - Common_App_ID__c
+  - Community_Based_Organization__c
+  - Company_Employer__c
+  - Country__c
+  - Country_of_Birth__c
+  - Dance__c
+  - Deceased__c
+  - Degree_Level__c
+  - Degree_Sought_Contact__c
+  - Degree_Sought__c
+  - Document_Status__c
+  - ELS_Student_ID__c
+  - Email__c
+  - Expected_Graduation_Date__c
+  - External_Salesforce_ID__c
+  - FAFSA_Current_CPS_Process_Date__c
+  - FAFSA_Filed_Load_Date__c
+  - FAFSA_Filed__c
+  - FAFSA_Guardian_Email__c
+  - FAFSA_ID__c
+  - FAFSA_Initial_CPS_Process_Date__c
+  - FAFSA_Parent_1_School_Level__c
+  - FAFSA_Parent_2_School_Level__c
+  - FAFSA_Selected_for_Verification__c
+  - FAFSA_Term__c
+  - First_Name__c
+  - Foot_on_Campus_Date__c
+  - Foot_on_Campus__c
+  - Former_Last_Name__c
+  - GPA__c
+  - Gender_Identity__c
+  - Gender__c
+  - High_School_Code__c
+  - High_School_Expected_Graduation_Year__c
+  - High_School_Name_Text__c
+  - Hispanic_Latino__c
+  - HomePhone__c
+  - Home_Phone__c
+  - Import_Source__c
+  - Inquiry_Citizenship__c
+  - Inquiry_College_Interest__c
+  - Language_Proficiency__c
+  - Language__c
+  - Last_Name__c
+  - Lead_Source__c
+  - Legacy_Add_Date__c
+  - Legacy_Application_Received_Date__c
+  - Legacy_Application_Record_Date__c
+  - Legacy_Decision_Date__c
+  - Legacy_Primary_Source__c
+  - LinkedIn_Profile__c
+  - MailingCity__c
+  - MailingCountry__c
+  - MailingPostalCode__c
+  - MailingSreetLine1__c
+  - MailingState__c
+  - MailingStreet3__c
+  - MailingStreetLine2__c
+  - MailingZip__c
+  - Mailing_State_Prov__c
+  - Major1__c
+  - Major2__c
+  - Major3__c
+  - Major_Code__c
+  - Major_Interest_Group__c
+  - Master_or_Copy_Test_Scores__c
+  - Middle_Name__c
+  - MobilePhone__c
+  - Mobile_Phone__c
+  - Music__c
+  - Non_US_Country_of_Citizenship__c
+  - Official_Major_Code__c
+  - Official_Transcript_Received__c
+  - PIDM__c
+  - Parent_1_Email__c
+  - Parent_1_First_Name__c
+  - Parent_1_Last_Name__c
+  - Parent_2_Email__c
+  - Parent_2_First_Name__c
+  - Parent_2_Last_Name__c
+  - PermCity__c
+  - PermCountry__c
+  - PermPostalCode__c
+  - PermState__c
+  - PermStreet1__c
+  - PermStreet2__c
+  - PermStreet3__c
+  - PermZip__c
+  - Perm_State_Prov__c
+  - Preferred_First_Name__c
+  - Preferred_Phone__c
+  - Primary_Relationship_to_Referral__c
+  - Program_Catalog__c
+  - Program_Code__c
+  - Program_Offered__c
+  - ROTC__c
+  - Race__c
+  - RaiseMe_ID__c
+  - RaiseMe_Portfolio_URL__c
+  - Receive_Texts__c
+  - Rejected_FAFSA__c
+  - Religious_Preference__c
+  - SF_LID__c
+  - SSN__c
+  - Salary__c
+  - Salesforce_Contact_ID__c
+  - Salutation__c
+  - School__c
+  - Self_Reported_ACT__c
+  - Self_Reported_IELTS__c
+  - Self_Reported_SAT__c
+  - Self_Reported_TOEFL__c
+  - Self_Reported_Undergrad_Degree__c
+  - Self_Reported_Undergrad_Grad_Year__c
+  - Self_Reported_Undergrad_Institution__c
+  - Session__c
+  - Source_Area_of_Interest__c
+  - Sport_1__c
+  - Sport_2__c
+  - Sport_3__c
+  - Sport_Type_1__c
+  - Sport_Type_2__c
+  - Sport_Type_3__c
+  - St_Thomas_School__c
+  - Start_Term__c
+  - State__c
+  - Status__c
+  - Street_Line_1__c
+  - Street_Line_2__c
+  - Student_Type__c
+  - Suffix__c
+  - System_Export_User_ID__c
+  - Term__c
+  - Test_Date__c
+  - Test_Score_Status__c
+  - Test_Type__c
+  - Title__c
+  - Touch_Point_Source__c
+  - Touch_Point_Status__c
+  - UST_Email__c
+  - Visit_Date_Time__c
+  - Visit_Event_Name__c
+  - Visit_Guests__c
+  - Visit_ID__c
+  - Visit_Needs__c
+  - Visit_Requester_Role__c
+  - Visit_Status__c
+  - Work_Phone__c
+  - Zip__c
+Insert UDAR_Forms_Controller__c:
+  sf_object: UDAR_Forms_Controller__c
+  fields:
+  - Active__c
+  - FormName__c
+  - Form_Name__c
+  - Name
+Insert UST_Zoom_Integration__c:
+  sf_object: UST_Zoom_Integration__c
+  fields:
+  - Name
+Insert Workplan__c:
+  sf_object: Workplan__c
+  fields:
+  - DEI_Goal_1__c
+  - DEI_Goal_2__c
+  - DEI_Goal_3__c
+  - Fiscal_Year__c
+  - Granted_Dollars_Goal__c
+  - Granted_Opportunities_Goal__c
+  - Individual_Goal_1__c
+  - Individual_Goal_2__c
+  - Individual_Goal_3__c
+  - Individual_Goal_4__c
+  - Individual_Goal_5__c
+  - Name
+  - Performance_Goal_1__c
+  - Performance_Goal_2__c
+  - Performance_Goal_3__c
+  - Performance_Goal_4__c
+  - Professional_Development_Goal_1__c
+  - Professional_Development_Goal_2__c
+  - Professional_Development_Goal_3__c
+  - Professional_Development_Goal_4__c
+  - Qualification_Goal__c
+  - Submitted_Dollars_Goal__c
+  - Submitted_Opportunities_Goal__c
+  - Substantive_Contacts_Goal__c
+  - Workplan_Status__c
+Insert et4ae5__Business_Unit__c:
+  sf_object: et4ae5__Business_Unit__c
+  fields:
+  - Name
+  - et4ae5__Business_Unit_ID__c
+  - et4ae5__Enabled__c
+  - et4ae5__IsParentAccountMID__c
+  - et4ae5__PreSaved__c
 Insert hed__Language__c:
   sf_object: hed__Language__c
   fields:
   - Holding_Name__c
+  - Language_External_Id__c
   - Name
   - Related_Object_JSON__c
+Insert summit__Summit_Events_Fee_Allocation__c:
+  sf_object: summit__Summit_Events_Fee_Allocation__c
+  fields:
+  - Name
 Insert EASY_Widget__c:
   sf_object: EASY_Widget__c
   fields:
@@ -54,7 +464,12 @@ Insert EASY_Widget__c:
   - Display_Widget_On_Sub_Status__c
   - End_Date__c
   - End_Time__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
   - Name
+  - Only_One_Widget_Key__c
   - Scripts__c
   - Sort_Order__c
   - Start_Date__c
@@ -65,9 +480,233 @@ Insert EASY_Widget__c:
   lookups:
     Application_Control__c:
       table: Application_Control__c
+Insert Mogli_SMS__GatewayToUserJunc__c:
+  sf_object: Mogli_SMS__GatewayToUserJunc__c
+  lookups:
+    Mogli_SMS__Assigned_Gateway__c:
+      table: Mogli_SMS__Gateway__c
+Insert Mogli_SMS__QuestionTemplate__c:
+  sf_object: Mogli_SMS__QuestionTemplate__c
+  fields:
+  - Mogli_SMS__FirstQuestion__c
+  - Mogli_SMS__FormComplete__c
+  - Mogli_SMS__Message_Text__c
+  - Name
+  lookups:
+    Mogli_SMS__DefaultNextQuestion__c:
+      table: Mogli_SMS__QuestionTemplate__c
+      after: Insert Mogli_SMS__QuestionTemplate__c
+    Mogli_SMS__FormTemplate__c:
+      table: Mogli_SMS__FormTemplate__c
+Insert Object_Merge_Field__c:
+  sf_object: Object_Merge_Field__c
+  fields:
+  - Active__c
+  - Name
+  - Use_for_Matching__c
+  lookups:
+    Object_Merge_Handler__c:
+      table: Object_Merge_Handler__c
+Insert PricebookEntry:
+  sf_object: PricebookEntry
+  fields:
+  - IsActive
+  - UnitPrice
+  - UseStandardPrice
+  lookups:
+    Product2Id:
+      table: Product2
+Insert Sender__c:
+  sf_object: Sender__c
+  fields:
+  - Allow_Business_Unit_Unsubscribe__c
+  - IsBusinessUnit__c
+  - Name
+  - Sender_Key__c
+  lookups:
+    Business_Unit_Sender__c:
+      table: Sender__c
+      after: Insert Sender__c
+    Business_Unit__c:
+      table: et4ae5__Business_Unit__c
+Insert summit__Summit_Events__c:
+  sf_object: summit__Summit_Events__c
+  fields:
+  - Banner_Event_Code__c
+  - Banner_Function_Code__c
+  - Name
+  - summit__Academic_Program_List_Selected__c
+  - summit__Academic_Program_List__c
+  - summit__Academic_Program_Selected__c
+  - summit__Add_Info_Question_Pick_List_1__c
+  - summit__Add_Info_Question_Pick_List_2__c
+  - summit__Add_Info_Question_Pick_List_3__c
+  - summit__Add_Info_Question_Pick_List_4__c
+  - summit__Add_Info_Question_Pick_List_5__c
+  - summit__Add_Info_Question_Text_1__c
+  - summit__Add_Info_Question_Text_2__c
+  - summit__Add_Info_Question_Text_3__c
+  - summit__Add_Info_Question_Text_4__c
+  - summit__Add_Info_Question_Text_5__c
+  - summit__Add_Info_Question_Type_1__c
+  - summit__Add_Info_Question_Type_2__c
+  - summit__Add_Info_Question_Type_3__c
+  - summit__Add_Info_Question_Type_4__c
+  - summit__Add_Info_Question_Type_5__c
+  - summit__Allow_Other_Attendees__c
+  - summit__Alternate_Registration_URL__c
+  - summit__Ask_Applicant_Type__c
+  - summit__Ask_Company_Organization__c
+  - summit__Ask_Date_Of_Birth__c
+  - summit__Ask_Gender__c
+  - summit__Ask_If_Parent__c
+  - summit__Ask_Last_Name_As_Student__c
+  - summit__Ask_Mailing_Address__c
+  - summit__Ask_Phone__c
+  - summit__Ask_Preferred_Class_Year__c
+  - summit__Ask_Preferred_First_Name__c
+  - summit__Ask_Pronoun__c
+  - summit__Ask_Registrant_Program_Of_Interest__c
+  - summit__Ask_Relationship_To_Institution__c
+  - summit__Ask_Third_Party_Registrant__c
+  - summit__Ask_Title__c
+  - summit__Audience__c
+  - summit__Building__c
+  - summit__Close_Event_Days_Before__c
+  - summit__College_High_School_Ask__c
+  - summit__Contact_Creation_Duplicate_Rule__c
+  - summit__Contact_Creation__c
+  - summit__Contact_Matching_Multiple_Match_Behavior__c
+  - summit__Contact_Matching_No_Match_Behavior__c
+  - summit__Contact_Matching_Rules__c
+  - summit__Custom_Metadata_Contact_Matching_Method__c
+  - summit__Display_Optional_Donation__c
+  - summit__Donation_Description__c
+  - summit__Donation_Suggested_Amount_List__c
+  - summit__Donation_Title__c
+  - summit__End_Date__c
+  - summit__Event_Appointment_Description__c
+  - summit__Event_Appointment_Title__c
+  - summit__Event_Cancel_Review_Description__c
+  - summit__Event_Cancel_Review_Title__c
+  - summit__Event_Cancelled_Notification_Text__c
+  - summit__Event_Confirmation_Description__c
+  - summit__Event_Confirmation_Title__c
+  - summit__Event_Fee_Additional__c
+  - summit__Event_Fee__c
+  - summit__Event_Footer__c
+  - summit__Event_Full_Text__c
+  - summit__Event_Home_Link_Title__c
+  - summit__Event_Home_Link_URL__c
+  - summit__Event_Name__c
+  - summit__Event_Short_Listing_Description__c
+  - summit__Event_Sponsor__c
+  - summit__Event_Status__c
+  - summit__Event_Submit_Description__c
+  - summit__Event_Submit_Title__c
+  - summit__Event_Type__c
+  - summit__Event_description__c
+  - summit__Feed_Registration_Button_Text__c
+  - summit__Hand_Raise_Action__c
+  - summit__Include_Time_frame_List__c
+  - summit__Keep_Registration_Open_During_Event__c
+  - summit__Location_Address__c
+  - summit__Location_Map_Link__c
+  - summit__Location_Title__c
+  - summit__Location_Type__c
+  - summit__Max_Other_Attendees__c
+  - summit__Private_Event__c
+  - summit__Program_Filter_2__c
+  - summit__Program_Filter_3__c
+  - summit__Program_Filter__c
+  - summit__Registration_Email_Restriction__c
+  - summit__Start_Date__c
+  - summit__Template__c
+  - summit__Tracking_Cancel_Registration__c
+  - summit__Tracking_Confirmation_Registration__c
+  - summit__Tracking_Event_Registration__c
+  - summit__Tracking_Options_Registration__c
+  - summit__Tracking_Submit_Registration__c
+  lookups:
+    Campaign__c:
+      table: Campaign
+    summit__Donation_Allocation_1__c:
+      table: summit__Summit_Events_Fee_Allocation__c
+    summit__Donation_Allocation_2__c:
+      table: summit__Summit_Events_Fee_Allocation__c
+    summit__Donation_Allocation_3__c:
+      table: summit__Summit_Events_Fee_Allocation__c
+    summit__Donation_Allocation_4__c:
+      table: summit__Summit_Events_Fee_Allocation__c
+    summit__Donation_Allocation_5__c:
+      table: summit__Summit_Events_Fee_Allocation__c
+    summit__Event_Fee_Additional_Allocation__c:
+      table: summit__Summit_Events_Fee_Allocation__c
+    summit__Event_Fee_Allocation__c:
+      table: summit__Summit_Events_Fee_Allocation__c
+Insert Communication_Preference__c:
+  sf_object: Communication_Preference__c
+  fields:
+  - BatchID__c
+  - Email_Address__c
+  - Email_Name__c
+  - JobID__c
+  - Last_Update__c
+  - Legacy_Banner_First_Name__c
+  - Legacy_Banner_ID__c
+  - Legacy_Banner_Last_Name__c
+  - ListID__c
+  - Opt_Out__c
+  - SubscriberKey__c
+  lookups:
+    Business_Unit__c:
+      table: et4ae5__Business_Unit__c
+    Sender__c:
+      table: Sender__c
+Insert summit__Summit_Events_Instance__c:
+  sf_object: summit__Summit_Events_Instance__c
+  fields:
+  - Banner_Event_Code__c
+  - Banner_Function_Code__c
+  - Instance_Registrant_Roster_URL__c
+  - Zoom_Meeting_ID__c
+  - summit__Active_Status__c
+  - summit__Alternate_Registration_URL_Override__c
+  - summit__Attendee_List__c
+  - summit__Building_Override__c
+  - summit__Capacity_Control__c
+  - summit__Capacity__c
+  - summit__Category__c
+  - summit__Event_Fee_Additional_Override__c
+  - summit__Event_Fee_Override__c
+  - summit__Feed_Registration_Button_Text_Override__c
+  - summit__Instance_End_Date__c
+  - summit__Instance_End_Time__c
+  - summit__Instance_Short_Description__c
+  - summit__Instance_Start_Date__c
+  - summit__Instance_Start_Time__c
+  - summit__Instance_Time_Zone__c
+  - summit__Instance_Title__c
+  - summit__Location_Address_Override__c
+  - summit__Location_Map_Link_Override__c
+  - summit__Location_Title_Override__c
+  - summit__Location_Type_Override__c
+  - summit__Private_Instance__c
+  - summit__Virtual_Appointment_Link__c
+  - summit__Virtual_Meeting_Link__c
+  lookups:
+    Campaign_Override__c:
+      table: Campaign
+    summit__Event_Fee_Additional_Allocation_Override__c:
+      table: summit__Summit_Events_Fee_Allocation__c
+    summit__Event_Fee_Allocation_Override__c:
+      table: summit__Summit_Events_Fee_Allocation__c
+    summit__Event__c:
+      table: summit__Summit_Events__c
 Insert Academic_Term__c:
   sf_object: Academic_Term__c
   fields:
+  - Academic_Term_Integration_External_ID__c
   - Academic_Year_Code__c
   - Activate_Application_Date__c
   - Banner_Term_Code__c
@@ -90,29 +729,194 @@ Insert Academic_Term__c:
 Insert Account:
   sf_object: Account
   fields:
+  - ACAT_Code__c
+  - Account_Integration_External_ID__c
+  - Activity_Category_Description__c
+  - Activity_Category__c
+  - Activity_Type_Description__c
+  - Activity_Type__c
+  - Aid_Eligibility__c
   - Banner_Code__c
   - Banner_Key__c
+  - Banner_Type_of_Institution_Code__c
   - CEEB_Code__c
   - CEEB_Integration_Code__c
+  - CIPC_Code__c
+  - Campaign_Rating__c
+  - Career_Development_Account__c
+  - Current_FY_Cash__c
+  - Current_FY_Commitment__c
+  - Current_Freshman_Parent__c
+  - Current_Parent__c
+  - DFC_Account_Status__c
+  - DLEV_Code__c
+  - Donor_Continuum__c
+  - Donor_Status__c
   - EASY_Validation_Record__c
+  - Email__c
+  - First_Gift_Amount__c
+  - First_Gift_Date__c
+  - First_Gift_Designation__c
+  - Focus_Rating__c
+  - GO_Rating__c
+  - Giving_Summary__c
+  - Greatest_Gift_Amount__c
+  - Greatest_Gift_Date__c
+  - Greatest_Gift_Designation__c
+  - Handshake_ID__c
+  - Household_Income__c
   - Inactive_School__c
+  - Is_WGBIDMT_Misc__c
+  - Known_Planned_Gift__c
+  - Last_Gift_Amount__c
+  - Last_Gift_Date__c
+  - Last_Gift_Designation__c
+  - Lifetime_Cash_Recieved__c
+  - Lifetime_Commitment_Dollars__c
   - Name
+  - Outstanding_Pledge_Amount__c
+  - PG_Rating__c
+  - Primary_University_Relationship__c
+  - PriorFYCash__c
+  - Prior_Fiscal_Year_Commitment__c
+  - Prospect_Capacity_Rating__c
+  - Prospect_Rationale__c
+  - Prospect_Status__c
   - RecordTypeId
+  - School_Geographic_Area__c
+  - School_Inactive__c
+  - School_Type_Code__c
+  - Sevis_Equivalent__c
+  - Soft_Credit__c
   - Surrogate_ID__c
+  - Total_Numbers_Years_Giving__c
+  - Type_of_Institution__c
+  - University_Banner_ID__c
+  - University_Banner_PIDM__c
+  - Valid_Major__c
+  - Valid_Minor__c
+  - YTD_Household_Gifts__c
+  - Yr3_Cash_Recieved__c
+  - Yr3_Commitments__c
+  - Yr4_Cash_Recieved__c
+  - Yr4_Commitments__c
+  - Yr5_Cash_Received__c
+  - Yr5_Commitments__c
   - hed__Billing_Address_Inactive__c
   - hed__Billing_County__c
+  - hed__Credentialing_Email__c
   - hed__School_Code__c
   - hed__Shipping_County__c
-  soql_filter: "EASY_Validation_Record__c = TRUE"
+  - rh2__testCurrency__c
   lookups:
+    AccountExtn__c:
+      table: AccountExtn__c
+      after: Insert AccountExtn__c
+    Admission_Territory__c:
+      table: Admission_Territory__c
+      after: Insert Admission_Territory__c
+    DFC_Admission_Territory__c:
+      table: Admission_Territory__c
+      after: Insert Admission_Territory__c
+    Gift_Officer__c:
+      table: Contact
+      after: Insert Contact
     ParentId:
       table: Account
       after: Insert Account
+    Secondary_Gift_Officer__c:
+      table: Contact
+      after: Insert Contact
+    Transfer_Admission_Territory__c:
+      table: Admission_Territory__c
+      after: Insert Admission_Territory__c
+    hed__Current_Address__c:
+      table: hed__Address__c
+      after: Insert hed__Address__c
+    hed__Primary_Contact__c:
+      table: Contact
+      after: Insert Contact
+Insert AccountTeamMember:
+  sf_object: AccountTeamMember
+  fields:
+  - Banner_Key__c
+  - Start_Date__c
+  lookups:
+    AccountId:
+      table: Account
+Insert Gift_Instrument_Request__c:
+  sf_object: Gift_Instrument_Request__c
+  fields:
+  - Additional_Signer_Name__c
+  - Additional_Signer__c
+  - Commitment_Amount__c
+  - Designations_and_Allocations_Details__c
+  - Distribution_Type__c
+  - Endowed_Scholarship_Indicator__c
+  - Existing_Fund_Name__c
+  - Fund_Revision_Reason__c
+  - Funding_Type__c
+  - Gift_Instrument_Status__c
+  - Gift_Received_By_Date__c
+  - New_Commitment__c
+  - New_Fund_Indicator__c
+  - Non_Scholarship_Purpose__c
+  - Non_Scholarship_Type__c
+  - Other_Non_Scholarship_Type__c
+  - Planned_Gift_Type__c
+  - Pledge_Funding_Desc__c
+  - Pledge_Reminder_Frequency__c
+  - Pledge_Year_Duration__c
+  - Proposed_Fund_Name__c
+  - Reminder_Begin_Date__c
+  - Scholarship_Criteria__c
+  - Scholarship_Indicator__c
+  - Scholarship_Type__c
+  lookups:
+    Account__c:
+      table: Account
+Insert License_allotment__c:
+  sf_object: License_allotment__c
+  fields:
+  - Notes__c
+  - Total_Allotted__c
+  - Used_Licenses__c
+  lookups:
+    External_License__c:
+      table: External_License__c
+    License_Owner__c:
+      table: Account
+Insert PLG_Score__c:
+  sf_object: PLG_Score__c
+  fields:
+  - Alumni_Status__c
+  - Assets_of_100M__c
+  - Campus_Visit_in_Past_3_Years__c
+  - Creative_Customized_Stewardship_of_Test__c
+  - Deep_Non_Development_Engagement__c
+  - Earned_the_Right_to_Pursue_a_Major_PLG_G__c
+  - Engagement_of_Stakeholders__c
+  - Established_GO_Relationship__c
+  - Evidence_of_Liquidity__c
+  - High_Level_Annual_Giving_25k__c
+  - High_Level_Board_Service__c
+  - Life_Stage_60__c
+  - Meeting_with_President__c
+  - Regional_Proximity__c
+  - Search_Field__c
+  - Stellar_Execution_of_Test_Gift__c
+  - Test_Gift__c
+  - X3_Visits_with_a_Unit_Leader__c
+  - X6_7_Figure_Giving__c
+  lookups:
+    Account__c:
+      table: Account
 Insert Program__c:
   sf_object: Program__c
   fields:
   - Academic_Level__c
   - Active__c
+  - Admit_Type__c
   - Applicant_Type__c
   - Application_Fee_Amount__c
   - Associated_Schools__c
@@ -152,6 +956,7 @@ Insert Program__c:
   - Program_College_of_Interest__c
   - Program_Degree_Code__c
   - Program_Display__c
+  - Program_Integration_External_Id__c
   - Program_Keywords__c
   - Program_Learning_Style__c
   - Program_Name_on_Application__c
@@ -178,31 +983,135 @@ Insert Program__c:
     Recruitment_Program__c:
       table: Program__c
       after: Insert Program__c
+Insert hed__Academic_Certification__c:
+  sf_object: hed__Academic_Certification__c
+  fields:
+  - Name
+  - RecordTypeId
+  - hed__Academic_Level__c
+  - hed__Credentialing_Identifier__c
+  - hed__Description__c
+  - hed__Extended_Name__c
+  - hed__Field_Of_Study__c
+  lookups:
+    hed__Issuer__c:
+      table: Account
+Insert hed__Course__c:
+  sf_object: hed__Course__c
+  fields:
+  - Active__c
+  - Banner_Activity_Date__c
+  - College_Code__c
+  - Course_Key__c
+  - Course_Number__c
+  - Effective_Term__c
+  - Name
+  - Subject__c
+  - hed__Academic_Level__c
+  - hed__Course_ID__c
+  - hed__Credentialing_Identifier__c
+  - hed__Credit_Hours__c
+  - hed__Description__c
+  - hed__Extended_Description__c
+  - hed__Subject__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Issuer__c:
+      table: Account
+Insert hed__Credential__c:
+  sf_object: hed__Credential__c
+  fields:
+  - Name
+  - RecordTypeId
+  - hed__Abbreviation__c
+  - hed__Academic_Level__c
+  - hed__Credentialing_Identifier__c
+  - hed__Description__c
+  - hed__Earning_Criteria__c
+  - hed__Extended_Name__c
+  - hed__Field_Of_Study__c
+  lookups:
+    hed__Issuer__c:
+      table: Account
+Insert hed__Facility__c:
+  sf_object: hed__Facility__c
+  fields:
+  - Name
+  - hed__Capacity__c
+  - hed__Description__c
+  - hed__Facility_Type__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Parent_Facility__c:
+      table: hed__Facility__c
+      after: Insert hed__Facility__c
+Insert hed__Program_Plan__c:
+  sf_object: hed__Program_Plan__c
+  fields:
+  - Name
+  - hed__Description__c
+  - hed__End_Date__c
+  - hed__Is_Primary__c
+  - hed__Start_Date__c
+  - hed__Status__c
+  - hed__Total_Required_Credits__c
+  - hed__Version__c
+  lookups:
+    hed__Account__c:
+      table: Account
 Insert hed__Term__c:
   sf_object: hed__Term__c
   fields:
-    - Activate_Application_Date__c
-    - Banner_Term_Code__c
-    - End_Application_Date__c
-    - Housing_End_Date__c
-    - Housing_Start_Date__c
-    - Name
-    - Term_Code__c
-    - Term_End_Date__c
-    - Term_Friendly_Name__c
-    - Term_Key__c
-    - Term_Start_Date__c
-    - hed__End_Date__c
-    - hed__Grading_Period_Sequence__c
-    - hed__Instructional_Days__c
-    - hed__Start_Date__c
-    - hed__Type__c
+  - Academic_Year__c
+  - Activate_Application_Date__c
+  - Banner_Term_Code__c
+  - Early_Action_End_Date__c
+  - End_Application_Date__c
+  - Housing_End_Date__c
+  - Housing_Start_Date__c
+  - Name
+  - Regular_Decision_End_Date__c
+  - Term_Code__c
+  - Term_End_Date__c
+  - Term_Friendly_Name__c
+  - Term_Integration_External_Id__c
+  - Term_Key__c
+  - Term_Start_Date__c
+  - hed__End_Date__c
+  - hed__Grading_Period_Sequence__c
+  - hed__Instructional_Days__c
+  - hed__Start_Date__c
+  - hed__Type__c
   lookups:
     hed__Account__c:
       table: Account
     hed__Parent_Term__c:
       table: hed__Term__c
       after: Insert hed__Term__c
+Insert hed__Time_Block__c:
+  sf_object: hed__Time_Block__c
+  fields:
+  - Name
+  - hed__End_Time__c
+  - hed__Start_Time__c
+  lookups:
+    hed__Educational_Institution__c:
+      table: Account
+Insert Admission_Territory__c:
+  sf_object: Admission_Territory__c
+  fields:
+  - Associated_States__c
+  - Fallback_Territory__c
+  - Name
+  - Program_Code__c
+  - School_or_College__c
+  - Territoy_Type__c
+  - Unique_Code__c
+  lookups:
+    Program__c:
+      table: Program__c
 Insert Intended_Program_Term__c:
   sf_object: Intended_Program_Term__c
   fields:
@@ -269,6 +1178,8 @@ Insert Requirement__c:
   - Internal_Only__c
   - Label__c
   - Name
+  - R_IUD__c
+  - Requirement_Integration_External_Id__c
   - Residency__c
   - School_College__c
   - Show_on_Application_Creation__c
@@ -279,6 +1190,141 @@ Insert Requirement__c:
       table: Application_Control__c
     Intended_Program__c:
       table: Program__c
+Insert hed__Plan_Requirement__c:
+  sf_object: hed__Plan_Requirement__c
+  fields:
+  - Name
+  - hed__Category__c
+  - hed__Credits__c
+  - hed__Description__c
+  - hed__Sequence__c
+  lookups:
+    hed__Course__c:
+      table: hed__Course__c
+    hed__Plan_Requirement__c:
+      table: hed__Plan_Requirement__c
+      after: Insert hed__Plan_Requirement__c
+    hed__Program_Plan__c:
+      table: hed__Program_Plan__c
+Insert Admissions_Region__c:
+  sf_object: Admissions_Region__c
+  fields:
+  - Associated_Countries__c
+  - Name
+  lookups:
+    Admission_Territory__c:
+      table: Admission_Territory__c
+Insert Lead:
+  sf_object: Lead
+  fields:
+  - Admit_Type__c
+  - Affiliation_Role__c
+  - Birthdate__c
+  - Citizenship_Type__c
+  - Citizenship__c
+  - College_of_Interest__c
+  - Company
+  - Constituent_ID__c
+  - Converted_Lead__c
+  - Degree_Level__c
+  - DoNotCall
+  - Ethnicity__c
+  - Expected_Graduate_Date__c
+  - FirstName
+  - Gender__c
+  - HasOptedOutOfEmail
+  - HasOptedOutOfFax
+  - Has_Question__c
+  - Heard_About_Us__c
+  - Home_Phone__c
+  - Inquiry_Date__c
+  - IsConverted
+  - IsUnreadByOwner
+  - LastName
+  - Lead_Website__c
+  - Mail_Information_Requested__c
+  - Mogli_SMS__Avatar_URL__c
+  - Mogli_SMS__Mogli_Number__c
+  - Mogli_SMS__Mogli_Opt_Out__c
+  - Mogli_SMS__SMS_Message_To_Send__c
+  - Pardot_Sync_OCB__c
+  - Primary_Affiliation__c
+  - Race__c
+  - Receive_Texts__c
+  - Status
+  - Timeline__c
+  - et4ae5__HasOptedOutOfMobile__c
+  - et4ae5__Mobile_Country_Code__c
+  - hed__Area_Of_Interest__c
+  - hed__Birth_Date__c
+  - hed__Citizenship__c
+  - hed__Ethnicity__c
+  - hed__External_Id__c
+  - hed__GPA__c
+  - hed__Gender__c
+  - hed__Highest_Degree_Earned__c
+  - hed__Language__c
+  - hed__Most_Recent_School__c
+  - hed__Preferred_Enrollment_Date__c
+  - hed__Preferred_Enrollment_Status__c
+  - hed__Preferred_Teaching_Format__c
+  - hed__Recruitment_Stage__c
+  - hed__SMS_Opt_Out__c
+  - hed__SSN__c
+  - hed__Undergraduate_Major__c
+  - pi__Needs_Score_Synced__c
+  - pi__Pardot_Last_Scored_At__c
+  - pi__campaign__c
+  - pi__comments__c
+  - pi__conversion_date__c
+  - pi__conversion_object_name__c
+  - pi__conversion_object_type__c
+  - pi__created_date__c
+  - pi__first_activity__c
+  - pi__first_search_term__c
+  - pi__first_search_type__c
+  - pi__first_touch_url__c
+  - pi__grade__c
+  - pi__last_activity__c
+  - pi__notes__c
+  - pi__pardot_hard_bounced__c
+  - pi__score__c
+  - pi__url__c
+  - pi__utm_campaign__c
+  - pi__utm_content__c
+  - pi__utm_medium__c
+  - pi__utm_source__c
+  - pi__utm_term__c
+  - utm_campaign__c
+  - utm_content__c
+  - utm_medium__c
+  - utm_source__c
+  - utm_term__c
+  lookups:
+    Affiliated_Account__c:
+      table: Account
+    High_School_or_College__c:
+      table: Account
+    Intended_Start_Term__c:
+      table: Academic_Term__c
+    Major_Program_2__c:
+      table: Program__c
+    Major_Program_3__c:
+      table: Program__c
+    Major_Program_4__c:
+      table: Program__c
+    Major_Program__c:
+      table: Program__c
+    Mogli_SMS__Default_Gateway__c:
+      table: Mogli_SMS__Gateway__c
+    Recruitment_Interest__c:
+      table: Plan__c
+    Recruitment_Program__c:
+      table: Program__c
+    St_Thomas_College_School__c:
+      table: Account
+    Term__c:
+      table: hed__Term__c
 Insert Requirement_Item__c:
   sf_object: Requirement_Item__c
   fields:
@@ -288,6 +1334,7 @@ Insert Requirement_Item__c:
   - Applicant_Type__c
   - Application_Status__c
   - Citizenship__c
+  - Common_App_Unique_ReqItem_Nickname__c
   - Degree_Type__c
   - Delivery_Type__c
   - Display_Order__c
@@ -308,6 +1355,7 @@ Insert Requirement_Item__c:
   - Label__c
   - Maximum_Number_of_Children__c
   - Name
+  - Number_of_Recommendations_Required__c
   - RI_UID__c
   - R_UID__c
   - RecordTypeId
@@ -342,6 +1390,7 @@ Insert Question__c:
   - Application_Status__c
   - Assistive_Text__c
   - Citizenship__c
+  - Common_App_Unique_Question_Nickname__c
   - Contact_Field__c
   - Date_Stamp__c
   - Degree_Type__c
@@ -367,8 +1416,15 @@ Insert Question__c:
   - Name
   - Name_Field_API_Name__c
   - New_Reference_Field__c
+  - Payment_Custom_Amount__c
+  - Payment_Gateway__c
+  - Payment_Name__c
+  - Payment_Type__c
   - Picklist_Values__c
   - Placeholder__c
+  - Q_UID__c
+  - Question_Integration_External_Id__c
+  - RI_UID__c
   - RecordTypeId
   - Related_Object_Field__c
   - Required__c
@@ -385,6 +1441,7 @@ Insert Question__c:
 Insert Question_Dependency__c:
   sf_object: Question_Dependency__c
   fields:
+  - Question_Dependency_Integration_Ext_Id__c
   - RecordTypeId
   - ValueCheckbox__c
   - Value__c
@@ -393,3 +1450,3155 @@ Insert Question_Dependency__c:
       table: Question__c
     Question__c:
       table: Question__c
+Insert AccountExtn__c:
+  sf_object: AccountExtn__c
+  fields:
+  - LastContactDate__c
+  - LastContactType__c
+  lookups:
+    ProspectAccountID__c:
+      table: Account
+    ProspectContactID__c:
+      table: Contact
+      after: Insert Contact
+Insert Account_Plan__c:
+  sf_object: Account_Plan__c
+  fields:
+  - Account_Plan_Status__c
+  - Additional_Notes__c
+  - Anticipated_Campaign_Ask__c
+  - College_School_of_Interest__c
+  - End_Date__c
+  - Fiscal_Year__c
+  - Internal_Support_Required__c
+  - Legacy_Key__c
+  - Name
+  - Project_of_Interest__c
+  - SWOT_Analysis__c
+  - Short_Term_Plans__c
+  - Solicitation_Strategy__c
+  - Start_Date__c
+  - Stewardardship_Strategy__c
+  - Stewardship_Strategy__c
+  - Strategy_Summary__c
+  lookups:
+    Account__c:
+      table: Account
+    Contact__c:
+      table: Contact
+      after: Insert Contact
+    PLG_Checklist__c:
+      table: PLG_Score__c
+Insert Objective__c:
+  sf_object: Objective__c
+  fields:
+  - Approach__c
+  - Manager_Review_Comments__c
+  - Name
+  - Objective_Subtype__c
+  - Objective_Summary__c
+  - Objective_Type__c
+  - Onwer_Review_Comments__c
+  - Outcome__c
+  - Status__c
+  - Target_Date__c
+  lookups:
+    Account_Plan__c:
+      table: Account_Plan__c
+Insert Account_Plan_Influencer__c:
+  sf_object: Account_Plan_Influencer__c
+  fields:
+  - Influencer_Relationship__c
+  - Level_of_Influence__c
+  - Name__c
+  - Notes__c
+  lookups:
+    Account_Plan__c:
+      table: Account_Plan__c
+    Contact__c:
+      table: Contact
+      after: Insert Contact
+Insert Admissions_Booking__c:
+  sf_object: Admissions_Booking__c
+  fields:
+  - Audience__c
+  - Booking_Date__c
+  - Booking_End__c
+  - Booking_Start__c
+  - Contact_Email__c
+  - Contact_Name__c
+  - Contact_Phone__c
+  - End_Time__c
+  - Event_Link__c
+  - Intention_of_Visit__c
+  - International__c
+  - Location_Name__c
+  - Notes_from_Visit__c
+  - Number_of_Attended__c
+  - Number_of_IQs__c
+  - Poster_Sent__c
+  - RecordTypeId
+  - Recruitment_Term__c
+  - Scanner__c
+  - Start_Time__c
+  - Subject__c
+  - Subtype__c
+  - Tracking_Status__c
+  - Type__c
+  - URL_to_Form__c
+  lookups:
+    Admission_Territory__c:
+      table: Admission_Territory__c
+    Admissions_Booking_Campaign__c:
+      table: Campaign
+    College_School__c:
+      table: Account
+    School_Contact__c:
+      table: Contact
+      after: Insert Contact
+Insert Alumni_Directory__c:
+  sf_object: Alumni_Directory__c
+  fields:
+  - Alumni_Directory_Banner_Key__c
+  - City_State__c
+  - Class_Year_Text__c
+  - Deceased__c
+  - Employer_Text__c
+  - First_Name_Text__c
+  - Last_Name_Text__c
+  - Name
+  - Nickname__c
+  - Occupation_Career_Interest_Area__c
+  - Occupation_Text__c
+  - St_Thomas_Degree_text__c
+  - Student_Last_Name_Text__c
+  lookups:
+    Alumni_News__c:
+      table: Alumni_News__c
+      after: Insert Alumni_News__c
+    Contact__c:
+      table: Contact
+      after: Insert Contact
+Insert Alumni_News__c:
+  sf_object: Alumni_News__c
+  fields:
+  - Alumni_News_Banner_Key__c
+  - Alumni_News__c
+  - Category__c
+  - Deceased_info__c
+  - External_Link__c
+  - Image__c
+  - News_Date__c
+  - News_Source__c
+  - Public_Display__c
+  - Reviewed_for_Community_Display__c
+  lookups:
+    Alumni_Directory__c:
+      table: Alumni_Directory__c
+    Contact__c:
+      table: Contact
+      after: Insert Contact
+Insert Application_Payment__c:
+  sf_object: Application_Payment__c
+  fields:
+  - Account_Number__c
+  - Address_1__c
+  - Address_2__c
+  - Applicant_Email__c
+  - Card_Type__c
+  - City__c
+  - Country__c
+  - Email_Address__c
+  - GatewayApprovalCode__c
+  - Gateway_Session_Identifier__c
+  - Method_of_Payment__c
+  - Name_On_Account__c
+  - Payment_Amount__c
+  - Payment_Defer_Date__c
+  - Payment_Dispute__c
+  - Payment_Email_Address__c
+  - Payment_Forfeit_Date__c
+  - Payment_Method_Expiration_Date__c
+  - Payment_Method__c
+  - Payment_Received_Date__c
+  - Payment_Refund_Date__c
+  - Payment_Returned_Date__c
+  - Payment_Status__c
+  - Payment_Waived_Date__c
+  - Phone__c
+  - State__c
+  - TouchNet_Ext_Trans_Id__c
+  - TouchnetReceiptNumber__c
+  - Waived_Reason__c
+  - Zip__c
+  lookups:
+    Admissions_Application__c:
+      table: Application__c
+      after: Insert Application__c
+    Question_Response__c:
+      table: Mogli_SMS__QuestionResponse__c
+      after: Insert Mogli_SMS__QuestionResponse__c
+    Question__c:
+      table: Question__c
+    Requirement_Response__c:
+      table: Requirement_Response__c
+      after: Insert Requirement_Response__c
+Insert Application_Review__c:
+  sf_object: Application_Review__c
+  fields:
+  - AP_Courses__c
+  - AP_English__c
+  - AP_IB_PSEO_Courses__c
+  - AP_Math__c
+  - CIS_PLTW__c
+  - Coaches_List__c
+  - Committee_Decision_Notes__c
+  - Committee_Decision__c
+  - Completed__c
+  - Counselor_Decision_Notes__c
+  - Counselor_Recommendation__c
+  - Date_Completed__c
+  - Decision_Recommendation__c
+  - Developmental_Courses__c
+  - Due_Date__c
+  - ELL_Courses__c
+  - English_As__c
+  - English_Bs__c
+  - English_Cs__c
+  - English_Ds__c
+  - English_Fs__c
+  - English_Progression__c
+  - Essay_Notes__c
+  - Essay_Review__c
+  - Grade_Trend__c
+  - High_School_GPA__c
+  - Highest_ACT_Composite__c
+  - Highest_ACT_English__c
+  - Highest_ACT_Math__c
+  - Highest_ACT_Reading__c
+  - Highest_ACT_Science_Reasoning__c
+  - Highest_Level_Math_Complete_Testing__c
+  - Highest_SAT_Composite__c
+  - Highest_SAT_Math__c
+  - Highest_SAT_Reading__c
+  - Highest_SAT_Writing__c
+  - Honors_Courses__c
+  - IB_Courses__c
+  - IB_English__c
+  - IB_Math__c
+  - Initial_Committee_Review__c
+  - Initial_Counselor_Review__c
+  - Is_First_Gen__c
+  - Math_As__c
+  - Math_Bs__c
+  - Math_Cs__c
+  - Math_Ds__c
+  - Math_Fs__c
+  - Math_Progression__c
+  - Other_Notes__c
+  - Other_Review__c
+  - PSEO_Courses__c
+  - PSEO_Dual_English__c
+  - PSEO_Dual_Math__c
+  - Primary_HS_Graduation_Date__c
+  - Primary_High_School_Ed_History_URL__c
+  - Primary_High_School_Rank__c
+  - RecordTypeId
+  - Review_Details__c
+  - SR_ACT_Composite__c
+  - SR_ACT_English__c
+  - SR_ACT_Math__c
+  - SR_ACT_Reading__c
+  - SR_ACT_Science_Reasoning__c
+  - SR_SAT_Composite__c
+  - SR_SAT_Math__c
+  - SR_SAT_Reading__c
+  - SR_SAT_Verbal__c
+  - School_Details__c
+  - School_Evaluation__c
+  - School_Review__c
+  - Science_As__c
+  - Science_Bs__c
+  - Science_Cs__c
+  - Science_Ds__c
+  - Science_Fs__c
+  - Second_Committee_Review__c
+  - Second_Counselor_Review__c
+  - Social_Science_As__c
+  - Social_Science_Bs__c
+  - Social_Science_Cs__c
+  - Social_Science_Ds__c
+  - Social_Science_Fs__c
+  - Start_Date__c
+  - Student_Involvement__c
+  - Sum_of_Credit_Hours__c
+  - Sum_of_Quality_Points__c
+  - Terminated__c
+  - Test_Score_Count__c
+  - Total_English__c
+  - Total_Math__c
+  - Total_Science_Score__c
+  - Total_Social_Science_Score__c
+  - Transcript_Evaluation__c
+  - Transcript_Notes__c
+  - Transcript_Reivew__c
+  - Writing_Story__c
+  - Writing_Style__c
+  lookups:
+    Application__c:
+      table: Application__c
+      after: Insert Application__c
+    High_School__c:
+      table: Account
+Insert Application__c:
+  sf_object: Application__c
+  fields:
+  - ACT_Composite_Score__c
+  - Activity_Music__c
+  - Admission_Decision__c
+  - Admission_Plan__c
+  - Agent_Email_International__c
+  - Applicant_Type__c
+  - Application_Decision_Team__c
+  - Application_Status__c
+  - Application_Substatus__c
+  - Auto_Accept_Audit__c
+  - Calculate_Merit_Scholarship__c
+  - Citizenship_Country__c
+  - Citizenship__c
+  - College_Readiness_Program__c
+  - Comments_Private__c
+  - Communication_Merge_Text_Field__c
+  - Criminal_Details__c
+  - Criminal_Indicator__c
+  - Current_Courses__c
+  - Current_US_Visa_Type__c
+  - Date_FAFSA_Filed_Load__c
+  - Decision_Letter_Sent__c
+  - Degree_Level__c
+  - Degree_Type__c
+  - Delivery_Location__c
+  - Delivery_Type__c
+  - Disciplinary_Date__c
+  - Discipline_Ind__c
+  - Documents_Missing_Text__c
+  - Documents_Missing__c
+  - Don_t_Recalculate_Counselor_Assignment__c
+  - ESL_Study_Ind__c
+  - Ed_Agent_International__c
+  - Educational_Background__c
+  - Ethnicity_Other__c
+  - Ethnicity__c
+  - External_Application_ID__c
+  - External_Application_Type__c
+  - External_Appliction_Type__c
+  - FAFSA_Aid_Year__c
+  - FAFSA_Filed__c
+  - First_Generation__c
+  - First_License__c
+  - Force_Data__c
+  - Future_ACT_SAT_Times__c
+  - Future_Test_Date__c
+  - Gender_Other__c
+  - Generic_Filter_1__c
+  - Generic_Filter_2__c
+  - Generic_Filter_3__c
+  - Generic_Filter_4__c
+  - High_School_GPA__c
+  - Highest_Level_Math__c
+  - Highest_Math_Other__c
+  - Holding_Name__c
+  - Honors_Activities_Desc__c
+  - Intend_Live_On_Campus__c
+  - Intend_Need_Financial_Aid__c
+  - Legal_Sex__c
+  - License_Area__c
+  - MN_Dream_Act_Filed__c
+  - MN_Dream_Act_Year__c
+  - MN_Transfer_Curr_Complete_Ind__c
+  - Message_To_Applicant__c
+  - Murray_Scholarship_Signature__c
+  - My_Pronouns__c
+  - Needs_Item_s__c
+  - Notification_of_Award_Date__c
+  - Other_Names_Indicator__c
+  - Portal_User_Email__c
+  - Program_Bucket__c
+  - Pronouns__c
+  - Race_Asian_Background__c
+  - Race_Black_African_American_Background__c
+  - Race_Hispanic_Background__c
+  - Race_Hispanic_Latino__c
+  - Race_Native_Pacific_Islander_Background__c
+  - Race_Other_Black_Background__c
+  - Race_Other_Black__c
+  - Race_Other_East_Asia__c
+  - Race_Other_Hispanic__c
+  - Race_Other_Pacific_Islander__c
+  - Race_Other_South_Asia__c
+  - Race_Other_Southeast_Asia__c
+  - Race_Other_White__c
+  - Race_White_Background__c
+  - Related_Object_JSON__c
+  - Religious_Preference__c
+  - Residency__c
+  - SAT_Composite_Score__c
+  - SJV_Ind__c
+  - SJV_Intent_to_Enroll__c
+  - SON_Mentor_Specialization__c
+  - School_College__c
+  - Self_Reported_Test_Acknowledgement_Date__c
+  - Self_Reported_Test_Acknowledgement__c
+  - Self_Reported_Test_Score__c
+  - Self_Reported_Test_Scores_Times_Taken__c
+  - Sponsor_Diocese__c
+  - Student_Type__c
+  - T_Shirt_Size__c
+  - Take_ACT_SAT__c
+  - Text_for_Testing__c
+  - Tribal_Identity__c
+  - Tribe_Enrolled_Ind__c
+  - Tribe_Name__c
+  - Tribe_Number__c
+  - UST_Previous_Apply_Date__c
+  - UST_Previous_Apply_Ind__c
+  - User_Created__c
+  - Veteran_Benefit_Eligible__c
+  - Veteran_Division__c
+  - Veteran_Status_At_Enrollment__c
+  - Veteran_Status_Current__c
+  lookups:
+    Application_Control__c:
+      table: Application_Control__c
+    Contact__c:
+      table: Contact
+      after: Insert Contact
+    Intended_Program__c:
+      table: Program__c
+    Intended_Term_of_Entry__c:
+      table: Academic_Term__c
+    Major_1__c:
+      table: Program__c
+    Major_2__c:
+      table: Program__c
+    Major_3__c:
+      table: Program__c
+    Pre_Professional_Program__c:
+      table: Program__c
+    Primary_High_School_Account__c:
+      table: Account
+    UST_Previous_Apply_Term__c:
+      table: hed__Term__c
+Insert Requirement_Response__c:
+  sf_object: Requirement_Response__c
+  fields:
+  - Archive_Payload__c
+  - Child_Requirement_Fulfilled_On__c
+  - Document_Requirement_Fulfilled_On__c
+  - External_Email__c
+  - HasDocument__c
+  - Has_Child_Requirement__c
+  - Hashcode__c
+  - Internal_Comments__c
+  - Related_Record__c
+  - Requirement_Response_Unique_External_ID__c
+  - Send_Reminder__c
+  - Status__c
+  - ValueTextEntry__c
+  - Viewed__c
+  - Waive_Requirement__c
+  lookups:
+    Application__c:
+      table: Application__c
+    Requirement_Item__c:
+      table: Requirement_Item__c
+Insert Question_Response__c:
+  sf_object: Question_Response__c
+  fields:
+  - City__c
+  - Country__c
+  - Historical_Program__c
+  - IsPopulated__c
+  - IsRequired__c
+  - IsShown__c
+  - PopulatedOn__c
+  - PostalCode__c
+  - Question_Response_Unique_External_ID__c
+  - State__c
+  - Street__c
+  - ValueCheckbox__c
+  - ValueCurrency__c
+  - ValueDateTime__c
+  - ValueDate__c
+  - ValueEmail__c
+  - ValueLongTextArea__c
+  - ValueNumber__c
+  - ValuePercent__c
+  - ValuePhone__c
+  - ValueTextArea__c
+  - ValueTextEncrypted__c
+  - ValueText__c
+  - ValueURL__c
+  lookups:
+    Application__c:
+      table: Application__c
+    Question__c:
+      table: Question__c
+    Requirement_Response__c:
+      table: Requirement_Response__c
+Insert Recommendation__c:
+  sf_object: Recommendation__c
+  fields:
+  - Allow_Upload__c
+  - Date_Received__c
+  - Display_Instructive_Text__c
+  - Display_Order__c
+  - Display_to_Applicant__c
+  - Document_Status__c
+  - Due_Date__c
+  - Employer__c
+  - Extension__c
+  - First_Name__c
+  - Form_URL__c
+  - Holding_Name__c
+  - Internal_Comments__c
+  - Last_Name__c
+  - Overall_Recommendation__c
+  - Phone_Type__c
+  - Phone__c
+  - Rec_Email__c
+  - Rec_Question_10_Response__c
+  - Rec_Question_10_Text__c
+  - Rec_Question_11_Response__c
+  - Rec_Question_11_Text__c
+  - Rec_Question_12_Response__c
+  - Rec_Question_12_Text__c
+  - Rec_Question_13_Response__c
+  - Rec_Question_13_Text__c
+  - Rec_Question_14_Response__c
+  - Rec_Question_14_Text__c
+  - Rec_Question_15_Response__c
+  - Rec_Question_15_Text__c
+  - Rec_Question_16_Response__c
+  - Rec_Question_16_Text__c
+  - Rec_Question_17_Response__c
+  - Rec_Question_17_Text__c
+  - Rec_Question_18_Response__c
+  - Rec_Question_18_Text__c
+  - Rec_Question_19_Response__c
+  - Rec_Question_19_Text__c
+  - Rec_Question_1_Response__c
+  - Rec_Question_1_Text__c
+  - Rec_Question_20_Response__c
+  - Rec_Question_20_Text__c
+  - Rec_Question_2_Response__c
+  - Rec_Question_2_Text__c
+  - Rec_Question_3_Response__c
+  - Rec_Question_3_Text__c
+  - Rec_Question_4_Response__c
+  - Rec_Question_4_Text__c
+  - Rec_Question_5_Response__c
+  - Rec_Question_5_Text__c
+  - Rec_Question_6_Response__c
+  - Rec_Question_6_Text__c
+  - Rec_Question_7_Response__c
+  - Rec_Question_7_Text__c
+  - Rec_Question_8_Response__c
+  - Rec_Question_8_Text__c
+  - Rec_Question_9_Response__c
+  - Rec_Question_9_Text__c
+  - Rec_Sign__c
+  - Recommendation_JSON__c
+  - Recommendation_Type__c
+  - Recommender_Relationship__c
+  - Related_Object_JSON__c
+  - Relationship__c
+  - Resend_Date__c
+  - Sign_Date__c
+  - Status__c
+  - Submitted__c
+  - System_Protect__c
+  - Title_Position__c
+  - User_Created__c
+  - Waive_Right_to_Review__c
+  lookups:
+    Application__c:
+      table: Application__c
+    Recommendation_Requirement_Response__c:
+      table: Requirement_Response__c
+Insert Award__c:
+  sf_object: Award__c
+  fields:
+  - Adj_Award_Amount__c
+  - Adj_GPA_QG__c
+  - Adj_GPA__c
+  - Adj_Max_Composite__c
+  - Adj_State__c
+  - Adj_TGPA_QG__c
+  - Adj_qgrp_index__c
+  - Adj_z_best_composite__c
+  - Adj_z_gpa__c
+  - Award_Amount_Manual_Override__c
+  - Award_Amount__c
+  - Award_Date__c
+  - Award_Status__c
+  - GPA_QG__c
+  - GPA__c
+  - Max_Composite__c
+  - Scholarship_Award_Adjust_Reason__c
+  - State__c
+  - TGPA_QG__c
+  - qgrp_index__c
+  - z_best_composite__c
+  - z_gpa__c
+  lookups:
+    Contact__c:
+      table: Contact
+      after: Insert Contact
+    Scholarship_Name__c:
+      table: Scholarship__c
+    Triggering_Application__c:
+      table: Application__c
+Insert CampaignMember:
+  sf_object: CampaignMember
+  fields:
+  - Banner_ID__c
+  - Banner_Key__c
+  - Banner_Sent_Date__c
+  - Campaign_Member_Key__c
+  - Communication_Function__c
+  - Event_Registration_Date__c
+  - Event_Role__c
+  - Number_of_Guests__c
+  - Survey_Link__c
+  - et4ae5__Activity__c
+  lookups:
+    CampaignId:
+      table: Campaign
+    ContactId:
+      table: Contact
+      after: Insert Contact
+    LeadId:
+      table: Lead
+    Summit_Events_Registration__c:
+      table: summit__Summit_Events_Registration__c
+      after: Insert summit__Summit_Events_Registration__c
+Insert Case:
+  sf_object: Case
+  fields:
+  - Banner_ID__c
+  - Birthdate__c
+  - CommunityUser__c
+  - Effective_Term__c
+  - FAFSA_Completed__c
+  - Family_Info__c
+  - Invitee_Email__c
+  - Involvement_Question__c
+  - IsEscalated
+  - Marital_Status__c
+  - Nomination_Specifics__c
+  - Nominee_Email__c
+  - Occupation_and_Position__c
+  - Outside_Degree__c
+  - Participation_Question__c
+  - Phone__c
+  - Preferred_Phone__c
+  - Provided_Address__c
+  - RecordTypeId
+  - Secondary_Reason__c
+  - Strengths__c
+  - Why__c
+  - hed__Category__c
+  - hed__Location__c
+  - hed__Occurrence_Date__c
+  lookups:
+    AccountId:
+      table: Account
+    Admissions_Application__c:
+      table: Application__c
+    Alumni_Directory__c:
+      table: Alumni_Directory__c
+    ContactId:
+      table: Contact
+      after: Insert Contact
+    Nominee__c:
+      table: Contact
+      after: Insert Contact
+    ParentId:
+      table: Case
+      after: Insert Case
+Insert EmailMessage:
+  sf_object: EmailMessage
+  fields:
+  - Contact_Type__c
+  - Incoming
+  - IsBounced
+  - IsClientManaged
+  - IsExternallyVisible
+  - IsTracked
+  - Status
+  lookups:
+    ParentId:
+      table: Case
+    ReplyToEmailMessageId:
+      table: EmailMessage
+      after: Insert EmailMessage
+Insert Communication_Preference_Relation__c:
+  sf_object: Communication_Preference_Relation__c
+  lookups:
+    Communication_Preference__c:
+      table: Communication_Preference__c
+    Contact__c:
+      table: Contact
+      after: Insert Contact
+    Lead__c:
+      table: Lead
+Insert Contact:
+  sf_object: Contact
+  fields:
+  - Academic_Standing_Probation_Description__c
+  - Academic_Standing_Term__c
+  - Additional_Family_Members__c
+  - Admissions_Mobile_Opt_In__c
+  - Anonymous_Donor__c
+  - Assistant_s_Email__c
+  - Banner_Admit_Student_Type__c
+  - Banner_Admit_Term__c
+  - Banner_Citizenship__c
+  - Banner_Ethnicity_Code__c
+  - Banner_Hold__c
+  - Banner_Holds_Detail__c
+  - Banner_Major_Code_1__c
+  - Banner_Major_Code_2__c
+  - Banner_Minor__c
+  - Banner_Primary_Advisor__c
+  - Banner_Religion_Code__c
+  - Banner_Student_Level__c
+  - Banner_Veteran_Indicator__c
+  - Blackbaud_Annuity_Likelihood__c
+  - Blackbaud_Bequest_Likelihood__c
+  - Blackbaud_Confirmed_Assets__c
+  - Blackbaud_Trust_Likelihood__c
+  - Campaign_Rating__c
+  - Career_Development_Contact__c
+  - Class__c
+  - Common_App_Student_ID__c
+  - Confidential__c
+  - Constituent_ID__c
+  - Contact_Banner_Key__c
+  - Contact_Constituent_ID__c
+  - Contact_ID_ERX__c
+  - Create_Portal_User__c
+  - Credits_Earned__c
+  - Current_FY_Cash__c
+  - Current_FY_Commitment__c
+  - Current_Freshman_Parent__c
+  - Current_Parent__c
+  - DFC_Career_Interests__c
+  - DFC_Cohort__c
+  - DFC_Current_Status__c
+  - DFC_Grad_Current_Status__c
+  - DFC_Mentor__c
+  - DFC_Parent__c
+  - DFC_Primary_Influencer__c
+  - DFC_Section__c
+  - DFC_Student_Industries_of_Interest__c
+  - DFC_Student_Other_Industries_of_Interest__c
+  - Deceased_Date__c
+  - Degree_s_Formatted__c
+  - Display_on_Directory__c
+  - DoNotCall
+  - Do_Not_Mail__c
+  - Do_Not_Text__c
+  - Donor_Continuum__c
+  - Donor_Status__c
+  - ELS_Student_ID__c
+  - Employer__c
+  - Expected_Graduation_Date__c
+  - FAFSA_Integration_ID__c
+  - FirstName
+  - First_Gift_Amount__c
+  - First_Gift_Date__c
+  - First_Gift_Designation__c
+  - First_UST_Degree_Year__c
+  - Focus_Rating__c
+  - Foot_On_Campus__c
+  - Foot_on_Campus_ERX__c
+  - Full_Time_Part_Time__c
+  - GO_Rating__c
+  - GPA_Inst__c
+  - GPA_Overall__c
+  - GPA_Transfer__c
+  - Grad_Level__c
+  - Greatest_Gift_Amount__c
+  - Greatest_Gift_Date__c
+  - Greatest_Gift_Designation__c
+  - Handshake_ID__c
+  - HasOptedOutOfEmail
+  - HasOptedOutOfFax
+  - High_School_GPA__c
+  - Income__c
+  - Initial_Foot_on_Campus_Date__c
+  - Initial_Foot_on_Campus__c
+  - Initial_Undergrad_Cohort__c
+  - Internship_Restrictions__c
+  - Is_WGBIDMT_Misc__c
+  - Job_Title__c
+  - Known_Planned_Gift__c
+  - LastName
+  - Last_Gift_Amount__c
+  - Last_Gift_Date__c
+  - Last_Gift_Designation__c
+  - Last_Time_on_Campus__c
+  - Lifetime_Cash_Recieved_Dollars__c
+  - Lifetime_Commitment_Dollars__c
+  - LinkedIn__c
+  - Major_Category__c
+  - Marital_Status__c
+  - Marts_Lundy_Capacity_High__c
+  - Marts_Lundy_Capacity_Low__c
+  - Marts_Lundy_Likelihood__c
+  - Mogli_SMS__Avatar_URL__c
+  - Mogli_SMS__Mogli_Number__c
+  - Mogli_SMS__Mogli_Opt_Out__c
+  - Mogli_SMS__SMS_Message_To_Send__c
+  - My_Pronouns__c
+  - Net_Worth__c
+  - No_Email_Solicitations__c
+  - No_Mail_Solicitations__c
+  - No_Phone_Solicitations__c
+  - Number_of_Event_Responses__c
+  - Nursing_CAS_Student_ID__c
+  - Occupation__c
+  - Other_Field_of_Study__c
+  - Outstanding_Pledge_Amount__c
+  - PG_Rating__c
+  - Pardot_Sync_OCB__c
+  - Parent_Tier__c
+  - Personal_Email__c
+  - Portal_User_First_Login__c
+  - Portal_User_Latest_Login__c
+  - Preferred_Class_Year__c
+  - Preferred_Contact_Method__c
+  - Preferred_First_Name__c
+  - Previous_Last_Name__c
+  - Primary_University_Relationship__c
+  - Prior_Fiscal_Year_Cash__c
+  - Prior_Fiscal_Year_Commitments__c
+  - Probation_Code__c
+  - Profile__c
+  - Pronouns__c
+  - Pronunciation__c
+  - Prospect_Capacity_Rating__c
+  - Prospect_Heat_Status__c
+  - Prospect_Rationale__c
+  - Prospect_Status_Date__c
+  - Prospect_Status__c
+  - Receive_Texts__c
+  - Registrar_Last_Name__c
+  - Resident_Commuter__c
+  - SFMC_Bounce_Category__c
+  - SFMC_Bounce_Subcategory__c
+  - SFMC_Bounce_Type__c
+  - SFMC_Event_Date__c
+  - SFMC_JobID__c
+  - SFMC_SMTP_Code__c
+  - SFMC_SMTP_Message__c
+  - Seasonal_1_Phone__c
+  - Seasonal_2_Phone__c
+  - Soft_Credit__c
+  - Spouse_Name__c
+  - St_Thomas_Connection__c
+  - St_Thomas_Degree_text__c
+  - Total_Number_Years_Giving__c
+  - Trustee__c
+  - UST_Account_Claimed__c
+  - UST_Test_Contact__c
+  - University_Banner_ID__c
+  - University_Banner_PIDM__c
+  - University_Vanity_Email__c
+  - YTD_Associated_Gifts__c
+  - Yr3_Cash_Received__c
+  - Yr3_Commitments__c
+  - Yr4_Cash_Received__c
+  - Yr4_Commitments__c
+  - Yr5_Cash_Received__c
+  - Yr5_Commitments__c
+  - et4ae5__HasOptedOutOfMobile__c
+  - et4ae5__Mobile_Country_Code__c
+  - hed__AlternateEmail__c
+  - hed__Chosen_Full_Name__c
+  - hed__Citizenship_Status__c
+  - hed__Citizenship__c
+  - hed__Contact_JSON__c
+  - hed__Country_of_Origin__c
+  - hed__Date_Deceased__c
+  - hed__Deceased__c
+  - hed__Disability_Status__c
+  - hed__Do_Not_Contact__c
+  - hed__Dual_Citizenship__c
+  - hed__Ethnicity__c
+  - hed__Exclude_from_Household_Formal_Greeting__c
+  - hed__Exclude_from_Household_Informal_Greeting__c
+  - hed__Exclude_from_Household_Name__c
+  - hed__FERPA__c
+  - hed__Financial_Aid_Applicant__c
+  - hed__Former_First_Name__c
+  - hed__Former_Last_Name__c
+  - hed__Former_Middle_Name__c
+  - hed__Gender__c
+  - hed__HIPAA_Detail__c
+  - hed__HIPAA__c
+  - hed__Mailing_Address_Inactive__c
+  - hed__Mailing_County__c
+  - hed__Military_Background__c
+  - hed__Military_Service__c
+  - hed__Naming_Exclusions__c
+  - hed__Other_County__c
+  - hed__PreferredPhone__c
+  - hed__Preferred_Email__c
+  - hed__Primary_Address_Type__c
+  - hed__Race__c
+  - hed__Religion__c
+  - hed__SMS_Opt_Out__c
+  - hed__Secondary_Address_Type__c
+  - hed__Social_Security_Number__c
+  - hed__UniversityEmail__c
+  - hed__WorkEmail__c
+  - hed__WorkPhone__c
+  - hed__is_Address_Override__c
+  - pi__Needs_Score_Synced__c
+  - pi__Pardot_Last_Scored_At__c
+  - pi__campaign__c
+  - pi__comments__c
+  - pi__conversion_date__c
+  - pi__conversion_object_name__c
+  - pi__conversion_object_type__c
+  - pi__created_date__c
+  - pi__first_activity__c
+  - pi__first_search_term__c
+  - pi__first_search_type__c
+  - pi__first_touch_url__c
+  - pi__grade__c
+  - pi__last_activity__c
+  - pi__notes__c
+  - pi__pardot_hard_bounced__c
+  - pi__score__c
+  - pi__url__c
+  - pi__utm_campaign__c
+  - pi__utm_content__c
+  - pi__utm_medium__c
+  - pi__utm_source__c
+  - pi__utm_term__c
+  - rh2__Currency_Test__c
+  - rh2__Integer_Test__c
+  - summit__Created_with_Summit_Events__c
+  lookups:
+    AccountId:
+      table: Account
+    Alumni_Directory_Record__c:
+      table: Alumni_Directory__c
+    Current_Student_Services__c:
+      table: Tommie_Support_Team__c
+      after: Insert Tommie_Support_Team__c
+    Gift_Officer_Contact__c:
+      table: Contact
+      after: Insert Contact
+    Mogli_SMS__Default_Gateway__c:
+      table: Mogli_SMS__Gateway__c
+    MyProgram__c:
+      table: hed__Program_Enrollment__c
+      after: Insert hed__Program_Enrollment__c
+    Primary_Academic_Program__c:
+      table: Account
+    Primary_Department__c:
+      table: Account
+    Primary_Educational_Institution__c:
+      table: Account
+    Primary_Sports_Organization__c:
+      table: Account
+    Primary_Student_Organization__c:
+      table: Account
+    ReportsToId:
+      table: Contact
+      after: Insert Contact
+    Secondary_Gift_Officer_Contact__c:
+      table: Contact
+      after: Insert Contact
+    Spouse__c:
+      table: Contact
+      after: Insert Contact
+    St_Thomas_Degree__c:
+      table: hed__Affiliation__c
+      after: Insert hed__Affiliation__c
+    hed__Current_Address__c:
+      table: hed__Address__c
+      after: Insert hed__Address__c
+    hed__Primary_Household__c:
+      table: Account
+    hed__Primary_Language__c:
+      table: hed__Language__c
+    hed__Primary_Organization__c:
+      table: Account
+    rh2__Describe__c:
+      table: rh2__PS_Describe__c
+      after: Insert rh2__PS_Describe__c
+Insert Approved_Student_Contact__c:
+  sf_object: Approved_Student_Contact__c
+  fields:
+  - Academic_Transcript__c
+  - Account_Detail_by_Term__c
+  - Address_Line_1__c
+  - Address_Line_2__c
+  - Address_Line_3__c
+  - Approved_Student_Contact_Key__c
+  - Award_Payment_Schedule__c
+  - Banner_Created_Date__c
+  - Banner_Last_Modified_Date__c
+  - Change_Tax_Year_for_1098_T__c
+  - City__c
+  - Country__c
+  - Email__c
+  - Final_Grades__c
+  - Financial_Aid_History__c
+  - Financial_Aid_Important_Messages__c
+  - First_Name__c
+  - Last_Name__c
+  - Loan_Application_Hisotry__c
+  - Middle_Name__c
+  - Order__c
+  - Phone__c
+  - Proxy_Passphrase__c
+  - Proxy_Start_Date__c
+  - Proxy_Stop_Date__c
+  - RecordTypeId
+  - Registration_Status__c
+  - Relationship_to_Contact_Raw_Data__c
+  - Relationship_to_Contact__c
+  - State_or_Province__c
+  - Student_Detail_Schedule__c
+  - Student_Requirements__c
+  - Student_Summary_Schedule__c
+  - Tuition_Reimbursement_Detail_Report__c
+  - View_Address_s__c
+  - View_My_Financial_Aid_Award__c
+  - X1098_T_Summary_Tax_Notification__c
+  - Zip_Postal_Code__c
+  lookups:
+    Contact__c:
+      table: Contact
+Insert Check_In__c:
+  sf_object: Check_In__c
+  fields:
+  - Attempt_Status__c
+  - Confidential_Note__c
+  - Error_Type__c
+  - External_Salesforce_ID__c
+  - External_Salesforce_Record_Owner__c
+  - Initial_Attempt_Date_Time__c
+  - Initiator__c
+  - Issues_Barriers_Concerncs__c
+  - Issues_Barriers_Concerns__c
+  - Meeting_Type__c
+  - Method__c
+  - Notes__c
+  - Reason__c
+  - RecordTypeId
+  - Resource__c
+  - Response__c
+  - Status__c
+  - Subject__c
+  - Transript_Form_Given__c
+  lookups:
+    Student__c:
+      table: Contact
+Insert College_Persistence__c:
+  sf_object: College_Persistence__c
+  fields:
+  - Academic_Tier__c
+  - Career_Placement__c
+  - Career_Services__c
+  - Class_Registrations__c
+  - College_Advisor_Contact__c
+  - External_Salesforce_ID__c
+  - External_Salesforce_Record_Owner__c
+  - Financial_Aid_Advisor_Contact__c
+  - Financial_Tier__c
+  - Life_Tier__c
+  - Meeting_Date_Time__c
+  - Meeting_Notes__c
+  - Meeting_Type__c
+  - Met_With__c
+  - Primary_Meeting_Topic__c
+  - Reported_GPA__c
+  - Research_Involvement__c
+  - Secondary_Meeting_Topic_s__c
+  - Status__c
+  - Tutoring_Services__c
+  - Writing_Math_Lab__c
+  lookups:
+    Student__c:
+      table: Contact
+Insert ERx_Import__BigTable__c:
+  sf_object: ERx_Import__BigTable__c
+  fields:
+  - ACT_Composite_Score__c
+  - ACT_English_Score__c
+  - ACT_Mathematics_Score__c
+  - ACT_Reading_Score__c
+  - ACT_Science_Score__c
+  - ACT_Writing_EW_Score__c
+  - ACT_Writing_WR_Score__c
+  - AP_Banner_Code__c
+  - AP_Test_Score__c
+  - AP_Test_Type__c
+  - AP_Test_origin__c
+  - Academic_Interests__c
+  - Admissions_Status__c
+  - Alumni_Class_Year__c
+  - Applicant_Type__c
+  - Application_Common_App_ID__c
+  - Application_Stage__c
+  - Attended_College_End__c
+  - Attended_College_Start__c
+  - Banner_Admission_Type__c
+  - Banner_ID__c
+  - Banner_Student_Type__c
+  - BigTable_Unique_External_ID__c
+  - Birthdate__c
+  - Booking__c
+  - Business_Email__c
+  - CEEB_Code_College__c
+  - CEEB_Code__c
+  - Campaign_ID__c
+  - Cheer__c
+  - Citizenship_Status__c
+  - City__c
+  - Common_App_ID__c
+  - Community_Based_Organization__c
+  - Company_Employer__c
+  - Country__c
+  - Country_of_Birth__c
+  - Dance__c
+  - Deceased__c
+  - Degree_Level__c
+  - Degree_Sought_Contact__c
+  - Degree_Sought__c
+  - Document_Received_Date__c
+  - Document_Status__c
+  - ELS_Student_ID__c
+  - ERx_Import__Error_Message__c
+  - ERx_Import__Source__c
+  - ERx_Import__Status__c
+  - Email__c
+  - Expected_Graduation_Date__c
+  - External_Salesforce_ID__c
+  - FAFSA_Current_CPS_Process_Date__c
+  - FAFSA_Filed_Load_Date__c
+  - FAFSA_Filed__c
+  - FAFSA_Guardian_Email__c
+  - FAFSA_ID__c
+  - FAFSA_Initial_CPS_Process_Date__c
+  - FAFSA_Integration_Key__c
+  - FAFSA_Parent_1_School_Level__c
+  - FAFSA_Parent_2_School_Level__c
+  - FAFSA_Selected_for_Verification__c
+  - FAFSA_Term__c
+  - First_Name__c
+  - Foot_on_Campus_Date__c
+  - Foot_on_Campus__c
+  - Former_Last_Name__c
+  - GPA__c
+  - Gender_Identity__c
+  - Gender__c
+  - High_School_Code__c
+  - High_School_Expected_Graduation_Year__c
+  - High_School_Name_Text__c
+  - Hispanic_Latino__c
+  - HomePhone__c
+  - Home_Phone__c
+  - Inquiry_Citizenship__c
+  - Inquiry_College_Interest__c
+  - Language_Proficiency__c
+  - Language__c
+  - Last_Name__c
+  - Lead_Source__c
+  - Legacy_Add_Date__c
+  - Legacy_Application_Received_Date__c
+  - Legacy_Application_Record_Date__c
+  - Legacy_Decision_Date__c
+  - Legacy_Primary_Source__c
+  - LinkedIn_Profile__c
+  - MailingCity__c
+  - MailingCountry__c
+  - MailingPostalCode__c
+  - MailingSreetLine1__c
+  - MailingState__c
+  - MailingStreet3__c
+  - MailingStreetLine2__c
+  - MailingZip__c
+  - Mailing_State_Prov__c
+  - Major1__c
+  - Major2__c
+  - Major3__c
+  - Major_Code__c
+  - Major_Interest_Group__c
+  - Master_or_Copy_Test_Scores__c
+  - Middle_Name__c
+  - MobilePhone__c
+  - Mobile_Phone__c
+  - Music__c
+  - Non_US_Country_of_Citizenship__c
+  - Official_Major_Code__c
+  - Official_Transcript_Received__c
+  - PIDM_Number__c
+  - PIDM__c
+  - Parent_1_Email__c
+  - Parent_1_First_Name__c
+  - Parent_1_Last_Name__c
+  - Parent_2_Email__c
+  - Parent_2_First_Name__c
+  - Parent_2_Last_Name__c
+  - PermCity__c
+  - PermCountry__c
+  - PermPostalCode__c
+  - PermState__c
+  - PermStreet1__c
+  - PermStreet2__c
+  - PermStreet3__c
+  - PermZip__c
+  - Perm_State_Prov__c
+  - Preferred_First_Name__c
+  - Preferred_Phone__c
+  - Primary_Relationship_to_Referral__c
+  - Program_Catalog__c
+  - Program_Code__c
+  - Program_Offered__c
+  - ROTC__c
+  - Race__c
+  - RaiseMe_ID__c
+  - RaiseMe_Portfolio_URL__c
+  - Receive_Texts__c
+  - Rejected_FAFSA__c
+  - Related_Object_Record_Type_ID__c
+  - Religious_Preference__c
+  - SF_LID__c
+  - SSN__c
+  - Salary__c
+  - Salesforce_Contact_ID__c
+  - Salutation__c
+  - School__c
+  - Self_Reported_ACT__c
+  - Self_Reported_IELTS__c
+  - Self_Reported_SAT__c
+  - Self_Reported_TOEFL__c
+  - Self_Reported_Undergrad_Degree__c
+  - Self_Reported_Undergrad_Grad_Year__c
+  - Self_Reported_Undergrad_Institution__c
+  - Session__c
+  - Source_Area_of_Interest__c
+  - Sport_1__c
+  - Sport_2__c
+  - Sport_3__c
+  - Sport_Type_1__c
+  - Sport_Type_2__c
+  - Sport_Type_3__c
+  - St_Thomas_School__c
+  - Start_Term__c
+  - State__c
+  - Street_Line_1__c
+  - Street_Line_2__c
+  - Student_Type__c
+  - Suffix__c
+  - System_Export_User_ID__c
+  - Term__c
+  - Test_Date__c
+  - Test_Score_Status__c
+  - Test_Type__c
+  - Title__c
+  - Touch_Point_Source__c
+  - Touch_Point_Status__c
+  - UST_Email__c
+  - Visit_Date_Time__c
+  - Visit_Event_Name__c
+  - Visit_Guests__c
+  - Visit_ID__c
+  - Visit_Needs__c
+  - Visit_Requester_Role__c
+  - Visit_Status__c
+  - Work_Phone__c
+  - Zip__c
+  lookups:
+    ERx_Import__Contact__c:
+      table: Contact
+Insert External_Course__c:
+  sf_object: External_Course__c
+  fields:
+  - Date_Reviewed__c
+  - Name
+  - Review_Result__c
+  lookups:
+    Institution__c:
+      table: Account
+    Reviewer__c:
+      table: Contact
+Insert Extracurricular_Activity__c:
+  sf_object: Extracurricular_Activity__c
+  fields:
+  - Activity_Type__c
+  - Hours_spent_per_week__c
+  - I_intend_to_participate_in_a_similar_act__c
+  - Organization_Name__c
+  - Participation_Grade_Levels__c
+  - Position_Leadership_description__c
+  - Recognition__c
+  - Related_Object_JSON__c
+  - Timing_of_participation__c
+  - User_Created__c
+  - Weeks_spent_per_year__c
+  lookups:
+    Contact__c:
+      table: Contact
+Insert Family_Member__c:
+  sf_object: Family_Member__c
+  fields:
+  - Address__c
+  - Age__c
+  - Alumni__c
+  - Birth_Country_Region_Territory__c
+  - Cell_Phone__c
+  - City__c
+  - Country__c
+  - Date_Deceased__c
+  - Email__c
+  - Employer__c
+  - Family_Address_Relationship__c
+  - Family_Member_Unique_External_ID__c
+  - First_Name__c
+  - Grad_Year__c
+  - Graduate_from_UST__c
+  - Highest_Level_of_Education__c
+  - Holding_Name__c
+  - Home_Phone__c
+  - Last_Name__c
+  - Maiden_Other_Last__c
+  - Middle_Name__c
+  - Number_of_Siblings__c
+  - Occupation__c
+  - Other_Occupation_Details__c
+  - Other_Phone__c
+  - Parent_Living__c
+  - PostalCode__c
+  - Prefix__c
+  - RecordTypeId
+  - Related_Object_JSON__c
+  - Relationship__c
+  - State__c
+  - Street__c
+  - Suffix__c
+  - UST_Attended__c
+  - UST_Employee__c
+  - UST_Sibling_Same_Term__c
+  - User_Created__c
+  - Work_Phone__c
+  lookups:
+    Admissions_Application__c:
+      table: Application__c
+    Contact__c:
+      table: Contact
+Insert Family__c:
+  sf_object: Family__c
+  fields:
+  - Address__c
+  - Age__c
+  - Alumni__c
+  - Birth_Country_Region_Territory__c
+  - Cell_Phone__c
+  - City__c
+  - Country__c
+  - Date_Deceased__c
+  - Email__c
+  - Employer__c
+  - Family_Address_Relationship__c
+  - First_Name__c
+  - Grad_Year__c
+  - Graduate_from_UST__c
+  - Highest_Level_of_Education__c
+  - Holding_Name__c
+  - Home_Phone__c
+  - Last_Name__c
+  - Maiden_Other_Last__c
+  - Middle_Name__c
+  - Number_of_Siblings__c
+  - Occupation__c
+  - Other_Occupation_Details__c
+  - Other_Phone__c
+  - Parent_Living__c
+  - PostalCode__c
+  - Prefix__c
+  - RecordTypeId
+  - Related_Object_JSON__c
+  - Relationship__c
+  - State__c
+  - Street__c
+  - Suffix__c
+  - UST_Attended__c
+  - UST_Employee__c
+  - UST_Sibling_Same_Term__c
+  - User_Created__c
+  - Work_Phone__c
+  lookups:
+    Applicant__c:
+      table: Contact
+    Application__c:
+      table: Application__c
+    Contact__c:
+      table: Contact
+Insert Financial_Aid__c:
+  sf_object: Financial_Aid__c
+  fields:
+  - FAFSA_Aid_Year__c
+  - FAFSA_Award_Date__c
+  - FAFSA_Current_CPS_Process_Date__c
+  - FAFSA_Filed_Load_Date__c
+  - FAFSA_Filed__c
+  - FAFSA_Initial_CPS_Process_Date__c
+  - FAFSA_Integration_Key__c
+  - FAFSA_Rejected__c
+  - FAFSA_Selected_for_Verification__c
+  - Force_Opportunity_Updates__c
+  - MN_Dream_Act_Award_Date__c
+  - MN_Dream_Act_Review_Date__c
+  - Minnesota_Dream_Act_Filed__c
+  - Notification_of_Award_Date__c
+  - RecordTypeId
+  lookups:
+    Contact__c:
+      table: Contact
+Insert Internship__c:
+  sf_object: Internship__c
+  fields:
+  - Company_Name_Text__c
+  - Department__c
+  - End_Date__c
+  - External_Salesforce_ID__c
+  - Job_Description__c
+  - Job_Title__c
+  - Sponsoring_Program__c
+  - Start_Date__c
+  - Status_at_Time_of_Internship__c
+  - Terminated__c
+  lookups:
+    Company__c:
+      table: Account
+    Internship_Term__c:
+      table: hed__Term__c
+    Student__c:
+      table: Contact
+    Supervisor__c:
+      table: Contact
+Insert Nomination__c:
+  sf_object: Nomination__c
+  fields:
+  - Award__c
+  - Banner_Key__c
+  - Fiscal_Year__c
+  - Internal_Nomination__c
+  - Membership_Position__c
+  - Nomination_Date__c
+  - Nomination_Organization__c
+  - Nomination_Status__c
+  - Nomination_Type__c
+  - Nominator_Email__c
+  - Nominator_Nomination_Form__c
+  - Nominee_Email__c
+  - Nominee_Nomination_Form__c
+  - Submission_Form__c
+  lookups:
+    Nominator__c:
+      table: Contact
+    Nominee__c:
+      table: Contact
+Insert Professional_Directory__c:
+  sf_object: Professional_Directory__c
+  fields:
+  - Active_Display__c
+  - Additional_Identity_Information__c
+  - Admission_State__c
+  - Biography__c
+  - Degree_Type__c
+  - Employer_Name__c
+  - Ethnicity__c
+  - First_Name__c
+  - Gender_Identity__c
+  - Graduation_YearSR__c
+  - Home_City__c
+  - Home_Country__c
+  - Home_State__c
+  - Home_Street_Address_1__c
+  - Home_Street_Address_2__c
+  - Home_Zip__c
+  - Internal_Use_Only_Email__c
+  - Keywords__c
+  - Language__c
+  - Last_Name__c
+  - Legacy_ID__c
+  - LinkedIn_Profile__c
+  - Name_as_Student__c
+  - Opt_in_Date__c
+  - Other_Admission_State__c
+  - Other_Language__c
+  - Personal_Email__c
+  - Personal_Phone_Type__c
+  - Personal_Phone__c
+  - Picture_Approved__c
+  - Picture__c
+  - Prefix__c
+  - RecordTypeId
+  - Speciality_Area__c
+  - Specialty_Area_1_Percentage__c
+  - Specialty_Area_1__c
+  - Specialty_Area_2_Percentage__c
+  - Specialty_Area_2__c
+  - Specialty_Area_3_Percentage__c
+  - Specialty_Area_3__c
+  - Specialty_Area_4_Percentage__c
+  - Specialty_Area_4__c
+  - Specialty_Area_5_Percentage__c
+  - Specialty_Area_5__c
+  - Specialty_Area_Other_Percentage__c
+  - Specialty_Area_Other__c
+  - Suffix__c
+  - Title__c
+  - Website__c
+  - Work_City__c
+  - Work_Country__c
+  - Work_Email__c
+  - Work_Phone__c
+  - Work_State__c
+  - Work_Street_Address__c
+  - Work_Zipcode__c
+  lookups:
+    Alumni__c:
+      table: Contact
+Insert Scholarship_Applicant__c:
+  sf_object: Scholarship_Applicant__c
+  fields:
+  - App_Attachment_SF_ID__c
+  - Confirmed_Criteria__c
+  - Declared_ACT_SAT__c
+  - Declared_GPA__c
+  - Essay_1_Answer__c
+  - Essay_1_Uploaded_Orig_Filename__c
+  - Essay_1_Uploaded__c
+  - Essay_2_Answer__c
+  - Essay_2_Uploaded_Orig_Filename__c
+  - Essay_2_Uploaded__c
+  - Question_1_Answer__c
+  - Question_2_Answer__c
+  - Question_3_Answer__c
+  - Question_4_Answer__c
+  - Recommendation2_Received__c
+  - Recommendation2_Request_Date__c
+  - Recommendation2__c
+  - Recommendation_Received__c
+  - Recommendation_Request_Date__c
+  - Recommendation__c
+  - Recommender2_Email__c
+  - Recommender2_Name__c
+  - Recommender_Email__c
+  - Recommender_Name__c
+  - RecordTypeId
+  - Scholarship_Amount__c
+  - Scholarship_Award_Type__c
+  - Scholarship_Complete__c
+  - Scholarship_Date_Accepted__c
+  - Scholarship_Date_Decision__c
+  - Scholarship_Date_Declined__c
+  - Scholarship_Date_Finalist__c
+  - Scholarship_Date_Not_Interested__c
+  - Scholarship_Date_Reviewed__c
+  - Scholarship_Date_Semi_Finalist__c
+  - Scholarship_Date_Started__c
+  - Scholarship_Date_Submitted__c
+  - Scholarship_Date_Withdrawn__c
+  - Scholarship_Notes__c
+  - Scholarship_Status__c
+  - Signature__c
+  lookups:
+    Contact__c:
+      table: Contact
+    Scholarship__c:
+      table: Scholarship__c
+Insert Solicitation__c:
+  sf_object: Solicitation__c
+  fields:
+  - Ask_Amount__c
+  - Ask_Date__c
+  - Close_Date__c
+  - Commitment_Type__c
+  - Declined_Date__c
+  - Description__c
+  - Expected_Amount__c
+  - Granted_Amount__c
+  - Granted_Date__c
+  - Name
+  - Pledge_Installment_Frequency__c
+  - Pledge_Year_Duration__c
+  - Project_of_Interest__c
+  - Stage__c
+  lookups:
+    Account__c:
+      table: Account
+    Contact__c:
+      table: Contact
+    Orginator__c:
+      table: Contact
+Insert Supporting_Document__c:
+  sf_object: Supporting_Document__c
+  fields:
+  - CEEB_Code__c
+  - Document_Load_Date__c
+  - Document_Type__c
+  - Name
+  - Processed_Date__c
+  - Processing_Comments__c
+  - RecordTypeId
+  - School_Name__c
+  - Source__c
+  - Supporting_Document_Unique_External_ID__c
+  lookups:
+    Contact__c:
+      table: Contact
+Insert Syllabus_Review__c:
+  sf_object: Syllabus_Review__c
+  fields:
+  - Approver_Notes__c
+  - Course_Approved__c
+  - Course_Evaluation_Result__c
+  - Course_Title__c
+  - Date_Time_Review_Complete__c
+  - Date_Time_Sent_to_Academic_Affairs__c
+  - Date_Time_Sent_to_Department__c
+  - Date_Time_Sent_to_Registrar__c
+  - Date_Time_sent_to_counselor__c
+  - Registrar_Notes__c
+  - Syllabus_Review_Status__c
+  lookups:
+    Course_Equivalent__c:
+      table: hed__Course__c
+    Course_taken_at__c:
+      table: Account
+    Faculty_Reviewer__c:
+      table: Contact
+    Plan_Requirement__c:
+      table: hed__Plan_Requirement__c
+    Student_Applicant__c:
+      table: Contact
+Insert Tommie_Support_Team__c:
+  sf_object: Tommie_Support_Team__c
+  fields:
+  - Academic_Standing_Probation_Code__c
+  - Academic_Standing_Probation_Description__c
+  - Academic_Standing__c
+  - Academic_Year__c
+  - Active_Term__c
+  - Banner_Advisor_PROB_Email__c
+  - Banner_Hold_Detail__c
+  - Banner_Hold_Type__c
+  - Banner_Hold__c
+  - Banner_PROB_Advisor__c
+  - Banner_PROV_Advisor_Email__c
+  - Banner_PROV_Advisor__c
+  - Banner_Primary_Advisor_Email__c
+  - Banner_Primary_Advisor__c
+  - Current_Professor_10_Email__c
+  - Current_Professor_10_Name__c
+  - Current_Professor_11_Email__c
+  - Current_Professor_11_Name__c
+  - Current_Professor_12_Email__c
+  - Current_Professor_12_Name__c
+  - Current_Professor_1_Email__c
+  - Current_Professor_1_Name__c
+  - Current_Professor_2_Email__c
+  - Current_Professor_2_Name__c
+  - Current_Professor_3_Email__c
+  - Current_Professor_3_Name__c
+  - Current_Professor_4_Email__c
+  - Current_Professor_4_Name__c
+  - Current_Professor_5_Email__c
+  - Current_Professor_5_Name__c
+  - Current_Professor_6_Email__c
+  - Current_Professor_6_Name__c
+  - Current_Professor_7_Email__c
+  - Current_Professor_7_Name__c
+  - Current_Professor_8_Email__c
+  - Current_Professor_8_Name__c
+  - Current_Professor_9_Email__c
+  - Current_Professor_9_Name__c
+  - Current_Professor_Email_8__c
+  - Financial_Aid_Counselor_Email__c
+  - Financial_Aid_Counselor_Name__c
+  - First_Year_Advisor_Banner_ID__c
+  - First_Year_Advisor_Email__c
+  - First_Year_Advisor_Name__c
+  - GPA_Inst__c
+  - GPA_Overall__c
+  - Name
+  - Primary_Advisor_Banner_ID__c
+  - Primary_Advisor_Email__c
+  - Primary_Advisor_Name__c
+  - Probation_Advisor_Email__c
+  - Probation_Advisor_Name__c
+  - Provisional_Advisor_Email__c
+  - Provisional_Advisor_Name__c
+  lookups:
+    Effective_Term__c:
+      table: hed__Term__c
+    Student__c:
+      table: Contact
+Insert Transaction_History__c:
+  sf_object: Transaction_History__c
+  fields:
+  - Amount__c
+  - Anonymous__c
+  - Appeal_Code__c
+  - Campaign_Code__c
+  - Cash__c
+  - College_Code__c
+  - College_Desc__c
+  - Commitment__c
+  - Consortium__c
+  - Credit_Amount__c
+  - Designation_Amount__c
+  - Designation_Code__c
+  - Designation_Description__c
+  - Fiscal_Year__c
+  - Fund_Code__c
+  - Fund_Desc__c
+  - Gift_Code_Desc__c
+  - Gift_Code__c
+  - Gift_Comment__c
+  - Gift_Entry_Date__c
+  - Gift_Number__c
+  - Gift_Total__c
+  - Installment_CFY_Due__c
+  - Legal_Amount__c
+  - Level_Code__c
+  - Level_Description__c
+  - Match__c
+  - Name
+  - Organization_Code__c
+  - Pledge_Amount_Paid__c
+  - Pledge_Balance__c
+  - Pledge_Code_Desc__c
+  - Pledge_Code__c
+  - Pledge_Indicator__c
+  - Pledge_Next_Installment_Date__c
+  - Pledge_Number__c
+  - Pledge_Overdue_Amount__c
+  - Pledge_Payment__c
+  - Pledge_Status_Code__c
+  - Pledge_Status_Desc__c
+  - Pledge_Vehicle_Code__c
+  - Pledge_Vehicle_Desc__c
+  - Project_Amount__c
+  - Soliciitation_Code2__c
+  - Solicitation_Code__c
+  - Solicitation_Desc2__c
+  - Solicitation_Desc__c
+  - Sustainer_Indicator__c
+  - Transaction_Date__c
+  - Transaction_History_Banner_Key__c
+  - Transaction_ID__c
+  - Transaction_Type__c
+  - VSE_Code__c
+  - VSE_Desc__c
+  lookups:
+    Account__c:
+      table: Account
+    Cash_Non_Person__c:
+      table: Account
+    Cash_Person__c:
+      table: Contact
+    Commitment_Non_Person__c:
+      table: Account
+    Commitment_Person__c:
+      table: Contact
+    Contact__c:
+      table: Contact
+    Designation_Description_del__c:
+      table: Account
+    Legal_Contact__c:
+      table: Contact
+    Legal_Non_Person__c:
+      table: Account
+    Project__c:
+      table: Product2
+Insert UST_Interview__c:
+  sf_object: UST_Interview__c
+  fields:
+  - Answer_Rating_10__c
+  - Answer_Rating_1__c
+  - Answer_Rating_2__c
+  - Answer_Rating_3__c
+  - Answer_Rating_4__c
+  - Answer_Rating_5__c
+  - Answer_Rating_6__c
+  - Answer_Rating_7__c
+  - Answer_Rating_8__c
+  - Answer_Rating_9__c
+  - Answer_Text_1__c
+  - Answer_Text_2__c
+  - Answer_Text_3__c
+  - Answer_Text_4__c
+  - Answer_Text_5__c
+  - Answer_Text_6__c
+  - Answer_Text_7__c
+  - Answer_Text_8__c
+  - Answer_Text_9__c
+  - Ask_for_help_support__c
+  - DFC_Ability_Achievement__c
+  - DFC_Ability_Comments__c
+  - DFC_Expectations_Fit__c
+  - DFC_Fit_Comments__c
+  - DFC_Integration_Comments__c
+  - DFC_Integration__c
+  - DFC_Obstacle_Outcome__c
+  - DFC_Obstacles_Comments__c
+  - DFC_Recommendation_Comments__c
+  - DFC_Recommendation__c
+  - DFC_Transition_Comments__c
+  - DFC_Transition_Schedule__c
+  - Desire_to_actively_and_fully_participate__c
+  - Interview_Date__c
+  - Interview_Submitted_Date__c
+  - Interview_Type__c
+  - Language_Barrier__c
+  - Motivation_required_to_be_successful__c
+  - Readiness_for_a_rigorous_academic_experi__c
+  - Recommendation_Comments__c
+  - Recommendation__c
+  - Status__c
+  - Suspect_Language_Barrier__c
+  - Volunteer_Email__c
+  - Volunteer_Name__c
+  lookups:
+    Applicant_Contact__c:
+      table: Contact
+    Application__c:
+      table: Application__c
+Insert Work_History__c:
+  sf_object: Work_History__c
+  fields:
+  - Annual_Revenue_Operating_Budget__c
+  - Company_City__c
+  - Company_Country__c
+  - Company_Phone_Ext__c
+  - Company_Phone_Number__c
+  - Company_Size__c
+  - Company_State_Province__c
+  - Company_Zip_Postal_Code__c
+  - Current_Job__c
+  - Current_Salary__c
+  - Describe_Work__c
+  - Employer__c
+  - End_Date__c
+  - Expenses_Accountable_for__c
+  - Holding_Name__c
+  - Hours_Per_Week__c
+  - Job_Title__c
+  - Major_Responsibilities__c
+  - Number_of_Direct_Reports__c
+  - Number_of_Indirect_Reports__c
+  - Position__c
+  - Primary_Competitors__c
+  - Principal_customers__c
+  - Product_Service__c
+  - Related_Object_JSON__c
+  - Revenue_Accountable_for__c
+  - Start_Date__c
+  - Supervisor_First_Name__c
+  - Supervisor_Last_Name__c
+  - Supervisor_Title__c
+  - Titles_of_Direct_Reports__c
+  - Titles_of_Indirect_Reports__c
+  - User_Created__c
+  lookups:
+    Application__c:
+      table: Application__c
+    Contact__c:
+      table: Contact
+Insert hed__Address__c:
+  sf_object: hed__Address__c
+  fields:
+  - Address_Banner_Key__c
+  - hed__Address_Type__c
+  - hed__Default_Address__c
+  - hed__Inactive__c
+  - hed__Latest_End_Date__c
+  - hed__Latest_Start_Date__c
+  - hed__MailingCity__c
+  - hed__MailingCountry__c
+  - hed__MailingCounty__c
+  - hed__MailingPostalCode__c
+  - hed__MailingState__c
+  - hed__MailingStreet2__c
+  - hed__MailingStreet__c
+  - hed__Seasonal_End_Day__c
+  - hed__Seasonal_End_Month__c
+  - hed__Seasonal_End_Year__c
+  - hed__Seasonal_Start_Day__c
+  - hed__Seasonal_Start_Month__c
+  - hed__Seasonal_Start_Year__c
+  lookups:
+    hed__Parent_Account__c:
+      table: Account
+    hed__Parent_Contact__c:
+      table: Contact
+Insert hed__Affiliation__c:
+  sf_object: hed__Affiliation__c
+  fields:
+  - Affiliation_Banner_Key__c
+  - DFC_Affiliation__c
+  - Degree_Level__c
+  - Giving_Level__c
+  - Graduation_Year__c
+  - Leadership_Role__c
+  - Position_Type__c
+  - Title__c
+  - Upsert_Key__c
+  - hed__Description__c
+  - hed__EndDate__c
+  - hed__Primary__c
+  - hed__Role__c
+  - hed__StartDate__c
+  - hed__Status__c
+  lookups:
+    Contact_Connection__c:
+      table: Contact
+    Degree__c:
+      table: Account
+    Deparment__c:
+      table: Account
+    Employment_History__c:
+      table: Contact
+    Giving_Societies__c:
+      table: Contact
+    Major_2__c:
+      table: Account
+    Major__c:
+      table: Account
+    Minor_2__c:
+      table: Account
+    Minor__c:
+      table: Account
+    OrgContactAct__c:
+      table: Account
+    School__c:
+      table: Account
+    hed__Account__c:
+      table: Account
+    hed__Contact__c:
+      table: Contact
+Insert hed__Application__c:
+  sf_object: hed__Application__c
+  fields:
+  - hed__Applicant_Decision_Date__c
+  - hed__Application_Date__c
+  - hed__Application_Decision_Date__c
+  - hed__Application_JSON__c
+  - hed__Application_Status__c
+  - hed__Application_Type__c
+  - hed__Due_Date__c
+  - hed__Initial_Creation_Date__c
+  - hed__Open_Date__c
+  lookups:
+    hed__Applicant__c:
+      table: Contact
+    hed__Applying_To__c:
+      table: Account
+    hed__Preparer__c:
+      table: Contact
+    hed__Term__c:
+      table: hed__Term__c
+Insert hed__Attribute__c:
+  sf_object: hed__Attribute__c
+  fields:
+  - Attribute_Banner_Key__c
+  - Attribute_Type_Code__c
+  - External_Salesforce_ID__c
+  - Name
+  - RecordTypeId
+  - Strength2__c
+  - Strength3__c
+  - Strength4__c
+  - Strength5__c
+  - Strengths1__c
+  - Subject_Area_Code__c
+  - hed__Activity_End_Date__c
+  - hed__Activity_Start_Date__c
+  - hed__Attribute_Type__c
+  - hed__Credential_Number__c
+  - hed__Credentialing_Identifier__c
+  - hed__Description__c
+  - hed__End_Date__c
+  - hed__Role__c
+  - hed__Start_Date__c
+  - hed__Status__c
+  - hed__Subject_Area__c
+  - hed__Verification_Status_Date__c
+  - hed__Verification_Status__c
+  lookups:
+    hed__Agency__c:
+      table: Account
+    hed__Contact__c:
+      table: Contact
+    hed__Credential__c:
+      table: hed__Credential__c
+Insert hed__Contact_Language__c:
+  sf_object: hed__Contact_Language__c
+  fields:
+  - Contact_Language_Unique_External_ID__c
+  - Holding_Name__c
+  - Language_Fluency__c
+  - Primary_Language__c
+  - Related_Object_JSON__c
+  - User_Created__c
+  - hed__Fluency__c
+  - hed__Language_Details__c
+  - hed__Primary_Language__c
+  lookups:
+    hed__Contact__c:
+      table: Contact
+    hed__Language__c:
+      table: hed__Language__c
+Insert hed__Course_Offering__c:
+  sf_object: hed__Course_Offering__c
+  fields:
+  - Campus__c
+  - Course_CRN__c
+  - Course_Offering_Deleted_in_Banner__c
+  - Course_Offering_Key__c
+  - Course_Title__c
+  - Credit_Hours__c
+  - Delivery_Method__c
+  - Instructional_Method__c
+  - Name
+  - Primary_Banner_Faculty__c
+  - Primary_Faculty_Banner_ID__c
+  - Primary_Faculty_Email__c
+  - Term_Code__c
+  - hed__Capacity__c
+  - hed__End_Date__c
+  - hed__Section_ID__c
+  - hed__Start_Date__c
+  lookups:
+    hed__Course__c:
+      table: hed__Course__c
+    hed__Facility__c:
+      table: hed__Facility__c
+    hed__Faculty__c:
+      table: Contact
+    hed__Term__c:
+      table: hed__Term__c
+    hed__Time_Block__c:
+      table: hed__Time_Block__c
+Insert hed__Education_History__c:
+  sf_object: hed__Education_History__c
+  fields:
+  - Admissions_Credit__c
+  - Associate_s_Degree_Detail__c
+  - CEEB_Code__c
+  - Certification_Expiration__c
+  - Certification_Organization__c
+  - City__c
+  - College_Courses_9th_Grade_On__c
+  - Country__c
+  - Currently_Attending__c
+  - Date_Received__c
+  - Diploma_GED_Earned_Date__c
+  - Diploma_GED_Earned__c
+  - Education_History_Unique_External_ID__c
+  - Evaluated__c
+  - Final_Transcript__c
+  - Holding_Name__c
+  - Internal_Comments__c
+  - MnTC_Satisfied__c
+  - Most_Recent_College_in_US__c
+  - Name_Different_on_Transcript__c
+  - Official_Credit__c
+  - Official_Degree__c
+  - Official_Graduation_Date__c
+  - Official_Transcript__c
+  - Postal_Code__c
+  - Primary_Bachelor_Institution__c
+  - Primary_High_School__c
+  - Quality_Points__c
+  - RecordTypeId
+  - Related_Object_JSON__c
+  - School_Not_Found__c
+  - Self_Reported_Major__c
+  - State__c
+  - Street__c
+  - Transcript_Evaluator__c
+  - Transcript_Other_First_Name__c
+  - Transcript_Other_Last_Name__c
+  - Transcript_Other_M_I__c
+  - Transcripts_Evaluated_Previously__c
+  - Trigger_Opportunity_Update__c
+  - Type_of_Certification__c
+  - User_Created__c
+  - hed__Class_Percentile__c
+  - hed__Class_Rank_Scale__c
+  - hed__Class_Rank_Type__c
+  - hed__Class_Rank__c
+  - hed__Class_Size__c
+  - hed__Credentialing_Identifier__c
+  - hed__Credits_Earned__c
+  - hed__Degree_Earned__c
+  - hed__Details__c
+  - hed__Education_History_JSON__c
+  - hed__Educational_Institution_Name__c
+  - hed__End_Date__c
+  - hed__GPA_Scale_Reporting__c
+  - hed__GPA_Scale_Type__c
+  - hed__GPA__c
+  - hed__Graduation_Date__c
+  - hed__Start_Date__c
+  - hed__Status__c
+  - hed__Verification_Status_Date__c
+  - hed__Verification_Status__c
+  lookups:
+    Official_Major__c:
+      table: Account
+    hed__Academic_Certification__c:
+      table: hed__Academic_Certification__c
+    hed__Account__c:
+      table: Account
+    hed__Contact__c:
+      table: Contact
+Insert hed__Relationship__c:
+  sf_object: hed__Relationship__c
+  fields:
+  - End_Date__c
+  - FERPA_Access__c
+  - Relationship_Banner_Key__c
+  - Start_Date__c
+  - hed__Description__c
+  - hed__Emergency_Contact__c
+  - hed__SYSTEM_SystemCreated__c
+  - hed__Status__c
+  - hed__Type__c
+  lookups:
+    hed__Contact__c:
+      table: Contact
+    hed__ReciprocalRelationship__c:
+      table: hed__Relationship__c
+      after: Insert hed__Relationship__c
+    hed__RelatedContact__c:
+      table: Contact
+Insert hed__Test__c:
+  sf_object: hed__Test__c
+  fields:
+  - ACT_Combined_English_Writing_Score__c
+  - ACT_Composite_Date__c
+  - ACT_Composite_Score__c
+  - ACT_English_Date__c
+  - ACT_English_Score__c
+  - ACT_Math_Date__c
+  - ACT_Mathematics_Score__c
+  - ACT_Reading_Date__c
+  - ACT_Reading_Score__c
+  - ACT_Science_Date__c
+  - ACT_Science_Score__c
+  - ACT_Total_Score__c
+  - ACT_Writing_EW_Date__c
+  - ACT_Writing_Score__c
+  - ACT_Writing_WR_Date__c
+  - AP_Test_Type__c
+  - Banner_Code__c
+  - Future_ACT_SAT_Times__c
+  - GMAT_Analytical_Writing_Assessment__c
+  - GMAT_Analytical_Writing_Percentile__c
+  - GMAT_Integrated_Reasoning_Percentile__c
+  - GMAT_Integrated_Reasoning_Score__c
+  - GMAT_Quantitative_Percentile__c
+  - GMAT_Quantitative_Scaled_Score__c
+  - GMAT_Total_Percentile__c
+  - GMAT_Total_Scaled_Score__c
+  - GMAT_Verbal_Percentile__c
+  - GMAT_Verbal_Scaled_Score__c
+  - GRE_Analytical_Writing_Percentile__c
+  - GRE_Analytical_Writing_Score__c
+  - GRE_Quantitative_Reasoning_Percentile__c
+  - GRE_Quantitative_Reasoning_Score__c
+  - GRE_Verbal_Reasoning_Percentile__c
+  - GRE_Verbal_Reasoning_Score__c
+  - Have_you_taken_the_ACT_SAT__c
+  - Holding_Name__c
+  - IELTS_Listening_Score__c
+  - IELTS_Overall_Band_Score__c
+  - IELTS_Reading_Score__c
+  - IELTS_Speaking_Score__c
+  - IELTS_Writing_Score__c
+  - LSAT_Percentile__c
+  - LSAT_Scaled_Score__c
+  - MAT_Percentile_for_Intended_Major__c
+  - MAT_Percentile_for_Total_Group__c
+  - MAT_Scaled_Score__c
+  - MN_NES_Math__c
+  - MN_NES_Reading__c
+  - MN_NES_Writing__c
+  - Math_Passed__c
+  - Other_Test_Name__c
+  - Other_Test_Score__c
+  - Planned_Future_Test_Sittings__c
+  - Praxis_Math_PPSM__c
+  - Praxis_Passed_Not_Passed__c
+  - Praxis_Reading_PPSR__c
+  - Praxis_Writing_PPSW__c
+  - QUAT_Score__c
+  - Reading_Passed__c
+  - RecordTypeId
+  - Related_Object_JSON__c
+  - SAT_Composite_Date__c
+  - SAT_Composite_Score__c
+  - SAT_Math_Date__c
+  - SAT_Mathematics_Score__c
+  - SAT_Total_Score__c
+  - SAT_Verbal_Date__c
+  - SAT_Verbal_Score__c
+  - SAT_Writing_Date__c
+  - SAT_Writing_Score__c
+  - Self_Reported_Test_Acknowledgement_Date__c
+  - Self_Reported_Test_Acknowledgement__c
+  - TOEFL_Listening_Score__c
+  - TOEFL_Reading_Score__c
+  - TOEFL_Speaking_Score__c
+  - TOEFL_Total_Score__c
+  - TOEFL_Writing_Score__c
+  - Take_ACT_SAT_Times__c
+  - Test_Code_Origin__c
+  - Test_Date__c
+  - Test_Name__c
+  - Test_Result__c
+  - Test_Score_Status__c
+  - User_Created__c
+  - Writing_Passed__c
+  - hed__Credentialing_Identifier__c
+  - hed__Credits_Earned__c
+  - hed__Date_Received__c
+  - hed__Source__c
+  - hed__Test_Date__c
+  - hed__Test_Type__c
+  - hed__Verification_Status_Date__c
+  - hed__Verification_Status__c
+  - old_GRE_Analytical_Percentile__c
+  - old_GRE_Analytical_Score__c
+  - old_GRE_Quantitative_Reasoning_Percenti__c
+  - old_GRE_Quantitative_Reasoning_Score__c
+  - old_GRE_Verbal_Reasoning_Percentile__c
+  - old_GRE_Verbal_Reasoning_Score__c
+  lookups:
+    hed__Contact__c:
+      table: Contact
+Insert rh2__PS_Describe__c:
+  sf_object: rh2__PS_Describe__c
+  fields:
+  - rh2__Asynchronous__c
+  - rh2__Data_Type__c
+  - rh2__Disable_Realtime__c
+  - rh2__Disable_Trigger__c
+  - rh2__Label__c
+  - rh2__Name__c
+  - rh2__Object__c
+  - rh2__Real_Time__c
+  - rh2__Rollup_10__c
+  - rh2__Rollup_11__c
+  - rh2__Rollup_12__c
+  - rh2__Rollup_13__c
+  - rh2__Rollup_14__c
+  - rh2__Rollup_15__c
+  - rh2__Rollup_16__c
+  - rh2__Rollup_17__c
+  - rh2__Rollup_18__c
+  - rh2__Rollup_19__c
+  - rh2__Rollup_1__c
+  - rh2__Rollup_20__c
+  - rh2__Rollup_21__c
+  - rh2__Rollup_22__c
+  - rh2__Rollup_23__c
+  - rh2__Rollup_24__c
+  - rh2__Rollup_25__c
+  - rh2__Rollup_26__c
+  - rh2__Rollup_27__c
+  - rh2__Rollup_28__c
+  - rh2__Rollup_29__c
+  - rh2__Rollup_2__c
+  - rh2__Rollup_30__c
+  - rh2__Rollup_31__c
+  - rh2__Rollup_32__c
+  - rh2__Rollup_33__c
+  - rh2__Rollup_34__c
+  - rh2__Rollup_35__c
+  - rh2__Rollup_36__c
+  - rh2__Rollup_37__c
+  - rh2__Rollup_38__c
+  - rh2__Rollup_39__c
+  - rh2__Rollup_3__c
+  - rh2__Rollup_40__c
+  - rh2__Rollup_41__c
+  - rh2__Rollup_42__c
+  - rh2__Rollup_43__c
+  - rh2__Rollup_44__c
+  - rh2__Rollup_45__c
+  - rh2__Rollup_46__c
+  - rh2__Rollup_47__c
+  - rh2__Rollup_48__c
+  - rh2__Rollup_49__c
+  - rh2__Rollup_4__c
+  - rh2__Rollup_50__c
+  - rh2__Rollup_51__c
+  - rh2__Rollup_52__c
+  - rh2__Rollup_53__c
+  - rh2__Rollup_54__c
+  - rh2__Rollup_55__c
+  - rh2__Rollup_56__c
+  - rh2__Rollup_57__c
+  - rh2__Rollup_58__c
+  - rh2__Rollup_59__c
+  - rh2__Rollup_5__c
+  - rh2__Rollup_60__c
+  - rh2__Rollup_61__c
+  - rh2__Rollup_62__c
+  - rh2__Rollup_63__c
+  - rh2__Rollup_64__c
+  - rh2__Rollup_65__c
+  - rh2__Rollup_66__c
+  - rh2__Rollup_6__c
+  - rh2__Rollup_7__c
+  - rh2__Rollup_8__c
+  - rh2__Rollup_9__c
+  - rh2__Selected__c
+  - rh2__Test_Checkbox__c
+  - rh2__Test_Currency__c
+  - rh2__Test_Date_Time__c
+  - rh2__Test_Date__c
+  - rh2__Test_Double__c
+  - rh2__Test_End_Date__c
+  - rh2__Test_Integer2__c
+  - rh2__Test_Integer__c
+  - rh2__Test_Long_Text__c
+  - rh2__Test_Multi_Picklist__c
+  - rh2__Test_Percent__c
+  - rh2__Test_Picklist__c
+  - rh2__Test_Rich_Text__c
+  - rh2__Validation_Test_Int__c
+  lookups:
+    rh2__Account__c:
+      table: Account
+    rh2__Contact2__c:
+      table: Contact
+    rh2__Contact3__c:
+      table: Contact
+    rh2__Contact__c:
+      table: Contact
+    rh2__Hierarchy_Test_2__c:
+      table: rh2__PS_Describe__c
+      after: Insert rh2__PS_Describe__c
+    rh2__Hierarchy_Test__c:
+      table: rh2__PS_Describe__c
+      after: Insert rh2__PS_Describe__c
+Insert summit__Summit_Events_Registration__c:
+  sf_object: summit__Summit_Events_Registration__c
+  fields:
+  - Administrative_Comment__c
+  - Banner_Fee_Code__c
+  - Banner_ID_Form_Entered__c
+  - Guest_Registration_Request__c
+  - Is_Preferred_Email_Address__c
+  - Is_Preferred_Phone__c
+  - Mogli_Number__c
+  - Mogli_Opt_Out__c
+  - Registrant_Other_Class_Year_2__c
+  - Registrant_Other_Class_Year_3__c
+  - Registrant_Other_Class_Year_4__c
+  - Registrant_Other_Class_Year__c
+  - Registrant_Other_First_Name_2__c
+  - Registrant_Other_First_Name_3__c
+  - Registrant_Other_First_Name_4__c
+  - Registrant_Other_Last_Name_2__c
+  - Registrant_Other_Last_Name_3__c
+  - Registrant_Other_Last_Name_4__c
+  - Registrant_Other_Relationship_2__c
+  - Registrant_Other_Relationship_3__c
+  - Registrant_Other_Relationship_4__c
+  - Table__c
+  - Trigger_Matching__c
+  - Zoom_Join_Link__c
+  - summit__Actual_Number_of_Guests__c
+  - summit__Add_Info_Answer_1__c
+  - summit__Add_Info_Answer_2__c
+  - summit__Add_Info_Answer_3__c
+  - summit__Add_Info_Answer_4__c
+  - summit__Add_Info_Answer_5__c
+  - summit__Answer_1_Numeric__c
+  - summit__Answer_2_Numeric__c
+  - summit__Answer_3_Numeric__c
+  - summit__Answer_4_Numeric__c
+  - summit__Answer_5_Numeric__c
+  - summit__Appointment_Table__c
+  - summit__Campus_Tour_Location__c
+  - summit__Campus_Tour_Time__c
+  - summit__Confirmation_Call_Result__c
+  - summit__Date_All_Appointments_Confirmed_del__c
+  - summit__Display_Attendance_Publicly__c
+  - summit__Encrypted_Registration_Id_1__c
+  - summit__Encrypted_Registration_Id_2__c
+  - summit__Event_Instance_Date_Time_Formatted__c
+  - summit__Event_Registration_Requested_Date__c
+  - summit__Generated_Itinerary__c
+  - summit__Generated_Requested_Appointments__c
+  - summit__Last_Name_as_Student__c
+  - summit__Matching_Log__c
+  - summit__New_Contact_Created__c
+  - summit__Number_of_Guests__c
+  - summit__Participation_Type__c
+  - summit__Preferred_Class_Year__c
+  - summit__Preferred_Visit_Time__c
+  - summit__Presentation_Location__c
+  - summit__Presentation_Time__c
+  - summit__Registrant_Applicant_Type__c
+  - summit__Registrant_City__c
+  - summit__Registrant_College_Code__c
+  - summit__Registrant_College_Not_Found__c
+  - summit__Registrant_College_Year__c
+  - summit__Registrant_College__c
+  - summit__Registrant_Company_Organization__c
+  - summit__Registrant_Country__c
+  - summit__Registrant_Date_of_Birth__c
+  - summit__Registrant_Do_Not_Call__c
+  - summit__Registrant_Email__c
+  - summit__Registrant_First_Name__c
+  - summit__Registrant_Gender__c
+  - summit__Registrant_High_School_Code__c
+  - summit__Registrant_High_School_Grad_Year__c
+  - summit__Registrant_High_School_Not_Found__c
+  - summit__Registrant_High_School__c
+  - summit__Registrant_Last_Name__c
+  - summit__Registrant_Mobile_Phone__c
+  - summit__Registrant_Other_Email__c
+  - summit__Registrant_Other_First_Name__c
+  - summit__Registrant_Other_Last_Name__c
+  - summit__Registrant_Other_Phone__c
+  - summit__Registrant_Other_Relationship__c
+  - summit__Registrant_Parent_Email__c
+  - summit__Registrant_Parent_First_Name__c
+  - summit__Registrant_Parent_Last_Name__c
+  - summit__Registrant_Parent_Phone__c
+  - summit__Registrant_Phone__c
+  - summit__Registrant_Postal_Code__c
+  - summit__Registrant_Preferred_First_Name__c
+  - summit__Registrant_Program_Interest__c
+  - summit__Registrant_Pronouns__c
+  - summit__Registrant_Receive_Texts__c
+  - summit__Registrant_State_Global__c
+  - summit__Registrant_State_Province__c
+  - summit__Registrant_State__c
+  - summit__Registrant_Street_1__c
+  - summit__Registrant_Street_2__c
+  - summit__Registrant_Third_Party_Status__c
+  - summit__Registrant_Title__c
+  - summit__Registrant_Zip__c
+  - summit__Relationship_To_Institution__c
+  - summit__Reminder_Call_Complete__c
+  - summit__Session__c
+  - summit__Status__c
+  - summit__Substatus__c
+  lookups:
+    Campaign__c:
+      table: Campaign
+    Default_Gateway__c:
+      table: Mogli_SMS__Gateway__c
+    Host_Registration_Custom__c:
+      table: summit__Summit_Events_Registration__c
+      after: Insert summit__Summit_Events_Registration__c
+    summit__Contact__c:
+      table: Contact
+    summit__Event_Instance__c:
+      table: summit__Summit_Events_Instance__c
+    summit__Event__c:
+      table: summit__Summit_Events__c
+Insert DFC_Transfer__c:
+  sf_object: DFC_Transfer__c
+  fields:
+  - Application_Deadline_Date__c
+  - Application_Required__c
+  - Application_Submission_Date__c
+  - Application_Walked_Through__c
+  - Early_Transfer_Permission_Form_Date__c
+  - Essay_Required__c
+  - External_Salesforce_Created_Date__c
+  - External_Salesforce_ID__c
+  - External_Salesforce_Record_Owner__c
+  - External_Salesforce_School_Text__c
+  - External_Salesforce_Term_Text__c
+  - Test_Scores_Required__c
+  - Transfer_Status__c
+  - Verification_Date__c
+  lookups:
+    End_Term__c:
+      table: hed__Term__c
+    Initial_Meeting__c:
+      table: Check_In__c
+    St_Thomas_Application__c:
+      table: hed__Application__c
+    Start_Term__c:
+      table: hed__Term__c
+    Student__c:
+      table: Contact
+    University_College__c:
+      table: Account
+Insert Opportunity:
+  sf_object: Opportunity
+  fields:
+  - Activity_Music__c
+  - Admissions_Application_Admit_Type__c
+  - Admissions_Application_Deny_Type__c
+  - Admit_Type__c
+  - All_Interested_Programs__c
+  - Application_Number__c
+  - Application_Submitted_Date__c
+  - Ask_Amount__c
+  - Ask_Date__c
+  - Athlete_Sport_1__c
+  - Athlete_Sport_2__c
+  - Athlete_Sport_3__c
+  - Athlete_Type_1__c
+  - Athlete_Type_2__c
+  - Athlete_Type_3__c
+  - Cash_Indicator__c
+  - Change_Ask_Amount__c
+  - Change_Ask_Date__c
+  - Change_Close_Date__c
+  - Change_Expected_Amount__c
+  - Change_Likelihood__c
+  - Citizenship__c
+  - CloseDate
+  - College_Code__c
+  - Commitment_Indicator__c
+  - Confidence_Level__c
+  - Country__c
+  - Date_Admit__c
+  - Date_Closed__c
+  - Date_Completed_App__c
+  - Date_Confirmed__c
+  - Date_Deferred__c
+  - Date_Denied__c
+  - Date_Engaged__c
+  - Date_FAFSA_Filed_Load__c
+  - Date_Inquiry__c
+  - Date_Intent_to_Enroll_Completed__c
+  - Date_Moderately_Suspect__c
+  - Date_No_Longer_Interested__c
+  - Date_Pending__c
+  - Date_Started_App__c
+  - Date_Submitted_App__c
+  - Date_Suspect__c
+  - Date_UG_Merit_Scholarship_Recalc__c
+  - Date_UG_Merit_Scholarship__c
+  - Date_UG_TR_DFC_Merit_Scholarship_Recal__c
+  - Date_UG_TR_DFC_Merit_Scholarship__c
+  - Date_UG_TR_Merit_Scholarship_Recalc__c
+  - Date_UG_TR_Merit_Scholarship__c
+  - Date_Withdrawn__c
+  - Declined_Date__c
+  - Degree_Level__c
+  - Dont_Reclaculate_Counselor_Assignment__c
+  - Employer__c
+  - Entity_ID__c
+  - Ethnicity__c
+  - Expected_Amount__c
+  - Expected_Graduate_Date__c
+  - FAFSA_Aid_Year__c
+  - FAFSA_Filed__c
+  - First_Inquiry_Source__c
+  - First_Recruitment_Interest__c
+  - First_Recruitment_Program__c
+  - Force_Recalc_Owner__c
+  - Forecast_Amount__c
+  - Gift_Number__c
+  - Granted_Amount__c
+  - Granted_Date__c
+  - Handicap__c
+  - Heard_About_Us__c
+  - High_School_Graduation_Year__c
+  - Home_and_Mailing_Address_Differ_Ind__c
+  - Inquiry_Date__c
+  - Intend_Need_Financial_Aid__c
+  - IsPrivate
+  - Likelihood_Stoplight__c
+  - Lost_Reason__c
+  - MN_Dream_Act_Filed__c
+  - MN_Dream_Act_Year__c
+  - Mogli_SMS__Avatar_URL__c
+  - Mogli_SMS__Mogli_Number__c
+  - Mogli_SMS__Mogli_Opt_Out__c
+  - My_Pronouns__c
+  - Name
+  - National_Merit_Scholar__c
+  - Note_to_PMR_Partner__c
+  - Notification_of_Award_Date__c
+  - Number_of_Internships__c
+  - Opportunity_Banner_Key__c
+  - Opportunity_Citizenship__c
+  - Opportunity_Key__c
+  - Opportunity_Strategy__c
+  - Other_Names_Indicator__c
+  - Override_Close_Date__c
+  - Pledge_Number__c
+  - Pronouns__c
+  - Proposal_Type__c
+  - Prospect_Rating__c
+  - Race_Asian_Background__c
+  - Race_Black_African_American_Background__c
+  - Race_Hispanic_Background__c
+  - Race_Native_Pacific_Islander_Background__c
+  - Race_Other_Black_Background__c
+  - Race_Other_East_Asia__c
+  - Race_Other_Hispanic__c
+  - Race_Other_Pacific_Islander__c
+  - Race_Other_South_Asia__c
+  - Race_Other_Southeast_Asia__c
+  - Race_Other_White__c
+  - Race_White_Background__c
+  - Receive_Texts__c
+  - RecordTypeId
+  - Religious_Preference__c
+  - StageName
+  - State__c
+  - Submitted_Date__c
+  - Substantive_Visits_Estimate__c
+  - Transaction_ID__c
+  - Transaction_this_year__c
+  - Tribal_Identity__c
+  - Tribe_Enrolled_Ind__c
+  - Tribe_Name__c
+  - Tribe_Number__c
+  - UG_Merit_Scholarship_Adjust_Reason__c
+  - UG_Merit_Scholarship_Amount_Adjusted__c
+  - UG_Merit_Scholarship_Amount__c
+  - UG_TR_DFC_Merit_Scholarship_Amount_Adj__c
+  - UG_TR_DFC_Merit_Scholarship_Amount__c
+  - UG_TR_Merit_Scholarship_Amount_Adj__c
+  - UG_TR_Merit_Scholarship_Amount__c
+  - UST_Previous_Apply_Date__c
+  - UST_Previous_Apply_Ind__c
+  - Workplan__c
+  - Years_Attended__c
+  - Zip_Code__c
+  - hed__Completed_FAFSA__c
+  - hed__Desired_Campus__c
+  - hed__Desired_Degree_Level__c
+  - hed__Living_Situation__c
+  lookups:
+    Academic_Interest__c:
+      table: Plan__c
+    Academic_Program__c:
+      table: Program__c
+    AccountId:
+      table: Account
+    Account_Plan__c:
+      table: Account_Plan__c
+    Admissions_Application__c:
+      table: Application__c
+    Affiliated_Account__c:
+      table: Account
+    Application_Payment__c:
+      table: Application_Payment__c
+    CampaignId:
+      table: Campaign
+    ContactId:
+      table: Contact
+    Contact__c:
+      table: Contact
+    High_School_Transfer__c:
+      table: Account
+    High_School_or_College__c:
+      table: Account
+    Intended_Start_Term__c:
+      table: Academic_Term__c
+    Last_Campaign_Source__c:
+      table: Campaign
+    Major_Program_1__c:
+      table: Program__c
+    Major_Program_2__c:
+      table: Program__c
+    Major_Program_3__c:
+      table: Program__c
+    Mogli_SMS__Default_Gateway__c:
+      table: Mogli_SMS__Gateway__c
+    Originator__c:
+      table: Contact
+    Pre_Professional_Program__c:
+      table: Program__c
+    Primary_High_School_Education_History__c:
+      table: hed__Education_History__c
+    Recruitment_Interest__c:
+      table: Plan__c
+    Recruitment_Program__c:
+      table: Program__c
+    Referral__c:
+      table: Contact
+    St_Thomas_College_School__c:
+      table: Account
+    Term__c:
+      table: hed__Term__c
+    hed__Desired_Start_Term__c:
+      table: hed__Term__c
+Insert Performance_Evaluation__c:
+  sf_object: Performance_Evaluation__c
+  fields:
+  - Attendance__c
+  - Name
+  - Performance_Review__c
+  - Rehire__c
+  lookups:
+    Employment_Record__c:
+      table: hed__Affiliation__c
+Insert Student_Session__c:
+  sf_object: Student_Session__c
+  fields:
+  - Appointment_Type__c
+  - DFC_Schedule_Type__c
+  - DFC_Tutor_List__c
+  - Duration__c
+  - External_Salesforce_ID__c
+  - External_Salesforce_Record_Owner__c
+  - MultiLingual_Learner__c
+  - RecordTypeId
+  - Session_Date__c
+  - Session_Notes__c
+  - Status__c
+  - Topics_or_questions_to_focus__c
+  lookups:
+    Contact__c:
+      table: Contact
+    Signature_Program__c:
+      table: hed__Affiliation__c
+Insert Student_Withdrawal_Returning__c:
+  sf_object: Student_Withdrawal_Returning__c
+  fields:
+  - Academic_Counseling_Tasks_Complete__c
+  - Additional_Withdrawal_Reason_s__c
+  - Applying_for_Veteran_s_Benefits__c
+  - Attend_Another_Intitution__c
+  - Business_Office_Tasks_Complete__c
+  - Card_Office_Tasks_Complete__c
+  - Contact_Location__c
+  - Contact_Type__c
+  - Could_St_Thomas_have_done_anything__c
+  - Current_First_Year__c
+  - DFC_Items_Collected__c
+  - Date_Start_of_Returning_Term__c
+  - Date_of_Contact__c
+  - Dean_of_Students_Form_Recieved__c
+  - Dean_of_Students_Office_Tasks_Complete__c
+  - Effective_As__c
+  - Encouraged_to_stay_reasons__c
+  - External_Salesforce_ID__c
+  - External_Salesforce_Institution__c
+  - Financial_Aid_Office_Tasks_Complete__c
+  - First_Choice_School__c
+  - Former_Veteran__c
+  - How_did_you_hear_about_W_process_O__c
+  - How_did_you_hear_about_the_W_process__c
+  - Is_Student_Transferring__c
+  - Laptop_Collected__c
+  - Major_not_offered_at_St_Thomas__c
+  - Metropass_Collected__c
+  - Most_recent_UST_housing__c
+  - Notify_Departments__c
+  - Other_Contact_Type__c
+  - Other_Feedback_Survey__c
+  - Other_Institution__c
+  - Other_Reason_Student_Survey__c
+  - Other_Reason_or_Intended_Major__c
+  - Planned_to_transfer_before_enrollment__c
+  - Plans_to_Return__c
+  - Post_Office_Tasks_Complete__c
+  - Primary_Withdrawal_Reason_Survey__c
+  - Primary_Withdrawal_Reason__c
+  - Readmit_after_Probation_or_Suspension__c
+  - Reasons_for_Withdrawal_Survey__c
+  - RecordTypeId
+  - Registrar_s_Office_Tasks_Complete__c
+  - Request_Status__c
+  - Resend_Withdrawal_Notification_Email__c
+  - Residence_Life_Tasks_Complete__c
+  - Retention_Office_Tasks_Complete__c
+  - Returning_Student_Type__c
+  - Returning_on_Probation__c
+  - Student_ID_Collected__c
+  - Student_Involvement_at_St_Thomas__c
+  - Student_Life_Tasks_Complete__c
+  - Student_Withdrawal_Additional_Notes__c
+  - Transcript_Received__c
+  - Transfer_Institutions__c
+  - Updated_Email_Address__c
+  - Veteran_s_Office_Tasks_Complete__c
+  - Why_did_you_leave__c
+  lookups:
+    Anticipated_Graduation_Term__c:
+      table: hed__Term__c
+    First_Enrollment_Term__c:
+      table: hed__Term__c
+    Plans_to_Return_Term__c:
+      table: hed__Term__c
+    Student__c:
+      table: Contact
+    Tommie_Support_Team__c:
+      table: Tommie_Support_Team__c
+    Transfer_Institution_Lookup__c:
+      table: Account
+Insert hed__Program_Enrollment__c:
+  sf_object: hed__Program_Enrollment__c
+  fields:
+  - hed__Admission_Date__c
+  - hed__Application_Submitted_Date__c
+  - hed__Class_Standing__c
+  - hed__Credits_Attempted__c
+  - hed__Credits_Earned__c
+  - hed__Eligible_to_Enroll__c
+  - hed__End_Date__c
+  - hed__Enrollment_Status__c
+  - hed__GPA__c
+  - hed__Graduation_Year__c
+  - hed__Start_Date__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Affiliation__c:
+      table: hed__Affiliation__c
+    hed__Contact__c:
+      table: Contact
+    hed__Education_History__c:
+      table: hed__Education_History__c
+    hed__Program_Plan__c:
+      table: hed__Program_Plan__c
+Insert hed__Test_Score__c:
+  sf_object: hed__Test_Score__c
+  fields:
+  - hed__Credentialing_Identifier__c
+  - hed__Letter_Score__c
+  - hed__Percentile__c
+  - hed__Score__c
+  - hed__Status__c
+  - hed__Subject_Area__c
+  lookups:
+    hed__Test__c:
+      table: hed__Test__c
+Insert Interaction__c:
+  sf_object: Interaction__c
+  fields:
+  - Additional_Campaign_Member_Status__c
+  - Additional_Campaign_Reference_ID__c
+  - Admit_Type__c
+  - Affiliation_Role__c
+  - Affiliation_Status__c
+  - Application_Number__c
+  - Athlete_Sport_1__c
+  - Athlete_Sport_2__c
+  - Athlete_Sport_3__c
+  - Athlete_Type_1__c
+  - Athlete_Type_2__c
+  - Athlete_Type_3__c
+  - Audit_Reason__c
+  - Birthdate__c
+  - Campaign_Member_Status__c
+  - Campaign_Reference_ID__c
+  - Citizenship__c
+  - College_CEEB__c
+  - College_of_Interest__c
+  - Constituent_ID__c
+  - Contact_ID_ERX__c
+  - Contact_Title__c
+  - Country__c
+  - Current_Grade__c
+  - Date_Admit__c
+  - Date_Closed__c
+  - Date_Completed_App__c
+  - Date_Confirmed__c
+  - Date_Denied__c
+  - Date_Engaged__c
+  - Date_Inquiry__c
+  - Date_Moderately_Suspect__c
+  - Date_No_Longer_Interested__c
+  - Date_Started_App__c
+  - Date_Submitted_App__c
+  - Date_Suspect__c
+  - Date_Withdrawn__c
+  - Degree_Level__c
+  - Email__c
+  - Employer__c
+  - Ethnicity__c
+  - FAFSA_Parent_1_School_Level__c
+  - FAFSA_Parent_2_School_Level__c
+  - First_Name__c
+  - Foot_on_Campus__c
+  - Gender__c
+  - High_School_CEEB__c
+  - High_School_Graduation_Year__c
+  - Home_Phone__c
+  - Identify_as_Reference__c
+  - Initial_Foot_on_Campus_Date__c
+  - Interaction_Source__c
+  - Interaction_Status__c
+  - Interaction_Upsert_Key__c
+  - Last_Name__c
+  - Latest_TouchPoint_Source_ERX__c
+  - Lead_Only__c
+  - Lead_Source__c
+  - Mailing_City__c
+  - Mailing_Country__c
+  - Mailing_Postal_Code__c
+  - Mailing_State__c
+  - Mailing_Street__c
+  - Middle_Name__c
+  - Mobile_Phone__c
+  - National_Merit_Scholar__c
+  - Nominator_Email__c
+  - Nominator_First_Name__c
+  - Nominator_Last_Name__c
+  - Opportunity_Record_Type__c
+  - Opportunity_Stage__c
+  - OwnerId__c
+  - Primary_Affiliation__c
+  - Race__c
+  - Receive_Texts__c
+  - Referral_Text__c
+  - Relationship_to_Student__c
+  - Salutation__c
+  - Scholarship_of_Interest__c
+  - State__c
+  - University_Email__c
+  - Years_Attended__c
+  - utm_campaign__c
+  - utm_content__c
+  - utm_medium__c
+  - utm_source__c
+  - utm_term__c
+  - xCollege_of_Interest__c
+  lookups:
+    Academic_Interest__c:
+      table: Plan__c
+    Academic_Program__c:
+      table: Program__c
+    Additional_Campaign__c:
+      table: Campaign
+    Admissions_Application__c:
+      table: Application__c
+    Affiliated_Account__c:
+      table: Account
+    Campaign__c:
+      table: Campaign
+    Contact__c:
+      table: Contact
+    High_School_Transfer__c:
+      table: Account
+    High_School_or_College__c:
+      table: Account
+    Intended_Start_Term__c:
+      table: Academic_Term__c
+    Lead__c:
+      table: Lead
+    Major_Program_1__c:
+      table: Program__c
+    Major_Program_2__c:
+      table: Program__c
+    Major_Program_3__c:
+      table: Program__c
+    Opportunity__c:
+      table: Opportunity
+    Recruitment_Interest__c:
+      table: Plan__c
+    Recruitment_Program__c:
+      table: Program__c
+    St_Thomas_College_School__c:
+      table: Account
+    Term__c:
+      table: hed__Term__c
+Insert Mogli_SMS__Form__c:
+  sf_object: Mogli_SMS__Form__c
+  fields:
+  - Mogli_SMS__Offline__c
+  - Mogli_SMS__Phone_Number__c
+  - Mogli_SMS__SMS_Gateway_Id__c
+  - Mogli_SMS__Status__c
+  lookups:
+    Mogli_SMS__Contact__c:
+      table: Contact
+    Mogli_SMS__FormTemplate__c:
+      table: Mogli_SMS__FormTemplate__c
+    Mogli_SMS__Lead__c:
+      table: Lead
+    Mogli_SMS__Opportunity__c:
+      table: Opportunity
+    Summit_Events_Registration__c:
+      table: summit__Summit_Events_Registration__c
+Insert Mogli_SMS__SMS__c:
+  sf_object: Mogli_SMS__SMS__c
+  fields:
+  - Mogli_SMS__Archived__c
+  - Mogli_SMS__Attachments__c
+  - Mogli_SMS__Batch_Group_ID__c
+  - Mogli_SMS__Debug__c
+  - Mogli_SMS__Direction__c
+  - Mogli_SMS__Message_SID__c
+  - Mogli_SMS__Message_Segments__c
+  - Mogli_SMS__Message__c
+  - Mogli_SMS__Offline__c
+  - Mogli_SMS__Phone_Number__c
+  - Mogli_SMS__Published__c
+  - Mogli_SMS__Read__c
+  - Mogli_SMS__Scheduled_Delivery__c
+  - Mogli_SMS__Status__c
+  - Mogli_SMS__isBatchTransaction__c
+  lookups:
+    Mogli_SMS__Campaign__c:
+      table: Campaign
+    Mogli_SMS__Contact__c:
+      table: Contact
+    Mogli_SMS__Gateway__c:
+      table: Mogli_SMS__Gateway__c
+    Mogli_SMS__Lead__c:
+      table: Lead
+    Mogli_SMS__Opportunity__c:
+      table: Opportunity
+    Summit_Events_Registration__c:
+      table: summit__Summit_Events_Registration__c
+Insert OpportunityLineItem:
+  sf_object: OpportunityLineItem
+  fields:
+  - Opportunity_Banner_Desg_Desc__c
+  - Opportunity_Banner_Desg__c
+  - Opportunity_Banner_Gift_No__c
+  - Opportunity_Banner_Pledge_No__c
+  - Opportunity_Product_Banner_Key__c
+  - Quantity
+  lookups:
+    OpportunityId:
+      table: Opportunity
+    PricebookEntryId:
+      table: PricebookEntry
+    Product2Id:
+      table: Product2
+Insert OpportunityTeamMember:
+  sf_object: OpportunityTeamMember
+  fields:
+  - Opportunity_Team_Banner_Key__c
+  lookups:
+    OpportunityId:
+      table: Opportunity
+Insert hed__Course_Enrollment__c:
+  sf_object: hed__Course_Enrollment__c
+  fields:
+  - Course_CRN__c
+  - Course_Connection_Deleted_in_Banner__c
+  - Course_Connections_Key__c
+  - Credit_Hours__c
+  - Error_Flag__c
+  - Final_Grade_Date__c
+  - Final_Grade__c
+  - Midterm_Grade__c
+  - RecordTypeId
+  - Registration_Code__c
+  - Registration_Sequence__c
+  - Registration_Term__c
+  - hed__Credentialing_Identifier__c
+  - hed__Credits_Attempted__c
+  - hed__Credits_Earned__c
+  - hed__Display_Grade__c
+  - hed__Grade__c
+  - hed__Primary__c
+  - hed__Status__c
+  - hed__Verification_Status_Date__c
+  - hed__Verification_Status__c
+  lookups:
+    hed__Account__c:
+      table: Account
+    hed__Affiliation__c:
+      table: hed__Affiliation__c
+    hed__Contact__c:
+      table: Contact
+    hed__Course_Offering__c:
+      table: hed__Course_Offering__c
+    hed__Program_Enrollment__c:
+      table: hed__Program_Enrollment__c
+Insert Mogli_SMS__QuestionResponse__c:
+  sf_object: Mogli_SMS__QuestionResponse__c
+  fields:
+  - Mogli_SMS__Question_Text__c
+  - Mogli_SMS__Response__c
+  lookups:
+    Mogli_SMS__Form__c:
+      table: Mogli_SMS__Form__c
+    Mogli_SMS__Gateway__c:
+      table: Mogli_SMS__Gateway__c
+    Mogli_SMS__Mogli_Question__c:
+      table: Mogli_SMS__SMS__c
+    Mogli_SMS__Mogli_Response__c:
+      table: Mogli_SMS__SMS__c
+    Mogli_SMS__QuestionTemplate__c:
+      table: Mogli_SMS__QuestionTemplate__c
+Insert UST_Mentoring__c:
+  sf_object: UST_Mentoring__c
+  fields:
+  - Alert_Value__c
+  - Cohort__c
+  - Effective_Term__c
+  - Engagement_Metric__c
+  - External_Salesforce_Connection_Text__c
+  - External_Salesforce_ID__c
+  - External_Salesforce_Record_Owner__c
+  - Faculty_Advisor_Notes__c
+  - Fall_December_1_1_Attended_Date__c
+  - Fall_December_1_1_Meeting_Attended__c
+  - Fall_December_Group_Attended_Date__c
+  - Fall_December_Group_Meeting_Attended__c
+  - Fall_November_1_1_Attended_Date__c
+  - Fall_November_1_1_Meeting_Attended__c
+  - Fall_November_Group_Attended_Date__c
+  - Fall_November_Group_Meeting_Attended__c
+  - Fall_October_1_1_Attended_Date__c
+  - Fall_October_1_1_Meeting_Attended__c
+  - Fall_October_Group_Attended_Date__c
+  - Fall_October_Group_Meeting_Attended__c
+  - Fall_September_1_1_Attended_Date__c
+  - Fall_September_1_1_Meeting_Attended__c
+  - Fall_September_Group_Attended_Date__c
+  - Fall_September_Group_Meeting_Attended__c
+  - Meeting_Date_Time__c
+  - Meeting_Notes__c
+  - Mentoring_Notes__c
+  - Mentoring_Status__c
+  - Mentoring_Type__c
+  - Outreach_Type__c
+  - Primary_Topic__c
+  - RecordTypeId
+  - Secondary_Topic_s__c
+  - Student_University_Email__c
+  - Topics_or_questions_to_focus__c
+  - X1st_Outreach_Date__c
+  - X2nd_Outreach_Date__c
+  - X2nd_Outreach_type__c
+  lookups:
+    Course_Connection__c:
+      table: hed__Course_Enrollment__c
+    Mentor__c:
+      table: Contact
+    Student__c:
+      table: Contact
+    Tommie_Support_Team__c:
+      table: Tommie_Support_Team__c

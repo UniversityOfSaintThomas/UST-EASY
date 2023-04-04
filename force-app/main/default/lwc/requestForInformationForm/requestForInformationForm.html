@@ -8,423 +8,420 @@
 
 <template>
     <lightning-card>
-        <template if:true={show_spinner}>
-            <lightning-spinner
-                    alternative-text="Loading"
-                    size="medium">
-            </lightning-spinner>
-        </template>
+        <div class="slds-grid slds-wrap slds-gutters_medium slds-m-around_xx-small">
+            <template if:true={show_spinner}>
+                <lightning-spinner
+                        alternative-text="Loading"
+                        size="medium">
+                </lightning-spinner>
+            </template>
 
-        <template if:false={hide_form_title}>
-            <div class="slds-text-heading_medium" style="text-align: center"><b>{academic_level} Request for Information {school_college_title}</b></div>
-        </template>
+            <template if:false={hide_form_title}>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium slds-m-bottom_medium">
+                    <div class="slds-text-heading_medium">{academic_level} Request for Information {school_college_title}</div>
+                </div>
+            </template>
 
-        <template if:false={form_submitted_successfully}>
-            <!-- BEGIN FORM -->
-            <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
+            <template if:false={form_submitted_successfully}>
+                <!-- BEGIN FORM -->
                 <template if:true={show_fields.I_will_apply_to_St_Thomas_as_a}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-combobox
-                                    required={require_fields.I_will_apply_to_St_Thomas_as_a}
-                                    label={field_labels.admit_type_label}
-                                    options={admit_type_picklist_values}
-                                    aria-label="I will apply to St. Thomas as a"
-                                    onchange={onChange}>
-                            </lightning-combobox>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium slds-m-bottom_medium field-admit-type">
+                        <lightning-combobox
+                                required={require_fields.I_will_apply_to_St_Thomas_as_a}
+                                label={field_labels.admit_type_label}
+                                options={admit_type_picklist_values}
+                                aria-label="I will apply to St. Thomas as a"
+                                onchange={onChange}
+                        >
+                        </lightning-combobox>
+                    </div>
+                </template>
+                <template if:true={show_fields.St_Thomas_Colleges}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium slds-m-bottom_medium field-admit-type">
+                        <lightning-combobox
+                                required={require_fields.St_Thomas_Colleges}
+                                label={field_labels.st_thomas_colleges}
+                                options={school_picklist}
+                                aria-label="College/School"
+                                onchange={onChange}
+                        >
+                        </lightning-combobox>
                     </div>
                 </template>
                 <template if:true={show_fields.Citizenship}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-combobox
-                                    required={require_fields.Citizenship}
-                                    label={field_labels.citizenship_label}
-                                    options={citizenship_picklist_values}
-                                    aria-label="Citizenship"
-                                    onchange={onChange}>
-                            </lightning-combobox>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium slds-m-bottom_medium field-citizenship">
+                        <lightning-combobox
+                                required={require_fields.Citizenship}
+                                label={field_labels.citizenship_label}
+                                options={citizenship_picklist_values}
+                                aria-label="Citizenship"
+                                onchange={onChange}
+                        >
+                        </lightning-combobox>
                     </div>
                 </template>
                 <template if:true={show_fields.Academic_Interest}>
-                    <template if:true={is_undergraduate}>
-                        <div class="slds-grid slds-gutters_medium">
-                            <div class="slds-col">
-                                <lightning-dual-listbox
-                                        required={require_fields.Academic_Interest}
-                                        label={field_labels.academic_interest_label}
-                                        source-label="Available"
-                                        selected-label="Selected"
-                                        options={academic_interest_picklist_values}
-                                        aria-label="Academic Interest"
-                                        onchange={onChange}
-                                        max="4"
-                                        field-level-help="">
-                                </lightning-dual-listbox>
-                            </div>
-                        </div>
-                    </template>
-                    <template if:false={is_undergraduate}>
-                        <div class="slds-grid slds-gutters_medium">
-                            <div class="slds-col">
-                                <lightning-combobox
-                                        required={require_fields.Academic_Interest}
-                                        label={field_labels.academic_interest_label}
-                                        options={academic_interest_picklist_values}
-                                        aria-label="Academic Interest"
-                                        onchange={onChange}>
-                                </lightning-combobox>
-                            </div>
-                        </div>
-                    </template>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium slds-m-bottom_medium field-academic-interest">
+                        <lightning-dual-listbox
+                                required={require_fields.Academic_Interest}
+                                label={field_labels.academic_interest_label}
+                                source-label="Available"
+                                selected-label="Selected"
+                                options={academic_interest_picklist_values}
+                                aria-label="Academic Interest"
+                                onchange={onChange}
+                                max="4"
+                                field-level-help=""
+                                variant="label-stacked"
+                                disable-reordering="true"
+                        >
+                        </lightning-dual-listbox>
+                    </div>
                 </template>
                 <template if:true={show_fields.Title}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-input
-                                    required={require_fields.Title}
-                                    type="text"
-                                    label={field_labels.title_label}
-                                    aria-label="Title"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-title">
+                        <lightning-input
+                                required={require_fields.Title}
+                                type="text"
+                                label={field_labels.title_label}
+                                aria-label="Title"
+                                onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_0-of-1 slds-medium-size_1-of-2">
                     </div>
                 </template>
-                <div class="slds-grid slds-gutters_medium">
-                    <div class="slds-col slds-size_1-of-2">
-                        <lightning-input
-                                required="true"
-                                type="text"
-                                label={field_labels.first_name_label}
-                                aria-label="First Name"
-                                onchange={onChange}>
-                        </lightning-input>
-                    </div>
-                    <div class="slds-col slds-size_1-of-2">
-                        <lightning-input
-                                required="true"
-                                type="text"
-                                label={field_labels.last_name_label}
-                                aria-label="Last Name"
-                                onchange={onChange}>
-                        </lightning-input>
-                    </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium filed-first-name">
+                    <lightning-input
+                            required="true"
+                            type="text"
+                            label={field_labels.first_name_label}
+                            aria-label="First Name"
+                            onchange={onChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium filed-last-name">
+                    <lightning-input
+                            required="true"
+                            type="text"
+                            label={field_labels.last_name_label}
+                            aria-label="Last Name"
+                            onchange={onChange}>
+                    </lightning-input>
                 </div>
                 <template if:true={show_fields.Email}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-input
-                                    required={require_fields.Email}
-                                    type="email"
-                                    label={field_labels.email_label}
-                                    aria-label="Email"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-email">
+                        <lightning-input
+                                required={require_fields.Email}
+                                type="email"
+                                label={field_labels.email_label}
+                                aria-label="Email"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.Home_and_Mobile_Phone}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-input
-                                    required={require_fields.Home_Phone}
-                                    type="tel"
-                                    label={field_labels.home_phone_label}
-                                    aria-label="Home Phone"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-input
-                                    required={require_fields.Mobile_Phone}
-                                    type="tel"
-                                    label={field_labels.mobile_phone_label}
-                                    aria-label="Mobile Phone"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-home-home">
+                        <lightning-input
+                                required={require_fields.Home_Phone}
+                                type="tel"
+                                label={field_labels.home_phone_label}
+                                aria-label="Home Phone"
+                                onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-mobile-phone">
+                        <lightning-input
+                                required={text_message_requested}
+                                type="tel"
+                                label={field_labels.mobile_phone_label}
+                                aria-label="Mobile Phone"
+                                onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                </template>
+                <template if:true={show_fields.Phone}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-home-home">
+                        <lightning-input
+                                required={text_message_requested}
+                                type="tel"
+                                label={field_labels.phone_label}
+                                aria-label="Phone"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.I_would_like_to_receive_text_messages}>
-                    <div class="slds-grid slds-gutters_medium slds-p-top_xx-small">
-                        <div class="slds-col">
-                            <lightning-input
-                                    type="checkbox"
-                                    label={field_labels.text_messages_label}
-                                    aria-label="I would like to receive text messages"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium slds-p-top_large field-text-message">
+                        <lightning-input
+                                type="checkbox"
+                                label={field_labels.text_messages_label}
+                                aria-label="I would like to receive text messages"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.Birthdate}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-input
-                                    required={require_fields.Birthdate}
-                                    type="date"
-                                    label={field_labels.birthdate_label}
-                                    aria-label="Birthday (MM/DD/YYYY)"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-birthdate">
+                        <lightning-input
+                                required={require_fields.Birthdate}
+                                type="date"
+                                label={field_labels.birthdate_label}
+                                aria-label="Birthday (MM/DD/YYYY)"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.Employer}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-input
-                                    required={require_fields.Employer}
-                                    type="text"
-                                    label={field_labels.employer_label}
-                                    aria-label="Employer"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-employer">
+                        <lightning-input
+                                required={require_fields.Employer}
+                                type="text"
+                                label={field_labels.employer_label}
+                                aria-label="Employer"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.Expected_Start_Term_at_St_Thomas}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-combobox
-                                    required={require_fields.Expected_Start_Term_at_St_Thomas}
-                                    label={field_labels.academic_term_label}
-                                    options={academic_term_picklist_values}
-                                    aria-label="Academic Term"
-                                    onchange={onChange}>
-                            </lightning-combobox>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-term">
+                        <lightning-combobox
+                                required={require_fields.Expected_Start_Term_at_St_Thomas}
+                                label={field_labels.academic_term_label}
+                                options={academic_term_picklist_values}
+                                aria-label="Academic Term"
+                                onchange={onChange}
+                        >
+                        </lightning-combobox>
                     </div>
                 </template>
                 <template if:true={show_fields.Timeline_to_Enrollment}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-combobox
-                                    required={require_fields.Timeline_to_Enrollment}
-                                    label={field_labels.timeline_label}
-                                    options={timeline_picklist_values}
-                                    aria-label="Timeline to Enrollment"
-                                    onchange={onChange}>
-                            </lightning-combobox>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-time-to-enroll">
+                        <lightning-combobox
+                                required={require_fields.Timeline_to_Enrollment}
+                                label={field_labels.timeline_label}
+                                options={timeline_picklist_values}
+                                aria-label="Timeline to Enrollment"
+                                onchange={onChange}
+                        >
+                        </lightning-combobox>
                     </div>
                 </template>
                 <template if:true={show_fields.High_School_Attended}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <template if:false={manually_enter_high_school}>
-                                <div>
-                                    <lightning-input
-                                            required={require_fields.High_School_Attended}
-                                            type="search"
-                                            label={field_labels.high_school_search_label}
-                                            aria-label="High School Attended"
-                                            placeholder="Begin typing..."
-                                            onchange={handleSearch}
-                                            data-id="high_school">
-                                    </lightning-input>
-                                </div>
-                                <template if:true={high_school_data}>
-                                    <div class="slds-scrollable_y slds-p-bottom_xx-small" style="max-height:120px">
-                                        <lightning-datatable
-                                                hide-table-header
-                                                column-widths-mode="fixed"
-                                                data={high_school_search_results}
-                                                columns={high_school_columns}
-                                                key-field="id"
-                                                max-row-selection="1"
-                                                onrowselection={onChange}
-                                                name={field_labels.high_school_datatable_name}>
-                                        </lightning-datatable>
-                                    </div>
-                                </template>
-                            </template>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-high-school">
+                        <template if:false={manually_enter_high_school}>
+                            <c-reusable-lookup
+                                    label={field_labels.high_school_search_label}
+                                    selected-icon-name="standard:account"
+                                    object-label=""
+                                    object-api-name="Account"
+                                    field-api-name="Name"
+                                    other-field-api-name="BillingCity,BillingState"
+                                    onvalueselected={onChange}
+                                    required={require_fields.High_School_Attended}
+                                    record-type-name='Educational Institution'
+                                    placeholder='Begin typing...'
+                                    type="High School"
+                            >
+                            </c-reusable-Lookup>
+                        </template>
 
-                            <template if:true={manually_enter_high_school}>
-                                <lightning-input
-                                        required={require_fields.High_School_Attended}
-                                        type="text"
-                                        label={field_labels.high_school_search_label}
-                                        aria-label="High School Attended"
-                                        onchange={onChange}
-                                        placeholder="Enter High School name">
-                                </lightning-input>
-                            </template>
-                            <div class="slds-p-top_xx-small">
-                                <lightning-input
-                                        type="checkbox"
-                                        label={field_labels.high_school_not_found_label}
-                                        aria-label="I can't find my High School"
-                                        onchange={onChange}>
-                                </lightning-input>
-                            </div>
+                        <template if:true={manually_enter_high_school}>
+                            <lightning-input
+                                    required={require_fields.High_School_Attended}
+                                    type="text"
+                                    label={field_labels.high_school_search_label}
+                                    aria-label="High School Attended"
+                                    onchange={onChange}
+                                    placeholder="Enter High School name">
+                            </lightning-input>
+                        </template>
+                        <div class="slds-p-top_xx-small">
+                            <lightning-input
+                                    type="checkbox"
+                                    label={field_labels.high_school_not_found_label}
+                                    aria-label="I can't find my High School"
+                                    onchange={onChange}>
+                            </lightning-input>
                         </div>
                     </div>
                 </template>
                 <template if:true={show_fields.High_School_Graduation_Year}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-input
-                                    required={require_fields.High_School_Graduation_Year}
-                                    type="text"
-                                    label={field_labels.high_school_graduation_year_label}
-                                    aria-label="High School Graduation (YYYY)"
-                                    onchange={onChange}
-                                    pattern="^[0-9]{4}$"
-                                    message-when-pattern-mismatch="Please enter a 4-digit year.">
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-grad-year">
+                        <lightning-input
+                                required={require_fields.High_School_Graduation_Year}
+                                type="text"
+                                label={field_labels.high_school_graduation_year_label}
+                                aria-label="High School Graduation (YYYY)"
+                                onchange={onChange}
+                                pattern="^[0-9]{4}$"
+                                message-when-pattern-mismatch="Please enter a 4-digit year.">
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.Address_1}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-input
-                                    required={require_fields.Address_1}
-                                    type="text"
-                                    label={field_labels.address1_label}
-                                    aria-label="Address 1"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium field-address1">
+                        <lightning-input
+                                required={require_fields.Address_1}
+                                type="text"
+                                label={field_labels.address1_label}
+                                aria-label="Address 1"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.Address_2}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-input
-                                    type="text"
-                                    label={field_labels.address2_label}
-                                    aria-label="Address 2"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium field-address2">
+                        <lightning-input
+                                type="text"
+                                label={field_labels.address2_label}
+                                aria-label="Address 2"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.Address_3}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-input
-                                    type="text"
-                                    label={field_labels.address3_label}
-                                    aria-label="Address 3"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium field-address3">
+                        <lightning-input
+                                type="text"
+                                label={field_labels.address3_label}
+                                aria-label="Address 3"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
-                <div class="slds-grid slds-gutters_medium">
-                    <template if:true={show_fields.Zipcode}>
-                        <div class="slds-col slds-size_1-of-2">
+                <template if:true={show_fields.Zipcode}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-zip">
+                        <lightning-input
+                                required={require_fields.Zipcode}
+                                type="text"
+                                label={field_labels.zipcode_label}
+                                aria-label="Zip Code"
+                                onchange={onChange}>
+                        </lightning-input>
+                    </div>
+                </template>
+                <template if:true={show_fields.City}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-city">
+                        <lightning-input
+                                required={require_fields.City}
+                                type="text"
+                                label={field_labels.city_label}
+                                aria-label="City"
+                                onchange={onChange}
+                                data-id="city">
+                        </lightning-input>
+                    </div>
+                </template>
+                <template if:true={show_fields.State}>
+                    <template if:true={international_citizen_type}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-state">
                             <lightning-input
-                                    required={require_fields.Zipcode}
+                                    required={require_fields.State}
                                     type="text"
-                                    label={field_labels.zipcode_label}
-                                    aria-label="Zip Code"
+                                    label={field_labels.region_label}
+                                    aria-label="Region, Province, or State"
+                                    placeholder="Enter a region, province, or state..."
                                     onchange={onChange}>
                             </lightning-input>
                         </div>
                     </template>
-                    <template if:true={show_fields.City}>
-                        <div class="slds-col slds-size_1-of-2">
-                            <lightning-input
-                                    required={require_fields.City}
-                                    type="text"
-                                    label={field_labels.city_label}
-                                    aria-label="City"
-                                    onchange={onChange}
-                                    data-id="city">
-                            </lightning-input>
-                        </div>
-                    </template>
-                </div>
-                <div class="slds-grid slds-gutters_medium">
-                    <template if:true={show_fields.State}>
-                        <template if:true={international_citizen_type}>
-                            <div class="slds-col slds-size_1-of-2">
-                                <lightning-input
-                                        required={require_fields.State}
-                                        type="text"
-                                        label={field_labels.region_label}
-                                        aria-label="Region, Province, or State"
-                                        placeholder="Enter a region, province, or state..."
-                                        onchange={onChange}>
-                                </lightning-input>
-                            </div>
-                        </template>
-                        <template if:false={international_citizen_type}>
-                            <div class="slds-col slds-size_1-of-2">
-                                <lightning-combobox
-                                        required={require_fields.State}
-                                        label={field_labels.state_label}
-                                        options={stateOptions}
-                                        aria-label="State"
-                                        placeholder="Select a state..."
-                                        onchange={onChange}
-                                        data-id="state">
-                                </lightning-combobox>
-                            </div>
-                        </template>
-                    </template>
-                    <template if:true={show_fields.Country}>
-                        <div class="slds-col slds-size_1-of-2">
+                    <template if:false={international_citizen_type}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-state">
                             <lightning-combobox
-                                    required={require_fields.Country}
-                                    label={field_labels.country_label}
-                                    options={country_picklist_values}
-                                    aria-label="Country"
-                                    placeholder="Select a country..."
+                                    required={require_fields.State}
+                                    label={field_labels.state_label}
+                                    options={state_picklist_values}
+                                    aria-label="State"
+                                    placeholder="Select a state..."
                                     onchange={onChange}
-                                    data-id="country">
+                                    data-id="state"
+                            >
                             </lightning-combobox>
                         </div>
                     </template>
-                </div>
+                </template>
+                <template if:true={show_fields.Country}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-country">
+                        <lightning-combobox
+                                required={require_fields.Country}
+                                label={field_labels.country_label}
+                                options={country_picklist_values}
+                                aria-label="Country"
+                                placeholder="Select a country..."
+                                onchange={onChange}
+                                data-id="country"
+                        >
+                        </lightning-combobox>
+                    </div>
+                </template>
+                <template if:true={show_fields.Scholarship_of_Interest}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-scholarship">
+                        <lightning-combobox
+                                required={require_fields.Scholarship_of_Interest}
+                                label={field_labels.scholarship_of_interest}
+                                options={scholarship_picklist}
+                                aria-label="Select a Scholarship"
+                                placeholder="Select a Scholarship..."
+                                onchange={onChange}
+                        >
+                        </lightning-combobox>
+                    </div>
+                </template>
+                <template if:true={show_fields.How_did_you_hear_about_us}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-heard-about">
+                        <lightning-combobox
+                                required={require_fields.How_did_you_hear_about_us}
+                                label={field_labels.how_did_you_hear_about_us}
+                                options={heard_about_us_picklist}
+                                aria-label="Select..."
+                                placeholder="Select..."
+                                onchange={onChange}
+                        >
+                        </lightning-combobox>
+                    </div>
+                </template>
                 <template if:true={show_fields.I_would_like_program_information_to_be_mailed_to_me}>
-                    <div class="slds-grid slds-gutters_medium slds-p-top_x-small">
-                        <div class="slds-col">
-                            <lightning-input
-                                    type="checkbox"
-                                    label={field_labels.mail_info_label}
-                                    aria-label="I would like program information to be mailed to me"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-info">
+                        <lightning-input
+                                type="checkbox"
+                                label={field_labels.mail_info_label}
+                                aria-label="I would like program information to be mailed to me"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.I_have_a_question}>
-                    <div class="slds-grid slds-gutters_medium slds-p-top_x-small">
-                        <div class="slds-col">
-                            <lightning-input
-                                    required={require_fields.I_have_a_question}
-                                    type="checkbox"
-                                    label={field_labels.has_question_label}
-                                    aria-label="I have a question"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-question">
+                        <lightning-input
+                                required={require_fields.I_have_a_question}
+                                type="checkbox"
+                                label={field_labels.has_question_label}
+                                aria-label="I have a question"
+                                onchange={onChange}>
+                        </lightning-input>
                     </div>
                 </template>
                 <template if:true={show_fields.Description}>
-                    <div class="slds-grid slds-gutters_medium">
-                        <div class="slds-col">
-                            <lightning-input
-                                    type="text"
-                                    label={field_labels.description_label}
-                                    aria-label="Questions and Comments"
-                                    onchange={onChange}>
-                            </lightning-input>
-                        </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-description">
+                        <lightning-textarea
+                                label={field_labels.description_label}
+                                aria-label="Questions and Comments"
+                                onchange={onChange}>
+                        </lightning-textarea>
                     </div>
                 </template>
-            </div>
-
-            <div class="slds-grid slds-gutters_medium">
-                <div class="slds-col slds-size_1-of-12">
-                    <div class="slds-m-left_medium slds-m-top_medium">
+                <template if:true={show_fields.Tell_us_about_yourself}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-description">
+                        <lightning-textarea
+                                label={field_labels.tell_us_about_yourself}
+                                aria-label="Tell us about yourself"
+                                onchange={onChange}>
+                        </lightning-textarea>
+                    </div>
+                </template>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2">
+                    <div class="slds-m-left_medium slds-m-top_medium field-submit">
                         <lightning-button
                                 variant="brand"
                                 label="Submit"
@@ -433,11 +430,11 @@
                         </lightning-button>
                     </div>
                 </div>
-            </div>
-        </template>
+            </template>
 
-        <template if:true={form_submitted_successfully}>
-            <div class="slds-text-heading_large slds-align_absolute-center">Thank you! You will receive information shortly.</div>
-        </template>
+            <template if:true={form_submitted_successfully}>
+                <div class="slds-text-heading_large slds-align_absolute-center thank-you-message">Thank you! You will receive information shortly.</div>
+            </template>
+        </div>
     </lightning-card>
 </template>

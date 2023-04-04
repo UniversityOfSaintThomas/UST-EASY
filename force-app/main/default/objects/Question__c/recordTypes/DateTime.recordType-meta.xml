@@ -2262,6 +2262,57 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Picklist_Value_Sets__c</picklist>
+        <values>
+            <fullName>Activity_Types%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Athlete Type</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Citizenship Type</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Clubs and Organizations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College of Interest</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intermural Club Sports</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>License Area</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Music</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residency Types</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>State</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Student Type</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Varsity Sports</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Required__c</picklist>
         <values>
             <fullName>Admit</fullName>

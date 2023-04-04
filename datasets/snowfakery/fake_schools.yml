@@ -22,7 +22,7 @@
     BillingState:
       fake: State
     BillingCountry:
-      fake: country
+      fake: CurrentCountry
     Industry: Education
     Type: College
     RecordType: Educational_Institution
@@ -51,7 +51,7 @@
     BillingState:
       fake: State
     BillingCountry:
-      fake: country
+      fake: CurrentCountry
     Industry: Education
     Type: High School
     RecordType: Educational_Institution

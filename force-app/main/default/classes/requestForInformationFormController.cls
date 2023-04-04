@@ -23,6 +23,9 @@ public without sharing class requestForInformationFormController {
                 if (sObjField == null) {
                     continue;
                 }
+                if (field.startsWith('utm_') && String.isNotEmpty((String) objMap.get(field))) {
+                    sobj.put(field, objMap.get(field).toString().escapeHtml4());
+                }
                 if (objMap.get(field) == null) {
                     sobj.put(field, null);
                 } else {
@@ -71,6 +74,7 @@ public without sharing class requestForInformationFormController {
                             Citizenship_Type__c,
                             Fields_to_Display__c,
                             Required_Fields__c,
+                            Academic_Interests_To_Display__c,
                             Lead_Owner__c,
                             Redirect_URL__c,
                             Hide_Form_Title__c,
@@ -86,23 +90,47 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static Map<Id, Program__c> getPrograms(String academic_level, String school_college) {
+    public static List<String> getProgramIds(String academic_interest_codes) {
+        System.debug('ACADEMIC INTEREST CODES: ' + academic_interest_codes);
+        List<String> programIds = new List<Id>();
+        academic_interest_codes = academic_interest_codes.escapeHtml4();
+        List<String> programCodes = academic_interest_codes.split(';');
+        List<Program__c> programs = [
+                SELECT Id
+                FROM Program__c
+                WHERE Program_Major_Concentration__c IN :programCodes
+                AND RecordType.DeveloperName = 'Recruitment_Program'
+                AND Program_Display__c INCLUDES ('RFI')
+                AND Active__c = TRUE
+        ];
+        System.debug(JSON.serializePretty(programs));
+        for (Program__c p : programs) {
+            programIds.add(p.Id);
+        }
+        return programIds;
+    }
+
+    @AuraEnabled(Cacheable=true)
+    public static Map<Id, Program__c> getPrograms(String academic_level, String school_college, String academic_interest_codes) {
         try {
-            Id recruitment_program_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Recruitment_Program').getRecordTypeId();
             String query_string =
+                    //Student type buckets
                     'SELECT ' +
                             'Id, ' +
                             'Name, ' +
-                            'Degree__c ' +
+                            'Program_Name_on_Application__c, ' +
+                            'Student_Type__c, ' +
+                            'Degree__c, ' +
+                            'Program_Major_Concentration__c ' +
                             'FROM Program__c ' +
-                            'WHERE RecordTypeId = \'' + recruitment_program_id + '\' ' +
+                            'WHERE RecordType.DeveloperName = \'Recruitment_Program\' ' +
                             'AND Program_Display__c INCLUDES (\'RFI\') ' +
                             'AND Active__c = true';
-
-            if (academic_level == 'U') {
-                query_string += ' AND Academic_Level__c = \'U\' AND (Program_Type__c INCLUDES (\'Major\') OR Program_Type__c INCLUDES (\'Pre-Professional\'))';
+            if (academic_level == 'U' || academic_level == 'Undergraduate') {
+                query_string += ' AND (Academic_Level__c = \'Undergraduate\' OR Academic_Level__c = \'U\') ';
+                query_string += ' AND (Program_Type__c INCLUDES (\'Major\') OR Program_Type__c INCLUDES (\'Pre-Professional\'))';
             } else {
-                query_string += ' AND Academic_Level__c != \'U\'';
+                query_string += ' AND (Academic_Level__c = \'Graduate\' OR Academic_Level__c = \'G\')  ';
                 if (!String.isBlank(school_college)) {
                     query_string += ' AND Associated_Schools__c INCLUDES (\'' + school_college + '\')';
                 }
@@ -110,8 +138,17 @@ public without sharing class requestForInformationFormController {
                     query_string += ' AND Banner_Program_Code__c LIKE \'LW_%\'';
                 }
             }
-            query_string += ' ORDER BY Name';
+
+            if (String.isNotBlank(academic_interest_codes)) {
+                academic_interest_codes = academic_interest_codes.escapeHtml4();
+                List<String> academicCodes = academic_interest_codes.split(';');
+                query_string += ' AND Program_Major_Concentration__c IN :academicCodes ';
+            }
+            query_string += ' ORDER BY Program_Name_on_Application__c';
+            System.debug('PROGRAM QUERY: ');
+            System.debug(query_string);
             List<Program__c> programs = Database.query(query_string);
+            System.debug(JSON.serializePretty(programs));
             return new Map<Id, Program__c>(programs);
         } catch (Exception e) {
             throw new AuraHandledException('Error retrieving programs: ' + e.getMessage());
@@ -139,36 +176,6 @@ public without sharing class requestForInformationFormController {
             return terms;
         } catch (Exception e) {
             throw new AuraHandledException('Error retrieving terms: ' + e.getMessage());
-        }
-    }
-
-    @AuraEnabled
-    public static Map<Id, Account> searchHighSchools(String search_term) {
-        try {
-            Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-            Map<Id, Account> high_school_map = new Map<Id, Account>();
-            List<List<Account>> high_schools = [
-                    FIND :search_term
-                    IN NAME FIELDS
-                    RETURNING Account(
-                            Id,
-                                    Name,
-                                    BillingCity,
-                                    BillingState,
-                                    BillingCountry
-                            WHERE Type = :'High School'
-                            AND RecordTypeId = :educational_institution_id
-                            ORDER BY Name
-                    )
-            ];
-            for (List<Account> account_list : high_schools) {
-                for (Account high_school : account_list) {
-                    high_school_map.put(high_school.Id, high_school);
-                }
-            }
-            return high_school_map;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
         }
     }
 
@@ -207,46 +214,76 @@ public without sharing class requestForInformationFormController {
     public static String getSchoolCollegeAccount(String school_college_name) {
         try {
             String school_college_id = '';
-            Id administrative_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Administrative').getRecordTypeId();
             List<Account> school_college_accounts = [
                     SELECT Id
                     FROM Account
                     WHERE Name = :school_college_name
-                    AND RecordTypeId = :administrative_id
+                    AND RecordType.DeveloperName = 'University_Department'
                     AND Banner_Key__c LIKE 'STVCOLL-%'
+                    AND Name != 'other'
             ];
             if (school_college_accounts.size() > 0) {
                 school_college_id = school_college_accounts[0].Id;
             }
             return school_college_id;
         } catch (Exception e) {
-            return '';
+            return null;
         }
     }
 
     @AuraEnabled
-    public static Id getRecruitmentProgram(String academic_level, String citizenship_type, String admit_type) {
-        try {
-            Id academic_program_RT_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Academic_Program').getRecordTypeId();
-            String program_name = '';
-            if (academic_level == 'U') {
-                if (admit_type == 'Transfer') {
-                    if (citizenship_type == 'International') {
-                        program_name = 'Undergraduate Transfer (INTL)';
-                    } else {
-                        program_name = 'Undergraduate Transfer';
-                    }
+    public static Id getRecruitmentProgram(String academic_level, String citizenship_type, String admit_type, String major_id, String school_name) {
+        String program_name = '';
+        String program_code = 'AS_UN_BA';
+        System.debug('SCHOOL_NAME: ' + school_name);
+        System.debug('ACADEMIC_LEVEL: ' + academic_level);
+        System.debug('MAJOR ID: ' + major_id);
+        System.debug('CITIZENSHIP TYPE: ' + citizenship_type);
+        if (academic_level == 'U' || academic_level == 'Undergraduate') {
+            if (admit_type == 'Transfer') {
+                if (citizenship_type == 'International') {
+                    program_name = 'Undergraduate Transfer (INTL)';
                 } else {
-                    program_name = 'Undergraduate First-Year';
+                    program_name = 'Undergraduate Transfer';
                 }
-            }
-            if (program_name != '') {
-                return [SELECT Id FROM Program__c WHERE Name = :program_name AND Program_Major_Concentration__c = 'AS_UN_BA' AND RecordTypeId = :academic_program_RT_id LIMIT 1].Id;
+            } else if (school_name.equalsIgnoreCase('Dougherty Family College')) {
+                program_name = 'Dougherty Family College';
+                program_code = 'DC_UG_AA|LIBA';
             } else {
-                return '';
+                program_name = 'Undergraduate First-Year';
             }
-        } catch (Exception e) {
-            return '';
+        }
+        List<Program__c> academicPrograms = new List<Program__c>();
+        if (String.isNotBlank(program_name) && String.isNotBlank(program_code)) {
+            academicPrograms = [
+                    SELECT Id
+                    FROM Program__c
+                    WHERE Name = :program_name
+                    AND Program_Major_Concentration__c = :program_code
+                    AND RecordType.DeveloperName = 'Academic_Program'
+                    LIMIT 1
+            ];
+        } else if (String.isNotEmpty(major_id)) {
+            Program__c programRecruitment = [
+                    SELECT
+                            Id, Name, Program_Major_Concentration__c
+                    FROM Program__c
+                    WHERE Id = :major_id
+            ];
+            if (programRecruitment != null) {
+                academicPrograms = [
+                        SELECT Id
+                        FROM Program__c
+                        WHERE Program_Major_Concentration__c = :programRecruitment.Program_Major_Concentration__c
+                        AND RecordType.DeveloperName = 'Academic_Program'
+                        LIMIT 1
+                ];
+            }
+        }
+        if (academicPrograms.size() > 0) {
+            return academicPrograms[0].Id;
+        } else {
+            return null;
         }
     }
 }

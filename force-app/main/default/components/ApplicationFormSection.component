@@ -44,7 +44,7 @@
 
         <apex:outputPanel id="questionGroupWrapper" layout="block">
 
-            <apex:actionRegion>
+            <apex:actionRegion >
 
                 <!-- REGULAR GROUP QUESTIONS - questionGroup -->
                 <apex:outputPanel id="questionGroup" rendered="{!group.questionGroup && !group.isInternal}" layout="block">
@@ -141,7 +141,7 @@
             <!-- CREATE REFERENCE RECORD -->
             <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
                     <p>You haven't created any records yet. Click "New Record" to create one.</p>
@@ -159,7 +159,6 @@
                             <apex:repeat value="{!group.questions}" var="question">
                                 <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
                                 <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="none">
-
                                     <!--THIS DISPLAYS WHEN RECORD HAS BEEN ENTERED -->
                                     <apex:outputPanel layout="none" rendered="{!!rr.isEditMode}">
                                         <dl class="slds-list_horizontal slds-wrap slds-border_bottom slds-p-vertical_x-small">
@@ -167,6 +166,7 @@
                                                 {!question.question.Label__c} {!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}
                                             </dt>
 
+                                            {!rr.obj['Name']}
                                             <dd class="slds-item_detail slds-truncate" title="Description for first label">
 
                                                 <!-- <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address'}"/>-->
@@ -299,7 +299,7 @@
             <!-- CREATE NEW RELATED RECORD -->
             <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
                     <apex:variable value="{!itemNumber+1}" var="itemNumber"/>

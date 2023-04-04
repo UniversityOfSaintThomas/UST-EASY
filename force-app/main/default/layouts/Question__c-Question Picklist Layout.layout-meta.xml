@@ -85,6 +85,10 @@
                 <behavior>Edit</behavior>
                 <field>Assistive_Text__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Picklist_Value_Sets__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

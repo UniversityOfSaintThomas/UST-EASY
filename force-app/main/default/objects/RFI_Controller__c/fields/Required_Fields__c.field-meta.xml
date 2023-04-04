@@ -47,6 +47,11 @@
                 <label>City</label>
             </value>
             <value>
+                <fullName>College Attended</fullName>
+                <default>false</default>
+                <label>College Attended</label>
+            </value>
+            <value>
                 <fullName>Country</fullName>
                 <default>false</default>
                 <label>Country</label>
@@ -82,6 +87,11 @@
                 <label>Home Phone</label>
             </value>
             <value>
+                <fullName>How did you hear about us</fullName>
+                <default>false</default>
+                <label>How did you hear about us</label>
+            </value>
+            <value>
                 <fullName>I will apply to St Thomas as a</fullName>
                 <default>false</default>
                 <label>I will apply to St Thomas as a</label>
@@ -97,9 +107,29 @@
                 <label>Mobile Phone</label>
             </value>
             <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>Scholarship of Interest</fullName>
+                <default>false</default>
+                <label>Scholarship of Interest</label>
+            </value>
+            <value>
                 <fullName>State</fullName>
                 <default>false</default>
                 <label>State</label>
+            </value>
+            <value>
+                <fullName>St Thomas Colleges</fullName>
+                <default>false</default>
+                <label>St Thomas Colleges</label>
+            </value>
+            <value>
+                <fullName>Tell us about yourself</fullName>
+                <default>false</default>
+                <label>Tell us about yourself</label>
             </value>
             <value>
                 <fullName>Timeline to Enrollment</fullName>

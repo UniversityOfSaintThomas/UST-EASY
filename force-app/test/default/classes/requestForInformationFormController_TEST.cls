@@ -13,7 +13,7 @@ public class requestForInformationFormController_TEST {
                 Academic_Level__c = 'U',
                 Fields_to_Display__c = 'Email',
                 Required_Fields__c = 'Email',
-                Redirect_Url__c = 'https://developer.salesforce.com',
+                Redirect_URL__c = 'https://developer.salesforce.com',
                 School_College__c = 'Undergraduate'
         );
         insert controller;
@@ -29,7 +29,9 @@ public class requestForInformationFormController_TEST {
                 Academic_Level__c = 'U',
                 Associated_Schools__c = 'Undergraduate',
                 Program_Type__c = 'Major'
+
         );
+
         programs_to_insert.add(program1);
         Program__c program2 = new Program__c(
                 Name = 'JD',
@@ -39,7 +41,9 @@ public class requestForInformationFormController_TEST {
                 Program_Display__c = 'RFI',
                 Academic_Level__c = 'G',
                 Associated_Schools__c = 'School of Law',
-                Banner_Program_Code__c = 'LW_JD'
+                Banner_Program_Code__c = 'LW_JD',
+                Major_Code__c = 'JD',
+                Concentration_Code__c = 'JD2'
         );
         programs_to_insert.add(program2);
         insert programs_to_insert;
@@ -47,7 +51,7 @@ public class requestForInformationFormController_TEST {
         List<Account> accounts_to_insert = new List<Account>();
         List<Id> search_results = new List<Id>();
         Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-        Id administrative_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Administrative').getRecordTypeId();
+        Id administrative_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('University_Department').getRecordTypeId();
         Account high_school1 = new Account(
                 Name = 'Test High School',
                 RecordTypeId = educational_institution_id,
@@ -86,15 +90,15 @@ public class requestForInformationFormController_TEST {
         insert term1;
 
         Academic_Term__c academic_term = new Academic_Term__c(
-            Term__c = term1.Id,
-            Name = 'Spring 2024',
-            Term_Start_Date__c = System.today()
+                Term__c = term1.Id,
+                Name = 'Spring 2024',
+                Term_Start_Date__c = System.today()
         );
         insert academic_term;
 
     }
 
-    @isTest
+    @IsTest
     public static void testCreateLead() {
         String record_input_fields = '{"FirstName":"Testing","LastName":"CreateLead","Company":"Company 123"}';
         Test.startTest();
@@ -105,7 +109,7 @@ public class requestForInformationFormController_TEST {
 
     }
 
-    @isTest
+    @IsTest
     public static void testCreateBadLead() {
         String record_input_fields = '{"FirstName":"","LastName":"","Company":""}';
         Test.startTest();
@@ -115,56 +119,46 @@ public class requestForInformationFormController_TEST {
         System.assertEquals(0, new_lead.size());
     }
 
-    @isTest
+    @IsTest
     public static void testGetRFIController() {
         RFI_Controller__c rfic = [SELECT Name FROM RFI_Controller__c];
         Test.startTest();
+
         RFI_Controller__c controller = requestForInformationFormController.getRFIController(rfic.Name);
-        Test.stopTest();
         System.assertEquals('U', controller.Academic_Level__c);
+
+        Exception capturedException;
+        try {
+            RFI_Controller__c controller2 = requestForInformationFormController.getRFIController('Bad Name');
+        } catch (AuraHandledException e) {
+            capturedException = e;
+        }
+        System.assertNotEquals(null, capturedException, 'Exception should be thrown');
+        System.assertEquals(AuraHandledException.class.getName(), capturedException.getTypeName(), 'AuraHandledException is expected');
+        System.assertEquals('Script-thrown exception', capturedException.getMessage(), 'Specific error message is expected');
+
+        Test.stopTest();
     }
 
-    @isTest
+    @IsTest
     public static void testGetPrograms() {
         Test.startTest();
-        Map<Id, Program__c> program_map1 = requestForInformationFormController.getPrograms('U', 'Undergraduate');
-        Map<Id, Program__c> program_map2 = requestForInformationFormController.getPrograms('G', 'School of Law');
+        Map<Id, Program__c> program_map1 = requestForInformationFormController.getPrograms('U', 'Undergraduate', '');
+        Map<Id, Program__c> program_map2 = requestForInformationFormController.getPrograms('G', 'School of Law', '');
         Test.stopTest();
         System.assertEquals(1, program_map1.size());
         System.assertEquals(1, program_map2.size());
     }
 
-    @isTest
-    public static void testSearchHighSchools() {
-        List<Account> accounts_to_insert = new List<Account>();
-        List<Id> search_results = new List<Id>();
-        Id educational_institution_id = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Educational_Institution').getRecordTypeId();
-
-        Account high_school1 = new Account(
-                Name = 'Test High School',
-                RecordTypeId = educational_institution_id,
-                Type = 'High School'
-        );
-        accounts_to_insert.add(high_school1);
-        Account high_school2 = new Account(
-                Name = 'New High School',
-                RecordTypeId = educational_institution_id,
-                Type = 'High School'
-        );
-        accounts_to_insert.add(high_school2);
-        insert accounts_to_insert;
-
-        search_results.add(high_school1.Id);
-        search_results.add(high_school2.Id);
-        Test.setFixedSearchResults(search_results);
-
+    @IsTest
+    public static void testGetProgramsWithPreselectedAcademicInterest() {
         Test.startTest();
-        Map<Id, Account> high_schools = requestForInformationFormController.searchHighSchools('High');
+        Map<Id, Program__c> program_map2 = requestForInformationFormController.getPrograms('G', 'School of Law', 'LW_JD|JD|JD2;LW_JD2|JD2|JD2');
         Test.stopTest();
-        System.assertEquals(2, high_schools.size());
+        System.assertEquals(1, program_map2.size());
     }
 
-    @isTest
+    @IsTest
     public static void testGetTerms() {
         Test.startTest();
         Map<Id, Academic_Term__c> terms = requestForInformationFormController.getTerms('School of Law');
@@ -172,7 +166,7 @@ public class requestForInformationFormController_TEST {
         System.assertEquals(1, terms.size());
     }
 
-    @isTest
+    @IsTest
     public static void testGetAcademicLevelValue() {
         Test.startTest();
         String value = requestForInformationFormController.getAcademicLevelValue('U');
@@ -180,7 +174,7 @@ public class requestForInformationFormController_TEST {
         System.assertEquals('Undergraduate', value);
     }
 
-    @isTest
+    @IsTest
     public static void testGetPresetValues() {
         Test.startTest();
         List<Lead_Preset_Value__mdt> presets = requestForInformationFormController.getPresetValues('RFI Controller 0000');
@@ -188,7 +182,7 @@ public class requestForInformationFormController_TEST {
         System.assertEquals(0, presets.size());
     }
 
-    @isTest
+    @IsTest
     public static void testGetSchoolCollegeAccount() {
         Test.startTest();
         String school_id = requestForInformationFormController.getSchoolCollegeAccount('School of Law');
@@ -198,27 +192,40 @@ public class requestForInformationFormController_TEST {
     }
 
     @IsTest
+    public static void testGetProgramIds() {
+        Test.startTest();
+        List<Id> school_ids = requestForInformationFormController.getProgramIds('LW_JD|JD|JD2');
+        System.debug(school_ids);
+        Test.stopTest();
+        String school_id = Id.valueOf([SELECT Id FROM Program__c WHERE Program_Major_Concentration__c = 'LW_JD|JD|JD2'].Id);
+        System.debug(school_id);
+        System.assert(school_ids.contains(school_id));
+    }
+
+    @IsTest
     public static void testGetRecruitmentProgram() {
         Id academic_program_RT_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Academic_Program').getRecordTypeId();
         Program__c new_program1 = new Program__c(
-            RecordTypeId = academic_program_RT_id, 
-            Name = 'Undergraduate Transfer',
-            Active__c = true,
-            Banner_Program_Code__c = 'AS_UN_BA'
+                RecordTypeId = academic_program_RT_id,
+                Name = 'Undergraduate Transfer',
+                Active__c = true,
+                Banner_Program_Code__c = 'AS_UN_BA'
         );
         Program__c new_program2 = new Program__c(
-            RecordTypeId = academic_program_RT_id, 
-            Name = 'Undergraduate Transfer (INTL)',
-            Active__c = true,
-            Banner_Program_Code__c = 'AS_UN_BA'
+                RecordTypeId = academic_program_RT_id,
+                Name = 'Undergraduate Transfer (INTL)',
+                Active__c = true,
+                Banner_Program_Code__c = 'AS_UN_BA'
         );
         Program__c new_program3 = new Program__c(
-            RecordTypeId = academic_program_RT_id, 
-            Name = 'Undergraduate First-Year',
-            Active__c = true,
-            Banner_Program_Code__c = 'AS_UN_BA'
+                RecordTypeId = academic_program_RT_id,
+                Name = 'Undergraduate First-Year',
+                Active__c = true,
+                Banner_Program_Code__c = 'AS_UN_BA'
         );
-        insert new List<Program__c>{new_program1, new_program2, new_program3};
+        insert new List<Program__c>{
+                new_program1, new_program2, new_program3
+        };
 
         Program__c program1 = [SELECT Id FROM Program__c WHERE Name = 'Undergraduate Transfer' LIMIT 1];
         Program__c program2 = [SELECT Id FROM Program__c WHERE Name = 'Undergraduate Transfer (INTL)' LIMIT 1];
@@ -226,9 +233,9 @@ public class requestForInformationFormController_TEST {
 
 
         Test.startTest();
-        Id program_id1 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'Transfer');
-        Id program_id2 = requestForInformationFormController.getRecruitmentProgram('U', 'International', 'Transfer');
-        Id program_id3 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'First-Year');
+        Id program_id1 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'Transfer', '');
+        Id program_id2 = requestForInformationFormController.getRecruitmentProgram('U', 'International', 'Transfer', '');
+        Id program_id3 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'First-Year', '');
         Test.stopTest();
 
         System.assertEquals(program1.Id, program_id1);

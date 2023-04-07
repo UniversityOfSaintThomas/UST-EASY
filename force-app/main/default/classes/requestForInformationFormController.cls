@@ -43,6 +43,8 @@ public without sharing class requestForInformationFormController {
 
             Database.DMLOptions dml = new Database.DMLOptions();
             dml.duplicateRuleHeader.allowSave = false;
+            System.debug('Lead object for insert: ');
+            System.debug(JSON.serializePretty(sobj));
             Database.SaveResult result = Database.insert(sobj, dml);
             if (result.isSuccess() == false) {
                 String context = 'Creation of lead failed on insert. \n Error: ' + result.getErrors();
@@ -91,7 +93,6 @@ public without sharing class requestForInformationFormController {
 
     @AuraEnabled(Cacheable=true)
     public static List<String> getProgramIds(String academic_interest_codes) {
-        System.debug('ACADEMIC INTEREST CODES: ' + academic_interest_codes);
         List<String> programIds = new List<Id>();
         academic_interest_codes = academic_interest_codes.escapeHtml4();
         List<String> programCodes = academic_interest_codes.split(';');
@@ -100,10 +101,9 @@ public without sharing class requestForInformationFormController {
                 FROM Program__c
                 WHERE Program_Major_Concentration__c IN :programCodes
                 AND RecordType.DeveloperName = 'Recruitment_Program'
-                AND Program_Display__c INCLUDES ('RFI')
+                //AND Program_Display__c INCLUDES ('RFI')
                 AND Active__c = TRUE
         ];
-        System.debug(JSON.serializePretty(programs));
         for (Program__c p : programs) {
             programIds.add(p.Id);
         }
@@ -125,10 +125,10 @@ public without sharing class requestForInformationFormController {
                             'FROM Program__c ' +
                             'WHERE RecordType.DeveloperName = \'Recruitment_Program\' ' +
                             'AND Program_Display__c INCLUDES (\'RFI\') ' +
-                            'AND Active__c = true';
+                            'AND Active__c = true ';
             if (academic_level == 'U' || academic_level == 'Undergraduate') {
                 query_string += ' AND (Academic_Level__c = \'Undergraduate\' OR Academic_Level__c = \'U\') ';
-                query_string += ' AND (Program_Type__c INCLUDES (\'Major\') OR Program_Type__c INCLUDES (\'Pre-Professional\'))';
+                query_string += ' AND (Program_Type__c INCLUDES (\'Major\') OR Program_Type__c INCLUDES (\'Pre-Professional\') OR Program_Type__c INCLUDES (\'Major Concentration\') OR Program_Type__c INCLUDES (\'Co-Major\')) ';
             } else {
                 query_string += ' AND (Academic_Level__c = \'Graduate\' OR Academic_Level__c = \'G\')  ';
                 if (!String.isBlank(school_college)) {
@@ -144,7 +144,7 @@ public without sharing class requestForInformationFormController {
                 List<String> academicCodes = academic_interest_codes.split(';');
                 query_string += ' AND Program_Major_Concentration__c IN :academicCodes ';
             }
-            query_string += ' ORDER BY Program_Name_on_Application__c';
+                query_string += ' ORDER BY Program_Name_on_Application__c ';
             System.debug('PROGRAM QUERY: ');
             System.debug(query_string);
             List<Program__c> programs = Database.query(query_string);
@@ -196,11 +196,29 @@ public without sharing class requestForInformationFormController {
         }
     }
 
+    @AuraEnabled(Cacheable=true)
+    public static Map<String, String> getCountries() {
+        Map<String, String> mapCountryCodeString = new Map<String, String>();
+        Schema.sObjectType objType = Contact.getSObjectType();
+        Schema.DescribeSObjectResult objDescribe = objType.getDescribe();
+        Map<String, Schema.SObjectField> fieldMap = objDescribe.fields.getMap();
+        List<Schema.PicklistEntry> values = fieldMap.get('MailingCountryCode').getDescribe().getPickListValues();
+        for (Schema.PicklistEntry a : values) {
+            mapCountryCodeString.put(a.getLabel(), a.getValue());
+        }
+        return mapCountryCodeString;
+    }
+
     @AuraEnabled
     public static List<Lead_Preset_Value__mdt> getPresetValues(String rfi_controller_name) {
         try {
             List<Lead_Preset_Value__mdt> return_preset_values = new List<Lead_Preset_Value__mdt>();
-            List<Lead_Preset_Value__mdt> preset_values = [SELECT Field_API_Name__c, Value__c FROM Lead_Preset_Value__mdt WHERE RFI_Controller_Name__c = :rfi_controller_name AND Active__c = TRUE];
+            List<Lead_Preset_Value__mdt> preset_values = [
+                    SELECT Field_API_Name__c, Value__c
+                    FROM Lead_Preset_Value__mdt
+                    WHERE RFI_Controller_Name__c = :rfi_controller_name
+                    AND Active__c = TRUE
+            ];
             if (preset_values.size() > 0) {
                 return preset_values;
             }
@@ -217,7 +235,7 @@ public without sharing class requestForInformationFormController {
             List<Account> school_college_accounts = [
                     SELECT Id
                     FROM Account
-                    WHERE Name = :school_college_name
+                    WHERE School_College_Name__c = :school_college_name
                     AND RecordType.DeveloperName = 'University_Department'
                     AND Banner_Key__c LIKE 'STVCOLL-%'
                     AND Name != 'other'

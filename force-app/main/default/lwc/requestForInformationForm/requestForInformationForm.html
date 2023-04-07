@@ -208,43 +208,84 @@
                     </div>
                 </template>
                 <template if:true={show_fields.High_School_Attended}>
-                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-high-school">
-                        <template if:false={manually_enter_high_school}>
-                            <c-reusable-lookup
-                                    label={field_labels.high_school_search_label}
-                                    selected-icon-name="standard:account"
-                                    object-label=""
-                                    object-api-name="Account"
-                                    field-api-name="Name"
-                                    other-field-api-name="BillingCity,BillingState"
-                                    onvalueselected={onChange}
-                                    required={require_fields.High_School_Attended}
-                                    record-type-name='Educational Institution'
-                                    placeholder='Begin typing...'
-                                    type="High School"
-                            >
-                            </c-reusable-Lookup>
-                        </template>
+                    <template if:false={is_transfer}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-high-school">
+                            <template if:false={manually_enter_high_school}>
+                                <c-reusable-lookup
+                                        label={field_labels.high_school_search_label}
+                                        selected-icon-name="standard:account"
+                                        object-label=""
+                                        object-api-name="Account"
+                                        field-api-name="Name"
+                                        other-field-api-name="BillingCity,BillingState"
+                                        onvalueselected={onChange}
+                                        required={require_fields.High_School_Attended}
+                                        record-type-name='Educational Institution'
+                                        placeholder='Begin typing...'
+                                        type="High School"
+                                >
+                                </c-reusable-Lookup>
+                            </template>
 
-                        <template if:true={manually_enter_high_school}>
-                            <lightning-input
-                                    required={require_fields.High_School_Attended}
-                                    type="text"
-                                    label={field_labels.high_school_search_label}
-                                    aria-label="High School Attended"
-                                    onchange={onChange}
-                                    placeholder="Enter High School name">
-                            </lightning-input>
-                        </template>
-                        <div class="slds-p-top_xx-small">
-                            <lightning-input
-                                    type="checkbox"
-                                    label={field_labels.high_school_not_found_label}
-                                    aria-label="I can't find my High School"
-                                    onchange={onChange}>
-                            </lightning-input>
+                            <template if:true={manually_enter_high_school}>
+                                <lightning-input
+                                        required={require_fields.High_School_Attended}
+                                        type="text"
+                                        label={field_labels.high_school_search_label}
+                                        aria-label="High School Attended"
+                                        onchange={onChange}
+                                        placeholder="Enter High School name">
+                                </lightning-input>
+                            </template>
+                            <div class="slds-p-top_xx-small">
+                                <lightning-input
+                                        type="checkbox"
+                                        label={field_labels.high_school_not_found_label}
+                                        aria-label="I can't find my High School"
+                                        onchange={onChange}>
+                                </lightning-input>
+                            </div>
                         </div>
-                    </div>
+                    </template>
+                    <template if:true={is_transfer}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-high-school">
+                            <template if:false={manually_enter_high_school}>
+                                <c-reusable-lookup
+                                        label={field_labels.college_search_label}
+                                        selected-icon-name="standard:account"
+                                        object-label=""
+                                        object-api-name="Account"
+                                        field-api-name="Name"
+                                        other-field-api-name="BillingCity,BillingState"
+                                        onvalueselected={onChange}
+                                        required={require_fields.High_School_Attended}
+                                        record-type-name='Educational Institution'
+                                        placeholder='Begin typing...'
+                                        type="College"
+                                >
+                                </c-reusable-Lookup>
+                            </template>
+
+                            <template if:true={manually_enter_high_school}>
+                                <lightning-input
+                                        required={require_fields.High_School_Attended}
+                                        type="text"
+                                        label={field_labels.college_search_label}
+                                        aria-label="College School Attended"
+                                        onchange={onChange}
+                                        placeholder="Enter College name">
+                                </lightning-input>
+                            </template>
+                            <div class="slds-p-top_xx-small">
+                                <lightning-input
+                                        type="checkbox"
+                                        label={field_labels.college_not_found_label}
+                                        aria-label="I can't find my College"
+                                        onchange={onChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </template>
                 </template>
                 <template if:true={show_fields.High_School_Graduation_Year}>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-grad-year">

@@ -39,6 +39,7 @@ import LEAD_CITY from '@salesforce/schema/Lead.City';
 import LEAD_STATE from '@salesforce/schema/Lead.State';
 import LEAD_POSTAL_CODE from '@salesforce/schema/Lead.PostalCode';
 import LEAD_COUNTRY from '@salesforce/schema/Lead.Country';
+import LEAD_COUNTRY_CODE from '@salesforce/schema/Lead.CountryCode';
 import LEAD_HIGH_SCHOOL_OR_COLLEGE from '@salesforce/schema/Lead.High_School_or_College__c';
 import LEAD_HIGH_SCHOOL_GRAD_YEAR from '@salesforce/schema/Lead.Expected_Graduate_Date__c';
 import LEAD_TIMELINE from '@salesforce/schema/Lead.Timeline__c';
@@ -52,6 +53,7 @@ import LEAD_SCHOLARSHIP_OF_INTEREST from '@salesforce/schema/Lead.Scholarship_of
 
 //controller
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
+import getCountries from '@salesforce/apex/requestForInformationFormController.getCountries';
 import getPrograms from '@salesforce/apex/requestForInformationFormController.getPrograms';
 import getTerms from '@salesforce/apex/requestForInformationFormController.getTerms';
 import getAcademicLevelValue from '@salesforce/apex/requestForInformationFormController.getAcademicLevelValue';
@@ -83,6 +85,7 @@ const ADDITIONAL_FIELDS = [
     LEAD_STATE,
     LEAD_POSTAL_CODE,
     LEAD_COUNTRY,
+    LEAD_COUNTRY_CODE,
     LEAD_HIGH_SCHOOL_OR_COLLEGE,
     LEAD_HIGH_SCHOOL_GRAD_YEAR,
     LEAD_TIMELINE,
@@ -249,6 +252,7 @@ export default class RequestForInformationForm extends LightningElement {
         'high_school_search_label': 'High School Attended',
         'college_search_label': 'Last College Attended',
         'high_school_not_found_label': 'I can\'t find my High School',
+        'college_not_found_label': 'I can\'t find my College',
         'high_school_datatable_name': 'High School Datatable',
         'employer_label': 'Employer',
         'title_label': 'Title',
@@ -344,8 +348,30 @@ export default class RequestForInformationForm extends LightningElement {
                     .catch(error => {
                         console.log(error);
                     })
+                getCountries().then(countries => {
+                    let values = [];
+                    for (let key in countries) {
+                        values.push(
+                            {label: key, value: countries[key]}
+                        );
+                    }
+                    this.country_picklist_values = values
+                });
+                console.log('acad codes: ' + this.academic_interest_codes);
+                if (!this.show_fields.Academic_Interest && this.academic_interest_codes) {
+                    console.log('getting program ids');
+                    getProgramIds({academic_interest_codes: this.academic_interest_codes})
+                        .then((programIds) => {
+                            this.academic_interest_id_list = programIds;
+                            console.log(programIds);
+                        })
+                        .catch(error => {
+                            console.log('ERROR: ' + error);
+                        });
+                }
                 if (Boolean(this.academic_level_api)) {
                     // gets programs based on academic level
+                    console.log('codes: ' + this.academic_interest_codes + ', school_college: ' + this.school_college + ', academic_level_api: ' + this.academic_level_api);
                     getPrograms({
                         academic_level: this.academic_level_api,
                         school_college: this.school_college,
@@ -375,6 +401,7 @@ export default class RequestForInformationForm extends LightningElement {
                                 }
                             }
                             this.academic_interest_picklist_values = values;
+                            console.log(this.academic_interest_picklist_values);
                         })
                         .catch(error => {
                             console.log(error);
@@ -441,7 +468,6 @@ export default class RequestForInformationForm extends LightningElement {
     })
     picklist_values2(result) {
         if (result.data) {
-            this.country_picklist_values = result.data.picklistFieldValues.Country__c.values;
             this.state_picklist_values = result.data.picklistFieldValues.State__c.values;
             this.school_picklist = result.data.picklistFieldValues.School_College__c.values;
         } else {
@@ -530,7 +556,8 @@ export default class RequestForInformationForm extends LightningElement {
                 }
                 break;
             case this.field_labels.country_label:
-                this.record_input.fields.Country = event.target.value;
+                this.record_input.fields.Country = event.target.options.find(opt => opt.value === event.detail.value).label;
+                this.record_input.fields.CountryCode = event.target.value;
                 if (!this.record_input.fields.Country.toLowerCase().startsWith('united states') && this.record_input.fields.Country.toLowerCase() !== 'us') {
                     this.international_citizen_type = true;
                 } else {
@@ -559,6 +586,10 @@ export default class RequestForInformationForm extends LightningElement {
                 break;
             case this.field_labels.admit_type_label:
                 this.record_input.fields.Admit_Type__c = event.target.value;
+                this.is_transfer = false;
+                if (this.record_input.fields.Admit_Type__c === 'Transfer') {
+                    this.is_transfer = true;
+                }
                 break;
             case this.field_labels.academic_interest_label:
                 this.academic_interest_id_list = event.detail.value;
@@ -575,7 +606,19 @@ export default class RequestForInformationForm extends LightningElement {
                     this.high_school_data = false;
                 }
                 break;
+            case this.field_labels.college_not_found_label:
+                this.manually_enter_high_school = event.target.checked;
+                if (event.target.checked) {
+                    this.record_input.fields.High_School_or_College__c = '';
+                    this.high_school_search_results = null;
+                    this.high_school_data = false;
+                }
+                break;
             case this.field_labels.high_school_search_label:
+                this.record_input.fields.High_School_or_College__c = event.detail.id;
+                this.record_input.fields.Most_Recent_School__c = event.detail.mainField;
+                break;
+            case this.field_labels.college_search_label:
                 this.record_input.fields.High_School_or_College__c = event.detail.id;
                 this.record_input.fields.Most_Recent_School__c = event.detail.mainField;
                 break;
@@ -668,16 +711,6 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.Lead_Website__c = window.location.href;
             this.record_input.fields.Lead_Website_Referrer__c = document.referrer;
 
-            if (!this.show_fields.Academic_Interest && this.academic_interest_codes) {
-                getProgramIds({academic_interest_codes: this.academic_interest_codes})
-                    .then((programIds) => {
-                        this.academic_interest_id_list = programIds;
-                    })
-                    .catch(error => {
-                        console.log('ERROR: ' + error);
-                    })
-            }
-
             //Populate the description field for long answers
             if (!Boolean(this.record_input.fields.Company)) {
                 this.record_input.fields.Company = this.record_input.fields.FirstName + ' ' + this.record_input.fields.LastName;
@@ -699,12 +732,11 @@ export default class RequestForInformationForm extends LightningElement {
                     if (Boolean(school_college_account_id)) {
                         this.record_input.fields.St_Thomas_College_School__c = school_college_account_id;
                     }
-                    this.handleRecruitmentProgram();
                 })
                 .catch(error => {
                     console.log(error);
-                    this.handleRecruitmentProgram();
                 })
+            this.handleRecruitmentProgram();
         }
     }
 
@@ -723,7 +755,7 @@ export default class RequestForInformationForm extends LightningElement {
     handleRecruitmentProgram() {
         //if (this.is_undergraduate) {
         let count = 0;
-        //console.log(this.academic_interest_id_list);
+
         for (const program_id of this.academic_interest_id_list) {
             if (count === 0) {
                 this.record_input.fields.Major_Program__c = program_id;
@@ -736,6 +768,7 @@ export default class RequestForInformationForm extends LightningElement {
             }
             count++;
         }
+        console.log('returned major');
         console.log(this.record_input.fields.Major_Program__c);
         getRecruitmentProgram({
             academic_level: this.academic_level_api,
@@ -793,10 +826,7 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     validateInput() {
-        //let valid_input_fields = this.validateInputFields();
         let valid_fields = this.validateFields();
-        //let valid_multi_picklist_fields = this.validateMultiPicklistFields();
-        //let validate_custom_lookup = this.validateCustomLookup();
         if (valid_fields) {
             return true;
         } else {

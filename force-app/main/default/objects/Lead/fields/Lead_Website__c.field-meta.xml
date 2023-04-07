@@ -7,5 +7,4 @@
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Url</type>
-    <unique>false</unique>
 </CustomField>

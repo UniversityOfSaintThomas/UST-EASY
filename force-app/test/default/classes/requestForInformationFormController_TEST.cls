@@ -203,6 +203,14 @@ public class requestForInformationFormController_TEST {
     }
 
     @IsTest
+    public static void testGetCountries() {
+        Test.startTest();
+        Map<String, String> countries = requestForInformationFormController.getCountries();
+        System.assert(countries.size() > 0);
+        Test.stopTest();
+    }
+
+    @IsTest
     public static void testGetRecruitmentProgram() {
         Id academic_program_RT_id = Schema.SObjectType.Program__c.getRecordTypeInfosByDeveloperName().get('Academic_Program').getRecordTypeId();
         Program__c new_program1 = new Program__c(
@@ -233,9 +241,9 @@ public class requestForInformationFormController_TEST {
 
 
         Test.startTest();
-        Id program_id1 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'Transfer', '');
-        Id program_id2 = requestForInformationFormController.getRecruitmentProgram('U', 'International', 'Transfer', '');
-        Id program_id3 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'First-Year', '');
+        Id program_id1 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'Transfer', '', '');
+        Id program_id2 = requestForInformationFormController.getRecruitmentProgram('U', 'International', 'Transfer', '', '');
+        Id program_id3 = requestForInformationFormController.getRecruitmentProgram('U', 'U.S. Citizen', 'First-Year', '', '');
         Test.stopTest();
 
         System.assertEquals(program1.Id, program_id1);

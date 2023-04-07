@@ -527,6 +527,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Lead.Recruitment_Program__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Program__c.Academic_Level__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1164,6 +1169,11 @@
         <editable>false</editable>
         <field>Question__c.URL_Parameter__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RFI_Controller__c.Multi_Select_Display_Type__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

@@ -349,6 +349,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>RFI_Controller__c.Multi_Select_Display_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>RFI_Controller__c.Redirect_After_Form_Submission__c</field>
         <readable>true</readable>
     </fieldPermissions>

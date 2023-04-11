@@ -357,21 +357,22 @@ export default class RequestForInformationForm extends LightningElement {
                     }
                     this.country_picklist_values = values
                 });
-                console.log('acad codes: ' + this.academic_interest_codes);
+                //console.log('acad codes: ' + this.academic_interest_codes);
                 if (!this.show_fields.Academic_Interest && this.academic_interest_codes) {
-                    console.log('getting program ids');
+                    //console.log('getting program ids');
                     getProgramIds({academic_interest_codes: this.academic_interest_codes})
                         .then((programIds) => {
                             this.academic_interest_id_list = programIds;
-                            console.log(programIds);
+                            //console.log(programIds);
                         })
                         .catch(error => {
                             console.log('ERROR: ' + error);
                         });
                 }
+
                 if (Boolean(this.academic_level_api)) {
                     // gets programs based on academic level
-                    console.log('codes: ' + this.academic_interest_codes + ', school_college: ' + this.school_college + ', academic_level_api: ' + this.academic_level_api);
+                    // console.log('codes: ' + this.academic_interest_codes + ', school_college: ' + this.school_college + ', academic_level_api: ' + this.academic_level_api);
                     getPrograms({
                         academic_level: this.academic_level_api,
                         school_college: this.school_college,
@@ -401,7 +402,7 @@ export default class RequestForInformationForm extends LightningElement {
                                 }
                             }
                             this.academic_interest_picklist_values = values;
-                            console.log(this.academic_interest_picklist_values);
+                            // console.log(this.academic_interest_picklist_values);
                         })
                         .catch(error => {
                             console.log(error);
@@ -491,7 +492,7 @@ export default class RequestForInformationForm extends LightningElement {
                 })
                 .catch(error => {
                     console.log(error);
-                })
+                });
         } else {
             if (result.error) {
                 console.log(result.error);
@@ -713,7 +714,7 @@ export default class RequestForInformationForm extends LightningElement {
 
             //Populate the description field for long answers
             if (!Boolean(this.record_input.fields.Company)) {
-                this.record_input.fields.Company = this.record_input.fields.FirstName + ' ' + this.record_input.fields.LastName;
+                this.record_input.fields.Company = 'No Company';
             }
 
             this.record_input.fields.Description = '';
@@ -768,8 +769,8 @@ export default class RequestForInformationForm extends LightningElement {
             }
             count++;
         }
-        console.log('returned major');
-        console.log(this.record_input.fields.Major_Program__c);
+        //console.log('returned major');
+        //console.log(this.record_input.fields.Major_Program__c);
         getRecruitmentProgram({
             academic_level: this.academic_level_api,
             citizenship_type: this.record_input.fields.Citizenship_Type__c,

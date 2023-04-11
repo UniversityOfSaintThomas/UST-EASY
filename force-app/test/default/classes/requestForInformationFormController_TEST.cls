@@ -66,9 +66,11 @@ public class requestForInformationFormController_TEST {
         accounts_to_insert.add(high_school2);
         Account college_account1 = new Account(
                 Name = 'School of Law',
+                School_College_Name__c = 'School of Law',
                 RecordTypeId = administrative_id,
                 Banner_Key__c = 'STVCOLL-LAW'
         );
+
         accounts_to_insert.add(college_account1);
         Account college_account2 = new Account(
                 Name = 'Undergraduate',

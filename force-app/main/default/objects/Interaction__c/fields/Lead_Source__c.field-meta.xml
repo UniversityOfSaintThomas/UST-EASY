@@ -255,9 +255,79 @@
                 <label>Search</label>
             </value>
             <value>
+                <fullName>2Y Group Visit</fullName>
+                <default>false</default>
+                <label>2Y Group Visit</label>
+            </value>
+            <value>
+                <fullName>2Y High School Visit</fullName>
+                <default>false</default>
+                <label>2Y High School Visit</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Event</fullName>
+                <default>false</default>
+                <label>Event</label>
+            </value>
+            <value>
+                <fullName>FAFSA</fullName>
+                <default>false</default>
+                <label>FAFSA</label>
+            </value>
+            <value>
+                <fullName>High School Visit</fullName>
+                <default>false</default>
+                <label>High School Visit</label>
+            </value>
+            <value>
+                <fullName>Paid Social</fullName>
+                <default>false</default>
+                <label>Paid Social</label>
+            </value>
+            <value>
                 <fullName>Stealth Application</fullName>
                 <default>false</default>
                 <label>Stealth Application</label>
+            </value>
+            <value>
+                <fullName>Two-Year RFI</fullName>
+                <default>false</default>
+                <label>Two-Year RFI</label>
+            </value>
+            <value>
+                <fullName>Undergraduate RFI Page</fullName>
+                <default>false</default>
+                <label>Undergraduate RFI Page</label>
+            </value>
+            <value>
+                <fullName>Graduate RFI Page</fullName>
+                <default>false</default>
+                <label>Graduate RFI Page</label>
+            </value>
+            <value>
+                <fullName>UG Visit request</fullName>
+                <default>false</default>
+                <label>UG Visit request</label>
+            </value>
+            <value>
+                <fullName>Advertising</fullName>
+                <default>false</default>
+                <label>Advertising</label>
+            </value>
+            <value>
+                <fullName>OHE Direct Admit</fullName>
+                <default>false</default>
+                <label>OHE Direct Admit</label>
+            </value>
+            <value>
+                <fullName>Dreamer</fullName>
+                <default>false</default>
+                <label>Dreamer</label>
             </value>
         </valueSetDefinition>
     </valueSet>

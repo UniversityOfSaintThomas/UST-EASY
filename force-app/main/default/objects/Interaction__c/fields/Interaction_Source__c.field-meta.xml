@@ -37,6 +37,11 @@
                 <default>true</default>
                 <label>Application</label>
             </value>
+            <value>
+                <fullName>ERX MVP</fullName>
+                <default>false</default>
+                <label>ERX MVP</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

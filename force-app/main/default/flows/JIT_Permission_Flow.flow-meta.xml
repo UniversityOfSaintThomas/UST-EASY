@@ -42,6 +42,20 @@
                 <stringValue>;</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>requestedPermissionSets</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>UST Scholarship Applicant</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>requestedPermissionSets</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>;</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Survey_Creator_Permission_Set</targetReference>
         </connector>
@@ -113,6 +127,7 @@
             <label>Is Survey Creator</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>JIT Permission Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>JIT Permission Flow</label>
     <processMetadataValues>

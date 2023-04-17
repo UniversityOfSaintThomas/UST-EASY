@@ -23,19 +23,26 @@ public without sharing class requestForInformationFormController {
                 if (sObjField == null) {
                     continue;
                 }
-                if (field.startsWith('utm_') && String.isNotEmpty((String) objMap.get(field))) {
-                    sobj.put(field, objMap.get(field).toString().escapeHtml4());
-                }
                 if (objMap.get(field) == null) {
                     sobj.put(field, null);
                 } else {
-                    switch on sObjField.getDescribe().getType().name().toLowerCase() {
+                    String fieldType = sObjField.getDescribe().getType().name().toLowerCase();
+                    switch on fieldType {
                         when 'date' {
                             sobj.put(field, Date.valueOf((String) objMap.get(field)));
                         } when 'datetime' {
                             sobj.put(field, Datetime.valueOf(((String) objMap.get(field)).replace('T', ' ').replace('Z', '')));
                         } when else {
-                            sobj.put(field, objMap.get(field));
+                            Integer fieldLength = sObjField.getDescribe().getLength();
+                            if (field.startsWith('utm_') || field.startsWith('gclid')) {
+                                sobj.put(field, objMap.get(field).toString().escapeHtml4());
+                            }
+                            if(fieldLength > 0 && fieldType == 'string' || fieldType == 'url') {
+                                sobj.put(field, objMap.get(field).toString().abbreviate(fieldLength));
+                            } else {
+                                sobj.put(field, objMap.get(field));
+                            }
+
                         }
                     }
                 }
@@ -144,7 +151,7 @@ public without sharing class requestForInformationFormController {
                 List<String> academicCodes = academic_interest_codes.split(';');
                 query_string += ' AND Program_Major_Concentration__c IN :academicCodes ';
             }
-                query_string += ' ORDER BY Program_Name_on_Application__c ';
+            query_string += ' ORDER BY Program_Name_on_Application__c ';
             System.debug('PROGRAM QUERY: ');
             System.debug(query_string);
             List<Program__c> programs = Database.query(query_string);

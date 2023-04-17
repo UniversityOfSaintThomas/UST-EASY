@@ -11,11 +11,6 @@
         <label>Engineering</label>
     </customValue>
     <customValue>
-        <fullName>Art History</fullName>
-        <default>false</default>
-        <label>Art History</label>
-    </customValue>
-    <customValue>
         <fullName>Catholic Studies</fullName>
         <default>false</default>
         <label>Catholic Studies</label>
@@ -66,9 +61,9 @@
         <label>Regular</label>
     </customValue>
     <customValue>
-        <fullName>District Partnerships</fullName>
+        <fullName>Work and Learn/Residency</fullName>
         <default>false</default>
-        <label>District Partnerships</label>
+        <label>Work and Learn/Residency</label>
     </customValue>
     <customValue>
         <fullName>Teacher Education</fullName>
@@ -91,10 +86,24 @@
         <label>Non-Degree</label>
     </customValue>
     <customValue>
-        <fullName>Traditional</fullName>
+        <fullName>Art History / Museum Studies</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Traditional</label>
+        <label>Art History / Museum Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Diversity Leadership</fullName>
+        <default>false</default>
+        <label>Diversity Leadership</label>
+    </customValue>
+    <customValue>
+        <fullName>Mentor (Licensed Registered Nurse)</fullName>
+        <default>false</default>
+        <label>Mentor (Licensed Registered Nurse)</label>
+    </customValue>
+    <customValue>
+        <fullName>Mentee (Current Student)</fullName>
+        <default>false</default>
+        <label>Mentee (Current Student)</label>
     </customValue>
     <customValue>
         <fullName>Undergraduate</fullName>
@@ -103,16 +112,28 @@
         <label>Undergraduate</label>
     </customValue>
     <customValue>
+        <fullName>Adult</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Adult</label>
+    </customValue>
+    <customValue>
+        <fullName>Traditional</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Traditional</label>
+    </customValue>
+    <customValue>
         <fullName>Graduate</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Graduate</label>
     </customValue>
     <customValue>
-        <fullName>Adult</fullName>
+        <fullName>Art History</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Adult</label>
+        <label>Art History</label>
     </customValue>
     <description>Student types for admissions.</description>
     <masterLabel>Student Types</masterLabel>

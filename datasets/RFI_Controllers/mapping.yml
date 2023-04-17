@@ -1,0 +1,18 @@
+Insert RFI_Controller__c:
+  sf_object: RFI_Controller__c
+  fields:
+  - Academic_Interests_To_Display__c
+  - Academic_Level__c
+  - Citizenship_Type__c
+  - Country__c
+  - CreatedDate
+  - Descriptive_Name__c
+  - Fields_to_Display__c
+  - Hide_Form_Title__c
+  - LastModifiedDate
+  - Lead_Source__c
+  - Redirect_After_Form_Submission__c
+  - Redirect_URL__c
+  - Required_Fields__c
+  - School_College__c
+  - State__c

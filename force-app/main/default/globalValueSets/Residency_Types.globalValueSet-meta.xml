@@ -10,6 +10,16 @@
         <default>false</default>
         <label>Non-Resident</label>
     </customValue>
+    <customValue>
+        <fullName>Yes, it is.</fullName>
+        <default>false</default>
+        <label>Yes, it is.</label>
+    </customValue>
+    <customValue>
+        <fullName>No, it is not.</fullName>
+        <default>false</default>
+        <label>No, it is not.</label>
+    </customValue>
     <description>Residency types for admissions applications.</description>
     <masterLabel>Residency Types</masterLabel>
     <sorted>false</sorted>

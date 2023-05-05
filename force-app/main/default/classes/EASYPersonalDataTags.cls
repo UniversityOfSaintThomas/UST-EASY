@@ -4,6 +4,7 @@
 
 public with sharing class EASYPersonalDataTags {
     public String Banner_ID { get; set; }
+    public String Contact_Id { get; set; }
     public String UGAQUSCHLRS { get; set; }
     public String Applicant_Email { get; set; }
     public String UGAcctClaimTxt { get; set; }
@@ -15,4 +16,5 @@ public with sharing class EASYPersonalDataTags {
     public String Documents_Missing { get; set; }
     public String First_Name { get; set; }
     public String Last_Name { get; set; }
+    public String Portal_University_email { get; set; }
 }

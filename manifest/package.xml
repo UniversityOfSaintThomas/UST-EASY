@@ -68,6 +68,7 @@
         <members>checklistHelper_TEST</members>
         <members>requestForInformationFormController</members>
         <members>requestForInformationFormControllerTest</members>
+        <members>EASYPersonalDataTags</members>
         <name>ApexClass</name>
     </types>
     <types>

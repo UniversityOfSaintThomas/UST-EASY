@@ -64,8 +64,8 @@ public with sharing class ApplicationBodyController {
             } else {
                 String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,';
                 appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,';
-                appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
-                appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Intended_Program__r.Program_Name_on_Application__c,';
+                appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact__r.Id, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
+                appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Contact__r.hed__UniversityEmail__c, Intended_Program__r.Program_Name_on_Application__c,';
                 appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c';
                 appsQuery += ' FROM Application__c';
                 appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
@@ -94,12 +94,14 @@ public with sharing class ApplicationBodyController {
                         dataTags.Documents_Missing = dataTags.Documents_Missing + '<br/><br/>' + app.Documents_Missing_Text__c;
                     } else {
                         dataTags.Banner_ID = app.Applicant_Banner_Id__c;
+                        dataTags.Contact_Id = app.Contact__r.Id;
                         dataTags.UGAQUSCHLRS = app.Aquinas_Scholars_Portal_Text__c;
                         dataTags.Applicant_Email = app.Contact_Email__c;
                         dataTags.UGAcctClaimTxt = app.Account_Claimed_Portal_Text__c;
                         dataTags.Documents_Missing = app.Documents_Missing_Text__c;
                         dataTags.First_Name = app.Contact_Mailing_First_Name__c;
                         dataTags.Last_Name = app.Contact__r.LastName;
+                        dataTags.Portal_University_email = app.Contact__r.hed__UniversityEmail__c;
                         dataTags.LastTranscript = '';
                         dataTags.Course_Pref = '';
                         dataTags.Housing_Pref = '';

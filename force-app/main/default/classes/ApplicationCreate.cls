@@ -423,12 +423,33 @@ public class ApplicationCreate {
 
         app.Id = null;
 
+        //Set the generic filter 4 with the term value
         if (String.isNotBlank(app.Intended_Term_of_Entry__c)) {
             Academic_Term__c termInfo = [SELECT Id, Name FROM Academic_Term__c WHERE Id = :app.Intended_Term_of_Entry__c];
             if (termInfo != null) {
                 app.Generic_Filter_4__c = termInfo.Name;
             }
         }
+
+        //Get the email value out of the question group response
+        if (String.isNotBlank(app.Contact__c)) {
+            Contact contactEmail = [SELECT Id, Email FROM Contact WHERE Id = :app.Contact__c];
+            app.Applicant_Email__c = contactEmail.Email;
+        } else {
+            for (ApplicationQuestionGroup aqg : section.groups) {
+                for (ApplicationQuestion question : aqg.questions) {
+                    if (String.isNotBlank(question.fieldName)) {
+                        System.debug('Field Name: ' + question.fieldName + ' = ' + question.resp);
+                        if (question.fieldName.equalsIgnoreCase('Email__c')) {
+                            if (String.isNotBlank(String.valueOf(question.resp))) {
+                                app.Applicant_Email__c = String.valueOf(question.resp);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         insert app; // Insert application
 

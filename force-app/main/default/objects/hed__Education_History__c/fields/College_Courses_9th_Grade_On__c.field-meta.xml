@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>College_Courses_9th_Grade_On__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>College Courses 9th Grade On</label>
     <required>false</required>

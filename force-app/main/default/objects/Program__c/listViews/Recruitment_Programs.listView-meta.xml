@@ -4,6 +4,8 @@
     <columns>NAME</columns>
     <columns>Career__c</columns>
     <columns>Department__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Academic_Level__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Program_Record_Type__c</field>
@@ -11,4 +13,5 @@
         <value>Recruitment Program</value>
     </filters>
     <label>Recruitment Programs</label>
+    <language>en_US</language>
 </ListView>

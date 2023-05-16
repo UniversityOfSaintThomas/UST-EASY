@@ -6,5 +6,6 @@
     <formula>Portal_User__c &lt;&gt; null</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Is Portal User</label>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

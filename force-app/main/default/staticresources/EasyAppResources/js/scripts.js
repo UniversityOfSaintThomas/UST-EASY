@@ -698,7 +698,6 @@ function activateCarousel(slideMoveTo) {
                         items[i].classList.remove('next');
                         items[i].classList.remove('active');
                     }
-
                     if (items[newPrevious]) {
                         items[newPrevious].classList.add("prev");
                     }
@@ -798,8 +797,8 @@ function showFormSpinner() {
 
 /* Tooltip */
 function activateTooltips() {
-    document.querySelectorAll('.has-data-tooltip').forEach(item => {
-        let toolTipElement = document.getElementById(item.getAttribute('data-tooltip'));
+    document.querySelectorAll('.aria-describedby-tooltip').forEach(item => {
+        let toolTipElement = document.getElementById(item.getAttribute('aria-describedby'));
         item.addEventListener('mousemove', function (e) {
             let toolTipOffsetElem = toolTipElement.offsetParent;
             toolTipElement.classList.remove('slds-fall-into-ground', 'slds-nubbin_left', 'slds-nubbin_right');
@@ -1044,28 +1043,6 @@ function textValidations(checkFormValidate, documentStart) {
 
 function validateFileType(obj) {
     if (Boolean(obj.title)) {
-        let acceptedTypes = obj.title.split(';');
-        let inputArray = obj.value.split('.');
-        let inputType = inputArray[inputArray.length - 1].toUpperCase();
-        if (!acceptedTypes.includes(inputType)) {
-            obj.value = null;
-            let fileTypeMessage = 'File type not accepted. Please upload one of the following: ';
-            for (const type of acceptedTypes) {
-                fileTypeMessage += type + ', ';
-            }
-            fileTypeMessage = fileTypeMessage.slice(0, fileTypeMessage.length - 2) + '.';
-            document.getElementById('error-108' + String(obj.name)).innerHTML = fileTypeMessage;
-            return false;
-        } else {
-            document.getElementById('error-108' + String(obj.name)).innerHTML = '';
-        }
-    }
-    return true;
-}
-
-function validateFileType(obj) {
-    if (Boolean(obj.title)) {
-        console.log(obj);
         let acceptedTypes = obj.title.split(';');
         let inputArray = obj.value.split('.');
         let inputType = inputArray[inputArray.length - 1].toUpperCase();

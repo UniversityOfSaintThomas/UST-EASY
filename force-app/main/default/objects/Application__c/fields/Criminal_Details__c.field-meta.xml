@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Criminal_Details__c</fullName>
+    <description>&quot;This section is required because you indicated one or more of the following situations earlier in the application:
+            • You have a past history of a misdemeanor, felony, or other crime.
+            • You have had or will have an interruption in your education.
+            • You received a military discharge of Other Than Honorable.
+            Please use the space below to provide details of the applicable situation(s). You may enter up to 650 words.&quot;</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Transfer Only:  Explanation for:
+            •  history of a misdemeanor, felony, or other crime.
+            • have had or will have an interruption in your education.
+            • military discharge not honorable</inlineHelpText>
+    <label>Criminal Details</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
+</CustomField>

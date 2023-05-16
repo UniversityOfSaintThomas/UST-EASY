@@ -30,6 +30,16 @@
                 <default>false</default>
                 <label>Withdrawn</label>
             </value>
+            <value>
+                <fullName>Calculated</fullName>
+                <default>false</default>
+                <label>Calculated</label>
+            </value>
+            <value>
+                <fullName>Adjusted</fullName>
+                <default>false</default>
+                <label>Adjusted</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

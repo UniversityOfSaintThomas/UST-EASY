@@ -7,6 +7,10 @@
     <columns>Active__c</columns>
     <columns>Program_Code__c</columns>
     <columns>Recruitment_Program__c</columns>
+    <columns>Pre_Professional_Program__c</columns>
+    <columns>RECORDTYPE</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Program_Record_Type__c</field>
@@ -14,4 +18,5 @@
         <value>Academic Program</value>
     </filters>
     <label>Academic Programs</label>
+    <language>en_US</language>
 </ListView>

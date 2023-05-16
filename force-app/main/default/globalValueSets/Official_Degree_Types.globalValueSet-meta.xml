@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Bachelor of Arts</fullName>
+        <default>false</default>
+        <label>Bachelor of Arts</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Science</fullName>
+        <default>false</default>
+        <label>Bachelor of Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Arts</fullName>
+        <default>false</default>
+        <label>Master of Arts</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Science</fullName>
+        <default>false</default>
+        <label>Master of Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Philosophy</fullName>
+        <default>false</default>
+        <label>Doctor of Philosophy</label>
+    </customValue>
+    <customValue>
+        <fullName>Attended No Degree</fullName>
+        <default>false</default>
+        <label>Attended No Degree</label>
+    </customValue>
+    <customValue>
+        <fullName>None</fullName>
+        <default>false</default>
+        <label>None</label>
+    </customValue>
+    <customValue>
+        <fullName>High School Diploma</fullName>
+        <default>false</default>
+        <label>High School Diploma</label>
+    </customValue>
+    <customValue>
+        <fullName>Associate of Applied Science</fullName>
+        <default>false</default>
+        <label>Associate of Applied Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Associate of Arts</fullName>
+        <default>false</default>
+        <label>Associate of Arts</label>
+    </customValue>
+    <customValue>
+        <fullName>Associate of Business</fullName>
+        <default>false</default>
+        <label>Associate of Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Associate of Engineering Tech</fullName>
+        <default>false</default>
+        <label>Associate of Engineering Tech</label>
+    </customValue>
+    <customValue>
+        <fullName>Associate of Science</fullName>
+        <default>false</default>
+        <label>Associate of Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Bach of Biomedical Engineering</fullName>
+        <default>false</default>
+        <label>Bach of Biomedical Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Bach of Biosys &amp; Ag Eng</fullName>
+        <default>false</default>
+        <label>Bach of Biosys &amp; Ag Eng</label>
+    </customValue>
+    <customValue>
+        <fullName>Bach of Geo-Engineering</fullName>
+        <default>false</default>
+        <label>Bach of Geo-Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Bach of Informatics &amp; Systems</fullName>
+        <default>false</default>
+        <label>Bach of Informatics &amp; Systems</label>
+    </customValue>
+    <customValue>
+        <fullName>Bach of Library &amp; Info Science</fullName>
+        <default>false</default>
+        <label>Bach of Library &amp; Info Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Bach. of Professional Studies</fullName>
+        <default>false</default>
+        <label>Bach. of Professional Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor in Civil Engineering</fullName>
+        <default>false</default>
+        <label>Bachelor in Civil Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Accounting</fullName>
+        <default>false</default>
+        <label>Bachelor of Accounting</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Agriculture</fullName>
+        <default>false</default>
+        <label>Bachelor of Agriculture</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Applied Arts</fullName>
+        <default>false</default>
+        <label>Bachelor of Applied Arts</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Applied Science</fullName>
+        <default>false</default>
+        <label>Bachelor of Applied Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Applied Studies</fullName>
+        <default>false</default>
+        <label>Bachelor of Applied Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Architecture</fullName>
+        <default>false</default>
+        <label>Bachelor of Architecture</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Business Admin</fullName>
+        <default>false</default>
+        <label>Bachelor of Business Admin</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Chem Engineering</fullName>
+        <default>false</default>
+        <label>Bachelor of Chem Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Chemistry</fullName>
+        <default>false</default>
+        <label>Bachelor of Chemistry</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Commerce</fullName>
+        <default>false</default>
+        <label>Bachelor of Commerce</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Comp Applications</fullName>
+        <default>false</default>
+        <label>Bachelor of Comp Applications</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Comp Engineering</fullName>
+        <default>false</default>
+        <label>Bachelor of Comp Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Computer Science</fullName>
+        <default>false</default>
+        <label>Bachelor of Computer Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Dental Surgey</fullName>
+        <default>false</default>
+        <label>Bachelor of Dental Surgey</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Divinity</fullName>
+        <default>false</default>
+        <label>Bachelor of Divinity</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Economics</fullName>
+        <default>false</default>
+        <label>Bachelor of Economics</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Education</fullName>
+        <default>false</default>
+        <label>Bachelor of Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Elected Studies</fullName>
+        <default>false</default>
+        <label>Bachelor of Elected Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Electrical Eng.</fullName>
+        <default>false</default>
+        <label>Bachelor of Electrical Eng.</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Electrnc Materials</fullName>
+        <default>false</default>
+        <label>Bachelor of Electrnc Materials</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Engineering</fullName>
+        <default>false</default>
+        <label>Bachelor of Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Engineering Tech</fullName>
+        <default>false</default>
+        <label>Bachelor of Engineering Tech</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Environmntl Design</fullName>
+        <default>false</default>
+        <label>Bachelor of Environmntl Design</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Fine Arts</fullName>
+        <default>false</default>
+        <label>Bachelor of Fine Arts</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of General Studies</fullName>
+        <default>false</default>
+        <label>Bachelor of General Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Industrial Eng.</fullName>
+        <default>false</default>
+        <label>Bachelor of Industrial Eng.</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Info Management</fullName>
+        <default>false</default>
+        <label>Bachelor of Info Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Info Systems</fullName>
+        <default>false</default>
+        <label>Bachelor of Info Systems</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Info Technology</fullName>
+        <default>false</default>
+        <label>Bachelor of Info Technology</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Journalism</fullName>
+        <default>false</default>
+        <label>Bachelor of Journalism</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Landscape Arch.</fullName>
+        <default>false</default>
+        <label>Bachelor of Landscape Arch.</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Law</fullName>
+        <default>false</default>
+        <label>Bachelor of Law</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Liberal Studies</fullName>
+        <default>false</default>
+        <label>Bachelor of Liberal Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Material Science</fullName>
+        <default>false</default>
+        <label>Bachelor of Material Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Mathematics</fullName>
+        <default>false</default>
+        <label>Bachelor of Mathematics</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Mech Engineering</fullName>
+        <default>false</default>
+        <label>Bachelor of Mech Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Medicine</fullName>
+        <default>false</default>
+        <label>Bachelor of Medicine</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Medicine &amp; Surgery</fullName>
+        <default>false</default>
+        <label>Bachelor of Medicine &amp; Surgery</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Metallurgical Eng.</fullName>
+        <default>false</default>
+        <label>Bachelor of Metallurgical Eng.</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Mining Engineering</fullName>
+        <default>false</default>
+        <label>Bachelor of Mining Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Music</fullName>
+        <default>false</default>
+        <label>Bachelor of Music</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Music Education</fullName>
+        <default>false</default>
+        <label>Bachelor of Music Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Music Therapy</fullName>
+        <default>false</default>
+        <label>Bachelor of Music Therapy</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Nursing</fullName>
+        <default>false</default>
+        <label>Bachelor of Nursing</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Pharmacy</fullName>
+        <default>false</default>
+        <label>Bachelor of Pharmacy</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Philosophy</fullName>
+        <default>false</default>
+        <label>Bachelor of Philosophy</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Security Sciences</fullName>
+        <default>false</default>
+        <label>Bachelor of Security Sciences</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Social Work</fullName>
+        <default>false</default>
+        <label>Bachelor of Social Work</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Special Studies</fullName>
+        <default>false</default>
+        <label>Bachelor of Special Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Statistics</fullName>
+        <default>false</default>
+        <label>Bachelor of Statistics</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Technology</fullName>
+        <default>false</default>
+        <label>Bachelor of Technology</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor of Urban Planning</fullName>
+        <default>false</default>
+        <label>Bachelor of Urban Planning</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor-Aerospace Eng.&amp; Mech</fullName>
+        <default>false</default>
+        <label>Bachelor-Aerospace Eng.&amp; Mech</label>
+    </customValue>
+    <customValue>
+        <fullName>Bachelor-Individual Studies</fullName>
+        <default>false</default>
+        <label>Bachelor-Individual Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Agricultural Engineering</fullName>
+        <default>false</default>
+        <label>BS in Agricultural Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Business</fullName>
+        <default>false</default>
+        <label>BS in Business</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Business Admin</fullName>
+        <default>false</default>
+        <label>BS in Business Admin</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Chemical Engineering</fullName>
+        <default>false</default>
+        <label>BS in Chemical Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Civil Engineering</fullName>
+        <default>false</default>
+        <label>BS in Civil Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Computer Engineering</fullName>
+        <default>false</default>
+        <label>BS in Computer Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Computer Science</fullName>
+        <default>false</default>
+        <label>BS in Computer Science</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Education</fullName>
+        <default>false</default>
+        <label>BS in Education</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Elec. and Computer Eng.</fullName>
+        <default>false</default>
+        <label>BS in Elec. and Computer Eng.</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Electrical Engineering</fullName>
+        <default>false</default>
+        <label>BS in Electrical Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Engineering</fullName>
+        <default>false</default>
+        <label>BS in Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Industrial Engineering</fullName>
+        <default>false</default>
+        <label>BS in Industrial Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Industrial Technology</fullName>
+        <default>false</default>
+        <label>BS in Industrial Technology</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Mathematics</fullName>
+        <default>false</default>
+        <label>BS in Mathematics</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Mechanical Engineering</fullName>
+        <default>false</default>
+        <label>BS in Mechanical Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Nursing</fullName>
+        <default>false</default>
+        <label>BS in Nursing</label>
+    </customValue>
+    <customValue>
+        <fullName>BS in Social Work</fullName>
+        <default>false</default>
+        <label>BS in Social Work</label>
+    </customValue>
+    <customValue>
+        <fullName>BSM in Management Science</fullName>
+        <default>false</default>
+        <label>BSM in Management Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Degree Not Declared</fullName>
+        <default>false</default>
+        <label>Degree Not Declared</label>
+    </customValue>
+    <customValue>
+        <fullName>Dipl Phys &amp; Elect Engineering</fullName>
+        <default>false</default>
+        <label>Dipl Phys &amp; Elect Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Diploma</fullName>
+        <default>false</default>
+        <label>Diploma</label>
+    </customValue>
+    <customValue>
+        <fullName>Diploma Chemical Engineering</fullName>
+        <default>false</default>
+        <label>Diploma Chemical Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Diploma Comp Prgrm and Ops</fullName>
+        <default>false</default>
+        <label>Diploma Comp Prgrm and Ops</label>
+    </customValue>
+    <customValue>
+        <fullName>Diploma Master Computer Apps</fullName>
+        <default>false</default>
+        <label>Diploma Master Computer Apps</label>
+    </customValue>
+    <customValue>
+        <fullName>Diploma Mechanical Engineering</fullName>
+        <default>false</default>
+        <label>Diploma Mechanical Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Business Admin</fullName>
+        <default>false</default>
+        <label>Doctor of Business Admin</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Chiropractic</fullName>
+        <default>false</default>
+        <label>Doctor of Chiropractic</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Dental Surgery</fullName>
+        <default>false</default>
+        <label>Doctor of Dental Surgery</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Education</fullName>
+        <default>false</default>
+        <label>Doctor of Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Engineering</fullName>
+        <default>false</default>
+        <label>Doctor of Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Medicine</fullName>
+        <default>false</default>
+        <label>Doctor of Medicine</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Ministry</fullName>
+        <default>false</default>
+        <label>Doctor of Ministry</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Musical Arts</fullName>
+        <default>false</default>
+        <label>Doctor of Musical Arts</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Pharmacy</fullName>
+        <default>false</default>
+        <label>Doctor of Pharmacy</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Physical Therapy</fullName>
+        <default>false</default>
+        <label>Doctor of Physical Therapy</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Podiatric Medicine</fullName>
+        <default>false</default>
+        <label>Doctor of Podiatric Medicine</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Psychology</fullName>
+        <default>false</default>
+        <label>Doctor of Psychology</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Social Work</fullName>
+        <default>false</default>
+        <label>Doctor of Social Work</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctor of Theology</fullName>
+        <default>false</default>
+        <label>Doctor of Theology</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctorate in Public Admin</fullName>
+        <default>false</default>
+        <label>Doctorate in Public Admin</label>
+    </customValue>
+    <customValue>
+        <fullName>Doctorate in Sacred Liturgy</fullName>
+        <default>false</default>
+        <label>Doctorate in Sacred Liturgy</label>
+    </customValue>
+    <customValue>
+        <fullName>Education Specialist</fullName>
+        <default>false</default>
+        <label>Education Specialist</label>
+    </customValue>
+    <customValue>
+        <fullName>Juris Doctor</fullName>
+        <default>false</default>
+        <label>Juris Doctor</label>
+    </customValue>
+    <customValue>
+        <fullName>Legum Magister</fullName>
+        <default>false</default>
+        <label>Legum Magister</label>
+    </customValue>
+    <customValue>
+        <fullName>Licensure</fullName>
+        <default>false</default>
+        <label>Licensure</label>
+    </customValue>
+    <customValue>
+        <fullName>Licentiate in Sacred Liturgy</fullName>
+        <default>false</default>
+        <label>Licentiate in Sacred Liturgy</label>
+    </customValue>
+    <customValue>
+        <fullName>Licentiate of Canon Law</fullName>
+        <default>false</default>
+        <label>Licentiate of Canon Law</label>
+    </customValue>
+    <customValue>
+        <fullName>Master in Theological Studies</fullName>
+        <default>false</default>
+        <label>Master in Theological Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Accountancy</fullName>
+        <default>false</default>
+        <label>Master of Accountancy</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Aeronautical Science</fullName>
+        <default>false</default>
+        <label>Master of Aeronautical Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Business Taxation</fullName>
+        <default>false</default>
+        <label>Master of Business Taxation</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Church Music</fullName>
+        <default>false</default>
+        <label>Master of Church Music</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Cmptr Applicatons</fullName>
+        <default>false</default>
+        <label>Master of Cmptr Applicatons</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Commerce</fullName>
+        <default>false</default>
+        <label>Master of Commerce</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Computer Management</fullName>
+        <default>false</default>
+        <label>Master of Computer Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Computer Science</fullName>
+        <default>false</default>
+        <label>Master of Computer Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Divinity</fullName>
+        <default>false</default>
+        <label>Master of Divinity</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Economics</fullName>
+        <default>false</default>
+        <label>Master of Economics</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Educ Prof Devel</fullName>
+        <default>false</default>
+        <label>Master of Educ Prof Devel</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Education</fullName>
+        <default>false</default>
+        <label>Master of Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Elec. Engineering</fullName>
+        <default>false</default>
+        <label>Master of Elec. Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Engineering</fullName>
+        <default>false</default>
+        <label>Master of Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Finance</fullName>
+        <default>false</default>
+        <label>Master of Finance</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Fine Arts</fullName>
+        <default>false</default>
+        <label>Master of Fine Arts</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Industrial Safety</fullName>
+        <default>false</default>
+        <label>Master of Industrial Safety</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of International Admin.</fullName>
+        <default>false</default>
+        <label>Master of International Admin.</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of International Mgmt.</fullName>
+        <default>false</default>
+        <label>Master of International Mgmt.</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Law</fullName>
+        <default>false</default>
+        <label>Master of Law</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Liberal Studies</fullName>
+        <default>false</default>
+        <label>Master of Liberal Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Library Science</fullName>
+        <default>false</default>
+        <label>Master of Library Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Management &amp; Admin</fullName>
+        <default>false</default>
+        <label>Master of Management &amp; Admin</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Mechanical Eng.</fullName>
+        <default>false</default>
+        <label>Master of Mechanical Eng.</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Medical Science</fullName>
+        <default>false</default>
+        <label>Master of Medical Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Medieval Studies</fullName>
+        <default>false</default>
+        <label>Master of Medieval Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Mfg Sys Eng</fullName>
+        <default>false</default>
+        <label>Master of Mfg Sys Eng</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Ministry</fullName>
+        <default>false</default>
+        <label>Master of Ministry</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Music</fullName>
+        <default>false</default>
+        <label>Master of Music</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Pacific Intl Affairs</fullName>
+        <default>false</default>
+        <label>Master of Pacific Intl Affairs</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Philosophy</fullName>
+        <default>false</default>
+        <label>Master of Philosophy</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Prof. Accountancy</fullName>
+        <default>false</default>
+        <label>Master of Prof. Accountancy</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Project Management</fullName>
+        <default>false</default>
+        <label>Master of Project Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Public Admin.</fullName>
+        <default>false</default>
+        <label>Master of Public Admin.</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Public Health</fullName>
+        <default>false</default>
+        <label>Master of Public Health</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Social Work</fullName>
+        <default>false</default>
+        <label>Master of Social Work</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Software Engineering</fullName>
+        <default>false</default>
+        <label>Master of Software Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Software Systems</fullName>
+        <default>false</default>
+        <label>Master of Software Systems</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Studies in Law</fullName>
+        <default>false</default>
+        <label>Master of Studies in Law</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Technology</fullName>
+        <default>false</default>
+        <label>Master of Technology</label>
+    </customValue>
+    <customValue>
+        <fullName>Master of Theological Studies</fullName>
+        <default>false</default>
+        <label>Master of Theological Studies</label>
+    </customValue>
+    <customValue>
+        <fullName>Master-Business Administration</fullName>
+        <default>false</default>
+        <label>Master-Business Administration</label>
+    </customValue>
+    <customValue>
+        <fullName>Master-Business Communication</fullName>
+        <default>false</default>
+        <label>Master-Business Communication</label>
+    </customValue>
+    <customValue>
+        <fullName>Master-Geographic Info Systems</fullName>
+        <default>false</default>
+        <label>Master-Geographic Info Systems</label>
+    </customValue>
+    <customValue>
+        <fullName>Master&apos;s Diploma</fullName>
+        <default>false</default>
+        <label>Master&apos;s Diploma</label>
+    </customValue>
+    <customValue>
+        <fullName>Masters of Business</fullName>
+        <default>false</default>
+        <label>Masters of Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Masters of Public Policy</fullName>
+        <default>false</default>
+        <label>Masters of Public Policy</label>
+    </customValue>
+    <customValue>
+        <fullName>Master-Software Design &amp; Dev.</fullName>
+        <default>false</default>
+        <label>Master-Software Design &amp; Dev.</label>
+    </customValue>
+    <customValue>
+        <fullName>MS Biosys &amp; Ag Eng</fullName>
+        <default>false</default>
+        <label>MS Biosys &amp; Ag Eng</label>
+    </customValue>
+    <customValue>
+        <fullName>MS in Civil Engineering</fullName>
+        <default>false</default>
+        <label>MS in Civil Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>MS in Electrical Engineering</fullName>
+        <default>false</default>
+        <label>MS in Electrical Engineering</label>
+    </customValue>
+    <customValue>
+        <fullName>No Degree Offered</fullName>
+        <default>false</default>
+        <label>No Degree Offered</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-Baccalaureate Certificate</fullName>
+        <default>false</default>
+        <label>Post-Baccalaureate Certificate</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-Graduate Diploma</fullName>
+        <default>false</default>
+        <label>Post-Graduate Diploma</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-Masters Certificate</fullName>
+        <default>false</default>
+        <label>Post-Masters Certificate</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-Secondary Certificate</fullName>
+        <default>false</default>
+        <label>Post-Secondary Certificate</label>
+    </customValue>
+    <customValue>
+        <fullName>Undecided</fullName>
+        <default>false</default>
+        <label>Undecided</label>
+    </customValue>
+    <customValue>
+        <fullName>Unknown</fullName>
+        <default>false</default>
+        <label>Unknown</label>
+    </customValue>
+    <description>Official Degree Types used for Banner integration to Degree Types</description>
+    <masterLabel>Official Degree Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

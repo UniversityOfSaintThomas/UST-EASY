@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>GMAT</fullName>
     <active>true</active>
+    <compactLayoutAssignment>UST</compactLayoutAssignment>
     <description>Use this for entering GMAT scores</description>
     <label>GMAT</label>
     <picklistValues>
@@ -117,59 +118,6 @@
         </values>
         <values>
             <fullName>9</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>hed__Source__c</picklist>
-        <values>
-            <fullName>Official</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Self Reported</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>hed__Test_Type__c</picklist>
-        <values>
-            <fullName>ACT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GMAT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GRE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SAT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TOEFL</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>hed__Verification_Status__c</picklist>
-        <values>
-            <fullName>Pending</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Revoked</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Unverified</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verified</fullName>
             <default>false</default>
         </values>
     </picklistValues>

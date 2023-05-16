@@ -71,6 +71,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Men%27s Varsity Track and Field</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Women%27s Varsity Basketball</fullName>
             <default>false</default>
         </values>
@@ -108,6 +112,10 @@
         </values>
         <values>
             <fullName>Women%27s Varsity Tennis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Women%27s Varsity Track and Field</fullName>
             <default>false</default>
         </values>
         <values>
@@ -158,6 +166,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Men%27s Varsity Track and Field</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Women%27s Varsity Basketball</fullName>
             <default>false</default>
         </values>
@@ -195,6 +207,10 @@
         </values>
         <values>
             <fullName>Women%27s Varsity Tennis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Women%27s Varsity Track and Field</fullName>
             <default>false</default>
         </values>
         <values>
@@ -245,6 +261,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Men%27s Varsity Track and Field</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Women%27s Varsity Basketball</fullName>
             <default>false</default>
         </values>
@@ -285,6 +305,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Women%27s Varsity Track and Field</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Women%27s Varsity Volleyball</fullName>
             <default>false</default>
         </values>
@@ -305,6 +329,10 @@
         </values>
         <values>
             <fullName>Full Athletic Scholar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regular</fullName>
             <default>false</default>
         </values>
         <values>
@@ -331,6 +359,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Regular</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Stacked Athletic Scholar</fullName>
             <default>false</default>
         </values>
@@ -351,6 +383,10 @@
         </values>
         <values>
             <fullName>Full Athletic Scholar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regular</fullName>
             <default>false</default>
         </values>
         <values>

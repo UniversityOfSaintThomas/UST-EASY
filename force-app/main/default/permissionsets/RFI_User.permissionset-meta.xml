@@ -64,11 +64,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Interaction__c.Admissions_Booking_Lookup__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Interaction__c.Admit_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -885,11 +880,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.OwnerId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Interaction__c.Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

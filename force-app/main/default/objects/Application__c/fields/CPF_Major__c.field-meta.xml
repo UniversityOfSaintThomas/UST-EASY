@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CPF_Major__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Major selected on the CPF</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Primary Major chosen when student filled out the Course Preference Form for Orientation and Registration. Populated by flow</inlineHelpText>
+    <label>CPF Major</label>
+    <referenceTo>Program__c</referenceTo>
+    <relationshipLabel>Admissions Applications (CPF Major)</relationshipLabel>
+    <relationshipName>Admissions_Applications4</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

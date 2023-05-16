@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Years_after_HS_Grad__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF (NOT (ISBLANK (Primary_HS_Graduation_Date__c)), 
+YEAR ( Application_Term_Start_Date__c ) - YEAR( Primary_HS_Graduation_Date__c ), null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Years after HS Grad</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

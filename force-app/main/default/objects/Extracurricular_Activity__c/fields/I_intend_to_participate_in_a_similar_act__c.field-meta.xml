@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>I_intend_to_participate_in_a_similar_act__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>I intend to participate in a similar act</label>
     <required>false</required>

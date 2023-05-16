@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Athlete_Sport_1__c</fullName>
+    <deprecated>false</deprecated>
     <description>Field to capture a perspective student&apos;s sport.</description>
     <externalId>false</externalId>
     <inlineHelpText>Field to capture a perspective student&apos;s sport.</inlineHelpText>
     <label>Athlete Sport 1</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

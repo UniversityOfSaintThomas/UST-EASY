@@ -2,6 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>School_Not_Found__c</fullName>
     <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
+    <description>Checkbox indicating that the contact&apos;s school is not available from the picklist options.</description>
     <externalId>false</externalId>
     <label>School Not Found</label>
     <trackTrending>false</trackTrending>

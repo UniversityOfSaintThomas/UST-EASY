@@ -7,20 +7,11 @@
     <externalId>false</externalId>
     <inlineHelpText>The general interest the individual is inquiring about for marketing.</inlineHelpText>
     <label>Recruitment Interest</label>
-    <lookupFilter>
-        <active>true</active>
-        <filterItems>
-            <field>Plan__c.Type__c</field>
-            <operation>equals</operation>
-            <value>Recruitment</value>
-        </filterItems>
-        <isOptional>false</isOptional>
-    </lookupFilter>
     <referenceTo>Plan__c</referenceTo>
     <relationshipLabel>Interactions with Recruitment Interest</relationshipLabel>
     <relationshipName>Recruitment_Interest_Interactions</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

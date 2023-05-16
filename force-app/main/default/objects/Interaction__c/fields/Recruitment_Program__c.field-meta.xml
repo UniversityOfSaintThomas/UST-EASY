@@ -11,7 +11,7 @@
     <relationshipLabel>Interactions (Recruitment Program)</relationshipLabel>
     <relationshipName>Recruitment_Program_Interactions</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

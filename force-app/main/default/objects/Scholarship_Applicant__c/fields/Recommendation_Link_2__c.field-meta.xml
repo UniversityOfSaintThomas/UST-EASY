@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recommendation_Link_2__c</fullName>
     <externalId>false</externalId>
-    <formula>Hyperlink(&quot;https://stthomas.force.com/applicantportal/ScholarshipRecommender?recid=&quot;&amp;Scholarship_App_18_Id__c&amp;&quot;2&quot;, &quot;Submit your recommendation&quot;)</formula>
+    <formula>$Setup.Application_Setting__c.Community_URL__c &amp; &apos;/ScholarshipRecommender?recId=&apos; &amp; Scholarship_App_18_Id__c&amp;&quot;2&quot;</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Recommendation Link 2</label>
     <required>false</required>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SR_Max_Superscore__c</fullName>
+    <description>MAX(SR_ACT_Composite__c,SR_ACT_Superscore_Composite__c)</description>
+    <externalId>false</externalId>
+    <formula>MAX(SR_ACT_Composite__c,SR_ACT_Superscore_Composite__c)</formula>
+    <inlineHelpText>MAX(SR_ACT_Composite__c,SR_ACT_Superscore_Composite__c)</inlineHelpText>
+    <label>SR Max Superscore</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

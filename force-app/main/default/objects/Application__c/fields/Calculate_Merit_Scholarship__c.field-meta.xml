@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Calculate_Merit_Scholarship__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check this box to trigger the UG Merit Scholarship Flow</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check this box to trigger the UG Merit Scholarship Flow</inlineHelpText>
+    <label>Calculate Merit Scholarship</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

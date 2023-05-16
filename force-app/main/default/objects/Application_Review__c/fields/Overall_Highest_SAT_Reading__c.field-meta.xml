@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Overall_Highest_SAT_Reading__c</fullName>
+    <description>Max score of Official and Self Reported</description>
+    <externalId>false</externalId>
+    <formula>MAX(Highest_SAT_Reading__c,SR_SAT_Reading__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Max score of Official and Self Reported</inlineHelpText>
+    <label>Overall Highest SAT Reading</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

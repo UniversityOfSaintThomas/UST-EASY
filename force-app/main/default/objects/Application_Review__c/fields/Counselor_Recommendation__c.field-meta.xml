@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Counselor_Recommendation__c</fullName>
+    <externalId>false</externalId>
+    <label>Counselor Recommendation</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Admit</fullName>
+                <default>false</default>
+                <label>Admit</label>
+            </value>
+            <value>
+                <fullName>Admit - No Committee Review</fullName>
+                <default>false</default>
+                <label>Admit - No Committee Review</label>
+            </value>
+            <value>
+                <fullName>Fall Grades</fullName>
+                <default>false</default>
+                <label>Fall Grades</label>
+            </value>
+            <value>
+                <fullName>Test Scores</fullName>
+                <default>false</default>
+                <label>Test Scores</label>
+            </value>
+            <value>
+                <fullName>Fall Grades &amp; Test Scores</fullName>
+                <default>false</default>
+                <label>Fall Grades &amp; Test Scores</label>
+            </value>
+            <value>
+                <fullName>Deny</fullName>
+                <default>false</default>
+                <label>Deny</label>
+            </value>
+            <value>
+                <fullName>Deny - No Committee Review</fullName>
+                <default>false</default>
+                <label>Deny - No Committee Review</label>
+            </value>
+            <value>
+                <fullName>Deny - Recommend to DFC</fullName>
+                <default>false</default>
+                <label>Deny - Recommend to DFC</label>
+            </value>
+            <value>
+                <fullName>Hold</fullName>
+                <default>false</default>
+                <label>Hold</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

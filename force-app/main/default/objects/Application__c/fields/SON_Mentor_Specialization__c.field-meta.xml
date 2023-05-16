@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SON_Mentor_Specialization__c</fullName>
+    <externalId>false</externalId>
+    <label>SON Mentor Specialization</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Ambulatory Care</fullName>
+                <default>false</default>
+                <label>Ambulatory Care</label>
+            </value>
+            <value>
+                <fullName>Cardiac</fullName>
+                <default>false</default>
+                <label>Cardiac</label>
+            </value>
+            <value>
+                <fullName>Case Management</fullName>
+                <default>false</default>
+                <label>Case Management</label>
+            </value>
+            <value>
+                <fullName>Certified Nurse Midwife</fullName>
+                <default>false</default>
+                <label>Certified Nurse Midwife</label>
+            </value>
+            <value>
+                <fullName>Clinical Nurse Specialist</fullName>
+                <default>false</default>
+                <label>Clinical Nurse Specialist</label>
+            </value>
+            <value>
+                <fullName>Critical Care</fullName>
+                <default>false</default>
+                <label>Critical Care</label>
+            </value>
+            <value>
+                <fullName>Entrepreneurship</fullName>
+                <default>false</default>
+                <label>Entrepreneurship</label>
+            </value>
+            <value>
+                <fullName>Genetics</fullName>
+                <default>false</default>
+                <label>Genetics</label>
+            </value>
+            <value>
+                <fullName>Geriatric</fullName>
+                <default>false</default>
+                <label>Geriatric</label>
+            </value>
+            <value>
+                <fullName>Holistic Nursing</fullName>
+                <default>false</default>
+                <label>Holistic Nursing</label>
+            </value>
+            <value>
+                <fullName>Home Health Care</fullName>
+                <default>false</default>
+                <label>Home Health Care</label>
+            </value>
+            <value>
+                <fullName>Hospice/Palliative Care</fullName>
+                <default>false</default>
+                <label>Hospice/Palliative Care</label>
+            </value>
+            <value>
+                <fullName>Infection Control/Prevention</fullName>
+                <default>false</default>
+                <label>Infection Control/Prevention</label>
+            </value>
+            <value>
+                <fullName>Leadership and Administration</fullName>
+                <default>false</default>
+                <label>Leadership and Administration</label>
+            </value>
+            <value>
+                <fullName>Managed Care</fullName>
+                <default>false</default>
+                <label>Managed Care</label>
+            </value>
+            <value>
+                <fullName>Medical-Surgical</fullName>
+                <default>false</default>
+                <label>Medical-Surgical</label>
+            </value>
+            <value>
+                <fullName>Mental Health</fullName>
+                <default>false</default>
+                <label>Mental Health</label>
+            </value>
+            <value>
+                <fullName>Neonatal</fullName>
+                <default>false</default>
+                <label>Neonatal</label>
+            </value>
+            <value>
+                <fullName>Nephrology</fullName>
+                <default>false</default>
+                <label>Nephrology</label>
+            </value>
+            <value>
+                <fullName>Neuroscience</fullName>
+                <default>false</default>
+                <label>Neuroscience</label>
+            </value>
+            <value>
+                <fullName>Nurse Anesthetist</fullName>
+                <default>false</default>
+                <label>Nurse Anesthetist</label>
+            </value>
+            <value>
+                <fullName>Nurse Practitioner</fullName>
+                <default>false</default>
+                <label>Nurse Practitioner</label>
+            </value>
+            <value>
+                <fullName>Nursing Education</fullName>
+                <default>false</default>
+                <label>Nursing Education</label>
+            </value>
+            <value>
+                <fullName>Nursing Informatics</fullName>
+                <default>false</default>
+                <label>Nursing Informatics</label>
+            </value>
+            <value>
+                <fullName>OB/GYN</fullName>
+                <default>false</default>
+                <label>OB/GYN</label>
+            </value>
+            <value>
+                <fullName>Occupational Health</fullName>
+                <default>false</default>
+                <label>Occupational Health</label>
+            </value>
+            <value>
+                <fullName>Oncology</fullName>
+                <default>false</default>
+                <label>Oncology</label>
+            </value>
+            <value>
+                <fullName>OR/Perioperative</fullName>
+                <default>false</default>
+                <label>OR/Perioperative</label>
+            </value>
+            <value>
+                <fullName>Orthopedics</fullName>
+                <default>false</default>
+                <label>Orthopedics</label>
+            </value>
+            <value>
+                <fullName>Other/Not Listed</fullName>
+                <default>false</default>
+                <label>Other/Not Listed</label>
+            </value>
+            <value>
+                <fullName>Pediatrics</fullName>
+                <default>false</default>
+                <label>Pediatrics</label>
+            </value>
+            <value>
+                <fullName>Public Health</fullName>
+                <default>false</default>
+                <label>Public Health</label>
+            </value>
+            <value>
+                <fullName>Pulmonary Care</fullName>
+                <default>false</default>
+                <label>Pulmonary Care</label>
+            </value>
+            <value>
+                <fullName>School Nursing</fullName>
+                <default>false</default>
+                <label>School Nursing</label>
+            </value>
+            <value>
+                <fullName>Static</fullName>
+                <default>false</default>
+                <label>Static</label>
+            </value>
+            <value>
+                <fullName>Travel Nurse</fullName>
+                <default>false</default>
+                <label>Travel Nurse</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

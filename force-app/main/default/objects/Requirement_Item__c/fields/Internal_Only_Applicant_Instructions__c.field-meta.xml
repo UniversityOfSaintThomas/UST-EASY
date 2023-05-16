@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Internal_Only_Applicant_Instructions__c</fullName>
+    <deprecated>false</deprecated>
     <description>Instructions that display to the applicant when the user accesses an Internal Only Requirement Item. Displayed at the top of the screen. This field accepts HTML.</description>
     <externalId>false</externalId>
     <inlineHelpText>Instructions that display to the applicant when the user accesses an Internal Only Requirement Item. Displayed at the top of the screen. This field accepts HTML.</inlineHelpText>

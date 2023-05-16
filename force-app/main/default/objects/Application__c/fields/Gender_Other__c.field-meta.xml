@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Gender_Other__c</fullName>
+    <complianceGroup>PII</complianceGroup>
+    <description>Applicants have the ability to explain their Gender identity if they have chosen picklist option &quot;Other&quot; on the application Gender Identity question.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Gender Identity: If an individual selects  &quot;Other&quot; from Gender Identity question picklist and enters their Gender Identity it will be captured here.</inlineHelpText>
+    <label>Gender Other</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -8,6 +8,7 @@
     <columns>Degree_Type__c</columns>
     <columns>College_Code__c</columns>
     <columns>Program_Display__c</columns>
+    <columns>Associated_Schools__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Program_Record_Type__c</field>
@@ -17,7 +18,7 @@
     <filters>
         <field>Academic_Level__c</field>
         <operation>notEqual</operation>
-        <value>U</value>
+        <value>U,Undergraduate</value>
     </filters>
     <label>Recruitment Programs - G</label>
     <language>en_US</language>

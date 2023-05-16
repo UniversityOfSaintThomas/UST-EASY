@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prior_Term_Application__c</fullName>
+    <description>Term Start Date +12</description>
+    <externalId>false</externalId>
+    <formula>IF( TODAY() &gt;=  Intended_Term_of_Entry__r.Term_Start_Date__c +12,TRUE, FALSE)</formula>
+    <inlineHelpText>Term Start Date +12</inlineHelpText>
+    <label>Prior Term Application</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

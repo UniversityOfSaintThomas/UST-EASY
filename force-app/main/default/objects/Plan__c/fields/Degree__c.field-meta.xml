@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Degree__c</fullName>
+    <deprecated>false</deprecated>
     <description>The Degree of the record (Ex: BS, BA, etc.).</description>
     <externalId>false</externalId>
     <inlineHelpText>Select a Degree for the record.</inlineHelpText>
@@ -56,6 +57,11 @@
                 <fullName>Associate&apos;s</fullName>
                 <default>false</default>
                 <label>Associate&apos;s</label>
+            </value>
+            <value>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+                <label>Non-Degree</label>
             </value>
             <value>
                 <fullName>BS</fullName>

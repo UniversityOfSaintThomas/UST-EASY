@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Campaign_Member_Key__c</fullName>
     <caseSensitive>false</caseSensitive>
+    <deprecated>false</deprecated>
     <description>The Contact ID.Campaign ID if it exists, used to to upsert Campaign Members in the Interaction process.</description>
     <externalId>true</externalId>
     <inlineHelpText>The Contact ID.Campaign ID if it exists, used to to upsert Campaign Members in the Interaction process.</inlineHelpText>

@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>User_Created__c</fullName>
     <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
     <description>Required for the EASY application created</description>
     <externalId>false</externalId>
     <inlineHelpText>Required for the EASY application created</inlineHelpText>

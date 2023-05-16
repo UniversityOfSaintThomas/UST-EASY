@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Primary_Relationship_to_Referral__c</fullName>
+    <deprecated>false</deprecated>
     <description>This field was created to capture the relationship between the Alumni Referral Program and the referred student.</description>
     <externalId>false</externalId>
     <label>Primary Relationship to Referral</label>

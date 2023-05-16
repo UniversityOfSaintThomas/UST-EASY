@@ -8,6 +8,8 @@
     <columns>Recruitment_Program__c</columns>
     <columns>Program_Code__c</columns>
     <columns>Active__c</columns>
+    <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
+    <language>en_US</language>
 </ListView>

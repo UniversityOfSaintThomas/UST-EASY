@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Question_Response__c</fullName>
+    <deprecated>false</deprecated>
     <description>This field shows whichever Value was entered.</description>
     <externalId>false</externalId>
     <formula>TRIM(
@@ -15,7 +16,7 @@ IF( NOT(ISBLANK(LEFT(ValueTextArea__c,255))),LEFT(ValueTextArea__c,255),
 IF( NOT(ISBLANK(ValueURL__c)),ValueURL__c,
 IF( NOT(ISBLANK(Street__c)), (Street__c &amp; &quot; &quot; &amp; City__c &amp; &quot; &quot; &amp; State__c &amp; &quot; &quot; &amp; Country__c &amp; &quot; &quot; &amp; PostalCode__c), 
 IF( NOT(ISBLANK(TEXT(ValueDate__c))),TEXT(ValueDate__c), 
-IF( NOT(ISBLANK(TEXT(ValueDateTime__c))),TEXT(ValueDateTime__c),&quot;&quot; 
+IF( NOT(ISBLANK(ValueDateTime__c)),TEXT(ValueDateTime__c),&quot;&quot; 
 )))))))))))))</formula>
     <inlineHelpText>This field shows whichever Value was entered.</inlineHelpText>
     <label>Question Response</label>

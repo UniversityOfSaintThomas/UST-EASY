@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Internal_Comments__c</fullName>
+    <description>Field on Requirement Response record to allow users to enter remarks/comments.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Field on Requirement Response record to allow users to enter remarks/comments.</inlineHelpText>
+    <label>Internal Comments</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

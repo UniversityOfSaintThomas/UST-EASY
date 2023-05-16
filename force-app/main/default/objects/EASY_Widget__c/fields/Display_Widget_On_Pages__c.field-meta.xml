@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Display_Widget_On_Pages__c</fullName>
+    <deprecated>false</deprecated>
     <description>Pages on which this widget should display.</description>
     <externalId>false</externalId>
     <inlineHelpText>Pages on which this widget should display.</inlineHelpText>

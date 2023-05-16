@@ -9,6 +9,7 @@
     <inlineHelpText>Mailing Latitude, Longitude</inlineHelpText>
     <label>Geolocation Coordinates</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

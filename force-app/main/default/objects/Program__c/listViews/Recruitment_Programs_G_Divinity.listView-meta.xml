@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recruitment_Programs_G_Divinity</fullName>
+    <columns>NAME</columns>
+    <columns>RECORDTYPE</columns>
+    <columns>Academic_Level__c</columns>
+    <columns>Degree__c</columns>
+    <columns>Degree_Type__c</columns>
+    <columns>College_Code__c</columns>
+    <columns>Program_Display__c</columns>
+    <columns>Associated_Schools__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Program_Record_Type__c</field>
+        <operation>equals</operation>
+        <value>Recruitment Program</value>
+    </filters>
+    <filters>
+        <field>Academic_Level__c</field>
+        <operation>notEqual</operation>
+        <value>U,Undergraduate</value>
+    </filters>
+    <filters>
+        <field>Associated_Schools__c</field>
+        <operation>includes</operation>
+        <value>The Saint Paul Seminary School of Divinity</value>
+    </filters>
+    <label>Recruitment Programs - G Divinity</label>
+    <language>en_US</language>
+</ListView>

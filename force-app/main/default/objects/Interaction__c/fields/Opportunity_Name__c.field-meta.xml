@@ -4,9 +4,10 @@
     <deprecated>false</deprecated>
     <description>Last Name|Term Name|Program Name on Application</description>
     <externalId>false</externalId>
-    <formula>IF(   NOT(ISBLANK(Academic_Program__c)),
+    <formula>IF( NOT(ISBLANK(Academic_Program__c)),
 
-(Last_Name__c &amp;&quot;|&quot;&amp; Term__r.Name &amp;&quot;|&quot;&amp;  Academic_Program__r.Program_Name_on_Application__c),(Last_Name__c &amp;&quot;|&quot;&amp; Term__r.Name &amp;&quot;|&quot;&amp;  Recruitment_Interest__r.Program__r.Program_Name_on_Application__c ))</formula>
+(Last_Name__c &amp;&quot;|&quot;&amp; Term__r.Name &amp;&quot;|&quot;&amp; Academic_Program__r.Program_Name_on_Application__c),(Last_Name__c &amp;&quot;|&quot;&amp; Term__r.Name &amp;&quot;|&quot;&amp; Recruitment_Interest__r.Program__r.Program_Name_on_Application__c ))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Opportunity Name</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

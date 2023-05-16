@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Intend_Live_On_Campus__c</fullName>
+    <description>Do you plan to live in on-campus housing?</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Do you plan to live in on-campus housing?</inlineHelpText>
+    <label>Intend Live On Campus</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>I intend to live on campus</fullName>
+                <default>false</default>
+                <label>I intend to live on campus</label>
+            </value>
+            <value>
+                <fullName>I intend to request an exception to the requirement</fullName>
+                <default>false</default>
+                <label>I intend to request an exception to the requirement</label>
+            </value>
+            <value>
+                <fullName>I completed two or more semesters at another college/university and will not live on campus</fullName>
+                <default>false</default>
+                <label>I completed two or more semesters at another college/university and will not live on campus</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

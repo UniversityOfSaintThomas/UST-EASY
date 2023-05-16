@@ -166,7 +166,6 @@
                                                 {!question.question.Label__c} {!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}
                                             </dt>
 
-                                            {!rr.obj['Name']}
                                             <dd class="slds-item_detail slds-truncate" title="Description for first label">
 
                                                 <!-- <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address'}"/>-->

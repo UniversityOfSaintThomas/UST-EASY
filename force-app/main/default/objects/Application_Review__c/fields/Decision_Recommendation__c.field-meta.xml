@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Decision_Recommendation__c</fullName>
+    <deprecated>false</deprecated>
     <description>This is the decision recommendation of the reviewer.</description>
     <externalId>false</externalId>
     <label>Decision Recommendation</label>

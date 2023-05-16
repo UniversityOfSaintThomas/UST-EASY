@@ -2,6 +2,7 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Academic_Programs_GSPP</fullName>
     <columns>NAME</columns>
+    <columns>Program_Name_on_Application__c</columns>
     <columns>Program_Major_Concentration__c</columns>
     <columns>Application_Control__c</columns>
     <columns>Degree_Type__c</columns>

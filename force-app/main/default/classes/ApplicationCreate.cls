@@ -432,12 +432,8 @@ public class ApplicationCreate {
         }
 
         //Get the email value out of the question group response
-        System.debug(JSON.serializePretty(app.Contact__r.Email));
-        System.debug(JSON.serializePretty(con));
-
         if (String.isNotBlank(app.Contact__c)) {
             Contact contactEmail = [SELECT Id, Email FROM Contact WHERE Id = :app.Contact__c];
-            System.debug(JSON.serializePretty(contactEmail));
             app.Applicant_Email__c = contactEmail.Email;
         } else {
             for (ApplicationQuestionGroup aqg : section.groups) {

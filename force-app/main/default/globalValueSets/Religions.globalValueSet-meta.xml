@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Baptist</fullName>
+        <default>false</default>
+        <label>Baptist</label>
+    </customValue>
+    <customValue>
+        <fullName>Buddhist</fullName>
+        <default>false</default>
+        <label>Buddhist</label>
+    </customValue>
+    <customValue>
+        <fullName>Chinese Religions</fullName>
+        <default>false</default>
+        <label>Chinese Religions</label>
+    </customValue>
+    <customValue>
+        <fullName>Episcopal</fullName>
+        <default>false</default>
+        <label>Episcopal</label>
+    </customValue>
+    <customValue>
+        <fullName>Ev. Lutheran Church/America</fullName>
+        <default>false</default>
+        <label>Ev. Lutheran Church/America</label>
+    </customValue>
+    <customValue>
+        <fullName>Hinduism</fullName>
+        <default>false</default>
+        <label>Hinduism</label>
+    </customValue>
+    <customValue>
+        <fullName>Jewish</fullName>
+        <default>false</default>
+        <label>Jewish</label>
+    </customValue>
+    <customValue>
+        <fullName>Methodist</fullName>
+        <default>false</default>
+        <label>Methodist</label>
+    </customValue>
+    <customValue>
+        <fullName>Muslim</fullName>
+        <default>false</default>
+        <label>Muslim</label>
+    </customValue>
+    <customValue>
+        <fullName>Native American</fullName>
+        <default>false</default>
+        <label>Native American</label>
+    </customValue>
+    <customValue>
+        <fullName>Orthodox</fullName>
+        <default>false</default>
+        <label>Orthodox</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Christian</fullName>
+        <default>false</default>
+        <label>Other Christian</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Lutheran</fullName>
+        <default>false</default>
+        <label>Other Lutheran</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Non-Christian</fullName>
+        <default>false</default>
+        <label>Other Non-Christian</label>
+    </customValue>
+    <customValue>
+        <fullName>Presbyterian</fullName>
+        <default>false</default>
+        <label>Presbyterian</label>
+    </customValue>
+    <customValue>
+        <fullName>Roman Catholic</fullName>
+        <default>false</default>
+        <label>Roman Catholic</label>
+    </customValue>
+    <customValue>
+        <fullName>Prefer not to Respond</fullName>
+        <default>false</default>
+        <label>Prefer not to Respond</label>
+    </customValue>
+    <customValue>
+        <fullName>None</fullName>
+        <default>false</default>
+        <label>None</label>
+    </customValue>
+    <customValue>
+        <fullName>Latter Day Saints</fullName>
+        <default>false</default>
+        <label>Latter Day Saints</label>
+    </customValue>
+    <masterLabel>Religions</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

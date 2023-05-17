@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SJV_Intent_to_Enroll__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>&quot;Verified&quot; = Confirmed with SJV that they are intending to enroll
+&quot;Not SJV&quot; = SJV has not confirmed their interest or intent to enroll from the diocese</inlineHelpText>
+    <label>SJV Intent to Enroll</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Verified</fullName>
+                <default>false</default>
+                <label>Verified</label>
+            </value>
+            <value>
+                <fullName>Not SJV</fullName>
+                <default>false</default>
+                <label>Not SJV</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

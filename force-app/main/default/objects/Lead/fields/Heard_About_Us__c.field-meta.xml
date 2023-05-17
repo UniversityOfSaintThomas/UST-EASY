@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Heard_About_Us__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Heard About Us</label>
     <required>false</required>
@@ -18,6 +19,11 @@
                 <fullName>College Fair</fullName>
                 <default>false</default>
                 <label>College Fair</label>
+            </value>
+            <value>
+                <fullName>Employer</fullName>
+                <default>false</default>
+                <label>Employer</label>
             </value>
             <value>
                 <fullName>Event</fullName>
@@ -55,14 +61,34 @@
                 <label>Newspaper</label>
             </value>
             <value>
+                <fullName>Professional Conference</fullName>
+                <default>false</default>
+                <label>Professional Conference</label>
+            </value>
+            <value>
+                <fullName>Professional Publication</fullName>
+                <default>false</default>
+                <label>Professional Publication</label>
+            </value>
+            <value>
                 <fullName>Radio</fullName>
                 <default>false</default>
                 <label>Radio</label>
             </value>
             <value>
+                <fullName>Social Media</fullName>
+                <default>false</default>
+                <label>Social Media</label>
+            </value>
+            <value>
                 <fullName>St. Thomas Website</fullName>
                 <default>false</default>
                 <label>St. Thomas Website</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
         </valueSetDefinition>
     </valueSet>

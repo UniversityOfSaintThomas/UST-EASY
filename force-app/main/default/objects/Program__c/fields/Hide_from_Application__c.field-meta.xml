@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Hide_from_Application__c</fullName>
     <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
     <description>If checked, this field will not show up as an option on the application.</description>
     <externalId>false</externalId>
     <inlineHelpText>If checked, this field will not show up as an option on the application.</inlineHelpText>

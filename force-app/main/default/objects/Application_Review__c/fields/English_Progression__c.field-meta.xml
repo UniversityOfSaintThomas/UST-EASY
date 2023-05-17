@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>English_Progression__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Exceeds Expectations - Completed beyond English 11 or advanced English by the end of Jr year (AP Lit, AP Lang)
+            Meets Expectations - Completed English 11 by the end of Jr year
+            Does Not Meet Expectations - Not taken English 11 or in developmental English</inlineHelpText>
+    <label>On Track in English</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Exceeds Expectations</fullName>
+                <default>false</default>
+                <label>Exceeds Expectations</label>
+            </value>
+            <value>
+                <fullName>Meets Expectations</fullName>
+                <default>false</default>
+                <label>Meets Expectations</label>
+            </value>
+            <value>
+                <fullName>Does Not Meet Expectations</fullName>
+                <default>false</default>
+                <label>Does Not Meet Expectations</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

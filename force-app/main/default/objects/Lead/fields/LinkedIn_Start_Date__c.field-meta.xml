@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LinkedIn_Start_Date__c</fullName>
+    <description>Start Date from the LinkedIn Lead Gen form</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Start Date from the LinkedIn Lead Gen form</inlineHelpText>
+    <label>LinkedIn Start Date</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

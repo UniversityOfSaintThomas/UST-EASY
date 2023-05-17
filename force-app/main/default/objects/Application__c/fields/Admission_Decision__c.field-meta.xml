@@ -3,10 +3,9 @@
     <fullName>Admission_Decision__c</fullName>
     <deprecated>false</deprecated>
     <externalId>false</externalId>
-    <label>Admission Decision</label>
+    <label>Graduate Processing Status</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

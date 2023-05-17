@@ -82,6 +82,11 @@
                 <label>Home and Mobile Phone</label>
             </value>
             <value>
+                <fullName>How did you hear about us</fullName>
+                <default>false</default>
+                <label>How did you hear about us</label>
+            </value>
+            <value>
                 <fullName>I have a question</fullName>
                 <default>false</default>
                 <label>I have a question</label>
@@ -107,9 +112,29 @@
                 <label>I would like to receive text messages</label>
             </value>
             <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>Scholarship of Interest</fullName>
+                <default>false</default>
+                <label>Scholarship of Interest</label>
+            </value>
+            <value>
                 <fullName>State</fullName>
                 <default>false</default>
                 <label>State</label>
+            </value>
+            <value>
+                <fullName>St Thomas Colleges</fullName>
+                <default>false</default>
+                <label>St Thomas Colleges</label>
+            </value>
+            <value>
+                <fullName>Tell us about yourself</fullName>
+                <default>false</default>
+                <label>Tell us about yourself</label>
             </value>
             <value>
                 <fullName>Timeline to Enrollment</fullName>

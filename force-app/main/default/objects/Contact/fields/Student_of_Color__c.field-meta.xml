@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Student_of_Color__c</fullName>
+    <externalId>false</externalId>
+    <formula>INCLUDES(hed__Race__c, &quot;American Indian or Alaskan Native&quot;) || INCLUDES(hed__Race__c, &quot;Asian&quot;)|| INCLUDES(hed__Race__c, &quot;Black or African American&quot;) || INCLUDES(hed__Race__c, &quot;Native Hawaiian or Pacific Islander&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Student of Color</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -16,11 +16,11 @@
 (TODAY()&gt;= DATE(2021,9,12))
 ),
 
-&quot;Aquinas Scholars:&quot; &amp; BR()&amp; &quot;Congratulations! Based on your high level of academic achievement, you are invited to apply to the &quot; &amp; (HYPERLINK (&quot;https://www.stthomas.edu/aquinasscholars/&quot;, &quot;Aquinas Scholars Honors Program.&quot;))&amp; BR() &amp; BR() &amp;
+&quot;Congratulations! Based on your high level of academic achievement, you are invited to apply to the &quot; &amp; (HYPERLINK (&quot;https://www.stthomas.edu/aquinasscholars/&quot;, &quot;Aquinas Scholars Honors Program.&quot;))&amp; BR() &amp; BR() &amp;
 
-IF(Intended_Program_Applicant_Type__c = &quot;First-Year&quot;, &quot;Deadline to apply is March 18 and you will need to use your 9-digit St. Thomas ID number - &quot;,&quot;You will need to use your 9-digit St. Thomas ID number -&quot;) &amp; Applicant_Banner_Id__c &amp; BR() &amp; HYPERLINK ( &quot;https://uofstthomasmn--edastaging.sandbox.my.site.com/Admissions/scholarshipapplicationpage1?sid=Scholarship-0024&quot;, &quot; Apply Here&quot;, &apos;_blank&apos;)
+IF(Intended_Program_Applicant_Type__c = &quot;First-Year&quot;, &quot;Deadline to apply is March 18 and you will need to use your 9-digit St. Thomas ID number: &quot;,&quot;You will need to use your 9-digit St. Thomas ID number: &quot;) &amp; Applicant_Banner_Id__c &amp; BR() &amp; BR() &amp; HYPERLINK ( &quot;https://uofstthomasmn.force.com/Admissions/scholarshipapplicationpage1?sid=Scholarship-0017&quot;, &quot; Click here to apply&quot;, &apos;_blank&apos;)
 
-, &quot;&quot;)</formula>
+, &quot;Congratulations on your acceptance to St. Thomas. You will need to use your 9-digit St. Thomas ID number at various times.&quot; &amp; BR() &amp; BR() &amp; &quot;Your St. Thomas ID number is: &quot; &amp; Applicant_Banner_Id__c)</formula>
     <label>Aquinas Scholars Portal Text</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

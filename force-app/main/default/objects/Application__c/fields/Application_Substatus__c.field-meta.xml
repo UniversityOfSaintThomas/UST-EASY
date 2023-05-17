@@ -8,7 +8,6 @@
     <label>Application Substatus</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -164,13 +163,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <controllingFieldValue>Wrong Application</controllingFieldValue>
             <valueName>Multiple App</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <controllingFieldValue>Wrong Application</controllingFieldValue>
-            <valueName>Wrong App</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

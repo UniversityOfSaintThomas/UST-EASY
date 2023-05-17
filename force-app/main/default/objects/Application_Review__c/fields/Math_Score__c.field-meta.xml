@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Math_Score__c</fullName>
+    <externalId>false</externalId>
+    <formula>(Math_As__c  * 4) +
+            (Math_Bs__c  * 3) +
+            (Math_Cs__c  * 2) +
+            (Math_Ds__c  * 1) +
+            (Math_Fs__c  * 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Math Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Graduate_from_UST__c</fullName>
+    <deprecated>false</deprecated>
     <description>Did this family member graduate from UST?</description>
     <externalId>false</externalId>
     <inlineHelpText>Did this family member graduate from UST?</inlineHelpText>

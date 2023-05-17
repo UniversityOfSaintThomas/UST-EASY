@@ -51,18 +51,30 @@
         <label>No</label>
     </customValue>
     <customValue>
-        <fullName>St. Paul Urban Teacher Residency</fullName>
-        <default>false</default>
-        <label>St. Paul Urban Teacher Residency</label>
-    </customValue>
-    <customValue>
         <fullName>Charter School Residency</fullName>
         <default>false</default>
         <label>Charter School Residency</label>
     </customValue>
     <customValue>
+        <fullName>Saint Paul Teacher Residency</fullName>
+        <default>false</default>
+        <label>Saint Paul Teacher Residency</label>
+    </customValue>
+    <customValue>
+        <fullName>Minneapolis Teacher Residency</fullName>
+        <default>false</default>
+        <label>Minneapolis Teacher Residency</label>
+    </customValue>
+    <customValue>
+        <fullName>St. Paul Urban Teacher Residency</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>St. Paul Urban Teacher Residency</label>
+    </customValue>
+    <customValue>
         <fullName>Minneapolis Special Education Residency</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Minneapolis Special Education Residency</label>
     </customValue>
     <description>Types of an applicant.</description>

@@ -6,7 +6,7 @@
     <inlineHelpText>Required to create or update an Opportunity.</inlineHelpText>
     <label>Opportunity Stage</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

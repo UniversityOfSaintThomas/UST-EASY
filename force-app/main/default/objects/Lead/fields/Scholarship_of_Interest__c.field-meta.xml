@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scholarship_of_Interest__c</fullName>
+    <externalId>false</externalId>
+    <label>Scholarship of Interest</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>GHR Fellows</fullName>
+                <default>false</default>
+                <label>GHR Fellows</label>
+            </value>
+            <value>
+                <fullName>Schulze Innovation</fullName>
+                <default>false</default>
+                <label>Schulze Innovation</label>
+            </value>
+            <value>
+                <fullName>Both</fullName>
+                <default>false</default>
+                <label>Both</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

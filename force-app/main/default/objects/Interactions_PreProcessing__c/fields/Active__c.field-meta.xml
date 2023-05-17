@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Active__c</fullName>
     <defaultValue>true</defaultValue>
+    <deprecated>false</deprecated>
     <description>Whether or not the setting is active.</description>
     <externalId>false</externalId>
     <inlineHelpText>Whether or not the setting is active.</inlineHelpText>

@@ -7,67 +7,32 @@
     <inlineHelpText>Indicate the initial source of this data.</inlineHelpText>
     <label>Lead Source</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
-                <fullName>Purchase List</fullName>
+                <fullName>2Y College Fair</fullName>
                 <default>false</default>
-                <label>Purchase List</label>
+                <label>2Y College Fair</label>
             </value>
             <value>
-                <fullName>College Fair</fullName>
+                <fullName>2Y Group Visit</fullName>
                 <default>false</default>
-                <label>College Fair</label>
+                <label>2Y Group Visit</label>
             </value>
             <value>
-                <fullName>Office Visit</fullName>
+                <fullName>2Y High School Visit</fullName>
                 <default>false</default>
-                <label>Office Visit</label>
+                <label>2Y High School Visit</label>
             </value>
             <value>
-                <fullName>Webform</fullName>
+                <fullName>2Y IQ</fullName>
                 <default>false</default>
-                <label>Webform</label>
-            </value>
-            <value>
-                <fullName>Phone Call</fullName>
-                <default>false</default>
-                <label>Phone Call</label>
-            </value>
-            <value>
-                <fullName>Graduate RFI</fullName>
-                <default>false</default>
-                <label>Graduate RFI</label>
-            </value>
-            <value>
-                <fullName>Undergraduate RFI</fullName>
-                <default>false</default>
-                <label>Undergraduate RFI</label>
-            </value>
-            <value>
-                <fullName>Undergrad RFI</fullName>
-                <default>false</default>
-                <label>Undergrad RFI</label>
-            </value>
-            <value>
-                <fullName>Internal RFI</fullName>
-                <default>false</default>
-                <label>Internal RFI</label>
-            </value>
-            <value>
-                <fullName>Landing Page</fullName>
-                <default>false</default>
-                <label>Landing Page</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
+                <label>2Y IQ</label>
             </value>
             <value>
                 <fullName>Advertisement</fullName>
@@ -75,9 +40,109 @@
                 <label>Advertisement</label>
             </value>
             <value>
+                <fullName>Advertising</fullName>
+                <default>false</default>
+                <label>Advertising</label>
+            </value>
+            <value>
+                <fullName>AIFS-Bernardi Exchange Application</fullName>
+                <default>false</default>
+                <label>AIFS-Bernardi Exchange Application</label>
+            </value>
+            <value>
+                <fullName>Alumni Referral Program</fullName>
+                <default>false</default>
+                <label>Alumni Referral Program</label>
+            </value>
+            <value>
+                <fullName>Application</fullName>
+                <default>false</default>
+                <label>Application</label>
+            </value>
+            <value>
+                <fullName>Banner Conversion</fullName>
+                <default>false</default>
+                <label>Banner Conversion</label>
+            </value>
+            <value>
+                <fullName>Catholic Studies CLT</fullName>
+                <default>false</default>
+                <label>Catholic Studies CLT</label>
+            </value>
+            <value>
+                <fullName>Coach List</fullName>
+                <default>false</default>
+                <label>Coach List</label>
+            </value>
+            <value>
+                <fullName>College Fair</fullName>
+                <default>false</default>
+                <label>College Fair</label>
+            </value>
+            <value>
+                <fullName>Common App</fullName>
+                <default>false</default>
+                <label>Common App</label>
+            </value>
+            <value>
+                <fullName>Common App Partial</fullName>
+                <default>false</default>
+                <label>Common App Partial</label>
+            </value>
+            <value>
+                <fullName>DFC Banner</fullName>
+                <default>false</default>
+                <label>DFC Banner</label>
+            </value>
+            <value>
+                <fullName>DFC Influencer</fullName>
+                <default>false</default>
+                <label>DFC Influencer</label>
+            </value>
+            <value>
+                <fullName>Dougherty Family College</fullName>
+                <default>false</default>
+                <label>Dougherty Family College</label>
+            </value>
+            <value>
+                <fullName>Dreamer</fullName>
+                <default>false</default>
+                <label>Dreamer</label>
+            </value>
+            <value>
+                <fullName>EducationUSA Fair</fullName>
+                <default>false</default>
+                <label>EducationUSA Fair</label>
+            </value>
+            <value>
+                <fullName>ELS Pathways</fullName>
+                <default>false</default>
+                <label>ELS Pathways</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
                 <fullName>Employee Referral</fullName>
                 <default>false</default>
                 <label>Employee Referral</label>
+            </value>
+            <value>
+                <fullName>Engineering UG RFI</fullName>
+                <default>false</default>
+                <label>Engineering UG RFI</label>
+            </value>
+            <value>
+                <fullName>ERX MVP</fullName>
+                <default>false</default>
+                <label>ERX MVP</label>
+            </value>
+            <value>
+                <fullName>Event</fullName>
+                <default>false</default>
+                <label>Event</label>
             </value>
             <value>
                 <fullName>External Referral</fullName>
@@ -85,14 +150,204 @@
                 <label>External Referral</label>
             </value>
             <value>
+                <fullName>External Virtual Event</fullName>
+                <default>false</default>
+                <label>External Virtual Event</label>
+            </value>
+            <value>
+                <fullName>FAFSA</fullName>
+                <default>false</default>
+                <label>FAFSA</label>
+            </value>
+            <value>
+                <fullName>FAFSA Suspense</fullName>
+                <default>false</default>
+                <label>FAFSA Suspense</label>
+            </value>
+            <value>
+                <fullName>Fire Engine Red</fullName>
+                <default>false</default>
+                <label>Fire Engine Red</label>
+            </value>
+            <value>
+                <fullName>Fire Engine Red Respondent</fullName>
+                <default>false</default>
+                <label>Fire Engine Red Respondent</label>
+            </value>
+            <value>
+                <fullName>GAM Migration</fullName>
+                <default>false</default>
+                <label>GAM Migration</label>
+            </value>
+            <value>
+                <fullName>GHR Fellows and Schulze Scholarship Programs</fullName>
+                <default>false</default>
+                <label>GHR Fellows and Schulze Scholarship Programs</label>
+            </value>
+            <value>
+                <fullName>GHR Fellows RFI</fullName>
+                <default>false</default>
+                <label>GHR Fellows RFI</label>
+            </value>
+            <value>
+                <fullName>Graduate RFI</fullName>
+                <default>false</default>
+                <label>Graduate RFI</label>
+            </value>
+            <value>
+                <fullName>Graduate RFI Page</fullName>
+                <default>false</default>
+                <label>Graduate RFI Page</label>
+            </value>
+            <value>
+                <fullName>High School Counselors</fullName>
+                <default>false</default>
+                <label>High School Counselors</label>
+            </value>
+            <value>
+                <fullName>High School Visit</fullName>
+                <default>false</default>
+                <label>High School Visit</label>
+            </value>
+            <value>
+                <fullName>Hobsons</fullName>
+                <default>false</default>
+                <label>Hobsons</label>
+            </value>
+            <value>
+                <fullName>Internal RFI</fullName>
+                <default>false</default>
+                <label>Internal RFI</label>
+            </value>
+            <value>
+                <fullName>Kiosk Landing Page</fullName>
+                <default>false</default>
+                <label>Kiosk Landing Page</label>
+            </value>
+            <value>
+                <fullName>Landing Page</fullName>
+                <default>false</default>
+                <label>Landing Page</label>
+            </value>
+            <value>
+                <fullName>LinkedIn</fullName>
+                <default>false</default>
+                <label>LinkedIn</label>
+            </value>
+            <value>
+                <fullName>MEF: U of M Crookston</fullName>
+                <default>false</default>
+                <label>MEF: U of M Crookston</label>
+            </value>
+            <value>
+                <fullName>Minnesota Music Educators Association (MMEA)</fullName>
+                <default>false</default>
+                <label>Minnesota Music Educators Association (MMEA)</label>
+            </value>
+            <value>
+                <fullName>MN State Fair</fullName>
+                <default>false</default>
+                <label>MN State Fair</label>
+            </value>
+            <value>
+                <fullName>MPCW</fullName>
+                <default>false</default>
+                <label>MPCW</label>
+            </value>
+            <value>
+                <fullName>Net Price Calculator</fullName>
+                <default>false</default>
+                <label>Net Price Calculator</label>
+            </value>
+            <value>
+                <fullName>Non-Degree Enrollment Form</fullName>
+                <default>false</default>
+                <label>Non-Degree Enrollment Form</label>
+            </value>
+            <value>
+                <fullName>NursingCAS</fullName>
+                <default>false</default>
+                <label>NursingCAS</label>
+            </value>
+            <value>
+                <fullName>OCB Migration</fullName>
+                <default>false</default>
+                <label>OCB Migration</label>
+            </value>
+            <value>
+                <fullName>OCB Schulze Newsletter</fullName>
+                <default>false</default>
+                <label>OCB Schulze Newsletter</label>
+            </value>
+            <value>
+                <fullName>OCB Schulz Newsletter</fullName>
+                <default>false</default>
+                <label>OCB Schulz Newsletter</label>
+            </value>
+            <value>
+                <fullName>Office Visit</fullName>
+                <default>false</default>
+                <label>Office Visit</label>
+            </value>
+            <value>
+                <fullName>OHE Direct Admit</fullName>
+                <default>false</default>
+                <label>OHE Direct Admit</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Paid Social</fullName>
+                <default>false</default>
+                <label>Paid Social</label>
+            </value>
+            <value>
                 <fullName>Partner</fullName>
                 <default>false</default>
                 <label>Partner</label>
             </value>
             <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+                <label>Phone Call</label>
+            </value>
+            <value>
                 <fullName>Public Relations</fullName>
                 <default>false</default>
                 <label>Public Relations</label>
+            </value>
+            <value>
+                <fullName>Purchase List</fullName>
+                <default>false</default>
+                <label>Purchase List</label>
+            </value>
+            <value>
+                <fullName>RaiseMe</fullName>
+                <default>false</default>
+                <label>RaiseMe</label>
+            </value>
+            <value>
+                <fullName>Referral</fullName>
+                <default>false</default>
+                <label>Referral</label>
+            </value>
+            <value>
+                <fullName>SAT</fullName>
+                <default>false</default>
+                <label>SAT</label>
+            </value>
+            <value>
+                <fullName>Search</fullName>
+                <default>false</default>
+                <label>Search</label>
             </value>
             <value>
                 <fullName>Seminar - Internal</fullName>
@@ -105,39 +360,44 @@
                 <label>Seminar - Partner</label>
             </value>
             <value>
+                <fullName>SOE Alumni Referral Program</fullName>
+                <default>false</default>
+                <label>SOE Alumni Referral Program</label>
+            </value>
+            <value>
+                <fullName>Stealth Application</fullName>
+                <default>false</default>
+                <label>Stealth Application</label>
+            </value>
+            <value>
+                <fullName>Summer Application</fullName>
+                <default>false</default>
+                <label>Summer Application</label>
+            </value>
+            <value>
+                <fullName>Summer RFI</fullName>
+                <default>false</default>
+                <label>Summer RFI</label>
+            </value>
+            <value>
+                <fullName>Test Score</fullName>
+                <default>false</default>
+                <label>Test Score</label>
+            </value>
+            <value>
                 <fullName>Trade Show</fullName>
                 <default>false</default>
                 <label>Trade Show</label>
             </value>
             <value>
-                <fullName>Web</fullName>
+                <fullName>Two-Year RFI</fullName>
                 <default>false</default>
-                <label>Web</label>
+                <label>Two-Year RFI</label>
             </value>
             <value>
-                <fullName>Word of mouth</fullName>
+                <fullName>UG College Fair</fullName>
                 <default>false</default>
-                <label>Word of mouth</label>
-            </value>
-            <value>
-                <fullName>Application</fullName>
-                <default>false</default>
-                <label>Application</label>
-            </value>
-            <value>
-                <fullName>RaiseMe</fullName>
-                <default>false</default>
-                <label>RaiseMe</label>
-            </value>
-            <value>
-                <fullName>Workshop</fullName>
-                <default>false</default>
-                <label>Workshop</label>
-            </value>
-            <value>
-                <fullName>UG High School Visit</fullName>
-                <default>false</default>
-                <label>UG High School Visit</label>
+                <label>UG College Fair</label>
             </value>
             <value>
                 <fullName>UG Email</fullName>
@@ -155,14 +415,9 @@
                 <label>UG Group Visit request</label>
             </value>
             <value>
-                <fullName>UG Phone</fullName>
+                <fullName>UG High School Visit</fullName>
                 <default>false</default>
-                <label>UG Phone</label>
-            </value>
-            <value>
-                <fullName>UG College Fair</fullName>
-                <default>false</default>
-                <label>UG College Fair</label>
+                <label>UG High School Visit</label>
             </value>
             <value>
                 <fullName>UG IQ</fullName>
@@ -170,59 +425,34 @@
                 <label>UG IQ</label>
             </value>
             <value>
-                <fullName>Coach List</fullName>
+                <fullName>UG Phone</fullName>
                 <default>false</default>
-                <label>Coach List</label>
+                <label>UG Phone</label>
             </value>
             <value>
-                <fullName>SAT</fullName>
+                <fullName>UG Recruit Document</fullName>
                 <default>false</default>
-                <label>SAT</label>
+                <label>UG Recruit Document</label>
             </value>
             <value>
-                <fullName>Hobsons</fullName>
+                <fullName>UG Visit request</fullName>
                 <default>false</default>
-                <label>Hobsons</label>
+                <label>UG Visit request</label>
             </value>
             <value>
-                <fullName>MPCW</fullName>
+                <fullName>Undergrad RFI</fullName>
                 <default>false</default>
-                <label>MPCW</label>
+                <label>Undergrad RFI</label>
             </value>
             <value>
-                <fullName>Common App Partial</fullName>
+                <fullName>Undergraduate RFI</fullName>
                 <default>false</default>
-                <label>Common App Partial</label>
+                <label>Undergraduate RFI</label>
             </value>
             <value>
-                <fullName>Fire Engine Red Respondent</fullName>
+                <fullName>Undergraduate RFI Page</fullName>
                 <default>false</default>
-                <label>Fire Engine Red Respondent</label>
-            </value>
-            <value>
-                <fullName>FAFSA Suspense</fullName>
-                <default>false</default>
-                <label>FAFSA Suspense</label>
-            </value>
-            <value>
-                <fullName>Virtual HSV/AVID Presentation</fullName>
-                <default>false</default>
-                <label>Virtual HSV/AVID Presentation</label>
-            </value>
-            <value>
-                <fullName>Alumni Referral Program</fullName>
-                <default>false</default>
-                <label>Alumni Referral Program</label>
-            </value>
-            <value>
-                <fullName>Fire Engine Red</fullName>
-                <default>false</default>
-                <label>Fire Engine Red</label>
-            </value>
-            <value>
-                <fullName>Net Price Calculator</fullName>
-                <default>false</default>
-                <label>Net Price Calculator</label>
+                <label>Undergraduate RFI Page</label>
             </value>
             <value>
                 <fullName>Undergraduate Schulze</fullName>
@@ -230,34 +460,44 @@
                 <label>Undergraduate Schulze</label>
             </value>
             <value>
-                <fullName>GHR Fellows and Schulze Scholarship Programs</fullName>
+                <fullName>USNWR</fullName>
                 <default>false</default>
-                <label>GHR Fellows and Schulze Scholarship Programs</label>
+                <label>USNWR</label>
             </value>
             <value>
-                <fullName>MN State Fair</fullName>
+                <fullName>Veterans Gala</fullName>
                 <default>false</default>
-                <label>MN State Fair</label>
+                <label>Veterans Gala</label>
             </value>
             <value>
-                <fullName>GHR Fellows RFI</fullName>
+                <fullName>Virtual HSV/AVID Presentation</fullName>
                 <default>false</default>
-                <label>GHR Fellows RFI</label>
+                <label>Virtual HSV/AVID Presentation</label>
             </value>
             <value>
-                <fullName>Test Score</fullName>
+                <fullName>Walk-in</fullName>
                 <default>false</default>
-                <label>Test Score</label>
+                <label>Walk-in</label>
             </value>
             <value>
-                <fullName>Search</fullName>
+                <fullName>Web</fullName>
                 <default>false</default>
-                <label>Search</label>
+                <label>Web</label>
             </value>
             <value>
-                <fullName>Stealth Application</fullName>
+                <fullName>Webform</fullName>
                 <default>false</default>
-                <label>Stealth Application</label>
+                <label>Webform</label>
+            </value>
+            <value>
+                <fullName>Word of mouth</fullName>
+                <default>false</default>
+                <label>Word of mouth</label>
+            </value>
+            <value>
+                <fullName>Workshop</fullName>
+                <default>false</default>
+                <label>Workshop</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Program_Codes__c</fullName>
+    <description>Program__r.Program_Major_Concentration__c</description>
+    <externalId>false</externalId>
+    <formula>Program__r.Program_Major_Concentration__c</formula>
+    <inlineHelpText>Program__r.Program_Major_Concentration__c</inlineHelpText>
+    <label>Program Codes</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

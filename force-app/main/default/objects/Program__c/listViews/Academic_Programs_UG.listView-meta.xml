@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Academic_Programs_UG</fullName>
+    <booleanFilter>1 AND 2</booleanFilter>
+    <columns>OBJECT_ID</columns>
     <columns>NAME</columns>
     <columns>Program_Major_Concentration__c</columns>
+    <columns>Associated_Schools__c</columns>
     <columns>Application_Control__c</columns>
+    <columns>Admit_Type__c</columns>
     <columns>Degree_Type__c</columns>
-    <columns>Applicant_Type__c</columns>
+    <columns>Program_Applicant_Type__c</columns>
     <columns>Student_Type__c</columns>
     <columns>Application_Fee_Amount__c</columns>
     <columns>Active__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>RECORDTYPE</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>Program_Record_Type__c</field>
+        <field>RECORDTYPE</field>
         <operation>equals</operation>
-        <value>Academic Program</value>
+        <value>Program__c.Academic_Program</value>
     </filters>
     <filters>
-        <field>Application_Control__c</field>
-        <operation>contains</operation>
+        <field>Career__c</field>
+        <operation>equals</operation>
         <value>Undergraduate</value>
     </filters>
     <label>Academic Programs - UG</label>

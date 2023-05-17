@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Race_Other_Black__c</fullName>
+    <description>Specify other Black or African American background:</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Specify other Black or African American background:</inlineHelpText>
+    <label>Other Black</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

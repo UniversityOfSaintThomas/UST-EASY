@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>International_Requirement__c</fullName>
+    <description>Requirement Item Citizenship field used to help filter Requirement Responses for International</description>
+    <externalId>false</externalId>
+    <formula>IF ( INCLUDES ( Requirement_Item__r.Citizenship__c , &quot;International&quot; ), &quot;International&quot;,null )</formula>
+    <label>International Requirement</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

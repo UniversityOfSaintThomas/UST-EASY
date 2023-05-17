@@ -128,14 +128,6 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Application_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -173,6 +165,7 @@
         <customTabListAdditionalFields>Intended_Program__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
         <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Applicant_Banner_Id__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Application_Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Intended_Term_of_Entry__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Intended_Program__c</searchResultsAdditionalFields>

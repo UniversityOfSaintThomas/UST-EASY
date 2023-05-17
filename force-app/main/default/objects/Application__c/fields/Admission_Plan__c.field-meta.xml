@@ -6,7 +6,6 @@
     <label>Admission Plan</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -15,7 +14,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Early Action</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Early Action</label>
             </value>
             <value>

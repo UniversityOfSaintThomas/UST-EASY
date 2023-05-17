@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comments_Private__c</fullName>
+    <description>Field for private comments to be captured and shared among UST Counselors and UST Enrollment Admin</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Comments only seen by Counselors and Committee</inlineHelpText>
+    <label>Comments (Private)</label>
+    <length>32768</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

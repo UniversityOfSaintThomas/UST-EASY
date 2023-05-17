@@ -2,15 +2,21 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>OBJECT_ID</columns>
+    <columns>Application__c</columns>
     <columns>NAME</columns>
+    <columns>Question_Label__c</columns>
     <columns>Question_Response__c</columns>
-    <columns>State__c</columns>
-    <columns>Street__c</columns>
-    <columns>City__c</columns>
-    <columns>Country__c</columns>
+    <columns>IsRequired__c</columns>
     <columns>IsPopulated__c</columns>
+    <columns>IsComplete__c</columns>
     <columns>CREATEDBY_USER</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>PopulatedOn__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Question_Name__c</field>
+        <operation>contains</operation>
+        <value>Confirm Program and Term</value>
+    </filters>
     <label>All</label>
-    <language>en_US</language>
 </ListView>

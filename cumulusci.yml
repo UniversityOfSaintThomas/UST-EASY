@@ -74,16 +74,16 @@ tasks:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/2022-07-08/mapping.yml
-      sql_path: datasets/2022-07-08/data.sql
+      mapping: datasets/fdfdata_Jan2023/mapping.yml
+      sql_path: datasets/fdfdata_Jan2023/data.sql
       inject_namespaces: False
 
   load_fdf_application_data:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/fdfdata/mapping.yml
-      sql_path: datasets/fdfdata/data.sql
+      mapping: datasets/fdfdata_Jan2023/mapping.yml
+      sql_path: datasets/fdfdata_Jan2023/data.sql
       inject_namespaces: False
 
   load_scholarship_test_data:

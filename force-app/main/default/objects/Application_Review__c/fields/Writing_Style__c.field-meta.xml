@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Writing_Style__c</fullName>
+    <description>STYLE: Facility with language. Mastery of vocabulary. Rhetorical flair. Sentence length and complexity. Grasp of grammar, punctuation, and spelling</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Exceeds Expectations - Solid flow, consistently strong, often elegant, error free
+            Meets Expectations - Communicates ideas fairly clearly, 1 or 2 grammar mistakes
+            Does Not Meet Expectations - Many grammar mistakes, poor organization, difficult to follow</inlineHelpText>
+    <label>Quality of Writing</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Exceeds Expectations</fullName>
+                <default>false</default>
+                <label>Exceeds Expectations</label>
+            </value>
+            <value>
+                <fullName>Meets Expectations</fullName>
+                <default>false</default>
+                <label>Meets Expectations</label>
+            </value>
+            <value>
+                <fullName>Does Not Meet Expectations</fullName>
+                <default>false</default>
+                <label>Does Not Meet Expectations</label>
+            </value>
+            <value>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+                <label>Not Applicable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

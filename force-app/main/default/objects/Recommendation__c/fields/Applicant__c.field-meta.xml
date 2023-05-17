@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Applicant__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>Application__r.Contact__r.FirstName  &amp; &quot; &quot; &amp;  Application__r.Contact__r.LastName</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

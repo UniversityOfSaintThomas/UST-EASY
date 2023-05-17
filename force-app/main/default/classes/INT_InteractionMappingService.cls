@@ -80,6 +80,7 @@ public class INT_InteractionMappingService {
      */
     public SObject applyDataToSObject(Interaction__c interaction, SObject theObject) {
         String objectName = theObject.getSObjectType().getDescribe().getName();
+
         if (intMappingMap.containsKey(objectName)) {
             for (Interaction_Mapping__c mapping : intMappingMap.get(objectName)) {
                 // Only copy the field value if the Interaction__c field value is different than the Object field value.
@@ -91,20 +92,10 @@ public class INT_InteractionMappingService {
                         && ((objectCheckboxesMap.containsKey(mapping.Target_Object_API_Name__c)
                         && !objectCheckboxesMap.get(mapping.Target_Object_API_Name__c).contains(mapping.Target_Field_API_Name__c.toLowerCase()))
                         || String.valueOf(interaction.get(mapping.Source_Field_API_Name__c)) != 'false'))
-                ) {
-                    if (theObject.Id != null && theObject.get(mapping.Target_Field_API_Name__c) != null && mapping.Target_Field_API_Name__c != 'RecordTypeId') {
-                        continue;
-                    } else {
-                        if (mapping.Target_Field_API_Name__c == 'RecordTypeId' && objectName == 'Opportunity') {
-                            Id inquiryOppRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Inquiry_Opportunity').getRecordTypeId();
-                            Id applicantOppRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
-                            if (interaction.get(mapping.Source_Field_API_Name__c) == inquiryOppRT && theObject.get(mapping.Target_Field_API_Name__c) == applicantOppRT) {
-                                continue;
-                            }
-                        }
-                        theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Source_Field_API_Name__c));
-                    }
+                        ) {
+                    theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Source_Field_API_Name__c));
                 }
+
             }
         }
 

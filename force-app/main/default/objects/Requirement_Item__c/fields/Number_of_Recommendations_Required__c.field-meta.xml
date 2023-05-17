@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_Recommendations_Required__c</fullName>
+    <description>Populate the number of recommendations required for this application. This is used with flow to create checklist items.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Populate the number of recommendations required for this application. This is used with flow to create checklist items.</inlineHelpText>
+    <label>Number of Recommendations Required</label>
+    <precision>1</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

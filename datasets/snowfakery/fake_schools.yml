@@ -1,5 +1,5 @@
 - object: Account
-  count: 400
+  count: 1000
   fields:
     Name:
       random_choice:
@@ -28,7 +28,7 @@
     RecordType: Educational_Institution
     Account_Integration_External_ID__c: ${{id}}
 - object: Account
-  count: 400
+  count: 1000
   fields:
     Name:
       random_choice:

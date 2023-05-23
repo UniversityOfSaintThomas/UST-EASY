@@ -106,22 +106,22 @@
         <label>Mentee (Current Student)</label>
     </customValue>
     <customValue>
-        <fullName>Undergraduate</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Undergraduate</label>
-    </customValue>
-    <customValue>
         <fullName>Adult</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Adult</label>
     </customValue>
     <customValue>
-        <fullName>Traditional</fullName>
+        <fullName>Undergraduate</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Traditional</label>
+        <label>Undergraduate</label>
+    </customValue>
+    <customValue>
+        <fullName>Art History</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Art History</label>
     </customValue>
     <customValue>
         <fullName>Graduate</fullName>
@@ -130,10 +130,10 @@
         <label>Graduate</label>
     </customValue>
     <customValue>
-        <fullName>Art History</fullName>
+        <fullName>Traditional</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Art History</label>
+        <label>Traditional</label>
     </customValue>
     <description>Student types for admissions.</description>
     <masterLabel>Student Types</masterLabel>

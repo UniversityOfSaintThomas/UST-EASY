@@ -70,11 +70,6 @@
         <default>false</default>
         <label>Proximity to home (too far)</label>
     </customValue>
-    <customValue>
-        <fullName>Accepted to another school under binding admissions decision</fullName>
-        <default>false</default>
-        <label>Accepted to another school under binding admissions decision</label>
-    </customValue>
     <masterLabel>Withdrawal Reasons</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

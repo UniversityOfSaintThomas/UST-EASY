@@ -201,6 +201,11 @@
                 <label>MBA</label>
             </value>
             <value>
+                <fullName>Micro-credential</fullName>
+                <default>false</default>
+                <label>Micro-credential</label>
+            </value>
+            <value>
                 <fullName>MS</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

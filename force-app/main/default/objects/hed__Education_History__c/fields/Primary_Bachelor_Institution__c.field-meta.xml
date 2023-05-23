@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Bachelor_Institution__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>The Institution where the applicant&apos;s bachelor degree transcript is from.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Institution where the applicant&apos;s bachelor degree transcript is from.</inlineHelpText>
+    <label>Primary Bachelor Institution</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

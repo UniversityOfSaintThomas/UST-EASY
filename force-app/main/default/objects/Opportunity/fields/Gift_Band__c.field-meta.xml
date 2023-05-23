@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Gift_Band__c</fullName>
+    <description>Gift Band is based on the Opportunity Ask Amount</description>
+    <externalId>false</externalId>
+    <formula>IF( Expected_Amount__c &gt;= 25000000,&apos;1) $25M+&apos;,
+  IF( Expected_Amount__c  &gt;= 10000000,&apos;2) $10M-$24.9M&apos;,
+    IF( Expected_Amount__c   &gt;= 5000000,&apos;3) $5M-$9.9M&apos;,
+      If(Expected_Amount__c   &gt;= 1000000,&apos;4) $1M-$4.9M&apos;,
+         If(Expected_Amount__c   &gt;= 500000,&apos;5) $500K-$999K&apos;,
+            if(Expected_Amount__c   &gt;= 150000,&apos;6) $150K-$499K&apos;,
+               if (Expected_Amount__c  &gt;= 50000,&apos;7) $50K-$149K&apos;,
+                  &apos;8) Under $50K&apos;
+                  )
+               )
+            )
+         )
+       )
+     )
+   )</formula>
+    <inlineHelpText>Gift Band is based on the Opportunity Ask Amount</inlineHelpText>
+    <label>Gift Band</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

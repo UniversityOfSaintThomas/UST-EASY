@@ -9,6 +9,8 @@
     <columns>Student_Type__c</columns>
     <columns>Application_Fee_Amount__c</columns>
     <columns>Active__c</columns>
+    <columns>X18_Digit_Program_ID__c</columns>
+    <columns>OBJECT_ID</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Program_Record_Type__c</field>
@@ -21,5 +23,4 @@
         <value>Law</value>
     </filters>
     <label>Academic Programs - GLAW</label>
-    <language>en_US</language>
 </ListView>

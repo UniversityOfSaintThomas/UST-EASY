@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SAT_Total_Score_Calculated__c</fullName>
+    <description>SAT_Mathematics_Score__c + SAT_Verbal_Score__c</description>
+    <externalId>false</externalId>
+    <formula>SAT_Mathematics_Score__c + SAT_Verbal_Score__c</formula>
+    <inlineHelpText>SAT_Mathematics_Score__c + SAT_Verbal_Score__c</inlineHelpText>
+    <label>SAT Total Score (Calculated)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

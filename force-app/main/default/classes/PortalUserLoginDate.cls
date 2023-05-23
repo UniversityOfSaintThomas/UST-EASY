@@ -34,7 +34,7 @@ public without sharing class PortalUserLoginDate {
             new_contact.Portal_User_Latest_Login__c = System.today();
             contactsToUpdate.add(new_contact); 
         } 
-        if (contactsToUpdate.size() > 0) {
+        if (contactsToUpdate.size() > 0 && !System.isFuture()) {
             try {
                 upsert contactsToUpdate;
             } catch (Exception e) {

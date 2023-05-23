@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Official_Credit__c</fullName>
+    <description>College credits</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Registrar&apos;s use only</inlineHelpText>
+    <label>Official Credit</label>
+    <precision>5</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

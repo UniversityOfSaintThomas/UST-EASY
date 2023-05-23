@@ -423,6 +423,7 @@ Insert Program__c:
   fields:
   - Academic_Level__c
   - Active__c
+  - Admit_Type__c
   - Applicant_Type__c
   - Application_Fee_Amount__c
   - Associated_Schools__c
@@ -446,6 +447,7 @@ Insert Program__c:
   - Generic_Filter_2__c
   - Generic_Filter_3__c
   - Generic_Filter_4__c
+  - Graduate_Integration_Program_Code__c
   - Hide_Applicant_Type__c
   - Hide_Citizenship__c
   - Hide_Student_Type__c
@@ -457,6 +459,7 @@ Insert Program__c:
   - Name
   - Number_of_Applications_Limit__c
   - Pre_Professional_Program__c
+  - Primary_School_College_for_Assignment__c
   - Program_Applicant_Type__c
   - Program_Areas_of_Interest__c
   - Program_Bucket__c
@@ -464,12 +467,14 @@ Insert Program__c:
   - Program_College_of_Interest__c
   - Program_Degree_Code__c
   - Program_Display__c
+  - Program_Image_URL__c
   - Program_Integration_External_Id__c
   - Program_Keywords__c
   - Program_Learning_Style__c
   - Program_Name_on_Application__c
   - Program_Offered_Name__c
   - Program_Record_Type__c
+  - Program_Short_Description__c
   - Program_Type__c
   - Program_URL__c
   - RecordTypeId
@@ -487,6 +492,8 @@ Insert Program__c:
     Department__c:
       table: Account
     Effective_Term__c:
+      table: Academic_Term__c
+    Max_Academic_Term_IPT__c:
       table: Academic_Term__c
     Recruitment_Program__c:
       table: Program__c
@@ -691,6 +698,7 @@ Insert Requirement_Item__c:
   - LastModifiedDate
   - Maximum_Number_of_Children__c
   - Name
+  - Number_of_Recommendations_Required__c
   - RI_UID__c
   - R_UID__c
   - RecordTypeId
@@ -838,72 +846,257 @@ Insert Application_Payment__c:
 Insert Application_Review__c:
   sf_object: Application_Review__c
   fields:
+  - AP_Courses__c
+  - AP_English__c
+  - AP_IB_PSEO_Courses__c
+  - AP_Math__c
+  - CIS_PLTW__c
+  - Coaches_List__c
+  - Committee_Decision_Notes__c
+  - Committee_Decision__c
   - Completed__c
+  - Counselor_Decision_Notes__c
+  - Counselor_Recommendation__c
   - CreatedDate
   - Date_Completed__c
   - Decision_Recommendation__c
+  - Developmental_Courses__c
   - Due_Date__c
+  - ELL_Courses__c
+  - English_As__c
+  - English_Bs__c
+  - English_Cs__c
+  - English_Ds__c
+  - English_Fs__c
+  - English_Progression__c
+  - Essay_1__c
+  - Essay_2__c
+  - Essay_Notes__c
+  - Essay_Review__c
+  - Grade_Trend__c
+  - High_School_GPA__c
+  - Highest_ACT_Composite__c
+  - Highest_ACT_English__c
+  - Highest_ACT_Math__c
+  - Highest_ACT_Reading__c
+  - Highest_ACT_Science_Reasoning__c
+  - Highest_Level_Math_Complete_Testing__c
+  - Highest_SAT_Composite__c
+  - Highest_SAT_Math__c
+  - Highest_SAT_Reading__c
+  - Highest_SAT_Writing__c
+  - Honors_Courses__c
+  - IB_Courses__c
+  - IB_English__c
+  - IB_Math__c
+  - Initial_Committee_Review__c
+  - Initial_Counselor_Review__c
+  - Is_First_Gen__c
   - LastModifiedDate
+  - Math_As__c
+  - Math_Bs__c
+  - Math_Cs__c
+  - Math_Ds__c
+  - Math_Fs__c
+  - Math_Progression__c
+  - Other_Notes__c
+  - Other_Review__c
+  - PSEO_Courses__c
+  - PSEO_Dual_English__c
+  - PSEO_Dual_Math__c
+  - Primary_HS_Graduation_Date__c
+  - Primary_High_School_Ed_History_URL__c
+  - Primary_High_School_Rank__c
+  - Review_Details__c
+  - SR_ACT_Composite__c
+  - SR_ACT_English__c
+  - SR_ACT_Math__c
+  - SR_ACT_Reading__c
+  - SR_ACT_Science_Reasoning__c
+  - SR_SAT_Composite__c
+  - SR_SAT_Math__c
+  - SR_SAT_Reading__c
+  - SR_SAT_Verbal__c
+  - School_Details__c
+  - School_Evaluation__c
+  - School_Review__c
+  - Science_As__c
+  - Science_Bs__c
+  - Science_Cs__c
+  - Science_Ds__c
+  - Science_Fs__c
+  - Second_Committee_Review__c
+  - Second_Counselor_Review__c
+  - Social_Science_As__c
+  - Social_Science_Bs__c
+  - Social_Science_Cs__c
+  - Social_Science_Ds__c
+  - Social_Science_Fs__c
   - Start_Date__c
+  - Student_Involvement__c
+  - Sum_of_Credit_Hours__c
+  - Sum_of_Quality_Points__c
   - Terminated__c
+  - Test_Score_Count__c
+  - Total_English__c
+  - Total_Math__c
+  - Total_Science_Score__c
+  - Total_Social_Science_Score__c
+  - Transcript_Evaluation__c
+  - Transcript_Notes__c
+  - Transcript_Reivew__c
+  - Writing_Story__c
+  - Writing_Style__c
   lookups:
     Application__c:
       table: Application__c
       after: Insert Application__c
+    High_School__c:
+      table: Account
 Insert Application__c:
   sf_object: Application__c
   fields:
+  - ACT_Composite_Score__c
+  - Activity_Music__c
   - Admission_Decision__c
   - Admission_Plan__c
+  - Agent_Email_International__c
+  - Applicant_Current_Courses__c
   - Applicant_Email__c
+  - Applicant_Outside_Activities__c
   - Applicant_Type__c
   - Application_Decision_Team__c
+  - Application_Feedback__c
   - Application_Status__c
   - Application_Substatus__c
   - Auto_Accept_Audit__c
+  - CPF_Pre_Professional_ProgramDDN__c
+  - Calculate_Merit_Scholarship__c
+  - Citizenship_Country__c
   - Citizenship__c
+  - College_Readiness_Program__c
+  - Comments_Private__c
+  - Communication_Merge_Text_Field__c
   - CreatedDate
+  - Criminal_Details__c
+  - Criminal_Indicator__c
+  - Current_Courses__c
+  - Current_US_Visa_Type__c
+  - Date_FAFSA_Filed_Load__c
+  - Decision_Letter_Sent__c
   - Degree_Level__c
   - Degree_Type__c
   - Delivery_Location__c
   - Delivery_Type__c
+  - Disciplinary_Date__c
+  - Discipline_Ind__c
   - Documents_Missing_Text__c
   - Documents_Missing__c
+  - Don_t_Recalculate_Counselor_Assignment__c
+  - Don_t_Recalculate_Counselor_Assingment__c
+  - ESL_Study_Ind__c
+  - Ed_Agent_International__c
   - Educational_Background__c
+  - Ethnicity_Other__c
+  - Ethnicity__c
   - External_Application_ID__c
+  - External_Application_Type__c
   - External_Appliction_Type__c
+  - FAFSA_Aid_Year__c
+  - FAFSA_Filed__c
+  - First_Generation__c
   - First_License__c
+  - Force_Data__c
   - Force_Recalc_Owner__c
   - Future_ACT_SAT_Times__c
   - Future_Test_Date__c
+  - Gender_Other__c
   - Generic_Filter_1__c
   - Generic_Filter_2__c
   - Generic_Filter_3__c
   - Generic_Filter_4__c
   - High_School_GPA__c
+  - Highest_Level_Math__c
+  - Highest_Math_Other__c
   - Holding_Name__c
+  - Honors_Activities_Desc__c
+  - Intend_Live_On_Campus__c
+  - Intend_Need_Financial_Aid__c
+  - Large_Text_Response_Test__c
   - LastModifiedDate
+  - Legal_Sex__c
   - License_Area__c
+  - MN_Dream_Act_Filed__c
+  - MN_Dream_Act_Year__c
+  - MN_Transfer_Curr_Complete_Ind__c
   - Message_To_Applicant__c
+  - Murray_Scholarship_Signature__c
+  - My_Pronouns__c
   - Needs_Item_s__c
+  - Notification_of_Award_Date__c
+  - Other_Names_Indicator__c
+  - Portal_User_Email__c
   - Program_Bucket__c
+  - Pronouns__c
+  - Race_Asian_Background__c
+  - Race_Black_African_American_Background__c
+  - Race_Hispanic_Background__c
+  - Race_Hispanic_Latino__c
+  - Race_Native_Pacific_Islander_Background__c
+  - Race_Other_Black_Background__c
+  - Race_Other_Black__c
+  - Race_Other_East_Asia__c
+  - Race_Other_Hispanic__c
+  - Race_Other_Pacific_Islander__c
+  - Race_Other_South_Asia__c
+  - Race_Other_Southeast_Asia__c
+  - Race_Other_White__c
+  - Race_White_Background__c
   - Related_Object_JSON__c
+  - Religious_Preference__c
   - Residency__c
+  - SAT_Composite_Score__c
+  - SJV_Ind__c
+  - SJV_Intent_to_Enroll__c
+  - SON_Mentor_Specialization__c
   - School_College__c
   - Self_Reported_Test_Acknowledgement_Date__c
   - Self_Reported_Test_Acknowledgement__c
   - Self_Reported_Test_Score__c
   - Self_Reported_Test_Scores_Times_Taken__c
+  - Sponsor_Diocese__c
   - Student_Type__c
+  - Sum_of_Credit_Hours__c
+  - Sum_of_Quality_Points__c
+  - T_Shirt_Size__c
   - Take_ACT_SAT__c
   - Text_for_Testing__c
+  - Tribal_Identity__c
+  - Tribe_Enrolled_Ind__c
+  - Tribe_Name__c
+  - Tribe_Number__c
+  - UST_Previous_Apply_Date__c
+  - UST_Previous_Apply_Ind__c
   - User_Created__c
+  - Veteran_Benefit_Eligible__c
+  - Veteran_Division__c
+  - Veteran_Status_At_Enrollment__c
+  - Veteran_Status_Current__c
+  - Withdrawal_Reason__c
   lookups:
     Application_Control__c:
       table: Application_Control__c
+    CPF_Major__c:
+      table: Program__c
+    CPF_Pre_Professional_Program__c:
+      table: Program__c
     Contact__c:
       table: Contact
       after: Insert Contact
+    High_School_or_College__c:
+      table: Account
+    Institution_Attending__c:
+      table: Account
     Intended_Program__c:
       table: Program__c
     Intended_Term_of_Entry__c:
@@ -916,6 +1109,10 @@ Insert Application__c:
       table: Program__c
     Pre_Professional_Program__c:
       table: Program__c
+    Primary_High_School_Account__c:
+      table: Account
+    UST_Previous_Apply_Term__c:
+      table: hed__Term__c
 Insert Requirement_Response__c:
   sf_object: Requirement_Response__c
   fields:
@@ -927,7 +1124,9 @@ Insert Requirement_Response__c:
   - HasDocument__c
   - Has_Child_Requirement__c
   - Hashcode__c
+  - Internal_Comments__c
   - LastModifiedDate
+  - Related_Record__c
   - Requirement_Response_Unique_External_ID__c
   - Send_Reminder__c
   - Status__c
@@ -945,6 +1144,7 @@ Insert Question_Response__c:
   - City__c
   - Country__c
   - CreatedDate
+  - Historical_Program__c
   - IsPopulated__c
   - IsRequired__c
   - IsShown__c
@@ -1078,14 +1278,20 @@ Insert Contact:
   - Common_App_Student_ID__c
   - Constituent_ID__c
   - Contact_Constituent_ID__c
+  - Contact_ID_ERX__c
   - CreatedDate
   - Credentialing_Identifier__c
   - Deceased_Date__c
+  - Degree_Type_Summary__c
   - DoNotCall
   - ELS_Student_ID__c
   - FirstName
+  - Foot_On_Campus__c
+  - Foot_on_Campus_ERX__c
   - HasOptedOutOfEmail
   - HasOptedOutOfFax
+  - Initial_Foot_on_Campus_Date__c
+  - Initial_Foot_on_Campus__c
   - Job_Title__c
   - LastModifiedDate
   - LastName
@@ -1095,6 +1301,7 @@ Insert Contact:
   - Preferred_First_Name__c
   - Receive_Texts__c
   - UST_Account_Claimed__c
+  - UST_Test_Contact__c
   - University_Banner_ID__c
   - University_Vanity_Email__c
   - hed__AlternateEmail__c
@@ -1279,113 +1486,6 @@ Insert Family__c:
       table: Application__c
     Contact__c:
       table: Contact
-Insert Opportunity:
-  sf_object: Opportunity
-  fields:
-  - Admit_Type__c
-  - All_Interested_Programs__c
-  - Application_Number__c
-  - Application_Submitted_Date__c
-  - Athlete_Sport_1__c
-  - Athlete_Sport_2__c
-  - Athlete_Sport_3__c
-  - Athlete_Type_1__c
-  - Athlete_Type_2__c
-  - Athlete_Type_3__c
-  - Change_Likelihood__c
-  - Citizenship__c
-  - CloseDate
-  - Confidence_Level__c
-  - Country__c
-  - CreatedDate
-  - Date_Admit__c
-  - Date_Closed__c
-  - Date_Completed_App__c
-  - Date_Confirmed__c
-  - Date_Deferred__c
-  - Date_Denied__c
-  - Date_Engaged__c
-  - Date_Inquiry__c
-  - Date_Moderately_Suspect__c
-  - Date_No_Longer_Interested__c
-  - Date_Pending__c
-  - Date_Started_App__c
-  - Date_Submitted_App__c
-  - Date_Suspect__c
-  - Date_Withdrawn__c
-  - Declined_Date__c
-  - Degree_Level__c
-  - Expected_Graduate_Date__c
-  - First_Inquiry_Source__c
-  - First_Recruitment_Interest__c
-  - First_Recruitment_Program__c
-  - Heard_About_Us__c
-  - High_School_Graduation_Year__c
-  - Inquiry_Date__c
-  - IsPrivate
-  - LastModifiedDate
-  - Likelihood_Stoplight__c
-  - Lost_Reason__c
-  - Name
-  - National_Merit_Scholar__c
-  - Opportunity_Citizenship__c
-  - Opportunity_Key__c
-  - Override_Close_Date__c
-  - Proposal_Type__c
-  - Prospect_Rating__c
-  - Receive_Texts__c
-  - RecordTypeId
-  - StageName
-  - Submitted_Date__c
-  - Transaction_this_year__c
-  - Years_Attended__c
-  - hed__Completed_FAFSA__c
-  - hed__Desired_Campus__c
-  - hed__Desired_Degree_Level__c
-  - hed__Living_Situation__c
-  lookups:
-    Academic_Interest__c:
-      table: Plan__c
-    Academic_Program__c:
-      table: Program__c
-    AccountId:
-      table: Account
-    Admissions_Application__c:
-      table: Application__c
-    Affiliated_Account__c:
-      table: Account
-    CampaignId:
-      table: Campaign
-    ContactId:
-      table: Contact
-    Contact__c:
-      table: Contact
-    High_School_Transfer__c:
-      table: Account
-    High_School_or_College__c:
-      table: Account
-    Intended_Start_Term__c:
-      table: Academic_Term__c
-    Last_Campaign_Source__c:
-      table: Campaign
-    Major_Program_1__c:
-      table: Program__c
-    Major_Program_2__c:
-      table: Program__c
-    Major_Program_3__c:
-      table: Program__c
-    Pre_Professional_Program__c:
-      table: Program__c
-    Recruitment_Interest__c:
-      table: Plan__c
-    Recruitment_Program__c:
-      table: Program__c
-    St_Thomas_College_School__c:
-      table: Account
-    Term__c:
-      table: hed__Term__c
-    hed__Desired_Start_Term__c:
-      table: hed__Term__c
 Insert Scholarship_Applicant__c:
   sf_object: Scholarship_Applicant__c
   fields:
@@ -1442,9 +1542,11 @@ Insert Work_History__c:
   fields:
   - Annual_Revenue_Operating_Budget__c
   - Company_City__c
+  - Company_Country__c
   - Company_Phone_Ext__c
   - Company_Phone_Number__c
   - Company_Size__c
+  - Company_State_Province__c
   - Company_Zip_Postal_Code__c
   - CreatedDate
   - Current_Job__c
@@ -1638,6 +1740,220 @@ Insert hed__Test__c:
   lookups:
     hed__Contact__c:
       table: Contact
+Insert Opportunity:
+  sf_object: Opportunity
+  fields:
+  - Activity_Music__c
+  - Admission_Territory_Unique_Code__c
+  - Admissions_Application_Admit_Type__c
+  - Admissions_Application_Deny_Type__c
+  - Admit_Type__c
+  - All_Interested_Programs__c
+  - Application_Number__c
+  - Application_Submitted_Date__c
+  - Ask_Amount__c
+  - Ask_Date__c
+  - Athlete_Sport_1__c
+  - Athlete_Sport_2__c
+  - Athlete_Sport_3__c
+  - Athlete_Type_1__c
+  - Athlete_Type_2__c
+  - Athlete_Type_3__c
+  - CPF_Created__c
+  - Cash_Indicator__c
+  - Change_Ask_Amount__c
+  - Change_Ask_Date__c
+  - Change_Close_Date__c
+  - Change_Expected_Amount__c
+  - Change_Likelihood__c
+  - Citizenship__c
+  - CloseDate
+  - College_Code__c
+  - Commitment_Indicator__c
+  - Confidence_Level__c
+  - Country__c
+  - CreatedDate
+  - Date_Admit__c
+  - Date_Closed__c
+  - Date_Completed_App__c
+  - Date_Confirmed__c
+  - Date_Deferred__c
+  - Date_Denied__c
+  - Date_Engaged__c
+  - Date_FAFSA_Filed_Load__c
+  - Date_Housing_Only_Deposit__c
+  - Date_Inquiry__c
+  - Date_Intent_to_Enroll_Completed__c
+  - Date_Moderately_Suspect__c
+  - Date_No_Longer_Interested__c
+  - Date_Pending__c
+  - Date_Started_App__c
+  - Date_Submitted_App__c
+  - Date_Suspect__c
+  - Date_UG_Merit_Scholarship_Recalc__c
+  - Date_UG_Merit_Scholarship__c
+  - Date_UG_TR_DFC_Merit_Scholarship_Recal__c
+  - Date_UG_TR_DFC_Merit_Scholarship__c
+  - Date_UG_TR_Merit_Scholarship_Recalc__c
+  - Date_UG_TR_Merit_Scholarship__c
+  - Date_Withdrawn__c
+  - Declined_Date__c
+  - Degree_Level__c
+  - Dont_Reclaculate_Counselor_Assignment__c
+  - Employer__c
+  - Entity_ID__c
+  - Ethnicity__c
+  - Expected_Amount__c
+  - Expected_Graduate_Date__c
+  - FAFSA_Aid_Year__c
+  - FAFSA_Filed__c
+  - First_Inquiry_Source__c
+  - First_Recruitment_Interest__c
+  - First_Recruitment_Program__c
+  - Force_Recalc_Owner__c
+  - Forecast_Amount__c
+  - Gift_Number__c
+  - Granted_Amount__c
+  - Granted_Date__c
+  - Handicap__c
+  - Heard_About_Us__c
+  - High_School_Graduation_Year__c
+  - Home_and_Mailing_Address_Differ_Ind__c
+  - Housing_Preference_Form_Received__c
+  - Housing_Requirement_Exception_Request__c
+  - Inquiry_Date__c
+  - Intend_Need_Financial_Aid__c
+  - IsPrivate
+  - LastModifiedDate
+  - Likelihood_Stoplight__c
+  - Lost_Reason__c
+  - MN_Dream_Act_Filed__c
+  - MN_Dream_Act_Year__c
+  - My_Pronouns__c
+  - Name
+  - National_Merit_Scholar__c
+  - Note_to_PMR_Partner__c
+  - Notification_of_Award_Date__c
+  - Number_of_Internships__c
+  - Opportunity_Banner_Key__c
+  - Opportunity_Citizenship__c
+  - Opportunity_Key__c
+  - Opportunity_Strategy__c
+  - Other_Names_Indicator__c
+  - Override_Close_Date__c
+  - Pledge_Number__c
+  - Pronouns__c
+  - Proposal_Type__c
+  - Prospect_Rating__c
+  - Race_Asian_Background__c
+  - Race_Black_African_American_Background__c
+  - Race_Hispanic_Background__c
+  - Race_Native_Pacific_Islander_Background__c
+  - Race_Other_Black_Background__c
+  - Race_Other_East_Asia__c
+  - Race_Other_Hispanic__c
+  - Race_Other_Pacific_Islander__c
+  - Race_Other_South_Asia__c
+  - Race_Other_Southeast_Asia__c
+  - Race_Other_White__c
+  - Race_White_Background__c
+  - Receive_Texts__c
+  - RecordTypeId
+  - Religious_Preference__c
+  - Self_Reported_Undergrad_Degree__c
+  - Self_Reported_Undergrad_Grad_Year__c
+  - StageName
+  - State__c
+  - Submitted_Date__c
+  - Substantive_Visits_Estimate__c
+  - Transaction_this_year__c
+  - Tribal_Identity__c
+  - Tribe_Enrolled_Ind__c
+  - Tribe_Name__c
+  - Tribe_Number__c
+  - UG_Merit_Scholarship_Adjust_Reason__c
+  - UG_Merit_Scholarship_Amount_Adjusted__c
+  - UG_Merit_Scholarship_Amount__c
+  - UG_TR_DFC_Merit_Scholarship_Amount_Adj__c
+  - UG_TR_DFC_Merit_Scholarship_Amount__c
+  - UG_TR_Merit_Scholarship_Amount_Adj__c
+  - UG_TR_Merit_Scholarship_Amount__c
+  - UST_Previous_Apply_Date__c
+  - UST_Previous_Apply_Ind__c
+  - Workplan__c
+  - Years_Attended__c
+  - Zip_Code__c
+  - hed__Completed_FAFSA__c
+  - hed__Desired_Campus__c
+  - hed__Desired_Degree_Level__c
+  - hed__Living_Situation__c
+  lookups:
+    Academic_Interest__c:
+      table: Plan__c
+    Academic_Program__c:
+      table: Program__c
+    AccountId:
+      table: Account
+    Admissions_Application__c:
+      table: Application__c
+    Affiliated_Account__c:
+      table: Account
+    Application_Payment_Housing_Only__c:
+      table: Application_Payment__c
+    Application_Payment__c:
+      table: Application_Payment__c
+    CampaignId:
+      table: Campaign
+    ContactId:
+      table: Contact
+    Contact__c:
+      table: Contact
+    High_School_Transfer__c:
+      table: Account
+    High_School_or_College__c:
+      table: Account
+    Intended_Start_Term__c:
+      table: Academic_Term__c
+    Last_Campaign_Source__c:
+      table: Campaign
+    Major_Program_1__c:
+      table: Program__c
+    Major_Program_2__c:
+      table: Program__c
+    Major_Program_3__c:
+      table: Program__c
+    Originator__c:
+      table: Contact
+    Pre_Professional_Program__c:
+      table: Program__c
+    Primary_High_School_Education_History__c:
+      table: hed__Education_History__c
+    Recruitment_Interest__c:
+      table: Plan__c
+    Recruitment_Program__c:
+      table: Program__c
+    Referral__c:
+      table: Contact
+    St_Thomas_College_School__c:
+      table: Account
+    Term__c:
+      table: hed__Term__c
+    hed__Desired_Start_Term__c:
+      table: hed__Term__c
+Insert hed__Test_Score__c:
+  sf_object: hed__Test_Score__c
+  fields:
+  - CreatedDate
+  - LastModifiedDate
+  - hed__Credentialing_Identifier__c
+  - hed__Letter_Score__c
+  - hed__Percentile__c
+  - hed__Score__c
+  - hed__Status__c
+  - hed__Subject_Area__c
+  lookups:
+    hed__Test__c:
+      table: hed__Test__c
 Insert Lead:
   sf_object: Lead
   fields:
@@ -1769,6 +2085,7 @@ Insert Lead:
   - utm_content__c
   - utm_creative_format__c
   - utm_id__c
+  - utm_marketing_tactic__c
   - utm_marketing_topic__c
   - utm_medium__c
   - utm_source__c
@@ -1803,20 +2120,6 @@ Insert Lead:
       table: Account
     Term__c:
       table: hed__Term__c
-Insert hed__Test_Score__c:
-  sf_object: hed__Test_Score__c
-  fields:
-  - CreatedDate
-  - LastModifiedDate
-  - hed__Credentialing_Identifier__c
-  - hed__Letter_Score__c
-  - hed__Percentile__c
-  - hed__Score__c
-  - hed__Status__c
-  - hed__Subject_Area__c
-  lookups:
-    hed__Test__c:
-      table: hed__Test__c
 Insert Interaction__c:
   sf_object: Interaction__c
   fields:
@@ -1833,6 +2136,7 @@ Insert Interaction__c:
   - Athlete_Type_2__c
   - Athlete_Type_3__c
   - Audit_Reason__c
+  - Banner_ID__c
   - Birthdate__c
   - Campaign_Member_Status__c
   - Campaign_Reference_ID__c
@@ -1844,6 +2148,7 @@ Insert Interaction__c:
   - Contact_Title__c
   - Country__c
   - CreatedDate
+  - Current_Grade__c
   - Date_Admit__c
   - Date_Closed__c
   - Date_Completed_App__c
@@ -1858,6 +2163,7 @@ Insert Interaction__c:
   - Date_Suspect__c
   - Date_Withdrawn__c
   - Degree_Level__c
+  - Degree_Type_Summary__c
   - Description__c
   - Email__c
   - Employer__c
@@ -1865,16 +2171,21 @@ Insert Interaction__c:
   - FAFSA_Parent_1_School_Level__c
   - FAFSA_Parent_2_School_Level__c
   - First_Name__c
+  - Foot_on_Campus__c
   - Gender__c
+  - Has_Question__c
   - High_School_CEEB__c
   - High_School_Graduation_Year__c
   - Home_Phone__c
   - I_have_a_question__c
+  - Identify_as_Reference__c
+  - Initial_Foot_on_Campus_Date__c
   - Interaction_Source__c
   - Interaction_Status__c
   - Interaction_Upsert_Key__c
   - LastModifiedDate
   - Last_Name__c
+  - Latest_TouchPoint_Source_ERX__c
   - Lead_Only__c
   - Lead_Source__c
   - Lead_Website_Referrer__c
@@ -1962,13 +2273,19 @@ Insert Interaction__c:
   - Nominator_Last_Name__c
   - Opportunity_Record_Type__c
   - Opportunity_Stage__c
+  - OwnerId__c
+  - Preferred_First_Name__c
   - Primary_Affiliation__c
   - Race__c
   - Receive_Texts__c
+  - Recruitment_Program_Associated_Schools__c
   - Referral_Text__c
   - Relationship_to_Student__c
   - Salutation__c
   - Scholarship_of_Interest__c
+  - Self_Reported_Undergrad_Degree__c
+  - Self_Reported_Undergrad_Grad_Year__c
+  - Self_Reported_Undergrad_Institution__c
   - Source_CEEB_Code__c
   - State__c
   - University_Email__c

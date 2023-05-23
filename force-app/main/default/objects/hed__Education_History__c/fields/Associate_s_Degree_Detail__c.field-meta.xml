@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Associate_s_Degree_Detail__c</fullName>
+    <description>Field created for UG Transfer application to gain more information about an applicant associate degree.</description>
+    <externalId>false</externalId>
+    <label>Associate&apos;s Degree Detail</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Associate of Applied Science (A.A.S.)</fullName>
+                <default>false</default>
+                <label>Associate of Applied Science (A.A.S.)</label>
+            </value>
+            <value>
+                <fullName>Associate of Arts (A.A.)</fullName>
+                <default>false</default>
+                <label>Associate of Arts (A.A.)</label>
+            </value>
+            <value>
+                <fullName>Associate of Science (A.S.)</fullName>
+                <default>false</default>
+                <label>Associate of Science (A.S.)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -6,10 +6,9 @@
         <label>Incomplete</label>
     </customValue>
     <customValue>
-        <fullName>Accepted Conditionally and Probationally</fullName>
+        <fullName>MSW Accelerated</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Accepted Conditionally and Probationally</label>
+        <label>MSW Accelerated</label>
     </customValue>
     <customValue>
         <fullName>Accepted Incomplete</fullName>
@@ -148,6 +147,12 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Withdrawn Waitlisted</label>
+    </customValue>
+    <customValue>
+        <fullName>Accepted Conditionally and Probationally</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Accepted Conditionally and Probationally</label>
     </customValue>
     <customValue>
         <fullName>Accepted</fullName>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Originator__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Person who originally instigated proposal</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The originator is the person who originally instigated the proposal and is responsible for the actual ask.</inlineHelpText>
+    <label>Originator</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Opportunities (Originator)</relationshipLabel>
+    <relationshipName>Opportunities1</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

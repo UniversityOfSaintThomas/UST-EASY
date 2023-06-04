@@ -21,16 +21,10 @@
         <label>Add another gender</label>
     </customValue>
     <customValue>
-        <fullName>Applicant under 25</fullName>
+        <fullName>Generic Value 2</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Applicant under 25</label>
-    </customValue>
-    <customValue>
-        <fullName>Generic Value 3</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Generic Value 3</label>
+        <label>Generic Value 2</label>
     </customValue>
     <customValue>
         <fullName>Generic Value 1</fullName>
@@ -39,10 +33,16 @@
         <label>Generic Value 1</label>
     </customValue>
     <customValue>
-        <fullName>Generic Value 2</fullName>
+        <fullName>Generic Value 3</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Generic Value 2</label>
+        <label>Generic Value 3</label>
+    </customValue>
+    <customValue>
+        <fullName>Applicant under 25</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Applicant under 25</label>
     </customValue>
     <masterLabel>Gender</masterLabel>
     <sorted>false</sorted>

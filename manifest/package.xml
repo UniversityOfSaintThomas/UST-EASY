@@ -685,5 +685,5 @@
         <members>Opportunity.Opportunity%3A Update Opportunity Key UST</members>
         <name>WorkflowRule</name>
     </types>
-    <version>55.0</version>
+    <version>56.0</version>
 </Package>

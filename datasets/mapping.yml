@@ -584,6 +584,22 @@ Insert hed__Term__c:
     hed__Parent_Term__c:
       table: hed__Term__c
       after: Insert hed__Term__c
+Insert Admission_Territory__c:
+  sf_object: Admission_Territory__c
+  fields:
+  - Associated_States__c
+  - CreatedDate
+  - DuplicateDNU__c
+  - Fallback_Territory__c
+  - LastModifiedDate
+  - Name
+  - Program_Code__c
+  - School_or_College__c
+  - Territoy_Type__c
+  - Unique_Code__c
+  lookups:
+    Program__c:
+      table: Program__c
 Insert Intended_Program_Term__c:
   sf_object: Intended_Program_Term__c
   fields:
@@ -668,6 +684,16 @@ Insert Requirement__c:
       table: Application_Control__c
     Intended_Program__c:
       table: Program__c
+Insert Admissions_Region__c:
+  sf_object: Admissions_Region__c
+  fields:
+  - Associated_Countries__c
+  - CreatedDate
+  - LastModifiedDate
+  - Name
+  lookups:
+    Admission_Territory__c:
+      table: Admission_Territory__c
 Insert Requirement_Item__c:
   sf_object: Requirement_Item__c
   fields:
@@ -800,6 +826,46 @@ Insert Question_Dependency__c:
       table: Question__c
     Question__c:
       table: Question__c
+Insert Admissions_Booking__c:
+  sf_object: Admissions_Booking__c
+  fields:
+  - Audience__c
+  - Booking_Date__c
+  - Booking_End__c
+  - Booking_Start__c
+  - Contact_Email__c
+  - Contact_Name__c
+  - Contact_Phone__c
+  - CreatedDate
+  - End_Time__c
+  - Event_Link__c
+  - Intention_of_Visit__c
+  - International__c
+  - LastModifiedDate
+  - Location_Name__c
+  - Notes_from_Visit__c
+  - Number_of_Attended__c
+  - Number_of_IQs__c
+  - Poster_Sent__c
+  - RecordTypeId
+  - Recruitment_Term__c
+  - Scanner__c
+  - Start_Time__c
+  - Subject__c
+  - Subtype__c
+  - Tracking_Status__c
+  - Type__c
+  - URL_to_Form__c
+  lookups:
+    Admission_Territory__c:
+      table: Admission_Territory__c
+    Admissions_Booking_Campaign__c:
+      table: Campaign
+    College_School__c:
+      table: Account
+    School_Contact__c:
+      table: Contact
+      after: Insert Contact
 Insert Application_Payment__c:
   sf_object: Application_Payment__c
   fields:
@@ -2458,6 +2524,8 @@ Insert Interaction__c:
       table: Campaign
     Admissions_Application__c:
       table: Application__c
+    Admissions_Booking_Lookup__c:
+      table: Admissions_Booking__c
     Affiliated_Account__c:
       table: Account
     Campaign__c:

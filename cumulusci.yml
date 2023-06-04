@@ -4,7 +4,7 @@ project:
   package:
     name: UST-EASY-Package
     namespace: null
-    api_version: '52.0'
+    api_version: '56.0'
   dependencies:
     - github: 'https://github.com/SalesforceFoundation/EDA'
   source_format: sfdx
@@ -74,32 +74,32 @@ tasks:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/fdfdata_Jan2023/default.dev.mapping.yml
-      sql_path: datasets/fdfdata_Jan2023/dev.dataset.sql
+      mapping: datasets/fdfdata_Jan2023/default.latest.mapping.yml
+      sql_path: datasets/fdfdata_Jan2023/latest.dataset.sql
       inject_namespaces: False
 
-  load_fdf_application_data:
+  load_latest_data:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/fdfdata_Jan2023/default.dev.mapping.yml
-      sql_path: datasets/fdfdata_Jan2023/dev.dataset.sql
+      mapping: datasets/latest/latest.mapping.yml
+      sql_path: datasets/latest/latest.dataset.sql
       inject_namespaces: False
 
   load_scholarship_test_data:
     description: 'Load test data associated with EASY scholarships'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/scholarships/scholarships-default.dev.mapping.yml
-      sql_path: datasets/scholarships/scholarships-dev.dataset.sql
+      mapping: datasets/scholarships/scholarships-default.latest.mapping.yml
+      sql_path: datasets/scholarships/scholarships-latest.dataset.sql
       inject_namespaces: False
 
   load_prod_application_data:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/prod/default.dev.mapping.yml
-      sql_path: datasets/dev5/dev.dataset.sql
+      mapping: datasets/prod/default.latest.mapping.yml
+      sql_path: datasets/dev5/latest.dataset.sql
       inject_namespaces: False
 
   configure_community:
@@ -109,6 +109,11 @@ tasks:
       namespace_inject: $project_config.project__package__namespace
       path: unpackaged/config/network
       unmanaged: True
+
+  publish_community:
+    description: Publishes the community
+    options:
+      name: "EASY Applicant Portal"
 
   configure_community_settings:
     description: Deploys Network config for community for Development.
@@ -191,6 +196,7 @@ tasks:
         - record_type: Account.Business_Organization
         - record_type: Account.Educational_Institution
         - record_type: Account.HH_Account
+        - record_type: Account.Participation_Org
         - record_type: Account.Sports_Organization
         - record_type: Account.University_Department
         - record_type: Program__c.Academic_Program
@@ -202,19 +208,20 @@ tasks:
         - record_type: Question__c.Date
         - record_type: Question__c.DateTime
         - record_type: Question__c.Email
-        - record_type: Question__c.LongTextArea
-        - record_type: Question__c.MultiPicklist
         - record_type: Question__c.Number
+        - record_type: Question__c.Payment
         - record_type: Question__c.Percent
         - record_type: Question__c.Phone
         - record_type: Question__c.Picklist
+        - record_type: Question__c.MultiPicklist
         - record_type: Question__c.Radio
         - record_type: Question__c.Reference
         - record_type: Question__c.Static
         - record_type: Question__c.Text
           default: true
-        - record_type: Question__c.TextArea
         - record_type: Question__c.TextEncrypted
+        - record_type: Question__c.TextArea
+        - record_type: Question__c.LongTextArea
         - record_type: Question__c.URL
         - record_type: Question_Dependency__c.Checkbox
         - record_type: Question_Dependency__c.Multi_Select_Picklist
@@ -261,20 +268,22 @@ flows:
     steps:
       3:
         task: create_community
+      3.5:
+        task: publish_community
       4:
         task: create_bulk_data_permission_set
       5:
         task: set_easy_custom_settings
       6:
         task: turn_off_duplicate_rules
-      # 7:
-      #  task: load_fdf_application_data
-      #      7.5:
-      #        task: create_fake_school_data
+      7:
+        task: create_fake_school_data
       8:
         task: turn_on_duplicate_rules
       9:
         task: update_admin_profile
+      9.5:
+        task: load_latest_data
       10:
         task: set_hierarchy_custom_settings
       11:
@@ -282,11 +291,11 @@ flows:
       12:
         task: set_review_custom_settings
       13:
-        task: configure_community
-      14:
-        task: configure_community_settings
-      15:
         task: deploy_site_config
+      14:
+        task: configure_community
+      15:
+        task: configure_community_settings
       16:
         task: permission_guest_user
       17:

@@ -3,5 +3,6 @@
     <fullName>Academic_Program</fullName>
     <fields>Active__c</fields>
     <fields>Degree__c</fields>
+    <fields>Integration_Program_Code__c</fields>
     <label>Academic_Program</label>
 </CompactLayout>

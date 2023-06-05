@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pardot_Sync_OCB_Grad__c</fullName>
+    <externalId>false</externalId>
+    <formula>BEGINS(Recruitment_Interest__r.Plan_Code__c, &quot;BU_&quot;) &amp;&amp; ISPICKVAL(Recruitment_Interest__r.Career__c, &quot;Graduate&quot;)</formula>
+    <label>Pardot Sync OCB Grad</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

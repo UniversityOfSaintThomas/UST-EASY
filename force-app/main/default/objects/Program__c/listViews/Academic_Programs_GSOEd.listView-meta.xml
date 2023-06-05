@@ -3,6 +3,7 @@
     <fullName>Academic_Programs_GSOEd</fullName>
     <columns>NAME</columns>
     <columns>Program_Major_Concentration__c</columns>
+    <columns>OBJECT_ID</columns>
     <columns>Application_Control__c</columns>
     <columns>Degree_Type__c</columns>
     <columns>Delivery_Type__c</columns>

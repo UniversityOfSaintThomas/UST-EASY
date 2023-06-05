@@ -235,6 +235,11 @@
                 <label>LinkedIn</label>
             </value>
             <value>
+                <fullName>LinkedIn Lead</fullName>
+                <default>false</default>
+                <label>LinkedIn Lead</label>
+            </value>
+            <value>
                 <fullName>MEF: U of M Crookston</fullName>
                 <default>false</default>
                 <label>MEF: U of M Crookston</label>

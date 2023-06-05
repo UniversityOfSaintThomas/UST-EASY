@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Grad</fullName>
+    <columns>NAME</columns>
+    <columns>School_or_College__c</columns>
+    <columns>Program_Code__c</columns>
+    <columns>Fallback_Territory__c</columns>
+    <columns>Assigned_User__c</columns>
+    <columns>Assigned_User_is_active__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Territoy_Type__c</field>
+        <operation>equals</operation>
+        <value>Grad</value>
+    </filters>
+    <label>Grad</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

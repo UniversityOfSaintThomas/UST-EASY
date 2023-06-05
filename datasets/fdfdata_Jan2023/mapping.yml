@@ -102,6 +102,7 @@ Insert Account:
   - hed__Billing_County__c
   - hed__School_Code__c
   - hed__Shipping_County__c
+  soql_filter: "Industry = 'Higher Education' OR Type = 'Higher Education'"
   lookups:
     ParentId:
       table: Account

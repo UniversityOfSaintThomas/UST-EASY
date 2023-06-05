@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Associated_Countries__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Countries assigned to region, for international counselor assignments</inlineHelpText>
+    <label>Associated Countries</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Country</valueSetName>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

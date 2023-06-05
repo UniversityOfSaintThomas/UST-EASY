@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UG_Merit_Scholarship_Adjust_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>UG Merit Scholarship Adjust Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Athletic Revision</fullName>
+                <default>false</default>
+                <label>Athletic Revision</label>
+            </value>
+            <value>
+                <fullName>Full Tuition 360 Journalism</fullName>
+                <default>false</default>
+                <label>Full Tuition - 360 Journalism</label>
+            </value>
+            <value>
+                <fullName>Full Tuition Dease Scholarship</fullName>
+                <default>false</default>
+                <label>Full Tuition - Dease Scholarship</label>
+            </value>
+            <value>
+                <fullName>Full Tuition GHR Scholarship</fullName>
+                <default>false</default>
+                <label>Full Tuition - GHR Scholarship</label>
+            </value>
+            <value>
+                <fullName>Full Tuition Schulze Innovation</fullName>
+                <default>false</default>
+                <label>Full Tuition - Schulze Innovation</label>
+            </value>
+            <value>
+                <fullName>Full Tuition Science Scholarship</fullName>
+                <default>false</default>
+                <label>Full Tuition - Science Scholarship</label>
+            </value>
+            <value>
+                <fullName>Late Adjust</fullName>
+                <default>false</default>
+                <label>Late Adjust</label>
+            </value>
+            <value>
+                <fullName>Manual Override</fullName>
+                <default>false</default>
+                <label>Manual Override</label>
+            </value>
+            <value>
+                <fullName>Move to Next Term</fullName>
+                <default>false</default>
+                <label>Move to Next Term</label>
+            </value>
+            <value>
+                <fullName>Revised ACT/SAT</fullName>
+                <default>false</default>
+                <label>Revised ACT/SAT</label>
+            </value>
+            <value>
+                <fullName>Revised GPA</fullName>
+                <default>false</default>
+                <label>Revised GPA</label>
+            </value>
+            <value>
+                <fullName>Test Score Rescinded</fullName>
+                <default>false</default>
+                <label>Test Score Rescinded</label>
+            </value>
+            <value>
+                <fullName>Tuition Exchange</fullName>
+                <default>false</default>
+                <label>Tuition Exchange</label>
+            </value>
+            <value>
+                <fullName>Tuition Remission - ACTC</fullName>
+                <default>false</default>
+                <label>Tuition Remission - ACTC</label>
+            </value>
+            <value>
+                <fullName>Tuition Remission - CCTE</fullName>
+                <default>false</default>
+                <label>Tuition Remission - CCTE</label>
+            </value>
+            <value>
+                <fullName>Tuition Remission - UST</fullName>
+                <default>false</default>
+                <label>Tuition Remission - UST</label>
+            </value>
+            <value>
+                <fullName>Yellow Ribbon</fullName>
+                <default>false</default>
+                <label>Yellow Ribbon</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

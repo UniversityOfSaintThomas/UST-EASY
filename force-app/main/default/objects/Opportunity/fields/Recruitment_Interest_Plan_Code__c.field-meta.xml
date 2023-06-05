@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recruitment_Interest_Plan_Code__c</fullName>
+    <description>Lookup to Recruitment Interest (Plan) Plan Code</description>
+    <externalId>false</externalId>
+    <formula>Recruitment_Interest__r.Plan_Code__c</formula>
+    <inlineHelpText>Lookup to Recruitment Interest (Plan) Plan Code</inlineHelpText>
+    <label>Recruitment Interest Plan Code</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

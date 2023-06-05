@@ -106,16 +106,10 @@
         <label>Mentee (Current Student)</label>
     </customValue>
     <customValue>
-        <fullName>Undergraduate</fullName>
+        <fullName>Graduate</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Undergraduate</label>
-    </customValue>
-    <customValue>
-        <fullName>Adult</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Adult</label>
+        <label>Graduate</label>
     </customValue>
     <customValue>
         <fullName>Traditional</fullName>
@@ -124,10 +118,16 @@
         <label>Traditional</label>
     </customValue>
     <customValue>
-        <fullName>Graduate</fullName>
+        <fullName>Adult</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Graduate</label>
+        <label>Adult</label>
+    </customValue>
+    <customValue>
+        <fullName>Undergraduate</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Undergraduate</label>
     </customValue>
     <customValue>
         <fullName>Art History</fullName>

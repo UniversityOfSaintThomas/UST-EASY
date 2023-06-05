@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ACT_Writing_EW_Date__c</fullName>
+    <description>ACT Writing (EW) Date</description>
+    <externalId>false</externalId>
+    <inlineHelpText>ACT Writing (EW) Date</inlineHelpText>
+    <label>ACT Writing (EW) Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

@@ -4,6 +4,7 @@
     <deprecated>false</deprecated>
     <description>A unique external ID field to house a prospect or student&apos;s ID for integration or manual data loading processes. It is also the identification code to be used for Contact Matching Rules as part of the Interaction process.</description>
     <externalId>false</externalId>
+    <inlineHelpText>Jan &apos;23 Field Not Utilized Yet</inlineHelpText>
     <label>Contact_Constituent ID</label>
     <length>255</length>
     <required>false</required>

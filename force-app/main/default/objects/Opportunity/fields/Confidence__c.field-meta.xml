@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Confidence__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE( Confidence_Level__c , 
+&apos;Certain&apos;, &apos;1) Certain&apos;, 
+&apos;High&apos;, &apos;2) High&apos;,
+&apos;Moderate&apos;, &apos;3) Moderate&apos;,
+&apos;Low&apos;, &apos;4) Low&apos;,
+&apos;5) Unknown&apos;)</formula>
+    <label>Confidence</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

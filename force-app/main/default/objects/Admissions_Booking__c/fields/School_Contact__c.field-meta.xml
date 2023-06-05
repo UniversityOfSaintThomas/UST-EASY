@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>School_Contact__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Contact person at the school</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Contact person at the school</inlineHelpText>
+    <label>School Contact</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Admissions Bookings</relationshipLabel>
+    <relationshipName>Admissions_Bookings</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

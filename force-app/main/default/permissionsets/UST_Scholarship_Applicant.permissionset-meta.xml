@@ -147,6 +147,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Scholarship__c.Direct_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Scholarship__c.Essay_1_Allow_Upload__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -321,6 +326,14 @@
     </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Scholarship_Applicant__c.Scholarship</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Scholarship__c.Scholarship</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Scholarship__c.Signature_Programs</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
 </PermissionSet>

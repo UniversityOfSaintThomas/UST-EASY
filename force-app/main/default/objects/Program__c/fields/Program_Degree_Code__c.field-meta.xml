@@ -12,7 +12,7 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>AA</fullName>
                 <default>false</default>
@@ -124,6 +124,11 @@
                 <label>MBA</label>
             </value>
             <value>
+                <fullName>MICRO</fullName>
+                <default>false</default>
+                <label>MICRO</label>
+            </value>
+            <value>
                 <fullName>MS</fullName>
                 <default>false</default>
                 <label>MS</label>
@@ -144,11 +149,6 @@
                 <label>MSW</label>
             </value>
             <value>
-                <fullName>PSD</fullName>
-                <default>false</default>
-                <label>PSD</label>
-            </value>
-            <value>
                 <fullName>NDND</fullName>
                 <default>false</default>
                 <label>NDND</label>
@@ -157,6 +157,11 @@
                 <fullName>NDO</fullName>
                 <default>false</default>
                 <label>NDO</label>
+            </value>
+            <value>
+                <fullName>PSD</fullName>
+                <default>false</default>
+                <label>PSD</label>
             </value>
         </valueSetDefinition>
     </valueSet>

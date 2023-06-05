@@ -4,7 +4,7 @@ project:
   package:
     name: UST-EASY-Package
     namespace: null
-    api_version: '52.0'
+    api_version: '56.0'
   dependencies:
     - github: 'https://github.com/SalesforceFoundation/EDA'
   source_format: sfdx
@@ -33,7 +33,7 @@ tasks:
       description: EASY application portal
       template: Build Your Own
       url_path_prefix: Admissions
-      retries: 10
+      timeout: 120000
 
   permission_guest_user:
     description: 'Applies permission set to guest community guest user'
@@ -74,32 +74,32 @@ tasks:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/fdfdata_Jan2023/mapping.yml
-      sql_path: datasets/fdfdata_Jan2023/data.sql
+      mapping: datasets/fdfdata_Jan2023/default.latest.mapping.yml
+      sql_path: datasets/fdfdata_Jan2023/latest.dataset.sql
       inject_namespaces: False
 
-  load_fdf_application_data:
+  load_latest_data:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/fdfdata_Jan2023/mapping.yml
-      sql_path: datasets/fdfdata_Jan2023/data.sql
+      mapping: datasets/latest/latest.mapping.yml
+      sql_path: datasets/latest/latest.dataset.sql
       inject_namespaces: False
 
   load_scholarship_test_data:
     description: 'Load test data associated with EASY scholarships'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/scholarships/scholarships-mapping.yml
-      sql_path: datasets/scholarships/scholarships-data.sql
+      mapping: datasets/scholarships/scholarships-default.latest.mapping.yml
+      sql_path: datasets/scholarships/scholarships-latest.dataset.sql
       inject_namespaces: False
 
   load_prod_application_data:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/prod/mapping.yml
-      sql_path: datasets/dev5/data.sql
+      mapping: datasets/prod/default.latest.mapping.yml
+      sql_path: datasets/dev5/latest.dataset.sql
       inject_namespaces: False
 
   configure_community:
@@ -117,6 +117,17 @@ tasks:
       namespace_inject: $project_config.project__package__namespace
       path: unpackaged/config/settings
       unmanaged: True
+
+  configure_network_setting:
+    description: Sets up the network for our community
+    class_path: cumulusci.tasks.salesforce.network_member_group.CreateNetworkMemberGroups
+    options:
+      network_name: EASY Applicant Portal
+      profile_names:
+        - Customer Community Login User
+      permission_set_names:
+        - UST Scholarship Applicant
+        - Application Community
 
   deploy_site_config:
     description: Deploys configuration for Development.
@@ -191,6 +202,7 @@ tasks:
         - record_type: Account.Business_Organization
         - record_type: Account.Educational_Institution
         - record_type: Account.HH_Account
+        - record_type: Account.Participation_Org
         - record_type: Account.Sports_Organization
         - record_type: Account.University_Department
         - record_type: Program__c.Academic_Program
@@ -202,19 +214,20 @@ tasks:
         - record_type: Question__c.Date
         - record_type: Question__c.DateTime
         - record_type: Question__c.Email
-        - record_type: Question__c.LongTextArea
-        - record_type: Question__c.MultiPicklist
         - record_type: Question__c.Number
+        - record_type: Question__c.Payment
         - record_type: Question__c.Percent
         - record_type: Question__c.Phone
         - record_type: Question__c.Picklist
+        - record_type: Question__c.MultiPicklist
         - record_type: Question__c.Radio
         - record_type: Question__c.Reference
         - record_type: Question__c.Static
         - record_type: Question__c.Text
           default: true
-        - record_type: Question__c.TextArea
         - record_type: Question__c.TextEncrypted
+        - record_type: Question__c.TextArea
+        - record_type: Question__c.LongTextArea
         - record_type: Question__c.URL
         - record_type: Question_Dependency__c.Checkbox
         - record_type: Question_Dependency__c.Multi_Select_Picklist
@@ -230,7 +243,6 @@ tasks:
         - record_type: Family__c.UST_Alumni_Family
         - record_type: Family__c.UST_Employee_Family
 
-
   add_degree_piciklist:
     description: "Adds more picklist items to the degree earned list of EDA."
     class_path: cumulusci.tasks.metadata_etl.picklists.AddPicklistEntries
@@ -238,24 +250,40 @@ tasks:
     ui_options:
       add_relationship_type_values:
         name: Add Relationship Type Picklist Values
-
     options:
       picklists: hed__Education_History__c.hed__Degree_Earned__c
       entries:
-        - fullName: "None"
-          label: "None"
-        - fullName: "Associates"
-          label: "Associates"
-        - fullName: "Bachelors"
-          label: "Bachelors"
-        - fullName: "Masters"
-          label: "Masters"
+        - fullName: "GED"
+          label: "GED"
+        - fullName: "Associate's"
+          label: "Associate's"
+        - fullName: "Bachelor's"
+          label: "Bachelor's"
+        - fullName: "Master's"
+          label: "Master's"
         - fullName: "Doctoral"
           label: "Doctoral"
         - fullName: "Certificate"
           label: "Certificate"
+        - fullName: "Education Specialist"
+          label: "Education Specialist"
+        - fullName: "Juris Doctor (JD)"
+          label: "Juris Doctor (JD)"
+        - fullName: "Licensure"
+          label: "Licensure"
+        - fullName: "Non-Degree"
+          label: "Non-Degree"
+        - fullName: "Post-Masters Certificate"
+          label: "Post-Masters Certificate"
+        - fullName: "Pre-Professional Program"
+          label: "Pre-Professional Program"
+        - fullName: "None"
+          label: "None"
         - fullName: "Post Graduate Diploma"
           label: "Post Graduate Diploma"
+        - fullName: "Attended No Degree"
+          label: "Attended No Degree"
+
 flows:
   config_dev:
     steps:
@@ -264,39 +292,41 @@ flows:
       4:
         task: create_bulk_data_permission_set
       5:
-        task: set_easy_custom_settings
-      6:
         task: turn_off_duplicate_rules
+      6:
+        task: create_fake_school_data
       7:
-        task: load_fdf_application_data
-      #      7.5:
-      #        task: create_fake_school_data
-      8:
-        task: turn_on_duplicate_rules
-      9:
         task: update_admin_profile
-      10:
+      8:
+        task: load_latest_data
+      9:
         task: set_hierarchy_custom_settings
-      11:
+      10:
         task: install_sharing_rules
-      12:
+      11:
         task: set_review_custom_settings
-      13:
-        task: configure_community
-      14:
-        task: configure_community_settings
-      15:
+      12:
         task: deploy_site_config
-      16:
+      13:
         task: permission_guest_user
-      17:
+      14:
         task: permission_admin_user
-      18:
+      15:
         task: set_holding_ids
-      19:
+      16:
         task: set_user_user_role
+      17:
+        task: set_easy_custom_settings
+      18:
+        task: turn_on_duplicate_rules
+      19:
+        task: configure_network_setting
       20:
-        task: load_scholarship_test_data
+        task: configure_community
+      21:
+        task: configure_community_settings
+      #22:
+      #  task: load_scholarship_test_data
 
   release_unlocked_beta:
     steps:

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admission_Territory__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <inlineHelpText>What territory does this region belong to? Defaults to FTFY</inlineHelpText>
+    <label>Admission Territory</label>
+    <referenceTo>Admission_Territory__c</referenceTo>
+    <relationshipLabel>Admissions Regions</relationshipLabel>
+    <relationshipName>Admissions_Regions</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

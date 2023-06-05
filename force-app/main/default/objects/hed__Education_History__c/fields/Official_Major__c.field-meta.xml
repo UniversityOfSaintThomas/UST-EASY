@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Official_Major__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Tie the official Major to an Educational History record</description>
+    <externalId>false</externalId>
+    <label>Official Major</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Education History (Official Major)</relationshipLabel>
+    <relationshipName>Education_History</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

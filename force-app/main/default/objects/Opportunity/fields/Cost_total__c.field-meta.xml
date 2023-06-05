@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cost_total__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Rollup summary of products for intl calculations</inlineHelpText>
+    <label>Cost total</label>
+    <summarizedField>OpportunityLineItem.TotalPrice</summarizedField>
+    <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

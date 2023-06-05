@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admissions_Application_Admit_Type__c</fullName>
+    <description>Populated at the time of admit to denote which type - Full, Conditional, Provisional</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Populated at the time of admit to denote which type - Full, Conditional, Provisional</inlineHelpText>
+    <label>Admissions Application Admit Type</label>
+    <length>75</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

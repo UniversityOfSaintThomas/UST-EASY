@@ -5,6 +5,7 @@
     <columns>Program_Name_on_Application__c</columns>
     <columns>RECORDTYPE</columns>
     <columns>Academic_Level__c</columns>
+    <columns>Program_Display__c</columns>
     <columns>Program_Type__c</columns>
     <columns>CREATEDBY_USER</columns>
     <columns>UPDATEDBY_USER</columns>

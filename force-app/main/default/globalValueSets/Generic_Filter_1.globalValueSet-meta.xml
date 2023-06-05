@@ -2976,6 +2976,11 @@
         <label>ED_ES_MA|TECI|SPCT</label>
     </customValue>
     <customValue>
+        <fullName>UN_N_BS</fullName>
+        <default>false</default>
+        <label>UN_N_BS</label>
+    </customValue>
+    <customValue>
         <fullName>AS_DV_MA|MADL</fullName>
         <default>false</default>
         <label>AS_DV_MA|MADL</label>
@@ -2986,10 +2991,54 @@
         <label>BU_MGT_MSM|BUMM</label>
     </customValue>
     <customValue>
-        <fullName>AS_DV_MA | MADL</fullName>
+        <fullName>BU_UG_BA|BUBC</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>AS_DV_MA | MADL</label>
+        <label>BU_UG_BA|BUBC</label>
+    </customValue>
+    <customValue>
+        <fullName>ET_GR_MICRO|MCDS</fullName>
+        <default>false</default>
+        <label>ET_GR_MICRO|MCDS</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MICRO|MCDL</fullName>
+        <default>false</default>
+        <label>SE_GR_MICRO|MCDL</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MICRO|MCDP</fullName>
+        <default>false</default>
+        <label>SE_GR_MICRO|MCDP</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MICRO|MCMI</fullName>
+        <default>false</default>
+        <label>SE_GR_MICRO|MCMI</label>
+    </customValue>
+    <customValue>
+        <fullName>ED_TP_MA|TPEL</fullName>
+        <default>false</default>
+        <label>ED_TP_MA|TPEL</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_CER|CYSC</fullName>
+        <default>false</default>
+        <label>SE_GR_CER|CYSC</label>
+    </customValue>
+    <customValue>
+        <fullName>BU_GR_CER|BUSU</fullName>
+        <default>false</default>
+        <label>BU_GR_CER|BUSU</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_CER|HCAI</fullName>
+        <default>false</default>
+        <label>SE_GR_CER|HCAI</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MICRO|MCIS</fullName>
+        <default>false</default>
+        <label>SE_GR_MICRO|MCIS</label>
     </customValue>
     <masterLabel>Program(s)</masterLabel>
     <sorted>true</sorted>

@@ -33,7 +33,7 @@ tasks:
       description: EASY application portal
       template: Build Your Own
       url_path_prefix: Admissions
-      retries: 10
+      timeout: 120000
 
   permission_guest_user:
     description: 'Applies permission set to guest community guest user'
@@ -110,11 +110,6 @@ tasks:
       path: unpackaged/config/network
       unmanaged: True
 
-  publish_community:
-    description: Publishes the community
-    options:
-      name: "EASY Applicant Portal"
-
   configure_community_settings:
     description: Deploys Network config for community for Development.
     class_path: cumulusci.tasks.salesforce.Deploy
@@ -122,6 +117,17 @@ tasks:
       namespace_inject: $project_config.project__package__namespace
       path: unpackaged/config/settings
       unmanaged: True
+
+  configure_network_setting:
+    description: Sets up the network for our community
+    class_path: cumulusci.tasks.salesforce.network_member_group.CreateNetworkMemberGroups
+    options:
+      network_name: EASY Applicant Portal
+      profile_names:
+        - Customer Community Login User
+      permission_set_names:
+        - UST Scholarship Applicant
+        - Application Community
 
   deploy_site_config:
     description: Deploys configuration for Development.
@@ -237,7 +243,6 @@ tasks:
         - record_type: Family__c.UST_Alumni_Family
         - record_type: Family__c.UST_Employee_Family
 
-
   add_degree_piciklist:
     description: "Adds more picklist items to the degree earned list of EDA."
     class_path: cumulusci.tasks.metadata_etl.picklists.AddPicklistEntries
@@ -245,66 +250,82 @@ tasks:
     ui_options:
       add_relationship_type_values:
         name: Add Relationship Type Picklist Values
-
     options:
       picklists: hed__Education_History__c.hed__Degree_Earned__c
       entries:
-        - fullName: "None"
-          label: "None"
-        - fullName: "Associates"
-          label: "Associates"
-        - fullName: "Bachelors"
-          label: "Bachelors"
-        - fullName: "Masters"
-          label: "Masters"
+        - fullName: "GED"
+          label: "GED"
+        - fullName: "Associate's"
+          label: "Associate's"
+        - fullName: "Bachelor's"
+          label: "Bachelor's"
+        - fullName: "Master's"
+          label: "Master's"
         - fullName: "Doctoral"
           label: "Doctoral"
         - fullName: "Certificate"
           label: "Certificate"
+        - fullName: "Education Specialist"
+          label: "Education Specialist"
+        - fullName: "Juris Doctor (JD)"
+          label: "Juris Doctor (JD)"
+        - fullName: "Licensure"
+          label: "Licensure"
+        - fullName: "Non-Degree"
+          label: "Non-Degree"
+        - fullName: "Post-Masters Certificate"
+          label: "Post-Masters Certificate"
+        - fullName: "Pre-Professional Program"
+          label: "Pre-Professional Program"
+        - fullName: "None"
+          label: "None"
         - fullName: "Post Graduate Diploma"
           label: "Post Graduate Diploma"
+        - fullName: "Attended No Degree"
+          label: "Attended No Degree"
+
 flows:
   config_dev:
     steps:
       3:
         task: create_community
-      3.5:
-        task: publish_community
       4:
         task: create_bulk_data_permission_set
       5:
-        task: set_easy_custom_settings
-      6:
         task: turn_off_duplicate_rules
-      7:
+      6:
         task: create_fake_school_data
-      8:
-        task: turn_on_duplicate_rules
-      9:
+      7:
         task: update_admin_profile
-      9.5:
+      8:
         task: load_latest_data
-      10:
+      9:
         task: set_hierarchy_custom_settings
-      11:
+      10:
         task: install_sharing_rules
-      12:
+      11:
         task: set_review_custom_settings
-      13:
+      12:
         task: deploy_site_config
-      14:
-        task: configure_community
-      15:
-        task: configure_community_settings
-      16:
+      13:
         task: permission_guest_user
-      17:
+      14:
         task: permission_admin_user
-      18:
+      15:
         task: set_holding_ids
-      19:
+      16:
         task: set_user_user_role
-      #20:
+      17:
+        task: set_easy_custom_settings
+      18:
+        task: turn_on_duplicate_rules
+      19:
+        task: configure_network_setting
+      20:
+        task: configure_community
+      21:
+        task: configure_community_settings
+      #22:
       #  task: load_scholarship_test_data
 
   release_unlocked_beta:

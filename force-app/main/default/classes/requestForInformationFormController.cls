@@ -88,7 +88,8 @@ public without sharing class requestForInformationFormController {
                             Redirect_URL__c,
                             Hide_Form_Title__c,
                             Lead_Source__c,
-                            Redirect_After_Form_Submission__c
+                            Redirect_After_Form_Submission__c,
+                            Multi_Select_Display_Type__c
                     FROM RFI_Controller__c
                     WHERE Name = :rfi_controller_name
                     LIMIT 1
@@ -151,7 +152,7 @@ public without sharing class requestForInformationFormController {
                 List<String> academicCodes = academic_interest_codes.split(';');
                 query_string += ' AND Program_Major_Concentration__c IN :academicCodes ';
             }
-            query_string += ' ORDER BY Program_Name_on_Application__c ';
+            query_string += ' ORDER BY Degree__c, Program_Name_on_Application__c ';
             System.debug('PROGRAM QUERY: ');
             System.debug(query_string);
             List<Program__c> programs = Database.query(query_string);

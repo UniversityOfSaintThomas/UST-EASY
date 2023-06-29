@@ -143,6 +143,8 @@ export default class RequestForInformationForm extends LightningElement {
     redirect_url;
     fields_to_display;
     required_fields;
+    multi_select_standard;
+    type_of_
     @track hide_form_title = true;
 
     // lead info
@@ -320,6 +322,11 @@ export default class RequestForInformationForm extends LightningElement {
                 this.hide_form_title = result.data.Hide_Form_Title__c;
                 this.redirect_after_submit = result.data.Redirect_After_Form_Submission__c;
                 this.academic_interest_codes = result.data.Academic_Interests_To_Display__c;
+                if (result.data.Multi_Select_Display_Type__c === 'SLDS Dueling Picklists') {
+                    this.multi_select_standard = true;
+                } else {
+                    this.multi_select_standard = false
+                }
 
                 // sets boolean values for front-end display i.e. which fields on are form, which are required
                 this.handleFieldsToDisplay();
@@ -381,6 +388,8 @@ export default class RequestForInformationForm extends LightningElement {
                         .then((programs) => {
                             this.program_id_to_name_map = programs;
                             const values = [];
+                            let last_group = '';
+                            //let item_count = 0;
                             if (this.academic_level === 'U') {
                                 for (const program in programs) {
                                     values.push(
@@ -392,11 +401,28 @@ export default class RequestForInformationForm extends LightningElement {
                                 }
                             } else {
                                 for (const program in programs) {
+                                    if (last_group === '' || last_group != programs[program].Degree__c) {
+                                        last_group = programs[program].Degree__c
+                                        values.push(
+                                            {
+                                                label: programs[program].Degree__c,
+                                                value: programs[program].Degree__c,
+                                                description: programs[program].Degree__c,
+                                                is_group: true
+                                            }
+                                        );
+                                    }
+                                    let label_value = programs[program].Program_Name_on_Application__c;
+                                    // if (!this.multi_select_standard) {
+                                    //     label_value = label_value.replace(/(^Certificate in|Master of Arts in|Master of Science in|Master of Social Work in|Non-Degree|Certificate -|Licensure in)/gi, "");
+                                    //     label_value = label_value.trim();
+                                    // }
                                     values.push(
                                         {
-                                            label: programs[program].Program_Name_on_Application__c,
+                                            label: label_value,
                                             value: programs[program].Id,
-                                            description: programs[program].Degree__c
+                                            description: programs[program].Degree__c,
+                                            is_group: false
                                         }
                                     );
                                 }
@@ -593,6 +619,7 @@ export default class RequestForInformationForm extends LightningElement {
                 }
                 break;
             case this.field_labels.academic_interest_label:
+                console.log(event.detail.value);
                 this.academic_interest_id_list = event.detail.value;
                 break;
             case this.field_labels.academic_term_label:
@@ -837,7 +864,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     validateFields() {
         let isChildValidated = true;
-        [...this.template.querySelectorAll("c-reusable-lookup")].forEach((element) => {
+        [...this.template.querySelectorAll("c-reusable-lookup, c-multi-select-pills-groupable")].forEach((element) => {
             if (element.checkValidity() === false) {
                 isChildValidated = false;
             }
@@ -874,6 +901,13 @@ export default class RequestForInformationForm extends LightningElement {
         let month = String(date.getMonth() + 1);
         let year = String(date.getFullYear());
         return year + '-' + month + '-' + day;
+    }
+
+    handleSelectionChange(event) {
+        event.stopPropagation();
+        const detail = event.detail;
+        //semi-colon seperated string
+        const selectedValue = detail.value;
     }
 
     populateUSCityStateAndCountry(zipcode) {

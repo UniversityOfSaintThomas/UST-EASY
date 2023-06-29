@@ -244,7 +244,9 @@ public class INT_InteractionProcessor {
                 oppContactRolestoInsert.add(oppContactRole);
             }
         }
-        insert oppContactRolestoInsert;
+        if (oppContactRolestoInsert.size() > 0){
+            insert oppContactRolestoInsert;
+        }
 
         // Finally, associate referenced Opportunity and set Interaction_Status__c after processing and flag if errored.
         for (Interaction__c interaction : interactionsToProcess) {
@@ -620,7 +622,7 @@ public class INT_InteractionProcessor {
                             matchingOpp.Name = determineOpportunityName(oppName, lastName, termName, programName);
                             interaction.Opportunity_Stage__c = matchingOpp.StageName;
                             interaction.Opportunity__r = matchingOpp;
-                            interaction.Opportunity_Record_Type__c = matchingOpp.RecordTypeId;
+                            //interaction.Opportunity_Record_Type__c = matchingOpp.RecordTypeId;
                             intMappingService.applyDataToSObject(interaction, matchingOpp);
                             opportunitiesToUpsert.add(matchingOpp);
                         }

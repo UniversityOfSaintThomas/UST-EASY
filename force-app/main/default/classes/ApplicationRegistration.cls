@@ -213,7 +213,7 @@ public class ApplicationRegistration {
             List<Academic_Term__c> academicTerm = [SELECT Term__c FROM Academic_Term__c WHERE Id =: interaction.Intended_Start_Term__c LIMIT 1];
             if (!academicTerm.isEmpty()) {
                 interaction.Term__c = academicTerm[0].Term__c;
-            } 
+            }
         }
         interaction.Opportunity_Stage__c = 'Started App';
         interaction.Opportunity_Record_Type__c = application_opp_RT_ID;

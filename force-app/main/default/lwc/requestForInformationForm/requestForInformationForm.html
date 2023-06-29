@@ -80,10 +80,10 @@
                         </template>
                         <template if:false={multi_select_standard}>
                             <c-multi-select-pills-groupable
+                                    required={require_fields.Academic_Interest}
                                     label={field_labels.academic_interest_label}
                                     options={academic_interest_picklist_values}
                                     onchange={onChange}
-                                    required={require_fields.Academic_Interest}
                                     dropdown-length="10"
                                     max="4"
                                     hint="Select an academic interest..."

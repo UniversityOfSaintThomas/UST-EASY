@@ -228,7 +228,7 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         idInput.value = valueString;
         idInput.closest('.slds-form-element').classList.remove('slds-has-error');
         this.template.querySelector("input").value = valueString;
-        const eventDetail = {value: valueString};
+        const eventDetail = {value: valueString.split(';')};
         const changeEvent = new CustomEvent('change', {detail: eventDetail});
         this.dispatchEvent(changeEvent);
     }

@@ -322,7 +322,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.hide_form_title = result.data.Hide_Form_Title__c;
                 this.redirect_after_submit = result.data.Redirect_After_Form_Submission__c;
                 this.academic_interest_codes = result.data.Academic_Interests_To_Display__c;
-                if (result.data.Multi_Select_Display_Type__c === 'SLDS Dueling Picklists') {
+                if (result.data.Multi_Select_Display_Type__c === 'SLDS Dueling Picklists' || !result.data.Multi_Select_Display_Type__c) {
                     this.multi_select_standard = true;
                 } else {
                     this.multi_select_standard = false
@@ -619,7 +619,6 @@ export default class RequestForInformationForm extends LightningElement {
                 }
                 break;
             case this.field_labels.academic_interest_label:
-                console.log(event.detail.value);
                 this.academic_interest_id_list = event.detail.value;
                 break;
             case this.field_labels.academic_term_label:

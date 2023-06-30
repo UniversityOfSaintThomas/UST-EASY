@@ -15,7 +15,7 @@ cci task run load_dataset -o mapping datasets/fdfdata/mapping.yml -o sql_path da
 ```
 
 If you need to connect an org, run the following command. It will connect, via a browser, to an org for authentication of
-that org. in this case "easy_app_dev" is the alias of the connected org and can be whatever you want. --login-url is the
+that org. In this case, "easy_app_dev" is the alias of the connected org and can be whatever you want. --login-url is the
 custom domain of the org and will be unique for each org.
 
 ```

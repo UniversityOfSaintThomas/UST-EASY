@@ -82,8 +82,10 @@ global with sharing class JustInTimePermissionSets {
             }
         }
 
-        //Update Portal_User_First_Login__c and Portal_User_Latest_Login__c for each user
-        PortalUserLoginDate.upsertContacts(userIdsAffected);
+        //Update Portal_User_First_Login__c and Portal_User_Latest_Login__c for each user 
+        if (userIdsAffected.size() > 0){
+            PortalUserLoginDate.upsertContacts(userIdsAffected);
+        }
     }
 
     global class userWithPermissionRequests {

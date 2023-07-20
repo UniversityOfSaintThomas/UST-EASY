@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Academic_Program</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Academic_Program</compactLayoutAssignment>
     <description>The official degree or major a student applies to and is admitted into.</description>
     <label>Academic Program</label>
     <picklistValues>
@@ -58,6 +59,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Nursing</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
@@ -98,6 +103,10 @@
         </values>
         <values>
             <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nursing</fullName>
             <default>false</default>
         </values>
         <values>
@@ -192,6 +201,10 @@
         <picklist>Career__c</picklist>
         <values>
             <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Degree</fullName>
             <default>false</default>
         </values>
         <values>
@@ -397,6 +410,10 @@
         </values>
         <values>
             <fullName>Master of Studies in Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Micro-credential</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1302,6 +1319,10 @@
         </values>
         <values>
             <fullName>BU_RL_MS%7CMSRL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BU_UG_BA%7CBUBC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2313,6 +2334,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ET_GR_MICRO%7CMCDS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ET_GR_MME%7CMMSE</fullName>
             <default>false</default>
         </values>
@@ -2741,6 +2766,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SE_GR_MICRO%7CMCDL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SE_GR_MICRO%7CMCDP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SE_GR_MICRO%7CMCMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SE_GR_MS%7CMSDS</fullName>
             <default>false</default>
         </values>
@@ -2844,6 +2881,10 @@
             <fullName>SW_GR_NDO%7CNDND</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>UN_N_BS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Generic_Filter_2__c</picklist>
@@ -2896,6 +2937,10 @@
         </values>
         <values>
             <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Second Deposit Paid - Confirming</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2978,6 +3023,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ready to be matched</fullName>
             <default>false</default>
         </values>
@@ -3045,6 +3094,10 @@
             <fullName>Summer 2030</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Hide_Applicant_Type__c</picklist>
@@ -3066,6 +3119,10 @@
         </values>
         <values>
             <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nursing</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3268,6 +3325,10 @@
         </values>
         <values>
             <fullName>Non-Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nursing</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3491,6 +3552,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MICRO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MS</fullName>
             <default>false</default>
         </values>
@@ -3679,6 +3744,10 @@
         </values>
         <values>
             <fullName>School of Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Nursing</fullName>
             <default>false</default>
         </values>
         <values>

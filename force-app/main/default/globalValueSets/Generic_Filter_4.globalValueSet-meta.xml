@@ -161,15 +161,19 @@
         <label>Summer 2030</label>
     </customValue>
     <customValue>
+        <fullName>Yes</fullName>
+        <default>false</default>
+        <label>Yes</label>
+    </customValue>
+    <customValue>
+        <fullName>No</fullName>
+        <default>false</default>
+        <label>No</label>
+    </customValue>
+    <customValue>
         <fullName>Ready to be matched</fullName>
         <default>false</default>
         <label>Ready to be matched</label>
-    </customValue>
-    <customValue>
-        <fullName>Yes</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Yes</label>
     </customValue>
     <customValue>
         <fullName>Generic Value 2</fullName>
@@ -182,12 +186,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Generic Value 1</label>
-    </customValue>
-    <customValue>
-        <fullName>No</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>No</label>
     </customValue>
     <masterLabel>Application Term</masterLabel>
     <sorted>false</sorted>

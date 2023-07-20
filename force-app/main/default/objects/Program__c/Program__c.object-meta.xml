@@ -177,10 +177,10 @@
         <searchFilterFields>Active__c</searchFilterFields>
         <searchFilterFields>Career__c</searchFilterFields>
         <searchFilterFields>Degree__c</searchFilterFields>
+        <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Active__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Career__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Department__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Program_Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Academic_Level__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Program_Major_Concentration__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

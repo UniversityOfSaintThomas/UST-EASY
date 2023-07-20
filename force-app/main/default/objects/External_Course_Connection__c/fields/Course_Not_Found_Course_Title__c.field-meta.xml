@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Course_Not_Found_Course_Title__c</fullName>
+    <description>If the course was not found (either if the school was not found, or if the school did not have that particular course)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Title of course if no External Course record could be found</inlineHelpText>
+    <label>Course Not Found Course Title</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

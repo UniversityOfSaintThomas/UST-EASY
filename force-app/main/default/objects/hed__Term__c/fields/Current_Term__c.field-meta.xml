@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_Term__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(TODAY() &gt;= hed__Start_Date__c &amp;&amp; TODAY() &lt;= hed__End_Date__c , TRUE, FALSE)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Calculates if this is the current term based on the start and end date</inlineHelpText>
+    <label>Current Term</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

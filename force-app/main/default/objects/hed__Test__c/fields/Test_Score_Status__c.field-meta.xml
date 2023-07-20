@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Test_Score_Status__c</fullName>
+    <description>Determines status of test score, separate from the Document Status, based on how information was submitted.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Determines status of test score, separate from the Document Status, based on how information was submitted.</inlineHelpText>
+    <label>Test Score Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Official</fullName>
+                <default>false</default>
+                <label>Official</label>
+            </value>
+            <value>
+                <fullName>Unofficial</fullName>
+                <default>false</default>
+                <label>Unofficial</label>
+            </value>
+            <value>
+                <fullName>Self-Reported</fullName>
+                <default>false</default>
+                <label>Self-Reported</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

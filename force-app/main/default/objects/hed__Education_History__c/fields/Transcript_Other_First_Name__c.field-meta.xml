@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Transcript_Other_First_Name__c</fullName>
+    <description>Former name that may appear on a transcript.</description>
+    <externalId>false</externalId>
+    <label>Transcript Other First Name</label>
+    <length>40</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

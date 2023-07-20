@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Foot_on_Campus_ERX__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates a foot on campus visit in ERX</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Indicates a foot on campus visit in ERX</inlineHelpText>
+    <label>Foot on Campus - ERX</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

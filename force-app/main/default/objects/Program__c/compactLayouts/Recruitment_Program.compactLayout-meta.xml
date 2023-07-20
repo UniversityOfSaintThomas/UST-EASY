@@ -5,5 +5,6 @@
     <fields>Department__c</fields>
     <fields>Active__c</fields>
     <fields>Career__c</fields>
+    <fields>Integration_Program_Code__c</fields>
     <label>Recruitment Program</label>
 </CompactLayout>

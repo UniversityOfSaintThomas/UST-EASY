@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Subtype__c</fullName>
+    <externalId>false</externalId>
+    <label>Subtype</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Financial Aid</fullName>
+                <default>false</default>
+                <label>Financial Aid</label>
+            </value>
+            <value>
+                <fullName>Parent</fullName>
+                <default>false</default>
+                <label>Parent</label>
+            </value>
+            <value>
+                <fullName>High School Visit</fullName>
+                <default>false</default>
+                <label>High School Visit</label>
+            </value>
+            <value>
+                <fullName>College Fair</fullName>
+                <default>false</default>
+                <label>College Fair</label>
+            </value>
+            <value>
+                <fullName>Diversity Event</fullName>
+                <default>false</default>
+                <label>Diversity Event</label>
+            </value>
+            <value>
+                <fullName>Online Event</fullName>
+                <default>false</default>
+                <label>Online Event</label>
+            </value>
+            <value>
+                <fullName>Professional Conference</fullName>
+                <default>false</default>
+                <label>Professional Conference</label>
+            </value>
+            <value>
+                <fullName>Career Fair</fullName>
+                <default>false</default>
+                <label>Career Fair</label>
+            </value>
+            <value>
+                <fullName>Corporate Visit</fullName>
+                <default>false</default>
+                <label>Corporate Visit</label>
+            </value>
+            <value>
+                <fullName>Transfer Fair</fullName>
+                <default>false</default>
+                <label>Transfer Fair</label>
+            </value>
+            <value>
+                <fullName>College Visit</fullName>
+                <default>false</default>
+                <label>College Visit</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Recruitment</controllingFieldValue>
+            <valueName>High School Visit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruitment</controllingFieldValue>
+            <valueName>College Fair</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruitment</controllingFieldValue>
+            <controllingFieldValue>Community Event</controllingFieldValue>
+            <valueName>Diversity Event</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruitment</controllingFieldValue>
+            <controllingFieldValue>Community Event</controllingFieldValue>
+            <valueName>Online Event</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruitment</controllingFieldValue>
+            <controllingFieldValue>Community Event</controllingFieldValue>
+            <valueName>Professional Conference</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruitment</controllingFieldValue>
+            <valueName>Career Fair</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruitment</controllingFieldValue>
+            <valueName>Transfer Fair</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recruitment</controllingFieldValue>
+            <valueName>College Visit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Evening Program</controllingFieldValue>
+            <valueName>Financial Aid</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Evening Program</controllingFieldValue>
+            <valueName>Parent</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

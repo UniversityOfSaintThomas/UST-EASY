@@ -91,12 +91,6 @@
         <label>System Admin</label>
     </customValue>
     <customValue>
-        <fullName>Complete-Pending Review</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Complete-Pending Review</label>
-    </customValue>
-    <customValue>
         <fullName>Deposit Waived</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -121,10 +115,10 @@
         <label>Wrong Application</label>
     </customValue>
     <customValue>
-        <fullName>Complete-Decision Made</fullName>
+        <fullName>Deposit Paid</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Complete-Decision Made</label>
+        <label>Deposit Paid</label>
     </customValue>
     <customValue>
         <fullName>Incomplete</fullName>
@@ -139,10 +133,16 @@
         <label>Deferred</label>
     </customValue>
     <customValue>
-        <fullName>Deposit Paid</fullName>
+        <fullName>Complete-Pending Review</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Deposit Paid</label>
+        <label>Complete-Pending Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Decision Made</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Decision Made</label>
     </customValue>
     <masterLabel>Application Status</masterLabel>
     <sorted>false</sorted>

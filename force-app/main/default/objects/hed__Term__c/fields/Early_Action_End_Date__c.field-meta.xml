@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Early_Action_End_Date__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Date when an application no longer qualifies as &apos;Early Action&apos;</inlineHelpText>
+    <label>Early Action End Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

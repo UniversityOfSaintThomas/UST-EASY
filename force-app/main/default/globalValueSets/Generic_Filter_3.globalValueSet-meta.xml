@@ -60,12 +60,6 @@
         <default>false</default>
         <label>Second Deposit Paid - Confirming</label>
     </customValue>
-    <customValue>
-        <fullName>$400 Confirming and Housing Deposits</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>$400 Confirming and Housing Deposits</label>
-    </customValue>
     <description>Used for Undergraduate Applications</description>
     <masterLabel>Test Score Preference</masterLabel>
     <sorted>false</sorted>

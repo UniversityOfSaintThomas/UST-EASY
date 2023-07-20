@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dont_Reclaculate_Counselor_Assignment__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <inlineHelpText>If checked this opportunity will be excluded from any counselor assignment logic. This is used when manually reassigning someone outside of the standard counselor assignment logic.</inlineHelpText>
+    <label>Don&apos;t Recalculate Counselor Assignment</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

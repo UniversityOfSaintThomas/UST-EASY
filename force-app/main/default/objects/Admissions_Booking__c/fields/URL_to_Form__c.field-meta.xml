@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>URL_to_Form__c</fullName>
+    <description>Utilize if there was an electronic form used to capture inquiries</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the link to the web form that was created.</inlineHelpText>
+    <label>URL to Form</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

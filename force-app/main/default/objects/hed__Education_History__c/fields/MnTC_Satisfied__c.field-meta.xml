@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MnTC_Satisfied__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Transcript indicates that the Minnesota Transfer Curriculum (MnTC) requirements have been satisfied</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Transcript indicates that the Minnesota Transfer Curriculum (MnTC) requirements have been satisfied</inlineHelpText>
+    <label>MnTC Satisfied</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

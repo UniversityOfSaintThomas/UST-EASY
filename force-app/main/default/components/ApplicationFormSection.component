@@ -71,24 +71,6 @@
                                                                appInfo="{!appInfo}"
                                 />
 
-                                <!-- Question Assistive Text -->
-                                <apex:outputPanel layout="none" rendered="{!!ISBLANK(question.assistiveText)}">
-                                    <div class="slds-form-element__help">
-                                        {!question.assistiveText}
-                                    </div>
-                                </apex:outputPanel>
-
-                                <apex:outputPanel layout="none" rendered="{!ISBLANK(question.assistiveText)}">
-                                    <div class="slds-form-element__help">
-                                        This field is required.
-                                    </div>
-                                </apex:outputPanel>
-
-                                <!-- Question Help Text -->
-                                <apex:outputPanel layout="none" rendered="{!!ISBLANK(question.helpText)}">
-                                    <p class="slds-text-body_regular">{!question.helpText}</p>
-                                </apex:outputPanel>
-
                             </apex:outputPanel>
 
                         </apex:outputPanel>

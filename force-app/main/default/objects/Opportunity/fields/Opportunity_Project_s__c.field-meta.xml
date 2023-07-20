@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Project_s__c</fullName>
+    <externalId>false</externalId>
+    <formula>MID(Name,(find(&apos;for &apos;,Name,1)+4), ((find(&apos; due &apos;,Name,1)) - (find(&apos;for &apos;,Name,1)+4)))</formula>
+    <label>Opportunity Project(s)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

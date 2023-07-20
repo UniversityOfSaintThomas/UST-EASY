@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Permissions to create Letterhead and Email Templates</description>
+    <description>Permissions to create Classic Letterhead and Email Templates</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Admissions Email Template Management</label>
     <objectPermissions>
@@ -43,6 +43,18 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>EditPublicTemplates</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditTask</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EmailSingle</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageEmailContent</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

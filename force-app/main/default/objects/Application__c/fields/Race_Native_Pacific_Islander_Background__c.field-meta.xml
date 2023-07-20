@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Race_Native_Pacific_Islander_Background__c</fullName>
+    <description>Which best describes your Native Hawaiian or Pacific Islander background? (You may select one or more)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Which best describes your Native Hawaiian or Pacific Islander background? (You may select one or more)</inlineHelpText>
+    <label>Native Pacific Islander Background</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Guam</fullName>
+                <default>false</default>
+                <label>Guam</label>
+            </value>
+            <value>
+                <fullName>Hawaii</fullName>
+                <default>false</default>
+                <label>Hawaii</label>
+            </value>
+            <value>
+                <fullName>Samoa</fullName>
+                <default>false</default>
+                <label>Samoa</label>
+            </value>
+            <value>
+                <fullName>Other Pacific Islands (excluding Philippines)</fullName>
+                <default>false</default>
+                <label>Other Pacific Islands (excluding Philippines)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

@@ -3,10 +3,10 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>Active__c</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Viewing_Requirement__c</columns>
     <columns>Degree_Type__c</columns>
-    <columns>Residency__c</columns>
     <columns>Citizenship__c</columns>
-    <columns>Student_Type__c</columns>
     <columns>LAST_UPDATE</columns>
     <columns>Application_Control__c</columns>
     <filterScope>Everything</filterScope>

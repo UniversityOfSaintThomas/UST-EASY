@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>School_Review__c</fullName>
+    <defaultValue>&quot;Connect the student’s perceived preparedness for college within the context of the school.&quot;</defaultValue>
+    <externalId>false</externalId>
+    <label>School Review</label>
+    <length>500</length>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

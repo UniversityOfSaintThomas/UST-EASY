@@ -21,7 +21,7 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
+    <apiVersion>56.0</apiVersion>
     <assignments>
         <description>User is an applicant so apply the Application Community permissions set</description>
         <name>Apply_Applicant_Permissions</name>
@@ -33,6 +33,20 @@
             <operator>Add</operator>
             <value>
                 <stringValue>Application Community</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>requestedPermissionSets</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>;</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>requestedPermissionSets</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>UST Scholarship Applicant</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -113,6 +127,7 @@
             <label>Is Survey Creator</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>JIT Permission Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>JIT Permission Flow</label>
     <processMetadataValues>

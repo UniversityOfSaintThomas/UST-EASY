@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Application_Control__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
     <description>Which Application Control will be used for this Program&apos;s Application?</description>
     <externalId>false</externalId>
     <inlineHelpText>Which Application Control will be used for this Program&apos;s Application?</inlineHelpText>

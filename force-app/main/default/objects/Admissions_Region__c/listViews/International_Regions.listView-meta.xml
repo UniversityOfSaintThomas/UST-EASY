@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>International_Regions</fullName>
+    <columns>NAME</columns>
+    <columns>Admission_Territory__c</columns>
+    <columns>Associated_Countries__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Associated_Countries__c</field>
+        <operation>notEqual</operation>
+        <value>United States of America</value>
+    </filters>
+    <label>International Regions</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

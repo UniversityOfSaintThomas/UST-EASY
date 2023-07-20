@@ -1,0 +1,10 @@
+/**
+ * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 6/28/2023.
+ */
+.slds-form-element__help {
+    display: none;
+}
+
+.slds-form-element.slds-has-error .slds-form-element__help {
+    display: block;
+}

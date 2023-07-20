@@ -22,6 +22,7 @@ robot/UST-EASY/results/
 
 # Misc
 .DS_Store
+ignore
 
 # Illuminated Cloud (IntelliJ IDEA)
 IlluminatedCloud

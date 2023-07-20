@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tracking_Status__c</fullName>
+    <description>Field to track status of visit.  Scheduled is for prior to the event which needs to be updated to Attended or Canceled based on actual attendance.  Did Not Attend may be an event you&apos;re invited to, but don&apos;t attend at all and captured for reporting purposes.</description>
+    <externalId>false</externalId>
+    <label>Tracking Status</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Scheduled</fullName>
+                <default>true</default>
+                <label>Scheduled</label>
+            </value>
+            <value>
+                <fullName>Attended</fullName>
+                <default>false</default>
+                <label>Attended</label>
+            </value>
+            <value>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+                <label>Canceled</label>
+            </value>
+            <value>
+                <fullName>Did Not Attend</fullName>
+                <default>false</default>
+                <label>Did Not Attend</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

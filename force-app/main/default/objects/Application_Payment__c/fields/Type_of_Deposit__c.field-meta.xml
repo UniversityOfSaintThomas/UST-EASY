@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Deposit__c</fullName>
+    <externalId>false</externalId>
+    <formula>right(
+   right(TouchNet_Ext_Trans_Id__c ,len(TouchNet_Ext_Trans_Id__c )-find(&quot;|&quot;,TouchNet_Ext_Trans_Id__c )),
+   len(right(TouchNet_Ext_Trans_Id__c ,len(TouchNet_Ext_Trans_Id__c )-find(&quot;|&quot;,TouchNet_Ext_Trans_Id__c )))- find(&quot;|&quot;,
+     right(TouchNet_Ext_Trans_Id__c ,len(TouchNet_Ext_Trans_Id__c )-find(&quot;|&quot;,TouchNet_Ext_Trans_Id__c))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Type of Deposit</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

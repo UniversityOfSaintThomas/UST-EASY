@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Family_Address_Relationship__c</fullName>
+    <deprecated>false</deprecated>
     <description>Field used to capture relationship of family member address to applicant.</description>
     <externalId>false</externalId>
     <inlineHelpText>Field used to capture relationship of family member address to applicant.</inlineHelpText>

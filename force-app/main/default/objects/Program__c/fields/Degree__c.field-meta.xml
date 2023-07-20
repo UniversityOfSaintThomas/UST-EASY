@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Degree__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>The degree of this program (Ex: BS, BA, etc.)</inlineHelpText>
     <label>Degree</label>
@@ -198,6 +199,11 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>MBA</label>
+            </value>
+            <value>
+                <fullName>Micro-credential</fullName>
+                <default>false</default>
+                <label>Micro-credential</label>
             </value>
             <value>
                 <fullName>MS</fullName>

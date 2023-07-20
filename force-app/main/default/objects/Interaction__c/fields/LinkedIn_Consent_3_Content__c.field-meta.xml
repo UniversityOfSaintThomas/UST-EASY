@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LinkedIn_Consent_3_Content__c</fullName>
+    <description>Consent from LinkedIn Lead Gen form</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Consent from LinkedIn Lead Gen form</inlineHelpText>
+    <label>LinkedIn Consent 3 - Content</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

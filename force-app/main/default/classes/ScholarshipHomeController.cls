@@ -18,7 +18,7 @@ public class ScholarshipHomeController {
         List<Scholarship__c> availableScholarships = [
                 SELECT Name,Id,Scholarship_ID__c,Short_Description__c
                 FROM Scholarship__c
-                WHERE Open_Date__c <= TODAY AND Close_Date__c >= TODAY
+                WHERE Open_Date__c <= TODAY AND Close_Date__c >= TODAY  AND RecordType.DeveloperName = 'Scholarship'
                 ORDER BY Name ASC NULLS FIRST
         ];
         return availableScholarships;

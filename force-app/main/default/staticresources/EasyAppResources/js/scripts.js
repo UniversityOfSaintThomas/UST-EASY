@@ -46,7 +46,7 @@ function pageLoadReRendered() {
     });
 
     //Arranging Visualforce inputs to achieve SLDS accessibility
-    activateCarousel();
+    findApplicationLinkTargetSelf();
     vfCountryPicklist();
     summaryDetail();
     radioCheckBox();
@@ -58,6 +58,27 @@ function pageLoadReRendered() {
     checkForm(null, true);
     //Hide the form spinner if it is active
     hideFormSpinner();
+}
+
+function findApplicationLinkTargetSelf() {
+    document.querySelectorAll('.slds-scope a').forEach(link => {
+        if (link.href.toLowerCase().includes('/applicationlink?')) {
+            link.setAttribute('target', '_self');
+        }
+    });
+}
+
+
+//Add record action
+function addRecordValidation(elem, rrIndex) {
+    showFormSpinner();
+    let recWrap = elem.closest('.slds-card');
+    hideFormSpinner();
+    window.scrollTo(0, 0);
+    if (textValidations(true, recWrap) === 0) {
+        return true;
+    }
+    return false;
 }
 
 function checkEnter(e) {
@@ -83,7 +104,7 @@ function reRenderAllGroups(rerenderName) {
 // SLDS Summary/Detail functionality https://www.lightningdesignsystem.com/components/summary-detail/
 function summaryDetail() {
     document.querySelectorAll('.slds-summary-detail').forEach(item => {
-        item.querySelector("button.slds-button").addEventListener('click', function (e) {
+        item.querySelector(".slds-button, .summary-detail-toggle").addEventListener('click', function (e) {
             e.preventDefault();
             let content = item.querySelector('.slds-summary-detail__content');
             if (content.style.display === 'none') {
@@ -160,26 +181,24 @@ function findFileName(filePath) {
 function adjustLabelsFor() {
     document.querySelectorAll('.slds-input, .slds-select, .slds-radio').forEach(inputFound => {
         let inputWrapper = inputFound.closest('.slds-form-element');
-        let isElement = inputWrapper instanceof Element || inputWrapper instanceof HTMLDocument;
-        let inputLabel = '';
-        let helpText = '';
-        if (isElement) {
-            inputLabel = inputWrapper.querySelector('label');
-            helpText = inputWrapper.querySelector('.slds-form-element__help');
-        }
-        if (inputLabel) {
-            inputLabel.htmlFor = inputFound.getAttribute('id');
-            if (inputWrapper.dataset.placeholder) {
-                inputFound.setAttribute('placeholder', inputWrapper.dataset.placeholder);
-            }
-            if (inputWrapper.dataset.maxlength) {
-                inputFound.setAttribute('maxlength', inputWrapper.dataset.maxlength);
-            }
-        }
+        if (inputWrapper) {
+            let inputLabel = inputWrapper.querySelector('label');
+            let helpText = inputWrapper.querySelector('.slds-form-element__help');
 
-        if (inputFound && helpText) {
-            inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
-            inputFound.setAttribute('aria-invalid', 'false');
+            if (inputLabel) {
+                inputLabel.htmlFor = inputFound.getAttribute('id');
+                if (inputWrapper.dataset.placeholder) {
+                    inputFound.setAttribute('placeholder', inputWrapper.dataset.placeholder);
+                }
+                if (inputWrapper.dataset.maxlength) {
+                    inputFound.setAttribute('maxlength', inputWrapper.dataset.maxlength);
+                }
+            }
+
+            if (inputFound && helpText) {
+                inputFound.setAttribute('aria-describedby', helpText.getAttribute('id'));
+                inputFound.setAttribute('aria-invalid', 'false');
+            }
         }
     });
 }
@@ -487,13 +506,295 @@ function navigateRequirementGroup(redirectTo) {
             appHideLoadingSpinner();
             hideFormSpinner();
         }
-    } 
-    else if (redirectTo === 'back') {
+    } else if (redirectTo === 'back') {
         performDocUploadSave(previousRequirement);
-    } 
-    else {
+    } else {
         performDocUploadSave(redirectTo);
     }
+}
+
+var carouselOn = false;
+
+function disableCarousel() {
+    carouselOn = false;
+
+    let killerButton = document.getElementById('carousel-killer');
+    killerButton.innerText = "Restore Form";
+    killerButton.removeEventListener('click', disableCarousel);
+    killerButton.addEventListener('click', enableCarousel);
+
+    let items = document.getElementsByClassName("carousel__item");
+    for (let i = 0; i < items.length; i++) {
+        items[i].classList.add('carousel__disable');
+    }
+
+    let groupCountTexts = document.getElementsByClassName("questionGroupCount");
+    for (let i = 0; i < groupCountTexts.length; i++) {
+        groupCountTexts[i].style.display = "none";
+    }
+
+    let groupWarnTexts = document.getElementsByClassName("questionGroupWarning");
+    for (let i = 0; i < groupWarnTexts.length; i++) {
+        groupWarnTexts[i].style.display = "none";
+    }
+
+    let nextButtons = document.getElementsByClassName("carousel__button--next");
+    for (let i = 0; i < nextButtons.length; i++) {
+        nextButtons[i].style.display = "none";
+    }
+
+    let prevButtons = document.getElementsByClassName("carousel__button--prev");
+    for (let i = 0; i < prevButtons.length; i++) {
+        prevButtons[i].style.display = "none";
+    }
+
+    let saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]');
+    saveAndAdvance.style.display = "inline-flex";
+
+    if (previousRequirement) {
+        let saveAndGoBack = document.getElementById('saveAndGoBack');
+        saveAndGoBack.style.display = "inline-flex";
+    }
+}
+
+function enableCarousel() {
+    carouselOn = true;
+
+    let killerButton = document.getElementById('carousel-killer');
+    killerButton.innerText = "Single-Page Form";
+    killerButton.removeEventListener('click', enableCarousel);
+    killerButton.addEventListener('click', disableCarousel);
+
+    let items = document.getElementsByClassName("carousel__item");
+    for (let i = 0; i < items.length; i++) {
+        items[i].classList.remove('carousel__disable');
+    }
+
+    let groupCountTexts = document.getElementsByClassName("questionGroupCount");
+    for (let i = 0; i < groupCountTexts.length; i++) {
+        groupCountTexts[i].style.display = "";
+    }
+
+    let groupWarnTexts = document.getElementsByClassName("questionGroupWarning");
+    for (let i = 0; i < groupWarnTexts.length; i++) {
+        groupWarnTexts[i].style.display = "";
+    }
+
+    let nextButtons = document.getElementsByClassName("carousel__button--next");
+    for (let i = 0; i < nextButtons.length; i++) {
+        nextButtons[i].style.display = "";
+    }
+
+    let prevButtons = document.getElementsByClassName("carousel__button--prev");
+    for (let i = 0; i < prevButtons.length; i++) {
+        prevButtons[i].style.display = "";
+    }
+
+    let saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]');
+    saveAndAdvance.style.display = "";
+
+    if (previousRequirement) {
+        let saveAndGoBack = document.getElementById('saveAndGoBack');
+        saveAndGoBack.style.display = "inline-flex";
+    }
+
+    let activeSlides = document.querySelectorAll(".carousel__item.prev, .carousel__item.active, .carousel__item.next");
+    for (let i = 0; i < activeSlides.length; i++) {
+        activeSlides[i].classList.remove("prev");
+        activeSlides[i].classList.remove("active");
+        activeSlides[i].classList.remove("next");
+    }
+
+    let firstSlide = document.querySelector(".carousel__item.slide-0");
+    firstSlide.classList.add("active");
+
+    let secondSlide = document.querySelector(".carousel__item.slide-1");
+    secondSlide.classList.add("next");
+
+    activateCarousel(0);
+}
+
+/* Carousel Script */
+function activateCarousel(slideMoveTo) {
+    // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
+    let items = document.getElementsByClassName("carousel__item"),
+        totalItems = items.length,
+        slide = 0,
+        moving = true,
+        saveAndAdvance = document.querySelector('[id$="saveAndAdvance"]'),
+        saveAndGoBack = document.getElementById('saveAndGoBack'),
+        killerButton = document.getElementById('carousel-killer'),
+        next = document.getElementsByClassName('carousel__button--next')[0],
+        prev = document.getElementsByClassName('carousel__button--prev')[0];
+
+    if (items.length > 0) {
+
+        // Set click events to navigation buttons
+        function setEventListeners() {
+            next.addEventListener('click', moveNext);
+            prev.addEventListener('click', movePrev);
+            killerButton.addEventListener('click', disableCarousel);
+            if (totalItems === 1) {
+                next.style.display = 'none';
+                prev.style.display = 'none';
+                saveAndAdvance.style.dispay = 'inline-flex';
+            } else {
+                prev.style.display = 'none';
+                saveAndAdvance.style.display = "none";
+            }
+            if (slide === 0 && previousRequirement) {
+                saveAndGoBack.style.display = 'inline-flex';
+            }
+        }
+
+        // Disable interaction by setting 'moving' to true for the same duration as our transition (0.5s = 500ms)
+        function disableInteraction() {
+            moving = true;
+            setTimeout(function () {
+                moving = false
+            }, 500);
+        }
+
+        let moveCarouselTo = function (slide) {
+            if (!moving) {
+                disableInteraction();
+                let newPrevious = slide - 1,
+                    newNext = slide + 1;
+
+                if (totalItems > 1) {
+
+                    if (slide === 0) {
+                        prev.style.display = "none";
+                        if (previousRequirement) {
+                            saveAndGoBack.style.display = 'inline-flex';
+                        }
+                        newPrevious = (totalItems - 1);
+                    } else if (slide === 1) {
+                        saveAndGoBack.style.display = "none"
+                        newPrevious = 0;
+                    } else if (slide === (totalItems - 1)) {
+                        newPrevious = (slide - 1);
+                        newNext = 0;
+                    }
+                    if (slide + 1 === totalItems || totalItems === 1) {
+                        saveAndAdvance.style.display = "inline-flex"
+                        next.style.display = "none"
+                    } else {
+                        saveAndAdvance.style.display = "none"
+                        next.style.display = "inline-flex"
+                    }
+
+                    if (slide > 0) {
+                        prev.style.display = "inline-flex"
+                    } else {
+                        prev.style.display = "none"
+                    }
+
+                    // For the transition animation to work, we need all these boxes to (briefly) have display: block, which will put inactive boxes in "slider" position with 0 opacity.
+                    for (let i = 0; i < items.length; i++) {
+                        items[i].style.display = "block";
+                    }
+
+                    for (let i = 0; i < items.length; i++) {
+                        items[i].classList.remove('prev');
+                        items[i].classList.remove('next');
+                        items[i].classList.remove('active');
+                    }
+                    if (items[newPrevious]) {
+                        items[newPrevious].classList.add("prev");
+                    }
+                    if (items[slide]) {
+                        items[slide].classList.add("active");
+                        let inputElements = items[slide].querySelectorAll("select, input");
+                        if (inputElements.length > 0) {
+                            inputElements[0].focus(); // focus on the first focusable form element, so we aren't stuck on the next/prev buttons.
+                        }
+                    }
+                    if (items[newNext]) {
+                        items[newNext].classList.add("next");
+                    }
+
+                    // Okay, transition's done. Now reset to styles so what screenreaders see matches what other users see.
+                    window.setTimeout(function () {
+                        let items = document.getElementsByClassName("carousel__item");
+                        for (let i = 0; i < items.length; i++) {
+                            items[i].style.display = "";
+                        }
+                    }, 1000);
+
+                }
+            }
+        }
+
+
+        function moveNext() {
+            if (!moving) {
+                if (slide === (totalItems - 1)) {
+                    slide = 0;
+                } else {
+                    slide++;
+                }
+                moveCarouselTo(slide);
+            }
+        }
+
+        function movePrev() {
+            if (!moving) {
+                if (slide === 0) {
+                    slide = (totalItems - 1);
+                } else {
+                    slide--;
+                }
+                moveCarouselTo(slide);
+            }
+        }
+
+        function initCarousel() {
+            setEventListeners();
+            moving = false;
+            carouselOn = true;
+        }
+
+        initCarousel();
+
+        if (slideMoveTo) {
+            if (!moving) {
+                moveCarouselTo(parseInt(slideMoveTo));
+            }
+        }
+    }
+    if (items.length <= 1) {
+        killerButton.style.display = 'none';
+    }
+}
+
+/* Spinners on/off */
+var spinnerFocusElement = null;
+
+function appHideLoadingSpinner(restoreFocus = true) {
+    document.getElementById('loadSpinner').style.display = "none";
+    if (restoreFocus == true && spinnerFocusElement != null) {
+        document.getElementById(spinnerFocusElement).focus();
+    }
+    return true;
+}
+
+function appShowLoadingSpinner() {
+    spinnerFocusElement = document.activeElement.id;
+    document.getElementById('loadSpinner').style.display = "block";
+    return true;
+}
+
+function hideFormSpinner(restoreFocus = true) {
+    document.getElementById("form-spinner").style.display = 'none';
+    if (restoreFocus == true && spinnerFocusElement != null) {
+        document.getElementById(spinnerFocusElement).focus();
+    }
+}
+
+function showFormSpinner() {
+    spinnerFocusElement = document.activeElement.id;
+    document.getElementById("form-spinner").style.display = 'block';
 }
 
 /* Tooltip */
@@ -523,19 +824,243 @@ function activateTooltips() {
     });
 }
 
-/* Spinners on/off */
-function appHideLoadingSpinner() {
-    loadSpinner.style.display = "none";
+function isCarousel() {
+    let items = document.getElementsByClassName("carousel__item");
+    if (items.length > 0 && carouselOn != false) {
+        return true;
+    }
+    return false;
 }
 
-function appShowLoadingSpinner() {
-    loadSpinner.style.display = "block";
+//Validate form elements on submit
+function checkForm() {
+    // let theForm = document.querySelector('form');
+    // theForm.reportValidity();
+    let error_count = 0;
+    error_count = error_count + textValidations(true);
+
+    if (error_count > 0) {
+        let foundErrors = document.querySelector(".slds-has-error");
+        if (foundErrors && isCarousel()) {
+            let carouselItem = foundErrors.closest('.carousel__item');
+            activateCarousel(carouselItem.dataset.slide);
+        }
+
+        window.scrollTo(0, 0); // Scroll to the top if you can't find a focus, but you should find a focus.
+
+        let errorInputs = foundErrors.querySelector("select, input");
+        if (errorInputs) {
+            errorInputs.focus();
+            spinnerFocusElement = errorInputs.id;   // checkForm() MAY be happening while the appSpinner is up; if so,
+                                                    // you might set focus here but will lose it again when appSpinner goes
+                                                    // down, as focus reverts to whatever was focused when appSpinner started.
+                                                    // So hijack the appSpinner's memory to make sure it sticks.
+        }
+        return false;
+    }
+    return true;
 }
 
-function hideFormSpinner() {
-    formSpinner.style.display = 'none';
+//Input validations
+function textValidations(checkFormValidate, documentStart) {
+    let doc;
+    if (!documentStart) {
+        doc = document;
+    } else {
+        doc = documentStart;
+    }
+    let errors = 0;
+    let allPhones = doc.querySelectorAll('.validatePhone');
+    let allSSN = doc.querySelectorAll('.validateSSN');
+    let allNamCharacters = doc.querySelectorAll('.validateName');
+    let allEmails = doc.querySelectorAll('.validateEmail');
+    let allUrls = doc.querySelectorAll('.validateURL');
+    let allRequiredInputs = doc.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select, .slds-is-required .slds-checkbox, .slds-is-required .slds-radio_button-group .slds-radio_button-value");
+
+
+    const re_email = /^([a-zA-Z0-9_.\-.'.+])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    const re_url = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/;
+    const re_number = /[^\d-]/;
+    const re_decimal = /[^\d-.]/;
+    const re_phoneIllegals = /[^\d+-/(/)]/;
+    const re_phoneFormat = /^(1|)?(\d{3})(\d{3})(\d{4})$/;
+    const re_phone = /[\d+\-\(\) ]/;
+    const re_snn = /^\d{3}-\d{2}-\d{4}$/;
+    const re_snnFormat = /(\d{3})(\d{2})(\d{4})$/;
+    const re_ssnIllegals = /[^\d+-]/;
+    const re_nameIllegals = /[\d\(\)@#$,]/;
+
+    //Required input check
+    if (checkFormValidate) {
+        allRequiredInputs.forEach(item => {
+            if (item) {
+                if (item.classList.contains('slds-checkbox')) {
+                    let checkBoxChecked = item.querySelector('input');
+                    if (!checkBoxChecked.checked) {
+                        activateErrorState(checkBoxChecked, 'change')
+                    }
+                } else if (!item.value) {
+                    console.log('error logged');
+                    activateErrorState(item, 'change')
+                }
+            }
+        });
+
+        doc.querySelectorAll(".selectableOL").forEach(sel => {
+            let selWrap = sel.closest('.slds-form-element');
+            let hiddenData = doc.querySelector('[id$="' + sel.dataset.hiddendataid + '"]').id;
+            if (selWrap.classList.contains("slds-is-required")) {
+                if (!doc.getElementById(hiddenData).value) {
+                    activateErrorState(sel, 'click')
+                }
+            }
+        });
+
+        doc.querySelectorAll('.docUploadInput').forEach(docUpload => {
+            if (String(docUpload.placeholder) === 'true' && !Boolean(docUpload.value)) {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
+                activateErrorState(docUpload, 'change');
+            } else {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
+            }
+        });
+
+        doc.querySelectorAll('.docUploadInput').forEach(docUpload => {
+            if (String(docUpload.placeholder) == 'true' && !Boolean(docUpload.value)) {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
+                activateErrorState(docUpload, 'change');
+            } else {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
+            }
+        })
+    }
+
+    //Format and validate phone numbers
+    allPhones.forEach(phone => {
+
+        //format directly after input
+        //Don't allow anything but phone number characters on key-up
+        phone.addEventListener('keyup', function () {
+            phone.value = phone.value.replace(re_phoneIllegals, '');
+        })
+
+        phone.addEventListener('change', function () {
+            let cleaned = String(phone.value).replace(/\D/g, "");
+            let match = cleaned.match(re_phoneFormat);
+            if (match) {
+                let intlCode = match[1] ? "+1 " : "";
+                phone.value = [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join("");
+            }
+        });
+
+        //Check if the final phone number matches correctly before submit
+        if (checkFormValidate && phone.value) {
+            if (!phone.value.match(re_phone)) {
+                activateErrorState(phone, 'change');
+            }
+        }
+
+
+    });
+
+
+    allNamCharacters.forEach(nameInput => {
+        //Don't allow anything but phone number characters on key-up
+        nameInput.addEventListener('keyup', function () {
+            nameInput.value = nameInput.value.replace(re_nameIllegals, '');
+        })
+
+        if (checkFormValidate && nameInput.value) {
+            nameInput.value = nameInput.value.replace(re_nameIllegals, '');
+        }
+    });
+
+    //Social Security Validation
+    allSSN.forEach(ssn => {
+        ssn.addEventListener('keyup', function () {
+            ssn.value = ssn.value.replace(re_ssnIllegals, '');
+        })
+
+        ssn.addEventListener('change', function () {
+            let cleaned = String(ssn.value).replace(/\D/g, "");
+            if (cleaned.length === 9) {
+                let match = cleaned.match(re_snnFormat);
+                if (match) {
+                    ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
+                }
+            } else {
+                activateErrorState(ssn, 'change');
+            }
+        });
+
+        if (checkFormValidate && ssn.value) {
+            if (!ssn.value.match(re_snn)) {
+                activateErrorState(ssn, 'change');
+            }
+        }
+    });
+
+    //Email Validation
+    allEmails.forEach(email => {
+        if (checkFormValidate && email.value) {
+            if (!email.value.match(re_email)) {
+                activateErrorState(email, 'change');
+            }
+        }
+    });
+
+    //URL validation
+    allUrls.forEach(inputUrl => {
+        inputUrl.value = inputUrl.value.replace(' ', '').trim();
+        if (inputUrl.value) {
+            if (!inputUrl.value.startsWith('http')) {
+                inputUrl.value = 'https://' + inputUrl.value;
+            }
+            if (checkFormValidate && inputUrl.value) {
+                if (!inputUrl.value.match(re_url)) {
+                    activateErrorState(inputUrl, 'change');
+                }
+            }
+        }
+    })
+
+    function activateErrorState(errorInput, eventType) {
+        let errorWrap = errorInput.closest('.slds-form-element');
+        errorWrap.classList.add("slds-has-error");
+        errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+            errorHelp.style.display = "block"
+        });
+        errorInput.addEventListener(eventType, () => {
+            errorWrap.classList.remove("slds-has-error");
+            errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+                errorHelp.style.display = "none";
+            });
+        });
+
+        errors++;
+    }
+
+    return errors;
 }
 
-function showFormSpinner() {
-    formSpinner.style.display = 'block';
+function validateFileType(obj) {
+    if (Boolean(obj.title)) {
+        let acceptedTypes = obj.title.split(';');
+        let inputArray = obj.value.split('.');
+        let inputType = inputArray[inputArray.length - 1].toUpperCase();
+        if (!acceptedTypes.includes(inputType)) {
+            obj.value = null;
+            let fileTypeMessage = 'File type not accepted. Please upload one of the following: ';
+            for (const type of acceptedTypes) {
+                fileTypeMessage += type + ', ';
+            }
+            fileTypeMessage = fileTypeMessage.slice(0, fileTypeMessage.length - 2) + '.';
+            document.getElementById('error-108' + String(obj.name)).innerHTML = fileTypeMessage;
+            console.log(document.getElementById('error-108' + String(obj.name)));
+            return false;
+        } else {
+            document.getElementById('error-108' + String(obj.name)).innerHTML = '';
+        }
+    }
+    return true;
 }

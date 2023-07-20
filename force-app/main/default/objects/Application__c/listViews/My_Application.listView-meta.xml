@@ -5,6 +5,9 @@
     <columns>Applicant_Type__c</columns>
     <columns>Application_Status__c</columns>
     <columns>Admission_Decision__c</columns>
+    <columns>Citizenship__c</columns>
+    <columns>Intended_Program__c</columns>
     <filterScope>Mine</filterScope>
     <label>My Application</label>
+    <language>en_US</language>
 </ListView>

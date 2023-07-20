@@ -4,11 +4,15 @@
     <columns>NAME</columns>
     <columns>Program_Major_Concentration__c</columns>
     <columns>Application_Control__c</columns>
+    <columns>Admit_Type__c</columns>
     <columns>Degree_Type__c</columns>
-    <columns>Applicant_Type__c</columns>
+    <columns>Program_Applicant_Type__c</columns>
     <columns>Student_Type__c</columns>
     <columns>Application_Fee_Amount__c</columns>
     <columns>Active__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>RECORDTYPE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Program_Record_Type__c</field>

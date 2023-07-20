@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Focus_Rating__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Focus Rating</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>
@@ -25,14 +27,14 @@
                 <label>Level 3/Pipeline 3-5Yrs</label>
             </value>
             <value>
-                <fullName>Level 4/Dicovery-Qualify</fullName>
+                <fullName>Level 4/Discovery-Qualify</fullName>
                 <default>false</default>
-                <label>Level 4/Dicovery-Qualify</label>
+                <label>Level 4/Discovery-Qualify</label>
             </value>
             <value>
-                <fullName>Level 5/Volunteer - Networker</fullName>
+                <fullName>Level 5/Volunteer/Networker</fullName>
                 <default>false</default>
-                <label>Level 5/Volunteer - Networker</label>
+                <label>Level 5/Volunteer/Networker</label>
             </value>
         </valueSetDefinition>
     </valueSet>

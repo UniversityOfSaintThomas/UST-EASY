@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Academic_Interest__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
     <description>The official interest the individual applies for. A lookup to Plan with a filter criteria of Record Type = Academic.</description>
     <externalId>false</externalId>
     <inlineHelpText>The official interest the individual applies for.</inlineHelpText>
@@ -20,6 +21,7 @@
     <relationshipName>Academic_Interest_Opportunities</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

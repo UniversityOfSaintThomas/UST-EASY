@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <description>Used to track student&apos;s extra-academic activities</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>

@@ -3,8 +3,10 @@
     <fullName>Academic_Programs_GSOEd</fullName>
     <columns>NAME</columns>
     <columns>Program_Major_Concentration__c</columns>
+    <columns>OBJECT_ID</columns>
     <columns>Application_Control__c</columns>
     <columns>Degree_Type__c</columns>
+    <columns>Delivery_Type__c</columns>
     <columns>Applicant_Type__c</columns>
     <columns>Student_Type__c</columns>
     <columns>Application_Fee_Amount__c</columns>
@@ -20,6 +22,10 @@
         <operation>contains</operation>
         <value>Education</value>
     </filters>
+    <filters>
+        <field>Active__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
     <label>Academic Programs - GSOEd</label>
-    <language>en_US</language>
 </ListView>

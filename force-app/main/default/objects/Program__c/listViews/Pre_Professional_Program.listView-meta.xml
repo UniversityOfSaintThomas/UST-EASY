@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pre_Professional_Program</fullName>
+    <columns>NAME</columns>
+    <columns>Active__c</columns>
+    <columns>Program_Code__c</columns>
+    <columns>Recruitment_Program__c</columns>
+    <columns>OBJECT_ID</columns>
+    <columns>Program_Record_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Program_Type__c</field>
+        <operation>includes</operation>
+        <value>Pre-Professional</value>
+    </filters>
+    <label>Pre-Professional Program</label>
+    <language>en_US</language>
+</ListView>

@@ -30,6 +30,36 @@
         <default>false</default>
         <label>No</label>
     </customValue>
+    <customValue>
+        <fullName>Second Deposit Paid - Housing</fullName>
+        <default>false</default>
+        <label>Second Deposit Paid - Housing</label>
+    </customValue>
+    <customValue>
+        <fullName>Select Deposit Type</fullName>
+        <default>false</default>
+        <label>Select Deposit Type</label>
+    </customValue>
+    <customValue>
+        <fullName>Housing Deposit Paid</fullName>
+        <default>false</default>
+        <label>Housing Deposit Paid</label>
+    </customValue>
+    <customValue>
+        <fullName>Confirming Deposit Paid</fullName>
+        <default>false</default>
+        <label>Confirming Deposit Paid</label>
+    </customValue>
+    <customValue>
+        <fullName>Both Deposits Paid</fullName>
+        <default>false</default>
+        <label>Both Deposits Paid</label>
+    </customValue>
+    <customValue>
+        <fullName>Second Deposit Paid - Confirming</fullName>
+        <default>false</default>
+        <label>Second Deposit Paid - Confirming</label>
+    </customValue>
     <description>Used for Undergraduate Applications</description>
     <masterLabel>Test Score Preference</masterLabel>
     <sorted>false</sorted>

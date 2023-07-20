@@ -7,19 +7,11 @@
     <externalId>false</externalId>
     <inlineHelpText>The official plan or program the individual applies for.</inlineHelpText>
     <label>Academic Program</label>
-    <lookupFilter>
-        <active>true</active>
-        <filterItems>
-            <field>Program__c.RecordType.Name</field>
-            <operation>equals</operation>
-            <value>Academic Program</value>
-        </filterItems>
-        <isOptional>false</isOptional>
-    </lookupFilter>
     <referenceTo>Program__c</referenceTo>
+    <relationshipLabel>Interactions (Academic Program)</relationshipLabel>
     <relationshipName>Academic_Program_Interactions</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

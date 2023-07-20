@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Academic Difficulty</fullName>
+        <default>false</default>
+        <label>Academic Difficulty</label>
+    </customValue>
+    <customValue>
+        <fullName>Academic/Conduct Suspension</fullName>
+        <default>false</default>
+        <label>Academic/Conduct Suspension</label>
+    </customValue>
+    <customValue>
+        <fullName>Affordability/Financial Aid/Business Office Challenges</fullName>
+        <default>false</default>
+        <label>Affordability/Financial Aid/Business Office Challenges</label>
+    </customValue>
+    <customValue>
+        <fullName>Belonging/Connection/Campus Climate</fullName>
+        <default>false</default>
+        <label>Belonging/Connection/Campus Climate</label>
+    </customValue>
+    <customValue>
+        <fullName>Health Challenge (personal or family)</fullName>
+        <default>false</default>
+        <label>Health Challenge (personal or family)</label>
+    </customValue>
+    <customValue>
+        <fullName>Course Availability/Curriculum/Online Course Environment</fullName>
+        <default>false</default>
+        <label>Course Availability/Curriculum/Online Course Environment</label>
+    </customValue>
+    <customValue>
+        <fullName>Major not offered at St. Thomas</fullName>
+        <default>false</default>
+        <label>Major not offered at St. Thomas</label>
+    </customValue>
+    <customValue>
+        <fullName>Institutional Size/Location</fullName>
+        <default>false</default>
+        <label>Institutional Size/Location</label>
+    </customValue>
+    <customValue>
+        <fullName>Internship/Job Offer/Military</fullName>
+        <default>false</default>
+        <label>Internship/Job Offer/Military</label>
+    </customValue>
+    <customValue>
+        <fullName>Leaving SJV</fullName>
+        <default>false</default>
+        <label>Leaving SJV</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Military</fullName>
+        <default>false</default>
+        <label>Military</label>
+    </customValue>
+    <customValue>
+        <fullName>Academic Difficulty/Suspension</fullName>
+        <default>false</default>
+        <label>Academic Difficulty/Suspension</label>
+    </customValue>
+    <customValue>
+        <fullName>Proximity to home (too far)</fullName>
+        <default>false</default>
+        <label>Proximity to home (too far)</label>
+    </customValue>
+    <masterLabel>Withdrawal Reasons</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -179,22 +179,22 @@ Insert Program__c:
 Insert hed__Term__c:
   sf_object: hed__Term__c
   fields:
-  - Activate_Application_Date__c
-  - Banner_Term_Code__c
-  - End_Application_Date__c
-  - Housing_End_Date__c
-  - Housing_Start_Date__c
-  - Name
-  - Term_Code__c
-  - Term_End_Date__c
-  - Term_Friendly_Name__c
-  - Term_Key__c
-  - Term_Start_Date__c
-  - hed__End_Date__c
-  - hed__Grading_Period_Sequence__c
-  - hed__Instructional_Days__c
-  - hed__Start_Date__c
-  - hed__Type__c
+    - Activate_Application_Date__c
+    - Banner_Term_Code__c
+    - End_Application_Date__c
+    - Housing_End_Date__c
+    - Housing_Start_Date__c
+    - Name
+    - Term_Code__c
+    - Term_End_Date__c
+    - Term_Friendly_Name__c
+    - Term_Key__c
+    - Term_Start_Date__c
+    - hed__End_Date__c
+    - hed__Grading_Period_Sequence__c
+    - hed__Instructional_Days__c
+    - hed__Start_Date__c
+    - hed__Type__c
   lookups:
     hed__Account__c:
       table: Account

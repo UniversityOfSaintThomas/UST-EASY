@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_Mismatch__c</fullName>
+    <description>If checked, then Opportunity Stage != Application Status</description>
+    <externalId>false</externalId>
+    <formula>IF( (TEXT(StageName)== TEXT( Admissions_Application__r.Application_Status__c)) ||  (LEFT(TEXT(StageName),7) == LEFT(TEXT( Admissions_Application__r.Application_Status__c ),7)), FALSE, TRUE
+)</formula>
+    <inlineHelpText>If checked, then Opportunity Stage != Application Status</inlineHelpText>
+    <label>Status Mismatch</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

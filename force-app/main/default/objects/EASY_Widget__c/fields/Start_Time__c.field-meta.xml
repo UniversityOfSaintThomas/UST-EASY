@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Start_Time__c</fullName>
+    <deprecated>false</deprecated>
     <description>Time that the widget will activate on if activation state is &quot;Date Activated&quot;</description>
     <externalId>false</externalId>
     <inlineHelpText>Time that the widget will activate on if activation state is &quot;Date Activated&quot;</inlineHelpText>

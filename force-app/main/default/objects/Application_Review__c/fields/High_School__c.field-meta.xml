@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>High_School__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>School that the student is currently attending</description>
+    <externalId>false</externalId>
+    <label>High School</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipName>UG_Application_Review</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

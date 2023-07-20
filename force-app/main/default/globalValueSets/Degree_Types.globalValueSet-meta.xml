@@ -65,6 +65,11 @@
         <default>false</default>
         <label>Master of Laws (LLM)</label>
     </customValue>
+    <customValue>
+        <fullName>Micro-credential</fullName>
+        <default>false</default>
+        <label>Micro-credential</label>
+    </customValue>
     <description>Types of a degree.</description>
     <masterLabel>Degree Types</masterLabel>
     <sorted>false</sorted>

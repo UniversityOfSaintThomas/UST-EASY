@@ -23,19 +23,19 @@
                             </span>
                     </div>
                     <div class="slds-media__body">
-                        <h2 class="slds-card__header-title">
+                        <h1 class="slds-card__header-title">
                             <span>
                                 <apex:outputPanel rendered="{!!appInfo.hideTermProgram}" layout="none">
                                     {!IF(!ISBLANK(appInfo.intendedProgram), appInfo.intendedProgram, '')}
                                  </apex:outputPanel>
                             </span>
-                        </h2>
-                        <h3>{!IF(!ISBLANK(appInfo.intendedTerm), appInfo.intendedTerm, '' )}</h3>
+                        </h1>
+                        <h2>{!IF(!ISBLANK(appInfo.intendedTerm), appInfo.intendedTerm, '' )}</h2>
                     </div>
                 </header>
             </div>
             <div class="slds-card__body {!IF(LOWER($CurrentPage.Name) == 'applicationportal', 'slds-card__body_inner', '')}">
-                <apex:form >
+                <apex:form>
                     <nav>
                         <apex:variable var="itemCount" value="{!0}"/>
                         <apex:variable var="firstReqId" value=""/>
@@ -53,7 +53,7 @@
                                     </button>
                                     <div>
                                         <div class="slds-summary-detail__title">
-                                            <h3 class="slds-text-heading_small">
+                                            <h2 class="slds-text-heading_small">
                                                 <apex:commandLink action="{!goToRequirement}" onClick="appShowLoadingSpinner();">
                                                     <apex:param name="nextRequirementId" value="{!r.req.Id}" assignTo="{!nextRequirementId}"/>
                                                     <apex:param name="nextAt" value="{!appInfoParam.at}" assignTo="{!nextAt}"/>
@@ -70,7 +70,7 @@
                                                 <apex:outputPanel layout="none" rendered="{!!r.viewed && !r.reqStatus}">
                                                     <span class="slds-badge slds-badge_lightest">Visit</span>
                                                 </apex:outputPanel>
-                                            </h3>
+                                            </h2>
                                         </div>
                                         <div aria-hidden="false" class="slds-summary-detail__content" id="expando-{!r.req.Id}" style="display:none;">
                                             <apex:outputPanel rendered="{!IF(r.reqItems.size > 0, true,false)}" layout="none">
@@ -78,7 +78,7 @@
                                                     <apex:repeat value="{!r.reqItems}" var="ri">
                                                         <apex:outputPanel rendered="{!ri.display}" layout="none">
                                                             <li>
-                                                                <apex:outputText >{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
+                                                                <apex:outputText>{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
                                                             </li>
                                                         </apex:outputPanel>
                                                     </apex:repeat>
@@ -118,6 +118,10 @@
 
                     </nav>
 
+
+                    <apex:outputPanel rendered="{!appInfo.appStatus = 'Withdrawn'}" layout="none">
+                        <p>Status: Withdrawn</p>
+                    </apex:outputPanel>
 
                     <apex:outputPanel rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">

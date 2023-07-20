@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Writing_Score__c</fullName>
+    <externalId>false</externalId>
+    <formula>(IF(ISPICKVAL(Writing_Story__c,&quot;1&quot;),1,0) + IF(ISPICKVAL(Writing_Story__c,&quot;2&quot;),2,0) + IF(ISPICKVAL(Writing_Story__c,&quot;3&quot;),3,0)+ IF(ISPICKVAL(Writing_Story__c,&quot;4&quot;),4,0)+ IF(ISPICKVAL(Writing_Story__c,&quot;5&quot;),5,0))
+
+            +
+
+            (IF(ISPICKVAL(Writing_Style__c,&quot;1&quot;),1,0) + IF(ISPICKVAL(Writing_Style__c,&quot;2&quot;),2,0) + IF(ISPICKVAL(Writing_Style__c,&quot;3&quot;),3,0)+ IF(ISPICKVAL(Writing_Style__c,&quot;4&quot;),4,0)+ IF(ISPICKVAL(Writing_Style__c,&quot;5&quot;),5,0))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Writing Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

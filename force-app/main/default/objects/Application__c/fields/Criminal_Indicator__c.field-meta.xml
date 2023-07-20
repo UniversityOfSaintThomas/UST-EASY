@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Criminal_Indicator__c</fullName>
+    <description>Have you ever been adjudicated guilty or convicted of a misdemeanor, felony, or other crime? Note that you are not required to answer &quot;yes&quot; to this question, or provide an explanation, if the criminal adjudication or conviction has been expunged, sealed, annulled, pardoned, destroyed, erased, impounded, or otherwise ordered by a court to be kept confidential.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Transfer Only: Have you ever been adjudicated guilty or convicted of a misdemeanor, felony, or other crime? Note that you are not required to answer &quot;yes&quot; to this question, or provide an explanation, if the criminal adjudication or conviction...</inlineHelpText>
+    <label>Criminal Indicator</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yes</fullName>
+                <default>false</default>
+                <label>Yes</label>
+            </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <label>No</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

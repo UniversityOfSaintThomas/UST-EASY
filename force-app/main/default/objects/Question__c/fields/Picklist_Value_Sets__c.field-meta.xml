@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Picklist_Value_Sets__c</fullName>
+    <externalId>false</externalId>
+    <label>Picklist Value Set</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Activity_Types__c</fullName>
+                <default>false</default>
+                <label>Activity Types</label>
+            </value>
+            <value>
+                <fullName>Athlete Type</fullName>
+                <default>false</default>
+                <label>Athlete Type</label>
+            </value>
+            <value>
+                <fullName>Citizenship Type</fullName>
+                <default>false</default>
+                <label>Citizenship Type</label>
+            </value>
+            <value>
+                <fullName>Clubs and Organizations</fullName>
+                <default>false</default>
+                <label>Clubs and Organizations</label>
+            </value>
+            <value>
+                <fullName>College of Interest</fullName>
+                <default>false</default>
+                <label>College of Interest</label>
+            </value>
+            <value>
+                <fullName>Intermural Club Sports</fullName>
+                <default>false</default>
+                <label>Intermural Club Sports</label>
+            </value>
+            <value>
+                <fullName>License Area</fullName>
+                <default>false</default>
+                <label>License Area</label>
+            </value>
+            <value>
+                <fullName>Music</fullName>
+                <default>false</default>
+                <label>Music</label>
+            </value>
+            <value>
+                <fullName>Residency Types</fullName>
+                <default>false</default>
+                <label>Residency Types</label>
+            </value>
+            <value>
+                <fullName>State</fullName>
+                <default>false</default>
+                <label>State</label>
+            </value>
+            <value>
+                <fullName>Student Type</fullName>
+                <default>false</default>
+                <label>Student Type</label>
+            </value>
+            <value>
+                <fullName>Varsity Sports</fullName>
+                <default>false</default>
+                <label>Varsity Sports</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

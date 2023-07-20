@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>International</fullName>
-        <default>false</default>
-        <label>International</label>
-    </customValue>
-    <customValue>
         <fullName>U.S. Citizen</fullName>
         <default>false</default>
         <label>U.S. Citizen</label>
@@ -24,6 +19,11 @@
         <fullName>Asylee/Refugee</fullName>
         <default>false</default>
         <label>Asylee/Refugee</label>
+    </customValue>
+    <customValue>
+        <fullName>International</fullName>
+        <default>false</default>
+        <label>International</label>
     </customValue>
     <customValue>
         <fullName>Other</fullName>

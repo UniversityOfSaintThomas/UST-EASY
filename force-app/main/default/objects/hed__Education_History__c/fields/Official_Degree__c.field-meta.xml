@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Official_Degree__c</fullName>
+    <description>Field used to capture Official Degree Type for Banner Integration for Education History</description>
+    <externalId>false</externalId>
+    <label>Official Degree</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Official_Degree_Types</valueSetName>
+    </valueSet>
+</CustomField>

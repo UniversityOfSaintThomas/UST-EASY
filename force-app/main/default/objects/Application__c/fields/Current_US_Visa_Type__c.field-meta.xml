@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_US_Visa_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Current US Visa Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>I do not hold a currently valid U.S. non-immigrant Visa</fullName>
+                <default>false</default>
+                <label>I do not hold a currently valid U.S. non-immigrant Visa</label>
+            </value>
+            <value>
+                <fullName>A-1 Foreign Diplomatic Personnel</fullName>
+                <default>false</default>
+                <label>A-1 Foreign Diplomatic Personnel</label>
+            </value>
+            <value>
+                <fullName>A-2 Dependent Foreign Diplomatic Personnel</fullName>
+                <default>false</default>
+                <label>A-2 Dependent Foreign Diplomatic Personnel</label>
+            </value>
+            <value>
+                <fullName>A-3 Employee of Foreign Gov Office</fullName>
+                <default>false</default>
+                <label>A-3 Employee of Foreign Gov Office</label>
+            </value>
+            <value>
+                <fullName>B-2 Tourist</fullName>
+                <default>false</default>
+                <label>B-2 Tourist</label>
+            </value>
+            <value>
+                <fullName>E-2 Dependent of Treaty Investor</fullName>
+                <default>false</default>
+                <label>E-2 Dependent of Treaty Investor</label>
+            </value>
+            <value>
+                <fullName>F-1 Student</fullName>
+                <default>false</default>
+                <label>F-1 Student</label>
+            </value>
+            <value>
+                <fullName>F-2 Dependent of F-1 Student</fullName>
+                <default>false</default>
+                <label>F-2 Dependent of F-1 Student</label>
+            </value>
+            <value>
+                <fullName>G-1 Representative of Intl. Org.</fullName>
+                <default>false</default>
+                <label>G-1 Representative of Intl. Org.</label>
+            </value>
+            <value>
+                <fullName>G-2 Dependent of Representative of Intl. Org.</fullName>
+                <default>false</default>
+                <label>G-2 Dependent of Representative of Intl. Org.</label>
+            </value>
+            <value>
+                <fullName>G-3 Dependent of Representative of Intl. Org.</fullName>
+                <default>false</default>
+                <label>G-3 Dependent of Representative of Intl. Org.</label>
+            </value>
+            <value>
+                <fullName>G-4 Dependent of Representative of Intl. Org.</fullName>
+                <default>false</default>
+                <label>G-4 Dependent of Representative of Intl. Org.</label>
+            </value>
+            <value>
+                <fullName>H-1 Work Visa</fullName>
+                <default>false</default>
+                <label>H-1 Work Visa</label>
+            </value>
+            <value>
+                <fullName>H-4 Dependent of H Visa Holder</fullName>
+                <default>false</default>
+                <label>H-4 Dependent of H Visa Holder</label>
+            </value>
+            <value>
+                <fullName>J-1 Exchange Visitor</fullName>
+                <default>false</default>
+                <label>J-1 Exchange Visitor</label>
+            </value>
+            <value>
+                <fullName>J-2 Dependent of J-1 Visa Holder</fullName>
+                <default>false</default>
+                <label>J-2 Dependent of J-1 Visa Holder</label>
+            </value>
+            <value>
+                <fullName>L-2 Dependent of L-1 Visa Holder</fullName>
+                <default>false</default>
+                <label>L-2 Dependent of L-1 Visa Holder</label>
+            </value>
+            <value>
+                <fullName>M-1 Student (Vocational)</fullName>
+                <default>false</default>
+                <label>M-1 Student (Vocational)</label>
+            </value>
+            <value>
+                <fullName>M-2 Dependent of M-1 Student</fullName>
+                <default>false</default>
+                <label>M-2 Dependent of M-1 Student</label>
+            </value>
+            <value>
+                <fullName>R-2 Dependent of R-1 Visa Holder</fullName>
+                <default>false</default>
+                <label>R-2 Dependent of R-1 Visa Holder</label>
+            </value>
+            <value>
+                <fullName>Other Visa Type</fullName>
+                <default>false</default>
+                <label>Other Visa Type</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

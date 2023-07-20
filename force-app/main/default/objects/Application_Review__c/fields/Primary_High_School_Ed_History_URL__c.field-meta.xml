@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_High_School_Ed_History_URL__c</fullName>
+    <description>Updated via Flow on record creation</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Updated via Flow on record creation</inlineHelpText>
+    <label>Primary High School Ed History URL</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

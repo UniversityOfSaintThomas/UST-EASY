@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Grade_Trend__c</fullName>
+    <description>What does the transcript appear to have in academic grade trends</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Trending Up - Transcript shows a strong finish in their Jr./Sr. year
+            Steady - Grades are consistently in a specific range
+            Trending Down - Transcript shows a decrease in academic performance junior/senior year
+            No Trend - Grades do not show any trend</inlineHelpText>
+    <label>Grade Trend</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Trending Up</fullName>
+                <default>false</default>
+                <label>Trending Up</label>
+            </value>
+            <value>
+                <fullName>Steady</fullName>
+                <default>false</default>
+                <label>Steady</label>
+            </value>
+            <value>
+                <fullName>Trending Down</fullName>
+                <default>false</default>
+                <label>Trending Down</label>
+            </value>
+            <value>
+                <fullName>No Trend</fullName>
+                <default>false</default>
+                <label>No Trend</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

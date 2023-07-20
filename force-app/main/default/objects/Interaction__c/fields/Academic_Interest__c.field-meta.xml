@@ -7,20 +7,11 @@
     <externalId>false</externalId>
     <inlineHelpText>The official interest the individual applies for.</inlineHelpText>
     <label>Academic Interest</label>
-    <lookupFilter>
-        <active>true</active>
-        <filterItems>
-            <field>Plan__c.Type__c</field>
-            <operation>equals</operation>
-            <value>Academic</value>
-        </filterItems>
-        <isOptional>false</isOptional>
-    </lookupFilter>
     <referenceTo>Plan__c</referenceTo>
     <relationshipLabel>Interactions with Academic Interest</relationshipLabel>
     <relationshipName>Academic_Interest_Interactions</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

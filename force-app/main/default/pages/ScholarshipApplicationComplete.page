@@ -1,5 +1,8 @@
 <apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ScholarshipApplicationCompleteController" action="{!initialize}">
     <apex:composition template="ScholarshipTemplate">
+        <apex:define name="head-extras">
+            <title>Complete! | Scholarships at St. Thomas</title>
+        </apex:define>
         <apex:define name="body">
             <div class="row">
                 <div class="columns errorMessages">

@@ -75,6 +75,11 @@
         <default>false</default>
         <label>College of Health Professions</label>
     </customValue>
+    <customValue>
+        <fullName>School of Nursing</fullName>
+        <default>false</default>
+        <label>School of Nursing</label>
+    </customValue>
     <masterLabel>School / College</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

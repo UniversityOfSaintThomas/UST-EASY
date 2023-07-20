@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Institution_Attending__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup to Educational Institution College Accounts</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Lookup to Educational Institution College Accounts</inlineHelpText>
+    <label>Institution Attending</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Educational Institution</value>
+        </filterItems>
+        <filterItems>
+            <field>Account.Type</field>
+            <operation>equals</operation>
+            <value>College</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Admissions Applications (Institution Attending)</relationshipLabel>
+    <relationshipName>Admissions_Apps_WD_Institution</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -10,7 +10,6 @@ global with sharing class JustInTimePermissionSets {
             Category= 'User'
     )
     public static void jitPermission(List<userWithPermissionRequests> permissionRequests) {
-        System.debug('Invocable Apex Reached!');
         List<String> allRequestedPermissionSetNames = new List<String>();
         List<String> userIdsAffected = new List<String>();
 
@@ -83,6 +82,10 @@ global with sharing class JustInTimePermissionSets {
             }
         }
 
+        //Update Portal_User_First_Login__c and Portal_User_Latest_Login__c for each user 
+        if (userIdsAffected.size() > 0){
+            PortalUserLoginDate.upsertContacts(userIdsAffected);
+        }
     }
 
     global class userWithPermissionRequests {

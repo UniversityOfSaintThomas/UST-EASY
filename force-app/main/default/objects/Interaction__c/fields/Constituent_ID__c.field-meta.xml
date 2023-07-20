@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <description>The individual&apos;s external ID from another database, used to match on Contact in the Lead and Contact Matching Rules.</description>
     <externalId>false</externalId>
-    <inlineHelpText>The individual&apos;s external ID from another database.</inlineHelpText>
+    <inlineHelpText>The individual&apos;s external ID from another database. UA is using this field as an individual Type (STUD, ALUM, GSTD,FACT,STAF,FEMP,TRUE,TRUF,TRUS). As of Jan &apos;23 no other ids are in this field.</inlineHelpText>
     <label>Constituent ID</label>
     <length>255</length>
     <required>false</required>

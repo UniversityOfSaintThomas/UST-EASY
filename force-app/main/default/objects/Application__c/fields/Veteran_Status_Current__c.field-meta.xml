@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Veteran_Status_Current__c</fullName>
+    <externalId>false</externalId>
+    <label>Veteran Status Current</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Currently Serving</fullName>
+                <default>false</default>
+                <label>Currently Serving</label>
+            </value>
+            <value>
+                <fullName>Previously Served</fullName>
+                <default>false</default>
+                <label>Previously Served</label>
+            </value>
+            <value>
+                <fullName>Current Dependent</fullName>
+                <default>false</default>
+                <label>Current Dependent</label>
+            </value>
+            <value>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+                <label>Not Applicable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

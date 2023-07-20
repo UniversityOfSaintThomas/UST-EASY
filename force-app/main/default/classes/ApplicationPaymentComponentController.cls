@@ -80,8 +80,11 @@ public with sharing class ApplicationPaymentComponentController {
                             }
                         }
                         parameterMap.put('AMT', paymentAmount);
+                        String billName = app.Contact__r.FirstName;
+                        billName += ' ' + app.Contact__r.LastName;
+                        billName = billName.escapeHtml4();
 
-                        String exTransId = app.Contact__r.FirstName + ' ' + app.Contact__r.LastName + ' | ' + app.Name + ' | ' + app.Intended_Term_of_Entry__r.Term__r.Name;
+                        String exTransId = billName + ' | ' + app.Name + ' | ' + app.Intended_Term_of_Entry__r.Term__r.Name;
                         if (String.isNotBlank(question.question.Payment_Name__c)) {
                             exTransId = exTransId + ' | ' + question.question.Payment_Name__c;
                         }
@@ -110,7 +113,7 @@ public with sharing class ApplicationPaymentComponentController {
                         String protectedIds = ApplicationUtilities.createEncryptedString('{"appId":"' + app.Id + '","responseId":"' + question.reqResponse.Id + '","questionId":"' + question.question.Id + '"}');
                         parameterMap.put('EASY_APP', protectedIds);
                         parameterMap.put('EXT_TRANS_ID_LABEL', 'University of St. Thomas Application');
-                        parameterMap.put('BILL_NAME', app.Contact__r.FirstName + ' ' + app.Contact__r.LastName);
+                        parameterMap.put('BILL_NAME', billName);
                         parameterMap.put('BILL_EMAIL_ADDRESS', app.Contact__r.Email);
                         parameterMap.put('BILL_STREET1', app.Contact__r.MailingStreet);
                         parameterMap.put('BILL_STATE', app.Contact__r.MailingState);

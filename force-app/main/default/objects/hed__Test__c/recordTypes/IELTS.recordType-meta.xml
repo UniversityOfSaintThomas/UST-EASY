@@ -2,8 +2,196 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>IELTS</fullName>
     <active>true</active>
+    <compactLayoutAssignment>UST</compactLayoutAssignment>
     <description>Use this for entering IELTS scores</description>
     <label>IELTS</label>
+    <picklistValues>
+        <picklist>AP_Test_Type__c</picklist>
+        <values>
+            <fullName>AP Art 2D Design</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Art 3D Design</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Art History</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Biology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Calculus AB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Calculus AB Subscore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Calculus BC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Chemistry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Chinese Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Comp Government%2FPOLS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Computer Science A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Computer Science AB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Computer Science Principles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP English Language%2FComp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP English Literature%2FComp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Environmental Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP European History</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP French Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP French Literature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP German Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Human Geography</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Int%27l English Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Italian Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Japanese Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Latin Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Latin Literature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Macroeconomics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Microeconomics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Music Th%2E Nonaural Subscore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Music Theory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Music Theory Aural Subscore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Physics B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Physics C1 - Mechanics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Physics C2 - Elect%2FMag</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Physics I</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Physics II</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Psychology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Research</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Seminar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Spanish Language</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Spanish Literature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Statistics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Studio Art-Drawing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP U%2ES%2E Government%2FPOLS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP U%2ES%2E History</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP World History</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>Future_ACT_SAT_Times__c</picklist>
         <values>
@@ -78,6 +266,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Praxis_Passed_Not_Passed__c</picklist>
+        <values>
+            <fullName>Not Passed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Take_ACT_SAT_Times__c</picklist>
         <values>
             <fullName>1</fullName>
@@ -121,55 +320,17 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>hed__Source__c</picklist>
+        <picklist>Test_Score_Status__c</picklist>
         <values>
             <fullName>Official</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Self Reported</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>hed__Test_Type__c</picklist>
-        <values>
-            <fullName>ACT</fullName>
+            <fullName>Self-Reported</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>GMAT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GRE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SAT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TOEFL</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>hed__Verification_Status__c</picklist>
-        <values>
-            <fullName>Pending</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Revoked</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Unverified</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verified</fullName>
+            <fullName>Unofficial</fullName>
             <default>false</default>
         </values>
     </picklistValues>

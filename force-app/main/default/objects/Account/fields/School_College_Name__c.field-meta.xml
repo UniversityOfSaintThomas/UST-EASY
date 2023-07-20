@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>School_College_Name__c</fullName>
+    <description>Global Value Set of School &quot;Friendly&quot; name</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Global Value Set of School &quot;Friendly&quot; name</inlineHelpText>
+    <label>School/College Name</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>School_College</valueSetName>
+    </valueSet>
+</CustomField>

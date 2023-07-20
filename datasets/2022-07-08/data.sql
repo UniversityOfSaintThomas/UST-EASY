@@ -21455,8 +21455,6 @@ CREATE TABLE "hed__Education_History__c_rt_mapping" (
 	developer_name VARCHAR(255), 
 	PRIMARY KEY (record_type_id)
 );
-INSERT INTO "hed__Education_History__c_rt_mapping" VALUES('012R0000003IU9eIAG','College');
-INSERT INTO "hed__Education_History__c_rt_mapping" VALUES('012R0000003IU9fIAG','High_School');
 CREATE TABLE "hed__Facility__c" (
 	id INTEGER NOT NULL, 
 	"CreatedDate" VARCHAR(255), 

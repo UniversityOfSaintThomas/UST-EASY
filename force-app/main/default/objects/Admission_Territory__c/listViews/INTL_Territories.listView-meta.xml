@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>INTL_Territories</fullName>
+    <columns>NAME</columns>
+    <columns>Assigned_User__c</columns>
+    <columns>Associated_States__c</columns>
+    <columns>Fallback_Territory__c</columns>
+    <columns>Unique_Code__c</columns>
+    <columns>Assigned_User_is_active__c</columns>
+    <columns>Territoy_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Territoy_Type__c</field>
+        <operation>equals</operation>
+        <value>International</value>
+    </filters>
+    <label>INTL Territories</label>
+</ListView>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GPA_Transfer_Calculated__c</fullName>
+    <description>Calculated value ROUND(Quality Points/Admissions Credit),2</description>
+    <externalId>false</externalId>
+    <formula>IF (  
+Record_Type_Name__c = &quot;College&quot; &amp;&amp;
+NOT(ISBLANK(Quality_Points__c)) &amp;&amp; 
+NOT(ISBLANK(Admissions_Credit__c)), 
+
+(ROUND( Quality_Points__c / Admissions_Credit__c  ,2)), 
+
+0.00)</formula>
+    <inlineHelpText>Calculated value ROUND(Quality Points/Admissions Credit),2</inlineHelpText>
+    <label>GPA Transfer - Calculated</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

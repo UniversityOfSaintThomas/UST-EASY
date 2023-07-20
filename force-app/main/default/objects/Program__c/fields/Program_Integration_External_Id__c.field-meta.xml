@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Program_Integration_External_Id__c</fullName>
     <defaultValue>&quot;Program__c&quot; &amp; TEXT(NOW()) &amp; MID($User.Id,6,5)</defaultValue>
+    <deprecated>false</deprecated>
     <description>Used for integration</description>
     <externalId>false</externalId>
     <inlineHelpText>Used for integration</inlineHelpText>

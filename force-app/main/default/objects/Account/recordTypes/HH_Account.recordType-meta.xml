@@ -38,11 +38,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 4%2FDicovery-Qualify</fullName>
+            <fullName>Level 4%2FDiscovery-Qualify</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Level 5%2FVolunteer - Networker</fullName>
+            <fullName>Level 5%2FVolunteer%2FNetworker</fullName>
             <default>false</default>
         </values>
         <values>
@@ -212,6 +212,73 @@
         </values>
         <values>
             <fullName>Warm</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>School_College_Name__c</picklist>
+        <values>
+            <fullName>College of Arts and Sciences</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College of Education%2C Leadership and Counseling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College of Health Professions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dougherty Family College</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduate School of Professional Psychology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morrison Family College of Health</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opus College of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Nursing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School of Social Work</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>The Murray Institute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>The Saint Paul Seminary School of Divinity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Undergraduate</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -6,6 +6,13 @@
     <columns>Activate_Application_Date__c</columns>
     <columns>End_Application_Date__c</columns>
     <columns>Application_Status__c</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Academic_Term__c</field>
+        <operation>equals</operation>
+        <value>Spring 2023</value>
+    </filters>
     <label>All</label>
 </ListView>

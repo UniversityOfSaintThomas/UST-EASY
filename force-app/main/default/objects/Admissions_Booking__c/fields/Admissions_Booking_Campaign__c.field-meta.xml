@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admissions_Booking_Campaign__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Captures the higher level recruitment effort.  This could be a circuit of fairs or an trip that last a certain amount of time.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Create Campaign first, then pair appropriately</inlineHelpText>
+    <label>Admissions Booking Campaign</label>
+    <referenceTo>Campaign</referenceTo>
+    <relationshipLabel>Admissions Bookings</relationshipLabel>
+    <relationshipName>Admissions_Bookings</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

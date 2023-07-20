@@ -6,13 +6,13 @@
     <columns>Lead_Source__c</columns>
     <columns>Opportunity__c</columns>
     <columns>Opportunity_Key__c</columns>
+    <columns>Admissions_Application__c</columns>
     <columns>College_of_Interest__c</columns>
     <columns>Major_Program_1__c</columns>
+    <columns>Academic_Interest__c</columns>
     <columns>Recruitment_Program__c</columns>
-    <columns>Lead__c</columns>
-    <columns>Lead_Only__c</columns>
+    <columns>OwnerId__c</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
-    <language>en_US</language>
 </ListView>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Degree__c</fullName>
+    <deprecated>false</deprecated>
     <description>The Degree of the record (Ex: BS, BA, etc.).</description>
     <externalId>false</externalId>
     <inlineHelpText>Select a Degree for the record.</inlineHelpText>
@@ -11,16 +12,22 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Associate&apos;s</fullName>
+                <default>false</default>
+                <label>Associate&apos;s</label>
+            </value>
             <value>
                 <fullName>Bachelor&apos;s</fullName>
                 <default>false</default>
                 <label>Bachelor&apos;s</label>
             </value>
             <value>
-                <fullName>Master&apos;s</fullName>
+                <fullName>BS</fullName>
                 <default>false</default>
-                <label>Master&apos;s</label>
+                <isActive>false</isActive>
+                <label>BS</label>
             </value>
             <value>
                 <fullName>Certificate</fullName>
@@ -48,20 +55,9 @@
                 <label>Licensure</label>
             </value>
             <value>
-                <fullName>Post-Masters Certificate</fullName>
+                <fullName>Master&apos;s</fullName>
                 <default>false</default>
-                <label>Post-Masters Certificate</label>
-            </value>
-            <value>
-                <fullName>Associate&apos;s</fullName>
-                <default>false</default>
-                <label>Associate&apos;s</label>
-            </value>
-            <value>
-                <fullName>BS</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>BS</label>
+                <label>Master&apos;s</label>
             </value>
             <value>
                 <fullName>MBA</fullName>
@@ -70,10 +66,25 @@
                 <label>MBA</label>
             </value>
             <value>
+                <fullName>Micro-credential</fullName>
+                <default>false</default>
+                <label>Micro-credential</label>
+            </value>
+            <value>
                 <fullName>MS</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>MS</label>
+            </value>
+            <value>
+                <fullName>Non-Degree</fullName>
+                <default>false</default>
+                <label>Non-Degree</label>
+            </value>
+            <value>
+                <fullName>Post-Masters Certificate</fullName>
+                <default>false</default>
+                <label>Post-Masters Certificate</label>
             </value>
         </valueSetDefinition>
     </valueSet>

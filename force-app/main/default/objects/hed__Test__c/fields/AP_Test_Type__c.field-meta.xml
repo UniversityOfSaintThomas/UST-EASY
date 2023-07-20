@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AP_Test_Type__c</fullName>
+    <description>AP Test Type</description>
+    <externalId>false</externalId>
+    <inlineHelpText>AP Test Type</inlineHelpText>
+    <label>AP Test Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AP Art 2D Design</fullName>
+                <default>false</default>
+                <label>AP Art 2D Design</label>
+            </value>
+            <value>
+                <fullName>AP Art 3D Design</fullName>
+                <default>false</default>
+                <label>AP Art 3D Design</label>
+            </value>
+            <value>
+                <fullName>AP Art History</fullName>
+                <default>false</default>
+                <label>AP Art History</label>
+            </value>
+            <value>
+                <fullName>AP Biology</fullName>
+                <default>false</default>
+                <label>AP Biology</label>
+            </value>
+            <value>
+                <fullName>AP Calculus AB</fullName>
+                <default>false</default>
+                <label>AP Calculus AB</label>
+            </value>
+            <value>
+                <fullName>AP Calculus AB Subscore</fullName>
+                <default>false</default>
+                <label>AP Calculus AB Subscore</label>
+            </value>
+            <value>
+                <fullName>AP Calculus BC</fullName>
+                <default>false</default>
+                <label>AP Calculus BC</label>
+            </value>
+            <value>
+                <fullName>AP Chemistry</fullName>
+                <default>false</default>
+                <label>AP Chemistry</label>
+            </value>
+            <value>
+                <fullName>AP Chinese Language</fullName>
+                <default>false</default>
+                <label>AP Chinese Language</label>
+            </value>
+            <value>
+                <fullName>AP Comp Government/POLS</fullName>
+                <default>false</default>
+                <label>AP Comp Government/POLS</label>
+            </value>
+            <value>
+                <fullName>AP Computer Science A</fullName>
+                <default>false</default>
+                <label>AP Computer Science A</label>
+            </value>
+            <value>
+                <fullName>AP Computer Science AB</fullName>
+                <default>false</default>
+                <label>AP Computer Science AB</label>
+            </value>
+            <value>
+                <fullName>AP Computer Science Principles</fullName>
+                <default>false</default>
+                <label>AP Computer Science Principles</label>
+            </value>
+            <value>
+                <fullName>AP English Language/Comp</fullName>
+                <default>false</default>
+                <label>AP English Language/Comp</label>
+            </value>
+            <value>
+                <fullName>AP English Literature/Comp</fullName>
+                <default>false</default>
+                <label>AP English Literature/Comp</label>
+            </value>
+            <value>
+                <fullName>AP Environmental Science</fullName>
+                <default>false</default>
+                <label>AP Environmental Science</label>
+            </value>
+            <value>
+                <fullName>AP European History</fullName>
+                <default>false</default>
+                <label>AP European History</label>
+            </value>
+            <value>
+                <fullName>AP French Language</fullName>
+                <default>false</default>
+                <label>AP French Language</label>
+            </value>
+            <value>
+                <fullName>AP French Literature</fullName>
+                <default>false</default>
+                <label>AP French Literature</label>
+            </value>
+            <value>
+                <fullName>AP German Language</fullName>
+                <default>false</default>
+                <label>AP German Language</label>
+            </value>
+            <value>
+                <fullName>AP Human Geography</fullName>
+                <default>false</default>
+                <label>AP Human Geography</label>
+            </value>
+            <value>
+                <fullName>AP Int&apos;l English Language</fullName>
+                <default>false</default>
+                <label>AP Int&apos;l English Language</label>
+            </value>
+            <value>
+                <fullName>AP Italian Language</fullName>
+                <default>false</default>
+                <label>AP Italian Language</label>
+            </value>
+            <value>
+                <fullName>AP Japanese Language</fullName>
+                <default>false</default>
+                <label>AP Japanese Language</label>
+            </value>
+            <value>
+                <fullName>AP Latin Language</fullName>
+                <default>false</default>
+                <label>AP Latin Language</label>
+            </value>
+            <value>
+                <fullName>AP Latin Literature</fullName>
+                <default>false</default>
+                <label>AP Latin Literature</label>
+            </value>
+            <value>
+                <fullName>AP Macroeconomics</fullName>
+                <default>false</default>
+                <label>AP Macroeconomics</label>
+            </value>
+            <value>
+                <fullName>AP Microeconomics</fullName>
+                <default>false</default>
+                <label>AP Microeconomics</label>
+            </value>
+            <value>
+                <fullName>AP Music Th. Nonaural Subscore</fullName>
+                <default>false</default>
+                <label>AP Music Th. Nonaural Subscore</label>
+            </value>
+            <value>
+                <fullName>AP Music Theory</fullName>
+                <default>false</default>
+                <label>AP Music Theory</label>
+            </value>
+            <value>
+                <fullName>AP Music Theory Aural Subscore</fullName>
+                <default>false</default>
+                <label>AP Music Theory Aural Subscore</label>
+            </value>
+            <value>
+                <fullName>AP Physics B</fullName>
+                <default>false</default>
+                <label>AP Physics B</label>
+            </value>
+            <value>
+                <fullName>AP Physics C1 - Mechanics</fullName>
+                <default>false</default>
+                <label>AP Physics C1 - Mechanics</label>
+            </value>
+            <value>
+                <fullName>AP Physics C2 - Elect/Mag</fullName>
+                <default>false</default>
+                <label>AP Physics C2 - Elect/Mag</label>
+            </value>
+            <value>
+                <fullName>AP Physics I</fullName>
+                <default>false</default>
+                <label>AP Physics I</label>
+            </value>
+            <value>
+                <fullName>AP Physics II</fullName>
+                <default>false</default>
+                <label>AP Physics II</label>
+            </value>
+            <value>
+                <fullName>AP Psychology</fullName>
+                <default>false</default>
+                <label>AP Psychology</label>
+            </value>
+            <value>
+                <fullName>AP Research</fullName>
+                <default>false</default>
+                <label>AP Research</label>
+            </value>
+            <value>
+                <fullName>AP Seminar</fullName>
+                <default>false</default>
+                <label>AP Seminar</label>
+            </value>
+            <value>
+                <fullName>AP Spanish Language</fullName>
+                <default>false</default>
+                <label>AP Spanish Language</label>
+            </value>
+            <value>
+                <fullName>AP Spanish Literature</fullName>
+                <default>false</default>
+                <label>AP Spanish Literature</label>
+            </value>
+            <value>
+                <fullName>AP Statistics</fullName>
+                <default>false</default>
+                <label>AP Statistics</label>
+            </value>
+            <value>
+                <fullName>AP Studio Art-Drawing</fullName>
+                <default>false</default>
+                <label>AP Studio Art-Drawing</label>
+            </value>
+            <value>
+                <fullName>AP U.S. Government/POLS</fullName>
+                <default>false</default>
+                <label>AP U.S. Government/POLS</label>
+            </value>
+            <value>
+                <fullName>AP U.S. History</fullName>
+                <default>false</default>
+                <label>AP U.S. History</label>
+            </value>
+            <value>
+                <fullName>AP World History</fullName>
+                <default>false</default>
+                <label>AP World History</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

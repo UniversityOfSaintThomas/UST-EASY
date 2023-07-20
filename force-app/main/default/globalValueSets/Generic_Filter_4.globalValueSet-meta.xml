@@ -171,6 +171,11 @@
         <label>No</label>
     </customValue>
     <customValue>
+        <fullName>Ready to be matched</fullName>
+        <default>false</default>
+        <label>Ready to be matched</label>
+    </customValue>
+    <customValue>
         <fullName>Generic Value 2</fullName>
         <default>false</default>
         <isActive>false</isActive>

@@ -1,0 +1,61 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 6/15/2023.
+ -->
+
+<!-- Multi Select Pills Groupable -->
+<template>
+    <div class="slds-form-element">
+        <label class={labelStyle} for="multi-select-pill-groupable">
+            <template if:true={required}>
+                <abbr class="slds-required" title="required">* </abbr>
+            </template>
+            {label}
+        </label>
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class={mainDivClass} aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                        <input type="text" class="slds-hide" id="multi-select-pill-groupable" aria-describedby="error-message-id" autocomplete="off" role="textbox" required={required}>
+                        <div onclick={handleClick} class="slds-input slds-combobox__input slds-p-around_xx-small"
+                             id="combobox-div-1" aria-controls="listbox-id-1">{hintText}
+                            <c-multi-select-pills-groupable-pill items={selectedPills} onitemremove={handlePillRemove}></c-multi-select-pills-groupable-pill>
+                        </div>
+                        <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                            <lightning-icon icon-name="utility:down" size="x-small" alternative-text="Approved"></lightning-icon>
+                        </span>
+                    </div>
+                    <div class={dropdownOuterStyle} role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            <template for:each={options_} for:item="option">
+
+                                <template if:true={option.is_group}>
+                                    <li role="presentation" class="slds-listbox__item" key={option.label}>
+                                        <div id="option0" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="presentation">
+                                            <h3 class="slds-listbox__option-header" role="presentation">{option.label}</h3>
+                                        </div>
+                                    </li>
+                                </template>
+
+                                <template if:false={option.is_group}>
+                                    <c-multi-select-pills-groupable-item
+                                            key={option.key}
+                                            value={option.value}
+                                            label={option.label}
+                                            selected={option.selected}
+                                            onselected={handleSelectedClick}>
+                                    </c-multi-select-pills-groupable-item>
+                                </template>
+
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <template if:true={displayHelp}>
+            <div class="slds-form-element__warning slds-text-body_regular">{help}</div>
+        </template>
+        <div class="slds-form-element__help slds-text-color_error" id="error-message-id">{alert}</div>
+
+    </div>
+</template>

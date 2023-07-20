@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>College_School__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>College or School doing the Recruitment</description>
+    <externalId>false</externalId>
+    <inlineHelpText>College or School doing the Recruitment</inlineHelpText>
+    <label>College/School</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Educational Institution</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Admissions Bookings</relationshipLabel>
+    <relationshipName>Admissions_Bookings</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

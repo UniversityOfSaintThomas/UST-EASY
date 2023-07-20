@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Self_Reported_Undergrad_Degree__c</fullName>
+    <deprecated>false</deprecated>
     <description>Initially created field for the OCB Migration.</description>
     <externalId>false</externalId>
     <label>Self-Reported Undergrad Degree</label>

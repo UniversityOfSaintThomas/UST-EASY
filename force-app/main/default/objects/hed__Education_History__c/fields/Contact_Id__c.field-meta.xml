@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Id__c</fullName>
+    <externalId>false</externalId>
+    <formula>hed__Contact__r.X18_Digit_Contact_ID__c</formula>
+    <label>Contact Id</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

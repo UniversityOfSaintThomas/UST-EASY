@@ -1,5 +1,5 @@
 - object: Account
-  count: 400
+  count: 1000
   fields:
     Name:
       random_choice:
@@ -20,15 +20,15 @@
     BillingStreet:
       fake: street_address
     BillingState:
-      fake: state
+      fake: State
     BillingCountry:
-      fake: country
+      fake: CurrentCountry
     Industry: Education
     Type: College
     RecordType: Educational_Institution
     Account_Integration_External_ID__c: ${{id}}
 - object: Account
-  count: 400
+  count: 1000
   fields:
     Name:
       random_choice:
@@ -49,9 +49,9 @@
     BillingStreet:
       fake: street_address
     BillingState:
-      fake: state
+      fake: State
     BillingCountry:
-      fake: country
+      fake: CurrentCountry
     Industry: Education
     Type: High School
     RecordType: Educational_Institution

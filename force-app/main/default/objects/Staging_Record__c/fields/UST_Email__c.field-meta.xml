@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>UST_Email__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>UST Email</label>
     <required>false</required>

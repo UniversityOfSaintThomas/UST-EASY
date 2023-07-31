@@ -3,7 +3,7 @@
     <apex:stylesheet value="https://s3.amazonaws.com/ust-style-static-files.aws.stthomas.edu/dist-ust-style/style-sheets/ust.min.css"/>
     <apex:stylesheet value="https://s3.amazonaws.com/ust-style-static-files.aws.stthomas.edu/dist-castor3/style-sheets/castor-full.min.css"/>
     <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
-    <apex:stylesheet value="https://static.stthomas.edu/undergraduate-admissions/js/jquery-ui/jquery-ui.min.css"/>
+    <apex:stylesheet value="https://s3.amazonaws.com/static.aws.stthomas.edu/undergraduate-admissions/jquery-ui.min.css"/>
     <apex:stylesheet value="{!$Resource.scholarshipStyles}"/>
     <apex:includeScript value="https://s3.amazonaws.com/ust-style-static-files.aws.stthomas.edu/dist-ust-style/js/ust-full.min.js"/>
     <apex:includeScript value="https://s3.amazonaws.com/ust-style-static-files.aws.stthomas.edu/dist-castor3/js/castor-full.js"/>

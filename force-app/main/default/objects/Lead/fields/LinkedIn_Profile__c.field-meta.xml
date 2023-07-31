@@ -4,7 +4,9 @@
     <description>Initially created field for the OCB Migration.</description>
     <externalId>false</externalId>
     <label>LinkedIn Profile</label>
+    <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <type>Url</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

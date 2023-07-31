@@ -62,20 +62,35 @@
                 </template>
                 <template if:true={show_fields.Academic_Interest}>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium slds-m-bottom_medium field-academic-interest">
-                        <lightning-dual-listbox
-                                required={require_fields.Academic_Interest}
-                                label={field_labels.academic_interest_label}
-                                source-label="Available"
-                                selected-label="Selected"
-                                options={academic_interest_picklist_values}
-                                aria-label="Academic Interest"
-                                onchange={onChange}
-                                max="4"
-                                field-level-help=""
-                                variant="label-stacked"
-                                disable-reordering="true"
-                        >
-                        </lightning-dual-listbox>
+                        <template if:true={multi_select_standard}>
+                            <lightning-dual-listbox
+                                    required={require_fields.Academic_Interest}
+                                    label={field_labels.academic_interest_label}
+                                    source-label="Available"
+                                    selected-label="Selected"
+                                    options={academic_interest_picklist_values}
+                                    aria-label="Academic Interest"
+                                    onchange={onChange}
+                                    max="4"
+                                    field-level-help=""
+                                    variant="label-stacked"
+                                    disable-reordering="true"
+                            >
+                            </lightning-dual-listbox>
+                        </template>
+                        <template if:false={multi_select_standard}>
+                            <c-multi-select-pills-groupable
+                                    required={require_fields.Academic_Interest}
+                                    label={field_labels.academic_interest_label}
+                                    options={academic_interest_picklist_values}
+                                    onchange={onChange}
+                                    dropdown-length="10"
+                                    max="4"
+                                    hint="Select an academic interest..."
+                                    alert="You must choose at least one academic interest"
+                                    help="You can only choose up to 4 options"
+                            ></c-multi-select-pills-groupable>
+                        </template>
                     </div>
                 </template>
                 <template if:true={show_fields.Title}>

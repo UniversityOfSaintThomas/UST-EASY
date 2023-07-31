@@ -33,7 +33,7 @@ tasks:
       description: EASY application portal
       template: Build Your Own
       url_path_prefix: Admissions
-      timeout: 120000
+      timeout: 240000
 
   permission_guest_user:
     description: 'Applies permission set to guest community guest user'

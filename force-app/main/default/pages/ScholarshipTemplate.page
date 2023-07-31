@@ -12,6 +12,7 @@
     <head>
         <meta name="viewport" content="width=device-width" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <apex:insert name="head-extras"/>
     </head>
     <nav class="tab-navigation" id="access" role="navigation">
         <a href="#content" tabindex="1">Skip to primary content</a>

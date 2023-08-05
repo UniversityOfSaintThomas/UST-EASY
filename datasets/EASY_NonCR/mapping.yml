@@ -25,7 +25,7 @@ Insert Application_Control__c:
   - Text_Color__c
   - URL_Parameter__c
   - Withdraw_Status__c
-  soql_filter: "Academic_Level__c = 'Non-Credit'"
+  soql_filter: "URL_Parameter__c = 'NCEASY'"
 Insert EASY_Widget__c:
   sf_object: EASY_Widget__c
   fields:
@@ -51,7 +51,7 @@ Insert EASY_Widget__c:
   - Widget_Screen_Location__c
   - Widget_Time_Zone__c
   - Widget_Type__c
-  soql_filter: "Application_Control__r.Academic_Level__c = 'Non-Credit'"
+  soql_filter: "Name like '%(NCEASY)%'"
   lookups:
     Application_Control__c:
       table: Application_Control__c
@@ -115,7 +115,7 @@ Insert Program__c:
   - STVMAJR_VALID_MINOR_IND__c
   - School_College__c
   - Student_Type__c
-  soql_filter: "Academic_Level__c = 'Non-Credit'"
+  soql_filter: "Name = 'EASY Non-Credit'"
   lookups:
     Application_Control__c:
       table: Application_Control__c
@@ -133,7 +133,7 @@ Insert Plan__c:
   - Plan_Code__c
   - Plan_Type__c
   - Type__c
-  soql_filter: "Career__c = 'Non-Credit'"
+  soql_filter: "Name = 'EASY Non-Credit'"
   lookups:
     Program__c:
       table: Program__c
@@ -166,7 +166,7 @@ Insert Requirement__c:
   - Show_on_Application_Creation__c
   - Student_Type__c
   - Viewing_Requirement__c
-  soql_filter: "Name like '%(NC%'"
+  soql_filter: "Name like '%(NCEASY)%'"
   lookups:
     Application_Control__c:
       table: Application_Control__c
@@ -217,7 +217,7 @@ Insert Requirement_Item__c:
   - School_College__c
   - Student_Type__c
   - Viewing_Requirement__c
-  soql_filter: "Name like '%(NC%' AND Active__c = TRUE"
+  soql_filter: "Name like '%(NCEASY)%' AND Active__c = TRUE"
   lookups:
     Intended_Program__c:
       table: Program__c
@@ -271,7 +271,7 @@ Insert Question__c:
   - Static_Text__c
   - Student_Type__c
   - URL_Parameter__c
-  soql_filter: "Name like '%(NC%' AND Active__c = TRUE"
+  soql_filter: "Name like '%(NCEASY)%' AND Active__c = TRUE"
   lookups:
     Intended_Program__c:
       table: Program__c
@@ -283,7 +283,7 @@ Insert Question_Dependency__c:
   - RecordTypeId
   - ValueCheckbox__c
   - Value__c
-  soql_filter: "Academic_Level__c = 'Non-Credit' AND Question_Active__c = TRUE AND Controlling_Question_Active__c = TRUE"
+  soql_filter: "Question__r.Name like '%(NCEASY)%'"
   lookups:
     Controlling_Question__c:
       table: Question__c

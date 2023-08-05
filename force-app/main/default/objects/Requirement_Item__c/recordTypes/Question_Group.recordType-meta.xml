@@ -1188,6 +1188,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>EASY_NC_NC%7CNCNC</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ED_CU_LIC%7CSPLD</fullName>
             <default>false</default>
         </values>

@@ -3040,6 +3040,11 @@
         <default>false</default>
         <label>SE_GR_MICRO|MCIS</label>
     </customValue>
+    <customValue>
+        <fullName>EASY_NC_NC|NCNC</fullName>
+        <default>false</default>
+        <label>EASY_NC_NC|NCNC</label>
+    </customValue>
     <masterLabel>Program(s)</masterLabel>
     <sorted>true</sorted>
 </GlobalValueSet>

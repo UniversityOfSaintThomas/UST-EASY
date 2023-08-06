@@ -7,6 +7,7 @@
     <apex:attribute name="appInfo" description="The text to display when save is occurring" type="EASYApplicationInfo" required="true" assignTo="{!appInfoParam}"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
     <apex:attribute name="vfPageName" description="The visualForce page name currently on." type="String" required="false" assignTo="{!currentPageName}"/>
+    <apex:attribute name="noApp" description="Lets the body controller know there is no application tied to this user." type="Boolean" assignTo="{!noApplication}" default="false" required="false"/>
 
     <div id="loadSpinner" class="popupBackground">
         <div id="loading" class="PopupPanel">
@@ -61,7 +62,7 @@
                         <h2 class="slds-text-heading_medium">{!subtitle}</h2>
                     </div>
                 </apex:outputPanel>
-            </apex:outputPanel>-->
+            </apex:outputPanel>
 
             <!-- BODY -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
@@ -77,7 +78,7 @@
             </apex:outputPanel>
 
             <!-- Load component for modal pop-up -->
-            <c:EasyModal />
+            <c:EasyModal/>
 
         </apex:outputPanel>
 

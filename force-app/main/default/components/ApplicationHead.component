@@ -1,6 +1,6 @@
 <apex:component >
     <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/scripts.js')}"/>
-    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyFormValidation.js')}"/>
-    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyCarousel.js')}"/>
+<!--    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyFormValidation.js')}"/>-->
+<!--    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyCarousel.js')}"/>-->
     <link href="{!URLFOR($Resource.EasyAppResources, '/css/styles.css')}" rel="stylesheet" type="text/css"/>
 </apex:component>

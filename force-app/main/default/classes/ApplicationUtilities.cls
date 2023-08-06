@@ -35,20 +35,22 @@ public class ApplicationUtilities {
     }
 
     public static EASYApplicationInfo flattenAppControl(Application_Control__c appControl, EASYApplicationInfo appInfo) {
-        appInfo.hideTermProgram = appControl.Hide_Term_Program__c;
-        appInfo.allowWithdrawFrom = appControl.Allow_Withdraw_From__c;
-        appInfo.allowSubmitFrom = appControl.Allow_Submit_From__c;
-        appInfo.submitStatus = appControl.Submit_Status__c;
-        appInfo.allowConfirmFrom = appControl.Allow_Confirm_From__c;
-        appInfo.confirmStatus = appControl.Confirm_Status__c;
-        appInfo.withdrawStatus = appControl.Withdraw_Status__c;
-        appInfo.academicLevel = appControl.Academic_Level__c;
-        appInfo.schoolCollege = appControl.School_College__c;
-        appInfo.appControlId = appControl.Id;
-        appInfo.template = appControl.Template__c;
-        appInfo.at = appControl.URL_Parameter__c;
-        appInfo.appStartStatus = appControl.Application_Start_Status__c;
-        appInfo.allowCancelFrom = appControl.Allow_Cancel_From__c;
+        if(appControl != null) {
+            appInfo.hideTermProgram = appControl.Hide_Term_Program__c;
+            appInfo.allowWithdrawFrom = appControl.Allow_Withdraw_From__c;
+            appInfo.allowSubmitFrom = appControl.Allow_Submit_From__c;
+            appInfo.submitStatus = appControl.Submit_Status__c;
+            appInfo.allowConfirmFrom = appControl.Allow_Confirm_From__c;
+            appInfo.confirmStatus = appControl.Confirm_Status__c;
+            appInfo.withdrawStatus = appControl.Withdraw_Status__c;
+            appInfo.academicLevel = appControl.Academic_Level__c;
+            appInfo.schoolCollege = appControl.School_College__c;
+            appInfo.appControlId = appControl.Id;
+            appInfo.template = appControl.Template__c;
+            appInfo.at = appControl.URL_Parameter__c;
+            appInfo.appStartStatus = appControl.Application_Start_Status__c;
+            appInfo.allowCancelFrom = appControl.Allow_Cancel_From__c;
+        }
         return appInfo;
     }
 

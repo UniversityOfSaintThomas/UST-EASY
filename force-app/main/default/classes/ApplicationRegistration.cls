@@ -13,6 +13,7 @@ public class ApplicationRegistration {
     public EASYApplicationInfo appInfo { get; set; }
     public Boolean cookieKeyPresent { get; set; }
     public String userType { get; set; }
+    public Boolean noApplication { get; set; }
 
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
@@ -21,6 +22,16 @@ public class ApplicationRegistration {
         userType = UserInfo.getUserType();
         appInfo = ApplicationUtilities.createShellAppInfo();
         cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
+        String applicationType = '';
+        noApplication = false;
+
+        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
+            applicationType = ApexPages.currentPage().getParameters().get('at');
+            if (applicationType.equalsIgnoreCase('noapp')) {
+                noApplication = true;
+            }
+        }
+
         if (cookieKeyPresent) {
 
             // Initialize objects
@@ -62,18 +73,32 @@ public class ApplicationRegistration {
             });
 
             // Setup other questions
-            appCreate.applicationCreateSetup(firstGroup, lastGroup);
+            System.debug('No Application: ' + noApplication);
+            if (noApplication) {
+                appCreate.applicationCreateSetup(firstGroup, lastGroup, true);
+            } else {
+                appCreate.applicationCreateSetup(firstGroup, lastGroup);
+            }
+
         }
     }
 
     public PageReference applicationRegistrationInit() {
         ApplicationUtilities.getCookieKey();
         userType = UserInfo.getUserType();
+        String applicationType = '';
+
+        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
+            applicationType = ApexPages.currentPage().getParameters().get('at');
+        }
+
+        System.debug('user type: ' + userType + ', at: ' + applicationType);
+
         if (!userType.endsWithIgnoreCase('guest')) {
             PageReference createApp;
-            If (String.isNOtBlank(ApexPages.currentPage().getParameters().get('at'))) {
+            if (String.isNotBlank(applicationType) && !applicationType.equalsIgnoreCase('noapp')) {
                 createApp = Page.ApplicationCreate;
-                createApp.getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
+                createApp.getParameters().put('at', applicationType);
             } else {
                 createApp = Page.ApplicationPortal;
             }
@@ -105,12 +130,18 @@ public class ApplicationRegistration {
 
         try {
             // Throw exception if not all required fields have been filled-out
-            String errorMessage = appCreate.checkFields();
-            if (errorMessage != null) {
+
+            String errorMessage = '';
+            errorMessage = appCreate.checkFields();
+            System.debug(errorMessage);
+
+            //String errorMessage = appCreate.checkFields();
+            if (String.isNotBlank(errorMessage)) {
                 throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
             }
 
             // Insert interaction to create/update Contact
+            System.debug('INTERACTION: ' + JSON.serializePretty(interaction));
             insert interaction;
             interaction = [SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
             Contact con = [SELECT Id, FirstName, MiddleName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
@@ -129,7 +160,10 @@ public class ApplicationRegistration {
             // Assign contact to application and save
             appCreate.app.Contact__c = con.Id;
 
-            String checklistUrl = doCrud.returnAppURL(appCreate);
+            String checklistUrl = '/apex/ApplicationPortal';
+            if (!noApplication) {
+                checklistUrl = doCrud.returnAppURL(appCreate);
+            }
 
             // Create user object
             User u = new User();
@@ -189,9 +223,9 @@ public class ApplicationRegistration {
         interaction.Id = null;
         interaction.Contact__c = null;
         for (ApplicationQuestionGroup questionGroup : appCreate.section.groups) {
-            for (ApplicationQuestion question: questionGroup.questions) {
+            for (ApplicationQuestion question : questionGroup.questions) {
                 if (question.label == 'What term are you applying for?' && question.resp != null) {
-                        interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
+                    interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
                 }
                 if (question.label == 'What program are you applying to?' && question.resp != null) {
                     interaction.Academic_Program__c = Id.valueOf(String.valueOf(question.resp));
@@ -199,18 +233,18 @@ public class ApplicationRegistration {
             }
         }
         if (interaction.Academic_Program__c != null) {
-            List<Program__c> program = [SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c FROM Program__c WHERE Id =: interaction.Academic_Program__c LIMIT 1];
+            List<Program__c> program = [SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c FROM Program__c WHERE Id = :interaction.Academic_Program__c LIMIT 1];
             if (!program.isEmpty()) {
                 interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
                 interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
             }
-            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c =: interaction.Academic_Program__c LIMIT 1];
+            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c = :interaction.Academic_Program__c LIMIT 1];
             if (!relatedPlan.isEmpty()) {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
             }
         }
         if (interaction.Intended_Start_Term__c != null) {
-            List<Academic_Term__c> academicTerm = [SELECT Term__c FROM Academic_Term__c WHERE Id =: interaction.Intended_Start_Term__c LIMIT 1];
+            List<Academic_Term__c> academicTerm = [SELECT Term__c FROM Academic_Term__c WHERE Id = :interaction.Intended_Start_Term__c LIMIT 1];
             if (!academicTerm.isEmpty()) {
                 interaction.Term__c = academicTerm[0].Term__c;
             }

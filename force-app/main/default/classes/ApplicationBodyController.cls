@@ -8,6 +8,7 @@ public with sharing class ApplicationBodyController {
     public EASYApplicationInfo appInfoParam { get; set; }
     public Map<String, EASYApplicationInfo> mapAtAppInfo { get; set; }
     public String currentPageName { get; set; }
+    public Boolean noApplication { get; set; }
 
     public ApplicationBodyController() {
     }
@@ -55,11 +56,7 @@ public with sharing class ApplicationBodyController {
 
         if (appInfoParam != null) {
 
-            if (String.isBlank(appInfoParam.appStatus)) {
-                appInfoParam.appStatus = 'none';
-            }
-
-            if (currentPageName.equalsIgnoreCase('applicationregistration')) {
+            if (currentPageName.equalsIgnoreCase('applicationregistration') || currentPageName.equalsIgnoreCase('applicationhome')) {
                 mapAtAppInfo.put(appInfoParam.at, appInfoParam);
             } else {
                 String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,';
@@ -76,12 +73,13 @@ public with sharing class ApplicationBodyController {
                 } else {
                     appsQuery += ' AND Id = \'' + appInfoParam.appId + '\'';
                 }
-                //System.debug(appsQuery);
+                System.debug(appsQuery);
                 try {
                     apps = new Map<Id, Application__c>((List<Application__c>) Database.query(appsQuery));
                 } catch (Exception e) {
                     System.debug(e.getMessage());
                 }
+
 
 
                 //Create map of application control URLs and tag data associated with them for processing below.
@@ -207,9 +205,16 @@ public with sharing class ApplicationBodyController {
                         }
                     }
                 }
+                System.debug('aps size: ' + apps.size());
+                if (apps.size() > 0) {
+                    noApplication = false;
+                } else {
+                    noApplication = true;
+                }
             }
 
             /* Gather up all the widgets */
+            System.debug(mapAtAppInfo.keySet());
             try {
                 allPositionWidgets = [
                         SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
@@ -229,6 +234,43 @@ public with sharing class ApplicationBodyController {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
             }
 
+            Boolean applicationListWidgetPresent = false;
+            Boolean applicationChecklistPresent = false;
+            if (allPositionWidgets.size() > 0) {
+                for (EASY_Widget__c widget : allPositionWidgets) {
+                    if (widget.Widget_Type__c.equalsIgnoreCase('Application Checklist')) {
+                        applicationChecklistPresent = true;
+                    }
+                    if (widget.Widget_Type__c.equalsIgnoreCase('List of Applications') || widget.Widget_Type__c.equalsIgnoreCase('Application Checklist Multiple')) {
+                        applicationListWidgetPresent = true;
+                    }
+                }
+            }
+
+            /*          if (currentPageName.equalsIgnoreCase('applicationhome') && !applicationChecklistPresent && !noApplication) {
+                          EASY_Widget__c checklistWidget = new EASY_Widget__c();
+                          checklistWidget.Name = 'Temp Application Checklist';
+                          checklistWidget.Widget_Type__c = ('Application Checklist');
+                          checklistWidget.Sort_Order__c = 0;
+                          checklistWidget.Display_Widget_On_Pages__c = 'ApplicationHome';
+                          checklistWidget.Activation_State__c = 'Active';
+                          checklistWidget.Widget_Screen_Location__c = 'Top';
+                          allPositionWidgets.add(checklistWidget);
+                      }
+
+                      if (currentPageName.equalsIgnoreCase('applicationportal') && !applicationListWidgetPresent && !noApplication) {
+                          system.debug('adding app list');
+                          EASY_Widget__c checklistWidget = new EASY_Widget__c();
+                          checklistWidget.Name = 'Temp Application List';
+                          checklistWidget.Widget_Type__c = ('List of Applications');
+                          checklistWidget.Sort_Order__c = 0;
+                          checklistWidget.Display_Widget_On_Pages__c = 'ApplicationPortal';
+                          checklistWidget.Activation_State__c = 'Active';
+                          checklistWidget.Widget_Screen_Location__c = 'Top';
+                          allPositionWidgets.add(checklistWidget);
+                      }
+          */
+            System.debug(JSON.serializePretty(allPositionWidgets));
 
             /* Start/End date filter if defined */
             for (EASY_Widget__c widget : allPositionWidgets) {
@@ -428,7 +470,7 @@ public with sharing class ApplicationBodyController {
                     }
 
                 }
-/*                System.debug('---------------------------');
+                System.debug('---------------------------');
                 System.debug('ID: ' + widget.Id);
                 System.debug('Name: ' + widget.Name);
                 System.debug('AT: ' + widget.Application_Control__r.URL_Parameter__c);
@@ -438,7 +480,7 @@ public with sharing class ApplicationBodyController {
                 System.debug('On Status: ' + widget.Display_Widget_On_Status__c);
                 System.debug('On Sub Status: ' + widget.Display_Widget_On_Sub_Status__c);
                 System.debug('Skipped: ' + skipWidget);
-                System.debug('Skip Reason: ' + skipReason);*/
+                System.debug('Skip Reason: ' + skipReason);
             }
 
         }

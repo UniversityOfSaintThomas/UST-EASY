@@ -2,12 +2,11 @@ let ready = (callback) => {
     if (document.readyState !== "loading") callback();
     else document.addEventListener("DOMContentLoaded", callback);
 }
-let loadSpinner, formSpinner;
+
 ready(() => {
-    loadSpinner = document.getElementById('loadSpinner');
-    formSpinner = document.getElementById("form-spinner");
     appHideLoadingSpinner();
     pageLoadReRendered();
+    activateCarousel();
 });
 
 function pageLoadReRendered() {
@@ -49,13 +48,13 @@ function pageLoadReRendered() {
     findApplicationLinkTargetSelf();
     vfCountryPicklist();
     summaryDetail();
+    adjustLabelsFor();
+    textValidations();
     radioCheckBox();
     checkbox();
-    adjustLabelsFor();
     activateAutoComplete();
     activateTooltips();
     fileUploadAreas();
-    checkForm(null, true);
     //Hide the form spinner if it is active
     hideFormSpinner();
 }
@@ -925,14 +924,6 @@ function textValidations(checkFormValidate, documentStart) {
             }
         });
 
-        doc.querySelectorAll('.docUploadInput').forEach(docUpload => {
-            if (String(docUpload.placeholder) == 'true' && !Boolean(docUpload.value)) {
-                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
-                activateErrorState(docUpload, 'change');
-            } else {
-                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
-            }
-        })
     }
 
     //Format and validate phone numbers

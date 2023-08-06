@@ -2,7 +2,7 @@
 @description This controller is used to display a list of applications available to the contact
 @author Huron Consulting Group
 
-Revision (s): 
+Revision (s):
 *******************************************************************************/
 public class ApplicationPortal {
 
@@ -13,10 +13,17 @@ public class ApplicationPortal {
     public EASYApplicationInfo appInfo { get; set; }
     public Map<Id, EASYApplicationInfo> appInfoMapByAppId { get; set; }
     public String template { get; set; }
+    public Boolean noApplication { get; set; }
 
     public ApplicationPortal() {
+        noApplication = false;
         if (appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
+        }
+        System.debug(JSON.serializePretty(appInfo));
+
+        if (String.isBlank(appInfo.appControlId)) {
+            noApplication = true;
         }
         Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
         template = AppSettings.Default_Template__c;
@@ -45,8 +52,8 @@ public class ApplicationPortal {
                                 FROM Application__c
                                 WHERE Contact__r.Id = :contactId
                                 AND Application_Status__c != 'Wrong App'
-                                AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
-                                AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
+                                AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
+                                AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
                         )
                 ]);
 
@@ -61,8 +68,19 @@ public class ApplicationPortal {
 
                 applicationsByIds = new Map<Id, Application__c>((List<Application__c>) Database.query(query));
                 applicationMapSize = applicationsByIds.size();
+                System.debug(applicationMapSize);
+
+                //Get application controls
+                Set<Id> appControlIds = new Set<Id>();
+                for (Application__c app : applicationsByIds.values()) {
+                    appControlIds.add(app.Application_Control__c);
+                }
+
+
 
                 for (Application__c app : applicationsByIds.values()) {
+                    System.debug(JSON.serializePretty(app.Application_Control__c));
+                    System.debug(JSON.serializePretty(app));
                     EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
                     List<RequirementWrapper> checklist = checklistHelper.checklistRequirements(app, newAppInfo);
                     Boolean allowSubmit = checklistHelper.allowSubmit(checklist, appInfo);

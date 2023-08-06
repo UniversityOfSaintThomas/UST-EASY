@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Opportunity_Record_Type__c</fullName>
-    <deprecated>false</deprecated>
+    <fullName>Highest_Math_Other__c</fullName>
+    <description>Applicants have the ability to explain their Other Math.</description>
     <externalId>false</externalId>
-    <label>Opportunity Record Type</label>
-    <length>25</length>
+    <label>Highest Math Other</label>
+    <length>255</length>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

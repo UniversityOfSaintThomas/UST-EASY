@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Substatus__c</fullName>
+    <description>Used in conjunction with Application Status and Decision Team</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used in conjunction with Application Status and Decision Team</inlineHelpText>
+    <label>Application Substatus</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Application_Status__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Application_Substatus</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Test Scores</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Grades &amp; Test Scores</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Grades</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>College Transcript(s)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Dean&apos;s Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Interview Invited</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Interview Scheduled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Interview Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>File Hold</controllingFieldValue>
+            <valueName>Pending English</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Academic</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Committee Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Committee Deny</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Referred to DFC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Committee Accept Waitlist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Counselor Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Counselor Accept Waitlist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <valueName>Counselor Deny</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Provisional</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pending</controllingFieldValue>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Conditional</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Disciplinary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Appeal Started</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Appeal Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Denied</controllingFieldValue>
+            <valueName>Appeal Denied</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Full</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Deferred from Previous Term</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>On Appeal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Admit</controllingFieldValue>
+            <valueName>Needs Review</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>After Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>After Confirm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Before Complete App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Before Decision</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>From Committee Accept Waitlist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>NAR (Not Actively Recruting)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Prior to Interview</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Unsubscribe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Multiple App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Wrong App</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Opportunity_Record_Type__c</fullName>
-    <deprecated>false</deprecated>
+    <fullName>Start_Term_ERX__c</fullName>
+    <description>Field created to bring over data from ERx.</description>
     <externalId>false</externalId>
-    <label>Opportunity Record Type</label>
+    <inlineHelpText>Field created to bring over data from ERx.</inlineHelpText>
+    <label>Start Term - ERX</label>
     <length>25</length>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

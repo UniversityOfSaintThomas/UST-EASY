@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>First_Generation__c</fullName>
+    <externalId>false</externalId>
+    <label>First Generation?</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yes, I am</fullName>
+                <default>false</default>
+                <label>Yes, I am</label>
+            </value>
+            <value>
+                <fullName>No, I am not</fullName>
+                <default>false</default>
+                <label>No, I am not</label>
+            </value>
+            <value>
+                <fullName>I don&apos;t know</fullName>
+                <default>false</default>
+                <label>I don&apos;t know</label>
+            </value>
+            <value>
+                <fullName>Prefer not to answer</fullName>
+                <default>false</default>
+                <label>Prefer not to answer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

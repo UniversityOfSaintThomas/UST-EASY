@@ -77,6 +77,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Application_Control__c.Allow_Confirm_From__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Application_Control__c.Allow_Submit_From__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -103,6 +108,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Application_Control__c.Cancel_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application_Control__c.Confirm_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -143,6 +153,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Application_Control__c.School_College__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application_Control__c.Show_on_App_Finder__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5941,7 +5956,7 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Application_Control__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>

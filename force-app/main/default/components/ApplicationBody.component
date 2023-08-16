@@ -41,14 +41,6 @@
         <a id="main-content"></a>
         <apex:outputPanel layout="block" styleClass="{!IF(col=='lr','slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-medium-size_6-of-12',IF(col=='l' || col=='r', 'slds-col slds-size_1-of-1 slds-large-size_9-of-12 slds-medium-size_9-of-12', 'slds-col slds-size_1-of-1 slds-large-size_12-of-12'))}">
 
-            <!-- CONTENT TOP WIDGETS -->
-            <apex:outputPanel layout="block" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                <apex:repeat value="{!w.contentTopWidgets}" var="widget" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}">
-                    <apex:variable value="{!mapAtAppInfo[widget.Application_Control__r.URL_Parameter__c]}" var="widgetAppInfo"/>
-                    <c:EasyWidget widget="{!widget}" appInfo="{!widgetAppInfo}" checklistItems="{!checklistItems}"/>
-                </apex:repeat>
-            </apex:outputPanel>
-
             <!-- TITLE AND SUB TITLE -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12 " layout="block">
                 <apex:outputPanel layout="none" rendered="{!currentPageName != 'applicationportal'}">
@@ -64,9 +56,18 @@
                 </apex:outputPanel>
             </apex:outputPanel>
 
+            <!-- CONTENT TOP WIDGETS -->
+            <apex:outputPanel layout="block" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}" styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <apex:repeat value="{!w.contentTopWidgets}" var="widget" rendered="{!IF(w.contentTopWidgets.size > 0, true, false)}">
+                    <apex:variable value="{!mapAtAppInfo[widget.Application_Control__r.URL_Parameter__c]}" var="widgetAppInfo"/>
+                    <c:EasyWidget widget="{!widget}" appInfo="{!widgetAppInfo}" checklistItems="{!checklistItems}"/>
+                </apex:repeat>
+            </apex:outputPanel>
+
+
             <!-- BODY -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                <apex:componentBody/>
+                <apex:componentBody />
             </apex:outputPanel>
 
             <!-- CONTENT BOTTOM WIDGETS -->
@@ -78,7 +79,7 @@
             </apex:outputPanel>
 
             <!-- Load component for modal pop-up -->
-            <c:EasyModal/>
+            <c:EasyModal />
 
         </apex:outputPanel>
 

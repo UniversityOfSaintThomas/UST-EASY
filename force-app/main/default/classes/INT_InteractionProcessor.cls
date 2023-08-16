@@ -572,6 +572,7 @@ public class INT_InteractionProcessor {
                 System.debug(' && !String.isEmpty(interaction.Opportunity_Key__c): ' + !String.isEmpty(interaction.Opportunity_Key__c));
                 if (!String.isEmpty(interaction.Opportunity_Key__c)) {
                     String lastName = interaction.Last_Name__c;
+                    lastName = lastName.replaceAll('[^\\w]', '');
                     String termName = '';
                     String programName = '';
                     if (leadIdToTermNameMap.get(lcr.getLeadId()) != null) {
@@ -755,7 +756,7 @@ public class INT_InteractionProcessor {
 
             //Use contact last name first
             if (String.isNotBlank(contactLastName)) {
-                lastName = contactLastName;
+                lastName = contactLastName.replaceAll('[^\\w]', '');
             } else if (String.isNotBlank(currentOppNameSplit[0])) {
                 lastName = currentOppNameSplit[0];
             }

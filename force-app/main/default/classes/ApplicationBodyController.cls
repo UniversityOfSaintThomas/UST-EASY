@@ -73,17 +73,16 @@ public with sharing class ApplicationBodyController {
                 } else {
                     appsQuery += ' AND Id = \'' + appInfoParam.appId + '\'';
                 }
-                System.debug(appsQuery);
+
                 try {
                     apps = new Map<Id, Application__c>((List<Application__c>) Database.query(appsQuery));
                 } catch (Exception e) {
                     System.debug(e.getMessage());
                 }
 
-
-
                 //Create map of application control URLs and tag data associated with them for processing below.
                 for (Application__c app : apps.values()) {
+
                     EASYPersonalDataTags dataTags = new EASYPersonalDataTags();
                     if (dataTagsMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
                         //Some tag data will be additive if a person has two apps of the same type. This will become an issue to explain, ugh.
@@ -205,7 +204,7 @@ public with sharing class ApplicationBodyController {
                         }
                     }
                 }
-                System.debug('aps size: ' + apps.size());
+
                 if (apps.size() > 0) {
                     noApplication = false;
                 } else {
@@ -214,7 +213,6 @@ public with sharing class ApplicationBodyController {
             }
 
             /* Gather up all the widgets */
-            System.debug(mapAtAppInfo.keySet());
             try {
                 allPositionWidgets = [
                         SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
@@ -247,29 +245,32 @@ public with sharing class ApplicationBodyController {
                 }
             }
 
-            /*          if (currentPageName.equalsIgnoreCase('applicationhome') && !applicationChecklistPresent && !noApplication) {
-                          EASY_Widget__c checklistWidget = new EASY_Widget__c();
-                          checklistWidget.Name = 'Temp Application Checklist';
-                          checklistWidget.Widget_Type__c = ('Application Checklist');
-                          checklistWidget.Sort_Order__c = 0;
-                          checklistWidget.Display_Widget_On_Pages__c = 'ApplicationHome';
-                          checklistWidget.Activation_State__c = 'Active';
-                          checklistWidget.Widget_Screen_Location__c = 'Top';
-                          allPositionWidgets.add(checklistWidget);
-                      }
+            if (currentPageName.equalsIgnoreCase('applicationhome') && !applicationChecklistPresent && !noApplication) {
+                EASY_Widget__c checklistWidget = new EASY_Widget__c();
+                checklistWidget.Name = 'Temp Application Checklist';
+                checklistWidget.Widget_Type__c = ('Application Checklist');
+                checklistWidget.Application_Control__r = applicationUtilities.getApplicationControls(appInfoParam.at);
+                checklistWidget.Sort_Order__c = 0;
+                checklistWidget.Display_Widget_On_Pages__c = 'ApplicationHome';
+                checklistWidget.Activation_State__c = 'Active';
+                checklistWidget.Widget_Screen_Location__c = 'Content Top';
+                allPositionWidgets.add(checklistWidget);
+            }
 
-                      if (currentPageName.equalsIgnoreCase('applicationportal') && !applicationListWidgetPresent && !noApplication) {
-                          system.debug('adding app list');
-                          EASY_Widget__c checklistWidget = new EASY_Widget__c();
-                          checklistWidget.Name = 'Temp Application List';
-                          checklistWidget.Widget_Type__c = ('List of Applications');
-                          checklistWidget.Sort_Order__c = 0;
-                          checklistWidget.Display_Widget_On_Pages__c = 'ApplicationPortal';
-                          checklistWidget.Activation_State__c = 'Active';
-                          checklistWidget.Widget_Screen_Location__c = 'Top';
-                          allPositionWidgets.add(checklistWidget);
-                      }
-          */
+            if (currentPageName.equalsIgnoreCase('applicationportal') && !applicationListWidgetPresent && !noApplication) {
+                system.debug('adding app list');
+                EASY_Widget__c checklistWidget = new EASY_Widget__c();
+                checklistWidget.Application_Control__r = applicationUtilities.getApplicationControls(appInfoParam.at);
+                checklistWidget.Activation_State__c = '';
+                checklistWidget.Name = 'Temp Application List';
+                checklistWidget.Widget_Type__c = 'List of Applications';
+                checklistWidget.Sort_Order__c = 0;
+                checklistWidget.Display_Widget_On_Pages__c = 'ApplicationPortal';
+                checklistWidget.Activation_State__c = 'Active';
+                checklistWidget.Widget_Screen_Location__c = 'Content Top';
+                allPositionWidgets.add(checklistWidget);
+            }
+
             System.debug(JSON.serializePretty(allPositionWidgets));
 
             /* Start/End date filter if defined */
@@ -470,7 +471,7 @@ public with sharing class ApplicationBodyController {
                     }
 
                 }
-                System.debug('---------------------------');
+/*                System.debug('---------------------------');
                 System.debug('ID: ' + widget.Id);
                 System.debug('Name: ' + widget.Name);
                 System.debug('AT: ' + widget.Application_Control__r.URL_Parameter__c);
@@ -480,7 +481,7 @@ public with sharing class ApplicationBodyController {
                 System.debug('On Status: ' + widget.Display_Widget_On_Status__c);
                 System.debug('On Sub Status: ' + widget.Display_Widget_On_Sub_Status__c);
                 System.debug('Skipped: ' + skipWidget);
-                System.debug('Skip Reason: ' + skipReason);
+                System.debug('Skip Reason: ' + skipReason);*/
             }
 
         }

@@ -27,7 +27,7 @@ public class ApplicationRegistration {
 
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
             applicationType = ApexPages.currentPage().getParameters().get('at');
-            if (applicationType.equalsIgnoreCase('noapp')) {
+            if (applicationType.equalsIgnoreCase('noapp') || applicationType.equalsIgnoreCase('commonapp')) {
                 noApplication = true;
             }
         }
@@ -64,10 +64,20 @@ public class ApplicationRegistration {
             ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'First_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
             portalPasswordConfirmation.addQuestionObject(new Question__c(Label__c = 'Please enter your password again.', Required__c = 'yep', Active__c = true, Length__c = 40));
 
-            // Create question groups
-            ApplicationQuestionGroup firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                    firstName, middleName, lastName, email
-            });
+            ApplicationQuestionGroup firstGroup;
+
+            if(applicationType.equalsIgnoreCase('commonapp')) {
+                ApplicationQuestion commonApp = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'First_Name__c');
+                commonApp.addQuestionObject(new Question__c(Label__c = 'Please enter your Common App Id.', Required__c = 'yep', Active__c = true, Length__c = 40));
+                firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+                        firstName, middleName, lastName, email, commonApp
+                });
+            } else {
+                firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+                        firstName, middleName, lastName, email
+                });
+            }
+
             ApplicationQuestionGroup lastGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
                     portalPassword, portalPasswordConfirmation
             });
@@ -96,7 +106,7 @@ public class ApplicationRegistration {
 
         if (!userType.endsWithIgnoreCase('guest')) {
             PageReference createApp;
-            if (String.isNotBlank(applicationType) && !applicationType.equalsIgnoreCase('noapp')) {
+            if (String.isNotBlank(applicationType) && !applicationType.equalsIgnoreCase('noapp') && !applicationType.endsWithIgnoreCase('commonapp')) {
                 createApp = Page.ApplicationCreate;
                 createApp.getParameters().put('at', applicationType);
             } else {

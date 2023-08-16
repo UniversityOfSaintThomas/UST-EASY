@@ -187,7 +187,7 @@ public without sharing class requestForInformationFormController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(Cacheable=true)
     public static String getAcademicLevelValue(String api_name) {
         try {
             String level = '';
@@ -217,7 +217,7 @@ public without sharing class requestForInformationFormController {
         return mapCountryCodeString;
     }
 
-    @AuraEnabled
+    @AuraEnabled(Cacheable=true)
     public static List<Lead_Preset_Value__mdt> getPresetValues(String rfi_controller_name) {
         try {
             List<Lead_Preset_Value__mdt> return_preset_values = new List<Lead_Preset_Value__mdt>();
@@ -236,7 +236,7 @@ public without sharing class requestForInformationFormController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(Cacheable=true)
     public static String getSchoolCollegeAccount(String school_college_name) {
         try {
             String school_college_id = '';
@@ -257,7 +257,7 @@ public without sharing class requestForInformationFormController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(Cacheable=true)
     public static Id getRecruitmentProgram(String academic_level, String citizenship_type, String admit_type, String major_id, String school_name) {
         String program_name = '';
         String program_code = 'AS_UN_BA';

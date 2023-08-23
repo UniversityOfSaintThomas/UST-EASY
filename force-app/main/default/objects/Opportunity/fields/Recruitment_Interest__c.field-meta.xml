@@ -9,7 +9,6 @@
     <label>Recruitment Interest</label>
     <lookupFilter>
         <active>true</active>
-        <errorMessage>Value does not exist or does not match filter criteria.</errorMessage>
         <filterItems>
             <field>Plan__c.Type__c</field>
             <operation>equals</operation>

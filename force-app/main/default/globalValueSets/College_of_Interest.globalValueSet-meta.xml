@@ -30,6 +30,16 @@
         <default>false</default>
         <label>Other</label>
     </customValue>
+    <customValue>
+        <fullName>Non-Credit</fullName>
+        <default>false</default>
+        <label>Non-Credit</label>
+    </customValue>
+    <customValue>
+        <fullName>Executive Education</fullName>
+        <default>false</default>
+        <label>Executive Education</label>
+    </customValue>
     <description>Used to capture the College of Interest</description>
     <masterLabel>College of Interest</masterLabel>
     <sorted>false</sorted>

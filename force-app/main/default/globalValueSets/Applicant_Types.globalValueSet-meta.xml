@@ -71,6 +71,16 @@
         <label>Nursing</label>
     </customValue>
     <customValue>
+        <fullName>Non-Credit</fullName>
+        <default>false</default>
+        <label>Non-Credit</label>
+    </customValue>
+    <customValue>
+        <fullName>Executive Education</fullName>
+        <default>false</default>
+        <label>Executive Education</label>
+    </customValue>
+    <customValue>
         <fullName>Minneapolis Special Education Residency</fullName>
         <default>false</default>
         <isActive>false</isActive>

@@ -68,6 +68,7 @@ public with sharing class ApplicationBodyController {
                 appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
                 appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
                 appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
+                appsQuery += ' AND Account_Claimed__c = TRUE ';
                 if (pagesWithMultipleAppInfo.contains(currentPageName)) {
                     appsQuery += ' AND Contact__c = \'' + appInfoParam.contactId + '\'';
                 } else {

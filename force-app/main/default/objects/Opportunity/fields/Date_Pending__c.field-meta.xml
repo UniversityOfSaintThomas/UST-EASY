@@ -6,6 +6,6 @@
     <label>Date - Pending</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-        <trackTrending>false</trackTrending>
+    <trackTrending>false</trackTrending>
     <type>Date</type>
 </CustomField>

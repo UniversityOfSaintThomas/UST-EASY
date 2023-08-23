@@ -33,6 +33,26 @@
                 <default>false</default>
                 <label>Webform</label>
             </value>
+            <value>
+                <fullName>ERx Data Migration</fullName>
+                <default>false</default>
+                <label>ERx Data Migration</label>
+            </value>
+            <value>
+                <fullName>ERX MVP</fullName>
+                <default>false</default>
+                <label>ERX MVP</label>
+            </value>
+            <value>
+                <fullName>ERx Data Migration - Application</fullName>
+                <default>false</default>
+                <label>ERx Data Migration - Application</label>
+            </value>
+            <value>
+                <fullName>ERx Data Migration - TouchPoint</fullName>
+                <default>false</default>
+                <label>ERx Data Migration - TouchPoint</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>8</visibleLines>

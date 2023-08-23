@@ -41,6 +41,11 @@
                 <default>false</default>
                 <label>Navy</label>
             </value>
+            <value>
+                <fullName>Space Force</fullName>
+                <default>false</default>
+                <label>Space Force</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

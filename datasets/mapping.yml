@@ -38,10 +38,7 @@ Insert Campaign:
   - Campaign_Reference_ID__c
   - IsActive
   - Name
-  lookups:
-    ParentId:
-      table: Campaign
-      after: Insert Campaign
+  soql_filter: "NAME = Null"
 Insert Interaction_Mapping__c:
   sf_object: Interaction_Mapping__c
   fields:
@@ -109,6 +106,7 @@ Insert Scholarship__c:
   - Scholarship_Budget__c
   - Self_Report_ACT_GPA_Criteria__c
   - Short_Description__c
+  soql_filter: "NAME = Null"
 Insert Staging_Record__c:
   sf_object: Staging_Record__c
   fields:
@@ -293,6 +291,7 @@ Insert Staging_Record__c:
   - Visit_Status__c
   - Work_Phone__c
   - Zip__c
+  soql_filter: "NAME = Null"
 Insert hed__Language__c:
   sf_object: hed__Language__c
   fields:
@@ -310,6 +309,7 @@ Insert Award__c:
   - Award_Status__c
   - CreatedDate
   - LastModifiedDate
+  soql_filter: "NAME = Null"
   lookups:
     Scholarship_Name__c:
       table: Scholarship__c
@@ -408,6 +408,7 @@ Insert Account:
   - hed__Credentialing_Email__c
   - hed__School_Code__c
   - hed__Shipping_County__c
+  soql_filter: "NAME LIKE 'Unknown %' OR RecordType.DeveloperName = 'University_Department' OR RecordType.DeveloperName = 'Academic_Program' OR Name = 'University of St Thomas' OR Name = 'Connected University' OR Name = 'Applicant Parent Account'"
   lookups:
     ParentId:
       table: Account
@@ -493,8 +494,8 @@ Insert Program__c:
       table: Account
     Effective_Term__c:
       table: Academic_Term__c
-    Max_Academic_Term_IPT__c:
-      table: Academic_Term__c
+#    Max_Academic_Term_IPT__c:
+#      table: Academic_Term__c
     Recruitment_Program__c:
       table: Program__c
       after: Insert Program__c
@@ -691,6 +692,7 @@ Insert Admissions_Region__c:
   - CreatedDate
   - LastModifiedDate
   - Name
+  soql_filter: "NAME = Null"
   lookups:
     Admission_Territory__c:
       table: Admission_Territory__c
@@ -856,6 +858,7 @@ Insert Admissions_Booking__c:
   - Tracking_Status__c
   - Type__c
   - URL_to_Form__c
+  soql_filter: "NAME = Null"
   lookups:
     Admission_Territory__c:
       table: Admission_Territory__c
@@ -901,6 +904,7 @@ Insert Application_Payment__c:
   - TouchnetReceiptNumber__c
   - Waived_Reason__c
   - Zip__c
+  soql_filter: "NAME = Null"
   lookups:
     Admissions_Application__c:
       table: Application__c
@@ -1017,6 +1021,7 @@ Insert Application_Review__c:
   - Transcript_Reivew__c
   - Writing_Story__c
   - Writing_Style__c
+  soql_filter: "NAME = Null"
   lookups:
     Application__c:
       table: Application__c
@@ -1037,13 +1042,16 @@ Insert Application__c:
   - Applicant_Type__c
   - Application_Decision_Team__c
   - Application_Feedback__c
+  - Application_ID_ERx__c
   - Application_Status__c
   - Application_Substatus__c
   - Auto_Accept_Audit__c
   - CPF_Pre_Professional_ProgramDDN__c
   - Calculate_Merit_Scholarship__c
+  - Canvas_Course_Materials_Expiration_Date__c
   - Citizenship_Country__c
   - Citizenship__c
+  - Club_Intramural_Sports_Interest__c
   - College_Readiness_Program__c
   - Comments_Private__c
   - Communication_Merge_Text_Field__c
@@ -1153,6 +1161,7 @@ Insert Application__c:
   - Veteran_Status_At_Enrollment__c
   - Veteran_Status_Current__c
   - Withdrawal_Reason__c
+  soql_filter: "NAME = Null"
   lookups:
     Application_Control__c:
       table: Application_Control__c
@@ -1165,10 +1174,10 @@ Insert Application__c:
       after: Insert Contact
     High_School_or_College__c:
       table: Account
-    Institution_Attending__c:
-      table: Account
-    Intended_Program_Term__c:
-      table: Intended_Program_Term__c
+#    Institution_Attending__c:
+#      table: Account
+#    Intended_Program_Term__c:
+#      table: Intended_Program_Term__c
     Intended_Program__c:
       table: Program__c
     Intended_Term_of_Entry__c:
@@ -1205,6 +1214,7 @@ Insert Requirement_Response__c:
   - ValueTextEntry__c
   - Viewed__c
   - Waive_Requirement__c
+  soql_filter: "NAME = Null"
   lookups:
     Application__c:
       table: Application__c
@@ -1239,6 +1249,7 @@ Insert Question_Response__c:
   - ValueTextEncrypted__c
   - ValueText__c
   - ValueURL__c
+  soql_filter: "NAME = Null"
   lookups:
     Application__c:
       table: Application__c
@@ -1323,6 +1334,7 @@ Insert Recommendation__c:
   - Title_Position__c
   - User_Created__c
   - Waive_Right_to_Review__c
+  soql_filter: "NAME = Null"
   lookups:
     Application__c:
       table: Application__c
@@ -1334,6 +1346,7 @@ Insert CampaignMember:
   - Campaign_Member_Key__c
   - CreatedDate
   - LastModifiedDate
+  soql_filter: "NAME = Null"
   lookups:
     CampaignId:
       table: Campaign
@@ -1418,6 +1431,7 @@ Insert Contact:
   - hed__WorkEmail__c
   - hed__WorkPhone__c
   - hed__is_Address_Override__c
+  soql_filter: "NAME = Null"
   lookups:
     AccountId:
       table: Account
@@ -1457,6 +1471,7 @@ Insert External_Course__c:
   - St_Thomas_Course_Number__c
   - St_Thomas_Course_Subject__c
   - St_Thomas_Course_Title__c
+  soql_filter: "NAME = Null"
   lookups:
     Course__c:
       table: hed__Course__c
@@ -1482,6 +1497,7 @@ Insert Extracurricular_Activity__c:
   - Timing_of_participation__c
   - User_Created__c
   - Weeks_spent_per_year__c
+  soql_filter: "NAME = Null"
   lookups:
     Contact__c:
       table: Contact
@@ -1529,6 +1545,7 @@ Insert Family_Member__c:
   - UST_Sibling_Same_Term__c
   - User_Created__c
   - Work_Phone__c
+  soql_filter: "NAME = Null"
   lookups:
     Admissions_Application__c:
       table: Application__c
@@ -1577,6 +1594,7 @@ Insert Family__c:
   - UST_Sibling_Same_Term__c
   - User_Created__c
   - Work_Phone__c
+  soql_filter: "NAME = Null"
   lookups:
     Applicant__c:
       table: Contact
@@ -1630,6 +1648,7 @@ Insert Scholarship_Applicant__c:
   - Scholarship_Notes__c
   - Scholarship_Status__c
   - Signature__c
+  soql_filter: "NAME = Null"
   lookups:
     Contact__c:
       table: Contact
@@ -1673,6 +1692,7 @@ Insert Work_History__c:
   - Titles_of_Direct_Reports__c
   - Titles_of_Indirect_Reports__c
   - User_Created__c
+  soql_filter: "NAME = Null"
   lookups:
     Application__c:
       table: Application__c
@@ -1701,6 +1721,7 @@ Insert hed__Address__c:
   - hed__Seasonal_Start_Day__c
   - hed__Seasonal_Start_Month__c
   - hed__Seasonal_Start_Year__c
+  soql_filter: "NAME = Null"
   lookups:
     hed__Parent_Account__c:
       table: Account
@@ -1718,6 +1739,7 @@ Insert hed__Affiliation__c:
   - hed__Role__c
   - hed__StartDate__c
   - hed__Status__c
+  soql_filter: "NAME = Null"
   lookups:
     hed__Account__c:
       table: Account
@@ -1737,6 +1759,7 @@ Insert hed__Contact_Language__c:
   - hed__Fluency__c
   - hed__Language_Details__c
   - hed__Primary_Language__c
+  soql_filter: "NAME = Null"
   lookups:
     hed__Contact__c:
       table: Contact
@@ -1809,6 +1832,7 @@ Insert hed__Education_History__c:
   - hed__Status__c
   - hed__Verification_Status_Date__c
   - hed__Verification_Status__c
+  soql_filter: "NAME = Null"
   lookups:
     Official_Major__c:
       table: Account
@@ -1923,6 +1947,7 @@ Insert hed__Test__c:
   - old_GRE_Quantitative_Reasoning_Score__c
   - old_GRE_Verbal_Reasoning_Percentile__c
   - old_GRE_Verbal_Reasoning_Score__c
+  soql_filter: "NAME = Null"
   lookups:
     hed__Contact__c:
       table: Contact
@@ -1942,6 +1967,7 @@ Insert External_Course_Connection__c:
   - Related_Object_JSON__c
   - School_Not_Found__c
   - User_Created__c
+  soql_filter: "NAME = Null"
   lookups:
     Education_History__c:
       table: hed__Education_History__c
@@ -2101,6 +2127,7 @@ Insert Opportunity:
   - hed__Desired_Campus__c
   - hed__Desired_Degree_Level__c
   - hed__Living_Situation__c
+  soql_filter: "NAME = Null"
   lookups:
     Academic_Interest__c:
       table: Plan__c
@@ -2305,6 +2332,7 @@ Insert Lead:
   - utm_source__c
   - utm_source_platform__c
   - utm_term__c
+  soql_filter: "NAME = Null"
   lookups:
     Affiliated_Account__c:
       table: Account
@@ -2339,10 +2367,15 @@ Insert Interaction__c:
   fields:
   - Additional_Campaign_Member_Status__c
   - Additional_Campaign_Reference_ID__c
+  - Admission_Type_UG__c
   - Admit_Type__c
   - Affiliation_Role__c
   - Affiliation_Status__c
+  - Application_ID_ERx__c
+  - Application_Name_ERx__c
   - Application_Number__c
+  - Application_Status__c
+  - Application_Substatus__c
   - Athlete_Sport_1__c
   - Athlete_Sport_2__c
   - Athlete_Sport_3__c
@@ -2356,6 +2389,7 @@ Insert Interaction__c:
   - Campaign_Reference_ID__c
   - Citizenship__c
   - College_CEEB__c
+  - College_Readiness_Program__c
   - College_of_Interest__c
   - Constituent_ID__c
   - Contact_ID_ERX__c
@@ -2363,6 +2397,7 @@ Insert Interaction__c:
   - Country__c
   - CreatedDate
   - Current_Grade__c
+  - Current_US_Visa_Type__c
   - Date_Admit__c
   - Date_Closed__c
   - Date_Completed_App__c
@@ -2370,8 +2405,10 @@ Insert Interaction__c:
   - Date_Denied__c
   - Date_Engaged__c
   - Date_Inquiry__c
+  - Date_Intent_to_Enroll_Completed__c
   - Date_Moderately_Suspect__c
   - Date_No_Longer_Interested__c
+  - Date_Pending__c
   - Date_Started_App__c
   - Date_Submitted_App__c
   - Date_Suspect__c
@@ -2379,17 +2416,24 @@ Insert Interaction__c:
   - Degree_Level__c
   - Degree_Type_Summary__c
   - Description__c
+  - Dont_Recalculate_Counselor_Assignment__c
+  - Duplicate_Email__c
   - Email__c
   - Employer__c
   - Ethnicity__c
+  - External_Application_ID__c
   - FAFSA_Parent_1_School_Level__c
   - FAFSA_Parent_2_School_Level__c
+  - First_Generation__c
   - First_Name__c
   - Foot_on_Campus__c
   - Gender__c
+  - Generic_Filter_3__c
   - Has_Question__c
   - High_School_CEEB__c
   - High_School_Graduation_Year__c
+  - Highest_Level_Math__c
+  - Highest_Math_Other__c
   - Home_Phone__c
   - I_have_a_question__c
   - Identify_as_Reference__c
@@ -2473,6 +2517,7 @@ Insert Interaction__c:
   - LinkedIn_Profile__c
   - LinkedIn_Seniority__c
   - LinkedIn_Start_Date__c
+  - MN_Transfer_Curr_Complete_Ind__c
   - Mailed_Program_Information_Requested__c
   - Mailing_City__c
   - Mailing_Country__c
@@ -2480,6 +2525,7 @@ Insert Interaction__c:
   - Mailing_State__c
   - Mailing_Street__c
   - Middle_Name__c
+  - Military_Status__c
   - Mobile_Phone__c
   - National_Merit_Scholar__c
   - Nominator_Email__c
@@ -2488,6 +2534,7 @@ Insert Interaction__c:
   - Opportunity_Record_Type__c
   - Opportunity_Stage__c
   - OwnerId__c
+  - Pardot_Sync_OCB__c
   - Preferred_First_Name__c
   - Primary_Affiliation__c
   - Race__c
@@ -2495,14 +2542,21 @@ Insert Interaction__c:
   - Recruitment_Program_Associated_Schools__c
   - Referral_Text__c
   - Relationship_to_Student__c
+  - SJV_Ind__c
   - Salutation__c
   - Scholarship_of_Interest__c
+  - Self_Reported_Field_of_Study__c
   - Self_Reported_Undergrad_Degree__c
   - Self_Reported_Undergrad_Grad_Year__c
   - Self_Reported_Undergrad_Institution__c
   - Source_CEEB_Code__c
+  - Start_Term_ERX__c
   - State__c
+  - Touchpoint_ID_ERX__c
   - University_Email__c
+  - Veteran_Benefit_Eligible__c
+  - Veteran_Status_Current__c
+  - Withdrawal_Reason__c
   - Years_Attended__c
   - gclid__c
   - utm_campaign__c
@@ -2515,6 +2569,7 @@ Insert Interaction__c:
   - utm_source_platform__c
   - utm_term__c
   - xCollege_of_Interest__c
+  soql_filter: "NAME = Null"
   lookups:
     Academic_Interest__c:
       table: Plan__c

@@ -12,24 +12,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Currently Serving</fullName>
+                <fullName>On active duty U.S. military</fullName>
                 <default>false</default>
-                <label>Currently Serving</label>
+                <label>On active duty U.S. military</label>
             </value>
             <value>
-                <fullName>Previously Served</fullName>
+                <fullName>U.S. Reserves or National Guard</fullName>
                 <default>false</default>
-                <label>Previously Served</label>
+                <label>U.S. Reserves or National Guard</label>
             </value>
             <value>
-                <fullName>Current Dependent</fullName>
+                <fullName>Veteran of U.S. Armed Forces</fullName>
                 <default>false</default>
-                <label>Current Dependent</label>
-            </value>
-            <value>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-                <label>Not Applicable</label>
+                <label>Veteran of U.S. Armed Forces</label>
             </value>
         </valueSetDefinition>
     </valueSet>

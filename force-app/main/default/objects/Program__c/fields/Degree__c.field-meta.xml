@@ -15,7 +15,7 @@
             <value>
                 <fullName>Associate&apos;s Degree Program</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Associate&apos;s Degree Program</label>
             </value>
             <value>
@@ -26,13 +26,13 @@
             <value>
                 <fullName>BA</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>BA</label>
             </value>
             <value>
                 <fullName>Bachelor&apos;s Degree Program</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Bachelor&apos;s Degree Program</label>
             </value>
             <value>
@@ -53,7 +53,7 @@
             <value>
                 <fullName>BS</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>BS</label>
             </value>
             <value>
@@ -89,7 +89,7 @@
             <value>
                 <fullName>Doctorate</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Doctorate</label>
             </value>
             <value>
@@ -130,7 +130,7 @@
             <value>
                 <fullName>MA</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>MA</label>
             </value>
             <value>
@@ -161,7 +161,7 @@
             <value>
                 <fullName>Master of Laws (LLM)</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Master of Laws (LLM)</label>
             </value>
             <value>
@@ -197,7 +197,7 @@
             <value>
                 <fullName>MBA</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>MBA</label>
             </value>
             <value>
@@ -208,7 +208,7 @@
             <value>
                 <fullName>MS</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>MS</label>
             </value>
             <value>

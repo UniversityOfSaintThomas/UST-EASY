@@ -3,7 +3,7 @@
     <fullName>Cost_total__c</fullName>
     <externalId>false</externalId>
     <inlineHelpText>Rollup summary of products for intl calculations</inlineHelpText>
-    <label>Cost total</label>
+    <label>Intl Cost Total (inc. fees + Room/Board)</label>
     <summarizedField>OpportunityLineItem.TotalPrice</summarizedField>
     <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
     <summaryOperation>sum</summaryOperation>

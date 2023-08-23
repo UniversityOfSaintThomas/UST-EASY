@@ -23,6 +23,21 @@
                 <default>false</default>
                 <label>RFI</label>
             </value>
+            <value>
+                <fullName>Application</fullName>
+                <default>false</default>
+                <label>Application</label>
+            </value>
+            <value>
+                <fullName>Course Preference Form</fullName>
+                <default>false</default>
+                <label>Course Preference Form</label>
+            </value>
+            <value>
+                <fullName>Course Catalog (Non-Credit)</fullName>
+                <default>false</default>
+                <label>Course Catalog (Non-Credit)</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>

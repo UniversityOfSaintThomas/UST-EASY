@@ -33,6 +33,11 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>Non-Credit</fullName>
+                <default>false</default>
+                <label>Non-Credit</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

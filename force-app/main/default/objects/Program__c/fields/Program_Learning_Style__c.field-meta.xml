@@ -33,6 +33,11 @@
                 <default>false</default>
                 <label>Metro Locations</label>
             </value>
+            <value>
+                <fullName>On Demand</fullName>
+                <default>false</default>
+                <label>On Demand</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>

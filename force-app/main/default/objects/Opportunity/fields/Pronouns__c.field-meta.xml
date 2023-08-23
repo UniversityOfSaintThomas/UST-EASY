@@ -4,7 +4,6 @@
     <externalId>false</externalId>
     <label>Pronouns</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>

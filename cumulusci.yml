@@ -128,6 +128,7 @@ tasks:
       permission_set_names:
         - UST Scholarship Applicant
         - Application Community
+      timeout: 480
 
   deploy_site_config:
     description: Deploys configuration for Development.

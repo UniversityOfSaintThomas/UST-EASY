@@ -145,8 +145,8 @@ public class requestForInformationFormController_TEST {
     @IsTest
     public static void testGetPrograms() {
         Test.startTest();
-        Map<Id, Program__c> program_map1 = requestForInformationFormController.getPrograms('U', 'Undergraduate', '');
-        Map<Id, Program__c> program_map2 = requestForInformationFormController.getPrograms('G', 'School of Law', '');
+        Map<Id, Program__c> program_map1 = requestForInformationFormController.getPrograms('U', 'Undergraduate', '', true);
+        Map<Id, Program__c> program_map2 = requestForInformationFormController.getPrograms('G', 'School of Law', '', false);
         Test.stopTest();
         System.assertEquals(1, program_map1.size());
         System.assertEquals(1, program_map2.size());
@@ -155,7 +155,7 @@ public class requestForInformationFormController_TEST {
     @IsTest
     public static void testGetProgramsWithPreselectedAcademicInterest() {
         Test.startTest();
-        Map<Id, Program__c> program_map2 = requestForInformationFormController.getPrograms('G', 'School of Law', 'LW_JD|JD|JD2;LW_JD2|JD2|JD2');
+        Map<Id, Program__c> program_map2 = requestForInformationFormController.getPrograms('G', 'School of Law', 'LW_JD|JD|JD2;LW_JD2|JD2|JD2', true);
         Test.stopTest();
         System.assertEquals(1, program_map2.size());
     }

@@ -119,7 +119,7 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static Map<Id, Program__c> getPrograms(String academic_level, String school_college, String academic_interest_codes) {
+    public static Map<Id, Program__c> getPrograms(String academic_level, String school_college, String academic_interest_codes, Boolean multi_select_standard) {
         try {
             String query_string =
                     //Student type buckets
@@ -152,7 +152,12 @@ public without sharing class requestForInformationFormController {
                 List<String> academicCodes = academic_interest_codes.split(';');
                 query_string += ' AND Program_Major_Concentration__c IN :academicCodes ';
             }
-            query_string += ' ORDER BY Degree__c, Program_Name_on_Application__c ';
+            if (multi_select_standard) {
+                query_string += ' ORDER BY Program_Name_on_Application__c ';
+            } else {
+                query_string += ' ORDER BY Degree__c, Program_Name_on_Application__c ';
+            }
+
             //System.debug('PROGRAM QUERY: ');
             //System.debug(query_string);
             List<Program__c> programs = Database.query(query_string);

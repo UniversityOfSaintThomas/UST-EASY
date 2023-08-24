@@ -14,6 +14,7 @@ public class ApplicationRegistration {
     public Boolean cookieKeyPresent { get; set; }
     public String userType { get; set; }
     public Boolean noApplication { get; set; }
+    public Boolean commonAppApplication { get; set; }
 
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
@@ -24,11 +25,15 @@ public class ApplicationRegistration {
         cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
         String applicationType = '';
         noApplication = false;
+        commonAppApplication = false;
 
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
             applicationType = ApexPages.currentPage().getParameters().get('at');
             if (applicationType.equalsIgnoreCase('noapp') || applicationType.equalsIgnoreCase('commonapp')) {
                 noApplication = true;
+            }
+            if (applicationType.equalsIgnoreCase('commonapp')) {
+                commonAppApplication = true;
             }
         }
 
@@ -66,8 +71,8 @@ public class ApplicationRegistration {
 
             ApplicationQuestionGroup firstGroup;
 
-            if(applicationType.equalsIgnoreCase('commonapp')) {
-                ApplicationQuestion commonApp = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'First_Name__c');
+            if (commonAppApplication) {
+                ApplicationQuestion commonApp = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'External_Application_ID__c');
                 commonApp.addQuestionObject(new Question__c(Label__c = 'Please enter your Common App Id.', Required__c = 'yep', Active__c = true, Length__c = 40));
                 firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
                         firstName, middleName, lastName, email, commonApp
@@ -132,7 +137,7 @@ public class ApplicationRegistration {
     public PageReference submit() {
         System.Savepoint sp = Database.setSavepoint();
         Boolean dmlException = false;
-        populateInteraction();
+        String errorMessage = populateInteraction();
         loginUser = null;
         loginPassword = null;
         loginUrl = null;
@@ -140,9 +145,7 @@ public class ApplicationRegistration {
 
         try {
             // Throw exception if not all required fields have been filled-out
-
-            String errorMessage = '';
-            errorMessage = appCreate.checkFields();
+            errorMessage += appCreate.checkFields();
             System.debug(errorMessage);
 
             //String errorMessage = appCreate.checkFields();
@@ -152,6 +155,7 @@ public class ApplicationRegistration {
 
             // Insert interaction to create/update Contact
             System.debug('INTERACTION: ' + JSON.serializePretty(interaction));
+
             insert interaction;
             interaction = [SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
             Contact con = [SELECT Id, FirstName, MiddleName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
@@ -228,10 +232,11 @@ public class ApplicationRegistration {
         return null;
     }
 
-    public void populateInteraction() {
+    public String populateInteraction() {
         Id application_opp_RT_ID = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
         interaction.Id = null;
         interaction.Contact__c = null;
+        String errorMessage = '';
         for (ApplicationQuestionGroup questionGroup : appCreate.section.groups) {
             for (ApplicationQuestion question : questionGroup.questions) {
                 if (question.label == 'What term are you applying for?' && question.resp != null) {
@@ -242,6 +247,34 @@ public class ApplicationRegistration {
                 }
             }
         }
+
+        //Check for common app Id External_Application_ID__c
+        if (commonAppApplication) {
+            try {
+                Application__c commonApplication = [
+                        SELECT External_Application_ID__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email,
+                                Contact__r.Mailing_First_Name__c, Intended_Program__c, Intended_Term_of_Entry__c
+                        FROM Application__c
+                        WHERE (
+                                Contact__r.FirstName = :interaction.First_Name__c
+                                OR
+                                Contact__r.Mailing_First_Name__c = :interaction.First_Name__c
+                        )
+                        AND Contact__r.LastName = :interaction.Last_Name__c
+                        AND Contact__r.Email = :interaction.Email__c
+                        AND External_Application_ID__c = :interaction.External_Application_ID__c
+                        LIMIT 1
+                ];
+                if (commonApplication != null) {
+                    interaction.Academic_Program__c = commonApplication.Intended_Program__c;
+                    interaction.Intended_Start_Term__c = commonApplication.Intended_Term_of_Entry__c;
+                }
+            } catch (Exception ex) {
+                errorMessage = ' We can\'t match your common app information with the information provided."';
+            }
+        }
+
+
         if (interaction.Academic_Program__c != null) {
             List<Program__c> program = [SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c FROM Program__c WHERE Id = :interaction.Academic_Program__c LIMIT 1];
             if (!program.isEmpty()) {
@@ -266,6 +299,8 @@ public class ApplicationRegistration {
         interaction.Date_Started_App__c = System.Today();
         interaction.Lead_Source__c = 'Application';
         interaction.Interaction_Status__c = 'New';
+
+        return errorMessage;
     }
 
     public PageReference login() {

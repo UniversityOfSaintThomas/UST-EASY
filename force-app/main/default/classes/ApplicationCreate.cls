@@ -424,7 +424,7 @@ public class ApplicationCreate {
             }
         }
 
-        return null;
+        return '';
     }
 
     public String saveApplication(Boolean createInteraction) {

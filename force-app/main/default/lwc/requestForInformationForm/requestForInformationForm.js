@@ -12,8 +12,6 @@ import {LightningElement, api, track, wire} from 'lwc';
 import {getObjectInfo} from 'lightning/uiObjectInfoApi';
 import {getPicklistValuesByRecordType} from 'lightning/uiObjectInfoApi';
 import {generateRecordInputForCreate, getRecordCreateDefaults} from 'lightning/uiRecordApi';
-import {loadStyle} from 'lightning/platformResourceLoader';
-import resourceName from '@salesforce/resourceUrl/rfiGeneralStyle';
 
 // lead object and fields
 import LEAD_OBJECT from '@salesforce/schema/Lead';
@@ -113,7 +111,6 @@ export default class RequestForInformationForm extends LightningElement {
     gclid;
 
     connectedCallback() {
-        loadStyle(this, resourceName).then().catch();
         this.utm_campaign = this.getUrlParamValue(window.location.href, 'utm_campaign');
         this.utm_medium = this.getUrlParamValue(window.location.href, 'utm_medium');
         this.utm_source = this.getUrlParamValue(window.location.href, 'utm_source');

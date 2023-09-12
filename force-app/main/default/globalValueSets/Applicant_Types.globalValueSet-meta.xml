@@ -81,6 +81,11 @@
         <label>Executive Education</label>
     </customValue>
     <customValue>
+        <fullName>Common App</fullName>
+        <default>false</default>
+        <label>Common App</label>
+    </customValue>
+    <customValue>
         <fullName>Minneapolis Special Education Residency</fullName>
         <default>false</default>
         <isActive>false</isActive>

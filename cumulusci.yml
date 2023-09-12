@@ -117,6 +117,7 @@ tasks:
       namespace_inject: $project_config.project__package__namespace
       path: unpackaged/config/settings
       unmanaged: True
+      timeout: 520
 
   configure_network_setting:
     description: Sets up the network for our community
@@ -128,7 +129,7 @@ tasks:
       permission_set_names:
         - UST Scholarship Applicant
         - Application Community
-      timeout: 480
+      timeout: 520
 
   deploy_site_config:
     description: Deploys configuration for Development.
@@ -243,6 +244,11 @@ tasks:
         - record_type: Family__c.Sibling
         - record_type: Family__c.UST_Alumni_Family
         - record_type: Family__c.UST_Employee_Family
+        - record_type: Family__c.Parent_Guardian
+          default: true
+        - record_type: Family_Member__c.Sibling
+        - record_type: Family_Member__c.Parent_Guardian
+        - record_type: Family_Member__c.UST_Alumni_Family
 
   add_degree_piciklist:
     description: "Adds more picklist items to the degree earned list of EDA."

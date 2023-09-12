@@ -154,16 +154,28 @@
                                             <dt class="slds-item_label slds-text-color_weak slds-truncate" title="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}">
                                                 {!question.question.Label__c} {!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}
                                             </dt>
-                                            <dd class="slds-item_detail" title="Description for first label">
 
-                                                <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address' && question.fieldType!='Date'}"/>
+                                            <dd class="slds-item_detail slds-truncate" title="Description for first label">
 
-                                                <!--Date record display -->
-                                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" rendered="{!question.fieldType ='Date'}">
-                                                    <apex:param value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}"/>
+                                                <!-- <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address'}"/>-->
+
+                                                <apex:outputText value="{!rr.obj['Holding_Name__c']}" rendered="{!question.fieldType!='Address' && NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
+
+                                                <apex:outputPanel layout="none" rendered="{!ISBLANK(rr.obj['Holding_Name__c']) && question.fieldType!='Address' && lower(question.question.Related_Object_Field__c) == 'hed__account__c' && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}">
+                                                    {!rr.obj['hed__Account__r']['Name']}
+                                                </apex:outputPanel>
+
+                                                <apex:outputPanel layout="none" rendered="{!question.fieldType!='Address' && !group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}">
+                                                    <apex:outputPanel layout="none" rendered="{!question.fieldType != 'Date'}">
+                                                       {!rr.obj[question.question.Related_Object_Field__c]}
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Date'}">
+                                                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                            <apex:param value="{!rr.obj[question.question.Related_Object_Field__c]}" />
                                                 </apex:outputText>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
 
-                                                <!--Address record display -->
                                                 <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Address'}">
                                                     {!rr.obj['Street__c']},
                                                     {!rr.obj['City__c']}, {!rr.obj['State__c']} {!rr.obj['PostalCode__c']} {!rr.obj['Country__c']}
@@ -220,16 +232,15 @@
                             </apex:commandLink>
                         </apex:outputPanel>
 
-                        <!-- This Add Record onclick event was a bear to write. Even though the method was returning true/false you still have to right the logic in the onclick event for it to work correctly-->
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" onClick="if(addRecordValidation(this) === false){return false;} else {showFormSpinner();}" styleClass="slds-button slds-button_brand slds-m-right-small add-record-button" onComplete="pageLoadReRendered();">
+                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" styleClass="slds-button slds-button_brand slds-m-right-small" onComplete="addRecordValidation(this);pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                                 </svg>
                                 Add Record
                                 <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                             </apex:commandLink>
-                            <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand cancel-records-button" onComplete="pageLoadReRendered();">
+                            <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand" onComplete="pageLoadReRendered();">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#close")}"></use>
                                 </svg>

@@ -1,16 +1,36 @@
-<messaging:emailTemplate subject="Recommendation Request for {!relatedTo.Application__r.Contact__r.Name}" recipientType="Contact" relatedToType="Recommendation__c" replyTo="noreply@stthomas.edu">
+<messaging:emailTemplate subject="Recommendation Request for {!relatedTo.Application__r.Contact_Mailing_First_Name__c} {!relatedTo.Application__r.Contact__r.LastName} " recipientType="Contact" relatedToType="Recommendation__c" replyTo="noreply@stthomas.edu">
     <messaging:htmlEmailBody >
+    <div style="width:550px;  margin:0 auto;">
+    <font face="sans-serif" size="2">
+    <apex:image id="header" value="https://uofstthomasmn--c.na132.content.force.com/servlet/servlet.ImageServer?id=0154P000007k5Z3&oid=00Df2000000CuDr&lastMod=1659413679000" />
+
         <html>
         <body>
         <p>
-            A Recommendation has been requested for {!relatedTo.Application__r.Contact__r.Name}. Please follow the link below to complete the Recommendation:
+            {!relatedTo.Application__r.Contact_Mailing_First_Name__c} {!relatedTo.Application__r.Contact__r.LastName} is requesting a recommendation from you for their {!relatedTo.Application__r.Intended_Term_of_Entry__r.Name} application to {!relatedTo.Application__r.Intended_Program__r.Program_Name_on_Application__c}. They have identified you as a personal or professional reference.
+            You can reach {!relatedTo.Application__r.Contact_Mailing_First_Name__c} at {!relatedTo.Application__r.Contact__r.Email} if you have questions.
+        </p>
+        <p>
+        Please provide feedback regarding {!relatedTo.Application__r.Contact_Mailing_First_Name__c}'s academic, professional and personal characteristics by clicking the link below. This will assist with our application review and allow us to provide {!relatedTo.Application__r.Contact_Mailing_First_Name__c} an admission decision.
         </p>
         <p>
             <a href="{!$Setup.Application_Setting__c.Community_URL__c+"/RecommendationForm?recId="+relatedTo.Id}" target="_blank">
-                {!$Setup.Application_Setting__c.Community_URL__c+"/RecommendationForm?recId="+relatedTo.Id}
+                University of St. Thomas Recommendation Form
             </a>
         </p>
+
+        <p>Thank you in advance for taking the time to provide this information. </p>
+        <p><strong><font color="510c76">Graduate Admissions</font></strong><br/>
+        <a href="mailto:gradadmissions@stthomas.edu&subject=Application Recommendation Request">gradadmissions@stthomas.edu</a><br />
+        <font color="510c76">University of St. Thomas</font></p>
+
+        <apex:image id="footer" value="https://uofstthomasmn--c.na132.content.force.com/servlet/servlet.ImageServer?id=0154P000007k5Z2&oid=00Df2000000CuDr&lastMod=1659413679000"/>
         </body>
         </html>
+
+
+
+        </font>
+        </div>
     </messaging:htmlEmailBody>
 </messaging:emailTemplate>

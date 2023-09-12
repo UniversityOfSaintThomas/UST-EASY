@@ -211,17 +211,4 @@
         <p class="slds-text-body_regular">{!questionWrapper['helpText']}</p>
     </apex:outputPanel>
 
-    <!-- Question Assistive Text -->
-    <apex:outputPanel layout="none" rendered="{!!ISBLANK(questionWrapper['assistiveText'])}">
-        <div class="slds-form-element__help">
-            {!questionWrapper['assistiveText']}
-        </div>
-    </apex:outputPanel>
-
-    <!-- Question Help Text -->
-    <apex:outputPanel layout="none" rendered="{!!ISBLANK(questionWrapper['helpText'])}">
-        <p class="slds-text-body_regular">{!questionWrapper['helpText']}</p>
-    </apex:outputPanel>
-
-
 </apex:component>

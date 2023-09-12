@@ -19,6 +19,7 @@ public class ApplicationRegistration {
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
     ********************************************************************************/
+
     public ApplicationRegistration() {
         userType = UserInfo.getUserType();
         appInfo = ApplicationUtilities.createShellAppInfo();
@@ -73,7 +74,7 @@ public class ApplicationRegistration {
 
             if (commonAppApplication) {
                 ApplicationQuestion commonApp = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'External_Application_ID__c');
-                commonApp.addQuestionObject(new Question__c(Label__c = 'Please enter your Common App Id.', Required__c = 'yep', Active__c = true, Length__c = 40));
+                commonApp.addQuestionObject(new Question__c(Label__c = 'Please enter your Common App Id', Required__c = 'yep', Active__c = true, Length__c = 40));
                 firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
                         firstName, middleName, lastName, email, commonApp
                 });
@@ -137,22 +138,20 @@ public class ApplicationRegistration {
     public PageReference submit() {
         System.Savepoint sp = Database.setSavepoint();
         Boolean dmlException = false;
-        String errorMessage = populateInteraction();
+        String errorMessage = '';
+        errorMessage = populateInteraction();
         loginUser = null;
         loginPassword = null;
         loginUrl = null;
         crudToDo doCrud = new crudToDo();
 
+        // Throw exception if not all required fields have been filled-out
+        errorMessage += appCreate.checkFields();
+
         try {
-            // Throw exception if not all required fields have been filled-out
-            errorMessage += appCreate.checkFields();
-            System.debug(errorMessage);
-
-            //String errorMessage = appCreate.checkFields();
             if (String.isNotBlank(errorMessage)) {
-                throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
+                throw new ApplicationUtilities.ApplicationException(errorMessage, true, true);
             }
-
             // Insert interaction to create/update Contact
             System.debug('INTERACTION: ' + JSON.serializePretty(interaction));
 
@@ -232,6 +231,7 @@ public class ApplicationRegistration {
         return null;
     }
 
+
     public String populateInteraction() {
         Id application_opp_RT_ID = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
         interaction.Id = null;
@@ -268,9 +268,11 @@ public class ApplicationRegistration {
                 if (commonApplication != null) {
                     interaction.Academic_Program__c = commonApplication.Intended_Program__c;
                     interaction.Intended_Start_Term__c = commonApplication.Intended_Term_of_Entry__c;
+                } else {
+                    return ' We can\'t match your common app information with the information provided.';
                 }
             } catch (Exception ex) {
-                errorMessage = ' We can\'t match your common app information with the information provided."';
+                return ' We can\'t match your common app information with the information provided.';
             }
         }
 

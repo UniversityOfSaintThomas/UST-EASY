@@ -31,7 +31,9 @@ public with sharing class ApplicationBodyController {
 
         Map<String, Integer> onlyOneWidgetPerPage = new Map<String, Integer>{
                 'Application Finder' => 0,
-                'User Info Login/Logout' => 0
+                'User Info Login/Logout' => 0,
+                'List of Applications' => 0,
+                'Application Checklist Multiple' => 0
         };
 
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();

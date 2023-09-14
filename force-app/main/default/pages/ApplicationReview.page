@@ -1,7 +1,8 @@
 <apex:page controller="ApplicationReview" action="{!init}" showHeader="false" standardStylesheets="false" docType="html-5.0" >
-   <c:ApplicationHead />
+<!--   <c:ApplicationHead />-->
      <apex:variable value="0" var="reqIndex"/>
     <div class="appBodyReview">
+        {!requirementIds}
         <apex:repeat value="{!arLst}" var="req">
             <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}">
                 <c:ApplicationForm section="{!req.section}" hidePaging="true" preventUpdates="true" appInfo="{!appInfo}">
@@ -10,7 +11,7 @@
             <apex:variable var="reqIndex" value="{!VALUE(reqIndex) + 1}"/>
         </apex:repeat>
     </div>
-  <apex:form id="appReviewForm">
+  <!--<apex:form id="appReviewForm">
         <div class="container-fluid" >
             <div class="row" >
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12" >
@@ -46,15 +47,15 @@
             </div> 
         </div>
         <apex:outputPanel id="themessages"><apex:pageMessages ></apex:pageMessages></apex:outputPanel>
-    </apex:form>
+    </apex:form>-->
     <script>
-        jQuery(function(){
-            jQuery('.appBodyReview .statePicklist select').addClass('form-control');
-            jQuery('.appBodyReview .statePicklist').on('DOMNodeInserted',function(){
-                jQuery('.appBodyReview .statePicklist select:not(.form-control)').addClass('form-control');
-                jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
-            });
-            jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
-        });
+        // jQuery(function(){
+        //     jQuery('.appBodyReview .statePicklist select').addClass('form-control');
+        //     jQuery('.appBodyReview .statePicklist').on('DOMNodeInserted',function(){
+        //         jQuery('.appBodyReview .statePicklist select:not(.form-control)').addClass('form-control');
+        //         jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
+        //     });
+        //     jQuery('.appBodyReview input,.appBodyReview select,.appBodyReview checkbox, .appBodyReview textarea').attr('disabled','disabled');
+        // });
     </script>
 </apex:page>

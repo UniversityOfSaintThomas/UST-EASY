@@ -44,7 +44,11 @@ public with sharing class ApplicationBodyController {
         Map<String, Set<String>> atGenericFilter3Map = new Map<String, Set<String>>();
         Map<String, Set<String>> atGenericFilter4Map = new Map<String, Set<String>>();
         mapAtAppInfo = new Map<String, EASYApplicationInfo>();
-        currentPageName = currentPageName.toLowerCase();
+        if (String.isNotBlank(currentPageName)) {
+            currentPageName = currentPageName.toLowerCase();
+        } else {
+            currentPageName = 'applicationhome';
+        }
         allWidgets foundWidgets = new allWidgets();
         foundWidgets.topWidgets = new List<EASY_Widget__c>();
         foundWidgets.rightWidgets = new List<EASY_Widget__c>();
@@ -261,7 +265,6 @@ public with sharing class ApplicationBodyController {
             }
 
             if (currentPageName.equalsIgnoreCase('applicationportal') && !applicationListWidgetPresent && !noApplication) {
-                system.debug('adding app list');
                 EASY_Widget__c checklistWidget = new EASY_Widget__c();
                 checklistWidget.Application_Control__r = applicationUtilities.getApplicationControls(appInfoParam.at);
                 checklistWidget.Activation_State__c = '';
@@ -273,8 +276,6 @@ public with sharing class ApplicationBodyController {
                 checklistWidget.Widget_Screen_Location__c = 'Content Top';
                 allPositionWidgets.add(checklistWidget);
             }
-
-            System.debug(JSON.serializePretty(allPositionWidgets));
 
             /* Start/End date filter if defined */
             for (EASY_Widget__c widget : allPositionWidgets) {
@@ -543,15 +544,14 @@ public with sharing class ApplicationBodyController {
 
 
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
-        // System.debug('LIST 1:' + list1);
-        //   System.debug('LIST 2:' + list2);
+
         for (String l : list1) {
             if (list2.contains(l)) {
-                //System.debug('List match!!!');
+
                 return true;
             }
         }
-        //    System.debug('NO Match');
+
         return false;
     }
 

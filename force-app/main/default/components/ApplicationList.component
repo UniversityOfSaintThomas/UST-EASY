@@ -5,14 +5,15 @@
 <apex:component id="ApplicationList" controller="ApplicationListController">
     <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true" assignTo="{!appInfoParam}"/>
     <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
+    <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String" required="false" assignTo="{!currentPageParam}"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
-    <apex:form >
-        <ul class="slds-grid slds-wrap slds-grid_pull-padded slds-card-tile">
+    <apex:form>
+        <ul class="slds-grid slds-wrap slds-grid_pull-padded-medium slds-card-tile">
             <apex:variable var="appCount" value="{!0}"/>
             <apex:repeat var="app" value="{!allApplications}">
                 <apex:variable var="appCount" value="{!appCount + 1}"/>
-                <li class="slds-p-horizontal_medium slds-size_1-of-1 {!(IF(appAmount > 1 && appCount != appAmount, 'slds-border_bottom',''))}">
-                    <article class="slds-tile slds-media slds-card__tile slds-hint-parent slds-p-bottom_small">
+                <li class="slds-p-bottom_x-small slds-size_1-of-1 {!(IF(appAmount > 1 && appCount != appAmount, 'slds-border_bottom',''))}">
+                    <article class="slds-tile slds-media slds-card__tile slds-hint-parent slds-p-bottom_x-small">
                         <div class="slds-media__figure">
                         <span class="slds-icon_container slds-icon-standard-contact" title="Icon for application {!appCount}">
                           <svg class="slds-icon slds-icon_small" aria-hidden="true">
@@ -23,11 +24,11 @@
                         </div>
                         <div class="slds-media__body">
                             <div class="slds-grid slds-grid_align-spread">
-                                <h3 class="slds-tile__title slds-text-heading_medium slds-p-bottom_small" title="Related Record Title 1">
+                                <h3 class="slds-tile__title slds-text-heading_medium slds-p-bottom_small" title="{!app.Intended_Program_Name_on_Application__c}">
                                     <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();">
                                         <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
                                         <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
-                                        {!app.Intended_Program__r.Name}
+                                        {!app.Intended_Program_Name_on_Application__c}
                                     </apex:commandLink>
                                 </h3>
                             </div>
@@ -39,17 +40,16 @@
                                         {!app.Intended_Term_of_Entry__r.Name}
                                     </dd>
 
-<!--                                    <apex:outputPanel rendered="{!NOT(ISBLANK(app.Degree_Type__c))}">-->
-                                        <dt class="slds-item_label slds-text-color_weak" title="Degree">Degree:</dt>
-                                        <dd class="slds-item_detail" title="Degree type for which this application is applying">
-                                            <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Undergraduate')}">
-                                                {!app.Application_Control__r.School_College__c}
-                                            </apex:outputPanel>
-                                            <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Graduate')}">
-                                                {!app.Degree_Type__c}
-                                            </apex:outputPanel>
-                                        </dd>
-<!--                                    </apex:outputPanel>-->
+                                    <dt class="slds-item_label slds-text-color_weak" title="Degree">Degree:</dt>
+                                    <dd class="slds-item_detail" title="Degree type for which this application is applying">
+                                        <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Undergraduate')}">
+                                            {!app.Application_Control__r.School_College__c}
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Graduate')}">
+                                            {!app.Degree_Type__c}
+                                        </apex:outputPanel>
+                                    </dd>
+
 
                                     <dt class="slds-item_label slds-text-color_weak" title="Program">Program:</dt>
                                     <dd class="slds-item_detail" title="Program for which this application is applying">
@@ -62,20 +62,15 @@
                                         </apex:outputPanel>
                                     </dd>
 
-                                    <dt class="slds-item_label slds-text-color_weak" title="Started Date">Started:</dt>
-                                    <dd class="slds-item_detail " title="The date when this app was started">
-                                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
-                                            <apex:param value="{!app.CreatedDate}"/>
-                                        </apex:outputText>
-                                    </dd>
-
                                 </dl>
                             </div>
-                            <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();" styleClass="slds-button slds-p-right_medium slds-button_brand slds-button-smaller slds-m-top_small">
-                                <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
-                                <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
-                                Select
-                            </apex:commandLink>
+                            <apex:outputPanel layout="none" rendered="{!IF(currentPage='applicationportal',true,false)}">
+                                <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();" styleClass="slds-button slds-p-right_medium slds-button_brand slds-button-smaller slds-m-top_small">
+                                    <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
+                                    <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
+                                    Select
+                                </apex:commandLink>
+                            </apex:outputPanel>
                         </div>
                     </article>
                 </li>

@@ -136,10 +136,10 @@ public class ApplicationRegistration {
     * @description populates fields on the contact and application through the interactions object.
     ********************************************************************************/
     public PageReference submit() {
-        System.Savepoint sp = Database.setSavepoint();
+
         Boolean dmlException = false;
         String errorMessage = '';
-        errorMessage = populateInteraction();
+        errorMessage += populateInteraction();
         loginUser = null;
         loginPassword = null;
         loginUrl = null;
@@ -147,17 +147,31 @@ public class ApplicationRegistration {
 
         // Throw exception if not all required fields have been filled-out
         errorMessage += appCreate.checkFields();
+        System.debug('Error Message' + errorMessage);
 
+        if (String.isNotBlank(errorMessage)) {
+            appCreate.additionalDataString = '';
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, errorMessage));
+            return null;
+           // throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
+        }
+
+        System.Savepoint sp = Database.setSavepoint();
         try {
-            if (String.isNotBlank(errorMessage)) {
-                throw new ApplicationUtilities.ApplicationException(errorMessage, true, true);
-            }
             // Insert interaction to create/update Contact
             System.debug('INTERACTION: ' + JSON.serializePretty(interaction));
 
             insert interaction;
-            interaction = [SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
-            Contact con = [SELECT Id, FirstName, MiddleName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
+            interaction = [
+                    SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c, External_Application_ID__c
+                    FROM Interaction__c
+                    WHERE Id = :interaction.Id
+            ];
+            Contact con = [
+                    SELECT Id, FirstName, MiddleName, LastName, Email, AccountId, Account.OwnerId
+                    FROM Contact
+                    WHERE Id = :interaction.Contact__c
+            ];
             appCreate.con.Id = con.Id;
 
             // Exit and roll-back if User with Email or Contact already exists
@@ -196,13 +210,13 @@ public class ApplicationRegistration {
             if (ApexPages.hasMessages(ApexPages.Severity.ERROR) && !Test.isRunningTest()) {
                 throw new ApplicationUtilities.ApplicationException(null, true);
             }
-
             Id uId;
             if (!Test.isRunningTest() && pass.equals(passConfirm)) {
                 uId = Site.createExternalUser(u, con.AccountId, pass, false);
                 if (uId == null) {
                     throw new ApplicationUtilities.ApplicationException('Error occurred when creating user.', true, true);
                 }
+
                 loginUser = new User(Id = uId, Username = u.Username);
                 loginPassword = pass;
                 loginUrl = checklistUrl;
@@ -249,47 +263,66 @@ public class ApplicationRegistration {
         }
 
         //Check for common app Id External_Application_ID__c
+        System.debug('common app: ' + commonAppApplication);
         if (commonAppApplication) {
-            try {
-                Application__c commonApplication = [
-                        SELECT External_Application_ID__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email,
-                                Contact__r.Mailing_First_Name__c, Intended_Program__c, Intended_Term_of_Entry__c
-                        FROM Application__c
-                        WHERE (
-                                Contact__r.FirstName = :interaction.First_Name__c
-                                OR
-                                Contact__r.Mailing_First_Name__c = :interaction.First_Name__c
-                        )
-                        AND Contact__r.LastName = :interaction.Last_Name__c
-                        AND Contact__r.Email = :interaction.Email__c
-                        AND External_Application_ID__c = :interaction.External_Application_ID__c
-                        LIMIT 1
-                ];
-                if (commonApplication != null) {
-                    interaction.Academic_Program__c = commonApplication.Intended_Program__c;
-                    interaction.Intended_Start_Term__c = commonApplication.Intended_Term_of_Entry__c;
-                } else {
-                    return ' We can\'t match your common app information with the information provided.';
-                }
-            } catch (Exception ex) {
+            List<Application__c> commonApplication = new List<Application__c>();
+            commonApplication = [
+                    SELECT External_Application_ID__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email,
+                            Contact__r.Mailing_First_Name__c, Intended_Program__c, Intended_Term_of_Entry__c
+                    FROM Application__c
+                    WHERE (
+                            Contact__r.FirstName = :interaction.First_Name__c
+                            OR
+                            Contact__r.Mailing_First_Name__c = :interaction.First_Name__c
+                    )
+                    AND Contact__r.LastName = :interaction.Last_Name__c
+                    AND Contact__r.Email = :interaction.Email__c
+                    AND External_Application_ID__c = :interaction.External_Application_ID__c
+            ];
+            //System.debug('COMMON APP:' + Json.serializePretty(commonApplication));
+            if (commonApplication.size() > 0 && String.isNotBlank(commonApplication[0].External_Application_ID__c) && commonApplication[0].External_Application_ID__c.equalsIgnoreCase(interaction.External_Application_ID__c)) {
+                interaction.Academic_Program__c = commonApplication[0].Intended_Program__c;
+                interaction.Intended_Start_Term__c = commonApplication[0].Intended_Term_of_Entry__c;
+                interaction.Admissions_Application__c = commonApplication[0].Id;
+            } else {
+                //interaction.External_Application_ID__c = null;
                 return ' We can\'t match your common app information with the information provided.';
             }
+
         }
 
 
         if (interaction.Academic_Program__c != null) {
-            List<Program__c> program = [SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c FROM Program__c WHERE Id = :interaction.Academic_Program__c LIMIT 1];
+            List<Program__c> program = [
+                    SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c
+                    FROM Program__c
+                    WHERE Id = :interaction.Academic_Program__c
+                    LIMIT 1
+            ];
+
             if (!program.isEmpty()) {
                 interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
                 interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
             }
-            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c = :interaction.Academic_Program__c LIMIT 1];
+
+            List<Plan__c> relatedPlan = [
+                    SELECT Id
+                    FROM Plan__c
+                    WHERE Program__c = :interaction.Academic_Program__c
+                    LIMIT 1
+            ];
+
             if (!relatedPlan.isEmpty()) {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
             }
         }
         if (interaction.Intended_Start_Term__c != null) {
-            List<Academic_Term__c> academicTerm = [SELECT Term__c FROM Academic_Term__c WHERE Id = :interaction.Intended_Start_Term__c LIMIT 1];
+            List<Academic_Term__c> academicTerm = [
+                    SELECT Term__c
+                    FROM Academic_Term__c
+                    WHERE Id = :interaction.Intended_Start_Term__c
+                    LIMIT 1
+            ];
             if (!academicTerm.isEmpty()) {
                 interaction.Term__c = academicTerm[0].Term__c;
             }
@@ -304,6 +337,7 @@ public class ApplicationRegistration {
 
         return errorMessage;
     }
+
 
     public PageReference login() {
         if (String.isNotBlank(loginUrl)) {

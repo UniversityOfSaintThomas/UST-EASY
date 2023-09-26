@@ -11,7 +11,7 @@ public class ApplicationCreate {
     public List<RequirementWrapper> checklistItems { get; set; }
     public List<Requirement_Item__c> items { get; set; }
     public Map<Id, Program__c> intendedPrograms { get; set; }
-    public transient String additionalDataString { get; set; }
+    public String additionalDataString { get; set; }
     public Set<String> contactFields { get; set; }
     public String degreeType { get; set; }
     public EASYApplicationInfo appInfo { get; set; }

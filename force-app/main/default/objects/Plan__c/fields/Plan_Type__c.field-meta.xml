@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Plan_Type__c</fullName>
-    <deprecated>false</deprecated>
     <description>The type of Plan such as a Major, Minor, etc.</description>
     <externalId>false</externalId>
     <inlineHelpText>Select a Plan Type for the Plan.</inlineHelpText>

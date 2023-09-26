@@ -7,7 +7,8 @@ public with sharing class ApplicationListController {
     public EASYApplicationInfo appInfoParam { get; set; }
     public String nextAt { get; set; }
     public Id nextAppId { get; set; }
-    public Integer appAmount {get;set;}
+    public Integer appAmount { get; set; }
+    public String currentPageParam { get; set; }
 
     public ApplicationListController() {
 
@@ -18,12 +19,26 @@ public with sharing class ApplicationListController {
                 SELECT Id, Application_Control__r.Active__c, Application_Status__c, Intended_Term_of_Entry__r.Name, Intended_Program__r.Name,
                         Intended_Program_College_of_Interest__c, Intended_Program_Applicant_Type__c, Intended_Program_Application_Control__c,
                         Application_Control__r.URL_Parameter__c, Contact__c, Intended_Term_of_Entry__r.Term_10th_Day__c, Degree_Type__c, CreatedDate,
-                        Application_Control__r.School_College__c
+                        Application_Control__r.School_College__c, Intended_Program_Name_on_Application__c
                 FROM Application__c
                 WHERE Contact__c = :appInfoParam.contactId
                 AND Application_Control__r.Active__c = TRUE
                 AND (Intended_Term_of_Entry__r.Term_10th_Day__c >= TODAY OR Intended_Term_of_Entry__r.Term_10th_Day__c = NULL)
+                AND Application_Status__c != 'Wrong App'
+                AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
+                AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
         ];
+
+        if (currentPageParam.equalsIgnoreCase('applicationhome')) {
+            List<Application__c> newAppList = new List<Application__c>();
+            for (Application__c app : allApplications) {
+                if (app.Id == appInfoParam.appId) {
+                    newAppList.add(app);
+                }
+                allApplications = newAppList;
+            }
+        }
+        
         appAmount = allApplications.size();
         return allApplications;
     }

@@ -248,6 +248,7 @@ tasks:
           default: true
         - record_type: Family_Member__c.Sibling
         - record_type: Family_Member__c.Parent_Guardian
+          default: true
         - record_type: Family_Member__c.UST_Alumni_Family
 
   add_degree_piciklist:

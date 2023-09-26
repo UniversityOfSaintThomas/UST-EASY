@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recruitment_Interest__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <deprecated>false</deprecated>
     <description>The general interest the individual is inquiring about for marketing. A lookup to Plan with a filter criteria of Record Type = Recruitment.</description>
     <externalId>false</externalId>
     <inlineHelpText>The general interest the individual is inquiring about for marketing.</inlineHelpText>

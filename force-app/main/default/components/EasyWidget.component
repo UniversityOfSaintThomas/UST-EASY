@@ -4,6 +4,7 @@
 
 <apex:component id="EasyWidget">
     <apex:attribute name="widget" description="Widget to process" type="EASY_Widget__c" required="false"/>
+    <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String" required="false"/>
     <apex:attribute name="appInfo" description="Wrapper with Application control and app information" required="false" type="EASYApplicationInfo"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
 
@@ -46,7 +47,7 @@
                 <c:ApplicationChecklistMultiple appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'List of Applications' }">
-                <c:ApplicationList appInfo="{!appInfo}" widget="{!widget}"/>
+                <c:ApplicationList appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
             </apex:outputPanel>
 
         </div>

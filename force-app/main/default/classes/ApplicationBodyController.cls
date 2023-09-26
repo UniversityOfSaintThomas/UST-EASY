@@ -43,6 +43,8 @@ public with sharing class ApplicationBodyController {
         Map<String, Set<String>> atGenericFilter2Map = new Map<String, Set<String>>();
         Map<String, Set<String>> atGenericFilter3Map = new Map<String, Set<String>>();
         Map<String, Set<String>> atGenericFilter4Map = new Map<String, Set<String>>();
+        Map<String, Set<String>> atApplicationTypeMap = new Map<String, Set<String>>();
+
         mapAtAppInfo = new Map<String, EASYApplicationInfo>();
         if (String.isNotBlank(currentPageName)) {
             currentPageName = currentPageName.toLowerCase();
@@ -62,14 +64,14 @@ public with sharing class ApplicationBodyController {
 
         if (appInfoParam != null) {
 
-            if (currentPageName.equalsIgnoreCase('applicationregistration') || currentPageName.equalsIgnoreCase('applicationhome')) {
+            if (currentPageName.equalsIgnoreCase('applicationregistration')) {
                 mapAtAppInfo.put(appInfoParam.at, appInfoParam);
             } else {
                 String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,';
                 appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c,';
                 appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact__r.Id, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
                 appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Contact__r.hed__UniversityEmail__c, Intended_Program__r.Program_Name_on_Application__c,';
-                appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c';
+                appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Applicant_Type__c';
                 appsQuery += ' FROM Application__c';
                 appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
                 appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
@@ -139,77 +141,35 @@ public with sharing class ApplicationBodyController {
                         }
                     }
 
-                    if (pagesWithMultipleAppInfo.contains(currentPageName)) {
-                        String atURL = app.Application_Control__r.URL_Parameter__c;
+                    String atURL = app.Application_Control__r.URL_Parameter__c;
 
-                        //atStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
-                        if (String.isNotBlank(app.Application_Status__c)) {
-                            if (atStatusMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
-                                atStatusMap.get(atURL).addAll(new Set<String>(app.Application_Status__c.split(';')));
-                            } else {
-                                atStatusMap.put(atURL, new Set<String>(app.Application_Status__c.split(';')));
-                            }
-                        }
-
-                        //atSubStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
-                        if (String.isNotBlank(app.Application_Substatus__c)) {
-                            if (atSubStatusMap.containsKey(atURL)) {
-                                atSubStatusMap.get(atURL).addAll(new Set<String>(app.Application_Substatus__c.split(';')));
-                            } else {
-                                atSubStatusMap.put(atURL, new Set<String>(app.Application_Substatus__c.split(';')));
-                            }
-                        }
-
-                        if (String.isNotBlank(app.Citizenship__c)) {
-                            if (atCitizenshipMap.containsKey(atURL)) {
-                                atCitizenshipMap.get(atURL).add(app.Citizenship__c);
-                            } else {
-                                atCitizenshipMap.put(atURL, new Set<String>{
-                                        app.Citizenship__c
-                                });
-                            }
-                        }
-
-                        if (String.isNotBlank(app.Generic_Filter_1__c)) {
-                            if (atGenericFilter1Map.containsKey(atURL)) {
-                                atGenericFilter1Map.get(atURL).add(app.Generic_Filter_1__c);
-                            } else {
-                                atGenericFilter1Map.put(atURL, new Set<String>{
-                                        app.Generic_Filter_1__c
-                                });
-                            }
-                        }
-
-                        if (String.isNotBlank(app.Generic_Filter_2__c)) {
-                            if (atGenericFilter2Map.containsKey(atURL)) {
-                                atGenericFilter2Map.get(atURL).add(app.Generic_Filter_2__c);
-                            } else {
-                                atGenericFilter2Map.put(atURL, new Set<String>{
-                                        app.Generic_Filter_2__c
-                                });
-                            }
-                        }
-
-                        if (String.isNotBlank(app.Generic_Filter_3__c)) {
-                            if (atGenericFilter3Map.containsKey(atURL)) {
-                                atGenericFilter3Map.get(atURL).add(app.Generic_Filter_3__c);
-                            } else {
-                                atGenericFilter3Map.put(atURL, new Set<String>{
-                                        app.Generic_Filter_3__c
-                                });
-                            }
-                        }
-
-                        if (String.isNotBlank(app.Generic_Filter_4__c)) {
-                            if (atGenericFilter4Map.containsKey(atURL)) {
-                                atGenericFilter4Map.get(atURL).add(app.Generic_Filter_4__c);
-                            } else {
-                                atGenericFilter4Map.put(atURL, new Set<String>{
-                                        app.Generic_Filter_4__c
-                                });
-                            }
+                    //atStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
+                    if (String.isNotBlank(app.Application_Status__c)) {
+                        if (atStatusMap.containsKey(app.Application_Control__r.URL_Parameter__c)) {
+                            atStatusMap.get(atURL).addAll(new Set<String>(app.Application_Status__c.split(';')));
+                        } else {
+                            atStatusMap.put(atURL, new Set<String>(app.Application_Status__c.split(';')));
                         }
                     }
+
+                    //atSubStatusMap.put(app.Application_Control__r.URL_Parameter__c, null);
+                    if (String.isNotBlank(app.Application_Substatus__c)) {
+                        if (atSubStatusMap.containsKey(atURL)) {
+                            atSubStatusMap.get(atURL).addAll(new Set<String>(app.Application_Substatus__c.split(';')));
+                        } else {
+                            atSubStatusMap.put(atURL, new Set<String>(app.Application_Substatus__c.split(';')));
+                        }
+                    }
+
+                    /* Filter maps use application at value and apply applicable multi-select data strings to them to parse below */
+                    atCitizenshipMap = createFilterMap(app.Citizenship__c, atCitizenshipMap, atURL);
+                    atGenericFilter1Map = createFilterMap(app.Generic_Filter_1__c, atGenericFilter1Map, atURL);
+                    atGenericFilter2Map = createFilterMap(app.Generic_Filter_2__c, atGenericFilter2Map, atURL);
+                    atGenericFilter3Map = createFilterMap(app.Generic_Filter_3__c, atGenericFilter3Map, atURL);
+                    atGenericFilter4Map = createFilterMap(app.Generic_Filter_4__c, atGenericFilter4Map, atURL);
+                    atApplicationTypeMap = createFilterMap(app.Applicant_Type__c, atApplicationTypeMap, atURL);
+
+
                 }
 
                 if (apps.size() > 0) {
@@ -226,7 +186,8 @@ public with sharing class ApplicationBodyController {
                                 Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
                                 Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
                                 Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
-                                Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
+                                Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
+                                Applicant_Type__c
                         FROM EASY_Widget__c
                         WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
                         AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
@@ -256,7 +217,7 @@ public with sharing class ApplicationBodyController {
                 EASY_Widget__c checklistWidget = new EASY_Widget__c();
                 checklistWidget.Name = 'Temp Application Checklist';
                 checklistWidget.Widget_Type__c = ('Application Checklist');
-                checklistWidget.Application_Control__r = applicationUtilities.getApplicationControls(appInfoParam.at);
+                checklistWidget.Application_Control__r = ApplicationUtilities.getApplicationControls(appInfoParam.at);
                 checklistWidget.Sort_Order__c = 0;
                 checklistWidget.Display_Widget_On_Pages__c = 'ApplicationHome';
                 checklistWidget.Activation_State__c = 'Active';
@@ -266,7 +227,7 @@ public with sharing class ApplicationBodyController {
 
             if (currentPageName.equalsIgnoreCase('applicationportal') && !applicationListWidgetPresent && !noApplication) {
                 EASY_Widget__c checklistWidget = new EASY_Widget__c();
-                checklistWidget.Application_Control__r = applicationUtilities.getApplicationControls(appInfoParam.at);
+                checklistWidget.Application_Control__r = ApplicationUtilities.getApplicationControls(appInfoParam.at);
                 checklistWidget.Activation_State__c = '';
                 checklistWidget.Name = 'Temp Application List';
                 checklistWidget.Widget_Type__c = 'List of Applications';
@@ -334,11 +295,9 @@ public with sharing class ApplicationBodyController {
                         String genericFilter2 = String.isNotBlank(widget.Generic_Filter_2__c) ? widget.Generic_Filter_2__c : '';
                         String genericFilter3 = String.isNotBlank(widget.Generic_Filter_3__c) ? widget.Generic_Filter_3__c : '';
                         String genericFilter4 = String.isNotBlank(widget.Generic_Filter_4__c) ? widget.Generic_Filter_4__c : '';
-
+                        String widgetApplicantType = String.isNotBlank(widget.Applicant_Type__c) ? widget.Applicant_Type__c : '';
 
                         EASYApplicationInfo widgetAppInfo = mapAtAppInfo.get(widgetUrlParam);
-
-                        //System.debug(JSON.serializePretty(widgetAppInfo));
 
                         /* Display on pages filter */
                         if (!skipWidget && String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
@@ -384,44 +343,19 @@ public with sharing class ApplicationBodyController {
                         }
 
                         /* Generic filter 1 */
-                        if (!skipWidget && String.isNotBlank(genericFilter1)) {
-                            if (atGenericFilter1Map.containsKey(widgetUrlParam)) {
-                                if (!doesListContainItem(genericFilter1.split(';'), new List<String>(atGenericFilter1Map.get(widgetUrlParam)))) {
-                                    skipWidget = true;
-                                    //skipReason += 'Generic Filter one not met, ';
-                                }
-                            }
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter1Map, genericFilter1, widgetUrlParam);
 
                         /* Generic filter 2 */
-                        if (!skipWidget && String.isNotBlank(genericFilter2)) {
-                            if (atGenericFilter2Map.containsKey(widgetUrlParam)) {
-                                if (!doesListContainItem(genericFilter2.split(';'), new List<String>(atGenericFilter2Map.get(widgetUrlParam)))) {
-                                    skipWidget = true;
-                                    //skipReason += 'Generic Filter two not met, ';
-                                }
-                            }
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter2Map, genericFilter2, widgetUrlParam);
 
                         /* Generic filter 3 */
-                        if (!skipWidget && String.isNotBlank(genericFilter3)) {
-                            if (atGenericFilter3Map.containsKey(widgetUrlParam)) {
-                                if (!doesListContainItem(genericFilter3.split(';'), new List<String>(atGenericFilter3Map.get(widgetUrlParam)))) {
-                                    skipWidget = true;
-                                    //skipReason += 'Generic Filter three not met, ';
-                                }
-                            }
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter3Map, genericFilter3, widgetUrlParam);
 
-                        /* Generic filter 2 */
-                        if (!skipWidget && String.isNotBlank(genericFilter4)) {
-                            if (atGenericFilter4Map.containsKey(widgetUrlParam)) {
-                                if (!doesListContainItem(genericFilter4.split(';'), new List<String>(atGenericFilter4Map.get(widgetUrlParam)))) {
-                                    skipWidget = true;
-                                    //skipReason += 'Generic Filter four not met, ';
-                                }
-                            }
-                        }
+                        /* Generic filter 4 */
+                        skipWidget = filterWidget(skipWidget, atGenericFilter4Map, genericFilter4, widgetUrlParam);
+
+                        /* Applicant Type filter */
+                        skipWidget = filterWidget(skipWidget, atApplicationTypeMap, widgetApplicantType, widgetUrlParam);
 
                     }
                 }
@@ -452,7 +386,6 @@ public with sharing class ApplicationBodyController {
                 }
 
                 if (!skipWidget) {
-
                     switch on widget.Widget_Screen_Location__c.toLowerCase() {
                         when 'left' {
                             foundWidgets.leftWidgets.add(widget);
@@ -473,24 +406,35 @@ public with sharing class ApplicationBodyController {
                             foundWidgets.contentBottomWidgets.add(widget);
                         }
                     }
-
                 }
-/*                System.debug('---------------------------');
-                System.debug('ID: ' + widget.Id);
-                System.debug('Name: ' + widget.Name);
-                System.debug('AT: ' + widget.Application_Control__r.URL_Parameter__c);
-                System.debug('Title: ' + widget.Display_Heading__c);
-                System.debug('Type: ' + widget.Widget_Type__c);
-                System.debug('Key: ' + widget.Only_One_Widget_Key__c);
-                System.debug('On Status: ' + widget.Display_Widget_On_Status__c);
-                System.debug('On Sub Status: ' + widget.Display_Widget_On_Sub_Status__c);
-                System.debug('Skipped: ' + skipWidget);
-                System.debug('Skip Reason: ' + skipReason);*/
             }
-
         }
 
         return foundWidgets;
+    }
+
+    public Boolean filterWidget(Boolean skipWidget, Map<String, Set<String>> filterMap, String filterString, String widgetUrlParam) {
+        if (!skipWidget && String.isNotBlank(filterString)) {
+            if (filterMap.containsKey(widgetUrlParam)) {
+                if (!doesListContainItem(filterString.split(';'), new List<String>(filterMap.get(widgetUrlParam)))) {
+                    return true;
+                }
+            }
+        }
+        return skipWidget;
+    }
+
+    public Map<String, Set<String>> createFilterMap(String filterValue, Map<String, Set<String>> filterMap, String atURL) {
+        if (String.isNotBlank(filterValue)) {
+            if (filterMap.containsKey(atURL)) {
+                filterMap.get(atURL).add(filterValue);
+            } else {
+                filterMap.put(atURL, new Set<String>{
+                        filterValue
+                });
+            }
+        }
+        return filterMap;
     }
 
     public String replaceDataTags(String widgetContent, EASYPersonalDataTags tagWrapper) {
@@ -544,14 +488,12 @@ public with sharing class ApplicationBodyController {
 
 
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
-
         for (String l : list1) {
             if (list2.contains(l)) {
 
                 return true;
             }
         }
-
         return false;
     }
 

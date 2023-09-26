@@ -3,9 +3,9 @@
         <apex:define name="scriptsHead">
             <c:ApplicationHead />
         </apex:define>
-        <apex:define name="metaPageTitle">St. Thomas Application Portal</apex:define>
+        <apex:define name="metaPageTitle">{!appInfo.intendedProgram} Application Page</apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="Application Home" appInfo="{!appInfo}" checklistItems="{!checklistItems}" vfPageName="ApplicationHome">
+            <c:ApplicationBody title="Application Page" appInfo="{!appInfo}" checklistItems="{!checklistItems}" vfPageName="ApplicationHome">
             </c:ApplicationBody>
         </apex:define>
     </apex:composition>

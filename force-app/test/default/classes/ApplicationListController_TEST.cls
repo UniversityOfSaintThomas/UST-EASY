@@ -77,8 +77,9 @@ private class ApplicationListController_TEST {
     static void testBehavior() {
 
         ApplicationListController controller = new ApplicationListController();
-        controller.appInfoParam = new EASYApplicationInfo();
-        controller.appInfoParam.contactId = [
+        EASYApplicationInfo appInfo = new EASYApplicationInfo();
+        controller.currentPageParam = 'applicationhome';
+        appInfo.contactId = [
                 SELECT Id
                 FROM Contact
                 WHERE FirstName = 'TestFirst'
@@ -86,11 +87,21 @@ private class ApplicationListController_TEST {
                 AND Email = 'testfirst@teststudent.com'
                 LIMIT 1
         ].Id;
+
+        appInfo.appId = [
+                SELECT Id
+                FROM Application__c
+                WHERE Contact__c = :appInfo.contactId
+                LIMIT 1
+        ].Id;
+        controller.appInfoParam = appInfo;
+
+        Test.startTest();
         List<Application__c> apps = controller.getAllApplications();
-        System.assertEquals(apps.size(),1);
+        System.assertEquals(apps.size(), 1);
 
         PageReference pageRef = controller.goToHome();
         System.assertEquals(pageRef.getUrl(), '/apex/applicationhome');
-
+        Test.stopTest();
     }
 }

@@ -20,13 +20,15 @@ public class ApplicationTESTUtilities {
         return appControl;
     }
 
-    public static User userToRunWith(String profileName, String PermissionSetToAdd) {
+    public static User userToRunWith(String profileName, String PermissionSetToAdd, Id userContact) {
 
         User u2 = buildUser('example1@sfdx-test.com', 'lm', 'System Administrator');
         insert u2;
+        Profile portalProfile = [SELECT Id FROM Profile WHERE Name LIKE '%Portal User%' Limit 1];
 
         System.runAs(u2) {
             User u3 = buildUser('example2@sfdx-test.com', 'ceo', profileName);
+            U3.ContactId = userContact;
             insert u3;
             if (String.isNotBlank(PermissionSetToAdd)) {
                 List<PermissionSet> seaGuestPermissions = [SELECT Id, Name FROM PermissionSet WHERE Name = :PermissionSetToAdd];
@@ -44,8 +46,9 @@ public class ApplicationTESTUtilities {
     private static User buildUser(String username, String alias, String profileName) {
         // Profile p = [SELECT Id, Name FROM Profile WHERE Name = :profileName];
         Profile p;
+        profileName = '%' + profileName + '%';
 
-        p = [select Id,name from Profile where Name = :profileName];
+        p = [select Id, name from Profile where Name LIKE :profileName LIMIT 1];
 
         return new User(
                 Alias = alias,

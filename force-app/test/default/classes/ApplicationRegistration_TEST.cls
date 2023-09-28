@@ -85,8 +85,6 @@ private class ApplicationRegistration_TEST {
         PageReference pr = Page.ApplicationRegistration;
         pr.getParameters().put('at', appControl.Id);
 
-        User testUser = ApplicationTESTUtilities.userToRunWith('Standard User', 'Application_Community_Guest');
-
         Test.startTest();
 
         ApplicationRegistration.lookupSearch('Program__c', 'Name != \'not_test\'', 'Name', 'test');

@@ -77,7 +77,7 @@ public with sharing class ApplicationBodyController {
                 appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
                 appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
                 appsQuery += ' AND Contact__c IN (SELECT ContactId FROM User WHERE Id = \'' + UserInfo.getUserId() + '\') ';
-                if (pagesWithMultipleAppInfo.contains(currentPageName)) {
+                if (!pagesWithMultipleAppInfo.contains(currentPageName)) {
                     appsQuery += ' AND Contact__c = \'' + appInfoParam.contactId + '\'';
                 } else {
                     appsQuery += ' AND Id = \'' + appInfoParam.appId + '\'';
@@ -88,6 +88,8 @@ public with sharing class ApplicationBodyController {
                 } catch (Exception e) {
                     System.debug(e.getMessage());
                 }
+
+                System.debug(JSON.serializePretty(apps));
 
                 //Create map of application control URLs and tag data associated with them for processing below.
                 for (Application__c app : apps.values()) {
@@ -129,6 +131,8 @@ public with sharing class ApplicationBodyController {
                                     WHERE Id = :apps.keySet()
                             )
                     ]);
+
+                    System.debug(JSON.serializePretty(appControlsByAppIds));
 
                     //setApplicationInfo
                     if (!mapAtAppInfo.containsKey(app.Application_Control__r.URL_Parameter__c)) {

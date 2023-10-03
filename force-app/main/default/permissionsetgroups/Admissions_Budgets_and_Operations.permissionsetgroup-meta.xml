@@ -4,8 +4,12 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Admissions - Budgets and Operations</label>
     <permissionSets>Admissions_Email_Template_Management</permissionSets>
+    <permissionSets>Admissions_Financial_Aid_Records_Read_Only</permissionSets>
     <permissionSets>Admissions_Reports_and_Dashboards</permissionSets>
     <permissionSets>Application_Decision</permissionSets>
+    <permissionSets>Application_Payments_Create</permissionSets>
     <permissionSets>Application_Reviewer</permissionSets>
+    <permissionSets>Summit_Events_Read_Only_Access</permissionSets>
+    <permissionSets>UST_Project_Milestone_User</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

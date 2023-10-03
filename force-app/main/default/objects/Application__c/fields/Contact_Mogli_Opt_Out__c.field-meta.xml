@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Mogli_Opt_Out__c</fullName>
+    <description>Display the Contact Mogli Out Out</description>
+    <externalId>false</externalId>
+    <formula>Contact__r.Mogli_SMS__Mogli_Opt_Out__c</formula>
+    <inlineHelpText>Display the Contact Mogli Out Out</inlineHelpText>
+    <label>Contact Mogli Opt Out</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

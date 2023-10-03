@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Copy_of_SOL_All_Apps_2023</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Control__c</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Citizenship__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Contact__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>Testing</label>
+</ListView>

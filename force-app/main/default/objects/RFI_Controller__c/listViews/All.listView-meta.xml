@@ -5,9 +5,7 @@
     <columns>Descriptive_Name__c</columns>
     <columns>Academic_Level__c</columns>
     <columns>School_College__c</columns>
-    <columns>Lead_Owner__c</columns>
     <columns>Redirect_After_Form_Submission__c</columns>
-    <columns>CREATED_DATE</columns>
     <columns>LAST_UPDATE</columns>
     <columns>Academic_Interests_To_Display__c</columns>
     <columns>Lead_Source__c</columns>

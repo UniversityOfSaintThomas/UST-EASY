@@ -525,6 +525,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Application__c.Club_Intramural_Sports_Interest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Application__c.Contact_Admission_Mobile_Opt_In__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Application__c.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -644,8 +654,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Application__c.Message_To_Applicant__c</field>
+        <editable>false</editable>
+        <field>Application__c.Mogli_Opt_Out__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1181,16 +1191,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.hed__is_Address_Override__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EASY_Widget__c.Academic_Level__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EASY_Widget__c.Applicant_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1731,6 +1731,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Interaction__c.Affiliation_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Application_ID_ERx__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Application_Name_ERx__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2610,6 +2620,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Interaction__c.Self_Reported_Field_of_Study__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Interaction__c.Self_Reported_Undergrad_Degree__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2631,6 +2646,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Interaction__c.St_Thomas_College_School__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Start_Term_ERX__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3130,6 +3150,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Application_ID_ERx__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Application_Name_ERx__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Opportunity.Application_Submitted_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3186,6 +3216,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Cost_total__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3331,6 +3366,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.Intended_Start_Term__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Intl_Scholarship_Amount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Intl_Tuition_Amount_4_year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Intl_Tuition_Amount_Annual__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Intl_Tuition_Discount_Percentage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3990,6 +4045,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Question__c.Common_App_Unique_Question_Nickname__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Question__c.Contact_Field__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4125,6 +4185,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Question__c.Payment_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Question__c.Payment_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4224,6 +4289,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Item__c.Academic_Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Requirement_Item__c.Active__c</field>
         <readable>true</readable>
@@ -4261,6 +4331,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Requirement_Item__c.Citizenship__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Requirement_Item__c.Common_App_Unique_ReqItem_Nickname__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4370,6 +4445,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Requirement_Item__c.Number_of_Recommendations_Required__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Requirement_Item__c.RI_UID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4426,6 +4506,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Requirement_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Requirement_Item__c.Requirement_Item_Integration_Ext_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4499,6 +4584,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Requirement_Response__c.Internal_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Requirement_Response__c.International_Requirement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Response__c.Question_Group_Requirement_Fulfilled_On__c</field>
         <readable>true</readable>
@@ -4515,7 +4610,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Requirement_Response__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Requirement_Response__c.ValueTextEntry__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Requirement_Response__c.Viewed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5017,6 +5122,15 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Application_Payment__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Application_Review__c</object>
         <viewAllRecords>false</viewAllRecords>
@@ -5229,6 +5343,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ApplicationCreate</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>ApplicationLink</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

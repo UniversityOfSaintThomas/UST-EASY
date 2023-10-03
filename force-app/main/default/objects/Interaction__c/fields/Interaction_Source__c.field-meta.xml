@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Interaction_Source__c</fullName>
+    <deprecated>false</deprecated>
     <description>The method by which the data is being added as an Interaction. Set to &quot;Manual Entry&quot; for hand entry, otherwise it represents the integration source (Webform, Purchase List, etc.) Also used in the Skip Mapping functionality on Interaction Mappings.</description>
     <externalId>false</externalId>
     <label>Interaction Source</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -50,6 +51,16 @@
                 <fullName>ERx Data Migration - Application</fullName>
                 <default>false</default>
                 <label>ERx Data Migration - Application</label>
+            </value>
+            <value>
+                <fullName>AP Scores</fullName>
+                <default>false</default>
+                <label>AP Scores</label>
+            </value>
+            <value>
+                <fullName>Qualtrics</fullName>
+                <default>false</default>
+                <label>Qualtrics</label>
             </value>
         </valueSetDefinition>
     </valueSet>

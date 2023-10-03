@@ -39,6 +39,10 @@
                 <behavior>Edit</behavior>
                 <field>Display_on_Checklist__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Academic_Level__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -250,13 +254,13 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Label__c</fields>
+        <fields>Internal_Requirement_Item__c</fields>
         <fields>RECORDTYPE</fields>
         <fields>Display_Order__c</fields>
         <fields>Active__c</fields>
-        <fields>CREATEDBY_USER</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>UPDATEDBY_USER</fields>
-        <fields>LAST_UPDATE</fields>
+        <fields>Generic_Filter_1__c</fields>
+        <fields>Student_Type__c</fields>
+        <fields>Degree_Type__c</fields>
         <relatedList>Requirement_Item__c.Requirement__c</relatedList>
         <sortField>Display_Order__c</sortField>
         <sortOrder>Asc</sortOrder>
@@ -267,7 +271,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hR0000004rA7t</masterLabel>
+        <masterLabel>00h4P00000XHXPM</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

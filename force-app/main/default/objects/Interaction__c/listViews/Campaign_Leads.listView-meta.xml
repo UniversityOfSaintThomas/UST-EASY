@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Campaign_Leads</fullName>
+    <columns>NAME</columns>
+    <columns>Opportunity_Name__c</columns>
+    <columns>Date_Inquiry__c</columns>
+    <columns>First_Name__c</columns>
+    <columns>Last_Name__c</columns>
+    <columns>Email__c</columns>
+    <columns>Recruitment_Program_Associated_Schools__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Program_Code__c</columns>
+    <columns>Major_Code__c</columns>
+    <columns>Recruitment_Program__c</columns>
+    <columns>utm_source__c</columns>
+    <columns>utm_medium__c</columns>
+    <columns>utm_content__c</columns>
+    <columns>Lead_Website__c</columns>
+    <filterScope>ScopingRule</filterScope>
+    <filters>
+        <field>Academic_Level__c</field>
+        <operation>equals</operation>
+        <value>Graduate</value>
+    </filters>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>greaterThan</operation>
+        <value>4/14/2023 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>Lead_Source__c</field>
+        <operation>notContain</operation>
+        <value>Application</value>
+    </filters>
+    <label>Grad Leads</label>
+    <sharedTo>
+        <group>Marketing_Insights_and_Communications</group>
+    </sharedTo>
+</ListView>

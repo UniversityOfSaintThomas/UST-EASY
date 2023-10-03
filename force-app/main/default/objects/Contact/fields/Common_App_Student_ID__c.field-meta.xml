@@ -11,6 +11,7 @@ DO NOT DELETE this field.  DO NOT REMOVE its &quot;external ID&quot; setting.  D
     <length>20</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Text</type>
     <unique>true</unique>
 </CustomField>

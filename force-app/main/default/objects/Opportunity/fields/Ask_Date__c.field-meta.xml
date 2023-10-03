@@ -5,6 +5,7 @@
     <inlineHelpText>Date the originator plans to ask for the gift.   Once the ask occurs, the submitted date will be populated to denote the actual ask date.</inlineHelpText>
     <label>Ask Date</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>

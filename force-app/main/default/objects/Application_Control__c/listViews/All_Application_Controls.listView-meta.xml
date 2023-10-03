@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Application_Controls</fullName>
+    <columns>NAME</columns>
+    <columns>Academic_Level__c</columns>
+    <columns>OBJECT_ID</columns>
+    <columns>Show_on_App_Finder__c</columns>
+    <columns>URL_Parameter__c</columns>
+    <columns>Active__c</columns>
+    <columns>Default__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>CREATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <label>All - Application Controls</label>
+</ListView>

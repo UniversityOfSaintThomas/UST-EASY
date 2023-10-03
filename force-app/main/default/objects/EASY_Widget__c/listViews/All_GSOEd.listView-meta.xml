@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_GSOEd</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Control__c</columns>
+    <columns>Activation_State__c</columns>
+    <columns>Display_Heading__c</columns>
+    <columns>Display_Widget_On_Pages__c</columns>
+    <columns>Display_Widget_On_Status__c</columns>
+    <columns>Display_Widget_On_Sub_Status__c</columns>
+    <columns>Display_Widget_On_Citizenship__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>equals</operation>
+        <value>Graduate School of Education</value>
+    </filters>
+    <label>All - GSOEd</label>
+    <language>en_US</language>
+</ListView>

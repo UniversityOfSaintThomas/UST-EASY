@@ -3,7 +3,16 @@
     <description>Read Only and Reporting permissions needed for UST Admissions Counselors</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Admissions - Counselor (Read Only)</label>
-    <permissionSets>Admissions_Reports_and_Dashboards</permissionSets>
+    <permissionSets>Ability_to_Run_Reports</permissionSets>
+    <permissionSets>Access_to_Admissions_Bookings_Read_Only</permissionSets>
+    <permissionSets>Activities_Page_Layout_View</permissionSets>
+    <permissionSets>Admissions_Financial_Aid_Records_Read_Only</permissionSets>
+    <permissionSets>Admissions_Territory_Management_View_Only</permissionSets>
     <permissionSets>Application_Reviewer</permissionSets>
+    <permissionSets>Course_Preference_View_Only</permissionSets>
+    <permissionSets>Individual_Email_Results_Read_Only</permissionSets>
+    <permissionSets>Scholarship_UG_Merit_Read_Only</permissionSets>
+    <permissionSets>Summit_Events_Read_Only_Access</permissionSets>
+    <permissionSets>View_Recommendations</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

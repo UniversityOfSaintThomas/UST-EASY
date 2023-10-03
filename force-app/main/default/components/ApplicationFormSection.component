@@ -110,8 +110,10 @@
                         </span>
                     </div>
                     <div class="slds-media__body">
-                        <h1 class="slds-card__header-title slds-truncate" tabindex="0">
-                            {!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}
+                        <h1 class="slds-card__header-title">
+                            <a href="#" class="slds-card__header-link slds-truncate" title="{!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}">
+                                <span>{!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}</span>
+                            </a>
                         </h1>
                     </div>
                 </header>
@@ -124,20 +126,11 @@
                 <apex:pageMessages />
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
-                    <p tabindex="0">You haven't created any records yet. Click "New Record," below, to create one.</p>
+                    <p>You haven't created any records yet. Click "New Record" to create one.</p>
                 </apex:outputPanel>
 
-                <apex:outputPanel rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                    <apex:outputPanel rendered="{!CONTAINS(group.item.Required__c, group.app.Application_Status__c) && group.item.Required_Number_of_Children__c != null && group.item.Required_Number_of_Children__c > 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
-                        <p tabindex="0">At least {!group.item.Required_Number_of_Children__c} record{!IF(group.item.Required_Number_of_Children__c > 1, 's are', ' is')} required.</p>
-                    </apex:outputPanel>
-
-                    <apex:commandLink styleClass="slds-button slds-button_brand" onClick="showFormSpinner();" action="{!group.newRow}" onComplete="pageLoadReRendered();" reRender="theTable">
-                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#new")}"></use>
-                        </svg>
-                        New Record
-                    </apex:commandLink>
+                <apex:outputPanel rendered="{!CONTAINS(group.item.Required__c, group.app.Application_Status__c) && group.item.Required_Number_of_Children__c != null && group.item.Required_Number_of_Children__c > 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
+                    <p>At least {!group.item.Required_Number_of_Children__c} record{!IF(group.item.Required_Number_of_Children__c > 1, 's are', ' is')} required.</p>
                 </apex:outputPanel>
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size > 0}">
@@ -148,6 +141,7 @@
                             <apex:repeat value="{!group.questions}" var="question">
                                 <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
                                 <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="none">
+
                                     <!--THIS DISPLAYS WHEN RECORD HAS BEEN ENTERED -->
                                     <apex:outputPanel layout="none" rendered="{!!rr.isEditMode}">
                                         <dl class="slds-list_horizontal slds-wrap slds-border_bottom slds-p-vertical_x-small">
@@ -172,7 +166,7 @@
                                                     <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Date'}">
                                                         <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
                                                             <apex:param value="{!rr.obj[question.question.Related_Object_Field__c]}" />
-                                                </apex:outputText>
+                                                        </apex:outputText>
                                                     </apex:outputPanel>
                                                 </apex:outputPanel>
 
@@ -270,6 +264,15 @@
                         </apex:outputPanel>
                     </apex:repeat>
 
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
+                    <apex:commandLink styleClass="slds-button slds-button_brand" onClick="showFormSpinner();" action="{!group.newRow}" onComplete="pageLoadReRendered();" reRender="theTable">
+                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#new")}"></use>
+                        </svg>
+                        New Record
+                    </apex:commandLink>
                 </apex:outputPanel>
 
             </apex:outputPanel>

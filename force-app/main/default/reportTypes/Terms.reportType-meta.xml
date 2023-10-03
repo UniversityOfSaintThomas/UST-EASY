@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
     <baseObject>hed__Term__c</baseObject>
-    <category>other</category>
+    <category>admin</category>
     <deployed>true</deployed>
     <description>Terms</description>
     <label>Terms</label>
@@ -74,6 +74,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Term_Integration_External_Id__c</field>
+            <table>hed__Term__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Early_Action_End_Date__c</field>
+            <table>hed__Term__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Regular_Decision_End_Date__c</field>
             <table>hed__Term__c</table>
         </columns>
         <masterLabel>Terms</masterLabel>

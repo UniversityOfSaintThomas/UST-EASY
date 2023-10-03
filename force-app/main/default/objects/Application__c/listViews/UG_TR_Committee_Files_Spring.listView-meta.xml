@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UG_TR_Committee_Files_Spring</fullName>
+    <booleanFilter>1 AND (2 OR 5) AND 3 AND 4 AND 6</booleanFilter>
+    <columns>Contact__c</columns>
+    <columns>NAME</columns>
+    <columns>Transfer_GPA__c</columns>
+    <columns>Veteran_Status_At_Enrollment__c</columns>
+    <columns>Criminal_Indicator__c</columns>
+    <columns>Discipline_Ind__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>OWNER.LAST_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Intended_Program_Application_Control__c</field>
+        <operation>equals</operation>
+        <value>Undergraduate Transfer</value>
+    </filters>
+    <filters>
+        <field>Application_Status__c</field>
+        <operation>equals</operation>
+        <value>Committee</value>
+    </filters>
+    <filters>
+        <field>Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Citizenship__c</field>
+        <operation>notEqual</operation>
+        <value>International</value>
+    </filters>
+    <filters>
+        <field>Application_Substatus__c</field>
+        <operation>equals</operation>
+        <value>Appeal Completed</value>
+    </filters>
+    <filters>
+        <field>Intended_Term_of_Entry__c</field>
+        <operation>contains</operation>
+        <value>Spring</value>
+    </filters>
+    <label>UG - TR Committee Files - Spring</label>
+</ListView>

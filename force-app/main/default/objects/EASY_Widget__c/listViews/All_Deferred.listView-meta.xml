@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Deferred</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Control__c</columns>
+    <columns>Activation_State__c</columns>
+    <columns>Display_Heading__c</columns>
+    <columns>Display_Widget_On_Pages__c</columns>
+    <columns>Display_Widget_On_Status__c</columns>
+    <columns>Display_Widget_On_Sub_Status__c</columns>
+    <columns>Display_Widget_On_Citizenship__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Display_Widget_On_Status__c</field>
+        <operation>includes</operation>
+        <value>Deferred</value>
+    </filters>
+    <label>All - Deferred</label>
+    <language>en_US</language>
+</ListView>

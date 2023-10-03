@@ -151,6 +151,21 @@
             <field>Show_on_App_Finder__c</field>
             <table>Application_Control__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Full_URL__c</field>
+            <table>Application_Control__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Allow_Confirm_From__c</field>
+            <table>Application_Control__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Confirm_Status__c</field>
+            <table>Application_Control__c</table>
+        </columns>
         <masterLabel>Application Controls</masterLabel>
     </sections>
 </ReportType>

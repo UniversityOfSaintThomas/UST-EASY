@@ -5,7 +5,8 @@
     <externalId>false</externalId>
     <label>Recommender&apos;s Email</label>
     <required>false</required>
-        <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Email</type>
     <unique>false</unique>
 </CustomField>

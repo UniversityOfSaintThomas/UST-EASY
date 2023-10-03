@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Interactions_for_HomePage</fullName>
+    <columns>NAME</columns>
+    <columns>Academic_Program__c</columns>
+    <columns>Admissions_Application__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Opportunity_Stage__c</columns>
+    <columns>Term__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Opportunity_Stage__c</field>
+        <operation>equals</operation>
+        <value>Started App</value>
+    </filters>
+    <label>Interactions for HomePage</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

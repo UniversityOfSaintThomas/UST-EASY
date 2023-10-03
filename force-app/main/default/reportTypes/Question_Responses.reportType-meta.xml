@@ -176,6 +176,56 @@
             <field>Question_Label__c</field>
             <table>Question_Response__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Question_Name__c</field>
+            <table>Question_Response__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Historical_Program__c</field>
+            <table>Question_Response__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Application_Field__c</field>
+            <table>Question_Response__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact_Field__c</field>
+            <table>Question_Response__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Related_Object_Field__c</field>
+            <table>Question_Response__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Generic_Filter_3_Value__c</field>
+            <table>Question_Response__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact_Value__c</field>
+            <table>Question_Response__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact_Id__c</field>
+            <table>Question_Response__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Application_ID__c</field>
+            <table>Question_Response__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Exception_Notes__c</field>
+            <table>Question_Response__c</table>
+        </columns>
         <masterLabel>Question Responses</masterLabel>
     </sections>
 </ReportType>

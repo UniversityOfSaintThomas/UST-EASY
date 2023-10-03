@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SOL_All_Apps_2023</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Application_Substatus__c</columns>
+    <columns>Citizenship__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Intended_Program_Applicant_Type__c</field>
+        <operation>equals</operation>
+        <value>Graduate</value>
+    </filters>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>equals</operation>
+        <value>Graduate School of Law</value>
+    </filters>
+    <filters>
+        <field>Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>SOL - All Apps 2023</label>
+    <sharedTo>
+        <group>Law_Admissions</group>
+    </sharedTo>
+</ListView>

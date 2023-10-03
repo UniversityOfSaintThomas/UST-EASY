@@ -71,6 +71,26 @@
             <field>Question_Dependency_Integration_Ext_Id__c</field>
             <table>Question_Dependency__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Application_Control__c</field>
+            <table>Question_Dependency__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Academic_Level__c</field>
+            <table>Question_Dependency__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Question_Active__c</field>
+            <table>Question_Dependency__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Controlling_Question_Active__c</field>
+            <table>Question_Dependency__c</table>
+        </columns>
         <masterLabel>Question Dependencies</masterLabel>
     </sections>
 </ReportType>

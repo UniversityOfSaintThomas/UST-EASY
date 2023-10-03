@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Graduate_MADL</fullName>
+    <booleanFilter>(1 OR 2 OR 3 OR 4 OR 6) AND 5 AND 7</booleanFilter>
+    <columns>NAME</columns>
+    <columns>Contact__c</columns>
+    <columns>Employer__c</columns>
+    <columns>Current_Opportunity_Stage__c</columns>
+    <columns>Date_Inquiry__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>First_Name__c</columns>
+    <columns>Last_Name__c</columns>
+    <columns>Major_Program_1__c</columns>
+    <columns>Email__c</columns>
+    <columns>Lead_Website__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Major_Program_1__c</field>
+        <operation>contains</operation>
+        <value>Diversity Leadership</value>
+    </filters>
+    <filters>
+        <field>Major_Program_2__c</field>
+        <operation>contains</operation>
+        <value>Diversity Leadership</value>
+    </filters>
+    <filters>
+        <field>Major_Program_3__c</field>
+        <operation>contains</operation>
+        <value>Diversity Leadership</value>
+    </filters>
+    <filters>
+        <field>Major_Program_4__c</field>
+        <operation>contains</operation>
+        <value>Diversity Leadership</value>
+    </filters>
+    <filters>
+        <field>UST_Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Academic_Program__c</field>
+        <operation>equals</operation>
+        <value>Diversity Leadership - Master of Arts</value>
+    </filters>
+    <filters>
+        <field>Lead_Source__c</field>
+        <operation>notEqual</operation>
+        <value>Application</value>
+    </filters>
+    <label>Graduate RFI - MADL</label>
+</ListView>

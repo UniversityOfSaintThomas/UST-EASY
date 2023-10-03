@@ -308,17 +308,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Payment_Type__c</field>
+            <field>Academic_Level__c</field>
             <table>Question__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Payment_Custom_Amount__c</field>
-            <table>Question__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Picklist_Value_Sets__c</field>
+            <field>Common_App_Unique_ReqItem_Nickname__c</field>
             <table>Question__c</table>
         </columns>
         <masterLabel>Questions</masterLabel>

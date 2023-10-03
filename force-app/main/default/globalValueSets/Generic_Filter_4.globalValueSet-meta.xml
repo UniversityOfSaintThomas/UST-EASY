@@ -176,26 +176,6 @@
         <label>Ready to be matched</label>
     </customValue>
     <customValue>
-        <fullName>On Demand (Fall 2023)</fullName>
-        <default>false</default>
-        <label>On Demand (Fall 2023)</label>
-    </customValue>
-    <customValue>
-        <fullName>On Demand (J-Term 2024)</fullName>
-        <default>false</default>
-        <label>On Demand (J-Term 2024)</label>
-    </customValue>
-    <customValue>
-        <fullName>On Demand (Spring 2024)</fullName>
-        <default>false</default>
-        <label>On Demand (Spring 2024)</label>
-    </customValue>
-    <customValue>
-        <fullName>On Demand (Summer 2024)</fullName>
-        <default>false</default>
-        <label>On Demand (Summer 2024)</label>
-    </customValue>
-    <customValue>
         <fullName>Generic Value 2</fullName>
         <default>false</default>
         <isActive>false</isActive>

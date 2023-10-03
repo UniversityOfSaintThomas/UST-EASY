@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UG_Admit_AQU_Scholars</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Application_Substatus__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>High_School_GPA__c</columns>
+    <columns>Aquinas_Scholars_Portal_Text__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>contains</operation>
+        <value>Undergraduate First-Year</value>
+    </filters>
+    <filters>
+        <field>Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Application_Status__c</field>
+        <operation>equals</operation>
+        <value>Admit</value>
+    </filters>
+    <label>UG - Admit (AQU Scholars)</label>
+    <language>en_US</language>
+</ListView>

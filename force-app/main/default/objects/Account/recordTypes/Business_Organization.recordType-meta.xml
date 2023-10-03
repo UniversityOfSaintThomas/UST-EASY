@@ -2,28 +2,225 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Business_Organization</fullName>
     <active>true</active>
+    <compactLayoutAssignment>UDARAccountCompactLayout</compactLayoutAssignment>
     <description>A business organization.</description>
     <label>Business Organization</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
+            <fullName>2Y College Fair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2Y IQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AIFS-Bernardi Exchange Application</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banner Conversion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Catholic Enrollment Options</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Catholic Studies CLT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Community Based Organization %28CBO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DFC Banner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DFC Group Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DFC Influencer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Daily Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dougherty Family College</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dreamer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ELS Pathways</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EducationUSA Fair</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Engineering UG RFI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>External Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>External Virtual Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Find Your Major Quiz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GAM Migration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High School Counselors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kiosk Landing Page</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LinkedIn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LinkedIn Lead</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEF%3A U of M Crookston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minnesota Music Educators Association %28MMEA%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-Degree Enrollment Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NursingCAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OCB Migration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OHE Direct Admit</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Partner Referral</fullName>
+            <fullName>PTK</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Phone Inquiry</fullName>
+            <fullName>Partner</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Purchased List</fullName>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Relations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ROTC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ruffalo Noel Levitz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ruffalo Noel Levitz Responder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOE Alumni Referral Program</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scholarship Application</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seminar - Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seminar - Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer Application</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Summer RFI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trade Show</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transfer College Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UG Recruit Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>USNWR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Virtual Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Walk-in</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Word of mouth</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -31,22 +228,6 @@
         <picklist>Focus_Rating__c</picklist>
         <values>
             <fullName>Level 1%2FTop Tier</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Level 3%2FPipeline 3-5Yrs</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Level 4%2FDiscovery-Qualify</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Level 5%2FVolunteer%2FNetworker</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Level2%2FPipeline 2 Yrs</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -285,19 +466,23 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Channel Partner %2F Reseller</fullName>
+            <fullName>Analyst</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer - Channel</fullName>
+            <fullName>Competitor</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer - Direct</fullName>
+            <fullName>Customer</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Installation Partner</fullName>
+            <fullName>Integrator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Investor</fullName>
             <default>false</default>
         </values>
         <values>
@@ -305,11 +490,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Press</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Prospect</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Technology Partner</fullName>
+            <fullName>Reseller</fullName>
             <default>false</default>
         </values>
     </picklistValues>

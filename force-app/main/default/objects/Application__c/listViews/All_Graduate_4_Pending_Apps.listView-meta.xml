@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Graduate_4_Pending_Apps</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Application_Substatus__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Intended_Program_Applicant_Type__c</field>
+        <operation>equals</operation>
+        <value>Graduate</value>
+    </filters>
+    <filters>
+        <field>Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Application_Status__c</field>
+        <operation>equals</operation>
+        <value>Pending</value>
+    </filters>
+    <filters>
+        <field>Application_Substatus__c</field>
+        <operation>notEqual</operation>
+        <value>Committee Accept Waitlist</value>
+    </filters>
+    <label>All Graduate -4- Pending Apps</label>
+    <sharedTo>
+        <group>Graduate_Admissions</group>
+    </sharedTo>
+</ListView>

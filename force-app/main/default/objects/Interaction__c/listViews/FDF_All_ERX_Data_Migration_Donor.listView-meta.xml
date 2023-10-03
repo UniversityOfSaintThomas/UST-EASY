@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FDF_All_ERX_Data_Migration_Donor</fullName>
+    <columns>Opportunity_Record_Type_Formula__c</columns>
+    <columns>Opportunity_Stage__c</columns>
+    <columns>OwnerId__c</columns>
+    <columns>NAME</columns>
+    <columns>Contact__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>Opportunity_Name__c</columns>
+    <columns>Term__c</columns>
+    <columns>Start_Term_ERX__c</columns>
+    <columns>Intended_Start_Term__c</columns>
+    <columns>Major_Program_1__c</columns>
+    <columns>Academic_Interest__c</columns>
+    <columns>Recruitment_Program__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Interaction_Source__c</field>
+        <operation>contains</operation>
+        <value>ERx Data Migration</value>
+    </filters>
+    <filters>
+        <field>Opportunity_Record_Type_Formula__c</field>
+        <operation>equals</operation>
+        <value>Donor</value>
+    </filters>
+    <label>FDF All - ERX Data Migration - Donor</label>
+    <language>en_US</language>
+</ListView>

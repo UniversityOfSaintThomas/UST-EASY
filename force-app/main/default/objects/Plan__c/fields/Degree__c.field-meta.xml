@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Degree__c</fullName>
+    <deprecated>false</deprecated>
     <description>The Degree of the record (Ex: BS, BA, etc.).</description>
     <externalId>false</externalId>
     <inlineHelpText>Select a Degree for the record.</inlineHelpText>

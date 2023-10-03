@@ -9,24 +9,14 @@ public with sharing class checklistHelper {
     public static Boolean allowSubmit { get; set; }
     public static Boolean allowCancel { get; set; }
     public static Boolean allowWithdraw { get; set; }
-    public static Boolean allowConfirm { get; set; }
     public static List<Requirement_Item__c> riList { get; set; }
     public static Decimal progress { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
 
-    public static List<RequirementWrapper> checklistRequirements(Application__c app, EASYApplicationInfo appInfo, Boolean doDML) {
-        return getChecklistRequirements(app, appInfo, doDML);
-    }
-
     public static List<RequirementWrapper> checklistRequirements(Application__c app, EASYApplicationInfo appInfo) {
-        return getChecklistRequirements(app, appInfo, true);
-    }
-
-    public static List<RequirementWrapper> getChecklistRequirements(Application__c app, EASYApplicationInfo appInfo, Boolean doDML) {
         allowSubmit = true;
         allowCancel = false;
         allowWithdraw = false;
-        allowConfirm = true;
 
         allowCancel = String.isNotBlank(appInfo.allowCancelFrom) && new Set<String>(appInfo.allowCancelFrom.split(';')).contains(app.Application_Status__c);
         allowWithdraw = String.isNotBlank(appInfo.allowWithdrawFrom) && new Set<String>(appInfo.allowWithdrawFrom.split(';')).contains(app.Application_Status__c);
@@ -63,7 +53,7 @@ public with sharing class checklistHelper {
             }
         }
 
-        checkRequirementCompletion(app.Id, app, doDML);
+        checkRequirementCompletion(app.Id, app);
 
         for (Requirement_Response__c rr : [
                 SELECT Id, Requirement_Item__r.Required__c, Requirement_Item__c, Requirement_Item__r.RecordType.DeveloperName, Requirement_Item__r.Requirement__c,
@@ -130,7 +120,7 @@ public with sharing class checklistHelper {
         return reqMap.values();
     }
 
-    public static Boolean allowSubmit(List<RequirementWrapper> requirements, EASYApplicationInfo appInfo) {
+    public static Boolean allowSubmit (List<RequirementWrapper> requirements, EASYApplicationInfo appInfo) {
 
         allowSubmit = false;
 
@@ -150,31 +140,10 @@ public with sharing class checklistHelper {
         return allowSubmit;
     }
 
-    public static Boolean allowConfirm (List<RequirementWrapper> requirements, EASYApplicationInfo appInfo) {
-
-        allowConfirm = false;
-
-        for (RequirementWrapper rw : requirements) {
-            if (!rw.reqStatus) {
-                return allowConfirm;
-            }
-        }
-
-        if (String.isNotBlank(appInfo.appControlId) && String.isNotBlank(appInfo.allowConfirmFrom)) {
-            if (!(new Set<String>(appInfo.allowConfirmFrom.split(';'))).contains(appInfo.appStatus)) {
-                return allowConfirm;
-            }
-        }
-
-        allowConfirm = true;
-
-        return allowConfirm;
-    }
-
-    /* ******************************************************************************
+    /*******************************************************************************
     * @description Checks to see if requirements have been completed. Checks related list items too (Even if they are not marked completed on the Requirement Response)
-    ******************************************************************************* */
-    public static void checkRequirementCompletion(Id applicationId, Application__c app, Boolean doDML) {
+    ********************************************************************************/
+    public static void checkRequirementCompletion(Id applicationId, Application__c app) {
 
         Set<Id> requirementIds = new Set<Id>();
 
@@ -283,7 +252,7 @@ public with sharing class checklistHelper {
             }
 
         }
-        if (newResponses.size() > 0 && doDML) {
+        if (newResponses.size() > 0) {
             insert newResponses;
         }
 
@@ -307,7 +276,7 @@ public with sharing class checklistHelper {
                     }
                 }
             }
-            if (rrLst.size() > 0 && doDML) {
+            if (rrLst.size() > 0) {
                 update rrLst;
             }
             for (Question_Response__c qr : questionToResponseMap.keySet()) {
@@ -315,10 +284,8 @@ public with sharing class checklistHelper {
                     qr.Requirement_Response__c = questionToResponseMap.get(qr).Id;
                 }
             }
-            if (doDML) {
-                upsert qResponses;
-                update app;
-            }
+            upsert qResponses;
+            update app;
 
         } catch (DmlException e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));

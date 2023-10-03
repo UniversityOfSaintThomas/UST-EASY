@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ryanna_s_list</fullName>
+    <columns>Activate_Application_Date__c</columns>
+    <columns>End_Application_Date__c</columns>
+    <columns>NAME</columns>
+    <columns>Academic_Term__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>School_College__c</columns>
+    <columns>Student_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Program_Application_Control__c</field>
+        <operation>contains</operation>
+        <value>engineering</value>
+    </filters>
+    <filters>
+        <field>Academic_Term__c</field>
+        <operation>equals</operation>
+        <value>Fall 2023</value>
+    </filters>
+    <label>Ryanna&apos;s list</label>
+</ListView>

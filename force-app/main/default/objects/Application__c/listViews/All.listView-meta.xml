@@ -10,6 +10,15 @@
     <columns>OWNER.FIRST_NAME</columns>
     <columns>OWNER.LAST_NAME</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Generic_Filter_3__c</field>
+        <operation>equals</operation>
+        <value>Apply Without Standardized Test</value>
+    </filters>
+    <filters>
+        <field>Application_Status__c</field>
+        <operation>equals</operation>
+        <value>Pending</value>
+    </filters>
     <label>All</label>
-    <language>en_US</language>
 </ListView>

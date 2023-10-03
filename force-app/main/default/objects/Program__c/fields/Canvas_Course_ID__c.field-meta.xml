@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Canvas_Course_ID__c</fullName>
+    <description>Canvas LMS Course ID</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Canvas LMS Course ID</inlineHelpText>
+    <label>Canvas Course ID</label>
+    <length>5</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

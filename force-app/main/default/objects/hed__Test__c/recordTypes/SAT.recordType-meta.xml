@@ -40,7 +40,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>AP Chinese Language</fullName>
+            <fullName>AP Chinese Language%2FCulture</fullName>
             <default>false</default>
         </values>
         <values>
@@ -76,7 +76,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>AP French Language</fullName>
+            <fullName>AP French Language%2FCulture</fullName>
             <default>false</default>
         </values>
         <values>
@@ -84,7 +84,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>AP German Language</fullName>
+            <fullName>AP German Language%2FCulture</fullName>
             <default>false</default>
         </values>
         <values>
@@ -164,11 +164,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>AP Spanish Language</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AP Spanish Literature</fullName>
+            <fullName>AP Spanish Language%2FCulture</fullName>
             <default>false</default>
         </values>
         <values>
@@ -208,6 +204,14 @@
         </values>
         <values>
             <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
             <default>false</default>
         </values>
     </picklistValues>

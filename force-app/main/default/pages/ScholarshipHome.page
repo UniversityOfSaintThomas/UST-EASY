@@ -1,8 +1,5 @@
 <apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ScholarshipHomeController" >
     <apex:composition template="ScholarshipTemplate" >
-        <apex:define name="head-extras">
-            <title>Home | Scholarships at St. Thomas</title>
-        </apex:define>
         <apex:define name="body">
             <script>
                 var historyPage = "{!PageURL}";

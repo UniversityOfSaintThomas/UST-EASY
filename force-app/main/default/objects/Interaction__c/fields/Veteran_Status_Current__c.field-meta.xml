@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Veteran_Status_Current__c</fullName>
+    <businessStatus>Active</businessStatus>
+    <description>To determine the current status of an veteran throughout the application lifecycle and allow for veterans guidance. Data Cookbook: https://stthomas.datacookbook.com/institution/terms/294212</description>
     <externalId>false</externalId>
+    <inlineHelpText>To determine the current status of an veteran throughout the application lifecycle and allow for veterans guidance.</inlineHelpText>
     <label>Veteran Status Current</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

@@ -6,7 +6,8 @@
     <inlineHelpText>Status of attachment if paper form was submitted</inlineHelpText>
     <label>Document Status</label>
     <required>false</required>
-        <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>

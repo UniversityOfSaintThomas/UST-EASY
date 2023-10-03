@@ -3,10 +3,26 @@
     <description>Student Data and Registrar Processing permissions needed to support Admissions</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Admissions - SDAR Processing</label>
+    <permissionSets>Access_to_Admissions_Bookings_Edit</permissionSets>
+    <permissionSets>Activities_Page_Layout_View</permissionSets>
     <permissionSets>Admissions_Email_Template_Management</permissionSets>
+    <permissionSets>Admissions_Financial_Aid_Records_Create_and_Edit</permissionSets>
     <permissionSets>Admissions_Reports_and_Dashboards</permissionSets>
     <permissionSets>Application_Config_Admin</permissionSets>
     <permissionSets>Application_Decision</permissionSets>
+    <permissionSets>Application_Payments_Create</permissionSets>
     <permissionSets>Application_Processing</permissionSets>
+    <permissionSets>Data_Modify_All</permissionSets>
+    <permissionSets>ERx_Import__Import_Rx_User_Permissions</permissionSets>
+    <permissionSets>Import_Rx_User_Permissions_UST</permissionSets>
+    <permissionSets>Process_Recommendations</permissionSets>
+    <permissionSets>Scholarship_UG_Merit_Create</permissionSets>
+    <permissionSets>Student_Withdrawal_Create</permissionSets>
+    <permissionSets>Summit_Events_Read_Only_Access</permissionSets>
+    <permissionSets>UST_Project_Milestone_User</permissionSets>
+    <permissionSets>UST_Scholarship_Admin</permissionSets>
+    <permissionSets>View_Encrypted_Data</permissionSets>
+    <permissionSets>View_Work_History</permissionSets>
+    <permissionSets>summit__Summit_Events_Admin</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

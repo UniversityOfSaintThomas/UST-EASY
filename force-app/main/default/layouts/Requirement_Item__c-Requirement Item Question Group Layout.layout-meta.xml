@@ -76,6 +76,10 @@
                 <behavior>Edit</behavior>
                 <field>File_Name_Prefix__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Academic_Level__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

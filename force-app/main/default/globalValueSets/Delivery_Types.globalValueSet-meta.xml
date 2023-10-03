@@ -60,6 +60,16 @@
         <default>false</default>
         <label>4-year (Fall Start)</label>
     </customValue>
+    <customValue>
+        <fullName>Hybrid</fullName>
+        <default>false</default>
+        <label>Hybrid</label>
+    </customValue>
+    <customValue>
+        <fullName>In-person</fullName>
+        <default>false</default>
+        <label>In-person</label>
+    </customValue>
     <description>Types that a program can be delivered.</description>
     <masterLabel>Delivery Types</masterLabel>
     <sorted>false</sorted>

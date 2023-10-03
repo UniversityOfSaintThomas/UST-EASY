@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_AH_Received</fullName>
+    <columns>NAME</columns>
+    <columns>Document_Status__c</columns>
+    <columns>Last_Name__c</columns>
+    <columns>First_Name__c</columns>
+    <columns>Applicant_Program__c</columns>
+    <columns>Rec_Question_1_Response__c</columns>
+    <columns>Rec_Question_2_Response__c</columns>
+    <columns>Rec_Question_3_Response__c</columns>
+    <columns>Rec_Question_4_Response__c</columns>
+    <columns>Rec_Question_5_Response__c</columns>
+    <columns>Rec_Question_6_Response__c</columns>
+    <columns>Rec_Question_7_Response__c</columns>
+    <columns>Rec_Question_8_Response__c</columns>
+    <columns>Rec_Question_9_Response__c</columns>
+    <columns>Rec_Question_10_Response__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Applicant_Program__c</field>
+        <operation>contains</operation>
+        <value>art history</value>
+    </filters>
+    <filters>
+        <field>Document_Status__c</field>
+        <operation>equals</operation>
+        <value>Received,Approved</value>
+    </filters>
+    <label>All - AH - Received</label>
+</ListView>

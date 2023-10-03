@@ -36,4 +36,5 @@
     <tabs>hed__Education_History__c</tabs>
     <tabs>Family_Member__c</tabs>
     <tabs>hed__Test__c</tabs>
+    <tabs>Syllabus_Review__c</tabs>
 </CustomApplication>

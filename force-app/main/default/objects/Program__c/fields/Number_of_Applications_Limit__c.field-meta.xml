@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Number_of_Applications_Limit__c</fullName>
+    <deprecated>false</deprecated>
     <description>One Application (Any other applications, don&apos;t allow creation)
 One Application Per Term (Only one application for the selected term)
 One Application Per Program (Only one application for the selected program)

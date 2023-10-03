@@ -27,6 +27,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Graduate_Integration_Program_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Major_Code__c</field>
             </layoutItems>
             <layoutItems>
@@ -52,6 +56,25 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Application_Control_URL__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Admit_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X18_Digit_Program_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Primary_School_College_for_Assignment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Major_Record_ID_ERX__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -117,6 +140,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Program_Image_URL__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Associated_Schools__c</field>
             </layoutItems>
         </layoutColumns>
@@ -128,6 +155,37 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Program_Type__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Canvas Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Canvas_Section_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Canvas_Course_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Canvas_Course_URL__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Canvas_Course_Materials_Access_in_Days__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Canvas_Course_Materials_Expire_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -190,6 +248,21 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CIP_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Banner_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Banner_Activity_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Banner_Index_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -300,6 +373,10 @@
                 <behavior>Edit</behavior>
                 <field>Description__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Program_Bucket__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -325,12 +402,22 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Application_Status__c</fields>
+        <fields>Intended_Term_of_Entry__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Application__c.Intended_Program__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Academic_Term__c</fields>
         <fields>Activate_Application_Date__c</fields>
         <fields>End_Application_Date__c</fields>
         <fields>Degree_Type__c</fields>
         <fields>Student_Type__c</fields>
+        <fields>Applicant_Type__c</fields>
         <fields>Application_Status__c</fields>
+        <fields>Delivery_Type__c</fields>
         <relatedList>Intended_Program_Term__c.Intended_Program__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -377,13 +464,17 @@
         <fields>Plan_Code__c</fields>
         <relatedList>Plan__c.Program__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Student_Withdrawal_Returning__c.Major_upon_return__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hJ0000007pOaP</masterLabel>
+        <masterLabel>00h4P00000XHXPE</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

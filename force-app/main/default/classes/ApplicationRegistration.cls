@@ -13,31 +13,14 @@ public class ApplicationRegistration {
     public EASYApplicationInfo appInfo { get; set; }
     public Boolean cookieKeyPresent { get; set; }
     public String userType { get; set; }
-    public Boolean noApplication { get; set; }
-    public Boolean commonAppApplication { get; set; }
 
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
     ********************************************************************************/
-
     public ApplicationRegistration() {
         userType = UserInfo.getUserType();
         appInfo = ApplicationUtilities.createShellAppInfo();
         cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
-        String applicationType = '';
-        noApplication = false;
-        commonAppApplication = false;
-
-        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
-            applicationType = ApexPages.currentPage().getParameters().get('at');
-            if (applicationType.equalsIgnoreCase('noapp') || applicationType.equalsIgnoreCase('commonapp')) {
-                noApplication = true;
-            }
-            if (applicationType.equalsIgnoreCase('commonapp')) {
-                commonAppApplication = true;
-            }
-        }
-
         if (cookieKeyPresent) {
 
             // Initialize objects
@@ -70,51 +53,27 @@ public class ApplicationRegistration {
             ApplicationQuestion portalPasswordConfirmation = new ApplicationQuestion(appCreate.con, appCreate.app, '', extraFields, 'First_Name__c', Schema.DisplayType.ENCRYPTEDSTRING, true);
             portalPasswordConfirmation.addQuestionObject(new Question__c(Label__c = 'Please enter your password again.', Required__c = 'yep', Active__c = true, Length__c = 40));
 
-            ApplicationQuestionGroup firstGroup;
-
-            if (commonAppApplication) {
-                ApplicationQuestion commonApp = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'External_Application_ID__c');
-                commonApp.addQuestionObject(new Question__c(Label__c = 'Please enter your Common App Id', Required__c = 'yep', Active__c = true, Length__c = 40));
-                firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                        firstName, middleName, lastName, email, commonApp
-                });
-            } else {
-                firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                        firstName, middleName, lastName, email
-                });
-            }
-
+            // Create question groups
+            ApplicationQuestionGroup firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+                    firstName, middleName, lastName, email
+            });
             ApplicationQuestionGroup lastGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
                     portalPassword, portalPasswordConfirmation
             });
 
             // Setup other questions
-            System.debug('No Application: ' + noApplication);
-            if (noApplication) {
-                appCreate.applicationCreateSetup(firstGroup, lastGroup, true);
-            } else {
-                appCreate.applicationCreateSetup(firstGroup, lastGroup);
-            }
-
+            appCreate.applicationCreateSetup(firstGroup, lastGroup);
         }
     }
 
     public PageReference applicationRegistrationInit() {
         ApplicationUtilities.getCookieKey();
         userType = UserInfo.getUserType();
-        String applicationType = '';
-
-        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
-            applicationType = ApexPages.currentPage().getParameters().get('at');
-        }
-
-        System.debug('user type: ' + userType + ', at: ' + applicationType);
-
         if (!userType.endsWithIgnoreCase('guest')) {
             PageReference createApp;
-            if (String.isNotBlank(applicationType) && !applicationType.equalsIgnoreCase('noapp') && !applicationType.endsWithIgnoreCase('commonapp')) {
+            If (String.isNOtBlank(ApexPages.currentPage().getParameters().get('at'))) {
                 createApp = Page.ApplicationCreate;
-                createApp.getParameters().put('at', applicationType);
+                createApp.getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
             } else {
                 createApp = Page.ApplicationPortal;
             }
@@ -136,42 +95,25 @@ public class ApplicationRegistration {
     * @description populates fields on the contact and application through the interactions object.
     ********************************************************************************/
     public PageReference submit() {
-
+        System.Savepoint sp = Database.setSavepoint();
         Boolean dmlException = false;
-        String errorMessage = '';
-        errorMessage += populateInteraction();
+        populateInteraction();
         loginUser = null;
         loginPassword = null;
         loginUrl = null;
         crudToDo doCrud = new crudToDo();
 
-        // Throw exception if not all required fields have been filled-out
-        errorMessage += appCreate.checkFields();
-        System.debug('Error Message' + errorMessage);
-
-        if (String.isNotBlank(errorMessage)) {
-            appCreate.additionalDataString = '';
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, errorMessage));
-            return null;
-            // throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
-        }
-
-        System.Savepoint sp = Database.setSavepoint();
         try {
-            // Insert interaction to create/update Contact
-            System.debug('INTERACTION: ' + JSON.serializePretty(interaction));
+            // Throw exception if not all required fields have been filled-out
+            String errorMessage = appCreate.checkFields();
+            if (errorMessage != null) {
+                throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
+            }
 
+            // Insert interaction to create/update Contact
             insert interaction;
-            interaction = [
-                    SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c, External_Application_ID__c
-                    FROM Interaction__c
-                    WHERE Id = :interaction.Id
-            ];
-            Contact con = [
-                    SELECT Id, FirstName, MiddleName, LastName, Email, AccountId, Account.OwnerId
-                    FROM Contact
-                    WHERE Id = :interaction.Contact__c
-            ];
+            interaction = [SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c FROM Interaction__c WHERE Id = :interaction.Id];
+            Contact con = [SELECT Id, FirstName, MiddleName, LastName, Email, AccountId, Account.OwnerId FROM Contact WHERE Id = :interaction.Contact__c];
             appCreate.con.Id = con.Id;
 
             // Exit and roll-back if User with Email or Contact already exists
@@ -187,10 +129,7 @@ public class ApplicationRegistration {
             // Assign contact to application and save
             appCreate.app.Contact__c = con.Id;
 
-            String checklistUrl = '/apex/ApplicationPortal';
-            if (!noApplication) {
-                checklistUrl = doCrud.returnAppURL(appCreate);
-            }
+            String checklistUrl = doCrud.returnAppURL(appCreate);
 
             // Create user object
             User u = new User();
@@ -210,13 +149,13 @@ public class ApplicationRegistration {
             if (ApexPages.hasMessages(ApexPages.Severity.ERROR) && !Test.isRunningTest()) {
                 throw new ApplicationUtilities.ApplicationException(null, true);
             }
+
             Id uId;
             if (!Test.isRunningTest() && pass.equals(passConfirm)) {
-                uId = Site.createExternalUser(u, con.AccountId, pass, false);
+                uId = Site.createExternalUser(u, con.AccountId, pass, true);
                 if (uId == null) {
                     throw new ApplicationUtilities.ApplicationException('Error occurred when creating user.', true, true);
                 }
-
                 loginUser = new User(Id = uId, Username = u.Username);
                 loginPassword = pass;
                 loginUrl = checklistUrl;
@@ -245,96 +184,36 @@ public class ApplicationRegistration {
         return null;
     }
 
-
-    public String populateInteraction() {
+    public void populateInteraction() {
         Id application_opp_RT_ID = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
         interaction.Id = null;
         interaction.Contact__c = null;
-        String errorMessage = '';
         for (ApplicationQuestionGroup questionGroup : appCreate.section.groups) {
-            for (ApplicationQuestion question : questionGroup.questions) {
+            for (ApplicationQuestion question: questionGroup.questions) {
                 if (question.label == 'What term are you applying for?' && question.resp != null) {
-                    interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
+                        interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
                 }
                 if (question.label == 'What program are you applying to?' && question.resp != null) {
                     interaction.Academic_Program__c = Id.valueOf(String.valueOf(question.resp));
                 }
             }
         }
-
-        //Check for common app Id External_Application_ID__c
-        System.debug('common app: ' + commonAppApplication);
-        if (commonAppApplication) {
-            String commonAppId = '';
-            if (String.isNotBlank(interaction.External_Application_ID__c)) {
-                commonAppId = interaction.External_Application_ID__c.trim();
-                commonAppId = '%' + commonAppId + '%';
-                List<Application__c> commonApplication = new List<Application__c>();
-                commonApplication = [
-                        SELECT External_Application_ID__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email,
-                                Contact__r.Mailing_First_Name__c, Intended_Program__c, Intended_Term_of_Entry__c, Applicant_Type__c
-                        FROM Application__c
-                        WHERE (
-                                Contact__r.FirstName = :interaction.First_Name__c
-                                OR
-                                Contact__r.Mailing_First_Name__c = :interaction.First_Name__c
-                        )
-                        AND Contact__r.LastName = :interaction.Last_Name__c
-                        AND Contact__r.Email = :interaction.Email__c
-                        AND External_Application_ID__c LIKE :commonAppId
-                ];
-
-                //System.debug('COMMON APP:' + Json.serializePretty(commonApplication));
-                if (commonApplication.size() > 0 && String.isNotBlank(commonApplication[0].External_Application_ID__c) && commonApplication[0].External_Application_ID__c.equalsIgnoreCase(interaction.External_Application_ID__c)) {
-                    interaction.Academic_Program__c = commonApplication[0].Intended_Program__c;
-                    interaction.Intended_Start_Term__c = commonApplication[0].Intended_Term_of_Entry__c;
-                    interaction.Admissions_Application__c = commonApplication[0].Id;
-                } else {
-                    //interaction.External_Application_ID__c = null;
-                    return ' We can\'t match your common app information with the information provided.';
-                }
-            } else {
-                //interaction.External_Application_ID__c = null;
-                return ' We can\'t match your common app information with the information provided.';
-            }
-
-        }
-
-
         if (interaction.Academic_Program__c != null) {
-            List<Program__c> program = [
-                    SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c
-                    FROM Program__c
-                    WHERE Id = :interaction.Academic_Program__c
-                    LIMIT 1
-            ];
-
+            List<Program__c> program = [SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c FROM Program__c WHERE Id =: interaction.Academic_Program__c LIMIT 1];
             if (!program.isEmpty()) {
                 interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
                 interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
             }
-
-            List<Plan__c> relatedPlan = [
-                    SELECT Id
-                    FROM Plan__c
-                    WHERE Program__c = :interaction.Academic_Program__c
-                    LIMIT 1
-            ];
-
+            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c =: interaction.Academic_Program__c LIMIT 1];
             if (!relatedPlan.isEmpty()) {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
             }
         }
         if (interaction.Intended_Start_Term__c != null) {
-            List<Academic_Term__c> academicTerm = [
-                    SELECT Term__c
-                    FROM Academic_Term__c
-                    WHERE Id = :interaction.Intended_Start_Term__c
-                    LIMIT 1
-            ];
+            List<Academic_Term__c> academicTerm = [SELECT Term__c FROM Academic_Term__c WHERE Id =: interaction.Intended_Start_Term__c LIMIT 1];
             if (!academicTerm.isEmpty()) {
                 interaction.Term__c = academicTerm[0].Term__c;
-            }
+            } 
         }
         interaction.Opportunity_Stage__c = 'Started App';
         interaction.Opportunity_Record_Type__c = application_opp_RT_ID;
@@ -343,10 +222,7 @@ public class ApplicationRegistration {
         interaction.Date_Started_App__c = System.Today();
         interaction.Lead_Source__c = 'Application';
         interaction.Interaction_Status__c = 'New';
-
-        return errorMessage;
     }
-
 
     public PageReference login() {
         if (String.isNotBlank(loginUrl)) {

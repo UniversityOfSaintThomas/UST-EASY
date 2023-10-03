@@ -2,6 +2,16 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Ensure read/write permissions exist for whichever user will be integrated into &quot;Extract, Transform, Load&quot; integrations designed in tools such as Jitterbit.  (Sometimes, being a sysadmin alone does not suffice when it comes to ETL.)</description>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Banner_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Banner_Key__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Family_Member__c.Family_Member_Unique_External_ID__c</field>
         <readable>true</readable>
@@ -104,6 +114,15 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>Account</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Application__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -124,6 +143,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>Family_Member__c</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Mogli_SMS__Form__c</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -197,6 +225,10 @@
         <object>hed__Test__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>Account.Educational_Institution</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Family_Member__c.Parent_Guardian</recordType>
         <visible>true</visible>
@@ -299,6 +331,14 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Requirement_Item__c.Related_Object</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>hed__Education_History__c.College</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>hed__Education_History__c.High_School</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

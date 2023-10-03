@@ -336,6 +336,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Recommendation__c.Recommendation_Requirement_Response__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Recommendation__c.Recommendation_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>

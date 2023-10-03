@@ -4,7 +4,8 @@
     <externalId>false</externalId>
     <label>Scholarship Award Type</label>
     <required>false</required>
-        <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

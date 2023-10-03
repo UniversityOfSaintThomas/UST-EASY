@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Counties</fullName>
+    <columns>NAME</columns>
+    <columns>County_s_State__c</columns>
+    <columns>Admission_Territory__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>County_s_State__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <label>Counties</label>
+    <sharedTo>
+        <group>UG_Admissions</group>
+    </sharedTo>
+</ListView>

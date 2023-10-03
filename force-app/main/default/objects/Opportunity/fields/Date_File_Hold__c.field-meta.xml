@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Date - File Hold</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>

@@ -8,11 +8,23 @@
         <default>false</default>
     </values>
     <values>
+        <fullName>Committee</fullName>
+        <default>false</default>
+    </values>
+    <values>
         <fullName>Complete App</fullName>
         <default>false</default>
     </values>
     <values>
         <fullName>Confirmed</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Deferred Admit</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Deferred Confirmed</fullName>
         <default>false</default>
     </values>
     <values>
@@ -24,11 +36,23 @@
         <default>false</default>
     </values>
     <values>
+        <fullName>File Hold</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Pending</fullName>
+        <default>false</default>
+    </values>
+    <values>
         <fullName>Pending Admit</fullName>
         <default>false</default>
     </values>
     <values>
         <fullName>Pending Decision</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Second Review</fullName>
         <default>false</default>
     </values>
     <values>
@@ -41,6 +65,10 @@
     </values>
     <values>
         <fullName>Withdrawn</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Wrong Application</fullName>
         <default>false</default>
     </values>
 </BusinessProcess>

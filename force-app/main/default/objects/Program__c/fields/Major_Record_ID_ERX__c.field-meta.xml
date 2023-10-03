@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Major_Record_ID_ERX__c</fullName>
+    <description>Captures ERX Major record ID</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Captures ERX Major record ID</inlineHelpText>
+    <label>Major Record ID - ERX</label>
+    <length>18</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

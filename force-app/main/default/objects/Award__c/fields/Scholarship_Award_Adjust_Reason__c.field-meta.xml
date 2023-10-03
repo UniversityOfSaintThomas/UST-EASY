@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scholarship_Award_Adjust_Reason__c</fullName>
+    <description>Selecting the value &quot;GPA&quot; triggers the &quot;Re-Calculate Transfer Scholarship&quot;  workflow that populates the &quot;UST Transfer Award Revised Annual Amount field&quot;</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Selecting the value &quot;GPA&quot; triggers the &quot;Re-Calculate Transfer Scholarship&quot; workflow that populates the &quot;UST Transfer Award Revised Annual Amount field&quot;</inlineHelpText>
+    <label>Merit Scholarship/Award Adjust Reason</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>ACT</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ACT</label>
+            </value>
+            <value>
+                <fullName>Athletic Revision</fullName>
+                <default>false</default>
+                <label>Athletic Revision</label>
+            </value>
+            <value>
+                <fullName>Dease Scholarship</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Dease Scholarship</label>
+            </value>
+            <value>
+                <fullName>Full Tuition 360 Journalism</fullName>
+                <default>false</default>
+                <label>Full Tuition - 360 Journalism</label>
+            </value>
+            <value>
+                <fullName>Full Tuition Dease Scholarship</fullName>
+                <default>false</default>
+                <label>Full Tuition - Dease Scholarship</label>
+            </value>
+            <value>
+                <fullName>Full Tuition Excellence Scholarship</fullName>
+                <default>false</default>
+                <label>Full Tuition - Excellence Scholarship</label>
+            </value>
+            <value>
+                <fullName>Full Tuition GHR Scholarship</fullName>
+                <default>false</default>
+                <label>Full Tuition - GHR Scholarship</label>
+            </value>
+            <value>
+                <fullName>Full Tuition Schulze Innovation</fullName>
+                <default>false</default>
+                <label>Full Tuition - Schulze Innovation</label>
+            </value>
+            <value>
+                <fullName>Full Tuition - Schulze Scholarship</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Full Tuition - Schulze Scholarship</label>
+            </value>
+            <value>
+                <fullName>Full Tuition Schulz Innovation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Full Tuition Schulz Innovation</label>
+            </value>
+            <value>
+                <fullName>Full Tuition Science Scholarship</fullName>
+                <default>false</default>
+                <label>Full Tuition - Science Scholarship</label>
+            </value>
+            <value>
+                <fullName>GPA - Missing Academic Work</fullName>
+                <default>false</default>
+                <label>GPA - Missing Academic Work</label>
+            </value>
+            <value>
+                <fullName>GPA – Missing Academic Work</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>GPA – Missing Academic Work</label>
+            </value>
+            <value>
+                <fullName>Late Adjust</fullName>
+                <default>false</default>
+                <label>Late Adjust</label>
+            </value>
+            <value>
+                <fullName>Manual Override</fullName>
+                <default>false</default>
+                <label>Manual Override</label>
+            </value>
+            <value>
+                <fullName>Move to Next Term</fullName>
+                <default>false</default>
+                <label>Move to Next Term</label>
+            </value>
+            <value>
+                <fullName>Non-FAFSA adjust 2022</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Non-FAFSA adjust 2022</label>
+            </value>
+            <value>
+                <fullName>Reinstate FTFY sch/awrd</fullName>
+                <default>false</default>
+                <label>Reinstate FTFY sch/awrd</label>
+            </value>
+            <value>
+                <fullName>Revised ACT/SAT</fullName>
+                <default>false</default>
+                <label>Revised ACT/SAT</label>
+            </value>
+            <value>
+                <fullName>Revised GPA</fullName>
+                <default>false</default>
+                <label>Revised GPA</label>
+            </value>
+            <value>
+                <fullName>SAGE (Timing)</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SAGE (Timing)</label>
+            </value>
+            <value>
+                <fullName>SAT</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SAT</label>
+            </value>
+            <value>
+                <fullName>Second Revision - ACT</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Second Revision - ACT</label>
+            </value>
+            <value>
+                <fullName>Second Revision - SAT</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Second Revision - SAT</label>
+            </value>
+            <value>
+                <fullName>SJV</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SJV</label>
+            </value>
+            <value>
+                <fullName>Test Score Rescinded</fullName>
+                <default>false</default>
+                <label>Test Score Rescinded</label>
+            </value>
+            <value>
+                <fullName>Tuition Exchange</fullName>
+                <default>false</default>
+                <label>Tuition Exchange</label>
+            </value>
+            <value>
+                <fullName>Tuition Remission - ACTC</fullName>
+                <default>false</default>
+                <label>Tuition Remission - ACTC</label>
+            </value>
+            <value>
+                <fullName>Tuition Remission – ACTC</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tuition Remission – ACTC</label>
+            </value>
+            <value>
+                <fullName>Tuition Remission - CCTE</fullName>
+                <default>false</default>
+                <label>Tuition Remission - CCTE</label>
+            </value>
+            <value>
+                <fullName>Tuition Remission – CCTE</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tuition Remission – CCTE</label>
+            </value>
+            <value>
+                <fullName>Tuition Remission - UST</fullName>
+                <default>false</default>
+                <label>Tuition Remission - UST</label>
+            </value>
+            <value>
+                <fullName>Tuition Remission – UST</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tuition Remission – UST</label>
+            </value>
+            <value>
+                <fullName>Yellow Ribbon</fullName>
+                <default>false</default>
+                <label>Yellow Ribbon</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -5,6 +5,7 @@
     <description>Official Transcript notification from the SDAR team.</description>
     <externalId>false</externalId>
     <label>Official Transcript</label>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

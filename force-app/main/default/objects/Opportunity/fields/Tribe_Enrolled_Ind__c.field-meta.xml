@@ -6,6 +6,7 @@
     <inlineHelpText>Are you enrolled in a federally recognized tribe?</inlineHelpText>
     <label>Tribe Enrolled Ind</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

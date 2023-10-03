@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSOE_All_RFI_s1</fullName>
+    <columns>NAME</columns>
+    <columns>Opportunity_Stage__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Date_Inquiry__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>Admissions_Application__c</columns>
+    <columns>Major_Program_1__c</columns>
+    <columns>Recruitment_Program__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Lead_Source__c</field>
+        <operation>equals</operation>
+        <value>Graduate RFI,Graduate RFI Page,Internal RFI,Landing Page</value>
+    </filters>
+    <filters>
+        <field>Program_Code__c</field>
+        <operation>startsWith</operation>
+        <value>SE_,ET_</value>
+    </filters>
+    <filters>
+        <field>Contact__c</field>
+        <operation>notContain</operation>
+        <value>Test</value>
+    </filters>
+    <filters>
+        <field>UST_Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>GSOE- All RFI&apos;s</label>
+</ListView>

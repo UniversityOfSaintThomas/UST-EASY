@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_SOL</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>equals</operation>
+        <value>Graduate School of Law</value>
+    </filters>
+    <label>All - SOL</label>
+</ListView>

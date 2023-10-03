@@ -6,7 +6,7 @@
 private class ApplicationCreate_TEST {
     @TestSetup
     static void setup() {
-        Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl('test', 'st');
+        Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl();
 
         // Create and insert Interaction Mapping Test Data
         List<Interaction_Mapping__c> testMappings = INT_TestDataFactory.createTestMappings();
@@ -130,19 +130,15 @@ private class ApplicationCreate_TEST {
 
         Id inquiryRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Inquiry_Opportunity').getRecordTypeId();
         Id appRT = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Applicant_Opportunity').getRecordTypeId();
-        String usCountryValue = 'United States';
-        if (ApplicationTESTUtilities.doesPicklistContain(Schema.Interaction__c.Country__c, 'United States of America')) {
-            usCountryValue = 'United States of America';
-        }
 
         Interaction__c int2 = new Interaction__c(
                 Interaction_Source__c = 'Application',
-                Interaction_Status__c = 'New',
+                Interaction_Status__c ='New',
                 Academic_Program__c = p3.Id,
                 Admit_Type__c = 'First-Year',
                 Recruitment_Interest__c = Plan1.Id,
                 Intended_Start_Term__c = at.Id,
-                Country__c = usCountryValue,
+                Country__c = 'United States of America',
                 Opportunity_Record_Type__c = appRT,
                 Opportunity_Stage__c = 'Started App',
                 Term__c = hedTerm.Id,
@@ -158,12 +154,12 @@ private class ApplicationCreate_TEST {
 
         Interaction__c int3 = new Interaction__c(
                 Interaction_Source__c = 'Application',
-                Interaction_Status__c = 'New',
+                Interaction_Status__c ='New',
                 Academic_Program__c = p4.Id,
                 Admit_Type__c = 'First-Year',
                 Recruitment_Interest__c = Plan2.Id,
                 Intended_Start_Term__c = at.Id,
-                Country__c = usCountryValue,
+                Country__c = 'United States of America',
                 Opportunity_Record_Type__c = appRT,
                 Opportunity_Stage__c = 'Started App',
                 Term__c = hedTerm.Id,
@@ -189,7 +185,7 @@ private class ApplicationCreate_TEST {
                 CloseDate = System.today(),
                 Academic_Program__c = p3.Id,
                 Term__c = hedTerm.Id,
-                Country__c = usCountryValue,
+                Country__c = 'United States of America',
                 Citizenship__c = 'U.S. Citizen',
                 Recruitment_Interest__c = plan1.Id,
                 Intended_Start_Term__c = at.Id
@@ -205,7 +201,7 @@ private class ApplicationCreate_TEST {
                 CloseDate = System.today(),
                 Academic_Program__c = p4.Id,
                 Term__c = hedTerm.Id,
-                Country__c = usCountryValue,
+                Country__c = 'United States of America',
                 Citizenship__c = 'U.S. Citizen',
                 Recruitment_Interest__c = plan1.Id,
                 Intended_Start_Term__c = at.Id
@@ -413,5 +409,5 @@ private class ApplicationCreate_TEST {
         System.assertEquals(1, results.size());
     }
 
-
+    
 }

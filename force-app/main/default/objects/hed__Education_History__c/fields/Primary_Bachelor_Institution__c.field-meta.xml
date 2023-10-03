@@ -6,6 +6,7 @@
     <externalId>false</externalId>
     <inlineHelpText>The Institution where the applicant&apos;s bachelor degree transcript is from.</inlineHelpText>
     <label>Primary Bachelor Institution</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

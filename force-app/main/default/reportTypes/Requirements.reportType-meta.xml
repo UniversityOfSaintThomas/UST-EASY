@@ -176,6 +176,11 @@
             <field>Requirement_Integration_External_Id__c</field>
             <table>Requirement__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Academic_Level__c</field>
+            <table>Requirement__c</table>
+        </columns>
         <masterLabel>Requirements</masterLabel>
     </sections>
 </ReportType>

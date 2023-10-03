@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Programs_UG</fullName>
+    <columns>OBJECT_ID</columns>
+    <columns>NAME</columns>
+    <columns>Program_Major_Concentration__c</columns>
+    <columns>Application_Control__c</columns>
+    <columns>Admit_Type__c</columns>
+    <columns>Degree_Type__c</columns>
+    <columns>Program_Applicant_Type__c</columns>
+    <columns>Student_Type__c</columns>
+    <columns>Application_Fee_Amount__c</columns>
+    <columns>Active__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>RECORDTYPE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>contains</operation>
+        <value>Undergraduate</value>
+    </filters>
+    <label>All Programs - UG</label>
+    <language>en_US</language>
+</ListView>

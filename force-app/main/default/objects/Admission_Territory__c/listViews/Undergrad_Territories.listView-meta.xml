@@ -7,8 +7,10 @@
     <columns>Associated_States__c</columns>
     <columns>Fallback_Territory__c</columns>
     <columns>Unique_Code__c</columns>
+    <columns>LAST_UPDATE</columns>
     <columns>Assigned_User_is_active__c</columns>
     <columns>Territoy_Type__c</columns>
+    <columns>OWNER.ALIAS</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Territoy_Type__c</field>
@@ -16,5 +18,8 @@
         <value>FTFY,DFC,Transfer,International</value>
     </filters>
     <label>Undergrad Territories</label>
-    <language>en_US</language>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+        <group>UG_Admissions</group>
+    </sharedTo>
 </ListView>

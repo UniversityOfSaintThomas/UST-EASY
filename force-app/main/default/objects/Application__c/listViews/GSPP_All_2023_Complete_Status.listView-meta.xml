@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSPP_All_2023_Complete_Status</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Control__c</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Intended_Program_Application_Control__c</field>
+        <operation>contains</operation>
+        <value>Psychology</value>
+    </filters>
+    <filters>
+        <field>Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Intended_Term_of_Entry__c</field>
+        <operation>contains</operation>
+        <value>2023</value>
+    </filters>
+    <filters>
+        <field>Application_Status__c</field>
+        <operation>equals</operation>
+        <value>Complete App</value>
+    </filters>
+    <label>GSPP - All 2023 Complete Status</label>
+    <sharedTo>
+        <group>GSPP_Admissions</group>
+    </sharedTo>
+</ListView>

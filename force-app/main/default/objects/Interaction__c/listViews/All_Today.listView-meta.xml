@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Today</fullName>
+    <columns>CREATED_DATE</columns>
+    <columns>NAME</columns>
+    <columns>Contact__c</columns>
+    <columns>Email__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>Opportunity_Key__c</columns>
+    <columns>Admissions_Application__c</columns>
+    <columns>College_of_Interest__c</columns>
+    <columns>Major_Program_1__c</columns>
+    <columns>Academic_Interest__c</columns>
+    <columns>Recruitment_Program__c</columns>
+    <columns>Intended_Start_Term__c</columns>
+    <columns>Term__c</columns>
+    <columns>External_Application_ID__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>TODAY</value>
+    </filters>
+    <label>All - Today</label>
+    <language>en_US</language>
+</ListView>

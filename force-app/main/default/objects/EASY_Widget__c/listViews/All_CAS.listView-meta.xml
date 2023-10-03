@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_CAS</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Control__c</columns>
+    <columns>Activation_State__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>equals</operation>
+        <value>Graduate College of Arts and Sciences</value>
+    </filters>
+    <label>All - CAS</label>
+</ListView>

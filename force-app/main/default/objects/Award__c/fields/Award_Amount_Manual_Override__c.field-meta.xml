@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Award_Amount_Manual_Override__c</fullName>
+    <description>For Athletic Revision, Manual Override or Test Score Rescinded, enter the new Award Amount. For Late Adjust, enter the amount to be ADDED to the existing Merit Award Amount.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>For Athletic Revision, Manual Override or Test Score Rescinded, enter the new Award Amount. For Late Adjust, enter the amount to be ADDED to the existing Merit Award Amount.</inlineHelpText>
+    <label>Award Amount - Manual Override</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

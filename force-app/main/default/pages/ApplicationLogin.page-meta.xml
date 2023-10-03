@@ -7,7 +7,7 @@
     <label>ApplicationLogin</label>
     <packageVersions>
         <majorNumber>1</majorNumber>
-        <minorNumber>122</minorNumber>
+        <minorNumber>120</minorNumber>
         <namespace>hed</namespace>
     </packageVersions>
 </ApexPage>

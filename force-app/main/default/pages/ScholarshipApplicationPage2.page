@@ -1,8 +1,5 @@
 <apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ScholarshipApplicationPage2Controller" action="{!initialize}">
     <apex:composition template="ScholarshipTemplate">
-        <apex:define name="head-extras">
-            <title>{!scholarship.Name} - Page 2 | Scholarships at St. Thomas</title>
-        </apex:define>
         <apex:define name="body">
             <script>
                 var essay1HasText = {!essay1HasText};

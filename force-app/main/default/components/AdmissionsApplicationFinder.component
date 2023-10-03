@@ -46,7 +46,6 @@
                 <!--
                 <apex:outputLabel styleClass="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular" for="AppPicklist">
                 </apex:outputLabel>
-
                 <div class="slds-form-element__control">
                     <div class="slds-select_container">
                         <apex:selectList id="AppPicklist" value="{!selectedApp}" size="1" styleClass="slds-select" onChange="selectApp(this.value);" disabled="{!ISBLANK(selectedSchool)}">
@@ -64,9 +63,6 @@
                     <apex:commandButton action="{!goToApp}" styleClass="slds-button slds-button_brand" value="Start New App"/>
                 </div>
             </apex:outputPanel>
-
-
-
         </apex:form>
     </div>
 </apex:component>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Academic_Programs_With_Record_ID</fullName>
+    <columns>Academic_Level__c</columns>
+    <columns>Associated_Schools__c</columns>
+    <columns>NAME</columns>
+    <columns>Program_Name_on_Application__c</columns>
+    <columns>Program_Major_Concentration__c</columns>
+    <columns>OBJECT_ID</columns>
+    <columns>X18_Digit_Program_ID__c</columns>
+    <columns>Application_Control__c</columns>
+    <columns>Degree_Type__c</columns>
+    <columns>Active__c</columns>
+    <columns>Program_Display__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Program_Record_Type__c</field>
+        <operation>equals</operation>
+        <value>Academic Program</value>
+    </filters>
+    <filters>
+        <field>Academic_Level__c</field>
+        <operation>equals</operation>
+        <value>G,Graduate,D,L,Law</value>
+    </filters>
+    <label>Academic Programs - With Record ID</label>
+    <sharedTo>
+        <group>Marketing_Insights_and_Communications</group>
+    </sharedTo>
+</ListView>

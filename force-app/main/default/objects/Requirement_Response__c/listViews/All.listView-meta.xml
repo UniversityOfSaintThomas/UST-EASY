@@ -4,16 +4,14 @@
     <columns>NAME</columns>
     <columns>Application__c</columns>
     <columns>Requirement_Item__c</columns>
+    <columns>Status__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>UPDATEDBY_USER</columns>
     <columns>ValueTextEntry__c</columns>
     <columns>CREATEDBY_USER</columns>
     <columns>Document_Requirement_Fulfilled_On__c</columns>
     <columns>Fulfilled_On__c</columns>
     <columns>Viewed__c</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>CREATEDBY_USER</field>
-        <operation>contains</operation>
-        <value>Crunch</value>
-    </filters>
     <label>All</label>
 </ListView>

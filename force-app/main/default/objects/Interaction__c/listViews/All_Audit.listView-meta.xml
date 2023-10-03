@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Audit</fullName>
+    <columns>NAME</columns>
+    <columns>Contact__c</columns>
+    <columns>Affiliated_Account__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>Admissions_Application__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Audit_Reason__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Interaction_Status__c</field>
+        <operation>equals</operation>
+        <value>Audit Required</value>
+    </filters>
+    <label>All - Audit</label>
+    <language>en_US</language>
+</ListView>

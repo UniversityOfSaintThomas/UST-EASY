@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LinkedIn_Leads</fullName>
+    <columns>CREATED_DATE</columns>
+    <columns>Date_Inquiry__c</columns>
+    <columns>NAME</columns>
+    <columns>Contact__c</columns>
+    <columns>Email__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>St_Thomas_College_School__c</columns>
+    <columns>Recruitment_Program__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Lead_Source__c</field>
+        <operation>equals</operation>
+        <value>LinkedIn Lead</value>
+    </filters>
+    <label>LinkedIn Leads</label>
+</ListView>

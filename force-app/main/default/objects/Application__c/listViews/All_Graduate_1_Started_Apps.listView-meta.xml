@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Graduate_1_Started_Apps</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Application_Substatus__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Status__c</field>
+        <operation>equals</operation>
+        <value>Started App</value>
+    </filters>
+    <filters>
+        <field>Intended_Program_Applicant_Type__c</field>
+        <operation>equals</operation>
+        <value>Graduate</value>
+    </filters>
+    <filters>
+        <field>Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>All Graduate -1- Started Apps</label>
+    <sharedTo>
+        <group>Graduate_Enrollment_All_Groups</group>
+    </sharedTo>
+</ListView>

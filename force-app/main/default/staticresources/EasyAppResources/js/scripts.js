@@ -10,37 +10,23 @@ ready(() => {
 });
 
 function pageLoadReRendered() {
-
     //Disable fields that are set to not be editable
-    let sldsScope = document.querySelector('.slds-scope');
-    sldsScope.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
+    document.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
     });
 
-    sldsScope.querySelector('form').onkeypress = checkEnter;
+    document.querySelector('form').onkeypress = checkEnter;
 
     //Make sure inputs are typed with HTML5 standards
-    sldsScope.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
+    document.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
         item.required = true;
     });
 
-    sldsScope.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent, .validateACT, .validateSATComposite, .validateSATSubject").forEach(item => {
+    document.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent").forEach(item => {
         item.type = "number";
-        if (item.classList.contains('validateACT')) {
-            item.setAttribute('min', '0');
-            item.setAttribute('max', '36');
-        }
-        if (item.classList.contains('validateSATComposite')) {
-            item.setAttribute('min', '0');
-            item.setAttribute('max', '1600');
-        }
-        if (item.classList.contains('validateSATSubject')) {
-            item.setAttribute('min', '0');
-            item.setAttribute('max', '800');
-        }
     });
 
-    sldsScope.querySelectorAll(".validatePhone").forEach(item => {
+    document.querySelectorAll(".validatePhone").forEach(item => {
         item.type = "tel";
     });
 
@@ -312,15 +298,6 @@ function activateAutoComplete() {
         let objectTypeFilter = comboBox.dataset.objtypefilter;
         let objectTypeNameField = comboBox.dataset.objtypenamefield;
 
-        let clearField = document.createElement('li');
-        clearField.classList.add('clear-search-field');
-        clearField.classList.add('slds-listbox__item');
-        let clearFieldLInk = document.createElement('a');
-        clearFieldLInk.innerText = ' Clear search. '
-        clearFieldLInk.addEventListener('click', function () {
-            refValueRemoved()
-        });
-
         /* Remote reference lookup */
         const resultListTemplate = (title, subtitle, icon, originObjId, resultId) => `
             <li role="presentation" class="slds-listbox__item" data-title="${title}, ${subtitle}" data-origId="${originObjId}" data-resultId="${resultId}">
@@ -402,8 +379,7 @@ function activateAutoComplete() {
                     if (subTitle) {
                         subTitle = subTitle.substr(0, subTitle.length - 2);
                     }
-                    subTitle = removeStartTrailComma(subTitle);
-                    resultName = removeStartTrailComma(resultName);
+
                     outputList += resultListTemplate(resultName, subTitle, comboBox.dataset.listicon, originObjId, resultId);
                 });
 
@@ -424,21 +400,12 @@ function activateAutoComplete() {
                             }
                         } else {
                             hiddenInput.value = refItem.dataset.resultid;
-                            autoItem.value = removeStartTrailComma(refItem.dataset.title);
+                            autoItem.value = refItem.dataset.title;
                             refValueAdded();
                         }
                     });
                 });
 
-                clearField.innerText = ''
-                clearField.appendChild(clearFieldLInk);
-                resultList.appendChild(clearField);
-
-            } else {
-                resultList.innerHTML = '';
-                clearField.innerText = 'No matching results...'
-                clearField.appendChild(clearFieldLInk);
-                resultList.appendChild(clearField);
             }
         }
 
@@ -468,12 +435,6 @@ function activateAutoComplete() {
         });
 
     });
-}
-
-function removeStartTrailComma(stringIn) {
-    stringIn = stringIn.trim();
-    stringIn = stringIn.replace(/(^,)|(,$)/g, '');
-    return stringIn;
 }
 
 //Visualforce state/country picklist enabled does not style correctly. This observes mutations and styles the picklsit.
@@ -699,6 +660,7 @@ function activateCarousel(slideMoveTo) {
                         items[i].classList.remove('next');
                         items[i].classList.remove('active');
                     }
+
                     if (items[newPrevious]) {
                         items[newPrevious].classList.add("prev");
                     }
@@ -798,8 +760,8 @@ function showFormSpinner() {
 
 /* Tooltip */
 function activateTooltips() {
-    document.querySelectorAll('.aria-describedby-tooltip').forEach(item => {
-        let toolTipElement = document.getElementById(item.getAttribute('aria-describedby'));
+    document.querySelectorAll('.has-data-tooltip').forEach(item => {
+        let toolTipElement = document.getElementById(item.getAttribute('data-tooltip'));
         item.addEventListener('mousemove', function (e) {
             let toolTipOffsetElem = toolTipElement.offsetParent;
             toolTipElement.classList.remove('slds-fall-into-ground', 'slds-nubbin_left', 'slds-nubbin_right');
@@ -850,11 +812,10 @@ function checkForm() {
         let errorInputs = foundErrors.querySelector("select, input");
         if (errorInputs) {
             errorInputs.focus();
-            spinnerFocusElement = errorInputs.id;
-            // checkForm() MAY be happening while the appSpinner is up; if so,
-            // you might set focus here but will lose it again when appSpinner goes
-            // down, as focus reverts to whatever was focused when appSpinner started.
-            // So hijack the appSpinner's memory to make sure it sticks.
+            spinnerFocusElement = errorInputs.id;   // checkForm() MAY be happening while the appSpinner is up; if so,
+                                                    // you might set focus here but will lose it again when appSpinner goes
+                                                    // down, as focus reverts to whatever was focused when appSpinner started.
+                                                    // So hijack the appSpinner's memory to make sure it sticks.
         }
         return false;
     }
@@ -925,6 +886,14 @@ function textValidations(checkFormValidate, documentStart) {
             }
         });
 
+        doc.querySelectorAll('.docUploadInput').forEach(docUpload => {
+            if (String(docUpload.placeholder) == 'true' && !Boolean(docUpload.value)) {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
+                activateErrorState(docUpload, 'change');
+            } else {
+                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
+            }
+        })
     }
 
     //Format and validate phone numbers
@@ -1037,6 +1006,28 @@ function textValidations(checkFormValidate, documentStart) {
 
 function validateFileType(obj) {
     if (Boolean(obj.title)) {
+        let acceptedTypes = obj.title.split(';');
+        let inputArray = obj.value.split('.');
+        let inputType = inputArray[inputArray.length - 1].toUpperCase();
+        if (!acceptedTypes.includes(inputType)) {
+            obj.value = null;
+            let fileTypeMessage = 'File type not accepted. Please upload one of the following: ';
+            for (const type of acceptedTypes) {
+                fileTypeMessage += type + ', ';
+            }
+            fileTypeMessage = fileTypeMessage.slice(0, fileTypeMessage.length - 2) + '.';
+            document.getElementById('error-108' + String(obj.name)).innerHTML = fileTypeMessage;
+            return false;
+        } else {
+            document.getElementById('error-108' + String(obj.name)).innerHTML = '';
+        }
+    }
+    return true;
+}
+
+function validateFileType(obj) {
+    if (Boolean(obj.title)) {
+        console.log(obj);
         let acceptedTypes = obj.title.split(';');
         let inputArray = obj.value.split('.');
         let inputType = inputArray[inputArray.length - 1].toUpperCase();

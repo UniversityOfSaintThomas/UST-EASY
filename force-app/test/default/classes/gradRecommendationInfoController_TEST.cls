@@ -17,10 +17,6 @@ public with sharing class gradRecommendationInfoController_TEST {
         );
         insert app_control;
 
-        // Create and insert Interaction Mapping Test Data
-        List<Interaction_Mapping__c> testMappings = INT_TestDataFactory.createTestMappings();
-        insert testMappings;
-        
         Requirement__c recommendation_requirement = new Requirement__c(
                 Application_Control__c = app_control.Id,
                 Name = 'Letter of Recommendation',
@@ -174,16 +170,16 @@ public with sharing class gradRecommendationInfoController_TEST {
         );
         insert ipt;
 
-        // Interaction__c inter = new Interaction__c(
-        //       Interaction_Source__c = 'Application',
-        //       Interaction_Status__c = 'New',
-        //       First_Name__c = student.FirstName,
-        //       Last_Name__c = student.LastName,
-        //       Email__c = student.Email,
-        //       Opportunity_Stage__c = 'Suspect',
-        //       Term__c = hed_term.Id
-        // );
-        // insert inter;
+        Interaction__c inter = new Interaction__c(
+                Interaction_Source__c = 'Application',
+                Interaction_Status__c = 'New',
+                First_Name__c = student.FirstName,
+                Last_Name__c = student.LastName,
+                Email__c = student.Email,
+                Opportunity_Stage__c = 'Suspect',
+                Term__c = hed_term.Id
+        );
+        insert inter;
 
         Opportunity opp = new Opportunity(
                 AccountId = acc.Id,
@@ -373,31 +369,25 @@ public with sharing class gradRecommendationInfoController_TEST {
         );
         insert ipt;
 
+        Interaction__c inter = new Interaction__c(
+                Interaction_Source__c = 'Application',
+                Interaction_Status__c = 'New',
+                First_Name__c = student.FirstName,
+                Last_Name__c = student.LastName,
+                Email__c = student.Email,
+                Opportunity_Stage__c = 'Suspect',
+                Term__c = hed_term.Id
+        );
+        insert inter;
 
-       // Interaction__c inter = new Interaction__c(
-        //        Interaction_Source__c = 'Application',
-         //       Interaction_Status__c = 'New',
-         //       First_Name__c = student.FirstName,
-         //       Last_Name__c = student.LastName,
-         //       Email__c = student.Email,
-         //       Opportunity_Stage__c = 'Started App',
-         //       Term__c = hed_term.Id
-        //);
-       // insert inter;
-
-       // Opportunity opp = new Opportunity(
-       //         AccountId = acc.Id,
-       //         Contact__c = student.Id,
-       //         Name = 'TestLast|Test 2022|Test Program',
-       //         CloseDate = system.today(),
-        //        StageName = 'Started App',
-              //  Country__c = 'United States of America',
-        //        Academic_Program__c = program.Id,
-        //        Term__c = hed_term.Id,
-         //       Intended_Start_Term__c = term.Id
-       // );
-       // insert opp;
-
+        Opportunity opp = new Opportunity(
+                AccountId = acc.Id,
+                Contact__c = student.Id,
+                Name = 'TestLast|Test 2022|Test Program',
+                CloseDate = system.today(),
+                StageName = 'Started App'
+        );
+        insert opp;
 
 
         Application__c app = new Application__c(

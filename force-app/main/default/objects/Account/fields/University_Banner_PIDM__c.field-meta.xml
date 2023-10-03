@@ -8,6 +8,7 @@
     <required>false</required>
     <scale>0</scale>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Number</type>
     <unique>false</unique>
 </CustomField>

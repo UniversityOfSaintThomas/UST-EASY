@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Program_Major_Concentration__c</fullName>
+    <deprecated>false</deprecated>
     <description>Banner_Program_Code__c &amp; &quot;|&quot;&amp; Major_Code__c &amp; &quot;|&quot; &amp;  Concentration_Code__c</description>
     <externalId>false</externalId>
     <formula>IF( ISBLANK(Banner_Program_Code__c),&quot;&quot;, Banner_Program_Code__c ) &amp;

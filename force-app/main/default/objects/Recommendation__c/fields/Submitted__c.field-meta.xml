@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <inlineHelpText>Has the recommendation been submitted</inlineHelpText>
     <label>Submitted</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

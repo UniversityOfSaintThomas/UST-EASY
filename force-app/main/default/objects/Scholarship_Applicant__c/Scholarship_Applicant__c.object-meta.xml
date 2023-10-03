@@ -185,6 +185,8 @@
         <searchResultsAdditionalFields>Scholarship_Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Scholarship_Date_Started__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Scholarship_Date_Submitted__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LAST_UPDATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

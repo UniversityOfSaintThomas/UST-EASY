@@ -163,6 +163,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Application Reviews</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

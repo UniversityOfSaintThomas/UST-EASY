@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SON_Mentor_All_Mentor_Apps</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Application_Substatus__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Student_Type__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Test_Contact__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>contains</operation>
+        <value>Mentor</value>
+    </filters>
+    <filters>
+        <field>Student_Type__c</field>
+        <operation>equals</operation>
+        <value>Mentor (Licensed Registered Nurse)</value>
+    </filters>
+    <filters>
+        <field>Application_Status__c</field>
+        <operation>equals</operation>
+        <value>Started App,Submitted App</value>
+    </filters>
+    <label>SON Mentor - All Mentor Apps - NeedsMatc</label>
+    <sharedTo>
+        <group>SON_Mentor_Program</group>
+    </sharedTo>
+</ListView>

@@ -271,6 +271,11 @@
             <field>File_Name_Prefix__c</field>
             <table>Requirement_Item__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Academic_Level__c</field>
+            <table>Requirement_Item__c</table>
+        </columns>
         <masterLabel>Requirement Items</masterLabel>
     </sections>
 </ReportType>

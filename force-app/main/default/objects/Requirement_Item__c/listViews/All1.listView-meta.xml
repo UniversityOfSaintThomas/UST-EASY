@@ -4,7 +4,7 @@
     <columns>NAME</columns>
     <columns>OBJECT_ID</columns>
     <columns>RECORDTYPE</columns>
+    <columns>File_Types__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
-    <language>en_US</language>
 </ListView>

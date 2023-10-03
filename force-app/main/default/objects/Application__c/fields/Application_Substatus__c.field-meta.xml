@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Application_Substatus__c</fullName>
+    <deprecated>false</deprecated>
     <description>Used in conjunction with Application Status and Decision Team</description>
     <externalId>false</externalId>
     <inlineHelpText>Used in conjunction with Application Status and Decision Team</inlineHelpText>
@@ -14,46 +15,6 @@
         <controllingField>Application_Status__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>Application_Substatus</valueSetName>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>After Accept</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>After Confirm</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>Before Complete App</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>Before Decision</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>From Committee Accept Waitlist</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>NAR (Not Actively Recruting)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>Prior to Interview</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>Unsubscribe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>Multiple App</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Withdrawn</controllingFieldValue>
-            <valueName>Wrong App</valueName>
-        </valueSettings>
         <valueSettings>
             <controllingFieldValue>File Hold</controllingFieldValue>
             <valueName>Test Scores</valueName>
@@ -160,6 +121,46 @@
         <valueSettings>
             <controllingFieldValue>Admit</controllingFieldValue>
             <valueName>Needs Review</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>After Accept</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>After Confirm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Before Complete App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Before Decision</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>From Committee Accept Waitlist</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>NAR (Not Actively Recruting)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Prior to Interview</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Unsubscribe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Multiple App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Withdrawn</controllingFieldValue>
+            <valueName>Wrong App</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

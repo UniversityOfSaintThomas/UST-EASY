@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Canvas_Course_URL__c</fullName>
+    <description>Canvas Course URL calculated from Course ID and Section ID</description>
+    <externalId>false</externalId>
+    <formula>IF(  NOT(ISBLANK(Canvas_Course_ID__c)) &amp;&amp; NOT(ISBLANK(Canvas_Section_ID__c)), 
+
+&quot;https://execed.instructure.com/courses/&quot; &amp; Canvas_Course_ID__c &amp; &quot;/sections/&quot; &amp; Canvas_Section_ID__c, null)</formula>
+    <inlineHelpText>Canvas Course URL calculated from Course ID and Section ID</inlineHelpText>
+    <label>Canvas Course URL</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

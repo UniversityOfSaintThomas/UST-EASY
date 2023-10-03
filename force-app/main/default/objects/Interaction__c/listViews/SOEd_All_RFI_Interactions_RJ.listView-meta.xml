@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SOEd_All_RFI_Interactions_RJ</fullName>
+    <columns>Recruitment_Program_Associated_Schools__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>NAME</columns>
+    <columns>Program_Code__c</columns>
+    <columns>Opportunity_Stage__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>Recruitment_Program__c</columns>
+    <columns>Major_Program_1__c</columns>
+    <columns>Admissions_Application__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Lead_Source__c</field>
+        <operation>equals</operation>
+        <value>Graduate RFI,Graduate RFI Page,Internal RFI,Landing Page</value>
+    </filters>
+    <filters>
+        <field>UST_Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Program_Code__c</field>
+        <operation>startsWith</operation>
+        <value>ED_</value>
+    </filters>
+    <label>SOED - All RFI Interactions - RJ</label>
+    <sharedTo>
+        <group>SOEd_Admissions</group>
+    </sharedTo>
+</ListView>

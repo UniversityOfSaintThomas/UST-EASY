@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Grad_Approved</fullName>
+    <columns>Submitted__c</columns>
+    <columns>NAME</columns>
+    <columns>Document_Status__c</columns>
+    <columns>Application__c</columns>
+    <columns>Applicant__c</columns>
+    <columns>Last_Name__c</columns>
+    <columns>First_Name__c</columns>
+    <columns>Date_Received__c</columns>
+    <columns>Applicant_Program__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Document_Status__c</field>
+        <operation>equals</operation>
+        <value>Approved</value>
+    </filters>
+    <label>All - Grad - Approved</label>
+</ListView>

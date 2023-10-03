@@ -29,7 +29,6 @@ public class ApplicationRequirement {
     public EASYApplicationInfo appInfo { get; set; }
 
     public Boolean allowSubmit { get; set; }
-    public Boolean allowConfirm { get; set; }
     public transient String additionalDataString { get; set; }
     public String redirectPage { get; set; }
     public String userType { get; set; }
@@ -119,6 +118,7 @@ public class ApplicationRequirement {
             return pr;
         }
 
+
         if (String.isBlank(appInfo.appControlId)) {
             PageReference portalPage = Page.ApplicationPortal;
             return portalPage;
@@ -149,8 +149,6 @@ public class ApplicationRequirement {
             checklistItems = checklistHelper.checklistRequirements(app, appInfo);
             allowSubmit = checklistHelper.allowSubmit(checklistItems, appInfo);
             appInfo.allowSubmit = allowSubmit;
-            allowConfirm = checklistHelper.allowConfirm(checklistItems, appInfo);
-            appInfo.allowConfirm = allowConfirm;
         }
 
         //Get needed values from Contact record
@@ -526,17 +524,6 @@ public class ApplicationRequirement {
         PageReference pr = Page.ApplicationPortal;
         try {
             update new Application__c(Id = appInfo.appId, Application_Status__c = appInfo.submitStatus);
-        } catch (Exception ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-            return null;
-        }
-        return pr;
-    }
-
-    public PageReference confirmEnrollment() {
-        PageReference pr = Page.ApplicationPortal;
-        try {
-            update new Application__c(Id = appInfo.appId, Application_Status__c = appInfo.confirmStatus);
         } catch (Exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
             return null;

@@ -67,6 +67,10 @@
                 <behavior>Required</behavior>
                 <field>Requirement_Item_Integration_Ext_Id__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Academic_Level__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>

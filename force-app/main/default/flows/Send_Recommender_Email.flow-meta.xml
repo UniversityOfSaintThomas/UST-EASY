@@ -14,6 +14,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Recommendation__c.Send_Recommendation_Request_Email</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_Recommender_Reminder_Email</name>
@@ -29,8 +31,10 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Recommendation__c.Send_Recommender_Reminder_Email</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <decisions>
         <name>New_or_Updated_Email</name>
         <label>New or Updated Email</label>

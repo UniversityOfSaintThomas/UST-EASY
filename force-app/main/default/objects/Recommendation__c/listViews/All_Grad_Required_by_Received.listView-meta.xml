@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Grad_Required_by_Received</fullName>
+    <columns>NAME</columns>
+    <columns>Document_Status__c</columns>
+    <columns>Application__c</columns>
+    <columns>Applicant__c</columns>
+    <columns>Last_Name__c</columns>
+    <columns>First_Name__c</columns>
+    <columns>Date_Received__c</columns>
+    <columns>Applicant_Program__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Document_Status__c</field>
+        <operation>equals</operation>
+        <value>Required</value>
+    </filters>
+    <filters>
+        <field>Date_Received__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <label>All - Grad - Required by Received</label>
+</ListView>

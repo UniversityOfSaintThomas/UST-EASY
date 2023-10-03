@@ -126,6 +126,11 @@
             <field>Intended_Program_Term_Integration_Ext_Id__c</field>
             <table>Intended_Program_Term__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Program_Application_Control__c</field>
+            <table>Intended_Program_Term__c</table>
+        </columns>
         <masterLabel>Intended Program Terms</masterLabel>
     </sections>
 </ReportType>

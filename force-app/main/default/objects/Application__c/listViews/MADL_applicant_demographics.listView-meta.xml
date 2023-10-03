@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MADL_applicant_demographics</fullName>
+    <columns>Contact__c</columns>
+    <columns>Pronouns__c</columns>
+    <columns>Citizenship__c</columns>
+    <columns>ContactMailingState__c</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <columns>Honors_Activities_Desc__c</columns>
+    <columns>Applicant_Age__c</columns>
+    <columns>Applicant_Student_of_Color__c</columns>
+    <columns>Ethnicity__c</columns>
+    <columns>Tribal_Identity__c</columns>
+    <columns>Race_Hispanic_Background__c</columns>
+    <columns>First_Generation__c</columns>
+    <columns>Religious_Preference__c</columns>
+    <columns>Veteran_Status_Current__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Intended_Program_Applicant_Type__c</field>
+        <operation>equals</operation>
+        <value>Graduate</value>
+    </filters>
+    <filters>
+        <field>Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Intended_Program__c</field>
+        <operation>contains</operation>
+        <value>diversity</value>
+    </filters>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>contains</operation>
+        <value>arts and sciences</value>
+    </filters>
+    <filters>
+        <field>Application_Status__c</field>
+        <operation>equals</operation>
+        <value>Complete App,Pending,Admit,Deferred Admit,Confirmed,Deferred Confirmed</value>
+    </filters>
+    <label>MADL - applicant demographics</label>
+</ListView>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Calli_Applications</fullName>
+    <columns>Test_Contact__c</columns>
+    <columns>NAME</columns>
+    <columns>Citizenship__c</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Application_Substatus__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>OWNER.ALIAS</columns>
+    <columns>Generic_Filter_3__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Intended_Program__c</field>
+        <operation>contains</operation>
+        <value>Undergraduate</value>
+    </filters>
+    <filters>
+        <field>Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>Intended_Program__c</field>
+        <operation>notContain</operation>
+        <value>BSN</value>
+    </filters>
+    <label>Test Contacts: UG Applications</label>
+</ListView>

@@ -5,6 +5,7 @@
     <description>Field used to indicate if the transcript has been Evaluated.</description>
     <externalId>false</externalId>
     <label>Evaluated</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

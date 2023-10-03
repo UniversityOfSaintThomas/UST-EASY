@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GSOE_All_Apps_2023_wo_Essay</fullName>
+    <columns>NAME</columns>
+    <columns>Applicant_Banner_Id__c</columns>
+    <columns>Application_Status__c</columns>
+    <columns>Application_Substatus__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>Contact__c</columns>
+    <columns>Intended_Program__c</columns>
+    <columns>Intended_Term_of_Entry__c</columns>
+    <columns>Contact_Email__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Intended_Program_Applicant_Type__c</field>
+        <operation>equals</operation>
+        <value>Graduate</value>
+    </filters>
+    <filters>
+        <field>Test_Contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>equals</operation>
+        <value>Graduate School of Engineering</value>
+    </filters>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>lessThan</operation>
+        <value>10/11/2022 10:15 AM</value>
+    </filters>
+    <filters>
+        <field>Intended_Program_Codes__c</field>
+        <operation>contains</operation>
+        <value>SE_</value>
+    </filters>
+    <label>GSOE - All Apps 2023 wo Essay</label>
+    <sharedTo>
+        <group>SOEng_Admissions</group>
+    </sharedTo>
+</ListView>

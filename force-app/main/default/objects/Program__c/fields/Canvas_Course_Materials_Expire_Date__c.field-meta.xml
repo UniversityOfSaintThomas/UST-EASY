@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Canvas_Course_Materials_Expire_Date__c</fullName>
+    <description>Today plus Course Materials Access in Days</description>
+    <externalId>false</externalId>
+    <formula>CASE(  Canvas_Course_Materials_Access_in_Days__c ,
+0,null,
+TODAY() +  Canvas_Course_Materials_Access_in_Days__c )</formula>
+    <inlineHelpText>Today plus Course Materials Access in Days</inlineHelpText>
+    <label>Canvas Course Materials Expire Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

@@ -7,5 +7,6 @@
     <inlineHelpText>This Account is required for EASY application functionality</inlineHelpText>
     <label>EASY Validation Record</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

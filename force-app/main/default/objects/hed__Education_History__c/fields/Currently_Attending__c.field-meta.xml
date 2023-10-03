@@ -5,6 +5,7 @@
     <description>Checkbox field used to indicate if an applicant is currently attending a school.</description>
     <externalId>false</externalId>
     <label>Currently Attending</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

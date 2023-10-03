@@ -21,6 +21,7 @@ IF( NOT(ISBLANK(ValueDateTime__c)),TEXT(ValueDateTime__c),&quot;&quot;
     <inlineHelpText>This field shows whichever Value was entered.</inlineHelpText>
     <label>Question Response</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

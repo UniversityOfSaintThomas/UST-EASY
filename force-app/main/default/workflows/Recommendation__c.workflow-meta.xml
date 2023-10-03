@@ -8,7 +8,8 @@
             <field>Rec_Email__c</field>
             <type>email</type>
         </recipients>
-        <senderType>DefaultWorkflowUser</senderType>
+        <senderAddress>gradadmissions@stthomas.edu</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Application_Email_Templates/Recommendation_Request</template>
     </alerts>
     <alerts>
@@ -19,7 +20,8 @@
             <field>Rec_Email__c</field>
             <type>email</type>
         </recipients>
-        <senderType>DefaultWorkflowUser</senderType>
+        <senderAddress>gradadmissions@stthomas.edu</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Application_Email_Templates/Recommendation_Reminder</template>
     </alerts>
 </Workflow>

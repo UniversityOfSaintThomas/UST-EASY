@@ -12,7 +12,11 @@
     <columns>CREATED_DATE</columns>
     <columns>LAST_UPDATE</columns>
     <columns>UPDATEDBY_USER</columns>
-    <columns>Display_Text__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>contains</operation>
+        <value>undergrad</value>
+    </filters>
     <label>All</label>
 </ListView>

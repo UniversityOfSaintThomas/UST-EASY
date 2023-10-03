@@ -27,5 +27,10 @@
         <operation>equals</operation>
         <value>1</value>
     </filters>
+    <filters>
+        <field>Student_Type__c</field>
+        <operation>notEqual</operation>
+        <value>Educational Leadership</value>
+    </filters>
     <label>Academic Programs - GSOEd</label>
 </ListView>

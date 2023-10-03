@@ -20,8 +20,10 @@
                 <elementReference>User_Logging_In.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>JustInTimePermissionSets</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <description>User is an applicant so apply the Application Community permissions set</description>
         <name>Apply_Applicant_Permissions</name>
@@ -47,6 +49,34 @@
             <operator>Add</operator>
             <value>
                 <stringValue>UST Scholarship Applicant</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>requestedPermissionSets</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>;</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>requestedPermissionSets</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Summit Events Registrant - Custom</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>requestedPermissionSets</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>;</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>requestedPermissionSets</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Summit Events Registrant</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -86,7 +116,7 @@
     <decisions>
         <name>Applicant_Permission_Set</name>
         <label>Applicant Permission Set</label>
-        <locationX>113</locationX>
+        <locationX>112</locationX>
         <locationY>171</locationY>
         <defaultConnector>
             <targetReference>Survey_Creator_Permission_Set</targetReference>

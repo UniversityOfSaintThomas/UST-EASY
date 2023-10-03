@@ -264,6 +264,11 @@
             <field>File_Name_Prefix__c</field>
             <table>Requirement_Item__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Academic_Level__c</field>
+            <table>Requirement_Item__c</table>
+        </columns>
         <masterLabel>Requirement Items</masterLabel>
     </sections>
     <sections>
@@ -519,17 +524,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Payment_Type__c</field>
+            <field>Academic_Level__c</field>
             <table>Requirement_Item__c.Questions__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Payment_Custom_Amount__c</field>
-            <table>Requirement_Item__c.Questions__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Picklist_Value_Sets__c</field>
+            <field>Common_App_Unique_ReqItem_Nickname__c</field>
             <table>Requirement_Item__c.Questions__r</table>
         </columns>
         <masterLabel>Questions</masterLabel>
@@ -588,6 +588,26 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Value__c</field>
+            <table>Requirement_Item__c.Questions__r.Question_Dependencies__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Application_Control__c</field>
+            <table>Requirement_Item__c.Questions__r.Question_Dependencies__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Academic_Level__c</field>
+            <table>Requirement_Item__c.Questions__r.Question_Dependencies__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Question_Active__c</field>
+            <table>Requirement_Item__c.Questions__r.Question_Dependencies__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Controlling_Question_Active__c</field>
             <table>Requirement_Item__c.Questions__r.Question_Dependencies__r</table>
         </columns>
         <masterLabel>Question Dependencies</masterLabel>

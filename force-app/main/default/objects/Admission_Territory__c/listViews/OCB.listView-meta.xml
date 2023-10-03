@@ -5,6 +5,7 @@
     <columns>Assigned_User__c</columns>
     <columns>Assigned_User_is_active__c</columns>
     <columns>Program_Code__c</columns>
+    <columns>Last_Name_Split__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>School_or_College__c</field>
@@ -12,4 +13,7 @@
         <value>Opus College of Business</value>
     </filters>
     <label>OCB</label>
+    <sharedTo>
+        <group>OCB_Admissions</group>
+    </sharedTo>
 </ListView>

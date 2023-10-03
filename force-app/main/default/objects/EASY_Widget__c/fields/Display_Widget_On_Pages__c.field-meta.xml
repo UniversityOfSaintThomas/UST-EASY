@@ -24,14 +24,9 @@
                 <label>Application Create</label>
             </value>
             <value>
-                <fullName>ApplicationHome</fullName>
-                <default>false</default>
-                <label>Application Page</label>
-            </value>
-            <value>
                 <fullName>ApplicationPortal</fullName>
                 <default>false</default>
-                <label>Admissions Home</label>
+                <label>Application Portal</label>
             </value>
             <value>
                 <fullName>ApplicationRegistration</fullName>

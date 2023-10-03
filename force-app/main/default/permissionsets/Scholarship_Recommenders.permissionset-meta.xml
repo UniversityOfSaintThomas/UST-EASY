@@ -164,4 +164,12 @@
         <apexPage>ScholarshipTemplate</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <recordTypeVisibilities>
+        <recordType>Scholarship_Applicant__c.Scholarship</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Scholarship__c.Scholarship</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>

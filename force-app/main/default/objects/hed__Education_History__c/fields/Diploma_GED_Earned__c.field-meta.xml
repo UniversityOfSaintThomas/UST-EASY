@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Diploma/GED Earned</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

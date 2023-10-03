@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Skip_Mapping__c</fullName>
+    <deprecated>false</deprecated>
     <description>Select the Interaction Sources that should ignore this mapping configuration. The values in this picklist should match the values in Interaction&apos;s &quot;Interaction Sources&quot; field.</description>
     <externalId>false</externalId>
     <inlineHelpText>Select the Interaction Sources that should ignore this import configuration.</inlineHelpText>
@@ -51,6 +52,11 @@
                 <fullName>ERx Data Migration - TouchPoint</fullName>
                 <default>false</default>
                 <label>ERx Data Migration - TouchPoint</label>
+            </value>
+            <value>
+                <fullName>Qualtrics</fullName>
+                <default>false</default>
+                <label>Qualtrics</label>
             </value>
         </valueSetDefinition>
     </valueSet>

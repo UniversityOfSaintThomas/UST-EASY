@@ -37,4 +37,7 @@
         <value>Major</value>
     </filters>
     <label>UG - Major Program</label>
+    <sharedTo>
+        <group>UG_Admissions</group>
+    </sharedTo>
 </ListView>

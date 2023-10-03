@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Grad</fullName>
+    <columns>NAME</columns>
+    <columns>Full_URL__c</columns>
+    <columns>Academic_Level__c</columns>
+    <columns>OBJECT_ID</columns>
+    <columns>URL_Parameter__c</columns>
+    <columns>Active__c</columns>
+    <columns>Default__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>Allow_Confirm_From__c</columns>
+    <columns>Confirm_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Active__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>Academic_Level__c</field>
+        <operation>equals</operation>
+        <value>Graduate</value>
+    </filters>
+    <label>All - Grad</label>
+</ListView>

@@ -64,6 +64,14 @@
                 <behavior>Readonly</behavior>
                 <field>Requirement_Id__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Academic_Level__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_of_Recommendations_Required__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -253,6 +261,10 @@
                 <behavior>Required</behavior>
                 <field>Requirement_Item_Integration_Ext_Id__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Common_App_Unique_ReqItem_Nickname__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -281,13 +293,25 @@
         <sortField>Display_Order__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Application__c</fields>
+        <fields>Fulfilled_On__c</fields>
+        <fields>HasDocument__c</fields>
+        <fields>Viewed__c</fields>
+        <fields>ValueTextEntry__c</fields>
+        <fields>Status__c</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <fields>Waive_Requirement__c</fields>
+        <relatedList>Requirement_Response__c.Requirement_Item__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hJ0000007pOaU</masterLabel>
+        <masterLabel>00h4P00000XHXPK</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

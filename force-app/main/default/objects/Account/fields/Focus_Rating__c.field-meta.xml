@@ -17,14 +17,14 @@
                 <label>Level 1/Top Tier</label>
             </value>
             <value>
-                <fullName>Level2/Pipeline 2 Yrs</fullName>
+                <fullName>Level 2/Pipeline 2 Yrs</fullName>
                 <default>false</default>
-                <label>Level2/Pipeline 2 Yrs</label>
+                <label>Level 2/Pipeline 2 Yrs</label>
             </value>
             <value>
-                <fullName>Level 3/Pipeline 3-5Yrs</fullName>
+                <fullName>Level 3/Pipeline 3-5 Yrs</fullName>
                 <default>false</default>
-                <label>Level 3/Pipeline 3-5Yrs</label>
+                <label>Level 3/Pipeline 3-5 Yrs</label>
             </value>
             <value>
                 <fullName>Level 4/Discovery-Qualify</fullName>

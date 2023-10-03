@@ -1,8 +1,5 @@
 <apex:page showHeader="false" sidebar="false" controller="ScholarshipRecommenderController" docType="html-5.0" standardStylesheets="false" action="{!buildRecommendation}">
     <apex:composition template="ScholarshipTemplate">
-        <apex:define name="head-extras">
-            <title>Recommendation for {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName} | Scholarships at St. Thomas</title>
-        </apex:define>
         <apex:define name="body">
             <div class="row">
                 <div class="columns errorMessages">

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
-    <defaultLandingTab>standard-home</defaultLandingTab>
+    <defaultLandingTab>Application__c</defaultLandingTab>
     <description>UST customized version of Enterprise Application Solution for Yield (EASY)</description>
-    <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
-    <label>UST Admissions</label>
+    <label>UST Admissions (Classic)</label>
     <logo>EASY_Shared_Documents/UST_Logo.jpg</logo>
     <tabs>Interaction__c</tabs>
     <tabs>standard-Opportunity</tabs>
+    <tabs>Admissions_Booking__c</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>Application_Review__c</tabs>
     <tabs>Application__c</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
+    <tabs>Syllabus_Review__c</tabs>
 </CustomApplication>

@@ -41,12 +41,6 @@
 
                 <apex:inputField id="postal" value="{!responseObject['PostalCode__c']}" styleClass="slds-input" rendered="{!If(inputAddressType == 'Postal Code', true, false)}"/>
 
-                <apex:outputPanel layout="none">
-                    <div class="slds-form-element__help">
-                        {!inputAddressType} is required.
-                    </div>
-                </apex:outputPanel>
-
             </apex:outputPanel>
 
         </apex:outputPanel>

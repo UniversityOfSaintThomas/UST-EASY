@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Highest Level Math</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

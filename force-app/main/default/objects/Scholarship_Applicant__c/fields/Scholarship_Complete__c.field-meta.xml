@@ -5,6 +5,7 @@
     <description>Checked when the scholarship application is complete.</description>
     <externalId>false</externalId>
     <label>Scholarship Complete</label>
-        <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

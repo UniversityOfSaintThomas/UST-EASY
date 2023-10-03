@@ -29,6 +29,18 @@
                 <default>false</default>
                 <label>Does Not Meet Expectations</label>
             </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>No</label>
+            </value>
+            <value>
+                <fullName>Yes</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Yes</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

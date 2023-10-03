@@ -4,4 +4,808 @@
     <active>true</active>
     <description>A place to store professional certifications.</description>
     <label>Certification</label>
+    <picklistValues>
+        <picklist>Associate_s_Degree_Detail__c</picklist>
+        <values>
+            <fullName>Associate of Applied Science %28A%2EA%2ES%2E%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associate of Arts %28A%2EA%2E%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associate of Science %28A%2ES%2E%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>College_Courses_9th_Grade_On__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Diploma_GED_Earned__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Most_Recent_College_in_US__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Name_Different_on_Transcript__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Official_Degree__c</picklist>
+        <values>
+            <fullName>Associate of Applied Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associate of Arts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associate of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associate of Engineering Tech</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associate of Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attended No Degree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Agricultural Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Business Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Chemical Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Civil Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Computer Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Computer Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Elec%2E and Computer Eng%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Electrical Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Industrial Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Industrial Technology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Mathematics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Mechanical Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Nursing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BS in Social Work</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BSM in Management Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bach of Biomedical Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bach of Biosys %26 Ag Eng</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bach of Geo-Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bach of Informatics %26 Systems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bach of Library %26 Info Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bach%2E of Professional Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor in Civil Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Accounting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Agriculture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Applied Arts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Applied Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Applied Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Architecture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Arts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Business Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Chem Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Chemistry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Commerce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Comp Applications</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Comp Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Computer Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Dental Surgey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Divinity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Economics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Elected Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Electrical Eng%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Electrnc Materials</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Engineering Tech</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Environmntl Design</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Fine Arts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of General Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Industrial Eng%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Info Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Info Systems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Info Technology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Journalism</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Landscape Arch%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Liberal Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Material Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Mathematics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Mech Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Medicine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Medicine %26 Surgery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Metallurgical Eng%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Mining Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Music</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Music Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Music Therapy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Nursing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Pharmacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Philosophy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Security Sciences</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Social Work</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Special Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Statistics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Technology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor of Urban Planning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor-Aerospace Eng%2E%26 Mech</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bachelor-Individual Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Degree Not Declared</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dipl Phys %26 Elect Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diploma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diploma Chemical Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diploma Comp Prgrm and Ops</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diploma Master Computer Apps</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diploma Mechanical Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Business Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Chiropractic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Dental Surgery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Medicine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Ministry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Musical Arts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Pharmacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Philosophy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Physical Therapy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Podiatric Medicine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Psychology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Social Work</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctor of Theology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctorate in Public Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doctorate in Sacred Liturgy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education Specialist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High School Diploma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Juris Doctor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legum Magister</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Licensure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Licentiate in Sacred Liturgy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Licentiate of Canon Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MS Biosys %26 Ag Eng</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MS in Civil Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MS in Electrical Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master in Theological Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Accountancy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Aeronautical Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Arts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Business Taxation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Church Music</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Cmptr Applicatons</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Commerce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Computer Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Computer Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Divinity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Economics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Educ Prof Devel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Elec%2E Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Finance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Fine Arts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Industrial Safety</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of International Admin%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of International Mgmt%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Liberal Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Library Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Management %26 Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Mechanical Eng%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Medical Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Medieval Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Mfg Sys Eng</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Ministry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Music</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Pacific Intl Affairs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Philosophy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Prof%2E Accountancy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Project Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Public Admin%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Public Health</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Social Work</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Software Engineering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Software Systems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Studies in Law</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Technology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master of Theological Studies</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master%27s Diploma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master-Business Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master-Business Communication</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master-Geographic Info Systems</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master-Software Design %26 Dev%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Masters of Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Masters of Public Policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Degree Offered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post-Baccalaureate Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post-Graduate Diploma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post-Masters Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post-Secondary Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Undecided</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unknown</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Transcript_Evaluator__c</picklist>
+        <values>
+            <fullName>ECE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WES</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Transcripts_Evaluated_Previously__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>

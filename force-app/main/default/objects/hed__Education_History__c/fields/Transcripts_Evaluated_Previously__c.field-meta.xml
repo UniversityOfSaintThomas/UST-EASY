@@ -6,6 +6,7 @@
     <externalId>false</externalId>
     <label>Transcripts Evaluated Previously</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

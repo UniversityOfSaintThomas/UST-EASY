@@ -3,8 +3,11 @@
     <description>Permissions needed to manage application configuration for admissions</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Admissions - Application Admin</label>
+    <permissionSets>Ability_to_Run_Reports</permissionSets>
     <permissionSets>Admissions_Email_Template_Management</permissionSets>
-    <permissionSets>Admissions_Reports_and_Dashboards</permissionSets>
+    <permissionSets>Admissions_Financial_Aid_Records_Read_Only</permissionSets>
     <permissionSets>Application_Config_Admin</permissionSets>
+    <permissionSets>Program_Create_Edit</permissionSets>
+    <permissionSets>Summit_Events_Read_Only_Access</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

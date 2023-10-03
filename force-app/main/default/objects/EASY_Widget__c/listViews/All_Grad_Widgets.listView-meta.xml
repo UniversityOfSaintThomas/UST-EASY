@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Grad_Widgets</fullName>
+    <columns>NAME</columns>
+    <columns>Application_Control__c</columns>
+    <columns>Display_Text__c</columns>
+    <columns>Activation_State__c</columns>
+    <columns>Display_Widget_On_Pages__c</columns>
+    <columns>Display_Widget_On_Status__c</columns>
+    <columns>Display_Widget_On_Sub_Status__c</columns>
+    <columns>Display_Heading__c</columns>
+    <columns>Only_One_Widget_Key__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>notContain</operation>
+        <value>Undergraduate,Common App,Non-Credit,SON</value>
+    </filters>
+    <filters>
+        <field>Activation_State__c</field>
+        <operation>equals</operation>
+        <value>Active</value>
+    </filters>
+    <label>All Grad Widgets</label>
+</ListView>

@@ -186,6 +186,8 @@ public class ApplicationQuestionGroup {
                     continue;
                 }
 
+                System.debug('question.app: ' + question.application);
+                System.debug('question.question.Required__c: ' + question.question.Required__c);
                 if (question.fieldType.equalsIgnoreCase('Address') && (question.application != null && String.isNotBlank(question.question.Required__c) && new Set<String>(question.question.Required__c.split(';')).contains(question.application.Application_Status__c)) && String.isNotBlank(question.question.Related_Object_Field__c)) {
 
                     for (String addressField : new Set<String>{
@@ -732,7 +734,6 @@ public class ApplicationQuestionGroup {
                         }
                     }
                     if (lstInsert.size() > 0) {
-                        System.debug(JSON.serializePretty(lstInsert));
                         insert lstInsert;
                     }
                     if (lstUpdate.size() > 0) {

@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Internal_Requirement_Item__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>If this requirement item is being asked to an external user (e.g. a recommender), this field looks-up to the corresponding internal requirement item that the applicant fulfills (e.g. recommender name and email)</inlineHelpText>
     <label>Internal Requirement Item</label>

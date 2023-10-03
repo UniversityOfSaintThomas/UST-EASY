@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_ERX_Data_Migration</fullName>
+    <columns>NAME</columns>
+    <columns>Contact__c</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>St_Thomas_College_School__c</columns>
+    <columns>College_of_Interest__c</columns>
+    <columns>Major_Program_1__c</columns>
+    <columns>Academic_Interest__c</columns>
+    <columns>Opportunity_Record_Type__c</columns>
+    <columns>Term__c</columns>
+    <columns>Start_Term_ERX__c</columns>
+    <columns>Intended_Start_Term__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Interaction_Source__c</field>
+        <operation>equals</operation>
+        <value>ERx Data Migration - TouchPoint,ERx Data Migration - Application</value>
+    </filters>
+    <label>All - ERX Data Migration</label>
+</ListView>

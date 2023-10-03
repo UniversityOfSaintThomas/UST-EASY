@@ -15,4 +15,8 @@
         <value>International</value>
     </filters>
     <label>INTL Territories</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+        <group>UG_Admissions</group>
+    </sharedTo>
 </ListView>

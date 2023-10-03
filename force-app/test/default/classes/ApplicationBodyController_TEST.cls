@@ -250,7 +250,7 @@ public class ApplicationBodyController_TEST {
         controller.noApplication = false;
         controller.currentPageName = 'ApplicationPortal';
 
-        User testUser = ApplicationTESTUtilities.userToRunWith('Portal User', 'Application_Community_Guest', student.Id);
+        User testUser = ApplicationTESTUtilities.userToRunWith('Customer Community Login User', 'Application_Community_Guest', student.Id);
         testUser.ContactId = student.Id;
         update testUser;
         System.runAs(testUser) {

@@ -77,7 +77,7 @@ public with sharing class ApplicationBodyController {
                 appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
                 appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
                 appsQuery += ' AND Contact__c IN (SELECT ContactId FROM User WHERE Id = \'' + UserInfo.getUserId() + '\') ';
-                if (!pagesWithMultipleAppInfo.contains(currentPageName)) {
+                if (pagesWithMultipleAppInfo.contains(currentPageName)) {
                     appsQuery += ' AND Contact__c = \'' + appInfoParam.contactId + '\'';
                 } else {
                     appsQuery += ' AND Id = \'' + appInfoParam.appId + '\'';

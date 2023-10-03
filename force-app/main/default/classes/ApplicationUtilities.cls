@@ -125,7 +125,8 @@ public class ApplicationUtilities {
             List<Application__c> lastApps = [
                     SELECT Id, Application_Control__r.URL_Parameter__c, LastModifiedDate, Contact__c,
                             Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
-                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name
+                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name,
+                            Applicant_Type__c
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     AND Application_Status__c != 'Wrong Application'
@@ -154,7 +155,7 @@ public class ApplicationUtilities {
         try {
             currentApp = [
                     SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
-                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Contact__c
+                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Contact__c, Applicant_Type__c
                     FROM Application__c
                     WHERE Id = :appId
                     AND Contact__c = :contactId

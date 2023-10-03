@@ -1,9 +1,9 @@
 @isTest
 public class ApplicationTESTUtilities {
 
-    public static Application_Control__c createApplicationControl() {
+    public static Application_Control__c createApplicationControl(String appControlName, String urlParameter) {
         Application_Control__c appControl = new Application_Control__c(
-                Name = 'test',
+                Name = appControlName,
                 Application_Start_Status__c = Application_Control__c.Application_Start_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 Active__c = true,
                 Allow_Cancel_From__c = Application_Control__c.Allow_Cancel_From__c.getDescribe().getPicklistValues()[0].getValue(),
@@ -11,7 +11,7 @@ public class ApplicationTESTUtilities {
                 Allow_Submit_From__c = Application_Control__c.Allow_Submit_From__c.getDescribe().getPicklistValues()[0].getValue(),
                 Cancel_Status__c = Application_Control__c.Cancel_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 Default__c = true,
-                URL_Parameter__c = 'st',
+                URL_Parameter__c = urlParameter,
                 Submit_Status__c = Application_Control__c.Submit_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 Withdraw_Status__c = Application_Control__c.Withdraw_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 Application_Control_External_ID__c = ApplicationUtilities.getUUID()
@@ -20,11 +20,23 @@ public class ApplicationTESTUtilities {
         return appControl;
     }
 
+    public static Boolean doesPicklistContain(Schema.sObjectField activeField, String valueToCheck) {
+        Schema.DescribeFieldResult fieldDetail = activeField.getDescribe();
+        List<Schema.PicklistEntry> picklistEntries = fieldDetail.getPicklistValues();
+        for (Schema.PicklistEntry ple : picklistEntries) {
+            if (ple.getValue().equals(valueToCheck)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public static User userToRunWith(String profileName, String PermissionSetToAdd, Id userContact) {
 
         User u2 = buildUser('example1@sfdx-test.com', 'lm', 'System Administrator');
         insert u2;
-        Profile portalProfile = [SELECT Id FROM Profile WHERE Name LIKE '%Portal User%' Limit 1];
+        Profile portalProfile = [SELECT Id FROM Profile WHERE Name LIKE '%Customer Community Login User%' Limit 1];
 
         System.runAs(u2) {
             User u3 = buildUser('example2@sfdx-test.com', 'ceo', profileName);

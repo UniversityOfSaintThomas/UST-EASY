@@ -171,9 +171,9 @@ public with sharing class checklistHelper {
         return allowConfirm;
     }
 
-    /*******************************************************************************
+    /* ******************************************************************************
     * @description Checks to see if requirements have been completed. Checks related list items too (Even if they are not marked completed on the Requirement Response)
-    ********************************************************************************/
+    ******************************************************************************* */
     public static void checkRequirementCompletion(Id applicationId, Application__c app, Boolean doDML) {
 
         Set<Id> requirementIds = new Set<Id>();

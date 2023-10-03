@@ -61,6 +61,12 @@
                                             <br/> {!app.Intended_Program__r.Name}
                                         </apex:outputPanel>
                                     </dd>
+                                    <apex:outputPanel layout="none" rendered="{!!ISBLANK(app.Applicant_Type__c) && app.Applicant_Type__c = 'Common App'}">
+                                        <dt class="slds-item_label slds-text-color_weak" title="Degree">Type:</dt>
+                                        <dd class="slds-item_detail" title="Degree type for which this application is applying">
+                                           {!app.Applicant_Type__c}
+                                        </dd>
+                                    </apex:outputPanel>
 
                                 </dl>
                             </div>

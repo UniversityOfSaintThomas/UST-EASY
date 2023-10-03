@@ -153,7 +153,7 @@ public class ApplicationRegistration {
             appCreate.additionalDataString = '';
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, errorMessage));
             return null;
-           // throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
+            // throw new ApplicationUtilities.ApplicationException(errorMessage, false, true);
         }
 
         System.Savepoint sp = Database.setSavepoint();
@@ -265,25 +265,34 @@ public class ApplicationRegistration {
         //Check for common app Id External_Application_ID__c
         System.debug('common app: ' + commonAppApplication);
         if (commonAppApplication) {
-            List<Application__c> commonApplication = new List<Application__c>();
-            commonApplication = [
-                    SELECT External_Application_ID__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email,
-                            Contact__r.Mailing_First_Name__c, Intended_Program__c, Intended_Term_of_Entry__c
-                    FROM Application__c
-                    WHERE (
-                            Contact__r.FirstName = :interaction.First_Name__c
-                            OR
-                            Contact__r.Mailing_First_Name__c = :interaction.First_Name__c
-                    )
-                    AND Contact__r.LastName = :interaction.Last_Name__c
-                    AND Contact__r.Email = :interaction.Email__c
-                    AND External_Application_ID__c = :interaction.External_Application_ID__c
-            ];
-            //System.debug('COMMON APP:' + Json.serializePretty(commonApplication));
-            if (commonApplication.size() > 0 && String.isNotBlank(commonApplication[0].External_Application_ID__c) && commonApplication[0].External_Application_ID__c.equalsIgnoreCase(interaction.External_Application_ID__c)) {
-                interaction.Academic_Program__c = commonApplication[0].Intended_Program__c;
-                interaction.Intended_Start_Term__c = commonApplication[0].Intended_Term_of_Entry__c;
-                interaction.Admissions_Application__c = commonApplication[0].Id;
+            String commonAppId = '';
+            if (String.isNotBlank(interaction.External_Application_ID__c)) {
+                commonAppId = interaction.External_Application_ID__c.trim();
+                commonAppId = '%' + commonAppId + '%';
+                List<Application__c> commonApplication = new List<Application__c>();
+                commonApplication = [
+                        SELECT External_Application_ID__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email,
+                                Contact__r.Mailing_First_Name__c, Intended_Program__c, Intended_Term_of_Entry__c, Applicant_Type__c
+                        FROM Application__c
+                        WHERE (
+                                Contact__r.FirstName = :interaction.First_Name__c
+                                OR
+                                Contact__r.Mailing_First_Name__c = :interaction.First_Name__c
+                        )
+                        AND Contact__r.LastName = :interaction.Last_Name__c
+                        AND Contact__r.Email = :interaction.Email__c
+                        AND External_Application_ID__c LIKE :commonAppId
+                ];
+
+                //System.debug('COMMON APP:' + Json.serializePretty(commonApplication));
+                if (commonApplication.size() > 0 && String.isNotBlank(commonApplication[0].External_Application_ID__c) && commonApplication[0].External_Application_ID__c.equalsIgnoreCase(interaction.External_Application_ID__c)) {
+                    interaction.Academic_Program__c = commonApplication[0].Intended_Program__c;
+                    interaction.Intended_Start_Term__c = commonApplication[0].Intended_Term_of_Entry__c;
+                    interaction.Admissions_Application__c = commonApplication[0].Id;
+                } else {
+                    //interaction.External_Application_ID__c = null;
+                    return ' We can\'t match your common app information with the information provided.';
+                }
             } else {
                 //interaction.External_Application_ID__c = null;
                 return ' We can\'t match your common app information with the information provided.';

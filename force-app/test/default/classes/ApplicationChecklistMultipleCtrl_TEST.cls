@@ -1,9 +1,11 @@
 /**
- * @last modified on  : 08-08-2022
- * @last modified by  : nicole.b@digitalmass.com
-**/
-@isTest
-public class ApplicationPortal_TEST {
+ * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 9/28/2023.
+ */
+
+
+@IsTest
+private class ApplicationChecklistMultipleCtrl_TEST {
+
     @testSetup
     public static void testSetup() {
         Application_Control__c appControl = new Application_Control__c(
@@ -71,16 +73,24 @@ public class ApplicationPortal_TEST {
         );
         insert app;
     }
-    public static TestMethod void loadApps() {
-        Contact student = [Select Id from Contact limit 1];
+
+    @IsTest
+    static void testBehavior() {
+        ApplicationChecklistMultipleController controller = new ApplicationChecklistMultipleController();
+        Contact student = [
+                SELECT Id
+                FROM Contact
+                WHERE FirstName = 'TestFirst'
+                AND
+                LastName = 'TestStudent'
+                AND
+                Email = 'testfirst@teststudent.com'
+                LIMIT 1
+        ];
 
         PageReference pr = Page.ApplicationPortal;
         pr.getParameters().put('contactId', student.Id);
         Test.setCurrentPage(pr);
-        ApplicationPortal ap = new ApplicationPortal();
-        Test.startTest();
-        ap.applicationPortalInit();
-        Test.stopTest();
-        //System.assertEquals(1, ap.applicationsByIds.size());
+        Map<Id, Application__c> mApplicationsByIds = controller.getApplicationsByIds();
     }
 }

@@ -46,8 +46,10 @@ public with sharing class ApplicationChecklistMultipleController {
 
             applicationsByIds = new Map<Id, Application__c>((List<Application__c>) Database.query(query));
             applicationMapSize = applicationsByIds.size();
+            System.debug('Apps in play: ' + applicationsByIds.size());
 
             for (Application__c app : applicationsByIds.values()) {
+                System.debug('app : ' + app.Id);
                 EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
                 List<RequirementWrapper> checklist = checklistHelper.checklistRequirements(app, newAppInfo, false);
                 Boolean allowSubmit = checklistHelper.allowSubmit(checklist, appInfoParam);

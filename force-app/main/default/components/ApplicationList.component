@@ -46,7 +46,7 @@
                                             {!app.Application_Control__r.School_College__c}
                                         </apex:outputPanel>
                                         <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Graduate')}">
-                                            {!app.Degree_Type__c}
+                                            {!app.Intended_Program__r.Degree__c}
                                         </apex:outputPanel>
                                     </dd>
 

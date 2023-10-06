@@ -65,7 +65,7 @@ public with sharing class checklistHelper {
 
         checkRequirementCompletion(app.Id, app, doDML);
 
-        for (Requirement_Response__c rr : [
+        List<Requirement_Response__c> requirementResponses = [
                 SELECT Id, Requirement_Item__r.Required__c, Requirement_Item__c, Requirement_Item__r.RecordType.DeveloperName, Requirement_Item__r.Requirement__c,
                         Fulfilled_On__c, Incomplete_Questions__c, Question_Group_Requirement_Fulfilled_On__c, HasDocument__c, Waive_Requirement__c,
                         Document_Requirement_Fulfilled_On__c, Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c, Send_Reminder__c,
@@ -73,7 +73,9 @@ public with sharing class checklistHelper {
                 FROM Requirement_Response__c
                 WHERE Application__c = :app.Id
                 AND Requirement_Item__r.Requirement__c IN :reqIds
-        ]) {
+        ];
+
+        for (Requirement_Response__c rr : requirementResponses) {
             if (riIds.contains(rr.Requirement_Item__c)) {
                 Boolean itemCompleted = true;
                 if (!completedRequirement.containsKey(rr.Requirement_Item__r.Requirement__c)) {
@@ -150,7 +152,7 @@ public with sharing class checklistHelper {
         return allowSubmit;
     }
 
-    public static Boolean allowConfirm (List<RequirementWrapper> requirements, EASYApplicationInfo appInfo) {
+    public static Boolean allowConfirm(List<RequirementWrapper> requirements, EASYApplicationInfo appInfo) {
 
         allowConfirm = false;
 

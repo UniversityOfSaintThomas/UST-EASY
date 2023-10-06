@@ -330,9 +330,9 @@ flows:
       19:
         task: configure_network_setting
       20:
-        task: configure_community
-      21:
         task: configure_community_settings
+      21:
+        task: configure_community
       #22:
       #  task: load_scholarship_test_data
 

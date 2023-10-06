@@ -65,7 +65,7 @@
                 #tmplHeader .USTTextContent,#tmplHeader .USTTextContent p{font-size:17px !important;line-height:150% !important;}
                 #tmplBody .USTTextContent,#tmplBody .USTTextContent p{font-size:17px !important;line-height:150% !important;}
                 #tmplFooter .USTTextContent,#tmplFooter .USTTextContent p{font-size:14px !important;line-height:150% !important;}
-				img[id=USTImageHead] {content:url(https://static.stthomas.edu/undergraduate-admissions/images/email/enrollment_email_header_mobile2016.png); }
+				img[id=USTImageHead] {content:url(https://s3.amazonaws.com/static.aws.stthomas.edu/undergraduate-admissions/enrollment_email_header_mobile2016.png); }
         }
   /*]]>*/
   </style>
@@ -89,7 +89,7 @@
                           <tbody>
                             <tr>
 								<td class="USTImageContent" valign="top" style="padding:0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-									<img align="center" alt="" src="https://static.stthomas.edu/undergraduate-admissions/images/email/enrollment_email_header2016.png" class="USTImage" ID="USTImageHead" width="100%" height="auto" style="max-width: 100%; padding:0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" />
+									<img align="center" alt="" src="https://s3.amazonaws.com/static.aws.stthomas.edu/undergraduate-admissions/enrollment_email_header2016.png" class="USTImage" ID="USTImageHead" width="100%" height="auto" style="max-width: 100%; padding:0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" />
 								</td>                            
 							</tr>
                           </tbody>
@@ -167,7 +167,7 @@
                   <tbody class="USTDividerBlockOuter">
                     <tr style="vertical-align: top;">
 						<td class="USTDividerBlockInner" style="min-width: 100%;padding:20px 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-							<img src="https://static.stthomas.edu/email/new-branding/waves-550.png" align="center" alt="" height="auto" width="100%" style="max-width: 600px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="USTImage"  />
+							<img src="https://s3.amazonaws.com/static.aws.stthomas.edu/undergraduate-admissions/waves-550.png" align="center" alt="" height="auto" width="100%" style="max-width: 600px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="USTImage"  />
                       </td>
                     </tr>
                   </tbody>

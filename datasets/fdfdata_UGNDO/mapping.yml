@@ -25,23 +25,7 @@ Insert Application_Control__c:
   - Text_Color__c
   - URL_Parameter__c
   - Withdraw_Status__c
-Insert Interaction_Mapping__c:
-  sf_object: Interaction_Mapping__c
-  fields:
-  - Active__c
-  - Insert_Null__c
-  - Interaction_Source_Field_API_Name__c
-  - Skip_Mapping__c
-  - Source_Field_API_Name__c
-  - Source_Object_API_Name__c
-  - Target_Field_API_Name__c
-  - Target_Object_API_Name__c
-Insert hed__Language__c:
-  sf_object: hed__Language__c
-  fields:
-  - Holding_Name__c
-  - Name
-  - Related_Object_JSON__c
+  soql_filter: "Name like '%Non-Credit%'"
 Insert EASY_Widget__c:
   sf_object: EASY_Widget__c
   fields:
@@ -54,6 +38,11 @@ Insert EASY_Widget__c:
   - Display_Widget_On_Sub_Status__c
   - End_Date__c
   - End_Time__c
+  - Generic_Filter_2__c
+  - Only_One_Widget_Key__c
+  - Generic_Filter_1__c
+  - Generic_Filter_4__c
+  - Generic_Filter_3__c
   - Name
   - Scripts__c
   - Sort_Order__c
@@ -62,50 +51,10 @@ Insert EASY_Widget__c:
   - Widget_Screen_Location__c
   - Widget_Time_Zone__c
   - Widget_Type__c
+  soql_filter: "Name like '%(NC%'"
   lookups:
     Application_Control__c:
       table: Application_Control__c
-Insert Academic_Term__c:
-  sf_object: Academic_Term__c
-  fields:
-  - Academic_Year_Code__c
-  - Activate_Application_Date__c
-  - Banner_Term_Code__c
-  - Early_Action_End_Date__c
-  - Early_Decision_End_Date__c
-  - Early_Decision_Start_Date__c
-  - End_Application_Date__c
-  - Financial_Aid_Processing_Year__c
-  - Housing_End_Date__c
-  - Housing_Start_Date__c
-  - Name
-  - Regular_Decision_End_Date__c
-  - Term_10th_Day__c
-  - Term_End_Date__c
-  - Term_Start_Date__c
-  lookups:
-    Term__c:
-      table: hed__Term__c
-      after: Insert hed__Term__c
-Insert Account:
-  sf_object: Account
-  fields:
-  - Banner_Code__c
-  - Banner_Key__c
-  - CEEB_Code__c
-  - CEEB_Integration_Code__c
-  - Inactive_School__c
-  - Name
-  - RecordTypeId
-  - Surrogate_ID__c
-  - hed__Billing_Address_Inactive__c
-  - hed__Billing_County__c
-  - hed__School_Code__c
-  - hed__Shipping_County__c
-  lookups:
-    ParentId:
-      table: Account
-      after: Insert Account
 Insert Program__c:
   sf_object: Program__c
   fields:
@@ -146,10 +95,14 @@ Insert Program__c:
   - Program_Applicant_Type__c
   - Program_Areas_of_Interest__c
   - Program_Bucket__c
+  - Program_CEU_Amount__c
   - Program_Code__c
   - Program_College_of_Interest__c
   - Program_Degree_Code__c
+  - Program_Description__c
   - Program_Display__c
+  - Program_Index_Code__c
+  - Program_Image_URL__c
   - Program_Keywords__c
   - Program_Learning_Style__c
   - Program_Name_on_Application__c
@@ -166,67 +119,13 @@ Insert Program__c:
   - STVMAJR_VALID_MINOR_IND__c
   - School_College__c
   - Student_Type__c
+  soql_filter: "Career__c = 'Non-Credit'"
   lookups:
     Application_Control__c:
       table: Application_Control__c
-    Department__c:
-      table: Account
-    Effective_Term__c:
-      table: Academic_Term__c
     Recruitment_Program__c:
       table: Program__c
       after: Insert Program__c
-Insert hed__Term__c:
-  sf_object: hed__Term__c
-  fields:
-  - Activate_Application_Date__c
-  - Banner_Term_Code__c
-  - End_Application_Date__c
-  - Housing_End_Date__c
-  - Housing_Start_Date__c
-  - Name
-  - Term_Code__c
-  - Term_End_Date__c
-  - Term_Friendly_Name__c
-  - Term_Key__c
-  - Term_Start_Date__c
-  - hed__End_Date__c
-  - hed__Grading_Period_Sequence__c
-  - hed__Instructional_Days__c
-  - hed__Start_Date__c
-  - hed__Type__c
-  lookups:
-    hed__Account__c:
-      table: Account
-    hed__Parent_Term__c:
-      table: hed__Term__c
-      after: Insert hed__Term__c
-Insert Intended_Program_Term__c:
-  sf_object: Intended_Program_Term__c
-  fields:
-  - Activate_Application_Date__c
-  - Applicant_Type__c
-  - Citizenship__c
-  - Degree_Type__c
-  - Delivery_Type__c
-  - End_Application_Date__c
-  - Generic_Filter_1__c
-  - Generic_Filter_2__c
-  - Generic_Filter_3__c
-  - Generic_Filter_4__c
-  - Intended_Program_Term_Integration_Ext_Id__c
-  - Name
-  - Period_Id__c
-  - Residency__c
-  - School_College__c
-  - Student_Type__c
-  lookups:
-    Academic_Term__c:
-      table: Academic_Term__c
-    Intended_Program__c:
-      table: Program__c
-    Term_Academic__c:
-      table: hed__Term__c
 Insert Plan__c:
   sf_object: Plan__c
   fields:
@@ -238,9 +137,8 @@ Insert Plan__c:
   - Plan_Code__c
   - Plan_Type__c
   - Type__c
+  soql_filter: "Career__c = 'Non-Credit'"
   lookups:
-    Department__c:
-      table: Account
     Program__c:
       table: Program__c
     Recruitment_Interest__c:
@@ -272,6 +170,7 @@ Insert Requirement__c:
   - Show_on_Application_Creation__c
   - Student_Type__c
   - Viewing_Requirement__c
+  soql_filter: "Name like '%(NC%'"
   lookups:
     Application_Control__c:
       table: Application_Control__c
@@ -322,6 +221,7 @@ Insert Requirement_Item__c:
   - School_College__c
   - Student_Type__c
   - Viewing_Requirement__c
+  soql_filter: "Name like '%(NC%' AND Active__c = TRUE"
   lookups:
     Intended_Program__c:
       table: Program__c
@@ -375,6 +275,7 @@ Insert Question__c:
   - Static_Text__c
   - Student_Type__c
   - URL_Parameter__c
+  soql_filter: "Name like '%(NC%' AND Active__c = TRUE"
   lookups:
     Intended_Program__c:
       table: Program__c

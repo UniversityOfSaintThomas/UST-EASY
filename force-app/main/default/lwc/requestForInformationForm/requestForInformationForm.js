@@ -12,8 +12,6 @@ import {LightningElement, api, track, wire} from 'lwc';
 import {getObjectInfo} from 'lightning/uiObjectInfoApi';
 import {getPicklistValuesByRecordType} from 'lightning/uiObjectInfoApi';
 import {generateRecordInputForCreate, getRecordCreateDefaults} from 'lightning/uiRecordApi';
-import {loadStyle} from 'lightning/platformResourceLoader';
-import resourceName from '@salesforce/resourceUrl/rfiGeneralStyle';
 
 // lead object and fields
 import LEAD_OBJECT from '@salesforce/schema/Lead';
@@ -113,7 +111,6 @@ export default class RequestForInformationForm extends LightningElement {
     gclid;
 
     connectedCallback() {
-        loadStyle(this, resourceName).then().catch();
         this.utm_campaign = this.getUrlParamValue(window.location.href, 'utm_campaign');
         this.utm_medium = this.getUrlParamValue(window.location.href, 'utm_medium');
         this.utm_source = this.getUrlParamValue(window.location.href, 'utm_source');
@@ -383,14 +380,15 @@ export default class RequestForInformationForm extends LightningElement {
                     getPrograms({
                         academic_level: this.academic_level_api,
                         school_college: this.school_college,
-                        academic_interest_codes: this.academic_interest_codes
+                        academic_interest_codes: this.academic_interest_codes,
+                        multi_select_standard: this.multi_select_standard
                     })
                         .then((programs) => {
                             this.program_id_to_name_map = programs;
                             const values = [];
                             let last_group = '';
                             //let item_count = 0;
-                            if (this.academic_level === 'U') {
+                            if (this.academic_level === 'U' || this.academic_level === 'Undergraduate') {
                                 for (const program in programs) {
                                     values.push(
                                         {
@@ -401,7 +399,7 @@ export default class RequestForInformationForm extends LightningElement {
                                 }
                             } else {
                                 for (const program in programs) {
-                                    if (last_group === '' || last_group != programs[program].Degree__c) {
+                                    if ((last_group === '' || last_group != programs[program].Degree__c) && !this.multi_select_standard) {
                                         last_group = programs[program].Degree__c
                                         values.push(
                                             {

@@ -172,7 +172,7 @@
                                                     <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Date'}">
                                                         <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
                                                             <apex:param value="{!rr.obj[question.question.Related_Object_Field__c]}" />
-                                                        </apex:outputText>
+                                                </apex:outputText>
                                                     </apex:outputPanel>
                                                 </apex:outputPanel>
 

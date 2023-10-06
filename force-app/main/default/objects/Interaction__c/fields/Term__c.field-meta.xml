@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Term__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <deprecated>false</deprecated>
     <description>The academic term a prospect is interested in. Used to build the Opportunity Key for the Interaction Processor to determine whether to create a new Opportunity or update an existing Opportunity.</description>
     <externalId>false</externalId>
     <inlineHelpText>Required to create or update an Opportunity.</inlineHelpText>

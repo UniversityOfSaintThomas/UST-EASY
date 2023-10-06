@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pardot_Sync_OCB__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If this is checked, then it will be included in the OCB Pardot data sync</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If this is checked, then it will be included in the OCB Pardot data sync</inlineHelpText>
+    <label>Pardot Sync - OCB</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

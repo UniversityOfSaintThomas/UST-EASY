@@ -6,6 +6,7 @@
     <label>Documents Missing Text</label>
     <length>131072</length>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Html</type>
     <visibleLines>25</visibleLines>

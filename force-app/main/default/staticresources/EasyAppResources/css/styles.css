@@ -7,9 +7,20 @@
     background-color: #9E28B5 !important;
 }
 
-.slds-scope .slds-button_brand {
-    background-color: #9E28B5;
-    border-color: #9E28B5;
+.slds-scope .slds-button_brand, .slds-scope .slds-icon-standard-contact {
+    background-color: #8348ad;
+    border-color: #8348ad;
+    font-size: 1.02rem;
+    line-height: 1.5rem;
+}
+
+.slds-scope .slds-button_brand:hover, .slds-scope .slds-icon-standard-contact:hover {
+    background-color: #a97cca;
+}
+
+.slds-scope .slds-button_brand:focus, .slds-scope .slds-icon-standard-contact:hover {
+    background-color: #510C76;
+    color: #fff;
 }
 
 .slds-scope .slds-summary-detail.slds-is-open .slds-summary-detail__content {
@@ -46,7 +57,7 @@
     max-width: 100% !important;
 }
 
-.slds-scope ul.slds-listbox {
+.slds-scope ul.slds-listbox, .slds-scope ul.slds-card-tile {
     margin: 0;
     list-style: none;
 }
@@ -82,6 +93,13 @@
     line-height: 1.6rem;
     font-weight: 400;
     padding: 0.3rem 0.7rem;
+}
+
+.slds-scope .slds-button.slds-button-smaller {
+    font-size: 1rem;
+    line-height: 1.4rem;
+    font-weight: 400;
+    padding: 0.2rem 0.7rem;
 }
 
 .slds-scope .slds-button.slds-radio_button {
@@ -225,8 +243,26 @@ div.slds-progress {
     padding-right: .4rem;
 }
 
-.slds-scope .messageTable .msgIcon {
+.slds-scope .slds-backdrop {
+    background-color: #e6daff;
+    opacity: .5;
+}
 
+.slds-scope .slds-modal__close {
+    padding: 0;
+}
+
+.slds-scope .slds-modal__close .slds-button__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.slds-dropdown {
+    min-height: 35px;
+}
+
+.slds-scope li.clear-search-field {
+    margin: .6rem .5rem;
 }
 
 /* Carousel styles */

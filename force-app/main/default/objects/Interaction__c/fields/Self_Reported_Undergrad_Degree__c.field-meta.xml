@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Self_Reported_Undergrad_Degree__c</fullName>
-    <description>Initially built for the OCB migration project. 
-The field is used for counselors to document a self reported undergraduate degree at any point in the process.</description>
+    <description>Initially built for the OCB migration project.
+            The field is used for counselors to document a self reported undergraduate degree at any point in the process.</description>
     <externalId>false</externalId>
     <label>Self-Reported Undergrad Degree</label>
     <length>50</length>

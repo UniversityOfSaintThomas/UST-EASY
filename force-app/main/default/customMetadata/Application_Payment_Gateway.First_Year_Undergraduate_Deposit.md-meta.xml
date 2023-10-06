@@ -3,6 +3,10 @@
     <label>First-Year Undergraduate Deposit</label>
     <protected>false</protected>
     <values>
+        <field>Gateway_URL__c</field>
+        <value xsi:type="xsd:string">https://test.secure.touchnet.net:8443/C20237test_upay/web/index.jsp</value>
+    </values>
+    <values>
         <field>UPay_Site_Id__c</field>
         <value xsi:type="xsd:string">2</value>
     </values>

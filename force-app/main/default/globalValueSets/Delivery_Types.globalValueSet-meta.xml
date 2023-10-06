@@ -35,6 +35,31 @@
         <default>false</default>
         <label>Work and Learn</label>
     </customValue>
+    <customValue>
+        <fullName>Hybrid (Summer Start)</fullName>
+        <default>false</default>
+        <label>Hybrid (Summer Start)</label>
+    </customValue>
+    <customValue>
+        <fullName>1-year (Summer Start)</fullName>
+        <default>false</default>
+        <label>1-year (Summer Start)</label>
+    </customValue>
+    <customValue>
+        <fullName>2-year (Fall Start)</fullName>
+        <default>false</default>
+        <label>2-year (Fall Start)</label>
+    </customValue>
+    <customValue>
+        <fullName>3-year (Fall Start)</fullName>
+        <default>false</default>
+        <label>3-year (Fall Start)</label>
+    </customValue>
+    <customValue>
+        <fullName>4-year (Fall Start)</fullName>
+        <default>false</default>
+        <label>4-year (Fall Start)</label>
+    </customValue>
     <description>Types that a program can be delivered.</description>
     <masterLabel>Delivery Types</masterLabel>
     <sorted>false</sorted>

@@ -241,26 +241,34 @@ public class ApplicationBodyController_TEST {
 
         EASYApplicationInfo appInfo = new EASYApplicationInfo();
         appInfo.appControlId = appControl.Id;
+        appInfo.appId = app.Id;
         appInfo.contactId = student.Id;
         appInfo.citizenship = 'U.S. Citizen';
 
         ApplicationBodyController controller = new ApplicationBodyController();
         controller.appInfoParam = appInfo;
+        controller.noApplication = false;
         controller.currentPageName = 'ApplicationPortal';
 
-        Test.startTest();
-        ApplicationBodyController.allWidgets allWidgets = controller.getWidgets();
-        Test.stopTest();
+        User testUser = ApplicationTESTUtilities.userToRunWith('Customer Community Login User', 'Application_Community_Guest', student.Id);
+        testUser.ContactId = student.Id;
+        update testUser;
+        System.runAs(testUser) {
 
-        System.debug(JSON.serializePretty(allWidgets));
+            Test.startTest();
+            ApplicationBodyController.allWidgets allWidgets = controller.getWidgets();
+            Test.stopTest();
 
-        System.assertEquals(3, allWidgets.topWidgets.size());
-        System.assertEquals('Display Text 111111111', allWidgets.topWidgets[0].Display_Text__c);
-        //Right includes one login widget
-        System.assertEquals(2, allWidgets.rightWidgets.size());
-        System.assertEquals(1, allWidgets.bottomWidgets.size());
-        System.assertEquals(1, allWidgets.leftWidgets.size());
-        System.assertEquals(1, allWidgets.contentTopWidgets.size());
-        System.assertEquals(1, allWidgets.contentBottomWidgets.size());
+            System.debug(JSON.serializePretty(allWidgets));
+
+            System.assertEquals(3, allWidgets.topWidgets.size());
+            System.assertEquals('Display Text 111111111', allWidgets.topWidgets[0].Display_Text__c);
+            //Right includes one login widget
+            System.assertEquals(2, allWidgets.rightWidgets.size());
+            System.assertEquals(1, allWidgets.bottomWidgets.size());
+            System.assertEquals(1, allWidgets.leftWidgets.size());
+            System.assertEquals(2, allWidgets.contentTopWidgets.size());
+            System.assertEquals(1, allWidgets.contentBottomWidgets.size());
+        }
     }
 }

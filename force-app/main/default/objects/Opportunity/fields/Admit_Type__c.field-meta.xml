@@ -38,6 +38,11 @@
                 <default>false</default>
                 <label>Other</label>
             </value>
+            <value>
+                <fullName>Nursing</fullName>
+                <default>false</default>
+                <label>Nursing</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

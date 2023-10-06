@@ -5,7 +5,8 @@
     "Communities",
     "Sites",
     "ForceComPlatform",
-    "StateAndCountryPicklist"
+    "StateAndCountryPicklist",
+    "EinsteinGPTForDevelopers"
   ],
   "settings": {
     "lightningExperienceSettings": {

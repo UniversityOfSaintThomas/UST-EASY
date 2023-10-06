@@ -1,7 +1,7 @@
 <apex:page controller="ApplicationRegistration" showHeader="false" applyHtmlTag="false" lightningStyleSheets="true" standardStylesheets="false" docType="html-5.0" action="{!applicationRegistrationInit}">
     <apex:composition template="{!appInfo.template}">
         <apex:define name="scriptsHead">
-            <c:ApplicationHead />
+            <c:ApplicationHead/>
             <script>
                 async function lookupSearchJS(sObj, sObjFilter, sObjNameField, searchTerm) {
                     return new Promise((resolve, reject) => {
@@ -17,12 +17,12 @@
                 }
             </script>
         </apex:define>
-        <apex:define name="metaPageTitle">New Application: {!appInfo.academicLevel}</apex:define>
+        <apex:define name="metaPageTitle">{!IF(commonAppApplication,"Common App: Claim your St. Thomas Admissions Portal", "New Application: " + appInfo.academicLevel)}</apex:define>
         <apex:define name="body">
 
             <!-- This only runs after initial install and generates the cookie encryption key unique to each org -->
             <apex:outputPanel layout="none" rendered="{!!cookieKeyPresent}">
-                <apex:form >
+                <apex:form>
                     <p>This is the first time you are running EASY and a unique encryption key must be generated for your org.</p>
                     <p style="margin-bottom: 30px;">
                         <apex:commandButton action="{!testCookieKey}" value="Click to generate encryption key" title="Click to generate encryption key"/>
@@ -31,7 +31,7 @@
             </apex:outputPanel>
 
             <apex:outputPanel layout="none" rendered="{!cookieKeyPresent}">
-                <c:ApplicationBody title="New Application" appInfo="{!appInfo}" loadingText="Building Your Application..." vfPageName="ApplicationRegistration">
+                <c:ApplicationBody title="{!IF(commonAppApplication,'Common App: Claim your St. Thomas Admissions Portal', 'New Application: '  + appInfo.academicLevel)}" appInfo="{!appInfo}" loadingText="Building Your Application..." vfPageName="ApplicationRegistration" noApp="{!noApplication}">
                     <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}" title="New Application" vfPageName="ApplicationRegistration">
                         <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
                             <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
@@ -71,7 +71,7 @@
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#shortcuts")}"></use>
                                 </svg>
-                                Return to Application Portal
+                                Return to Admissions Home
                             </a>
                         </nav>
 

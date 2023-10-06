@@ -3,23 +3,9 @@
         <apex:define name="scriptsHead">
             <c:ApplicationHead />
         </apex:define>
-        <apex:define name="metaPageTitle">St. Thomas Application Portal</apex:define>
+        <apex:define name="metaPageTitle">St. Thomas Admissions Home</apex:define>
         <apex:define name="body">
-            <c:ApplicationBody title="Application(s)" appInfo="{!appInfo}" vfPageName="ApplicationPortal">
-                <apex:variable var="howManyApps" value="{!IF(!ISBLANK(applicationMapSize), applicationMapSize, 0)}"/>
-                <div class="slds-grid slds-wrap {!IF(howManyApps >= 2, ' slds-gutters','')}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <apex:pageMessages />
-                    <apex:variable var="checklistStyle" value="{!IF(howManyApps >= 2, ' slds-large-size_6-of-12', ' slds-large-size_12-of-12')}"/>
-                    <apex:repeat value="{!applicationsByIds}" var="key">
-                        <apex:variable var="thisAppInfo" value="{!appInfoMapByAppId[key]}"/>
-                        <apex:variable var="thisApp" value="{!applicationsByIds[key]}"/>
-                        <apex:variable var="thisIntendedProgram" value="{!thisApp.Intended_Program__r}"/>
-                        <apex:variable var="thisChecklist" value="{!checklistsByAppIds[key]}"/>
-                        <div class="slds-col slds-size_1-of-1{!checklistStyle}">
-                            <c:ApplicationChecklist appInfo="{!thisAppInfo}" checklistItems="{!thisChecklist}"/>
-                        </div>
-                    </apex:repeat>
-                </div>
+            <c:ApplicationBody title="Admissions Home" appInfo="{!appInfo}" vfPageName="ApplicationPortal" noApp="{!noApplication}">
             </c:ApplicationBody>
         </apex:define>
     </apex:composition>

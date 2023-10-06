@@ -732,6 +732,7 @@ public class ApplicationQuestionGroup {
                         }
                     }
                     if (lstInsert.size() > 0) {
+                        System.debug(JSON.serializePretty(lstInsert));
                         insert lstInsert;
                     }
                     if (lstUpdate.size() > 0) {

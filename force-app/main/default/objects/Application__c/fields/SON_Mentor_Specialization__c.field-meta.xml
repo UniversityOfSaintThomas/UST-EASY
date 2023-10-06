@@ -9,8 +9,9 @@
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Ambulatory Care</fullName>
                 <default>false</default>
@@ -193,5 +194,5 @@
             </value>
         </valueSetDefinition>
     </valueSet>
-    <visibleLines>3</visibleLines>
+    <visibleLines>4</visibleLines>
 </CustomField>

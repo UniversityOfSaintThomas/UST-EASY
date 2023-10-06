@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>College_Readiness_Program__c</fullName>
+    <externalId>false</externalId>
+    <label>College Readiness Program</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AVID</fullName>
+                <default>false</default>
+                <label>AVID</label>
+            </value>
+            <value>
+                <fullName>Big Brothers/Big Sisters</fullName>
+                <default>false</default>
+                <label>Big Brothers/Big Sisters</label>
+            </value>
+            <value>
+                <fullName>Boys and Girls Club</fullName>
+                <default>false</default>
+                <label>Boys and Girls Club</label>
+            </value>
+            <value>
+                <fullName>College Possible</fullName>
+                <default>false</default>
+                <label>College Possible</label>
+            </value>
+            <value>
+                <fullName>Genesys Works</fullName>
+                <default>false</default>
+                <label>Genesys Works</label>
+            </value>
+            <value>
+                <fullName>Mentoring Excellence Program (MEP)</fullName>
+                <default>false</default>
+                <label>Mentoring Excellence Program (MEP)</label>
+            </value>
+            <value>
+                <fullName>Northside Achievement Zone</fullName>
+                <default>false</default>
+                <label>Northside Achievement Zone</label>
+            </value>
+            <value>
+                <fullName>Tazel Institute</fullName>
+                <default>false</default>
+                <label>Tazel Institute</label>
+            </value>
+            <value>
+                <fullName>Upward Bound</fullName>
+                <default>false</default>
+                <label>Upward Bound</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

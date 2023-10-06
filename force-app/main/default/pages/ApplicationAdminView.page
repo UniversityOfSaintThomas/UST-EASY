@@ -16,19 +16,10 @@
                     });
                 }
             </script>
+            <c:ApplicationHead />
         </apex:define>
-        <apex:define name="metaPageTitle">TEST</apex:define>
-        <apex:define name="body">
-
-            <apex:variable value="0" var="reqIndex"/>
-
-            <div id="loadSpinner" class="popupBackground">
-                <div id="loading" class="PopupPanel">
-                    <div class="background"></div>
-                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Please Wait..</span>
-                </div>
-            </div>
-
+        <apex:variable value="0" var="reqIndex"/>
+        <div class="appBodyReview">
             <apex:outputPanel id="themessages">
                 <apex:pageMessages />
             </apex:outputPanel>
@@ -36,31 +27,49 @@
             <!--    <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}" vfPageName="ApplicationAdminView">-->
             <!--    <c:ApplicationBody title="Title" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}" vfPageName="ApplicationAdminView">-->
             <apex:repeat value="{!arLst}" var="req">
-
-                <apex:variable var="itemCount" value="0"/>
-                <apex:form >
-                    <apex:repeat value="{!req.section.groups}" var="g" rendered="{!req.section.groups != null && req.section.groups.size > 0}">
-                        <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
-                            <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appInfo="{!appInfo}"/>
+                <c:ApplicationBody title="{!req.title}" hideLogo="{!VALUE(reqIndex)!=0}" appInfo="{!appInfo}">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+                            <div>
+                                <div class="row" style="display:flex;">
+                                    <div class="col-lg-8 col-xs-10">
+                                        <div role="listbox">
+                                            <apex:variable var="itemCount" value="0"/>
+                                            <apex:form >
+                                                <apex:repeat value="{!req.section.groups}" var="g" rendered="{!req.section.groups != null && req.section.groups.size > 0}">
+                                                    <div class="item {!IF(VALUE(itemCount) == 0,'active','')}">
+                                                        <c:ApplicationFormSection groupNewRelatedRecord="{!g.createNewReferenceObject}" group="{!g}" preventUpdates="false" appInfo="{!appInfo}"/>
+                                                    </div>
+                                                    <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
+                                                </apex:repeat>
+                                            </apex:form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <apex:variable var="itemCount" value="{!TEXT(VALUE(itemCount)+1)}"/>
-                    </apex:repeat>
-                </apex:form>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+                            <hr/>
+                        </div>
+                    </div>
+                </c:ApplicationBody>
                 <apex:variable var="reqIndex" value="{!TEXT(value(reqIndex) + 1)}"/>
             </apex:repeat>
-            <!--    </c:ApplicationBody>-->
-
-            <apex:outputLink styleClass="btn-lightning btn-lg" value="/{!applicationId}">Back to Application</apex:outputLink>
-
-            <apex:form >
-                <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
-                    <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
-                </apex:actionFunction>
-                <apex:commandLink styleClass="slds-button_brand" style="float:right;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
-            </apex:form>
-
-            <br/>
-            <br/>
-        </apex:define>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 col-xs-6">
+                    <apex:outputLink styleClass="btn-lightning btn-lg" value="/{!applicationId}">Back to Application</apex:outputLink>
+                </div>
+                <div class="col-lg-4 col-md-5 col-xs-6">
+                    <apex:form >
+                        <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="formPageMessages" oncomplete="appHideLoadingSpinner();">
+                            <apex:param name="p1" value="" assignTo="{!additionalDataString}"/>
+                        </apex:actionFunction>
+                        <apex:commandLink styleClass="btn-lightning btn-lg" style="float:right;" value="Save" reRender="none" onclick="performDocUploadSave();appShowLoadingSpinner();"/>
+                    </apex:form>
+                </div>
+            </div>
+        </div>
     </apex:composition>
 </apex:page>

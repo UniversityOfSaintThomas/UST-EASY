@@ -145,7 +145,7 @@ Created by Thaddaeus Dahlberg on 10/25/2017.
             </header>
         </div>
         <nav aria-label="Skip navigation" class="tab-navigation" id="access">
-            <a href="#main-content" tabindex="1">Skip to primary content</a>
+            <a href="#content" tabindex="1">Skip to primary content</a>
         </nav>
         <main class="the-main">
             <!--<system-region name="BREADCRUMBS"/>-->

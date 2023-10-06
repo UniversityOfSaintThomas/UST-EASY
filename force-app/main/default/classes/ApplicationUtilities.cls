@@ -35,20 +35,22 @@ public class ApplicationUtilities {
     }
 
     public static EASYApplicationInfo flattenAppControl(Application_Control__c appControl, EASYApplicationInfo appInfo) {
-        appInfo.hideTermProgram = appControl.Hide_Term_Program__c;
-        appInfo.allowWithdrawFrom = appControl.Allow_Withdraw_From__c;
-        appInfo.allowSubmitFrom = appControl.Allow_Submit_From__c;
-        appInfo.submitStatus = appControl.Submit_Status__c;
-        appInfo.allowConfirmFrom = appControl.Allow_Confirm_From__c;
-        appInfo.confirmStatus = appControl.Confirm_Status__c;
-        appInfo.withdrawStatus = appControl.Withdraw_Status__c;
-        appInfo.academicLevel = appControl.Academic_Level__c;
-        appInfo.schoolCollege = appControl.School_College__c;
-        appInfo.appControlId = appControl.Id;
-        appInfo.template = appControl.Template__c;
-        appInfo.at = appControl.URL_Parameter__c;
-        appInfo.appStartStatus = appControl.Application_Start_Status__c;
-        appInfo.allowCancelFrom = appControl.Allow_Cancel_From__c;
+        if(appControl != null) {
+            appInfo.hideTermProgram = appControl.Hide_Term_Program__c;
+            appInfo.allowWithdrawFrom = appControl.Allow_Withdraw_From__c;
+            appInfo.allowSubmitFrom = appControl.Allow_Submit_From__c;
+            appInfo.submitStatus = appControl.Submit_Status__c;
+            appInfo.allowConfirmFrom = appControl.Allow_Confirm_From__c;
+            appInfo.confirmStatus = appControl.Confirm_Status__c;
+            appInfo.withdrawStatus = appControl.Withdraw_Status__c;
+            appInfo.academicLevel = appControl.Academic_Level__c;
+            appInfo.schoolCollege = appControl.School_College__c;
+            appInfo.appControlId = appControl.Id;
+            appInfo.template = appControl.Template__c;
+            appInfo.at = appControl.URL_Parameter__c;
+            appInfo.appStartStatus = appControl.Application_Start_Status__c;
+            appInfo.allowCancelFrom = appControl.Allow_Cancel_From__c;
+        }
         return appInfo;
     }
 
@@ -123,7 +125,8 @@ public class ApplicationUtilities {
             List<Application__c> lastApps = [
                     SELECT Id, Application_Control__r.URL_Parameter__c, LastModifiedDate, Contact__c,
                             Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
-                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name
+                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name,
+                            Applicant_Type__c
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     AND Application_Status__c != 'Wrong Application'
@@ -152,7 +155,7 @@ public class ApplicationUtilities {
         try {
             currentApp = [
                     SELECT Id, Application_Control__r.URL_Parameter__c, Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
-                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Contact__c
+                            Intended_Program__r.Name, Intended_Program__r.Program_Name_on_Application__c, Intended_Term_of_Entry__r.Name, Contact__c, Applicant_Type__c
                     FROM Application__c
                     WHERE Id = :appId
                     AND Contact__c = :contactId

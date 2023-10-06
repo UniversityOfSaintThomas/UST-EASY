@@ -4,7 +4,6 @@
     <externalId>false</externalId>
     <label>Date - UG TR DFC Merit Scholarship</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Counselor_Assignment_Recalc__c</fullName>
+    <externalId>false</externalId>
+    <label>Counselor Assignment Recalc</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Admissions</fullName>
+                <default>false</default>
+                <label>Admissions</label>
+            </value>
+            <value>
+                <fullName>Financial Aid</fullName>
+                <default>false</default>
+                <label>Financial Aid</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

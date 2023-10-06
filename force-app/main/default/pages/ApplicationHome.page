@@ -1,0 +1,12 @@
+<apex:page controller="ApplicationRequirement" showHeader="false" standardStylesheets="false" applyHtmlTag="false" lightningStyleSheets="true" docType="html-5.0" action="{!applicationRequirementInit}">
+    <apex:composition template="{!appInfo.template}">
+        <apex:define name="scriptsHead">
+            <c:ApplicationHead />
+        </apex:define>
+        <apex:define name="metaPageTitle">{!appInfo.intendedProgram} Application Page</apex:define>
+        <apex:define name="body">
+            <c:ApplicationBody title="Application Page" appInfo="{!appInfo}" checklistItems="{!checklistItems}" vfPageName="ApplicationHome">
+            </c:ApplicationBody>
+        </apex:define>
+    </apex:composition>
+</apex:page>

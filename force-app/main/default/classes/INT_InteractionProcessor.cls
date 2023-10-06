@@ -244,7 +244,7 @@ public class INT_InteractionProcessor {
                 oppContactRolestoInsert.add(oppContactRole);
             }
         }
-        if (oppContactRolestoInsert.size() > 0){
+        if (oppContactRolestoInsert.size() > 0) {
             insert oppContactRolestoInsert;
         }
 
@@ -307,19 +307,28 @@ public class INT_InteractionProcessor {
      */
     private List<Interaction__c> duplicatePreProcessing(List<Interaction__c> interactions) {
         // If the custom setting is turned off, return the List and do not run any pre-processing for duplicates.
+        System.debug('duplicate processing happening');
+        System.debug(Interactions_PreProcessing__c.getAll().values());
         if (Interactions_PreProcessing__c.getAll().values() != null) {
             for (Interactions_PreProcessing__c ipp : Interactions_PreProcessing__c.getAll().values()) {
-                if (!ipp.Active__c) return interactions;
+                System.debug(ipp);
+                if (!ipp.Active__c) {
+                    System.debug('Interaction skipped');
+                    return interactions;
+                }
             }
         }
+        System.debug('Interaction active');
 
         Map<String, Interaction__c> filteredMap = new Map<String, Interaction__c>();
 
         for (Interaction__c interaction : interactions) {
             String filterKey = interaction.First_Name__c + interaction.Last_Name__c + interaction.Email__c;
+
             if (!filteredMap.containsKey(filterKey)) {
                 filteredMap.put(filterKey, interaction);
             } else {
+                System.debug('filterKey: ' + filterKey + ', interaction: ' + JSON.serializePretty(interaction));
                 interaction.Interaction_Status__c = 'Audit Required';
                 String error = ' Reason: this Interaction was not processed because it is a possible ' +
                         'duplicate of - ' + filteredMap.get(filterKey).Id + ': ' + filteredMap.get(filterKey).First_Name__c +
@@ -546,6 +555,11 @@ public class INT_InteractionProcessor {
             if (lcr.isSuccess()) {
                 // Add Contact Id to set to be updated from its Interaction record.
                 interaction.Contact__c = lcr.getContactId();
+                String contactLastName = interaction.Contact__r.lastName;
+                String txtTermName = interaction.Start_Term_ERX__c;
+                String intendTermName = interaction.Intended_Start_Term__r.Name;
+                String hedTermName = interaction.Term__r.Name;
+
                 contactIds.add(lcr.getContactId());
 
                 // If we had an existing Lead in SF, copy the values to the Interaction based upon the custom mdt.
@@ -558,6 +572,7 @@ public class INT_InteractionProcessor {
                 System.debug(' && !String.isEmpty(interaction.Opportunity_Key__c): ' + !String.isEmpty(interaction.Opportunity_Key__c));
                 if (!String.isEmpty(interaction.Opportunity_Key__c)) {
                     String lastName = interaction.Last_Name__c;
+                    String lastNameCleaned = lastName.replaceAll('\'', '');
                     String termName = '';
                     String programName = '';
                     if (leadIdToTermNameMap.get(lcr.getLeadId()) != null) {
@@ -568,25 +583,28 @@ public class INT_InteractionProcessor {
                     }
 
                     List<Opportunity> matchingOpps = new List<Opportunity>();
-                    // check for matching opportunities
+                    // check for matching opportunitiesc
                     if (contactOppMap.get(interaction.Contact__c) != null) {
                         Pattern matchingPattern;
                         if (!String.isBlank(termName) && !String.isBlank(programName)) {
                             // matches: any opps without program and term information, or opportunities with exact program and term
-                            matchingPattern = Pattern.compile('^(?:' + lastName + ')\\|(?:' + termName + ')*\\|(?:' + programName + ')*$');
+                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|(?:' + programName + ')*$');
                         } else if (String.isBlank(termName) && !String.isBlank(programName)) {
                             // matches: any opportunities without program information, or opportunities with exact program
-                            matchingPattern = Pattern.compile('^(?:' + lastName + ')\\|.*\\|(?:' + programName + ')*$');
+                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|.*\\|(?:' + programName + ')*$');
                         } else if (!String.isBlank(termName) && String.isBlank(programName)) {
                             // matches: any opportunities without term information, or opportunities  with exact term
-                            matchingPattern = Pattern.compile('^(?:' + lastName + ')\\|(?:' + termName + ')*\\|.*$');
+                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|.*$');
                         } else if (String.isBlank(termName) && String.isBlank(programName)) {
                             // matches: any opportunities with or without term or program information
-                            matchingPattern = Pattern.compile('^(?:' + lastName + ')\\|.*\\|.*$');
+                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|.*\\|.*$');
                         }
 
+                        System.debug('Matching Pattern: ' + matchingPattern);
                         for (Opportunity opp : contactOppMap.get(interaction.Contact__c)) {
-                            Matcher oppMatch = matchingPattern.matcher(opp.Name);
+                            System.debug('Cleaned Opportunity Name: ' + opp.Name.replaceAll('\'', ''));
+                            Matcher oppMatch = matchingPattern.matcher(opp.Name.replaceAll('\'', ''));
+                            System.debug('Matched: ' + oppMatch.matches());
                             if (oppMatch.matches()) {
                                 if (matchingOpps.size() > 0) {
                                     if (matchingOpps[0].Probability < opp.Probability) {
@@ -609,20 +627,39 @@ public class INT_InteractionProcessor {
                         newOppty.StageName = interaction.Opportunity_Stage__c;
                         newOppty.Opportunity_Key__c = lcr.getContactId() + interaction.Opportunity_Key__c;
                         newOppty.AccountId = lcr.getAccountId();
-                        newOppty.Name = determineOpportunityName('', lastName, termName, programName);
+                        newOppty.Name = determineOpportunityName('', lastName, termName, programName, contactLastName, txtTermName, intendTermName, hedTermName);
                         interaction.Opportunity__r = newOppty;
                         opportunitiesToUpsert.add(newOppty);
                         oppKeyToContactMap.put(newOppty.Opportunity_Key__c, interaction.Contact__c);
                     } else {
                         for (Opportunity matchingOpp : matchingOpps) {
                             String oppName = matchingOpp.Name;
+                            String oppStageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
+                            Id inqoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Inquiry Opportunity').getRecordTypeId();
+                            Id appoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Applicant Opportunity').getRecordTypeId();
+
+                            List<String> inqOppStageList = new List<String>();
+                            inqOppStageList.add('Suspect');
+                            inqOppStageList.add('Moderately Suspect');
+                            inqOppStageList.add('Inquiry');
+                            inqOppStageList.add('Engaged');
+                            inqOppStageList.add('No Longer Interested');
+
                             matchingOpp.CloseDate = System.today();
-                            matchingOpp.StageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
+                            // matchingOpp.StageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
+                            matchingOpp.StageName = oppStageName;
                             matchingOpp.AccountId = lcr.getAccountId();
-                            matchingOpp.Name = determineOpportunityName(oppName, lastName, termName, programName);
+                            matchingOpp.Name = determineOpportunityName(oppName, lastName, termName, programName, contactLastName, txtTermName, intendTermName, hedTermName);
                             interaction.Opportunity_Stage__c = matchingOpp.StageName;
                             interaction.Opportunity__r = matchingOpp;
                             //interaction.Opportunity_Record_Type__c = matchingOpp.RecordTypeId;
+
+                            if (inqOppStageList.contains(oppStageName)) {
+                                interaction.Opportunity_Record_Type__c = inqoppRTID;
+                            } else {
+                                interaction.Opportunity_Record_Type__c = appoppRTID;
+                            }
+
                             intMappingService.applyDataToSObject(interaction, matchingOpp);
                             opportunitiesToUpsert.add(matchingOpp);
                         }
@@ -732,23 +769,59 @@ public class INT_InteractionProcessor {
         return contactOppMap;
     }
 
-    private String determineOpportunityName(String currentOppName, String lastName, String termName, String programName) {
+    private String determineOpportunityName(String currentOppName, String lastName, String termName, String programName, String contactLastName, String txtTermName, String intendTermName, String hedTermName) {
+        // System.debug('current Opp Name: ' + currentOppName + ', last Name: ' + lastName + ', term Name: ' + termName + ', program Name: ' + programName + ', contact Last Name: ' + contactLastName);
+
         if (currentOppName != null) {
             List<String> currentOppNameSplit = currentOppName.split('\\|');
+            //System.debug('split: ' + currentOppNameSplit);
+
+            //Use contact last name first
+            if (String.isNotBlank(contactLastName)) {
+                lastName = contactLastName;
+            } else if (String.isNotBlank(currentOppNameSplit[0])) {
+                lastName = currentOppNameSplit[0];
+            }
+
+            //Use Term__c then Intended_Start_Term__c then Start_Term_ERX__c
+            if (String.isNotBlank(hedTermName)) {
+                termName = hedTermName;
+            } else if (String.isNotBlank(intendTermName)) {
+                termName = intendTermName;
+            } else if (String.isNotBlank(txtTermName)) {
+                termName = txtTermName;
+            }
+
             switch on currentOppNameSplit.size() {
                 when 2 {
+                    //  System.debug('switch 2');
+                    if (String.isBlank(termName) && String.isNotBlank(currentOppNameSplit[1])) {
+                        termName = currentOppNameSplit[1];
+                    }
                     return lastName + '|' + currentOppNameSplit[1] + '|' + programName;
                 }
                 when 3 {
-                    if (String.isEmpty(currentOppNameSplit[1])) {
-                        return lastName + '|' + termName + '|' + currentOppNameSplit[2];
-                    } else {
-                        return currentOppName;
+                    // System.debug('switch 3');
+                    if (String.isBlank(termName) && String.isNotBlank(currentOppNameSplit[1])) {
+                        termName = currentOppNameSplit[1];
                     }
+                    if (String.isBlank(programName) && String.isNotBlank(currentOppNameSplit[2])) {
+                        programName = currentOppNameSplit[2];
+                    }
+
+                    //return lastName + '|' + termName + '|' + programName;
+//                    if (String.isEmpty(currentOppNameSplit[1])) {
+//                        return lastName + '|' + termName + '|' + programName;
+//                    } else {
+//                        return currentOppName;
+//                    }
                 }
             }
         }
-        return lastName + '|' + termName + '|' + programName;
+        String newOpportunityName = lastName + '|' + termName + '|' + programName;
+        System.debug(newOpportunityName);
+        return newOpportunityName;
+
     }
 
     private String determineOpportunityStage(String newStageName, String previousStageName) {
@@ -766,6 +839,7 @@ public class INT_InteractionProcessor {
             return previousStageName;
         }
     }
+
 
     private static List<SObject> queryForSObjectMappedFields(List<Interaction_Mapping__c> interactionMappings, String SObjectName, Set<Id> SObjectIds, List<String> additionalFields, String whereClause) {
         String queryString = 'SELECT Id, ';

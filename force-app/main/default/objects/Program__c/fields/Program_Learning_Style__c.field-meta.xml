@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Program_Learning_Style__c</fullName>
-    <deprecated>false</deprecated>
     <description>Used for Program Finder</description>
     <externalId>false</externalId>
     <inlineHelpText>Used for Program Finder</inlineHelpText>
@@ -32,6 +31,11 @@
                 <fullName>Metro Locations</fullName>
                 <default>false</default>
                 <label>Metro Locations</label>
+            </value>
+            <value>
+                <fullName>On Demand</fullName>
+                <default>false</default>
+                <label>On Demand</label>
             </value>
         </valueSetDefinition>
     </valueSet>

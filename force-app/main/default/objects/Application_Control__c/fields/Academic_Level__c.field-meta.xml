@@ -21,6 +21,16 @@
                 <default>false</default>
                 <label>Undergraduate</label>
             </value>
+            <value>
+                <fullName>Non-Credit</fullName>
+                <default>false</default>
+                <label>Non-Credit</label>
+            </value>
+            <value>
+                <fullName>Executive Education</fullName>
+                <default>false</default>
+                <label>Executive Education</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

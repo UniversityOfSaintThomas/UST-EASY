@@ -1,0 +1,57 @@
+<apex:page showheader="false" sidebar="false" id="AdvisorAttendance" docType="html-5.0" cache="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false">
+    <apex:stylesheet value="https://s3.amazonaws.com/ust-style-static-files.aws.stthomas.edu/dist-ust-style/trueno/ust-fonts.css"/>
+    <apex:stylesheet value="https://s3.amazonaws.com/ust-style-static-files.aws.stthomas.edu/dist-ust-style/style-sheets/ust.min.css"/>
+    <apex:stylesheet value="https://s3.amazonaws.com/ust-style-static-files.aws.stthomas.edu/dist-castor3/style-sheets/castor-full.min.css"/>
+    <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <apex:stylesheet value="https://s3.amazonaws.com/static.aws.stthomas.edu/undergraduate-admissions/jquery-ui.min.css"/>
+    <apex:includeScript value="https://s3.amazonaws.com/ust-style-static-files.aws.stthomas.edu/dist-ust-style/js/ust-full.min.js"/>
+    <apex:includeScript value="https://s3.amazonaws.com/ust-style-static-files.aws.stthomas.edu/dist-castor3/js/castor-full.js"/>
+    <html class="no-js" lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <meta name="viewport" content="width=device-width"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <apex:insert name="head-extras"/>
+    </head>
+    <nav class="tab-navigation" id="access" role="navigation">
+        <a href="#content" tabindex="1">Skip to primary content</a>
+    </nav>
+    <header>
+        <div id="ustTopBarWrap" class="ust-row">
+            <div class="ust-column" id="iconSearchMenu">
+                <a class="st-thomas-logo" href="http://www.stthomas.edu/">
+                    University of St. Thomas &ndash; Minnesota &ndash;
+                    A private, Catholic liberal arts university
+                </a>
+            </div>
+        </div>
+    </header>
+    <header>
+        <div id="mainHeaderWrap">
+            <div class="purple-bar pb-one-level ">
+                <div class="white-bar-wrap row">
+                    <div class="white-bar">
+                        <h1>
+                            <apex:insert name="page-title"/>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="content">
+        <div class="castor-top">
+            <div class="row">
+                <div class="main-body column">
+                    <apex:insert name="body"/>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <apex:insert name="footer">
+            <c:ScholarshipFooter />
+            <site:googleAnalyticsTracking />
+        </apex:insert>
+    </footer>
+    </html>
+</apex:page>

@@ -1,0 +1,71 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 9/9/2022.
+ -->
+
+<apex:component id="EasyModal">
+
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_x-small" id="easyModal" style="display:none;">
+        <div class="slds-modal__container">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse easyModalClose">
+                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                </svg>
+                <span class="slds-assistive-text">Cancel and close</span>
+            </button>
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate"></h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            </div>
+            <div class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral easyModalClose" aria-label="Cancel and close">Cancel</button>
+                <button class="slds-button slds-button_brand slds-modal-button-action"></button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation" style="display:none;" id="easyModalBackdrop"></div>
+
+    <!--    <a href="javascript:activateModal('', '<p>Hello <strong>WORLD!</strong></p>');" class="modal-button-test">Modal Test</a>-->
+
+    <script type="text/javascript">
+
+
+        function activateModal(header, message, buttonName, callback) {
+            const modal = document.getElementById('easyModal');
+            const backdrop = document.getElementById('easyModalBackdrop');
+            const modalHead = modal.querySelector('.slds-modal__title');
+            const modalBody = modal.querySelector('.slds-modal__content');
+            const closeButtons = modal.querySelectorAll('.easyModalClose');
+            const actionButton = modal.querySelector('.slds-modal-button-action');
+
+            if (buttonName) {
+                actionButton.innerText = buttonName;
+                actionButton.addEventListener('click', function () {
+                    if (typeof callback == 'function') {
+                        callback();
+                    }
+                    modal.style.display = 'none';
+                    backdrop.style.display = 'none';
+                });
+            } else {
+                actionButton.style.display = 'none';
+            }
+
+            closeButtons.forEach(closeBtn => {
+                closeBtn.addEventListener('click', function () {
+                    modal.style.display = 'none';
+                    backdrop.style.display = 'none';
+                });
+            });
+            if (header) {
+                modalHead.innerText = header;
+            } else {
+                modalHead.style.dispay = 'none';
+            }
+
+            modalBody.innerHTML = message;
+            modal.style.display = 'block';
+            backdrop.style.display = 'block';
+        }
+    </script>
+</apex:component>

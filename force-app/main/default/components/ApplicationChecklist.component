@@ -8,7 +8,7 @@
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
     <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <article class="slds-card slds-m-bottom_medium">
-            <div class="{!IF(LOWER($CurrentPage.Name) == 'applicationportal', 'slds-card__header', '')} slds-grid">
+            <div class="{!IF(LOWER($CurrentPage.Name) == 'applicationportal', 'slds-card__header slds-grid_pull-padded-small', '')} slds-grid">
                 <header class="slds-media slds-has-flexi-truncate">
                     <div class="slds-media__figure slds-m-top_xx-small">
                             <span class="slds-icon_container slds-icon-standard-brand" title="Admissions Application">
@@ -35,10 +35,14 @@
                 </header>
             </div>
             <div class="slds-card__body {!IF(LOWER($CurrentPage.Name) == 'applicationportal', 'slds-card__body_inner', '')}">
-                <apex:form>
+                <apex:form >
                     <nav>
+                        <apex:variable var="itemCount" value="{!0}"/>
+                        <apex:variable var="firstReqId" value=""/>
                         <apex:repeat value="{!checklistItems}" var="r">
+                            <apex:variable var="itemCount" value="{!itemCount + 1}"/>
                             <apex:outputPanel rendered="{!r.display}" layout="none">
+                                <apex:variable var="firstReqId" value="{!IF(itemCount = 1, r.req.Id, firstReqId)}"/>
                                 <apex:variable value="{!IF(r.req.Label__c != null && r.req.Label__c != '', r.req.Label__c, r.req.Name)}" var="requirementTitle"/>
                                 <div class="slds-summary-detail">
                                     <button class="slds-button slds-button_icon" title="Toggle details for {!requirementTitle}" aria-controls="expando-{!r.req.Id}" aria-expanded="false">
@@ -74,7 +78,7 @@
                                                     <apex:repeat value="{!r.reqItems}" var="ri">
                                                         <apex:outputPanel rendered="{!ri.display}" layout="none">
                                                             <li>
-                                                                <apex:outputText>{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
+                                                                <apex:outputText >{!if(ri.reqItem.Label__c != null && ri.reqItem.Label__c != '', ri.reqItem.Label__c, ri.reqItem.Name)}</apex:outputText>
                                                             </li>
                                                         </apex:outputPanel>
                                                     </apex:repeat>
@@ -85,19 +89,35 @@
                                 </div>
                             </apex:outputPanel>
                         </apex:repeat>
+
+
+<!--                        <div class="slds-p-top_xx-small slds-p-top_x-small slds-m-top_x-small">-->
+                            <apex:commandLink action="{!goToRequirement}" onClick="appShowLoadingSpinner();" styleClass="slds-button slds-button_brand slds-button-smaller slds-m-top_small">
+                                <apex:param name="nextRequirementId" value="{!firstReqId}" assignTo="{!nextRequirementId}"/>
+                                <apex:param name="nextAt" value="{!appInfoParam.at}" assignTo="{!nextAt}"/>
+                                <apex:param name="nextAppId" value="{!appInfoParam.appId}" assignTo="{!nextAppId}"/>
+                                <apex:param name="nextContactId" value="{!appInfoParam.contactId}" assignTo="{!nextContactId}"/>
+                                <apex:param name="nextPage" value="{!IF(LOWER($CurrentPage.Name) = 'applicationhome', 'applicationportal', 'applicationhome')}" assignTo="{!nextPage}"/>
+                                {!IF(LOWER($CurrentPage.Name) = 'applicationhome', 'Admissions Home', 'Application Page')}
+                            </apex:commandLink>
+<!--                        </div>-->
+
+                        <apex:outputPanel rendered="{!appInfo.allowSubmit && appInfo.appStatus = 'Started App'}" layout="none">
+                            <div class="slds-border_top slds-p-top_xx-small slds-p-bottom_x-small">
+                                <div class="slds-p-bottom_small slds-p-top_medium">
+                                    <p>This application meets all the requirements for submission.</p>
+                                </div>
+                                <div class="slds-p-bottom_small">
+                                    <apex:commandLink action="{!finalSubmitApp}" rendered="{!appInfo.allowSubmit && appInfo.appStatus = 'Started App'}" value="Submit Application" styleClass="slds-button slds-button_success">
+                                        <apex:param name="submitAppId" value="{!appInfoParam.appId}" assignTo="{!submitAppId}"/>
+                                        <apex:param name="submitAppStatus" value="{!appInfoParam.submitStatus}" assignTo="{!submitAppStatus}"/>
+                                    </apex:commandLink>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+
                     </nav>
 
-                    <apex:outputPanel rendered="{!appInfo.allowSubmit && appInfo.appStatus = 'Started App'}" layout="none">
-                        <div class="slds-p-bottom_small slds-p-top_medium">
-                            <p>This application meets all the requirements for submission.</p>
-                        </div>
-                        <div class="slds-p-bottom_small">
-                            <apex:commandLink action="{!finalSubmitApp}" rendered="{!appInfo.allowSubmit && appInfo.appStatus = 'Started App'}" value="Submit Application" styleClass="slds-button slds-button_success">
-                                <apex:param name="submitAppId" value="{!appInfoParam.appId}" assignTo="{!submitAppId}"/>
-                                <apex:param name="submitAppStatus" value="{!appInfoParam.submitStatus}" assignTo="{!submitAppStatus}"/>
-                            </apex:commandLink>
-                        </div>
-                    </apex:outputPanel>
 
                     <apex:outputPanel rendered="{!appInfo.appStatus = 'Withdrawn'}" layout="none">
                         <p>Status: Withdrawn</p>

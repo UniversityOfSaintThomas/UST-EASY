@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Claimed__c</fullName>
+    <description>Formula from Contact. Checked if UST Account has been claimed.</description>
+    <externalId>false</externalId>
+    <formula>Contact__r.UST_Account_Claimed__c</formula>
+    <inlineHelpText>Formula from Contact. Checked if UST Account has been claimed.</inlineHelpText>
+    <label>Account Claimed</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

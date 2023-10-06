@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Name_ERx__c</fullName>
+    <description>Field created to bring over data from ERx.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Field created to bring over data from ERx.</inlineHelpText>
+    <label>Application Name - ERx</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

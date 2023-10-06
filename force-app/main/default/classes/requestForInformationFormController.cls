@@ -50,8 +50,8 @@ public without sharing class requestForInformationFormController {
 
             Database.DMLOptions dml = new Database.DMLOptions();
             dml.duplicateRuleHeader.allowSave = false;
-            System.debug('Lead object for insert: ');
-            System.debug(JSON.serializePretty(sobj));
+            //System.debug('Lead object for insert: ');
+            //System.debug(JSON.serializePretty(sobj));
             Database.SaveResult result = Database.insert(sobj, dml);
             if (result.isSuccess() == false) {
                 String context = 'Creation of lead failed on insert. \n Error: ' + result.getErrors();
@@ -119,7 +119,7 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static Map<Id, Program__c> getPrograms(String academic_level, String school_college, String academic_interest_codes) {
+    public static Map<Id, Program__c> getPrograms(String academic_level, String school_college, String academic_interest_codes, Boolean multi_select_standard) {
         try {
             String query_string =
                     //Student type buckets
@@ -152,11 +152,16 @@ public without sharing class requestForInformationFormController {
                 List<String> academicCodes = academic_interest_codes.split(';');
                 query_string += ' AND Program_Major_Concentration__c IN :academicCodes ';
             }
-            query_string += ' ORDER BY Degree__c, Program_Name_on_Application__c ';
-            System.debug('PROGRAM QUERY: ');
-            System.debug(query_string);
+            if (multi_select_standard) {
+                query_string += ' ORDER BY Program_Name_on_Application__c ';
+            } else {
+                query_string += ' ORDER BY Degree__c, Program_Name_on_Application__c ';
+            }
+
+            //System.debug('PROGRAM QUERY: ');
+            //System.debug(query_string);
             List<Program__c> programs = Database.query(query_string);
-            System.debug(JSON.serializePretty(programs));
+            //System.debug(JSON.serializePretty(programs));
             return new Map<Id, Program__c>(programs);
         } catch (Exception e) {
             throw new AuraHandledException('Error retrieving programs: ' + e.getMessage());
@@ -187,7 +192,7 @@ public without sharing class requestForInformationFormController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(Cacheable=true)
     public static String getAcademicLevelValue(String api_name) {
         try {
             String level = '';
@@ -217,7 +222,7 @@ public without sharing class requestForInformationFormController {
         return mapCountryCodeString;
     }
 
-    @AuraEnabled
+    @AuraEnabled(Cacheable=true)
     public static List<Lead_Preset_Value__mdt> getPresetValues(String rfi_controller_name) {
         try {
             List<Lead_Preset_Value__mdt> return_preset_values = new List<Lead_Preset_Value__mdt>();
@@ -236,7 +241,7 @@ public without sharing class requestForInformationFormController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(Cacheable=true)
     public static String getSchoolCollegeAccount(String school_college_name) {
         try {
             String school_college_id = '';
@@ -257,14 +262,14 @@ public without sharing class requestForInformationFormController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(Cacheable=true)
     public static Id getRecruitmentProgram(String academic_level, String citizenship_type, String admit_type, String major_id, String school_name) {
         String program_name = '';
         String program_code = 'AS_UN_BA';
-        System.debug('SCHOOL_NAME: ' + school_name);
-        System.debug('ACADEMIC_LEVEL: ' + academic_level);
-        System.debug('MAJOR ID: ' + major_id);
-        System.debug('CITIZENSHIP TYPE: ' + citizenship_type);
+        //.debug('SCHOOL_NAME: ' + school_name);
+        //System.debug('ACADEMIC_LEVEL: ' + academic_level);
+        //System.debug('MAJOR ID: ' + major_id);
+        //System.debug('CITIZENSHIP TYPE: ' + citizenship_type);
         if (academic_level == 'U' || academic_level == 'Undergraduate') {
             if (admit_type == 'Transfer') {
                 if (citizenship_type == 'International') {

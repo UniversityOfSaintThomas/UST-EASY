@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Academic_Level__c</fullName>
-    <deprecated>false</deprecated>
     <description>STVDLEV - Banner Degree Levels</description>
     <externalId>false</externalId>
     <inlineHelpText>STVDLEV - Banner Degree Levels</inlineHelpText>
@@ -56,6 +55,16 @@
                 <fullName>X</fullName>
                 <default>false</default>
                 <label>No Data</label>
+            </value>
+            <value>
+                <fullName>Non-Credit</fullName>
+                <default>false</default>
+                <label>Non-Credit</label>
+            </value>
+            <value>
+                <fullName>Executive Education</fullName>
+                <default>false</default>
+                <label>Executive Education</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -10,6 +10,7 @@ ready(() => {
 });
 
 function pageLoadReRendered() {
+
     //Disable fields that are set to not be editable
     let sldsScope = document.querySelector('.slds-scope');
     sldsScope.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
@@ -849,10 +850,11 @@ function checkForm() {
         let errorInputs = foundErrors.querySelector("select, input");
         if (errorInputs) {
             errorInputs.focus();
-            spinnerFocusElement = errorInputs.id;   // checkForm() MAY be happening while the appSpinner is up; if so,
-                                                    // you might set focus here but will lose it again when appSpinner goes
-                                                    // down, as focus reverts to whatever was focused when appSpinner started.
-                                                    // So hijack the appSpinner's memory to make sure it sticks.
+            spinnerFocusElement = errorInputs.id;
+            // checkForm() MAY be happening while the appSpinner is up; if so,
+            // you might set focus here but will lose it again when appSpinner goes
+            // down, as focus reverts to whatever was focused when appSpinner started.
+            // So hijack the appSpinner's memory to make sure it sticks.
         }
         return false;
     }
@@ -923,14 +925,6 @@ function textValidations(checkFormValidate, documentStart) {
             }
         });
 
-        doc.querySelectorAll('.docUploadInput').forEach(docUpload => {
-            if (String(docUpload.placeholder) == 'true' && !Boolean(docUpload.value)) {
-                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = 'Upload required.';
-                activateErrorState(docUpload, 'change');
-            } else {
-                doc.getElementById('error-108' + String(docUpload.name)).innerHTML = '';
-            }
-        })
     }
 
     //Format and validate phone numbers

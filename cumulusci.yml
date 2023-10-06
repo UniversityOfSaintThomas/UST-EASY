@@ -33,7 +33,6 @@ tasks:
       description: EASY application portal
       template: Build Your Own
       url_path_prefix: Admissions
-      timeout: 240000
 
   permission_guest_user:
     description: 'Applies permission set to guest community guest user'
@@ -82,8 +81,8 @@ tasks:
     description: 'Load data needed to start EASY applications'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/latest/latest.mapping.yml
-      sql_path: datasets/latest/latest.dataset.sql
+      mapping: datasets/mapping.yml
+      sql_path: datasets/data.sql
       inject_namespaces: False
 
   load_scholarship_test_data:
@@ -109,6 +108,7 @@ tasks:
       namespace_inject: $project_config.project__package__namespace
       path: unpackaged/config/network
       unmanaged: True
+      timeout: 480
 
   configure_community_settings:
     description: Deploys Network config for community for Development.
@@ -117,6 +117,7 @@ tasks:
       namespace_inject: $project_config.project__package__namespace
       path: unpackaged/config/settings
       unmanaged: True
+      timeout: 520
 
   configure_network_setting:
     description: Sets up the network for our community
@@ -128,6 +129,7 @@ tasks:
       permission_set_names:
         - UST Scholarship Applicant
         - Application Community
+      timeout: 520
 
   deploy_site_config:
     description: Deploys configuration for Development.
@@ -242,6 +244,12 @@ tasks:
         - record_type: Family__c.Sibling
         - record_type: Family__c.UST_Alumni_Family
         - record_type: Family__c.UST_Employee_Family
+        - record_type: Family__c.Parent_Guardian
+          default: true
+        - record_type: Family_Member__c.Sibling
+        - record_type: Family_Member__c.Parent_Guardian
+          default: true
+        - record_type: Family_Member__c.UST_Alumni_Family
 
   add_degree_piciklist:
     description: "Adds more picklist items to the degree earned list of EDA."
@@ -322,9 +330,9 @@ flows:
       19:
         task: configure_network_setting
       20:
-        task: configure_community
-      21:
         task: configure_community_settings
+      21:
+        task: configure_community
       #22:
       #  task: load_scholarship_test_data
 

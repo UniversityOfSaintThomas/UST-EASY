@@ -73,19 +73,6 @@
                         <a href="{!$Site.Prefix}/ApplicationRegistration" class="register-text">Create Account</a>
                     </div>
 
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-
-                      <p>If you applied with the Common App and have not yet accessed the St. Thomas Admissions Portal, follow the instructions below:</p>
-                        <ul>
-                        <li>Choose "Forgot your password?"</li>
-                        <li>Your user name is the email address you used to apply with the Common App</li>
-                        <li>Choose "Request Password"</li>
-                        <li>Check your email for a link to set your password and access the portal. Be aware that your password retrieval email may go to your spam folder.</li>
-                        </ul>
-
-
-                    </div>
-
                 </div>
                 <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-backdrop_open slds-backdrop" id="form-spinner">
                     <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">

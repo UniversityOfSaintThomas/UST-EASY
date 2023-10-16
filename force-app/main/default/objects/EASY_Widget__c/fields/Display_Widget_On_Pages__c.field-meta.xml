@@ -26,12 +26,12 @@
             <value>
                 <fullName>ApplicationHome</fullName>
                 <default>false</default>
-                <label>Application Home</label>
+                <label>Application Page</label>
             </value>
             <value>
                 <fullName>ApplicationPortal</fullName>
                 <default>false</default>
-                <label>Application Portal</label>
+                <label>Admissions Home</label>
             </value>
             <value>
                 <fullName>ApplicationRegistration</fullName>

@@ -40,11 +40,16 @@ public with sharing class ApplicationChecklistMultipleController {
             String appFields = ApplicationHelper.getAllItemApplicationFieldsByAppControlId(appControlIdsList);
 
             String query = 'SELECT ' + appFields + ' FROM Application__c WHERE Contact__c = \'' + contactId + '\''; //+ '\' AND Application_Control__r.Id IN :appControlIdsList';
+            query += ' AND Application_Status__c != \'Wrong Application\'';
+            query += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
+            query += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
 
             applicationsByIds = new Map<Id, Application__c>((List<Application__c>) Database.query(query));
             applicationMapSize = applicationsByIds.size();
+            System.debug('Apps in play: ' + applicationsByIds.size());
 
             for (Application__c app : applicationsByIds.values()) {
+                System.debug('app : ' + app.Id);
                 EASYApplicationInfo newAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
                 List<RequirementWrapper> checklist = checklistHelper.checklistRequirements(app, newAppInfo, false);
                 Boolean allowSubmit = checklistHelper.allowSubmit(checklist, appInfoParam);

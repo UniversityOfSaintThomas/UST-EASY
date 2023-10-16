@@ -4,7 +4,7 @@
     <label>ApplicationDocumentUpload</label>
     <packageVersions>
         <majorNumber>1</majorNumber>
-        <minorNumber>120</minorNumber>
+        <minorNumber>122</minorNumber>
         <namespace>hed</namespace>
     </packageVersions>
 </ApexComponent>

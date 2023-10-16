@@ -51,6 +51,6 @@
                 </div>
             </div>
         </div>
-        <apex:componentBody/>
+        <apex:componentBody />
     </apex:form>
 </apex:component>

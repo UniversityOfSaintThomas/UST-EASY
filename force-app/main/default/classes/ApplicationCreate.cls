@@ -11,7 +11,7 @@ public class ApplicationCreate {
     public List<RequirementWrapper> checklistItems { get; set; }
     public List<Requirement_Item__c> items { get; set; }
     public Map<Id, Program__c> intendedPrograms { get; set; }
-    public transient String additionalDataString { get; set; }
+    public String additionalDataString { get; set; }
     public Set<String> contactFields { get; set; }
     public String degreeType { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
@@ -402,7 +402,7 @@ public class ApplicationCreate {
                 // Check to make sure selections are valid for number of applications limit
                 if (app.Contact__c != null && String.isNotBlank(ip.Number_of_Applications_Limit__c)) {
                     for (Application__c a : [
-                            SELECT Id, Intended_Program__c, Intended_Term_of_Entry__c, Application_Status__c, Application_Substatus__c
+                            SELECT Id, Intended_Program__c, Intended_Term_of_Entry__c, Application_Status__c, Application_Substatus__c, Applicant_Type__c
                             FROM Application__c
                             WHERE Contact__c = :app.Contact__c
                             AND Application_Status__c != 'Wrong Application'
@@ -577,7 +577,8 @@ public class ApplicationCreate {
                             Intended_Program__c,
                             Intended_Program__r.Program_College_of_Interest__c,
                             Intended_Program__r.Program_Applicant_Type__c,
-                            Intended_Term_of_Entry__r.Term__c
+                            Intended_Term_of_Entry__r.Term__c,
+                            Applicant_Type__c
                     FROM Application__c
                     WHERE Id = :app.Id
                     LIMIT 1
@@ -643,7 +644,8 @@ public class ApplicationCreate {
                             Contact__r.MailingPostalCode,
                             Contact__r.MailingStreet,
                             Contact__r.MailingState,
-                            Contact__r.HomePhone
+                            Contact__r.HomePhone,
+                            Applicant_Type__c
                     FROM Application__c
                     WHERE Id = :app.Id
                     LIMIT 1

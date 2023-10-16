@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>File_Name_Prefix__c</fullName>
-    <deprecated>false</deprecated>
     <description>Used to rename the uploaded document for integration</description>
     <externalId>false</externalId>
     <inlineHelpText>Used to rename the uploaded document for integration</inlineHelpText>

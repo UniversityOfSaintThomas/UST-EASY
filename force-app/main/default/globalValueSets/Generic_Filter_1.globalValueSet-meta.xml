@@ -3275,6 +3275,11 @@
         <isActive>false</isActive>
         <label>EX_SE_LIC|SPAB</label>
     </customValue>
+    <customValue>
+        <fullName>EASY_NC_NC|NCNC</fullName>
+        <default>false</default>
+        <label>EASY_NC_NC|NCNC</label>
+    </customValue>
     <masterLabel>Program(s)</masterLabel>
     <sorted>true</sorted>
 </GlobalValueSet>

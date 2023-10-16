@@ -8,8 +8,19 @@
 }
 
 .slds-scope .slds-button_brand, .slds-scope .slds-icon-standard-contact {
-    background-color: #9E28B5;
-    border-color: #9E28B5;
+    background-color: #8348ad;
+    border-color: #8348ad;
+    font-size: 1.02rem;
+    line-height: 1.5rem;
+}
+
+.slds-scope .slds-button_brand:hover, .slds-scope .slds-icon-standard-contact:hover {
+    background-color: #a97cca;
+}
+
+.slds-scope .slds-button_brand:focus, .slds-scope .slds-icon-standard-contact:hover {
+    background-color: #510C76;
+    color: #fff;
 }
 
 .slds-scope .slds-summary-detail.slds-is-open .slds-summary-detail__content {

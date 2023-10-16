@@ -7,7 +7,7 @@ global with sharing class JustInTimePermissionSets {
     @InvocableMethod(
             Label='JIT Permission Sets'
             Description='Applies Permission Sets to qualified users on login'
-            Category= 'User'
+            Category='User'
     )
     public static void jitPermission(List<userWithPermissionRequests> permissionRequests) {
         List<String> allRequestedPermissionSetNames = new List<String>();
@@ -34,7 +34,7 @@ global with sharing class JustInTimePermissionSets {
 
         //Get the list of permission sets the user already has. Map it by user id with a list of permission ids as values.
         List<PermissionSetAssignment> currentPermissions = [
-                SELECT PermissionSetId, Id,AssigneeId
+                SELECT PermissionSetId, Id, AssigneeId
                 FROM PermissionSetAssignment
                 WHERE AssigneeId IN :userIdsAffected
         ];
@@ -83,9 +83,9 @@ global with sharing class JustInTimePermissionSets {
         }
 
         //Update Portal_User_First_Login__c and Portal_User_Latest_Login__c for each user 
-        if (userIdsAffected.size() > 0){
-            PortalUserLoginDate.upsertContacts(userIdsAffected);
-        }
+        //if (userIdsAffected.size() > 0){
+        PortalUserLoginDate.upsertContacts(userIdsAffected);
+        //}
     }
 
     global class userWithPermissionRequests {

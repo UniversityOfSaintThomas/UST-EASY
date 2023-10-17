@@ -21,7 +21,7 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>59.0</apiVersion>
     <assignments>
         <description>User is an applicant so apply the Application Community permissions set</description>
         <name>Apply_Applicant_Permissions</name>

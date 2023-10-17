@@ -30,7 +30,7 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>59.0</apiVersion>
     <decisions>
         <name>New_or_Updated_Email</name>
         <label>New or Updated Email</label>

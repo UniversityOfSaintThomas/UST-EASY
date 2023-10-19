@@ -2,41 +2,42 @@
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/16/2023.
  */
 
-import {LightningElement, wire, track} from 'lwc';
+import {LightningElement, wire, track, api} from 'lwc';
 import {getSObjectValue} from '@salesforce/apex';
-import {CurrentPageReference, NavigationMixin} from 'lightning/navigation';
 
 import getApplicantInfo from '@salesforce/apex/appReviewController.getApplicantInfo';
 import FIRST_NAME from '@salesforce/schema/Application__c.Contact__r.FirstName';
 import LAST_NAME from '@salesforce/schema/Application__c.Contact__r.LastName';
 
-import { subscribe, MessageContext, publish } from 'lightning/messageService';
+import {MessageContext, publish, subscribe} from 'lightning/messageService';
 import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/App_Selected__c';
+import {CurrentPageReference} from "lightning/navigation";
+import {adjustURLParams, setAppIdFromURL, subscribeToLMS} from 'c/appReviewUtility';
 
 export default class AppReviewInfoPanel extends LightningElement {
 
-    @track currentPageReference;
-
-    @wire(CurrentPageReference)
-    setCurrentPageReference(currentPageReference) {
-        this.currentPageReference = currentPageReference;
-    }
+    @track appId;
 
     @wire(MessageContext)
     messageContext;
 
+    @wire(CurrentPageReference)
+    currentPageReference;
+
     connectedCallback() {
-        const message = {
-            appId: this.appId
-        };
-        publish(this.messageContext, APP_SELECTED_CHANNEL, message);
+        this.lmsSubscription();
     }
 
-    get appId() {
-        return this.currentPageReference?.state?.c__appId;
+    //This will subscribe the LWC to the LMS and grab/sync appId data
+    lmsSubscription() {
+        subscribe(this.messageContext, APP_SELECTED_CHANNEL, (message) => {
+            this.appId = message.appId;
+            adjustURLParams('c__appId', this.appId);
+        });
+        setAppIdFromURL(this.messageContext, APP_SELECTED_CHANNEL, this.currentPageReference, this.appId);
     }
 
-    @wire(getApplicantInfo, {appId: '$appId'})
+    @wire(getApplicantInfo, {appId: "$appId"})
     applicantInfo;
 
     get firstname() {
@@ -49,6 +50,11 @@ export default class AppReviewInfoPanel extends LightningElement {
         return this.applicantInfo.data
             ? getSObjectValue(this.applicantInfo.data, LAST_NAME)
             : '';
+    }
+
+    inputValueChange(event) {
+        const payload = {appId: event.detail.value};
+        publish(this.messageContext, APP_SELECTED_CHANNEL, payload);
     }
 
 }

@@ -15,5 +15,6 @@
         <template lwc:elseif={applicantInfo.error}>
             {applicantInfo.error}
         </template>
+        <lightning-input value={appId} onchange={inputValueChange}></lightning-input>
     </lightning-card>
 </template>

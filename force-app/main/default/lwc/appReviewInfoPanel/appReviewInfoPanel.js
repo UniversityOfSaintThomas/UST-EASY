@@ -28,7 +28,6 @@ export default class AppReviewInfoPanel extends LightningElement {
         this.lmsSubscription();
     }
 
-    //This will subscribe the LWC to the LMS and grab/sync appId data
     lmsSubscription() {
         subscribe(this.messageContext, APP_SELECTED_CHANNEL, (message) => {
             this.appId = message.appId;

@@ -67,7 +67,7 @@
 
             <!-- BODY -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                <apex:componentBody/>
+                <apex:componentBody />
             </apex:outputPanel>
 
             <!-- CONTENT BOTTOM WIDGETS -->
@@ -79,7 +79,7 @@
             </apex:outputPanel>
 
             <!-- Load component for modal pop-up -->
-            <c:EasyModal/>
+            <c:EasyModal />
 
         </apex:outputPanel>
 

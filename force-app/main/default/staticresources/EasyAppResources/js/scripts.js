@@ -9,7 +9,7 @@ ready(() => {
     activateCarousel();
 });
 
-function pageLoadReRendered() {
+function pageLoadReRendered(isRelatedRecordReRender = false) {
 
     //Disable fields that are set to not be editable
     let sldsScope = document.querySelector('.slds-scope');
@@ -56,7 +56,7 @@ function pageLoadReRendered() {
     activateTooltips();
     fileUploadAreas();
     //Hide the form spinner if it is active
-    hideFormSpinner();
+    hideFormSpinner(true, isRelatedRecordReRender);
 }
 
 function findApplicationLinkTargetSelf() {
@@ -784,15 +784,26 @@ function appShowLoadingSpinner() {
     return true;
 }
 
-function hideFormSpinner(restoreFocus = true) {
+function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
     document.getElementById("form-spinner").style.display = 'none';
     if (restoreFocus == true && spinnerFocusElement != null) {
+        if (focusOnFirstInput == true) {
+            let inputElements = document.getElementById(spinnerFocusElement).parentElement.parentElement.parentElement.querySelectorAll("select, input");
+            if (inputElements.length > 0) {
+                spinnerFocusElement = inputElements[0];
+            }
+        }
         document.getElementById(spinnerFocusElement).focus();
     }
 }
 
 function showFormSpinner() {
     spinnerFocusElement = document.activeElement.id;
+    document.getElementById("form-spinner").style.display = 'block';
+}
+
+function showFormSpinnerRelatedRecord() {
+    spinnerFocusElement = document.activeElement.parentElement.parentElement.parentElement;
     document.getElementById("form-spinner").style.display = 'block';
 }
 

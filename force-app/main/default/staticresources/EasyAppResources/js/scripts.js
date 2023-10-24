@@ -788,12 +788,12 @@ function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
     document.getElementById("form-spinner").style.display = 'none';
     if (restoreFocus == true && spinnerFocusElement != null) {
         if (focusOnFirstInput == true) {
-            let inputElements = document.getElementById(spinnerFocusElement).parentElement.parentElement.parentElement.querySelectorAll("select, input");
+            let inputElements = document.getElementById(spinnerFocusElement.id).parentElement.parentElement.parentElement.querySelectorAll("select, input");
             if (inputElements.length > 0) {
                 spinnerFocusElement = inputElements[0];
             }
         }
-        document.getElementById(spinnerFocusElement).focus();
+        spinnerFocusElement.focus();
     }
 }
 

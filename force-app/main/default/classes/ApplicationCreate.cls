@@ -185,8 +185,9 @@ public class ApplicationCreate {
                     //TODO: Assuming CST here. Maybe make time zone setting for application control to set this or academic term
                     if ((Date) ar.get('Term_Start_Date__c') != null && (Date) ar.get('Term_End_Date__c') != null) {
                         //Parenthesis around the time zone string because class is used to parsing that out of a generated picklist that includes it.
-                        Datetime startTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_Start_Date__c'), null, '(America/Chicago)');
-                        Datetime endTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_End_Date__c'), null, '(America/Chicago)');
+                        Time endDayTime = Time.newInstance(23, 59, 59, 59);
+                        Datetime startTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_Start_Date__c'), endDayTime, '(America/Chicago)');
+                        Datetime endTermDateTime = ApplicationUtilities.convertDateToDatetime((Date) ar.get('Term_End_Date__c'), endDayTime, '(America/Chicago)');
                         formattedName = ' (Start Date: ' + startTermDateTime.format('MMM dd, yyyy') + ')';
                     }
 

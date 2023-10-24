@@ -4,7 +4,7 @@ project:
   package:
     name: UST-EASY-Package
     namespace: null
-    api_version: '56.0'
+    api_version: '59.0'
   dependencies:
     - github: 'https://github.com/SalesforceFoundation/EDA'
   source_format: sfdx

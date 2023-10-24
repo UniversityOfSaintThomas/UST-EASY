@@ -12,7 +12,7 @@ import LAST_NAME from '@salesforce/schema/Application__c.Contact__r.LastName';
 import {MessageContext, publish, subscribe} from 'lightning/messageService';
 import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/App_Selected__c';
 import {CurrentPageReference} from "lightning/navigation";
-import {adjustURLParams, setAppIdFromURL, subscribeToLMS} from 'c/appReviewUtility';
+import {adjustURLParams, setAppIdFromURL} from 'c/appReviewUtility';
 
 export default class AppReviewInfoPanel extends LightningElement {
 

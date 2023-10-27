@@ -5,5 +5,5 @@
 
 public with sharing class EASYAppQuestionResponseWrapper {
     @AuraEnabled public Question__c question { get; set; }
-    @AuraEnabled public List<Question_Response__c> questionResponse { get; set; }
+    @AuraEnabled public List<Question_Response__c> questionResponses { get; set; }
 }

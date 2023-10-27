@@ -35,20 +35,23 @@ public with sharing class appReviewController {
 
             //Requirements
             Map<Id, Requirement__c> requirements = new Map<Id, Requirement__c>([
-                    SELECT Id, Name, Active__c, Display_on_Admin_Review_Pages__c, Label__c
+                    SELECT Id, Name, Active__c, Display_on_Admin_Review_Pages__c, Label__c, Display_Order__c
                     FROM Requirement__c
                     WHERE Application_Control__c = :appControl.Id
                     AND Active__c = TRUE
                     AND Display_on_Admin_Review_Pages__c = TRUE
+                    ORDER BY Display_Order__c
             ]);
 
             //Requirement items
             Map<Id, Requirement_Item__c> requirementItems = new Map<Id, Requirement_Item__c>([
-                    SELECT Id, Name, Requirement__c, Active__c, Instructions__c, Label__c, Required__c
+                    SELECT Id, Name, Requirement__c, Active__c, Instructions__c, Label__c, Required__c, Display_Order__c
                     FROM Requirement_Item__c
                     WHERE Requirement__c IN :requirements.keySet()
                     AND Active__c = TRUE
+                    ORDER BY Display_Order__c
             ]);
+
 
             //Questions
             Map<Id, Question__c> questions = new Map<Id, Question__c>([
@@ -154,11 +157,11 @@ public with sharing class appReviewController {
                                 EASYAppQuestionResponseWrapper qrWrapper = new EASYAppQuestionResponseWrapper();
                                 qrWrapper.question = q;
                                 //Add question responses if they exist
-                                qrWrapper.questionResponse = new List<Question_Response__c>();
+                                qrWrapper.questionResponses = new List<Question_Response__c>();
                                 if (reqItemIdMapQuestionResponses.containsKey(ri.Id)) {
                                     for (Question_Response__c qr : reqItemIdMapQuestionResponses.get(ri.Id)) {
                                         if(qr.Question__c == q.Id) {
-                                            qrWrapper.questionResponse.add(qr);
+                                            qrWrapper.questionResponses.add(qr);
                                         }
                                     }
                                 }

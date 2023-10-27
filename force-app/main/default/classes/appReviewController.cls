@@ -52,7 +52,6 @@ public with sharing class appReviewController {
                     ORDER BY Display_Order__c
             ]);
 
-
             //Questions
             Map<Id, Question__c> questions = new Map<Id, Question__c>([
                     SELECT Id, Name, Requirement_Item__c, Active__c, Additional_Field_Validation__c, Application_Field__c, Assistive_Text__c, Dependency_Behavior__c,

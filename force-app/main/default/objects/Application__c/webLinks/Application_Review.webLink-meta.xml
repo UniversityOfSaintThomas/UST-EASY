@@ -17,5 +17,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/lightning/n/Admissions_Application_Review?c__appId={!Application__c.Id}</url>
+    <url>/lightning/n/Application_Review?c__appId={!Application__c.Id}</url>
 </WebLink>

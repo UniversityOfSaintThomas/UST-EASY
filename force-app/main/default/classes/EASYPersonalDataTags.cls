@@ -17,5 +17,4 @@ public with sharing class EASYPersonalDataTags {
     public String First_Name { get; set; }
     public String Last_Name { get; set; }
     public String Portal_University_email { get; set; }
-    public String Application_ID { get; set; }
 }

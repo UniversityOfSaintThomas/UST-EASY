@@ -6,7 +6,7 @@
     <inlineHelpText>Which best describes your Asian background? (You may select one or more)</inlineHelpText>
     <label>Asian Background</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>

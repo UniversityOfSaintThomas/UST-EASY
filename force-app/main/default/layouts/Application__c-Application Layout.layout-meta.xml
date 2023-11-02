@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Review</customButtons>
+    <customButtons>Application_Review</customButtons>
     <customButtons>Admin_View</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -375,7 +376,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7e000003hQhd</masterLabel>
+        <masterLabel>00hDE00000BVYew</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

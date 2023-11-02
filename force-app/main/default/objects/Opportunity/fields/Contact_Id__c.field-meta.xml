@@ -5,7 +5,6 @@
     <formula>Contact__r.X18_Digit_Contact_ID__c</formula>
     <label>Contact Id</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

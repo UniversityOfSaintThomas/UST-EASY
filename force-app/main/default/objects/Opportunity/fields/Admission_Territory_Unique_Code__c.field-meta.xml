@@ -5,7 +5,7 @@
     <label>Admission Territory Unique Code</label>
     <length>15</length>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

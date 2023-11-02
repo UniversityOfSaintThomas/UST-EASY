@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Program_Degree__c</fullName>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>TEXT(Intended_Program__r.Degree__c)</formula>
     <label>Program Degree</label>

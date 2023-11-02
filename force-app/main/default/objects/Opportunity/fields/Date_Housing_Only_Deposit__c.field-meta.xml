@@ -6,7 +6,7 @@
     <inlineHelpText>Date that a housing only deposit was made.</inlineHelpText>
     <label>Date - Housing Only Deposit</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>
 </CustomField>

@@ -4,6 +4,5 @@
     <externalId>false</externalId>
     <formula>Portal_User__r.IsActive</formula>
     <label>Portal User Active</label>
-    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

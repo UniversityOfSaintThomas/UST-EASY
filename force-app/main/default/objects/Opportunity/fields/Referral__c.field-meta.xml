@@ -10,7 +10,7 @@
     <relationshipLabel>Opportunities (Referral)</relationshipLabel>
     <relationshipName>Opportunities2</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

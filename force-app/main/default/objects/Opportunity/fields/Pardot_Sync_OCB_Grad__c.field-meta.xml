@@ -4,7 +4,6 @@
     <externalId>false</externalId>
     <formula>IF( TEXT(Academic_Program__r.Primary_School_College_for_Assignment__c) = &quot;Opus College of Business&quot;, TRUE, FALSE)</formula>
     <label>Pardot Sync OCB Grad</label>
-    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

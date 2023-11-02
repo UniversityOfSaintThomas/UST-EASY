@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Sport_2__c</fullName>
-    <deprecated>false</deprecated>
     <description>Sport 2 (Contact Special_Athlete_Sport_2__c)</description>
     <externalId>false</externalId>
     <label>Sport 2</label>

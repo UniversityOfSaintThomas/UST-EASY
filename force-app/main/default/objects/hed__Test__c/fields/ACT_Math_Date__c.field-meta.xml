@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ACT_Math_Date__c</fullName>
-    <deprecated>false</deprecated>
     <description>ACT Math Date</description>
     <externalId>false</externalId>
     <inlineHelpText>ACT Math Date</inlineHelpText>

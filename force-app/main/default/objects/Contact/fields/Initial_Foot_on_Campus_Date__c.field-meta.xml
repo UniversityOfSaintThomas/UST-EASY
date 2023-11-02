@@ -5,6 +5,5 @@
     <label>Initial Foot on Campus Date - ERX</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Date</type>
 </CustomField>

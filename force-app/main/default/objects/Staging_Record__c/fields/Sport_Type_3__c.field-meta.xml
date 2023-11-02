@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Sport_Type_3__c</fullName>
-    <deprecated>false</deprecated>
     <description>Contact Special_Athlete_Type_3__c</description>
     <externalId>false</externalId>
     <label>Sport Type 3</label>

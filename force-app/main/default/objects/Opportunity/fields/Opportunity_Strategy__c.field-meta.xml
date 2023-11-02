@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Opportunity Strategy</label>
     <length>32768</length>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>5</visibleLines>

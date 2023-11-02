@@ -12,6 +12,5 @@
     </summaryFilterItems>
     <summaryForeignKey>Family_Member__c.Contact__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>
-    <trackHistory>false</trackHistory>
     <type>Summary</type>
 </CustomField>

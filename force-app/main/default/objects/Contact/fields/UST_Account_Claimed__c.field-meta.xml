@@ -5,6 +5,5 @@
     <externalId>false</externalId>
     <label>UST Account Claimed</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Default_Template__c</fullName>
     <defaultValue>&quot;GeneralSLDS&quot;</defaultValue>
-    <deprecated>false</deprecated>
     <description>Name of visualforce page template to default the whole Application site if an application control template is not selected.</description>
     <externalId>false</externalId>
     <inlineHelpText>Name of visualforce page template to default the whole Application site if an application control template is not selected.</inlineHelpText>

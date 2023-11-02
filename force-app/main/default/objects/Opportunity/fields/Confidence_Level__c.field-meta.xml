@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Confidence_Level__c</fullName>
-    <deprecated>false</deprecated>
     <description>Confidence level of timing of when proposal will close by the Due Date specified</description>
     <externalId>false</externalId>
     <inlineHelpText>Confidence level of timing of when proposal will close by the Due Date specified.  The confidence level is accessed after the initial ask and the proposal is moved to pending/submitted.  Values are Certain, High, Moderate or Low.</inlineHelpText>
     <label>Confidence Level</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

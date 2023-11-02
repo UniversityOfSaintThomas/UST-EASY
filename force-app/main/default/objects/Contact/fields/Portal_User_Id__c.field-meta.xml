@@ -5,7 +5,6 @@
     <formula>Portal_User__r.SF_ID__c</formula>
     <label>Portal User Id</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

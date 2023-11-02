@@ -1,0 +1,36 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/16/2023.
+ -->
+
+<!-- App Review Application View -->
+<template>
+    <lightning-card title="Application Info" icon-name="custom:custom14">
+        Hello World : {appId}<br/>
+        <template lwc:if={applicationControl.data}>
+            App Control ID : {applicationControl.data.appControl.Id}
+
+            <template for:each={applicationControl.data.requirements} for:item="req">
+                <p key={req.requirement.id} class="slds-text-heading_medium slds-m-bottom_small">{req.requirement.Label__c}</p>
+                <template for:each={req.requirementItems} for:item="reqItem">
+                    <p key={reqItem.requirementItem.id} class="slds-text-heading_small slds-m-bottom_small slds-p-left_x-small">{reqItem.requirementItem.Label__c}</p>
+                    <template for:each={reqItem.questions} for:item="question">
+                        <div key={question.question.Id}>
+                            <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_medium">{question.question.Label__c}</p>
+                            <template for:each={question.questionResponses} for:item="questionResponse">
+                                <div key={questionResponse.Id}>
+                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_large">{questionResponse.ValueText__c}</p>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </template>
+            </template>
+
+        </template>
+
+        <br/><br/>
+        <pre>
+            {appControlStr}
+        </pre>
+    </lightning-card>
+</template>

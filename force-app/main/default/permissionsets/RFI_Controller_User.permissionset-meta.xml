@@ -1735,7 +1735,7 @@
         <field>Lead.hed__Undergraduate_Major__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Lead.utm_campaign__c</field>
         <readable>true</readable>

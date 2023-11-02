@@ -7,6 +7,5 @@
     <inlineHelpText>Indicates a foot on campus visit in ERX</inlineHelpText>
     <label>Foot on Campus - ERX</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

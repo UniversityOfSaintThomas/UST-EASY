@@ -6,6 +6,40 @@
     <description>Applicant (Enrollment) Opportunity</description>
     <label>Applicant Opportunity</label>
     <picklistValues>
+        <picklist>Activity_Music__c</picklist>
+        <values>
+            <fullName>Band</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Choir</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Orchestra</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Admission_Type_UG__c</picklist>
+        <values>
+            <fullName>Early Action</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IY1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regular Decision</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rolling Admission</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Admit_Type__c</picklist>
         <values>
             <fullName>First-Year</fullName>
@@ -25,6 +59,232 @@
         </values>
         <values>
             <fullName>Transfer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Application_Status_INT__c</picklist>
+        <values>
+            <fullName>Admit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Committee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confirmed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred Admit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred Confirmed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Do Not Contact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enrolled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>File Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post-Admit %28System%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Second Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Started App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporary Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Withdrawn</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Application_Substatus_INT__c</picklist>
+        <values>
+            <fullName>Academic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>After Accept</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>After Confirm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appeal Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appeal Denied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appeal Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Complete App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Before Decision</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College Transcript%28s%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Committee Accept</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Committee Accept Waitlist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Committee Deny</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conditional</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Counselor Accept</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Counselor Accept Waitlist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Counselor Deny</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dean%27s Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deferred from Previous Term</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disciplinary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>From Committee Accept Waitlist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grades</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grades %26 Test Scores</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Multiple App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAR %28Not Actively Recruting%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Needs Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Off Waitlist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Appeal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending English</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prior to Interview</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provisional</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referred to DFC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Test Scores</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unsubscribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Writing Assessment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wrong App</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -425,6 +685,49 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>College_Readiness_Program__c</picklist>
+        <values>
+            <fullName>AVID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Big Brothers%2FBig Sisters</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Boys and Girls Club</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>College Possible</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Genesys Works</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mentoring Excellence Program %28MEP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Northside Achievement Zone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tazel Institute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upward Bound</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Confidence_Level__c</picklist>
         <values>
             <fullName>Certain</fullName>
@@ -444,6 +747,1067 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Counselor_Assignment_Recalc__c</picklist>
+        <values>
+            <fullName>Admissions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Aid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Country__c</picklist>
+        <values>
+            <fullName>Afghanistan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aland Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Albania</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Algeria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Andorra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Angola</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Anguilla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antarctica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antigua and Barbuda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Argentina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Armenia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aruba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Australia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Austria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azerbaijan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bahamas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bahrain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bangladesh</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Barbados</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Belarus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Belgium</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Belize</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bermuda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bhutan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bolivia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonaire%2C Sint Eustatius and Saba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bosnia and Herzegovina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Botswana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bouvet Island</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brazil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>British Indian Ocean Territory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brunei Darussalam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bulgaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Burkina Faso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Burundi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambodia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cameroon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Canada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cape Verde</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cayman Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Central African Republic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>China</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Christmas Island</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cocos %28Keeling%29 Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Colombia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comoros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Congo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Congo %28Brazzaville%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cook Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Costa Rica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cote d%27Ivoire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Croatia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cuba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Curaçao</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cyprus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Czech Republic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denmark</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Djibouti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dominica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dominican Republic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ecuador</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Egypt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>El Salvador</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equatorial Guinea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eritrea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estonia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ethiopia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Falkland Islands %28Malvinas%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Faroe Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiji</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>France</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>French Guiana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>French Polynesia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>French Southern Territories</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gabon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gambia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Georgia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Germany</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ghana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gibraltar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Greece</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Greenland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grenada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guadeloupe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guatemala</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guernsey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guinea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guinea-Bissau</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guyana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Haiti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Heard and McDonald Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Holy See %28Vatican City State%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Honduras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hungary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iceland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>India</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indonesia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iran%2C Islamic Republic of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iraq</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ireland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Isle of Man</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Israel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Italy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jamaica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Japan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jersey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jordan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kazakhstan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kenya</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kiribati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Korea%2C Dem People%27s Rep of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Korea%2C Republic of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kuwait</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kyrgyzstan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lao</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Latvia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lebanon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lesotho</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liberia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Libya</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Liechtenstein</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lithuania</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luxembourg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Macao</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Macedonia%2C the former Yugoslav Republic of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Madagascar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malawi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malaysia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maldives</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Martinique</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mauritania</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mauritius</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mayotte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moldova%2C Republic of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monaco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mongolia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Montengro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Montserrat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morocco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mozambique</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Myanmar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Namibia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nauru</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nepal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Netherlands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Caledonia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Zealand</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nicaragua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Niger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nigeria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Niue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Norfolk Island</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Norway</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oman</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pakistan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Palestinian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Panama</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Papua New Guinea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paraguay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Peru</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Philippines</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pitcairn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Poland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portugal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qatar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reunion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Romania</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Russian Federation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rwanda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S Georgia and S Sandwich Islan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saint Helena%2C Ascension and Tristan da Cunha</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saint Kitts and Nevis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saint Lucia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saint Pierre and Miquelon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saint Vincent and Grenadines</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saint-Barthelemy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saint-Martin %28French part%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Samoa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Marino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sao Tome and Principe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saudi Arabia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Senegal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Serbia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seychelles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sierra Leone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Singapore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sint Maarten %28Dutch part%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Slovakia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Slovenia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solomon Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Somalia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Africa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Sudan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sri Lanka</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sudan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suriname</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Svalbard and Jan Mayen Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Swaziland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sweden</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switzerland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Syrian Arab Republic %28Syria%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Taiwan%2C Republic of China</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tajikistan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tanzania%2C United Republic of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Thailand</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Timor-Leste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Togo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tokelau</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tonga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trinidad and Tobago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tunisia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Turkey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Turkmenistan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Turks and Caicos Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tuvalu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uganda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ukraine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>United Arab Emirates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>United Kingdom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>United States</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Uruguay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uzbekistan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vanuatu</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venezuela %28Bolivarian Rep of%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Viet Nam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Virgin Islands%2C British</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wallis and Futuna Islands</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western Sahara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yemen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Zambia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Zimbabwe</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Current_US_Visa_Type__c</picklist>
+        <values>
+            <fullName>A-1 Foreign Diplomatic Personnel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A-2 Dependent Foreign Diplomatic Personnel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A-3 Employee of Foreign Gov Office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B-2 Tourist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-2 Dependent of Treaty Investor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F-1 Student</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F-2 Dependent of F-1 Student</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G-1 Representative of Intl%2E Org%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G-2 Dependent of Representative of Intl%2E Org%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G-3 Dependent of Representative of Intl%2E Org%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G-4 Dependent of Representative of Intl%2E Org%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>H-1 Work Visa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>H-4 Dependent of H Visa Holder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>I do not hold a currently valid U%2ES%2E non-immigrant Visa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-1 Exchange Visitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>J-2 Dependent of J-1 Visa Holder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>L-2 Dependent of L-1 Visa Holder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M-1 Student %28Vocational%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M-2 Dependent of M-1 Student</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Visa Type</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>R-2 Dependent of R-1 Visa Holder</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Degree_Level__c</picklist>
         <values>
             <fullName>Graduate</fullName>
@@ -451,6 +1815,48 @@
         </values>
         <values>
             <fullName>Undergraduate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Ethnicity__c</picklist>
+        <values>
+            <fullName>American Indian or Alaskan Native</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Asian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Black or African American</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Native Hawaiian or Pacific Islander</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>White</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>First_Generation__c</picklist>
+        <values>
+            <fullName>I don%27t Know</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No%2C I am not</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prefer not to answer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes%2C I am</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -474,6 +1880,57 @@
         </values>
         <values>
             <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Generic_Filter_3__c</picklist>
+        <values>
+            <fullName>Apply With Standardized Test</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Apply Without Standardized Test</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Both Deposits Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confirming Deposit Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generic Value 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Housing Deposit Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Second Deposit Paid - Confirming</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Second Deposit Paid - Housing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Select Deposit Type</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -521,6 +1978,102 @@
         </values>
         <values>
             <fullName>St%2E Thomas Website</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Highest_Level_Math__c</picklist>
+        <values>
+            <fullName>%28IB%29 Mathematics HL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%28IB%29 Mathematics SL or Mathematical Studies SL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Calculus AB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Calculus AB %26 %28IB%29 Mathematics SL or Mathematical Studies SL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Calculus BC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Calculus BC %26 %28IB%29 Mathematics HL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Algebra 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Algebra 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Algebra 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calculus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Geometry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Advanced Math %28Algebra 3%2C Statistics%2C Trigonometry or other%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-Calculus</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Home_and_Mailing_Address_Differ_Ind__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Housing_Requirement_Exception_Request__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Submitted</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Intend_Need_Financial_Aid__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -586,6 +2139,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MN_Transfer_Curr_Complete_Ind__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Military_Status__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Opportunity_Citizenship__c</picklist>
         <values>
             <fullName>Asylee%2FRefugee</fullName>
@@ -609,6 +2184,36 @@
         </values>
         <values>
             <fullName>U%2ES%2E Permanent Resident</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Other_Names_Indicator__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Pronouns__c</picklist>
+        <values>
+            <fullName>Add another pronoun set</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>He%2FHim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>She%2FHer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>They%2FThem</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -651,6 +2256,141 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Race_Asian_Background__c</picklist>
+        <values>
+            <fullName>Cambodia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>China</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>India</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Japan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Korea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malaysia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other East Asia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other South Asia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Southeast Asia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pakistan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Philippines</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vietnam</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Race_Black_African_American_Background__c</picklist>
+        <values>
+            <fullName>Africa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caribbean</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>U%2ES%2E %2F African American</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Race_Hispanic_Background__c</picklist>
+        <values>
+            <fullName>Central America</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cuba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Puerto Rico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South America</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spain</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Race_Native_Pacific_Islander_Background__c</picklist>
+        <values>
+            <fullName>Guam</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hawaii</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Pacific Islands %28excluding Philippines%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Samoa</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Race_White_Background__c</picklist>
+        <values>
+            <fullName>European</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middle East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Receive_Texts__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -658,6 +2398,2757 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Religious_Preference__c</picklist>
+        <values>
+            <fullName>Baptist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Buddhist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chinese Religions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Episcopal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ev%2E Lutheran Church%2FAmerica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hinduism</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jewish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Latter Day Saints</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Methodist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Muslim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Native American</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Orthodox</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Christian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Lutheran</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Non-Christian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prefer not to Respond</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presbyterian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Roman Catholic</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SJV_Ind__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>State__c</picklist>
+        <values>
+            <fullName>AA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ME</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ND</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NJ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ON</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PW</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TX</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>YT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tribe_Enrolled_Ind__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tribe_Name__c</picklist>
+        <values>
+            <fullName>AK - Afognak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Agdaagux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Akhiok</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Akiachak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Akiak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Akutan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Alakanuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Alatna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Aleknagik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Algaaciq</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Allakaket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Alutiiq Tribe of Old Harbor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ambler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Anaktuvuk Pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Andreafski</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Angoon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Aniak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Anvik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Arctic Slope</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Arctic Village</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Asa%27carsarmiut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Atka</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Atmautluak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Atqasuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Barrow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Beaver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Belkofski</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Bill Moore%27s Slough</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Birch Creek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Brevig Mission</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Buckland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Cantwell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chalkyitsik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Cheesh-Na</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chefornak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chenega</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chevak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chickaloon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chignik Bay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chignik Lagoon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chignik Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chilkat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chilkoot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chinik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chitina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chuathbaluk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Chuloonawick</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Circle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Clark%27s Point</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Council</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Craig</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Crooked Creek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Curyung</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Deering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Diomede</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Dot Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Douglas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Eagle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Eek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Egegik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Eklutna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ekuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ekwok</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Elim IRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Emmonak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Evansville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Eyak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - False Pass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Fort Yukon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Gakona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Galena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Gambell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Georgetown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Goodnews Bay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Grayling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Gulkana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Hamilton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Healy Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Holy Cross</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Hoonah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Hooper Bay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Hughes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Huslia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Hydaburg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Igiugig</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Iliamna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Iqugmiut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ivanof Bay Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kaguyuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kaktovik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kalskag</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kaltag</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kanatak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Karluk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kasaan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kasigluk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kenaitze</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ketchikan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kiana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - King Island</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - King Salmon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kipnuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kivalina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Klawock</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kluti-Kaah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Knik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kobuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kokhanok</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kongiganak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kotlik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kotzebue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Koyuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Koyukuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kwethluk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kwigillingok</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Kwinhagak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Larsen Bay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Levelock</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Lime</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Lower Kalskag</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Manley Hot Springs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Manokotak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Marshall</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Mary%27s Igloo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Mcgrath</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Mekoryuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Mentasta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Metlakatla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Minto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Naknek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nanwalek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Napaimute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Napakiak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Napaskiak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nelson Lagoon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nenana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - New Koliganek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - New Stuyahok</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Newhalen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Newtok</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nightmute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nikolai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nikolski</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ninilchik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Noatak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nome</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nondalton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Noorvik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Northway</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nuiqsut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nulato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nunakauyarmiut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nunam Iqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Nunapitchuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ohogamiut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Orutsararmiut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Oscarville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ouzinkie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Paimiut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Pauloff Harbor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Pedro Bay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Perryville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Petersburg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Pilot Point</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Pilot Station</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Pitka%27s Point</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Platinum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Point Hope IRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Point Lay IRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Port Graham</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Port Heiden</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Port Lions</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Portage Creek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Qagan Tayagungin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Qawalangin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Rampart</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Red Devil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ruby</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Saint Paul</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Salamatof</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Savoonga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Saxman</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Scammon Bay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Selawik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Seldovia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Shageluk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Shaktoolik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Shishmaref IRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Shungnak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Sitka</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Skagway</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Sleetmute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Solomon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - South Naknek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - St%2E George</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - St%2E Michael IRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Stebbins</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Stevens Village</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Stony River</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Sun%27aq</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Takotna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tanacross</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tanana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tangirnaq</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tatitlek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tazlina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Telida</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Teller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tetlin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tlingit %26 Haida</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Togiak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tuluksak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tuntutuliak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tununak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Twin Hills</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Tyonek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Ugashik</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Umkumiut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Unalakleet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Unga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Venetie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Venetie IRA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Wainwright</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Wales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - White Mountain AK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Wrangell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AK - Yakutat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AL - Poarch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Ak Chin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Cocopah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Colorado River</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Fort McDowell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Gila River</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Havasupai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Hopi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Hualapai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Kaibab</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Navajo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Pascua Yaqui</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Quechan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Salt River</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - San Carlos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - San Juan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Tohono O%27odham</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Tonto Apache</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - White Mountain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Yavapai-Apache</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AZ - Yavapai-Prescott</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Agua Caliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Alturas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Augustine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Bear River</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Benton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Berry Creek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Big Lagoon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Big Pine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Big Sandy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Big Valley Rancheria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Bishop Paiute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Blue Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Bridgeport Indian Colony</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Buena Vista Rancheria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Cabazon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Cachil DeHe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Cahto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Cahuilla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - California Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Campo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Capitan Grande</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Cedarville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Chemehuevi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Cher-Ae Heights</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Chicken Ranch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Cloverdale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Cold Springs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Cortina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Coyote Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Dry Creek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Elem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Elk Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Enterprise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Ewiiaapaayp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Federated Indians of Graton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Fort Bidwell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Fort Independence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Fort Mojave</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Greenville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Grindstone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Guidiville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Habematolel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Hoopa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Hopland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Iipay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Inaja</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Ione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Jackson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Jamul</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Karuk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Kashia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Koi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - La Jolla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - La Posta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Lone Pine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Los Coyotes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Lytton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Manchester</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Manzanita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Mechoopda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Mesa Grande</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Middletown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Mooretown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Morongo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Northfork</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Pala</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Paskenta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Pauma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Pechanga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Picayune</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Pit River</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Potter Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Quartz Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Ramona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Redding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Redwood Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Resighini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Rincon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Robinson</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Round Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - San Manuel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - San Pasqual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Santa Rosa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Santa Rosa of Cahuilla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Santa Ynez</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Scotts Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Sherwood Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Shingle Springs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Soboba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Susanville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Sycuan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Table Mountain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Tejon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Timbi-sha Shoshone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Tolowa Dee-Ni%27</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Torres Martinez</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Tule River</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Tuolumne</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Twenty-Nine Palms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - United Auburn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Viejas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Wilton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Wiyot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Yocha Dehe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA - Yurok</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CO - Southern Ute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CO - Ute Mountain Ute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT - Mashantucket Pequot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT - Mohegan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ca - Pinoleville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FL - Miccosukee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FL - Seminole</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IA - Sac %26 Fox of Mississippi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ID - Coeur D%27Alene</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ID - Kootenai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ID - Nez Perce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ID - Shoshone-Bannock</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KS - Iowa of Kansas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KS - Kickapoo of Kansas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KS - Prairie Band</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KS - Sac and Fox Nation of Missouri in Kansas and Nebraska</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LA - Chitimacha</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LA - Coushatta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LA - Jena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LA - Tunica-Biloxi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MA - Mashpee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MA - Wampanoag</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ME - Aroostok</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ME - Houlton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ME - Passamaquaddy Pleasant Point</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ME - Passamaquoddy Indian Township</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ME - Penobscot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Bay Mills</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Grand Traverse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Hannahville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Keweenaw</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Lac Vieux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Little River</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Little Traverse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Match-e-be-nash-she-wish Band</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Nottawaseppi Potawatomi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Pokagon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Saginaw Chippewa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MI - Sault Ste%2E Marie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Bois Forte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Fond du Lac</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Grand Portage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Leech Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Lower Sioux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Mille Lacs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Minnesota Chippewa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Prairie Island</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Red Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Shakopee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - Upper Sioux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MN - White Earth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MO - Eastern Shawnee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MS - Mississippi Choctaw</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT - Assiniboine and Gros Ventre Tribes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT - Assiniboine and Sioux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT - Blackfeet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT - Chippewa-Cree</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT - Confederated Salish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT - Crow</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT - Little Shell Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT - Northern Cheyenne</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NC - Eastern Cherokee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ND - Spirit Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ND - Standing Rock</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ND - Three Affiliated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ND - Turtle Mountain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NE - Omaha</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NE - Ponca of Nebraska</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NE - Santee Sioux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NE - Winnebago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Jicarilla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Kewa Pueblo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Mescalero Apache</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Ohkay Owingeh</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Acoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Cochiti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Isleta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Jemez</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Laguna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Nambe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Picuris</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Pojoaque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of San Felipe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of San Ildefonso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Sandia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Santa Ana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Santa Clara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Taos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Tesuque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Pueblo of Zia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Ramah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NM - Zuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Duckwater</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Ely Shoshone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Fort McDermitt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Las Vegas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Lovelock</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Moapa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Paiute-Shoshone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Pyramid Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Reno-Sparks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Shoshone-Paiute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Summit Lake</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Te-Moak</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Walker River</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Washoe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Winnemucca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Yerington</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NV - Yomba Shoshone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY - Cayuga Nation of New York</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY - Oneida Indian Nation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY - Onondaga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY - Saint Regis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY - Seneca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY - Shinnecock</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY - Tonawanda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NY - Tuscarora</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Name 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK %E2%80%93 Cheyenne and Arapaho Tribes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Absentee-Shawnee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Alabama-Quassarte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Apache</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Caddo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Cherokee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Chickasaw</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Choctaw</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Citizen Potawatomi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Comanche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Delaware Nation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Delaware Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Fort Sill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Iowa of Oklahoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Kaw</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Kialegee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Kickapoo of Oklahoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Kiowa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Miami of Oklahoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Modoc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Muscogee %28Creek%29 Nation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Osage Nation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Otoe-Missouria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Ottawa of Oklahoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Pawnee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Peoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Ponca of Oklahoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Quapaw Nation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Sac and Fox Nation%2C Oklahoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Seminole Nation of Oklahoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Seneca-Cayuga Nation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Shawnee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Thlopthlocco Tribal Town</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Tonkawa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - United Keetoowah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Wichita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK - Wyandotte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR - Burns Paiute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR - Confederated Coos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR - Coquille</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR - Cow Creek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR - Grand Ronde Tribes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR - Klamath</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR - Siletz Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR - Umatilla Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OR - Warms Springs Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RI - Narragansett</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC - Catawba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD - Cheyenne River Sioux Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD - Crow Creek</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD - Flandreau</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD - Lower Brule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD - Oglala Sioux</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD - Rosebud</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD - Sisseton-Wahpeton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD - Yankton</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TX - Alabama-Coushatta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TX - Kickapoo of Texas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TX - Ysleta Del Sur</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UT - Confederated Goshute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UT - Northwestern Shoshone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UT - Paiute of Utah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UT - Skull Valley</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UT - Ute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA - Chickahominy Indian Tribe - Eastern Division</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA - Chickahominy Indian Tribe%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA - Monacan Indian Nation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA - Nansemond Indian Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA - Pamunkey Indian Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA - Rappahannock Tribe%2C Inc%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VA - Upper Mattaponi Tribe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Chehalis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Confederated Colville</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Confederated Yakama</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Cowlitz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Hoh</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Jamestown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Kalispel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Lower Elwha</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Lummi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Makah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Muckleshoot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Nisqually</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Nooksack</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Port Gamble</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Puyallup</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Quileute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Quinault</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Samish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Sauk-Suiattle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Shoalwater</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Skokomish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Snoqualmie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Spokane</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Squaxin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Stillaguamish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Suquamish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Swinomish</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Tulalip</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WA - Upper Skagit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Bad River Band</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Forest County</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Ho-Chunk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Lac Courte Oreilles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Lac du Flambeau</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Menominee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Oneida Nation %28Wisconsin%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Red Cliff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Sokaogon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - St%2E Croix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WI - Stockbridge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WY - Eastern Shoshone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WY - Northern Arapaho</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -677,6 +5168,177 @@
         </values>
         <values>
             <fullName>New Customer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UG_Merit_Scholarship_Adjust_Reason__c</picklist>
+        <values>
+            <fullName>Athletic Revision</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Tuition 360 Journalism</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Tuition Dease Scholarship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Tuition GHR Scholarship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Tuition Schulze Innovation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full Tuition Science Scholarship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Late Adjust</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manual Override</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Move to Next Term</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revised ACT%2FSAT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revised GPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Test Score Rescinded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tuition Exchange</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tuition Remission - ACTC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tuition Remission - CCTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tuition Remission - UST</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yellow Ribbon</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UST_Previous_Apply_Ind__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Veteran_Benefit_Eligible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Veteran_Status_Current__c</picklist>
+        <values>
+            <fullName>Current Dependent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Currently Serving</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Applicable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Previously Served</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Withdrawal_Reason__c</picklist>
+        <values>
+            <fullName>Academic Difficulty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Academic Difficulty%2FSuspension</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Academic%2FConduct Suspension</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Affordability%2FFinancial Aid%2FBusiness Office Challenges</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Belonging%2FConnection%2FCampus Climate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Course Availability%2FCurriculum%2FOnline Course Environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Health Challenge %28personal or family%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Institutional Size%2FLocation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internship%2FJob Offer%2FMilitary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leaving SJV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Major not offered at St%2E Thomas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Military</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proximity to home %28too far%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>

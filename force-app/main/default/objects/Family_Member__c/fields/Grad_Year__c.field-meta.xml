@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Grad_Year__c</fullName>
-    <deprecated>false</deprecated>
     <description>If did s/he graduate = Yes.</description>
     <externalId>false</externalId>
     <inlineHelpText>If did s/he graduate = Yes.</inlineHelpText>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FAFSA_Initial_CPS_Process_Date__c</fullName>
-    <deprecated>false</deprecated>
     <description>FAFSA Initial CPS Process Date</description>
     <externalId>false</externalId>
     <inlineHelpText>FAFSA Initial CPS Process Date</inlineHelpText>

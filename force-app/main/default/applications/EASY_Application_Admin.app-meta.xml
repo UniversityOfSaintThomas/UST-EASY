@@ -17,6 +17,7 @@
     <tabs>Requirement_Item__c</tabs>
     <tabs>Question__c</tabs>
     <tabs>Interaction__c</tabs>
+    <tabs>Admissions_Application_Review</tabs>
     <tabs>Academic_Term__c</tabs>
     <tabs>Program__c</tabs>
     <tabs>Interaction_Mapping__c</tabs>

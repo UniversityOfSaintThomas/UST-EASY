@@ -6,7 +6,7 @@
     <precision>7</precision>
     <required>false</required>
     <scale>2</scale>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Currency</type>
 </CustomField>

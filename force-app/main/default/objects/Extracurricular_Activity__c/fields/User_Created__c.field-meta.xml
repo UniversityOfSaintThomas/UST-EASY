@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>User_Created__c</fullName>
     <defaultValue>false</defaultValue>
-    <deprecated>false</deprecated>
     <description>Indicates this record was created by the user via Experience Cloud</description>
     <externalId>false</externalId>
     <inlineHelpText>Indicates this record was created by the user via Experience Cloud</inlineHelpText>

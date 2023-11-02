@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <inlineHelpText>If checked this opportunity will be excluded from any counselor assignment logic. This is used when manually reassigning someone outside of the standard counselor assignment logic.</inlineHelpText>
     <label>Don&apos;t Recalculate Counselor Assignment</label>
-    <trackHistory>false</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

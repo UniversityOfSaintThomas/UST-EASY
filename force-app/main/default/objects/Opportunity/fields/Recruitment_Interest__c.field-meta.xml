@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recruitment_Interest__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <deprecated>false</deprecated>
     <description>The marketable name for an official Academic Interest (or group of interests) that the individual is inquiring about. A lookup to Plan with a filter criteria of Record Type = Recruitment. Used in building the Opportunity Key for the Interaction Processor to determine whether to create a new Opportunity or update an existing Opportunity for a decentralized recruitment process.</description>
     <externalId>false</externalId>
     <inlineHelpText>The marketable name for an official Academic Interest (or group of interests) that the individual is inquiring about.</inlineHelpText>
@@ -21,7 +20,6 @@
     <relationshipName>Recruitment_Interest_Opportunities</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

@@ -116,16 +116,10 @@
         <label>Advanced Standing</label>
     </customValue>
     <customValue>
-        <fullName>Adult</fullName>
+        <fullName>Art History</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Adult</label>
-    </customValue>
-    <customValue>
-        <fullName>Undergraduate</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Undergraduate</label>
+        <label>Art History</label>
     </customValue>
     <customValue>
         <fullName>Graduate</fullName>
@@ -134,10 +128,16 @@
         <label>Graduate</label>
     </customValue>
     <customValue>
-        <fullName>Art History</fullName>
+        <fullName>Undergraduate</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Art History</label>
+        <label>Undergraduate</label>
+    </customValue>
+    <customValue>
+        <fullName>Adult</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Adult</label>
     </customValue>
     <customValue>
         <fullName>Traditional</fullName>

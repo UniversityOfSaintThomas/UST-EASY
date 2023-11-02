@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Mail_Information_Requested__c</fullName>
     <defaultValue>false</defaultValue>
-    <deprecated>false</deprecated>
     <description>Used to request information sent via postal mail in follow up on an RFI.</description>
     <externalId>false</externalId>
     <inlineHelpText>Used to request information sent via postal mail in follow up on an RFI.</inlineHelpText>

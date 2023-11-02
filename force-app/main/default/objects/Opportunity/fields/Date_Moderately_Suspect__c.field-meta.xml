@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Date_Moderately_Suspect__c</fullName>
-    <deprecated>false</deprecated>
     <description>Date the Opportunity was moved to a Moderately Suspect Status.</description>
     <externalId>false</externalId>
     <label>Date - Moderately Suspect</label>

@@ -6,6 +6,5 @@
     <inlineHelpText>Indicates that this contact is for testing purposes and is not a real person. This contact should be excluded from all banner loads and reports.</inlineHelpText>
     <label>UST Test Contact</label>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

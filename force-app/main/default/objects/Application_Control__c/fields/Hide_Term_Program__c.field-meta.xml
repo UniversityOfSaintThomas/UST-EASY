@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Hide_Term_Program__c</fullName>
     <defaultValue>false</defaultValue>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>If checked, the intended term and intended program fields won&apos;t be displayed when creating new applications</inlineHelpText>
     <label>Hide Term/Program</label>

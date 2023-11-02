@@ -143,7 +143,6 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>UST</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <deprecated>false</deprecated>
     <description>Junction object between requirement response and question.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>

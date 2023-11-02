@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Foot_on_Campus_Date__c</fullName>
-    <deprecated>false</deprecated>
     <description>(will be used for both Contact Initial_Foot_on_Campus_c and Contact Last_Time_on_Campus_c)</description>
     <externalId>false</externalId>
     <inlineHelpText>(will be used for both Contact Initial_Foot_on_Campus_c and Contact Last_Time_on_Campus_c)</inlineHelpText>

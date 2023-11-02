@@ -17,5 +17,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/flow/Admissions_Application_Review?AppId={!Application__c.Id}&amp;ConId={!Application__c.ContactId__c}</url>
+    <url>/lightning/n/Admissions_Application_Review?c__appId={!Application__c.Id}</url>
 </WebLink>

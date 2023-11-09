@@ -220,11 +220,18 @@ function radioCheckBox() {
 
 // SLDS Checkbox https://www.lightningdesignsystem.com/components/checkbox/
 function checkbox() {
+    function checkboxListener(cb) {
+        return function (e) {
+            if (e.type === 'click' || (e.type === 'keypress' && e.keyCode === 13)) {
+                let cbInput = cb.querySelector('input');
+                cbInput.click();
+            }
+        };
+    }
+
     document.querySelectorAll('.slds-checkbox.single-checkbox').forEach(cb => {
-        cb.addEventListener('click', () => {
-            let cbInput = cb.querySelector('input');
-            cbInput.click();
-        });
+        cb.addEventListener('click', checkboxListener(cb));
+        cb.addEventListener('keypress', checkboxListener(cb));
     });
 }
 
@@ -317,8 +324,10 @@ function activateAutoComplete() {
         clearField.classList.add('slds-listbox__item');
         let clearFieldLInk = document.createElement('a');
         clearFieldLInk.innerText = ' Clear search. '
+        clearFieldLInk.href = '#'
         clearFieldLInk.addEventListener('click', function () {
             refValueRemoved()
+            return false;
         });
 
         /* Remote reference lookup */
@@ -333,8 +342,10 @@ function activateAutoComplete() {
                     </span>
                   </span>
                   <span class="slds-media__body">
-                    <span class="slds-listbox__option-text slds-listbox__option-text_entity">${title}</span>
-                    <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">${subtitle}</span>
+                    <a href="#" onclick="return false"> <!-- This a tag looks useless, but it's making the listbox item focusable, thus available to tabbing, arrows, and accessibility navigation in general. -->
+                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">${title}</span>
+                        <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">${subtitle}</span>
+                    </a>
                   </span>
                 </div>
             </li>

@@ -715,7 +715,7 @@ function activateCarousel(slideMoveTo) {
                     }
                     if (items[slide]) {
                         items[slide].classList.add("active");
-                        let inputElements = items[slide].querySelectorAll("select, input");
+                        let inputElements = items[slide].querySelectorAll("select, input, .slds-card h1");
                         if (inputElements.length > 0) {
                             inputElements[0].focus(); // focus on the first focusable form element, so we aren't stuck on the next/prev buttons.
                         }

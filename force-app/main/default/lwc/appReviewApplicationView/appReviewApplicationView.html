@@ -5,32 +5,41 @@
 <!-- App Review Application View -->
 <template>
     <lightning-card title="Application Info" icon-name="custom:custom14">
-        Hello World : {appId}<br/>
-        <template lwc:if={applicationControl.data}>
-            App Control ID : {applicationControl.data.appControl.Id}
 
-            <template for:each={applicationControl.data.requirements} for:item="req">
-                <p key={req.requirement.id} class="slds-text-heading_medium slds-m-bottom_small">{req.requirement.Label__c}</p>
-                <template for:each={req.requirementItems} for:item="reqItem">
-                    <p key={reqItem.requirementItem.id} class="slds-text-heading_small slds-m-bottom_small slds-p-left_x-small">{reqItem.requirementItem.Label__c}</p>
-                    <template for:each={reqItem.questions} for:item="question">
-                        <div key={question.question.Id}>
-                            <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_medium">{question.question.Label__c}</p>
-                            <template for:each={question.questionResponses} for:item="questionResponse">
-                                <div key={questionResponse.Id}>
-                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_large">{questionResponse.ValueText__c}</p>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+                <c-app-review-nav app={applicationControl.data}></c-app-review-nav>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-large-size_10-of-12">
+                Hello World : {appId}<br/>
+                <template lwc:if={applicationControl.data}>
+                    App Control ID : {applicationControl.data.appControl.Id}
+
+                    <template for:each={applicationControl.data.requirements} for:item="req">
+                        <p key={req.requirement.id} class="slds-text-heading_medium slds-m-bottom_small">{req.requirement.Label__c}</p>
+                        <template for:each={req.requirementItems} for:item="reqItem">
+                            <p key={reqItem.requirementItem.id} class="slds-text-heading_small slds-m-bottom_small slds-p-left_x-small">{reqItem.requirementItem.Label__c}</p>
+                            <template for:each={reqItem.questions} for:item="question">
+                                <div key={question.question.Id}>
+                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_large">{question.question.Label__c}</p>
+                                    <template for:each={question.questionResponses} for:item="questionResponse">
+                                        <div key={questionResponse.Id}>
+                                            <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large">{questionResponse.ValueText__c}</p>
+                                        </div>
+                                    </template>
                                 </div>
                             </template>
-                        </div>
+                        </template>
                     </template>
+
                 </template>
-            </template>
 
-        </template>
-
-        <br/><br/>
-        <pre>
-            {appControlStr}
-        </pre>
+                <br/><br/>
+                <pre>
+                    {appControlStr}
+                </pre>
+            </div>
+        </div>
     </lightning-card>
+
 </template>

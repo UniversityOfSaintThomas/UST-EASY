@@ -34,8 +34,6 @@ export default class AppReviewApplicationView extends LightningElement {
     @wire(getApplicationControl, {appId: "$appId"})
     applicationControl;
 
-
-
     get appControlStr() {
         return this.applicationControl
             ? JSON.stringify(this.applicationControl.data, null, 2)

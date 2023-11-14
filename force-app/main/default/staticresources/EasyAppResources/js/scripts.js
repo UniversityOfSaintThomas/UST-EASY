@@ -1,9 +1,15 @@
-let ready = (callback) => {
-    if (document.readyState !== "loading") callback();
-    else document.addEventListener("DOMContentLoaded", callback);
+
+function docReady(fn) {
+    // see if DOM is already available
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+
+        setTimeout(fn, 1);
+    } else {
+        document.addEventListener("DOMContentLoaded", fn);
+    }
 }
 
-ready(() => {
+docReady(function() {
     appHideLoadingSpinner();
     pageLoadReRendered();
     activateCarousel();
@@ -13,6 +19,7 @@ function pageLoadReRendered() {
 
     //Disable fields that are set to not be editable
     let sldsScope = document.querySelector('.slds-scope');
+
     sldsScope.querySelectorAll('.fieldNotEditable, .fieldNotEditable input, .fieldNotEditable select, .fieldNotEditable textarea').forEach(field => {
         field.setAttribute('disabled', 'disabled');
     });

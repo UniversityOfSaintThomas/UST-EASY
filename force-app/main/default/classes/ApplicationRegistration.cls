@@ -216,7 +216,7 @@ public class ApplicationRegistration {
                     currentUrl = 'https://' + currentUrl;
                 }
 
-                if (a.size() > 0) {
+                if (a.size() > 0 && !commonAppApplication) {
                     throw new ApplicationUtilities.ApplicationException('You have an unclaimed common app. Please <a href="' + currentUrl + '">follow this link to claim it</a>.', true, true);
                 }
             }

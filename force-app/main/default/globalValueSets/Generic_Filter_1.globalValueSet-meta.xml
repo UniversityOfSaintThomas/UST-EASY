@@ -2806,6 +2806,12 @@
         <label>ED_TE_CER|LTLI</label>
     </customValue>
     <customValue>
+        <fullName>BU_DLB_MBA|PTMB|JDMB</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>BU_DLB_MBA|PTMB|JDMB</label>
+    </customValue>
+    <customValue>
         <fullName>AS_PL_MA|EDSL</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -2822,12 +2828,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>BU_DLB_MBA|OLMB|JDMB</label>
-    </customValue>
-    <customValue>
-        <fullName>BU_DLB_MBA|PTMB|JDMB</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>BU_DLB_MBA|PTMB|JDMB</label>
     </customValue>
     <customValue>
         <fullName>LW_DLB_JD|CMPL</fullName>
@@ -3178,6 +3178,12 @@
         <label>ED_TE_MA|TPST|MSLS</label>
     </customValue>
     <customValue>
+        <fullName>ED_TE_MA|TPST|PETE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>ED_TE_MA|TPST|PETE</label>
+    </customValue>
+    <customValue>
         <fullName>ED_TE_MA|TPST|MSMA</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -3194,12 +3200,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>ED_TE_MA|TPST|MSSS</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|PETE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|PETE</label>
     </customValue>
     <customValue>
         <fullName>ET_GR_CER|MCCS</fullName>

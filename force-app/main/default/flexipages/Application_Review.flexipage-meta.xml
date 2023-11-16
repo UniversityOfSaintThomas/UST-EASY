@@ -18,7 +18,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>appReviewInfoPanel</componentName>
-                <identifier>c_appReviewInfoPanel</identifier>
+                <identifier>c_appReviewInfoPanel2</identifier>
             </componentInstance>
         </itemInstances>
         <name>region3</name>

@@ -8,8 +8,8 @@ export default class AppReviewNav extends LightningElement {
 
     @api app;
 
-    renderedCallback() {
-        console.log('THIS: ' + JSON.stringify(this.app));
-    }
+    // renderedCallback() {
+    //     console.log('THIS: ' + JSON.stringify(this.app));
+    // }
 
 }

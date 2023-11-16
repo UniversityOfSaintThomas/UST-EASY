@@ -10,7 +10,15 @@
 <!--            Nav menu 1-->
 <!--        </lightning-accordion-section>-->
 
-{app.appControl.Id}
+        {app.appReviewNavItems.map(item => {
+            return (
+                <lightning-accordion-section key={item.id} name={item.id} label={item.label}>
+                    <template for:each={item.items} for:item="subItem">
+                        <p key={subItem.id}>{subItem.label}</p>
+                    </template>
+                </lightning-accordion-section>
+            );
+        })
 <!--        <template for:each={app.requirements} for:item="req">-->
 <!--            <lightning-accordion-section name={req.requirement.id} label={req.requirement.Label__c}>-->
 <!--                <template for:each={req.requirementItems} for:item="reqItem">-->

@@ -6,10 +6,37 @@ import {api, LightningElement} from 'lwc';
 
 export default class AppReviewNav extends LightningElement {
 
-    @api app;
+    selectedNav;
 
-    // renderedCallback() {
-    //     console.log('THIS: ' + JSON.stringify(this.app));
-    // }
+    _app = {};
+    menu = {};
+    requirement;
+
+    @api
+    get app() {
+        return this._app;
+    }
+
+    set app(value) {
+        this._app = value;
+        this.createMenu();
+    }
+
+    createMenu() {
+        this.menu = this._app;
+    }
+
+    handleMenuClick(event) {
+        this.selectedNav = event.detail.name;
+        event.preventDefault();
+        const selectEvent = new CustomEvent('newrequirement', {
+            detail: this.requirement.Id
+        });
+        this.dispatchEvent(selectEvent);
+    }
+
+    renderedCallback() {
+
+    }
 
 }

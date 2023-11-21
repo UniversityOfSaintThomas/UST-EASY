@@ -40,5 +40,9 @@ export default class AppReviewApplicationView extends LightningElement {
             : '';
     }
 
+    handleNewRequirement(event) {
+        console.log('handleNewRequirement: ' + JSON.stringify(event.detail));
+    }
+
 
 }

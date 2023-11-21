@@ -217,7 +217,7 @@ public class ApplicationRegistration {
                 }
 
                 if (a.size() > 0 && !commonAppApplication) {
-                    throw new ApplicationUtilities.ApplicationException('You have an unclaimed common app. Please <a href="' + currentUrl + '">follow this link to claim it</a>.', true, true);
+                    throw new ApplicationUtilities.ApplicationException('You need to claim your Common App application. <a href="' + currentUrl + '">Please follow this link for more information and to claim your account</a>.', true, true);
                 }
             }
 

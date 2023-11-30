@@ -3,6 +3,7 @@
 * Author: Sierra-Cedar
 * Description: Processes new Interaction__c records by inserting/converting Leads, upserting Opportunities,
 * updating Contacts, upserting Affiliations, and upserting CampaignMembers
+ *
 ******************************************/
 public class INT_InteractionProcessor {
     private final List<Interaction__c> dupeInteractions = new List<Interaction__c>();

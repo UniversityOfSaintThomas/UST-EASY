@@ -127,7 +127,7 @@ public class INT_InteractionProcessor {
 
     private Map<String, OpportunityStage> oppStageMap {
         get {
-            List<OpportunityStage> stages = [SELECT ApiName, DefaultProbability, ForecastCategoryName FROM OpportunityStage];
+            List<OpportunityStage> stages = [SELECT ApiName, DefaultProbability, ForecastCategory, ForecastCategoryName FROM OpportunityStage];
             Map<String, OpportunityStage> oppStageMap = new Map<String, OpportunityStage>();
             for (OpportunityStage stage : stages) {
                 oppStageMap.put(stage.ApiName, stage);
@@ -568,6 +568,7 @@ public class INT_InteractionProcessor {
                     intMappingService.applyDataToInteraction(existingLeadMap.get(lcr.getLeadId()), interaction);
                 }
 
+//Interaction Opportunity Key is a formula field during Interaction creation. - YN
                 // Create new Opportunity for upsert if Opportunity Key is populated.
                 System.debug('&&& interaction: ' + interaction);
                 System.debug(' && !String.isEmpty(interaction.Opportunity_Key__c): ' + !String.isEmpty(interaction.Opportunity_Key__c));
@@ -633,9 +634,13 @@ public class INT_InteractionProcessor {
                         opportunitiesToUpsert.add(newOppty);
                         oppKeyToContactMap.put(newOppty.Opportunity_Key__c, interaction.Contact__c);
                     } else {
+/***CONCENTRATE HERE FOR OPPORTUNITY UPDATES
+ * matchingOpp updates field in Interaction which Interaction Mappings uses to updates matchingOpp to add to Opportunities to upsert. - YN
+*/
                         for (Opportunity matchingOpp : matchingOpps) {
                             String oppName = matchingOpp.Name;
                             String oppStageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
+                            String matchingOppLeadSource = matchingOpp.LeadSource; //Used to preserve original Lead Source from initial Opportunity record. -YN
                             Id inqoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Inquiry Opportunity').getRecordTypeId();
                             Id appoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Applicant Opportunity').getRecordTypeId();
 
@@ -655,13 +660,14 @@ public class INT_InteractionProcessor {
                             interaction.Opportunity__r = matchingOpp;
                             //interaction.Opportunity_Record_Type__c = matchingOpp.RecordTypeId;
 
-                            if (inqOppStageList.contains(oppStageName)) {
+                            if (inqOppStageList.contains(oppStageName)) { //Maybe here we check if matching opp record type is Application then don't update - YN
                                 interaction.Opportunity_Record_Type__c = inqoppRTID;
                             } else {
                                 interaction.Opportunity_Record_Type__c = appoppRTID;
                             }
 
-                            intMappingService.applyDataToSObject(interaction, matchingOpp);
+                            intMappingService.applyDataToSObject(interaction, matchingOpp); //Uses Interaction Mapping to finalize fields to upsert matching Opportunity. -YN
+                            matchingOpp.LeadSource = matchingOppLeadSource; //Update Opportunity Lead Source back to original value without changing Lead Source on new Interaction - YN
                             opportunitiesToUpsert.add(matchingOpp);
                         }
                     }
@@ -829,7 +835,13 @@ public class INT_InteractionProcessor {
         OpportunityStage newStage = oppStageMap.get(newStageName);
         OpportunityStage previousStage = oppStageMap.get(previousStageName);
         System.debug('new stage (' + newStageName + '): ' + newStage.DefaultProbability + ', previous stage: (' + previousStageName + '): ' + previousStage.DefaultProbability);
-        if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
+
+//        if (previousStage.DefaultProbability == 0.0 || previousStage.ForecastCategory == 'Omitted') {
+//            System.debug('previous stage assigned');
+//            return previousStageName;
+//        }
+//        else
+                if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
             System.debug('new stage assigned');
             return newStageName;
         } else if (newStage.ForecastCategoryName == 'Omitted') {

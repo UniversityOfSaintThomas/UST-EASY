@@ -12,6 +12,7 @@ import getApplicationControl from '@salesforce/apex/appReviewController.getAppli
 export default class AppReviewApplicationView extends LightningElement {
 
     @track appId;
+    @track requirementId;
 
     @wire(MessageContext)
     messageContext;
@@ -40,8 +41,17 @@ export default class AppReviewApplicationView extends LightningElement {
             : '';
     }
 
+    get requirements() {
+        let result = null;
+        if (this.applicationControl && this.applicationControl.data) {
+            result = this.applicationControl.data.requirements.find(item => item.requirement.Id === this.requirementId);
+            console.log(result);
+        }
+        return result;
+    }
+
     handleNewRequirement(event) {
-        console.log('handleNewRequirement: ' + JSON.stringify(event.detail));
+        this.requirementId = event.detail;
     }
 
 

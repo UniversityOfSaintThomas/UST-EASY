@@ -471,6 +471,7 @@
                         </lightning-textarea>
                     </div>
                 </template>
+
                 <template if:true={show_fields.Tell_us_about_yourself}>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-description">
                         <lightning-textarea
@@ -480,6 +481,55 @@
                         </lightning-textarea>
                     </div>
                 </template>
+
+                <!-- Load additional questions -->
+                <template for:each={additional_questions} for:item="question">
+                    <div key={question.id} class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium">
+                        <template lwc:if={question.isPicklist}>
+                            <lightning-combobox
+                                    required={question.isRequired}
+                                    label={question.questionLabel}
+                                    options={question.picklistValues}
+                                    aria-label={question.questionLabel}
+                                    onchange={onChange}
+                                    data-questionid={question.id}
+                                    message-when-bad-input={question.assistiveText}
+                                    message-when-value-missing={question.assistiveText}
+                                    data-addquestion="true"
+                            >
+                            </lightning-combobox>
+                        </template>
+                        <template lwc:elseif={question.isTextBox}>
+                            <lightning-input
+                                    required={question.isRequired}
+                                    type="text"
+                                    label={question.questionLabel}
+                                    aria-label={question.questionLabel}
+                                    onchange={onChange}
+                                    message-when-bad-input={question.assistiveText}
+                                    message-when-value-missing={question.assistiveText}
+                                    data-questionid={question.id}
+                                    data-addquestion="true"
+                            >
+                            </lightning-input>
+                        </template>
+                        <template lwc:else>
+                            <lightning-textarea
+                                    required={question.isRequired}
+                                    label={question.questionLabel}
+                                    aria-label={question.questionLabel}
+                                    message-when-bad-input={question.assistiveText}
+                                    message-when-value-missing={question.assistiveText}
+                                    onchange={onChange}
+                                    data-questionid={question.id}
+                                    data-addquestion="true"
+                            >
+                            </lightning-textarea>
+                        </template>
+                    </div>
+                </template>
+
+
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2">
                     <div class="slds-m-left_medium slds-m-top_medium field-submit">
                         <lightning-button

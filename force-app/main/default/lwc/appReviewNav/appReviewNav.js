@@ -24,13 +24,18 @@ export default class AppReviewNav extends LightningElement {
 
     createMenu() {
         this.menu = this._app;
+        if(this.menu) {
+            if (!this.selectedNav) {
+                this.selectedNav = this.menu.requirements[0].requirement.Id;
+            }
+        }
     }
 
     handleMenuClick(event) {
         this.selectedNav = event.detail.name;
         event.preventDefault();
         const selectEvent = new CustomEvent('newrequirement', {
-            detail: this.requirement.Id
+            detail: event.detail.name
         });
         this.dispatchEvent(selectEvent);
     }

@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Academic Quiz Bowl</fullName>
+        <default>false</default>
+        <label>Academic Quiz Bowl</label>
+    </customValue>
+    <customValue>
+        <fullName>Accessibility for All</fullName>
+        <default>false</default>
+        <label>Accessibility for All</label>
+    </customValue>
+    <customValue>
+        <fullName>Accounting Club</fullName>
+        <default>false</default>
+        <label>Accounting Club</label>
+    </customValue>
+    <customValue>
+        <fullName>African Nations Student Association</fullName>
+        <default>false</default>
+        <label>African Nations Student Association</label>
+    </customValue>
+    <customValue>
+        <fullName>Air Force ROTC</fullName>
+        <default>false</default>
+        <label>Air Force ROTC</label>
+    </customValue>
+    <customValue>
+        <fullName>American Public Works Association</fullName>
+        <default>false</default>
+        <label>American Public Works Association</label>
+    </customValue>
+    <customValue>
+        <fullName>American Society of Civil Engineers</fullName>
+        <default>false</default>
+        <label>American Society of Civil Engineers</label>
+    </customValue>
+    <customValue>
+        <fullName>American Society of Mechanical Engineers</fullName>
+        <default>false</default>
+        <label>American Society of Mechanical Engineers</label>
+    </customValue>
+    <customValue>
+        <fullName>Anime Society</fullName>
+        <default>false</default>
+        <label>Anime Society</label>
+    </customValue>
+    <customValue>
+        <fullName>Aquinas Scholars Honor Society</fullName>
+        <default>false</default>
+        <label>Aquinas Scholars Honor Society</label>
+    </customValue>
+    <customValue>
+        <fullName>Army ROTC</fullName>
+        <default>false</default>
+        <label>Army ROTC</label>
+    </customValue>
+    <customValue>
+        <fullName>Arnold Air Society</fullName>
+        <default>false</default>
+        <label>Arnold Air Society</label>
+    </customValue>
+    <customValue>
+        <fullName>Asian Students In America Club</fullName>
+        <default>false</default>
+        <label>Asian Students In America Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Association of Women in Science</fullName>
+        <default>false</default>
+        <label>Association of Women in Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Automotive Competition Club</fullName>
+        <default>false</default>
+        <label>Automotive Competition Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Badminton Club</fullName>
+        <default>false</default>
+        <label>Badminton Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Ballroom Club</fullName>
+        <default>false</default>
+        <label>Ballroom Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Beta Beta Beta Biology Club</fullName>
+        <default>false</default>
+        <label>Beta Beta Beta Biology Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Beta Gamma Sigma (BGS) Business Honor Society</fullName>
+        <default>false</default>
+        <label>Beta Gamma Sigma (BGS) Business Honor Society</label>
+    </customValue>
+    <customValue>
+        <fullName>Black Empowerment Student Alliance</fullName>
+        <default>false</default>
+        <label>Black Empowerment Student Alliance</label>
+    </customValue>
+    <customValue>
+        <fullName>Black Knights Precision Drill Team</fullName>
+        <default>false</default>
+        <label>Black Knights Precision Drill Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Book Club</fullName>
+        <default>false</default>
+        <label>Book Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Botanical Club</fullName>
+        <default>false</default>
+        <label>Botanical Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Brightside Ambassadors Club</fullName>
+        <default>false</default>
+        <label>Brightside Ambassadors Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Business Law and Compliance Club</fullName>
+        <default>false</default>
+        <label>Business Law and Compliance Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Business Undergraduate Mentorship Program</fullName>
+        <default>false</default>
+        <label>Business Undergraduate Mentorship Program</label>
+    </customValue>
+    <customValue>
+        <fullName>Cadenza</fullName>
+        <default>false</default>
+        <label>Cadenza</label>
+    </customValue>
+    <customValue>
+        <fullName>Campus Ministry</fullName>
+        <default>false</default>
+        <label>Campus Ministry</label>
+    </customValue>
+    <customValue>
+        <fullName>Campus Outreach</fullName>
+        <default>false</default>
+        <label>Campus Outreach</label>
+    </customValue>
+    <customValue>
+        <fullName>Catholic Students Incorporated</fullName>
+        <default>false</default>
+        <label>Catholic Students Incorporated</label>
+    </customValue>
+    <customValue>
+        <fullName>Changemaking for the Common Good</fullName>
+        <default>false</default>
+        <label>Changemaking for the Common Good</label>
+    </customValue>
+    <customValue>
+        <fullName>Chemistry Club</fullName>
+        <default>false</default>
+        <label>Chemistry Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Chi Alpha</fullName>
+        <default>false</default>
+        <label>Chi Alpha</label>
+    </customValue>
+    <customValue>
+        <fullName>College Democrats</fullName>
+        <default>false</default>
+        <label>College Democrats</label>
+    </customValue>
+    <customValue>
+        <fullName>College Republicans</fullName>
+        <default>false</default>
+        <label>College Republicans</label>
+    </customValue>
+    <customValue>
+        <fullName>Collegiate Entrepreneurs&apos; Organization</fullName>
+        <default>false</default>
+        <label>Collegiate Entrepreneurs&apos; Organization</label>
+    </customValue>
+    <customValue>
+        <fullName>Computer Science Club</fullName>
+        <default>false</default>
+        <label>Computer Science Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Cru</fullName>
+        <default>false</default>
+        <label>Cru</label>
+    </customValue>
+    <customValue>
+        <fullName>Dance Club</fullName>
+        <default>false</default>
+        <label>Dance Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Data Science &amp; Analytics Club</fullName>
+        <default>false</default>
+        <label>Data Science &amp; Analytics Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Delta Sigma Pi - Nu Tau Chapter</fullName>
+        <default>false</default>
+        <label>Delta Sigma Pi - Nu Tau Chapter</label>
+    </customValue>
+    <customValue>
+        <fullName>Desi Club</fullName>
+        <default>false</default>
+        <label>Desi Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Disc Golf Club</fullName>
+        <default>false</default>
+        <label>Disc Golf Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Diversity Activities Board</fullName>
+        <default>false</default>
+        <label>Diversity Activities Board</label>
+    </customValue>
+    <customValue>
+        <fullName>Economics Club</fullName>
+        <default>false</default>
+        <label>Economics Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Electrical Engineering Club</fullName>
+        <default>false</default>
+        <label>Electrical Engineering Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Enactus</fullName>
+        <default>false</default>
+        <label>Enactus</label>
+    </customValue>
+    <customValue>
+        <fullName>Engineers for a Sustainable World</fullName>
+        <default>false</default>
+        <label>Engineers for a Sustainable World</label>
+    </customValue>
+    <customValue>
+        <fullName>Excel! Research Scholars Program</fullName>
+        <default>false</default>
+        <label>Excel! Research Scholars Program</label>
+    </customValue>
+    <customValue>
+        <fullName>Fellowship of Christian Athletes</fullName>
+        <default>false</default>
+        <label>Fellowship of Christian Athletes</label>
+    </customValue>
+    <customValue>
+        <fullName>Feminist Community</fullName>
+        <default>false</default>
+        <label>Feminist Community</label>
+    </customValue>
+    <customValue>
+        <fullName>Finance Club</fullName>
+        <default>false</default>
+        <label>Finance Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Foreign Affairds Club</fullName>
+        <default>false</default>
+        <label>Foreign Affairds Club</label>
+    </customValue>
+    <customValue>
+        <fullName>French Club</fullName>
+        <default>false</default>
+        <label>French Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Futbol Club</fullName>
+        <default>false</default>
+        <label>Futbol Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Gamma Iota Sigma</fullName>
+        <default>false</default>
+        <label>Gamma Iota Sigma</label>
+    </customValue>
+    <customValue>
+        <fullName>Geology Club</fullName>
+        <default>false</default>
+        <label>Geology Club</label>
+    </customValue>
+    <customValue>
+        <fullName>German Club</fullName>
+        <default>false</default>
+        <label>German Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Globally Minded Students Association</fullName>
+        <default>false</default>
+        <label>Globally Minded Students Association</label>
+    </customValue>
+    <customValue>
+        <fullName>Health &amp; Exercise Science Club</fullName>
+        <default>false</default>
+        <label>Health &amp; Exercise Science Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Hispanic Organization for Leadership and Achievement</fullName>
+        <default>false</default>
+        <label>Hispanic Organization for Leadership and Achievement</label>
+    </customValue>
+    <customValue>
+        <fullName>Hmong United Student Association</fullName>
+        <default>false</default>
+        <label>Hmong United Student Association</label>
+    </customValue>
+    <customValue>
+        <fullName>Italian Club</fullName>
+        <default>false</default>
+        <label>Italian Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Knights of Columbus</fullName>
+        <default>false</default>
+        <label>Knights of Columbus</label>
+    </customValue>
+    <customValue>
+        <fullName>KUST Radio</fullName>
+        <default>false</default>
+        <label>KUST Radio</label>
+    </customValue>
+    <customValue>
+        <fullName>Lead Club</fullName>
+        <default>false</default>
+        <label>Lead Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Marine Corps ROTC</fullName>
+        <default>false</default>
+        <label>Marine Corps ROTC</label>
+    </customValue>
+    <customValue>
+        <fullName>Math &amp; Actuarial Science Club</fullName>
+        <default>false</default>
+        <label>Math &amp; Actuarial Science Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Mind Matters</fullName>
+        <default>false</default>
+        <label>Mind Matters</label>
+    </customValue>
+    <customValue>
+        <fullName>Minority Students in Science</fullName>
+        <default>false</default>
+        <label>Minority Students in Science</label>
+    </customValue>
+    <customValue>
+        <fullName>Mock Trial Team</fullName>
+        <default>false</default>
+        <label>Mock Trial Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Music Industry Club</fullName>
+        <default>false</default>
+        <label>Music Industry Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Muslim Student Association</fullName>
+        <default>false</default>
+        <label>Muslim Student Association</label>
+    </customValue>
+    <customValue>
+        <fullName>National Society of Black Engineers</fullName>
+        <default>false</default>
+        <label>National Society of Black Engineers</label>
+    </customValue>
+    <customValue>
+        <fullName>Navy ROTC</fullName>
+        <default>false</default>
+        <label>Navy ROTC</label>
+    </customValue>
+    <customValue>
+        <fullName>Neuroscience Club</fullName>
+        <default>false</default>
+        <label>Neuroscience Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Nordic Ski Team</fullName>
+        <default>false</default>
+        <label>Nordic Ski Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Omega Ti</fullName>
+        <default>false</default>
+        <label>Omega Ti</label>
+    </customValue>
+    <customValue>
+        <fullName>Omicron Delta Kappa</fullName>
+        <default>false</default>
+        <label>Omicron Delta Kappa</label>
+    </customValue>
+    <customValue>
+        <fullName>Out of State Tommies</fullName>
+        <default>false</default>
+        <label>Out of State Tommies</label>
+    </customValue>
+    <customValue>
+        <fullName>Pep Band</fullName>
+        <default>false</default>
+        <label>Pep Band</label>
+    </customValue>
+    <customValue>
+        <fullName>Photography Club</fullName>
+        <default>false</default>
+        <label>Photography Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Pickleball Club</fullName>
+        <default>false</default>
+        <label>Pickleball Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-Dental Club</fullName>
+        <default>false</default>
+        <label>Pre-Dental Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-Health Professions Club</fullName>
+        <default>false</default>
+        <label>Pre-Health Professions Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-Law Society</fullName>
+        <default>false</default>
+        <label>Pre-Law Society</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-Pharmacy Club</fullName>
+        <default>false</default>
+        <label>Pre-Pharmacy Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Pre-Physical Therapy Club</fullName>
+        <default>false</default>
+        <label>Pre-Physical Therapy Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Proud to be First</fullName>
+        <default>false</default>
+        <label>Proud to be First</label>
+    </customValue>
+    <customValue>
+        <fullName>Psychology Club</fullName>
+        <default>false</default>
+        <label>Psychology Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Public Health Club</fullName>
+        <default>false</default>
+        <label>Public Health Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Purple Gloves</fullName>
+        <default>false</default>
+        <label>Purple Gloves</label>
+    </customValue>
+    <customValue>
+        <fullName>Queer Justice Initiative</fullName>
+        <default>false</default>
+        <label>Queer Justice Initiative</label>
+    </customValue>
+    <customValue>
+        <fullName>Real Estate Society</fullName>
+        <default>false</default>
+        <label>Real Estate Society</label>
+    </customValue>
+    <customValue>
+        <fullName>Residential Connections Team</fullName>
+        <default>false</default>
+        <label>Residential Connections Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Rock Climbing Club</fullName>
+        <default>false</default>
+        <label>Rock Climbing Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Saint Paul&apos;s Outreach Student Organization</fullName>
+        <default>false</default>
+        <label>Saint Paul&apos;s Outreach Student Organization</label>
+    </customValue>
+    <customValue>
+        <fullName>Sigma Chi</fullName>
+        <default>false</default>
+        <label>Sigma Chi</label>
+    </customValue>
+    <customValue>
+        <fullName>Sigma Tau Delta Literary Club</fullName>
+        <default>false</default>
+        <label>Sigma Tau Delta Literary Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Society of American Military Engineers</fullName>
+        <default>false</default>
+        <label>Society of American Military Engineers</label>
+    </customValue>
+    <customValue>
+        <fullName>Society of Hispanic Professional Engineers</fullName>
+        <default>false</default>
+        <label>Society of Hispanic Professional Engineers</label>
+    </customValue>
+    <customValue>
+        <fullName>Society of Women Engineers</fullName>
+        <default>false</default>
+        <label>Society of Women Engineers</label>
+    </customValue>
+    <customValue>
+        <fullName>Sociology and Criminal Justice Club</fullName>
+        <default>false</default>
+        <label>Sociology and Criminal Justice Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Somali Student Association</fullName>
+        <default>false</default>
+        <label>Somali Student Association</label>
+    </customValue>
+    <customValue>
+        <fullName>Spanish Club</fullName>
+        <default>false</default>
+        <label>Spanish Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Special Olympics</fullName>
+        <default>false</default>
+        <label>Special Olympics</label>
+    </customValue>
+    <customValue>
+        <fullName>Sports Business Club</fullName>
+        <default>false</default>
+        <label>Sports Business Club</label>
+    </customValue>
+    <customValue>
+        <fullName>St. Thomas Activities and Recreation</fullName>
+        <default>false</default>
+        <label>St. Thomas Activities and Recreation</label>
+    </customValue>
+    <customValue>
+        <fullName>St. Thomas eSports Club</fullName>
+        <default>false</default>
+        <label>St. Thomas eSports Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Stomp n&apos; Shake Cheerleading Club</fullName>
+        <default>false</default>
+        <label>Stomp n&apos; Shake Cheerleading Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Student Alumni Council</fullName>
+        <default>false</default>
+        <label>Student Alumni Council</label>
+    </customValue>
+    <customValue>
+        <fullName>Students for Human Life</fullName>
+        <default>false</default>
+        <label>Students for Human Life</label>
+    </customValue>
+    <customValue>
+        <fullName>Students for Justice and Peace</fullName>
+        <default>false</default>
+        <label>Students for Justice and Peace</label>
+    </customValue>
+    <customValue>
+        <fullName>Study Abroad</fullName>
+        <default>false</default>
+        <label>Study Abroad</label>
+    </customValue>
+    <customValue>
+        <fullName>Summit Ave Review (Literary Magazine)</fullName>
+        <default>false</default>
+        <label>Summit Ave Review (Literary Magazine)</label>
+    </customValue>
+    <customValue>
+        <fullName>Supply Chain &amp; Operations Management Club</fullName>
+        <default>false</default>
+        <label>Supply Chain &amp; Operations Management Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Sustainability Club</fullName>
+        <default>false</default>
+        <label>Sustainability Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Swing Dance Club</fullName>
+        <default>false</default>
+        <label>Swing Dance Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Table Top Gaming Club</fullName>
+        <default>false</default>
+        <label>Table Top Gaming Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Teachers Educating and Creating Hope</fullName>
+        <default>false</default>
+        <label>Teachers Educating and Creating Hope</label>
+    </customValue>
+    <customValue>
+        <fullName>Theater Club</fullName>
+        <default>false</default>
+        <label>Theater Club</label>
+    </customValue>
+    <customValue>
+        <fullName>The Summit Singers</fullName>
+        <default>false</default>
+        <label>The Summit Singers</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommie Ambassadors</fullName>
+        <default>false</default>
+        <label>Tommie Ambassadors</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommie Marketing Club</fullName>
+        <default>false</default>
+        <label>Tommie Marketing Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommie Media</fullName>
+        <default>false</default>
+        <label>Tommie Media</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommie Outdoors</fullName>
+        <default>false</default>
+        <label>Tommie Outdoors</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommie Ski and Snowboard Club</fullName>
+        <default>false</default>
+        <label>Tommie Ski and Snowboard Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommies Together Volunteer Center</fullName>
+        <default>false</default>
+        <label>Tommies Together Volunteer Center</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommie Strength</fullName>
+        <default>false</default>
+        <label>Tommie Strength</label>
+    </customValue>
+    <customValue>
+        <fullName>Undergraduate Student Government</fullName>
+        <default>false</default>
+        <label>Undergraduate Student Government</label>
+    </customValue>
+    <customValue>
+        <fullName>Veterans Association</fullName>
+        <default>false</default>
+        <label>Veterans Association</label>
+    </customValue>
+    <customValue>
+        <fullName>Volunteers in Service International or National</fullName>
+        <default>false</default>
+        <label>Volunteers in Service International or National</label>
+    </customValue>
+    <customValue>
+        <fullName>Women in Business</fullName>
+        <default>false</default>
+        <label>Women in Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Animal Welfare Club</fullName>
+        <default>false</default>
+        <label>Animal Welfare Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Aerospace Engineering Club</fullName>
+        <default>false</default>
+        <label>Aerospace Engineering Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Biology Club</fullName>
+        <default>false</default>
+        <label>Biology Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Black Students in Business</fullName>
+        <default>false</default>
+        <label>Black Students in Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Bridge St. Thomas</fullName>
+        <default>false</default>
+        <label>Bridge St. Thomas</label>
+    </customValue>
+    <customValue>
+        <fullName>Chess Club</fullName>
+        <default>false</default>
+        <label>Chess Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Dance Team</fullName>
+        <default>false</default>
+        <label>Dance Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Entrepreneurial Society</fullName>
+        <default>false</default>
+        <label>Entrepreneurial Society</label>
+    </customValue>
+    <customValue>
+        <fullName>Foreign Affairs Club</fullName>
+        <default>false</default>
+        <label>Foreign Affairs Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Orchestra Club</fullName>
+        <default>false</default>
+        <label>Orchestra Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Ping Pong Club</fullName>
+        <default>false</default>
+        <label>Ping Pong Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Queer Straight Alliance</fullName>
+        <default>false</default>
+        <label>Queer Straight Alliance</label>
+    </customValue>
+    <customValue>
+        <fullName>Running Club</fullName>
+        <default>false</default>
+        <label>Running Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Sigma Chi (National Social Fraternity)</fullName>
+        <default>false</default>
+        <label>Sigma Chi (National Social Fraternity)</label>
+    </customValue>
+    <customValue>
+        <fullName>Society of Human Resources Management (SHRM)</fullName>
+        <default>false</default>
+        <label>Society of Human Resources Management (SHRM)</label>
+    </customValue>
+    <customValue>
+        <fullName>Spikeball Club</fullName>
+        <default>false</default>
+        <label>Spikeball Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Sports Management Club</fullName>
+        <default>false</default>
+        <label>Sports Management Club</label>
+    </customValue>
+    <customValue>
+        <fullName>St. Thomas Cheer Team</fullName>
+        <default>false</default>
+        <label>St. Thomas Cheer Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommiemedia.com (web-based, student-run news)</fullName>
+        <default>false</default>
+        <label>Tommiemedia.com (web-based, student-run news)</label>
+    </customValue>
+    <customValue>
+        <fullName>Tutor/Mentor Program</fullName>
+        <default>false</default>
+        <label>Tutor/Mentor Program</label>
+    </customValue>
+    <customValue>
+        <fullName>Drawing Club</fullName>
+        <default>false</default>
+        <label>Drawing Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Ethiopian Eritrean Student Alliance</fullName>
+        <default>false</default>
+        <label>Ethiopian Eritrean Student Alliance</label>
+    </customValue>
+    <customValue>
+        <fullName>Fishing Club</fullName>
+        <default>false</default>
+        <label>Fishing Club</label>
+    </customValue>
+    <customValue>
+        <fullName>The Wall Street Club</fullName>
+        <default>false</default>
+        <label>The Wall Street Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Math Club</fullName>
+        <default>false</default>
+        <label>Math Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Pop &amp; Rock Club</fullName>
+        <default>false</default>
+        <label>Pop &amp; Rock Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Speech &amp; Debate Team</fullName>
+        <default>false</default>
+        <label>Speech &amp; Debate Team</label>
+    </customValue>
+    <customValue>
+        <fullName>Statistics &amp; Actuarial Science Club</fullName>
+        <default>false</default>
+        <label>Statistics &amp; Actuarial Science Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Tommie Ski &amp; Snowboard Club</fullName>
+        <default>false</default>
+        <label>Tommie Ski &amp; Snowboard Club</label>
+    </customValue>
+    <description>Field to populate choices from the application to the application record.</description>
+    <masterLabel>Clubs/Activities</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

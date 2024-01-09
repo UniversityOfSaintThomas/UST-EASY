@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Additional_Questions__c</fullName>
+    <description>Field holds JSON data for additional Questions. Should not be edited manually.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Field holds JSON data for additional Questions. Should not be edited manually.</inlineHelpText>
+    <label>Additional Questions</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

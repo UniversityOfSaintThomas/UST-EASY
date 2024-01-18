@@ -119,7 +119,7 @@ public without sharing class requestForInformationFormController {
         return programIds;
     }
 
-    @AuraEnabled(Cacheable=true)
+    @AuraEnabled(Cacheable=false)
     public static Map<Id, Program__c> getPrograms(String academic_level, String school_college, String academic_interest_codes, Boolean multi_select_standard) {
         try {
             String query_string =
@@ -152,6 +152,7 @@ public without sharing class requestForInformationFormController {
                 academic_interest_codes = academic_interest_codes.escapeHtml4();
                 List<String> academicCodes = academic_interest_codes.split(';');
                 query_string += ' AND Program_Major_Concentration__c IN :academicCodes ';
+                System.debug('PROGRAM QUERY: ' + academicCodes);
             }
             if (multi_select_standard) {
                 query_string += ' ORDER BY Program_Name_on_Application__c ';
@@ -159,8 +160,8 @@ public without sharing class requestForInformationFormController {
                 query_string += ' ORDER BY Degree__c, Program_Name_on_Application__c ';
             }
 
-            //System.debug('PROGRAM QUERY: ');
-            //System.debug(query_string);
+
+            System.debug(query_string);
             List<Program__c> programs = Database.query(query_string);
             //System.debug(JSON.serializePretty(programs));
             return new Map<Id, Program__c>(programs);
@@ -175,7 +176,7 @@ public without sharing class requestForInformationFormController {
             Date today = System.today();
             Date today_plus_four_years = today.addYears(4);
             // Academic Term -> intended start term
-            // limit by 4 years, show Fall and Spring 
+            // limit by 4 years, show Fall and Spring
             Map<Id, Academic_Term__c> terms = new Map<Id, Academic_Term__c>([
                     SELECT
                             Id,
@@ -286,6 +287,8 @@ public without sharing class requestForInformationFormController {
             }
         }
         List<Program__c> academicPrograms = new List<Program__c>();
+        System.debug('PROGRAM NAME: ' + program_name);
+        System.debug('PROGRAM CODE: ' + program_code);
         if (String.isNotBlank(program_name) && String.isNotBlank(program_code)) {
             academicPrograms = [
                     SELECT Id
@@ -296,6 +299,7 @@ public without sharing class requestForInformationFormController {
                     LIMIT 1
             ];
         } else if (String.isNotEmpty(major_id)) {
+            System.debug('major_id: ' + major_id);
             Program__c programRecruitment = [
                     SELECT
                             Id, Name, Program_Major_Concentration__c

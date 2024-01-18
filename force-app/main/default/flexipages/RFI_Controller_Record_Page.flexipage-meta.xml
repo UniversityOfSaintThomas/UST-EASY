@@ -124,6 +124,16 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>rfi_controller</name>
+                    <value>RFI Controller 0000</value>
+                </componentInstanceProperties>
+                <componentName>requestForInformationForm</componentName>
+                <identifier>c_requestForInformationForm</identifier>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
         <type>Region</type>

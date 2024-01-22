@@ -118,6 +118,7 @@ export default class RfiAdditionalQuestions extends LightningElement {
         if (error) {
             console.log(error);
         } else if (data) {
+
             const JSONString = getFieldValue(data, ADDITIONAL_QUESTIONS_FIELD);
             if (JSONString === null || JSONString === '[]') {
                 this.questionJSON = [];
@@ -143,11 +144,11 @@ export default class RfiAdditionalQuestions extends LightningElement {
                 let field = this.leadObjectInfo.data.fields[fieldName];
                 //Check if field is updatable before adding it to the combobox options
                 //check if field is a text box or a textarea
-                console.log(field.dataType);
-                if (field.dataType === 'String' || field.dataType === 'TextArea') {
-                    if (field.updateable) {
+                if ((field.dataType === 'String' || field.dataType === 'TextArea')
+                    && field.updateable && field.createable
+                    && !fieldName.toLowerCase().startsWith('utm_')
+                    && !fieldName.toLowerCase().startsWith('linkedin')) {
                         leadFields.push({label: field.label, value: fieldName});
-                    }
                 }
             });
         }
@@ -220,8 +221,6 @@ export default class RfiAdditionalQuestions extends LightningElement {
                 break;
         }
 
-        // console.log(this.questionJSON);
-        // console.log(JSON.stringify(this.inputItem));
     }
 
     callRowAction(event) {
@@ -260,6 +259,5 @@ export default class RfiAdditionalQuestions extends LightningElement {
         updateRecord(recordInput).then(r => console.log(r)).catch(e => console.log(e));
 
     }
-
 
 }

@@ -117,6 +117,7 @@ export default class RequestForInformationForm extends LightningElement {
     utm_source_platform;
     gclid;
 
+    //connectedCallback() is a lifecycle hook that fires when the component is inserted into the DOM so we can gather URL parameters at this point
     connectedCallback() {
         this.utm_campaign = this.getUrlParamValue(window.location.href, 'utm_campaign');
         this.utm_medium = this.getUrlParamValue(window.location.href, 'utm_medium');
@@ -130,14 +131,17 @@ export default class RequestForInformationForm extends LightningElement {
         this.gclid = this.getUrlParamValue(window.location.href, 'gclid');
     }
 
+    //Gets url parameters to populate utm fields
     getUrlParamValue(url, key) {
         return new URL(url).searchParams.get(key);
     }
 
     // // RFI controller info
     @api rfi_controller = 'RFI Controller 0000';
+
     @api recordId;
 
+    //If a recordId is found we can assume we are on a record page and we can get the RFI controller name from the record
     @wire(getRecord, {recordId: "$recordId", fields: RFI_CONTROLLER_FIELDS})
     rfiController({error, data}) {
         if (error) {
@@ -161,7 +165,6 @@ export default class RequestForInformationForm extends LightningElement {
     multi_select_standard;
     multi_select_single = false;
 
-    @track hide_form_title = true;
 
     // lead info
     lead_default_record_type;
@@ -174,6 +177,7 @@ export default class RequestForInformationForm extends LightningElement {
     undecided_program_id; // store id for undecided program if in play
 
     //front-end display
+    @track hide_form_title = true;
     @track show_spinner = true;
     @track manually_enter_high_school = false;
     @track high_school_data = false;
@@ -320,10 +324,12 @@ export default class RequestForInformationForm extends LightningElement {
      ******************************************
      */
 
+    // Use the Apex class getRFIController to get the RFI controller information
     @wire(getRFIController, {rfi_controller_name: '$rfi_controller'})
     rfi(result) {
         if (result.data) {
             if (Boolean(result.data)) {
+                //Assign values from RFI controller to local variables
                 this.academic_level_api = result.data.Academic_Level__c;
                 if (this.academic_level_api === 'U') {
                     this.is_undergraduate = true;
@@ -343,10 +349,12 @@ export default class RequestForInformationForm extends LightningElement {
                 this.hide_form_title = result.data.Hide_Form_Title__c;
                 this.redirect_after_submit = result.data.Redirect_After_Form_Submission__c;
                 this.academic_interest_codes = result.data.Academic_Interests_To_Display__c;
-                this.multi_select_standard = result.data.Multi_Select_Display_Type__c === 'SLDS Dueling Picklists' || !result.data.Multi_Select_Display_Type__c;
-                // if(result.data.Include_Undecided_Academic_Interest__c) {
-                //     this.academic_undecided = result.data.Include_Undecided_Academic_Interest__c;
-                // }
+                if (result.data.Multi_Select_Display_Type__c === 'SLDS Dueling Picklists' || !result.data.Multi_Select_Display_Type__c) {
+                    this.multi_select_standard = true;
+                } else {
+                    this.multi_select_standard = false
+                }
+
 
                 if (result.data.Additional_Questions__c) {
                     this.additional_questions = JSON.parse(result.data.Additional_Questions__c);
@@ -412,7 +420,7 @@ export default class RequestForInformationForm extends LightningElement {
                             this.program_id_to_name_map = programs;
                             const values = [];
                             let last_group = '';
-                            //let item_count = 0;
+
                             if (this.academic_level === 'U' || this.academic_level === 'Undergraduate') {
                                 for (const program in programs) {
                                     values.push(
@@ -423,23 +431,29 @@ export default class RequestForInformationForm extends LightningElement {
                                     );
                                 }
                             } else {
+                                //Check for any programs that have Program_Name_on_Application__c = 'Undecided'
                                 for (const program in programs) {
-                                    if ((last_group === '' || last_group !== programs[program].Degree__c)) {
-                                        last_group = programs[program].Degree__c
-                                        values.push(
-                                            {
-                                                label: programs[program].Program,
-                                                value: programs[program].Degree__c,
-                                                description: programs[program].Degree__c,
-                                                is_group: true
-                                            }
-                                        );
-                                    }
-
-                                    let label_value = programs[program].Program_Name_on_Application__c;
-                                    if (label_value.toLowerCase().includes('undecided')) {
-                                        console.log('undecided found');
+                                    if (programs[program].Program_Name_on_Application__c.toLowerCase().includes('undecided')) {
                                         this.multi_select_single = true;
+                                    }
+                                }
+
+                                for (const program in programs) {
+                                    let label_value = programs[program].Program_Name_on_Application__c;
+                                    if (!this.undecided_program_id) {
+                                        if (last_group === '' || last_group !== programs[program].Degree__c) {
+                                            last_group = programs[program].Degree__c
+                                            if (label_value && programs[program].Degree__c) {
+                                                values.push(
+                                                    {
+                                                        label: label_value,
+                                                        value: programs[program].Degree__c,
+                                                        description: programs[program].Degree__c,
+                                                        is_group: true
+                                                    }
+                                                );
+                                            }
+                                        }
                                     }
                                     if (label_value && programs[program].Id) {
                                         values.push(
@@ -454,29 +468,18 @@ export default class RequestForInformationForm extends LightningElement {
                                 }
                             }
 
-                            //If this.multi_select_single is true then remove is_group = true values
-                            if (this.multi_select_single || this.multi_select_standard) {
-                                this.academic_interest_picklist_values = values.filter(function (el) {
-                                    return el.is_group !== true;
-                                });
-                            } else {
-                                this.academic_interest_picklist_values = values;
-                            }
+                            this.academic_interest_picklist_values = values;
 
                             //remove undecided value from academic_interest_picklist_values and apply to academic_interest_picklist_values_no_undecided
                             this.academic_interest_picklist_values_no_undecided = this.academic_interest_picklist_values.filter(function (el) {
                                 return !el.label.toLowerCase().includes('undecided');
                             });
 
-                            console.log('multi_select_standard: ' + this.multi_select_standard);
-                            console.log('multi_select_single: ' + this.multi_select_single);
-                            console.log('academic_interest_label: ' + this.field_labels.academic_interest_label);
                             if (this.multi_select_single) {
                                 this.field_labels.academic_interest_label = 'Academic Interest';
                             } else {
                                 this.field_labels.academic_interest_label = 'Academic Interest (Max 4)';
                             }
-
 
                         })
                         .catch(error => {
@@ -587,15 +590,9 @@ export default class RequestForInformationForm extends LightningElement {
      */
 
     onChange(event) {
-        // console.log(JSON.stringify(event.targetElement.dataset));
-        //console.log(JSON.stringify(event.currentTarget.dataset));
-        // console.log(JSON.stringify(event.target));
-        //console.log('ID: ' + event.target.dataset.questionid);
-        // console.log('Label: ' + event.target.label);
-        // console.log('Value: ' + event.target.value);
+
         if (event.currentTarget.dataset.addquestion) {
             let fieldToApplyTo = this.additional_questions[event.currentTarget.dataset.questionid].fieldToApplyTo;
-            console.log('fieldToApplyTo: ' + fieldToApplyTo);
             this.record_input.fields[fieldToApplyTo] = event.target.value;
         } else {
 
@@ -672,7 +669,12 @@ export default class RequestForInformationForm extends LightningElement {
                     break;
                 case this.field_labels.academic_interest_label:
                     //Check if the RFI user selected Undecided
-                    let label = this.academic_interest_picklist_values.find(opt => opt.value === event.detail.value).label;
+                    let label = ''
+                    // had to try/catch this because groupable pills only return values and no labels
+                    try {
+                        label = this.academic_interest_picklist_values.find(opt => opt.value === event.detail.value).label;
+                    } catch (e) {
+                    }
                     this.academic_undecided_selected = label.toLowerCase().includes('undecided');
                     if (this.academic_undecided_selected) {
                         this.undecided_program_id = event.detail.value;
@@ -681,9 +683,8 @@ export default class RequestForInformationForm extends LightningElement {
                     }
                     break;
                 case "What programs are you considering (max 3)?":
-                    //Hard coded label for undecided academic interest. First value blank
-                    this.academic_interest_id_list = event.detail.value.unshift(this.undecided_program_id);
-                    console.log('academic_interest_id_list: ' + JSON.stringify(this.academic_interest_id_list));
+                    //Hard coded label for undecided academic interest. First value blank=
+                    this.academic_interest_id_list = event.detail.value;
                     break
                 case this.field_labels.academic_term_label:
                     this.record_input.fields.Intended_Start_Term__c = event.target.value;
@@ -849,8 +850,12 @@ export default class RequestForInformationForm extends LightningElement {
         //if (this.is_undergraduate) {
         let count = 0;
         console.log('academic_interest_id_list : ' + this.academic_interest_id_list);
+        if (this.undecided_program_id) {
+            this.record_input.fields.Major_Program__c = this.undecided_program_id;
+            count = 1;
+        }
         for (const program_id of this.academic_interest_id_list) {
-            console.log('program_id ' + count + ' : ' + program_id);
+            //If undecided is selected assign to recruitment program (Major_Program__c)
             if (count === 0) {
                 this.record_input.fields.Major_Program__c = program_id;
             } else if (count === 1) {
@@ -881,6 +886,7 @@ export default class RequestForInformationForm extends LightningElement {
             });
     }
 
+    // Create the lead record
     createLead() {
         createLead({
             record: JSON.stringify(this.record_input.fields),
@@ -970,6 +976,7 @@ export default class RequestForInformationForm extends LightningElement {
         const selectedValue = detail.value;
     }
 
+    // Openstreetmap API to get city, state, and country from zipcode
     populateUSCityStateAndCountry(zipcode) {
         this.show_spinner = true;
         let url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&postalcode=' + String(zipcode) + '&countrycodes=US';
@@ -1013,6 +1020,7 @@ export default class RequestForInformationForm extends LightningElement {
             })
     }
 
+    // Map of US states to abbreviations to match Openstreetmap API
     getStateMap() {
         let state_map = new Map();
         state_map.set('Alabama', 'AL');

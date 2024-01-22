@@ -119,7 +119,7 @@ public without sharing class requestForInformationFormController {
         return programIds;
     }
 
-    @AuraEnabled(Cacheable=false)
+    @AuraEnabled(Cacheable=true)
     public static Map<Id, Program__c> getPrograms(String academic_level, String school_college, String academic_interest_codes, Boolean multi_select_standard) {
         try {
             String query_string =
@@ -287,8 +287,6 @@ public without sharing class requestForInformationFormController {
             }
         }
         List<Program__c> academicPrograms = new List<Program__c>();
-        System.debug('PROGRAM NAME: ' + program_name);
-        System.debug('PROGRAM CODE: ' + program_code);
         if (String.isNotBlank(program_name) && String.isNotBlank(program_code)) {
             academicPrograms = [
                     SELECT Id
@@ -299,7 +297,6 @@ public without sharing class requestForInformationFormController {
                     LIMIT 1
             ];
         } else if (String.isNotEmpty(major_id)) {
-            System.debug('major_id: ' + major_id);
             Program__c programRecruitment = [
                     SELECT
                             Id, Name, Program_Major_Concentration__c

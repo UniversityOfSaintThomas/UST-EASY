@@ -152,7 +152,6 @@ public without sharing class requestForInformationFormController {
                 academic_interest_codes = academic_interest_codes.escapeHtml4();
                 List<String> academicCodes = academic_interest_codes.split(';');
                 query_string += ' AND Program_Major_Concentration__c IN :academicCodes ';
-                System.debug('PROGRAM QUERY: ' + academicCodes);
             }
             if (multi_select_standard) {
                 query_string += ' ORDER BY Program_Name_on_Application__c ';
@@ -160,8 +159,8 @@ public without sharing class requestForInformationFormController {
                 query_string += ' ORDER BY Degree__c, Program_Name_on_Application__c ';
             }
 
-
-            System.debug(query_string);
+            //System.debug('PROGRAM QUERY: ');
+            //System.debug(query_string);
             List<Program__c> programs = Database.query(query_string);
             //System.debug(JSON.serializePretty(programs));
             return new Map<Id, Program__c>(programs);

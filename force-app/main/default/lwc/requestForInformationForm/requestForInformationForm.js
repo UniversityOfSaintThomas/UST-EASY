@@ -165,7 +165,6 @@ export default class RequestForInformationForm extends LightningElement {
     multi_select_standard;
     multi_select_single = false;
 
-
     // lead info
     lead_default_record_type;
     rfi_controller_default_record_type;
@@ -174,9 +173,11 @@ export default class RequestForInformationForm extends LightningElement {
     // maps to populate picklists, where value is name and key is id of object
     program_id_to_name_map; // for Recruitment_Program__c
     term_id_to_name_map; // for Intended_Start_Term__c
-    undecided_program_id; // store id for undecided program if in play
-
+    single_selected_program; // store id for undecided program if in play
+    academic_max_select = "4";
+    academic_max_select_help = "You can only choose up to " + this.academic_max_select + " options";
     //front-end display
+
     @track hide_form_title = true;
     @track show_spinner = true;
     @track manually_enter_high_school = false;
@@ -354,7 +355,17 @@ export default class RequestForInformationForm extends LightningElement {
                 } else {
                     this.multi_select_standard = false
                 }
-
+                if (result.data.Academic_Interest_Max_Selection__c) {
+                    console.log('result.data.Academic_Interest_Max_Selection__c : ' + result.data.Academic_Interest_Max_Selection__c);
+                    this.academic_max_select = result.data.Academic_Interest_Max_Selection__c;
+                    if (this.academic_max_select == "1") {
+                        this.multi_select_single = true;
+                        this.field_labels.academic_interest_label = 'Academic Interest';
+                    } else {
+                        this.field_labels.academic_interest_label = 'Academic Interest (Max ' + this.academic_max_select + ')';
+                        this.academic_max_select_help = "You can only choose up to " + this.academic_max_select + " options";
+                    }
+                }
 
                 if (result.data.Additional_Questions__c) {
                     this.additional_questions = JSON.parse(result.data.Additional_Questions__c);
@@ -433,14 +444,17 @@ export default class RequestForInformationForm extends LightningElement {
                             } else {
                                 //Check for any programs that have Program_Name_on_Application__c = 'Undecided'
                                 for (const program in programs) {
-                                    if (programs[program].Program_Name_on_Application__c.toLowerCase().includes('undecided')) {
+                                    if (programs[program].Program_Name_on_Application__c.toLowerCase().includes('undecided') || this.academic_max_select === "1") {
+                                        this.academic_max_select = "1";
                                         this.multi_select_single = true;
+                                        this.field_labels.academic_interest_label = 'Academic Interest';
+                                        this.academic_max_select_help = "You can only choose up to " + this.academic_max_select + " options";
                                     }
                                 }
 
                                 for (const program in programs) {
                                     let label_value = programs[program].Program_Name_on_Application__c;
-                                    if (!this.undecided_program_id) {
+                                    if (!this.single_selected_program) {
                                         if (last_group === '' || last_group !== programs[program].Degree__c) {
                                             last_group = programs[program].Degree__c
                                             if (label_value && programs[program].Degree__c) {
@@ -474,12 +488,6 @@ export default class RequestForInformationForm extends LightningElement {
                             this.academic_interest_picklist_values_no_undecided = this.academic_interest_picklist_values.filter(function (el) {
                                 return !el.label.toLowerCase().includes('undecided');
                             });
-
-                            if (this.multi_select_single) {
-                                this.field_labels.academic_interest_label = 'Academic Interest';
-                            } else {
-                                this.field_labels.academic_interest_label = 'Academic Interest (Max 4)';
-                            }
 
                         })
                         .catch(error => {
@@ -676,8 +684,8 @@ export default class RequestForInformationForm extends LightningElement {
                     } catch (e) {
                     }
                     this.academic_undecided_selected = label.toLowerCase().includes('undecided');
-                    if (this.academic_undecided_selected) {
-                        this.undecided_program_id = event.detail.value;
+                    if (this.academic_undecided_selected || this.multi_select_single) {
+                        this.single_selected_program = event.detail.value;
                     } else {
                         this.academic_interest_id_list = event.detail.value;
                     }
@@ -850,8 +858,8 @@ export default class RequestForInformationForm extends LightningElement {
         //if (this.is_undergraduate) {
         let count = 0;
         console.log('academic_interest_id_list : ' + this.academic_interest_id_list);
-        if (this.undecided_program_id) {
-            this.record_input.fields.Major_Program__c = this.undecided_program_id;
+        if (this.single_selected_program) {
+            this.record_input.fields.Major_Program__c = this.single_selected_program;
             count = 1;
         }
         for (const program_id of this.academic_interest_id_list) {

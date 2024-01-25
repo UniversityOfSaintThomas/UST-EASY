@@ -1634,6 +1634,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>RFI_Controller__c.Academic_Interest_Max_Selection__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>RFI_Controller__c.Academic_Interests_To_Display__c</field>
         <readable>true</readable>
     </fieldPermissions>

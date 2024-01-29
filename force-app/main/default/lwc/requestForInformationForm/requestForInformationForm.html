@@ -62,18 +62,7 @@
                 </template>
                 <template if:true={show_fields.Academic_Interest}>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium slds-m-bottom_medium field-academic-interest">
-                        <template lwc:if={multi_select_single}>
-                            <lightning-combobox
-                                    required={require_fields.Academic_Interest}
-                                    label={field_labels.academic_interest_label}
-                                    options={academic_interest_picklist_values}
-                                    aria-label="Academic Interest"
-                                    onchange={onChange}
-                                    field-level-help=""
-                            >
-                            </lightning-combobox>
-                        </template>
-                        <template lwc:elseif={multi_select_standard}>
+                        <template lwc:if={multi_select_standard}>
                             <lightning-dual-listbox
                                     required={require_fields.Academic_Interest}
                                     label={field_labels.academic_interest_label}

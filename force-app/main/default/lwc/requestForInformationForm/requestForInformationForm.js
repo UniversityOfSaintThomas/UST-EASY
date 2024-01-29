@@ -454,6 +454,9 @@ export default class RequestForInformationForm extends LightningElement {
 
                                 for (const program in programs) {
                                     let label_value = programs[program].Program_Name_on_Application__c;
+                                    if(label_value.toLowerCase().includes('undecided')) {
+                                        this.multi_select_standard = false;
+                                    }
                                     if (!this.single_selected_program) {
                                         if (last_group === '' || last_group !== programs[program].Degree__c) {
                                             last_group = programs[program].Degree__c
@@ -483,6 +486,13 @@ export default class RequestForInformationForm extends LightningElement {
                             }
 
                             this.academic_interest_picklist_values = values;
+
+                            //if multi_select_standard is true remove items with is_group true
+                            if (this.multi_select_standard) {
+                                this.academic_interest_picklist_values = this.academic_interest_picklist_values.filter(function (el) {
+                                    return !el.is_group;
+                                });
+                            }
 
                             //remove undecided value from academic_interest_picklist_values and apply to academic_interest_picklist_values_no_undecided
                             this.academic_interest_picklist_values_no_undecided = this.academic_interest_picklist_values.filter(function (el) {
@@ -598,7 +608,6 @@ export default class RequestForInformationForm extends LightningElement {
      */
 
     onChange(event) {
-
         if (event.currentTarget.dataset.addquestion) {
             let fieldToApplyTo = this.additional_questions[event.currentTarget.dataset.questionid].fieldToApplyTo;
             this.record_input.fields[fieldToApplyTo] = event.target.value;
@@ -676,19 +685,14 @@ export default class RequestForInformationForm extends LightningElement {
                     this.is_transfer = this.record_input.fields.Admit_Type__c === 'Transfer';
                     break;
                 case this.field_labels.academic_interest_label:
-                    //Check if the RFI user selected Undecided
-                    let label = ''
-                    // had to try/catch this because groupable pills only return values and no labels
-                    try {
-                        label = this.academic_interest_picklist_values.find(opt => opt.value === event.detail.value).label;
-                    } catch (e) {
+                    let academic_value = event.detail.value.toString();
+                    //if the multi select pills groupable finds undecided it will append it to the front of the id
+                    if (academic_value.toLowerCase().includes("undecided|")) {
+                        academic_value = academic_value.replace("undecided|", "");
+                        this.academic_undecided_selected = true;
+                        this.single_selected_program = academic_value;
                     }
-                    this.academic_undecided_selected = label.toLowerCase().includes('undecided');
-                    if (this.academic_undecided_selected || this.multi_select_single) {
-                        this.single_selected_program = event.detail.value;
-                    } else {
-                        this.academic_interest_id_list = event.detail.value;
-                    }
+                    this.academic_interest_id_list = academic_value;
                     break;
                 case "What programs are you considering (max 3)?":
                     //Hard coded label for undecided academic interest. First value blank=
@@ -857,7 +861,7 @@ export default class RequestForInformationForm extends LightningElement {
     handleRecruitmentProgram() {
         //if (this.is_undergraduate) {
         let count = 0;
-        console.log('academic_interest_id_list : ' + this.academic_interest_id_list);
+        //Apply the single record if undecided in play
         if (this.single_selected_program) {
             this.record_input.fields.Major_Program__c = this.single_selected_program;
             count = 1;

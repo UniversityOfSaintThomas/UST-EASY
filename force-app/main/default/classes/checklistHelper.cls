@@ -285,6 +285,9 @@ public with sharing class checklistHelper {
             }
 
         }
+
+        System.debug('NEW RESPONSE SIZE : ' + newResponses.size());
+
         if (newResponses.size() > 0 && doDML) {
             insert newResponses;
         }
@@ -323,8 +326,10 @@ public with sharing class checklistHelper {
             }
 
         } catch (DmlException e) {
+            System.debug('Error: ' + e.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
         } catch (Exception e) {
+            System.debug('Error: ' + e.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 

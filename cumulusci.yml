@@ -301,8 +301,8 @@ flows:
         task: create_bulk_data_permission_set
       5:
         task: turn_off_duplicate_rules
-      6:
-        task: create_fake_school_data
+#      6:
+#        task: create_fake_school_data
       7:
         task: update_admin_profile
       8:

@@ -477,10 +477,31 @@ public with sharing class ApplicationBodyController {
 
             //Find if lowercase version of tag is in our map of lower/uppercase tags and use uppercase to grab data
             if (lowerCaseUppercaseTagMap.keySet().contains(tab_data.toLowerCase())) {
+                //find if the tag is Documents_Missing
                 String caseSensitiveTag = lowerCaseUppercaseTagMap.get(tab_data.toLowerCase());
 
                 //If the value is blank we want to replace tag with an empty string
                 String valueForTag = String.isNotBlank((String) tagMap.get(caseSensitiveTag)) ? (String) tagMap.get(caseSensitiveTag) : '' ;
+
+                if(tab_data.toLowerCase() == 'documents_missing' && String.isNotBlank(valueForTag)){
+                    //The documents_missing tab contains a comma seperated list inside brackets I want to turn into a bulleted list
+                    String documentsMissing = (String) tagMap.get(lowerCaseUppercaseTagMap.get(tab_data.toLowerCase()));
+                    if(String.isNotBlank(documentsMissing)){
+                        //System.debug('documentsMissing: ' + documentsMissing);
+                        //remove <p>[ from front of tag and ]</p> from end of tag added by flow creation
+                        documentsMissing = documentsMissing.removeStart('<p>');
+                        documentsMissing = documentsMissing.removeStart('[');
+                        documentsMissing = documentsMissing.removeEnd('</p>');
+                        documentsMissing = documentsMissing.removeEnd(']');
+                        String[] documentsMissingList = documentsMissing.split(',');
+                        String documentsMissingListHTML = '<ul>';
+                        for(String document : documentsMissingList){
+                            documentsMissingListHTML += '<li>' + document + '</li>';
+                        }
+                        documentsMissingListHTML += '</ul>';
+                        valueForTag = documentsMissingListHTML;
+                    }
+                }
 
                 //Replace the original tag (as it may contain html,ect, with the found value)
                 widgetContent = widgetContent.replace(tag, valueForTag);

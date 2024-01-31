@@ -16,7 +16,7 @@ public class ApplicationRequirement {
     public Contact con { get; set; }
     public Application__c app { get; set; }
     public List<Question_Response__c> qResponses { get; set; }
-    private Boolean queryItems = true;
+    //private Boolean queryItems = true;
     List<Requirement_Response__c> requirementResponses { get; set; }
     List<Question_Response__c> questionResponses { get; set; }
     List<Question_Dependency__c> questionDependencies { get; set; }
@@ -27,7 +27,6 @@ public class ApplicationRequirement {
     public Boolean isInvalid { get; set; }
     public Boolean ignoreExternalFilter { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
-
     public Boolean allowSubmit { get; set; }
     public Boolean allowConfirm { get; set; }
     public transient String additionalDataString { get; set; }
@@ -51,6 +50,7 @@ public class ApplicationRequirement {
         }
         set;
     }
+
     public Id prevReqId {
         get {
             if (appInfo != null && String.isNotBlank(appInfo.requirementId)) {
@@ -83,18 +83,11 @@ public class ApplicationRequirement {
     }
 
     public ApplicationRequirement(Id contactId, Id applicationId, Id requirementId, List<Requirement_Item__c> items, List<Requirement_Response__c> requirementResponses, List<Question_Response__c> questionResponses, List<Question_Dependency__c> questionDependencies) {
-/*
-        appInfo = this.appInfo;
-        appInfo.contactId = contactId;
-        appInfo.appId = applicationId;
-        appInfo.requirementId = requirementId;
-        ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));*/
         this.items = items;
         this.requirementResponses = requirementResponses;
         this.questionResponses = questionResponses;
         this.questionDependencies = questionDependencies;
         this.preventUpdates = true;
-        queryItems = false;
         isInvalid = false;
     }
 
@@ -132,11 +125,9 @@ public class ApplicationRequirement {
             return new PageReference(Site.getPathPrefix() + '/SiteLogin?startURL=' + EncodingUtil.urlEncode(startUrl, 'UTF-8'));
         }
 
-        if (queryItems == true) {
-            items = applicationHelper.getRequirementQuestions(new Set<Id>{
-                    appInfo.requirementId
-            }, appInfo.isExternalUser);
-        }
+        items = applicationHelper.getRequirementQuestions(new Set<Id>{
+                appInfo.requirementId
+        }, appInfo.isExternalUser);
 
         //Get the application values for this requirement
         if ((String.isNotBlank(appInfo.appId) && app == null)) {
@@ -145,13 +136,11 @@ public class ApplicationRequirement {
             app = ((List<Application__c>) Database.query(query)).get(0);
         }
 
-        if (queryItems == true) {
-            checklistItems = checklistHelper.checklistRequirements(app, appInfo);
-            allowSubmit = checklistHelper.allowSubmit(checklistItems, appInfo);
-            appInfo.allowSubmit = allowSubmit;
-            allowConfirm = checklistHelper.allowConfirm(checklistItems, appInfo);
-            appInfo.allowConfirm = allowConfirm;
-        }
+        checklistItems = checklistHelper.checklistRequirements(app, appInfo);
+        allowSubmit = checklistHelper.allowSubmit(checklistItems, appInfo);
+        appInfo.allowSubmit = allowSubmit;
+        allowConfirm = checklistHelper.allowConfirm(checklistItems, appInfo);
+        appInfo.allowConfirm = allowConfirm;
 
         //Get needed values from Contact record
         if (con == null) {
@@ -270,29 +259,23 @@ public class ApplicationRequirement {
                 relatedFieldDescribes.put(result.getName(), result.fields.getMap());
             }
         }
-/*
-        moved to checklist helper
-        if (preventUpdates == false) {
-            insert newResponses;
-        }
-*/
 
         section = new ApplicationQuestionSection(con, app, riLst, dQuestions, responses, dResponses, relatedFieldDescribes);
 
         // Clone Question Response records and store ID if this is an external user
         // in order to get around restriction of external users being able to edit objects
-        if (appInfo.isExternalUser != null && appInfo.isExternalUser) {
-            for (ApplicationQuestionGroup aqg : section.groups) {
-                if (aqg.questionGroup && aqg.questions != null) {
-                    for (ApplicationQuestion aq : aqg.questions) {
-                        if (aq.response != null && aq.response.Id != null) {
-                            aq.responseId = aq.response.Id;
-                            aq.response = aq.response.clone(false, true, false, false);
-                        }
+        //if (appInfo.isExternalUser != null && appInfo.isExternalUser) {
+        for (ApplicationQuestionGroup aqg : section.groups) {
+            if (aqg.questionGroup && aqg.questions != null) {
+                for (ApplicationQuestion aq : aqg.questions) {
+                    if (aq.response != null && aq.response.Id != null) {
+                        aq.responseId = aq.response.Id;
+                        aq.response = aq.response.clone(false, true, false, false);
                     }
                 }
             }
         }
+        //}
         return null;
     }
 
@@ -400,11 +383,7 @@ public class ApplicationRequirement {
                             }
                         }
                     }
-                } 
-                // else if (addData == null && g.att != null && String.isEmpty(g.att.Title) && g.item.Required__c.contains(app.Application_Status__c)) {
-                //     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Upload required.'));
-                //     hasError = true;
-                // }
+                }
             }
         }
 
@@ -442,10 +421,8 @@ public class ApplicationRequirement {
                         Question_Response__c qResp = q.response;
                         qResp.Application__c = app.Id;
 
-                        // Clone Question Response and apply ID if this is an external user
-                        // in order to get around the restriction of external users not being
-                        // able to edit objects.
-                        if (appInfo.isExternalUser) {
+                        // Clone Question Response and apply ID if this user is a guest user to let guest user edit object
+                        if (Auth.CommunitiesUtil.isGuestUser()) {
                             qResp = q.response.clone(false, true, false, false);
                             qResp.Id = q.responseId;
                         }

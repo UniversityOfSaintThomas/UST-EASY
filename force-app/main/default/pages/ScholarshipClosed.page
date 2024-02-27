@@ -1,4 +1,4 @@
-<apex:page showHeader="false" sidebar="false" controller="ScholarshipClosedController"  action="{!initialize}">
+<apex:page showHeader="false" sidebar="false" controller="ScholarshipClosedController" >
     <apex:composition template="ScholarshipTemplate">
         <apex:define name="head-extras">
             <title>Closed | Scholarships at St. Thomas</title>

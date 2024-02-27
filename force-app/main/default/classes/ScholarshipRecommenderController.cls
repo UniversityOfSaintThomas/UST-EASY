@@ -74,10 +74,6 @@ public class ScholarshipRecommenderController {
 
     }
 
-    public PageReference buildRecommendation() {
-        return null;
-    }
-
     public PageReference Save() {
         if (this.ScholarshipApplicant != null) {
             doCRUD CRUDToDo = new doCRUD();

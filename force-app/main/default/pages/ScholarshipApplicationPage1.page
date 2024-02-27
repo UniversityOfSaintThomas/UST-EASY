@@ -1,63 +1,88 @@
 <apex:page showHeader="false" sidebar="false" controller="ScholarshipApplicationPage1Controller" action="{!sanityCheck}">
-    <apex:composition template="ScholarshipTemplate">
-        <apex:define name="head-extras">
-            <title>{!scholarship.Name} - Page 1 | Scholarships at St. Thomas</title>
+    <apex:composition template="ScholarshipTemplate2024">
+        <apex:define name="metaPageTitle">
+            {!scholarship.Name} - Page 1 | Scholarships at St. Thomas
         </apex:define>
         <apex:define name="body">
-            <script>
-                var historyPage = '{!PageURL}';
-            </script>
-            <div class="row">
-                <div class="columns errorMessages">
-                    <apex:messages />
+            <div class="slds-grid slds-wrap normalizeSLDS" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <nav class="slds-col slds-size_1-of-1">
+                    <h1 class="slds-text-heading_large">
+                        Scholarships
+                    </h1>
+                    <ul>
+                        <li>
+                            <apex:outputLink value="{!$Page.ScholarshipHome}">Scholarship List</apex:outputLink>
+                        </li>
+                        <li>
+                            <apex:outputLink value="{!$Page.ApplicationPortal}">Admissions Home</apex:outputLink>
+                        </li>
+                        <apex:outputPanel layout="none" rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">
+                            <li>
+                                <apex:outputLink value="{!$Site.Prefix}/ApplicationLogin">Login</apex:outputLink>
+                            </li>
+                        </apex:outputPanel>
+                    </ul>
+                </nav>
+                <div class="slds-col slds-size_1-of-1 errorMessages">
+                    <apex:messages/>
                 </div>
-            </div>
-            <apex:form styleClass="criteriaForm" id="criteriaForm">
-                <apex:outputPanel layout="block" styleClass="row" rendered="{!IF(ISNULL(scholarship.Name) , false , true)}">
-                    <div class="column">
-                        <h2>
+                <apex:form styleClass="criteriaForm slds-grid slds-wrap" id="criteriaForm">
+                    <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!IF(ISNULL(scholarship.Name) , false , true)}">
+                        <h1 class="slds-text-heading_large">
                             {!scholarship.Name}
-                        </h2>
+                        </h1>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!IF(ISNULL(scholarship.Description__c) , false , true)}">
+                        <h2 class="slds-text-heading_medium">Scholarship description</h2>
+                        <apex:outputText escape="false" value="{!scholarship.Description__c}"></apex:outputText>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!IF(ISNULL(scholarship.Criteria_Statement__c) , false , true)}">
+                        <h2 class="slds-text-heading_medium">Eligibility</h2>
+                        <apex:outputText escape="false" value="{!scholarship.Criteria_Statement__c}"></apex:outputText>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel layout="none" rendered="{!scholarship.Self_Report_ACT_GPA_Criteria__c}" id="selfReportGA" StyleClass="row selfReportGA">
+                        <div class="slds-p-top_x-small slds-p-bottom_small slds-p-right_small slds-size_1-of-1 slds-size_6-of-12">
+                            <apex:outputLabel for="Declared_GPA" styleClass="slds-form-element__label">
+                                Self report your GPA:
+                            </apex:outputLabel>
+                            <div class="slds-form-element__control">
+                                <apex:inputText value="{!scholarshipApplicant.Declared_GPA__c}" id="Declared_GPA" styleClass="Declared_GPA slds-input" title="Self Reported GPA is required."></apex:inputText>
+                            </div>
+                        </div>
+                        <div class="slds-p-vertical_x-small slds-size_1-of-1 slds-size_6-of-12">
+                            <apex:outputLabel for="Declared_Test" styleClass="slds-form-element__label">
+                                Self report your ACT or SAT:
+                            </apex:outputLabel>
+                            <div class="slds-form-element__control">
+                                <apex:inputText value="{!scholarshipApplicant.Declared_ACT_SAT__c}" id="Declared_Test" styleClass="Declared_Test slds-input" title="Self Reported ACT or SAT is required."></apex:inputText>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+
+                    <div class="slds-col slds-p-top_x-small slds-p-bottom_medium slds-size_1-of-1">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <div class="slds-checkbox">
+                                    <apex:inputCheckbox value="{!scholarshipApplicant.Confirmed_Criteria__c}" id="confirmCriteria"/>
+                                    <apex:outputLabel for="confirmCriteria" styleClass="slds-checkbox__label">
+                                        <span class="slds-checkbox_faux"></span>
+                                        <span class="slds-form-element__label">I confirm that I meet the eligibility criteria for the {!scholarship.Name}.</span>
+                                    </apex:outputLabel>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </apex:outputPanel>
-                <apex:outputPanel layout="block" styleClass="row" rendered="{!IF(ISNULL(scholarship.Description__c) , false , true)}">
-                    <div class="column">
-                        <p>
-                            <strong>Scholarship description</strong><br/>
-                            <apex:outputText escape="false" value="{!scholarship.Description__c}" ></apex:outputText>
-                        </p>
+
+                    <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
+                        <apex:commandLink action="{!SaveCriteria}" onClick="return validateCriteria();" Value="Confirm and Continue" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
                     </div>
-                </apex:outputPanel>
-                <apex:outputPanel layout="block" styleClass="row" rendered="{!IF(ISNULL(scholarship.Criteria_Statement__c) , false , true)}">
-                    <div class="column">
-                        <p>
-                            <strong>Eligibility</strong><br/>
-                            <apex:outputText escape="false" value="{!scholarship.Criteria_Statement__c}"></apex:outputText>
-                        </p>
-                    </div>
-                </apex:outputPanel>
-                <apex:outputPanel layout="block" rendered="{!scholarship.Self_Report_ACT_GPA_Criteria__c}" id="selfReportGA" StyleClass="row selfReportGA">
-                    <div class="small-6 medium-6 larg-6 columns">
-                        Self report your GPA:<br/>
-                        <apex:inputText value="{!scholarshipApplicant.Declared_GPA__c}" id="Declared_GPA" styleClass="Declared_GPA" title="Self Reported GPA is required."></apex:inputText>
-                    </div>
-                    <div class="small-6 medium-6 larg-6 columns">
-                        Self report your ACT or SAT:<br/>
-                        <apex:inputText value="{!scholarshipApplicant.Declared_ACT_SAT__c}" id="Declared_Test" styleClass="Declared_Test" title="Self Reported ACT or SAT is required."></apex:inputText>
-                    </div>
-                </apex:outputPanel>
-                <div class="row">
-                    <div class="column">
-                        <apex:inputCheckbox value="{!scholarshipApplicant.Confirmed_Criteria__c}" id="confirmCriteria" styleClass="requiredInput confirmCriteria" title="You must check the box indicating your acceptance if the criteria above." />
-                        <apex:outputLabel value="I confirm that I meet the eligibility criteria for the {!scholarship.Name}." for="confirmCriteria"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="columns small-4 medium-4 large-4" style="padding-top:20px;">
-                        <apex:commandLink action="{!SaveCriteria}" onClick="return validateCriteria();" Value="Confirm and Continue" styleClass="button confirmContinue"/>
-                    </div>
-                </div>
-            </apex:form>
+
+                </apex:form>
+            </div>
         </apex:define>
     </apex:composition>
 </apex:page>

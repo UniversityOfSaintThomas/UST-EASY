@@ -89,8 +89,8 @@ tasks:
     description: 'Load test data associated with EASY scholarships'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/scholarships/scholarships-default.latest.mapping.yml
-      sql_path: datasets/scholarships/scholarships-latest.dataset.sql
+      mapping: datasets/scholarships/mapping.yml
+      sql_path: datasets/scholarships/dataset.sql
       inject_namespaces: False
 
   load_prod_application_data:
@@ -250,6 +250,14 @@ tasks:
         - record_type: Family_Member__c.Parent_Guardian
           default: true
         - record_type: Family_Member__c.UST_Alumni_Family
+        - record_type: Scholarship_Applicant__c.Scholarship
+          default: true
+        - record_type: Scholarship_Applicant__c.Grant
+        - record_type: Scholarship__c.Graduate_Scholarship
+        - record_type: Scholarship__c.Scholarship
+          default: true
+        - record_type: Scholarship__c.Signature_Programs
+        - record_type: Scholarship__c.UG_Merit
 
   add_degree_piciklist:
     description: "Adds more picklist items to the degree earned list of EDA."
@@ -333,8 +341,8 @@ flows:
         task: configure_community_settings
       21:
         task: configure_community
-      #22:
-      #  task: load_scholarship_test_data
+      22:
+        task: load_scholarship_test_data
 
   release_unlocked_beta:
     steps:

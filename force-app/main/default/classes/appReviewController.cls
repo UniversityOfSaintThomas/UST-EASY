@@ -1,3 +1,8 @@
+/**
+ * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/16/2023.
+ */
+
+
 public with sharing class appReviewController {
 
     @AuraEnabled(Cacheable=true)

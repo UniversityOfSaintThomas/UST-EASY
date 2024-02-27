@@ -7,81 +7,82 @@
     <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
     <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String" required="false" assignTo="{!currentPageParam}"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
-    <apex:form >
-        <ul class="slds-grid slds-wrap slds-grid_pull-padded-medium slds-card-tile">
-            <apex:variable var="appCount" value="{!0}"/>
-            <apex:repeat var="app" value="{!allApplications}">
-                <apex:variable var="appCount" value="{!appCount + 1}"/>
-                <li class="slds-p-bottom_x-small slds-size_1-of-1 {!(IF(appAmount > 1 && appCount != appAmount, 'slds-border_bottom',''))}">
-                    <article class="slds-tile slds-media slds-card__tile slds-hint-parent slds-p-bottom_x-small">
-                        <div class="slds-media__figure">
+    <apex:outputPanel layout="none" rendered="{!allApplications.size >0}">
+        <apex:form>
+            <ul class="slds-grid slds-wrap slds-grid_pull-padded-medium slds-card-tile">
+                <apex:variable var="appCount" value="{!0}"/>
+                <apex:repeat var="app" value="{!allApplications}">
+                    <apex:variable var="appCount" value="{!appCount + 1}"/>
+                    <li class="slds-p-bottom_x-small slds-size_1-of-1 {!(IF(appAmount > 1 && appCount != appAmount, 'slds-border_bottom',''))}">
+                        <article class="slds-tile slds-media slds-card__tile slds-hint-parent slds-p-bottom_x-small">
+                            <div class="slds-media__figure">
                         <span class="slds-icon_container slds-icon-standard-contact" title="Icon for application {!appCount}">
                           <svg class="slds-icon slds-icon_small" aria-hidden="true">
                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#visualforce_page')}"></use>
                           </svg>
                           <span class="slds-assistive-text">Application {!appCount}</span>
                         </span>
-                        </div>
-                        <div class="slds-media__body">
-                            <div class="slds-grid slds-grid_align-spread">
-                                <h3 class="slds-tile__title slds-text-heading_medium slds-p-bottom_small" title="{!app.Intended_Program_Name_on_Application__c}">
-                                    <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();">
+                            </div>
+                            <div class="slds-media__body">
+                                <div class="slds-grid slds-grid_align-spread">
+                                    <h3 class="slds-tile__title slds-text-heading_medium slds-p-bottom_small" title="{!app.Intended_Program_Name_on_Application__c}">
+                                        <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();">
+                                            <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
+                                            <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
+                                            {!app.Intended_Program_Name_on_Application__c}
+                                        </apex:commandLink>
+                                    </h3>
+                                </div>
+                                <div class="slds-tile__detail">
+                                    <dl class="slds-list_horizontal slds-wrap">
+
+                                        <dt class="slds-item_label slds-text-color_weak" title="Term">Term:</dt>
+                                        <dd class="slds-item_detail " title="Term for which this application is applying">
+                                            {!app.Intended_Term_of_Entry__r.Name}
+                                        </dd>
+
+                                        <dt class="slds-item_label slds-text-color_weak" title="Degree">Degree:</dt>
+                                        <dd class="slds-item_detail" title="Degree type for which this application is applying">
+                                            <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Undergraduate')}">
+                                                {!app.Application_Control__r.School_College__c}
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Graduate')}">
+                                                {!app.Intended_Program__r.Degree__c}
+                                            </apex:outputPanel>
+                                        </dd>
+
+
+                                        <dt class="slds-item_label slds-text-color_weak" title="Program">Program:</dt>
+                                        <dd class="slds-item_detail" title="Program for which this application is applying">
+                                            {!app.Intended_Program_Application_Control__c}
+                                            <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Undergraduate')}">
+                                                <br/> {!app.Intended_Program_College_of_Interest__c}
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Graduate')}">
+                                                <br/> {!app.Intended_Program__r.Name}
+                                            </apex:outputPanel>
+                                        </dd>
+                                        <apex:outputPanel layout="none" rendered="{!!ISBLANK(app.Applicant_Type__c) && app.Applicant_Type__c = 'Common App'}">
+                                            <dt class="slds-item_label slds-text-color_weak" title="Degree">Type:</dt>
+                                            <dd class="slds-item_detail" title="Degree type for which this application is applying">
+                                                {!app.Applicant_Type__c}
+                                            </dd>
+                                        </apex:outputPanel>
+
+                                    </dl>
+                                </div>
+                                <apex:outputPanel layout="none" rendered="{!IF(currentPage='applicationportal',true,false)}">
+                                    <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();" styleClass="slds-button slds-p-right_medium slds-button_brand slds-button-smaller slds-m-top_small">
                                         <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
                                         <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
-                                        {!app.Intended_Program_Name_on_Application__c}
+                                        Select
                                     </apex:commandLink>
-                                </h3>
+                                </apex:outputPanel>
                             </div>
-                            <div class="slds-tile__detail">
-                                <dl class="slds-list_horizontal slds-wrap">
-
-                                    <dt class="slds-item_label slds-text-color_weak" title="Term">Term:</dt>
-                                    <dd class="slds-item_detail " title="Term for which this application is applying">
-                                        {!app.Intended_Term_of_Entry__r.Name}
-                                    </dd>
-
-                                    <dt class="slds-item_label slds-text-color_weak" title="Degree">Degree:</dt>
-                                    <dd class="slds-item_detail" title="Degree type for which this application is applying">
-                                        <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Undergraduate')}">
-                                            {!app.Application_Control__r.School_College__c}
-                                        </apex:outputPanel>
-                                        <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Graduate')}">
-                                            {!app.Intended_Program__r.Degree__c}
-                                        </apex:outputPanel>
-                                    </dd>
-
-
-                                    <dt class="slds-item_label slds-text-color_weak" title="Program">Program:</dt>
-                                    <dd class="slds-item_detail" title="Program for which this application is applying">
-                                        {!app.Intended_Program_Application_Control__c}
-                                        <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Undergraduate')}">
-                                            <br/> {!app.Intended_Program_College_of_Interest__c}
-                                        </apex:outputPanel>
-                                        <apex:outputPanel rendered="{!BEGINS(app.Intended_Program_Application_Control__c,'Graduate')}">
-                                            <br/> {!app.Intended_Program__r.Name}
-                                        </apex:outputPanel>
-                                    </dd>
-                                    <apex:outputPanel layout="none" rendered="{!!ISBLANK(app.Applicant_Type__c) && app.Applicant_Type__c = 'Common App'}">
-                                        <dt class="slds-item_label slds-text-color_weak" title="Degree">Type:</dt>
-                                        <dd class="slds-item_detail" title="Degree type for which this application is applying">
-                                           {!app.Applicant_Type__c}
-                                        </dd>
-                                    </apex:outputPanel>
-
-                                </dl>
-                            </div>
-                            <apex:outputPanel layout="none" rendered="{!IF(currentPage='applicationportal',true,false)}">
-                                <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();" styleClass="slds-button slds-p-right_medium slds-button_brand slds-button-smaller slds-m-top_small">
-                                    <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
-                                    <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
-                                    Select
-                                </apex:commandLink>
-                            </apex:outputPanel>
-                        </div>
-                    </article>
-                </li>
-            </apex:repeat>
-        </ul>
-    </apex:form>
-
+                        </article>
+                    </li>
+                </apex:repeat>
+            </ul>
+        </apex:form>
+    </apex:outputPanel>
 </apex:component>

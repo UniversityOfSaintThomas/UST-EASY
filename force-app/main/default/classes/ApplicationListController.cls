@@ -25,8 +25,7 @@ public with sharing class ApplicationListController {
                 AND Application_Control__r.Active__c = TRUE
                 AND (Intended_Term_of_Entry__r.Term_10th_Day__c >= TODAY OR Intended_Term_of_Entry__r.Term_10th_Day__c = NULL)
                 AND Application_Status__c != 'Wrong App'
-                AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
-                AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
+                AND Application_Status__c != 'Withdrawn'
         ];
 
         if (currentPageParam.equalsIgnoreCase('applicationhome')) {
@@ -38,7 +37,7 @@ public with sharing class ApplicationListController {
                 allApplications = newAppList;
             }
         }
-        
+
         appAmount = allApplications.size();
         return allApplications;
     }

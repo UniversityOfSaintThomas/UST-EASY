@@ -39,10 +39,17 @@ export default class RfiAdditionalQuestions extends LightningElement {
             hideDefaultActions: true
         },
         {
-            label: 'Picklist Values',
-            fieldName: 'picklistValuesFlat',
+            label: 'Position',
+            fieldName: 'position',
             type: 'text',
             wrapText: true,
+            hideDefaultActions: true
+        },
+        {
+            label: 'Value(s)',
+            fieldName: 'valuesFlat',
+            type: 'text',
+            wrapTextMaxLines: 3,
             hideDefaultActions: true
         },
         {
@@ -86,6 +93,11 @@ export default class RfiAdditionalQuestions extends LightningElement {
     @api recordId;
 
     @track isPicklist = false;
+    @track isTextarea = false;
+    @track isTextBox = false;
+    @track isEmail = false;
+    @track isStaticContent = false;
+    @track assistiveTextRequired = false;
 
     @track inputItem = {
         'id': '',
@@ -93,11 +105,16 @@ export default class RfiAdditionalQuestions extends LightningElement {
         'questionType': '',
         'fieldToApplyTo': '',
         'assistiveText': '',
+        'position': '',
         'isPicklist': false,
         'isRequired': false,
         'isTextBox': false,
+        'isTextarea': false,
+        'isRichText': false,
+        'isStaticContent': false,
+        'isEmail': false,
         'picklistValues': [],
-        'picklistValuesFlat': ''
+        'valuesFlat': ''
     };
 
     @track questionJSON = [];
@@ -105,13 +122,21 @@ export default class RfiAdditionalQuestions extends LightningElement {
     @track showDataTable = false;
 
     @track questionTypes = [
+        {label: 'Email', value: 'Email'},
+        {label: 'Email required', value: 'Email required'},
         {label: 'Picklist', value: 'Picklist'},
         {label: 'Picklist required', value: 'Picklist required'},
+        {label: 'Static content', value: 'Static content'},
         {label: 'Text box', value: 'Text box'},
         {label: 'Text box required', value: 'Text box required'},
         {label: 'Textarea', value: 'Textarea'},
         {label: 'Textarea required', value: 'Textarea required'}
     ];
+
+    positionOptions = [
+        {label: 'Top', value: 'top'},
+        {label: 'Bottom', value: 'bottom'}
+    ]
 
     @wire(getRecord, {recordId: "$recordId", fields: FIELDS})
     addQuestionJSON({error, data}) {
@@ -144,34 +169,71 @@ export default class RfiAdditionalQuestions extends LightningElement {
                 let field = this.leadObjectInfo.data.fields[fieldName];
                 //Check if field is updatable before adding it to the combobox options
                 //check if field is a text box or a textarea
-                if ((field.dataType === 'String' || field.dataType === 'TextArea')
+                let fieldType = field.dataType.toLowerCase();
+                if (((fieldType === 'string' || fieldType === 'textArea') && (this.isTextBox || this.isTextarea || this.isPicklist))
+                    || (fieldType === 'email' && this.isEmail)
                     && field.updateable && field.createable
                     && !fieldName.toLowerCase().startsWith('utm_')
+                    && !fieldName.toLowerCase().startsWith('gclid')
                     && !fieldName.toLowerCase().startsWith('linkedin')) {
-                        leadFields.push({label: field.label, value: fieldName});
+                    leadFields.push({label: field.label, value: fieldName});
                 }
             });
         }
         return leadFields;
     }
 
-    handleChange(event) {
+    validInput(event) {
+        const allValid = [
+            ...this.template.querySelectorAll('lightning-input,lightning-combobox'),
+        ].reduce((validSoFar, inputCmp) => {
+            inputCmp.reportValidity();
+            return validSoFar && inputCmp.checkValidity();
+        }, true);
 
+        if (allValid) {
+            this.handleChange(event);
+        } else {
+            this.template.querySelector('.slds-has-error').scrollIntoView();
+            return false;
+        }
+    }
+
+    handleChange(event) {
         this.inputItem['id'] = this.questionJSON.length;
         switch (event.target.name) {
             case 'questionType':
                 this.isPicklist = false;
+                this.isEmail = false;
+                this.isTextarea = false;
+                this.isTextBox = false;
+                this.isStaticContent = false;
                 if (event.target.value === 'Picklist' || event.target.value === 'Picklist required') {
                     this.isPicklist = true;
                     this.inputItem['isPicklist'] = true;
                 }
                 if (event.target.value === 'Text box' || event.target.value === 'Text box required') {
+                    this.isTextBox = true;
                     this.inputItem['isTextBox'] = true;
+                }
+                if (event.target.value === 'Textarea' || event.target.value === 'Textarea required') {
+                    this.isTextarea = true;
+                    this.inputItem['isTextarea'] = true;
+                }
+                if (event.target.value === 'Email' || event.target.value === 'Email required') {
+                    this.isEmail = true;
+                    this.inputItem['isEmail'] = true;
+                }
+                if (event.target.value === 'Static content') {
+                    this.inputItem['isStaticContent'] = true;
+                    this.isStaticContent = true;
                 }
                 this.inputItem['questionType'] = event.target.value;
                 if (event.target.value.includes('required')) {
                     this.inputItem['isRequired'] = true;
+                    this.assistiveTextRequired = true;
                 } else {
+                    this.assistiveTextRequired = false;
                     this.inputItem['isRequired'] = false;
                 }
                 break;
@@ -187,13 +249,19 @@ export default class RfiAdditionalQuestions extends LightningElement {
                     }
                 })
                 this.inputItem['picklistValues'] = pickValuesArray;
-                this.inputItem['picklistValuesFlat'] = pickValues.join(';');
+                this.inputItem['valuesFlat'] = pickValues.join(';');
+                break;
+            case 'staticContent':
+                this.inputItem['valuesFlat'] = event.target.value;
                 break;
             case 'questionLabel':
                 this.inputItem['questionLabel'] = event.target.value;
                 break;
             case 'assistiveText':
                 this.inputItem['assistiveText'] = event.target.value;
+                break;
+            case 'position':
+                this.inputItem['position'] = event.target.value;
                 break;
             case 'Submit':
                 this.Submit = event.target.value;
@@ -205,23 +273,28 @@ export default class RfiAdditionalQuestions extends LightningElement {
                 const recordInput = {fields};
                 updateRecord(recordInput).then(r => console.log(r)).catch(e => console.log(e));
                 this.template.querySelector("form").reset();
-                this.template.querySelectorAll('form lightning-combobox').forEach(each => {
+                this.template.querySelectorAll('form lightning-combobox, form lightning-input-rich-text').forEach(each => {
                     each.value = undefined;
                 });
                 this.inputItem = {
                     'questionLabel': '',
                     'questionType': '',
                     'fieldToApplyTo': '',
-                    'picklistValues': '',
-                    'picklistValuesFlat': '',
-                    isPicklist: false,
-                    isRequired: false,
-                    isTextBox: false,
+                    'assistiveText': '',
+                    'isPicklist': false,
+                    'isRequired': false,
+                    'isTextBox': false,
+                    'isTextarea': false,
+                    'isRichText': false,
+                    'isStaticContent': false,
+                    'isEmail': false,
+                    'picklistValues': [],
+                    'valuesFlat': '',
                 };
                 break;
         }
-
     }
+
 
     callRowAction(event) {
         const actionName = event.detail.action.name;
@@ -260,4 +333,24 @@ export default class RfiAdditionalQuestions extends LightningElement {
 
     }
 
+    customButtons = [
+        {
+            category: "FORMAT_TEXT",
+            label: 'Format Text',
+            buttons: [
+                {
+                    value: 'like',
+                    label: 'Like',
+                    iconName: 'utility:like',
+                    format: 'header',
+                    handler: function () {
+                        // format selection to be h1...
+                        this.quill.format('header', 'h1');
+                        this.quill.classList.add('slds-text-heading_large');
+                    }
+                }
+            ]
+        },
+
+    ];
 }

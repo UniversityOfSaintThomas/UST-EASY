@@ -307,7 +307,6 @@ export default class RequestForInformationForm extends LightningElement {
     @track timeline_picklist_values;
     @track scholarship_picklist;
     @track heard_about_us_picklist;
-    @track additional_questions = [];
 
     //intermediate values
     address1;
@@ -317,7 +316,12 @@ export default class RequestForInformationForm extends LightningElement {
     school_picklist;
     tell_us_about;
     have_a_question;
-    has_additional_questions = false;
+    has_additional_questions_top = false;
+    has_additional_questions_bottom = false;
+    additional_questions_top;
+    additional_questions_bottom;
+    disable_standard_fields;
+    additional_questions;
 
     /**
      ******************************************
@@ -350,13 +354,13 @@ export default class RequestForInformationForm extends LightningElement {
                 this.hide_form_title = result.data.Hide_Form_Title__c;
                 this.redirect_after_submit = result.data.Redirect_After_Form_Submission__c;
                 this.academic_interest_codes = result.data.Academic_Interests_To_Display__c;
+                this.disable_standard_fields = result.data.Disable_fields_to_display__c;
                 if (result.data.Multi_Select_Display_Type__c === 'SLDS Dueling Picklists' || !result.data.Multi_Select_Display_Type__c) {
                     this.multi_select_standard = true;
                 } else {
                     this.multi_select_standard = false
                 }
                 if (result.data.Academic_Interest_Max_Selection__c) {
-                    console.log('result.data.Academic_Interest_Max_Selection__c : ' + result.data.Academic_Interest_Max_Selection__c);
                     this.academic_max_select = result.data.Academic_Interest_Max_Selection__c;
                     if (this.academic_max_select == "1") {
                         this.multi_select_single = true;
@@ -369,7 +373,16 @@ export default class RequestForInformationForm extends LightningElement {
 
                 if (result.data.Additional_Questions__c) {
                     this.additional_questions = JSON.parse(result.data.Additional_Questions__c);
-                    this.has_additional_questions = true;
+                    //get all data with position top
+                    this.additional_questions_top = this.additional_questions.filter(question => question.position === 'top');
+                    //get all data with position bottom or empty
+                    this.additional_questions_bottom = this.additional_questions.filter(question => question.position === 'bottom' || !question.position);
+                    if (this.additional_questions_top.length > 0) {
+                        this.has_additional_questions_top = true;
+                    }
+                    if (this.additional_questions_bottom.length > 0) {
+                        this.has_additional_questions_bottom = true;
+                    }
                 }
 
                 // sets boolean values for front-end display i.e. which fields on are form, which are required
@@ -454,7 +467,7 @@ export default class RequestForInformationForm extends LightningElement {
 
                                 for (const program in programs) {
                                     let label_value = programs[program].Program_Name_on_Application__c;
-                                    if(label_value.toLowerCase().includes('undecided')) {
+                                    if (label_value.toLowerCase().includes('undecided')) {
                                         this.multi_select_standard = false;
                                     }
                                     if (!this.single_selected_program) {
@@ -463,7 +476,7 @@ export default class RequestForInformationForm extends LightningElement {
                                             if (label_value && programs[program].Degree__c) {
                                                 values.push(
                                                     {
-                                                        label: label_value,
+                                                        label: programs[program].Degree__c,
                                                         value: programs[program].Degree__c,
                                                         description: programs[program].Degree__c,
                                                         is_group: true
@@ -608,11 +621,13 @@ export default class RequestForInformationForm extends LightningElement {
      */
 
     onChange(event) {
-        if (event.currentTarget.dataset.addquestion) {
-            let fieldToApplyTo = this.additional_questions[event.currentTarget.dataset.questionid].fieldToApplyTo;
-            this.record_input.fields[fieldToApplyTo] = event.target.value;
+        if (event.detail.addquestion) {
+            if (this.additional_questions[event.detail.questionid].questionType.toLowerCase() !== 'static content') {
+                console.log(JSON.stringify(this.additional_questions[event.detail.questionid], null, 2))
+                let fieldToApplyTo = this.additional_questions[event.detail.questionid].fieldToApplyTo;
+                this.record_input.fields[fieldToApplyTo] = event.detail.value;
+            }
         } else {
-
             switch (event.target.label) {
                 case this.field_labels.first_name_label:
                     this.record_input.fields.FirstName = event.target.value;
@@ -691,8 +706,17 @@ export default class RequestForInformationForm extends LightningElement {
                         academic_value = academic_value.replace("undecided|", "");
                         this.academic_undecided_selected = true;
                         this.single_selected_program = academic_value;
+                    } else if (!academic_value) {
+                        this.academic_undecided_selected = false;
+                        this.single_selected_program = '';
+                        this.academic_interest_id_list = null;
                     }
-                    this.academic_interest_id_list = academic_value;
+                    //if academic_value value is not a list assign the value to single selected program
+                    if (!Array.isArray(event.detail.value) && academic_value) {
+                        this.single_selected_program = academic_value;
+                    } else {
+                        this.academic_interest_id_list = event.detail.value;
+                    }
                     break;
                 case "What programs are you considering (max 3)?":
                     //Hard coded label for undecided academic interest. First value blank=

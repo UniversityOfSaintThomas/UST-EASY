@@ -4,7 +4,7 @@
     <description>Essay number 1 Question or criteria describing what the essay should be about.</description>
     <externalId>false</externalId>
     <label>Essay 1 Text</label>
-    <length>2000</length>
+    <length>100000</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Html</type>

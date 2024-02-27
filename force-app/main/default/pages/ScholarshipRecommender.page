@@ -1,4 +1,4 @@
-<apex:page showHeader="false" sidebar="false" controller="ScholarshipRecommenderController" docType="html-5.0" standardStylesheets="false" action="{!buildRecommendation}">
+<apex:page showHeader="false" sidebar="false" controller="ScholarshipRecommenderController" docType="html-5.0" standardStylesheets="false">
     <apex:composition template="ScholarshipTemplate">
         <apex:define name="head-extras">
             <title>Recommendation for {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName} | Scholarships at St. Thomas</title>
@@ -6,7 +6,7 @@
         <apex:define name="body">
             <div class="row">
                 <div class="columns errorMessages">
-                    <apex:pageMessages />
+                    <apex:pageMessages/>
                 </div>
             </div>
             <div class="row">
@@ -16,7 +16,7 @@
                     </h2>
                 </div>
             </div>
-            <apex:form rendered="{!!recComplete}" >
+            <apex:form rendered="{!!recComplete}">
                 <apex:outputPanel rendered="{!IF(ISNULL(ScholarshipApplicant.Scholarship__r.Name), false,true)}">
                     <div class="row">
                         <div class="column">

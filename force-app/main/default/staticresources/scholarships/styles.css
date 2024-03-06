@@ -88,3 +88,30 @@
     displpaly: block;
     text-align: right;
 }
+
+.slds-scope .slds-has-error .recError {
+    display: block;
+}
+
+.slds-scope .slds-has-error .richText {
+    border: 1px solid red;
+}
+
+.slds-scope .message.confirmM3 table {
+    border: solid 1px green !important;
+    border-collapse: initial;
+}
+
+.slds-scope .message table td {
+    padding: 5px;
+    background-color: #e6f7e3;
+}
+
+.slds-scope .message table td h4 {
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.slds-scope .slds-has-error .slds-form-element__help {
+    display: block !important;
+}

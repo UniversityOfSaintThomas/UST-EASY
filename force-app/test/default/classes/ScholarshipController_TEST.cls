@@ -268,7 +268,6 @@ public class ScholarshipController_TEST {
         ScholarshipSharedUtilities.getScholarshipInfo('Scholarship-FAKE');
         ScholarshipSharedUtilities.getApplicantInfo('Scholarship-FAKE', ScholarshipSharedUtilities.getActiveUserId());
         ScholarshipSharedUtilities.isScholarshipOpen(ScholarshipSharedUtilities.getScholarshipInfo('Scholarship-FAKE'));
-        ScholarshipSharedUtilities.setHistoryPage('Scholarship-FAKE');
         ScholarshipSharedUtilities.adjustForCentralTime(Datetime.newInstance(2022, 10, 11));
         ScholarshipSharedUtilities.sendEmail('na', 'testemail20221011@stthomas-test.edu',
                 'Test Email Subject', '<p>Test Email HTML Body</p>',

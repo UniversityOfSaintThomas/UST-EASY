@@ -37,14 +37,11 @@ public class ScholarshipApplicationPage1Controller {
             upsert scholarshipApplicant;
         } catch (DmlException ex) {
             //Add a message that the record was not saved
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Logged in scholarship user could be found.'));
-            System.debug(ex.getMessage());
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
             return null;
         }
         scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
         pageURL = ApexPages.currentPage().getUrl();
-        pageURL = ScholarshipSharedUtilities.setHistoryPage(scholarship.Scholarship_ID__c);
-
         return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationPage2, false, scholarship.Scholarship_ID__c);
     }
 }

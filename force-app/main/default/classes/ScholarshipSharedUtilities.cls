@@ -76,7 +76,7 @@ public with sharing class ScholarshipSharedUtilities {
                             Question_4_Answer__c, Recommendation2__c, Recommendation__c, Recommender2_Email__c, Recommender2_Name__c,
                             Recommender_Email__c, Recommender_Name__c, Scholarship_Complete__c, Scholarship__c, Signature__c, Scholarship_Status__c,
                             Essay_1_Uploaded_Orig_Filename__c, Essay_2_Uploaded_Orig_Filename__c, Scholarship_Date_Started__c, Scholarship_Date_Submitted__c,
-                            Recommendation2_Request_Date__c, Recommendation_Request_Date__c, Contact__c
+                            Recommendation2_Request_Date__c, Recommendation_Request_Date__c, Contact__c, Recommendation_Link__c, Recommendation_Link_2__c
                     FROM Scholarship_Applicant__c
                     WHERE Contact__c = :contactId
                     AND Scholarship__c = :scholarshipId
@@ -84,11 +84,9 @@ public with sharing class ScholarshipSharedUtilities {
 
             if (ScholarshipApplicants.size() > 0) {
                 //load in scholarship applicant
-                System.debug('getApplicantInfo():: found an applicant! ');
                 scholarshipApplicant = ScholarshipApplicants[0];
             } else {
                 //Create a new scholarship applicant if there is none already
-                System.debug('getApplicantInfo():: creating new applicant! ');
                 scholarshipApplicant = new Scholarship_Applicant__c();
             }
         } else {
@@ -97,10 +95,18 @@ public with sharing class ScholarshipSharedUtilities {
         return scholarshipApplicant;
     }
 
-    public static void sendEmail(String rName, String EmailAddress, String Subject, String HTMLBodyText, String PlainBodyText, String sName) {
+    public static Boolean isScratchTrialOrg() {
+        Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
+        Boolean isScratchOrg = org.IsSandbox && org.TrialExpirationDate != null;
+        Boolean isTrialOrg = !org.IsSandbox && org.TrialExpirationDate != null;
+        return isScratchOrg || isTrialOrg;
+    }
+
+    public static Messaging.SingleEmailMessage sendEmail(String rName, String EmailAddress, String Subject, String HTMLBodyText, String PlainBodyText, String sName) {
+
         if (!String.isEmpty(EmailAddress)) {
 
-            /* grab the email template. Would be nice to make this admin-editable; see SummitEventsRegistration, lines 78-132 (after statuscheck). */
+            // TODO: Make email template selectable.
             EmailTemplate[] emailTemplates = [
                     SELECT Id, Subject, HtmlValue, Body
                     FROM EmailTemplate
@@ -112,16 +118,19 @@ public with sharing class ScholarshipSharedUtilities {
                 emailTemplate = emailTemplates.get(0);
 
                 /* We are going to want this to be selectable. See SummitEventsLetterheadLookup.page in SummitEvents. */
+                //TODO: Make org wide email selectable and use permission set.
                 OrgWideEmailAddress[] owea = [
                         SELECT Id
                         FROM OrgWideEmailAddress
                         WHERE Address = 'admissions@stthomas.edu'
                 ];
-                if (owea.size() == 0) {
+
+                if (isScratchTrialOrg()){
                     owea = [
                             SELECT Id
                             FROM OrgWideEmailAddress
-                            WHERE Address = 'jjheaney@stthomas.edu'
+                            WHERE isAllowAllProfiles = TRUE
+                            LIMIT 1
                     ];
                 } // Fallback for scratch environments.
 
@@ -162,12 +171,10 @@ public with sharing class ScholarshipSharedUtilities {
                 mail.setPlainTextBody(plainBody);
                 mail.setHtmlBody(htmlBody);
 
-                // Send the email you have created.
-                Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{
-                        mail
-                });
+                return mail;
             }
         }
+        return null;
     }
 
     public static Boolean isScholarshipOpen(Scholarship__c scholarship) {
@@ -178,22 +185,6 @@ public with sharing class ScholarshipSharedUtilities {
         return scholarshipOpen;
     }
 
-    public static String setHistoryPage(String scholarshipId) {
-        String cPage = ApexPages.currentPage().getUrl();
-        String[] cPageSplit = null;
-        if (cPage != null) {
-            cPageSplit = cPage.split('\\?');
-        }
-        String historyURL = '/Admissions/ScholarshipHome';
-        if (cPageSplit != null && cPageSplit.size() > 0) {
-            historyURL = cPageSplit[0];
-        }
-        historyURL = historyURL.replace('/apex/', '/Admissions/');
-        if (!String.isEmpty(scholarshipId)) {
-            historyURL += '?sid=' + scholarshipId;
-        }
-        return historyURL;
-    }
 
     public static Datetime adjustForCentralTime(Datetime dt) {
         //Get the current GMT time and adjust for our timezone
@@ -203,10 +194,10 @@ public with sharing class ScholarshipSharedUtilities {
     }
 
     public static PageReference checkScholarshipAccess() {
-        String sId = ApexPages.currentPage().getParameters().get('sid');
         String scholarshipId = null;
         PageReference result = null;
-        if (String.isNotBlank(sId)) {
+        if (String.isBlank(ApexPages.currentPage().getParameters().get('sid'))) {
+            String sId = ApexPages.currentPage().getParameters().get('sid');
             scholarshipId = sId;
             Scholarship__c scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
             if (scholarship == null) {

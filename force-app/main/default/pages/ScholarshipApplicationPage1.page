@@ -23,9 +23,9 @@
                         </apex:outputPanel>
                     </ul>
                 </nav>
-                <div class="slds-col slds-size_1-of-1 errorMessages">
-                    <apex:messages/>
-                </div>
+
+                <apex:pageMessages/>
+
                 <apex:form styleClass="criteriaForm slds-grid slds-wrap" id="criteriaForm">
                     <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!IF(ISNULL(scholarship.Name) , false , true)}">
                         <h1 class="slds-text-heading_large">
@@ -45,19 +45,25 @@
 
                     <apex:outputPanel layout="none" rendered="{!scholarship.Self_Report_ACT_GPA_Criteria__c}" id="selfReportGA" StyleClass="row selfReportGA">
                         <div class="slds-p-top_x-small slds-p-bottom_small slds-p-right_small slds-size_1-of-1 slds-size_6-of-12">
-                            <apex:outputLabel for="Declared_GPA" styleClass="slds-form-element__label">
-                                Self report your GPA:
-                            </apex:outputLabel>
-                            <div class="slds-form-element__control">
-                                <apex:inputText value="{!scholarshipApplicant.Declared_GPA__c}" id="Declared_GPA" styleClass="Declared_GPA slds-input" title="Self Reported GPA is required."></apex:inputText>
+                            <div class="slds-form-element">
+                                <apex:outputLabel for="Declared_GPA" styleClass="slds-form-element__label">
+                                    Self report your GPA:
+                                </apex:outputLabel>
+                                <div class="slds-form-element__control">
+                                    <apex:inputText value="{!scholarshipApplicant.Declared_GPA__c}" id="Declared_GPA" styleClass="Declared_GPA slds-input" title="Self Reported GPA is required."></apex:inputText>
+                                </div>
+                                <div class="slds-form-element__help">Please enter a valid gpa (example 3.5).</div>
                             </div>
                         </div>
                         <div class="slds-p-vertical_x-small slds-size_1-of-1 slds-size_6-of-12">
-                            <apex:outputLabel for="Declared_Test" styleClass="slds-form-element__label">
-                                Self report your ACT or SAT:
-                            </apex:outputLabel>
-                            <div class="slds-form-element__control">
-                                <apex:inputText value="{!scholarshipApplicant.Declared_ACT_SAT__c}" id="Declared_Test" styleClass="Declared_Test slds-input" title="Self Reported ACT or SAT is required."></apex:inputText>
+                            <div class="slds-form-element">
+                                <apex:outputLabel for="Declared_Test" styleClass="slds-form-element__label">
+                                    Self report your ACT or SAT:
+                                </apex:outputLabel>
+                                <div class="slds-form-element__control">
+                                    <apex:inputText value="{!scholarshipApplicant.Declared_ACT_SAT__c}" id="Declared_Test" styleClass="Declared_Test slds-input" title="Self Reported ACT or SAT is required."></apex:inputText>
+                                </div>
+                                <div class="slds-form-element__help">Please enter a valid ACT/SAT score (example 27).</div>
                             </div>
                         </div>
                     </apex:outputPanel>
@@ -74,6 +80,7 @@
                                     </apex:outputLabel>
                                 </div>
                             </div>
+                            <div class="slds-form-element__help">You must acknowledge you understand and meet the criteria outlined on this page to proceed. Signify this by checking the confirmation checkbox.</div>
                         </div>
                     </div>
 

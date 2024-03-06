@@ -84,6 +84,7 @@ tasks:
       mapping: datasets/mapping.yml
       sql_path: datasets/data.sql
       inject_namespaces: False
+      ignore_row_errors: True
 
   load_scholarship_test_data:
     description: 'Load test data associated with EASY scholarships'

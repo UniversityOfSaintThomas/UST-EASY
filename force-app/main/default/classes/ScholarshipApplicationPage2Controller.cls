@@ -30,10 +30,10 @@ public with sharing class ScholarshipApplicationPage2Controller {
     }
     public Datetime recommendRequestDate1 { get; set; }
     public Datetime recommendRequestDate2 { get; set; }
-
+    public String sId { get; set; }
 
     public ScholarshipApplicationPage2Controller() {
-        String sId = ApexPages.currentPage().getParameters().get('sid');
+        sId = ApexPages.currentPage().getParameters().get('sid');
         String scholarshipId = null;
         if (!String.isBlank(sId)) {
             scholarshipId = sId;
@@ -55,10 +55,9 @@ public with sharing class ScholarshipApplicationPage2Controller {
         return ScholarshipSharedUtilities.checkScholarshipAccess();
     }
 
-    private void uploadEssay(Attachment essay, Integer essayNum, String filename) {
+    private PageReference uploadEssay(Attachment essay, Integer essayNum, String filename) {
 
         String ext = getFileExtension(filename);
-
         essay.Id = null;
         essay.OwnerId = UserInfo.getUserId();
         if (essay.ParentId != applicant.Id) { // If user deletes and re-uploads, and it tries writing this field, it will find it already written, then explode. This SHOULD therefore only pass on first upload, but it COULD in theory pass if the second uploader somehow doesn't have the same applicant ID as the first uploader. That will still cause it to explode, and rightly so.
@@ -87,7 +86,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
             essay = new Attachment();
         }
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Essay ' + essayNum + ' uploaded successfully'));
-
+        return null;
     }
 
     public PageReference UploadEssay1() {
@@ -129,69 +128,73 @@ public with sharing class ScholarshipApplicationPage2Controller {
         deleteEssay(2);
     }
 
-    public void SendRecommenderEmail() {
-        String RecEmail = '';
-        String RecName = '';
-        String RecLink = '';
-        String RecMessage = '';
+    public PageReference SendRecommenderEmail() {
+        List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
+
+        PageReference redirectPage = Page.ScholarshipApplicationPage2;
+        redirectPage.setRedirect(true);
+        redirectPage.getParameters().put('sid', sid);
+        //return redirectPage;
+
+        System.debug('applicant: ' + JSON.serializePretty(applicant));
+
+        String recName1 = applicant.Recommender_Name__c;
+        String recEmail1 = applicant.Recommender_Email__c;
+        String recLink1 = applicant.Recommendation_Link__c;
+
+        String recName2 = applicant.Recommender2_Name__c;
+        String recEmail2 = applicant.Recommender2_Email__c;
+        String recLink2 = applicant.Recommendation_Link_2__c;
+
+        System.debug('recName1: ' + recName1 + ' recEmail1: ' + recEmail1 + ' recName2: ' + recName2 + ' recEmail2: ' + recEmail2);
+        Boolean recSent = false;
         String RecSubject = 'University of St. Thomas ' + scholarship.Name;
         String styles = ' style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: rgb(85, 85, 85);font-family: Palatino Linotype, Georgia, serif;font-size: 16px;line-height: 150%;text-align: left;"';
         String styledP = '<p ' + styles + '>';
-        for (Integer xx = 1; xx < 3; xx++) {
-            RecEmail = '';
-            RecName = '';
-            RecLink = Site.getBaseSecureUrl() + '/ScholarshipRecommender';
-            RecMessage = styledP + UserInfo.getFirstName() + ' ' + UserInfo.getLastName() + ' has applied for the ' + scholarship.Name + ' at the University of St. Thomas and indicated that you would be willing to write a recommendation. </p>';
+        String RecMessage = styledP + UserInfo.getFirstName() + ' ' + UserInfo.getLastName() + ' has applied for the ' + scholarship.Name + ' at the University of St. Thomas and indicated that you would be willing to write a recommendation. </p>';
+        if (String.isNotBlank(scholarship.Description__c)) {
+            String scholarshipDescription = scholarship.Description__c;
+            scholarshipDescription = scholarshipDescription.replaceAll('<p>', styledP);
+            scholarshipDescription = scholarshipDescription.replaceAll('<ul>', '<ul ' + styles + '>');
+            scholarshipDescription = scholarshipDescription.replaceAll('<li>', '<li ' + styles + '>');
+            RecMessage += styledP + '<strong>Scholarship Description</strong><br/>' + scholarshipDescription + '</p>';
+        }
+        if (String.isNotBlank(scholarship.Recommender_Question__c)) {
+            RecMessage += styledP + scholarship.Recommender_Question__c + '</p>';
+        }
 
-            if (xx == 1
-                    //&& scholarship.Recommender_Auto_Send__c
-                    && String.isNotBlank(applicant.Recommender_Email__c) && String.isNotBlank(applicant.Recommender_Name__c) && applicant.Recommendation_Request_Date__c == null
-            ) {
-                RecEmail = applicant.Recommender_Email__c;
-                RecName = applicant.Recommender_Name__c;
-                RecLink += '?recid=' + applicant.Id + '1';
-                if (scholarship.Recommender_Question__c != null) {
-                    RecMessage += styledP + scholarship.Recommender_Question__c + '</p>';
-                }
-                RecMessage += styledP + '<a href="' + RecLink + '" class="button">Submit your recommendation</a></p>';
-            }
-            if (xx == 2
-                    //&& scholarship.Recommender2_Auto_Send__c
-                    && String.isNotBlank(applicant.Recommender2_Email__c) && String.isNotBlank(applicant.Recommender2_Name__c) && applicant.Recommendation2_Request_Date__c == null
-            ) {
-                RecEmail = applicant.Recommender2_Email__c;
-                RecName = applicant.Recommender2_Name__c;
-                RecLink += '?recid=' + applicant.Id + '2';
-                if (scholarship.Recommender2_Question__c != null) {
-                    RecMessage += styledP + scholarship.Recommender2_Question__c + '</p>';
-                }
-                RecMessage += styledP + '<a href="' + RecLink + '" class="button">Submit your recommendation</a></p>';
-            }
-
-            if (scholarship.Description__c != null) {
-                String descr = scholarship.Description__c;
-                descr = descr.replaceAll('<p>', styledP);
-                descr = descr.replaceAll('<ul>', '<ul ' + styles + '>');
-                descr = descr.replaceAll('<li>', '<li ' + styles + '>');
-                RecMessage += styledP + '<strong>Scholarship Description</strong><br/>' + descr + '</p>';
-            }
-
-            if (!String.isEmpty(RecEmail)) {
-                ScholarshipSharedUtilities.sendEmail(RecName, RecEmail, RecSubject, RecMessage, RecMessage, scholarship.Name);
-                if (String.isNotBlank(applicant.Recommender_Name__c) && String.isNotBlank(applicant.Recommender_Email__c)) {
-                    applicant.Recommendation_Request_Date__c = Datetime.now();
-                    recommendRequestDate1 = ScholarshipSharedUtilities.adjustForCentralTime(Datetime.now());
-                }
-                if (String.isNotBlank(applicant.Recommender2_Name__c) && String.isNotBlank(applicant.Recommender2_Email__c)) {
-                    applicant.Recommendation2_Request_Date__c = Datetime.now();
-                    recommendRequestDate2 = ScholarshipSharedUtilities.adjustForCentralTime(Datetime.now());
-                }
-                upsert applicant;
+        if (String.isNotBlank(recName1) && String.isNotBlank(recEmail1) && applicant.Recommendation_Request_Date__c == null) {
+            RecMessage += styledP + '<a href="' + recLink1 + '" class="button">Submit your recommendation</a></p>';
+            if (!String.isEmpty(recEmail1)) {
+                emailsToSend.add(ScholarshipSharedUtilities.sendEmail(recName1, recEmail1, RecSubject, RecMessage, RecMessage, scholarship.Name));
+                applicant.Recommendation_Request_Date__c = Datetime.now();
             }
         }
+
+        if (String.isNotBlank(recName2) && String.isNotBlank(recEmail2) && applicant.Recommendation2_Request_Date__c == null) {
+            RecMessage += styledP + '<a href="' + recLink2 + '" class="button">Submit your recommendation</a></p>';
+            if (!String.isEmpty(recEmail2)) {
+                emailsToSend.add(ScholarshipSharedUtilities.sendEmail(recName2, recEmail2, RecSubject, RecMessage, RecMessage, scholarship.Name));
+            }
+        }
+
+        upsert applicant;
+
+        if (emailsToSend.size() > 0) {
+            try {
+                Messaging.sendEmail(emailsToSend);
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Recommendation request sent'));
+            } catch (Exception ex) {
+                //If the email fails, we want to add the error message to the activity task description
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'No recommendation request sent' + ex.getMessage()));
+                System.debug(ex.getMessage());
+                return null;
+            }
+        }
+        return redirectPage;
     }
 
-    public void SaveFinishLater() {
+    public PageReference SaveFinishLater() {
         try {
             upsert applicant;
             essay1HasText = !String.isEmpty(applicant.Essay_1_Answer__c);
@@ -203,6 +206,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
         msgComplete += ' It has not been completed and will not be considered for an award until you complete it by clicking \"Save & Complete\" below.';
 
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, msgComplete));
+        return null;
     }
 
     public PageReference SaveComplete() {
@@ -215,11 +219,13 @@ public with sharing class ScholarshipApplicationPage2Controller {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
             return null;
         } finally {
+            SendRecommenderEmail();
             String styledP = '<p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: rgb(85, 85, 85);font-family: Palatino Linotype, Georgia, serif;font-size: 16px;line-height: 150%;text-align: left;">';
             String cMessage = '<h2>Your scholarship application has been received!</h2>';
             String firstName = 'FirstName';
             String lastName = 'LastName';
             String email = 'EmailAddress@InsertEmailDomain.Unknown';
+            List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 
             List<Contact> contactMatches = [
                     SELECT Id, Name, FirstName, LastName, Email
@@ -240,15 +246,24 @@ public with sharing class ScholarshipApplicationPage2Controller {
             if (scholarship.Review_Award_Process_Description__c != null) {
                 cMessage += styledP + '<strong>What happens next?</strong><br/>' + scholarship.Review_Award_Process_Description__c + '</p>';
             }
-            ScholarshipSharedUtilities.sendEmail(firstName + ' ' + lastName, email, 'University of St. Thomas Scholarship', cMessage, cMessage, scholarship.Name);
-            SendRecommenderEmail();
+            emailsToSend.add(ScholarshipSharedUtilities.sendEmail(firstName + ' ' + lastName, email, 'University of St. Thomas Scholarship', cMessage, cMessage, scholarship.Name));
+
+            if (emailsToSend.size() > 0) {
+                try {
+                    upsert applicant;
+                    Messaging.sendEmail(emailsToSend);
+                } catch (Exception ex) {
+                    //If the email fails, we want to add the error message to the activity task description
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Scholarship not saved: ' + ex.getMessage()));
+                    return null;
+                }
+            }
+
         }
-        ScholarshipSharedUtilities.setHistoryPage(scholarship.Scholarship_ID__c);
         return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarship.Scholarship_ID__c);
     }
 
     public PageReference GoCriteria() {
-        ScholarshipSharedUtilities.setHistoryPage(scholarship.Scholarship_ID__c);
         return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationPage1, false, scholarship.Scholarship_ID__c);
     }
 

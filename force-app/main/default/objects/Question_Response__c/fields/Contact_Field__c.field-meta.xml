@@ -5,6 +5,7 @@
     <formula>Question__r.Contact_Field__c</formula>
     <label>Contact Field</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

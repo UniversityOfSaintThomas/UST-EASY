@@ -635,6 +635,7 @@ public class INT_InteractionProcessor {
                         for (Opportunity matchingOpp : matchingOpps) {
                             String oppName = matchingOpp.Name;
                             String oppStageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
+                            String matchingOppLeadSource = matchingOpp.LeadSource; //Used to preserve original Lead Source from initial Opportunity record.
                             Id inqoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Inquiry Opportunity').getRecordTypeId();
                             Id appoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Applicant Opportunity').getRecordTypeId();
 
@@ -661,6 +662,7 @@ public class INT_InteractionProcessor {
                             }
 
                             intMappingService.applyDataToSObject(interaction, matchingOpp);
+                            matchingOpp.LeadSource = matchingOppLeadSource; //Re-assigns initial Opportunity Lead Source.
                             opportunitiesToUpsert.add(matchingOpp);
                         }
                     }

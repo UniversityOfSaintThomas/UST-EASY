@@ -55,6 +55,11 @@
         <default>false</default>
         <label>Recommended to DFC</label>
     </customValue>
+    <customValue>
+        <fullName>Writing Assessment</fullName>
+        <default>false</default>
+        <label>Writing Assessment</label>
+    </customValue>
     <description>Used in conjunction with Application Substatus</description>
     <masterLabel>Needs Item(s)</masterLabel>
     <sorted>true</sorted>

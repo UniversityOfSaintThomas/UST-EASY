@@ -62,6 +62,10 @@
     list-style: none;
 }
 
+.slds-scope .slds-combobox_container {
+    margin-bottom: 2rem; /* Needs extra space because the autocomplete box unavoidably obscures the next line if selected. (Especially hard to avoid on a screenreader.) */
+}
+
 .slds-scope .slds-combobox .slds-combobox__form-element .refRemoveButton {
     padding: 0;
     width: 1.4rem;

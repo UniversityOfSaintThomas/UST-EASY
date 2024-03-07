@@ -15,7 +15,7 @@ docReady(function() {
     activateCarousel();
 });
 
-function pageLoadReRendered() {
+function pageLoadReRendered(isRelatedRecordReRender = false) {
 
     //Disable fields that are set to not be editable
     let sldsScope = document.querySelector('.slds-scope');
@@ -63,7 +63,7 @@ function pageLoadReRendered() {
     activateTooltips();
     fileUploadAreas();
     //Hide the form spinner if it is active
-    hideFormSpinner();
+    hideFormSpinner(true, isRelatedRecordReRender);
 }
 
 function findApplicationLinkTargetSelf() {
@@ -227,11 +227,18 @@ function radioCheckBox() {
 
 // SLDS Checkbox https://www.lightningdesignsystem.com/components/checkbox/
 function checkbox() {
+    function checkboxListener(cb) {
+        return function (e) {
+            if (e.type === 'click' || (e.type === 'keypress' && e.keyCode === 13)) {
+                let cbInput = cb.querySelector('input');
+                cbInput.click();
+            }
+        };
+    }
+
     document.querySelectorAll('.slds-checkbox.single-checkbox').forEach(cb => {
-        cb.addEventListener('click', () => {
-            let cbInput = cb.querySelector('input');
-            cbInput.click();
-        });
+        cb.addEventListener('click', checkboxListener(cb));
+        cb.addEventListener('keypress', checkboxListener(cb));
     });
 }
 
@@ -324,8 +331,10 @@ function activateAutoComplete() {
         clearField.classList.add('slds-listbox__item');
         let clearFieldLInk = document.createElement('a');
         clearFieldLInk.innerText = ' Clear search. '
+        clearFieldLInk.href = '#'
         clearFieldLInk.addEventListener('click', function () {
             refValueRemoved()
+            return false;
         });
 
         /* Remote reference lookup */
@@ -340,8 +349,10 @@ function activateAutoComplete() {
                     </span>
                   </span>
                   <span class="slds-media__body">
-                    <span class="slds-listbox__option-text slds-listbox__option-text_entity">${title}</span>
-                    <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">${subtitle}</span>
+                    <a href="#" onclick="return false"> <!-- This a tag looks useless, but it's making the listbox item focusable, thus available to tabbing, arrows, and accessibility navigation in general. -->
+                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">${title}</span>
+                        <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">${subtitle}</span>
+                    </a>
                   </span>
                 </div>
             </li>
@@ -711,7 +722,7 @@ function activateCarousel(slideMoveTo) {
                     }
                     if (items[slide]) {
                         items[slide].classList.add("active");
-                        let inputElements = items[slide].querySelectorAll("select, input");
+                        let inputElements = items[slide].querySelectorAll("select, input, .slds-card h1");
                         if (inputElements.length > 0) {
                             inputElements[0].focus(); // focus on the first focusable form element, so we aren't stuck on the next/prev buttons.
                         }
@@ -791,15 +802,26 @@ function appShowLoadingSpinner() {
     return true;
 }
 
-function hideFormSpinner(restoreFocus = true) {
+function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
     document.getElementById("form-spinner").style.display = 'none';
     if (restoreFocus == true && spinnerFocusElement != null) {
-        document.getElementById(spinnerFocusElement).focus();
+        if (focusOnFirstInput == true) {
+            let inputElements = document.getElementById(spinnerFocusElement.id).parentElement.parentElement.parentElement.querySelectorAll("select, input");
+            if (inputElements.length > 0) {
+                spinnerFocusElement = inputElements[0];
+            }
+        }
+        spinnerFocusElement.focus();
     }
 }
 
 function showFormSpinner() {
     spinnerFocusElement = document.activeElement.id;
+    document.getElementById("form-spinner").style.display = 'block';
+}
+
+function showFormSpinnerRelatedRecord() {
+    spinnerFocusElement = document.activeElement.parentElement.parentElement.parentElement;
     document.getElementById("form-spinner").style.display = 'block';
 }
 

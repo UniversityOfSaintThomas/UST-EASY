@@ -39,10 +39,16 @@ public with sharing class ApplicationBodyController {
         Map<String, Set<String>> atStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atSubStatusMap = new Map<String, Set<String>>();
         Map<String, Set<String>> atCitizenshipMap = new Map<String, Set<String>>();
+        // create a map of generic filters 1-8
         Map<String, Set<String>> atGenericFilter1Map = new Map<String, Set<String>>();
         Map<String, Set<String>> atGenericFilter2Map = new Map<String, Set<String>>();
         Map<String, Set<String>> atGenericFilter3Map = new Map<String, Set<String>>();
         Map<String, Set<String>> atGenericFilter4Map = new Map<String, Set<String>>();
+        Map<String, Set<String>> atGenericFilter5Map = new Map<String, Set<String>>();
+        Map<String, Set<String>> atGenericFilter6Map = new Map<String, Set<String>>();
+        Map<String, Set<String>> atGenericFilter7Map = new Map<String, Set<String>>();
+        Map<String, Set<String>> atGenericFilter8Map = new Map<String, Set<String>>();
+
         Map<String, Set<String>> atApplicationTypeMap = new Map<String, Set<String>>();
 
         mapAtAppInfo = new Map<String, EASYApplicationInfo>();
@@ -71,7 +77,7 @@ public with sharing class ApplicationBodyController {
                 appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c, Id,';
                 appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact__r.Id, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
                 appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Contact__r.hed__UniversityEmail__c, Intended_Program__r.Program_Name_on_Application__c,';
-                appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Applicant_Type__c';
+                appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c, Applicant_Type__c';
                 appsQuery += ' FROM Application__c';
                 appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
                 appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
@@ -89,7 +95,7 @@ public with sharing class ApplicationBodyController {
                     System.debug(e.getMessage());
                 }
 
-                System.debug(JSON.serializePretty(apps));
+                //System.debug(JSON.serializePretty(apps));
 
                 //Create map of application control URLs and tag data associated with them for processing below.
                 for (Application__c app : apps.values()) {
@@ -133,7 +139,7 @@ public with sharing class ApplicationBodyController {
                             )
                     ]);
 
-                    System.debug(JSON.serializePretty(appControlsByAppIds));
+                    //System.debug(JSON.serializePretty(appControlsByAppIds));
 
                     //setApplicationInfo
                     if (!mapAtAppInfo.containsKey(app.Application_Control__r.URL_Parameter__c)) {
@@ -172,8 +178,11 @@ public with sharing class ApplicationBodyController {
                     atGenericFilter2Map = createFilterMap(app.Generic_Filter_2__c, atGenericFilter2Map, atURL);
                     atGenericFilter3Map = createFilterMap(app.Generic_Filter_3__c, atGenericFilter3Map, atURL);
                     atGenericFilter4Map = createFilterMap(app.Generic_Filter_4__c, atGenericFilter4Map, atURL);
+                    atGenericFilter5Map = createFilterMap(app.Generic_Filter_5__c, atGenericFilter5Map, atURL);
+                    atGenericFilter6Map = createFilterMap(app.Generic_Filter_6__c, atGenericFilter6Map, atURL);
+                    atGenericFilter7Map = createFilterMap(app.Generic_Filter_7__c, atGenericFilter7Map, atURL);
+                    atGenericFilter8Map = createFilterMap(app.Generic_Filter_8__c, atGenericFilter8Map, atURL);
                     atApplicationTypeMap = createFilterMap(app.Applicant_Type__c, atApplicationTypeMap, atURL);
-
 
                 }
 
@@ -192,6 +201,7 @@ public with sharing class ApplicationBodyController {
                                 Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
                                 Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
                                 Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
+                                Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
                                 Applicant_Type__c
                         FROM EASY_Widget__c
                         WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
@@ -300,6 +310,10 @@ public with sharing class ApplicationBodyController {
                         String genericFilter2 = String.isNotBlank(widget.Generic_Filter_2__c) ? widget.Generic_Filter_2__c : '';
                         String genericFilter3 = String.isNotBlank(widget.Generic_Filter_3__c) ? widget.Generic_Filter_3__c : '';
                         String genericFilter4 = String.isNotBlank(widget.Generic_Filter_4__c) ? widget.Generic_Filter_4__c : '';
+                        String genericFilter5 = String.isNotBlank(widget.Generic_Filter_5__c) ? widget.Generic_Filter_5__c : '';
+                        String genericFilter6 = String.isNotBlank(widget.Generic_Filter_6__c) ? widget.Generic_Filter_6__c : '';
+                        String genericFilter7 = String.isNotBlank(widget.Generic_Filter_7__c) ? widget.Generic_Filter_7__c : '';
+                        String genericFilter8 = String.isNotBlank(widget.Generic_Filter_8__c) ? widget.Generic_Filter_8__c : '';
                         String widgetApplicantType = String.isNotBlank(widget.Applicant_Type__c) ? widget.Applicant_Type__c : '';
 
                         EASYApplicationInfo widgetAppInfo = mapAtAppInfo.get(widgetUrlParam);
@@ -358,6 +372,18 @@ public with sharing class ApplicationBodyController {
 
                         /* Generic filter 4 */
                         skipWidget = filterWidget(skipWidget, atGenericFilter4Map, genericFilter4, widgetUrlParam);
+
+                        /* Generic filter 5 */
+                        skipWidget = filterWidget(skipWidget, atGenericFilter5Map, genericFilter5, widgetUrlParam);
+
+                        /* Generic filter 6 */
+                        skipWidget = filterWidget(skipWidget, atGenericFilter6Map, genericFilter6, widgetUrlParam);
+
+                        /* Generic filter 7 */
+                        skipWidget = filterWidget(skipWidget, atGenericFilter7Map, genericFilter7, widgetUrlParam);
+
+                        /* Generic filter 8 */
+                        skipWidget = filterWidget(skipWidget, atGenericFilter8Map, genericFilter8, widgetUrlParam);
 
                         /* Applicant Type filter */
                         skipWidget = filterWidget(skipWidget, atApplicationTypeMap, widgetApplicantType, widgetUrlParam);

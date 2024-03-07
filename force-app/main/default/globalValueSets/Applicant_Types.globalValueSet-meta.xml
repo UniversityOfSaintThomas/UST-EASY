@@ -86,6 +86,11 @@
         <label>Common App</label>
     </customValue>
     <customValue>
+        <fullName>UST App</fullName>
+        <default>false</default>
+        <label>UST App</label>
+    </customValue>
+    <customValue>
         <fullName>Minneapolis Special Education Residency</fullName>
         <default>false</default>
         <isActive>false</isActive>

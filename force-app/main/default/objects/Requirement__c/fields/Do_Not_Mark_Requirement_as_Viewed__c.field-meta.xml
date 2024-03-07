@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_Not_Mark_Requirement_as_Viewed__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If checked, code will not mark the Requirement Response as Viewed.  A user or Flow can mark the Requirement Response as Viewed and thus control if the Requirement is updated as Finished.  This field and code was created for the O&amp;R Placement Exam experience in Spring 2024.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If checked, code will not mark the Requirement Response as Viewed.  A user or Flow can mark the Requirement Response as Viewed and thus control if the Requirement is updated as Finished.  This field and code was created for the O&amp;R Placement Exam experience in Spring 2024.</inlineHelpText>
+    <label>Do Not Mark Requirement as Viewed</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

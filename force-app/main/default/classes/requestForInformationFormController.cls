@@ -89,7 +89,10 @@ public without sharing class requestForInformationFormController {
                             Hide_Form_Title__c,
                             Lead_Source__c,
                             Redirect_After_Form_Submission__c,
-                            Multi_Select_Display_Type__c
+                            Multi_Select_Display_Type__c,
+                            Additional_Questions__c,
+                            Academic_Interest_Max_Selection__c,
+                            Disable_fields_to_display__c
                     FROM RFI_Controller__c
                     WHERE Name = :rfi_controller_name
                     LIMIT 1

@@ -1,8 +1,8 @@
 minimum_cumulusci_version: '3.32.1'
 project:
-  name: UST-EASY
+  name: UST-EASY-One
   package:
-    name: UST-EASY-Package
+    name: UST-EASY-Package-One
     namespace: null
     api_version: '56.0'
   dependencies:
@@ -84,6 +84,7 @@ tasks:
       mapping: datasets/mapping.yml
       sql_path: datasets/data.sql
       inject_namespaces: False
+      ignore_row_errors: True
 
   load_scholarship_test_data:
     description: 'Load test data associated with EASY scholarships'

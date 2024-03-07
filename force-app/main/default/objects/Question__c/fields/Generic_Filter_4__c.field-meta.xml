@@ -5,7 +5,7 @@
     <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
     <externalId>false</externalId>
     <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
-    <label>Generic Filter 4</label>
+    <label>Term(s)</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>

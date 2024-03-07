@@ -400,7 +400,7 @@ public class ApplicationRequirement {
                             }
                         }
                     }
-                } 
+                }
                 // else if (addData == null && g.att != null && String.isEmpty(g.att.Title) && g.item.Required__c.contains(app.Application_Status__c)) {
                 //     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Upload required.'));
                 //     hasError = true;
@@ -418,7 +418,11 @@ public class ApplicationRequirement {
         Map<Id, Id> requirement_item_ids_of_external_email_rrs = new Map<Id, Id>();
         for (ApplicationQuestionGroup aqg : section.groups) {
             if (aqg.response != null && aqg.isEditable) {
-                aqg.response.Viewed__c = true;
+                System.debug('Do not mark viewed: ' + aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c);
+                if (!aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c) {
+                    System.debug('Marked viewed');
+                    aqg.response.Viewed__c = true;
+                }
                 if (String.isNotBlank(aqg.response.External_Email__c)) {
                     requirement_item_ids_of_external_email_rrs.put(aqg.response.Requirement_Item__c, aqg.response.Id);
                 }

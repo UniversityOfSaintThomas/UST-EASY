@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Program_Bucket__c</fullName>
+    <deprecated>false</deprecated>
     <description>Use this for graduate schools to limit Programs that will appear to the applicant when creating an application.</description>
     <externalId>false</externalId>
     <inlineHelpText>Use this for graduate schools to limit Programs that will appear to the applicant when creating an application.</inlineHelpText>

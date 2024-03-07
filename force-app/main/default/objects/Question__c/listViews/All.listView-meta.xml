@@ -9,6 +9,10 @@
     <columns>Editable_Application_Status__c</columns>
     <columns>RECORDTYPE</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Question__c.Date</value>
+    </filters>
     <label>All</label>
-    <language>en_US</language>
 </ListView>

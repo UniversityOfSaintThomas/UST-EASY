@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Degree__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>The degree of this program (Ex: BS, BA, etc.)</inlineHelpText>
     <label>Degree</label>
@@ -14,6 +15,7 @@
             <value>
                 <fullName>Associate&apos;s Degree Program</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Associate&apos;s Degree Program</label>
             </value>
             <value>
@@ -24,11 +26,13 @@
             <value>
                 <fullName>BA</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>BA</label>
             </value>
             <value>
                 <fullName>Bachelor&apos;s Degree Program</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Bachelor&apos;s Degree Program</label>
             </value>
             <value>
@@ -49,6 +53,7 @@
             <value>
                 <fullName>BS</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>BS</label>
             </value>
             <value>
@@ -84,6 +89,7 @@
             <value>
                 <fullName>Doctorate</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Doctorate</label>
             </value>
             <value>
@@ -124,6 +130,7 @@
             <value>
                 <fullName>MA</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>MA</label>
             </value>
             <value>
@@ -154,6 +161,7 @@
             <value>
                 <fullName>Master of Laws (LLM)</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Master of Laws (LLM)</label>
             </value>
             <value>
@@ -189,6 +197,7 @@
             <value>
                 <fullName>MBA</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>MBA</label>
             </value>
             <value>
@@ -199,6 +208,7 @@
             <value>
                 <fullName>MS</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>MS</label>
             </value>
             <value>

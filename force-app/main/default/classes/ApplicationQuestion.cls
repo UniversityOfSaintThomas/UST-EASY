@@ -272,6 +272,19 @@ public class ApplicationQuestion {
         if (String.isNotBlank(ip.Generic_Filter_4__c) && (String.isBlank(application.Generic_Filter_4__c) || !(new Set<String>(ip.Generic_Filter_4__c.split(';'))).contains(application.Generic_Filter_4__c))) {
             return false;
         }
+        if (String.isNotBlank(ip.Generic_Filter_5__c) && (String.isBlank(application.Generic_Filter_5__c) || !(new Set<String>(ip.Generic_Filter_5__c.split(';'))).contains(application.Generic_Filter_5__c))) {
+            return false;
+        }
+        if (String.isNotBlank(ip.Generic_Filter_6__c) && (String.isBlank(application.Generic_Filter_6__c) || !(new Set<String>(ip.Generic_Filter_6__c.split(';'))).contains(application.Generic_Filter_6__c))) {
+            return false;
+        }
+        if (String.isNotBlank(ip.Generic_Filter_7__c) && (String.isBlank(application.Generic_Filter_7__c) || !(new Set<String>(ip.Generic_Filter_7__c.split(';'))).contains(application.Generic_Filter_7__c))) {
+            return false;
+        }
+        if (String.isNotBlank(ip.Generic_Filter_8__c) && (String.isBlank(application.Generic_Filter_8__c) || !(new Set<String>(ip.Generic_Filter_8__c.split(';'))).contains(application.Generic_Filter_8__c))) {
+            return false;
+        }
+
 
         return true;
     }

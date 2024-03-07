@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Award_Amount_Manual_Override__c</fullName>
+    <description>Enter the updated total award amount. Enter 0 for Full Tuition adjustment or Move to Next Term. If this value is filled in, it will be used to populate the Adjusted Award Amount fields and will not include the individual Scholarship amounts listed below.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the updated total award amount. Enter 0 for Full Tuition adjustment or Move to Next Term. If this value is filled in, it will be used to populate the Adjusted Award Amount fields and will not include the individual Scholarship amounts listed below.</inlineHelpText>
+    <label>Manual Override - Updated Award Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Generic_Filter_4__c</fullName>
-    <description>Term Name: A Picklist of Terms Available for each application. A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+    <deprecated>false</deprecated>
+    <description>Term Name: The Start Term for an individual application. Data Cookbook Definition: https://stthomas.datacookbook.com/institution/terms/271288</description>
     <externalId>false</externalId>
-    <inlineHelpText>Term Name: A Picklist of Terms Available for each application. A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+    <inlineHelpText>Term Name: The Start Term for an individual application. Data Cookbook Definition: https://stthomas.datacookbook.com/institution/terms/271288</inlineHelpText>
     <label>Term Name</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Application Status (INT)</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

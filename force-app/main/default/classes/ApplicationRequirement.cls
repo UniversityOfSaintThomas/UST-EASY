@@ -418,9 +418,8 @@ public class ApplicationRequirement {
         Map<Id, Id> requirement_item_ids_of_external_email_rrs = new Map<Id, Id>();
         for (ApplicationQuestionGroup aqg : section.groups) {
             if (aqg.response != null && aqg.isEditable) {
-                System.debug('Do not mark viewed: ' + aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c);
+                //Skip marking requirement response as viewed as directed by requirement
                 if (!aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c) {
-                    System.debug('Marked viewed');
                     aqg.response.Viewed__c = true;
                 }
                 if (String.isNotBlank(aqg.response.External_Email__c)) {

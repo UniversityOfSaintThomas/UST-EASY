@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Generic_Filter_1__c</fullName>
-    <description>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+    <businessStatus>Active</businessStatus>
+    <deprecated>false</deprecated>
+    <description>The Non-Undergraduate (Graduate, Non-Degree, etc) program and major codes offered at the University (example: AS_AH_MA|ARTH). Undergraduates look at Major code fields. Data Cookbook: https://stthomas.datacookbook.com/institution/terms/293039</description>
     <externalId>false</externalId>
-    <inlineHelpText>A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+    <inlineHelpText>The Non-Undergraduate (Graduate, Non-Degree, etc) program and major codes offered at the University (example: AS_AH_MA|ARTH). Undergraduates look at Major code fields.</inlineHelpText>
     <label>Program(s)</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

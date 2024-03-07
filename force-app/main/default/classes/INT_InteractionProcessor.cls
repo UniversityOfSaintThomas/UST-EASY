@@ -828,7 +828,10 @@ public class INT_InteractionProcessor {
         OpportunityStage newStage = oppStageMap.get(newStageName);
         OpportunityStage previousStage = oppStageMap.get(previousStageName);
         System.debug('new stage (' + newStageName + '): ' + newStage.DefaultProbability + ', previous stage: (' + previousStageName + '): ' + previousStage.DefaultProbability);
-        if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
+        if (previousStage.ApiName == 'Denied' || previousStage.ApiName == 'Withdrawn') { //Update to never change Opportunity Stage if one of these previous stages.
+            System.debug('previous stage assigned based on certain previous stage');
+            return previousStageName;
+        } else if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
             System.debug('new stage assigned');
             return newStageName;
         } else if (newStage.ForecastCategoryName == 'Omitted') {

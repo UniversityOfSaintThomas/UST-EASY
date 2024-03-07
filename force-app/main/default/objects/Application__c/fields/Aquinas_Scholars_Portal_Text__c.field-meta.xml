@@ -18,7 +18,7 @@
 
 &quot;Congratulations! Based on your high level of academic achievement, you are invited to apply to the &quot; &amp; (HYPERLINK (&quot;https://www.stthomas.edu/aquinasscholars/&quot;, &quot;Aquinas Scholars Honors Program.&quot;))&amp; BR() &amp; BR() &amp;
 
-IF(Intended_Program_Applicant_Type__c = &quot;First-Year&quot;, &quot;Deadline to apply is March 18 and you will need to use your 9-digit St. Thomas ID number: &quot;,&quot;You will need to use your 9-digit St. Thomas ID number: &quot;) &amp; Applicant_Banner_Id__c &amp; BR() &amp; BR() &amp; HYPERLINK ( &quot;https://uofstthomasmn.force.com/Admissions/scholarshipapplicationpage1?sid=Scholarship-0017&quot;, &quot; Click here to apply&quot;, &apos;_blank&apos;)
+IF(Intended_Program_Applicant_Type__c = &quot;First-Year&quot;, &quot;Early application deadline to apply is February 16, 2024, with the final deadline of March 15, 2024. You will need your St. Thomas ID number to apply: &quot;,&quot;You will need to use your 9-digit St. Thomas ID number: &quot;) &amp; Applicant_Banner_Id__c &amp; BR() &amp; BR() &amp; HYPERLINK ( &quot;https://uofstthomasmn.force.com/Admissions/scholarshipapplicationpage1?sid=Scholarship-0049&quot;, &quot; Click here to apply&quot;, &apos;_blank&apos;)
 
 , &quot;Congratulations on your acceptance to St. Thomas. You will need to use your 9-digit St. Thomas ID number at various times.&quot; &amp; BR() &amp; BR() &amp; &quot;Your St. Thomas ID number is: &quot; &amp; Applicant_Banner_Id__c)</formula>
     <label>Aquinas Scholars Portal Text</label>

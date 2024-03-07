@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Allow_Confirm_From__c</fullName>
+    <description>Application status(es) that the &quot;Confirm&quot; button shows-up for.</description>
     <externalId>false</externalId>
     <inlineHelpText>Application status(es) that the &quot;Confirm&quot; button shows-up for.</inlineHelpText>
     <label>Allow Confirm From</label>

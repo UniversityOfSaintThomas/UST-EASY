@@ -2,65 +2,6 @@
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>Edit</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Delete</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Clone</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>ChangeOwnerOne</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Application__c.Application_Review</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Application__c.Review</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>ChangeRecordType</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>PrintableView</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>collapsed</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableActionsConfiguration</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableActionsInNative</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideChatterActions</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numVisibleActions</name>
-                    <value>5</value>
-                </componentInstanceProperties>
-                <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>header</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -68,6 +9,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Contact__c</fieldItem>
                 <identifier>RecordContact_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Applicant_Banner_Id__c</fieldItem>
+                <identifier>RecordApplicant_Banner_Id_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -116,8 +67,48 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.Primary_High_School_Account__c</fieldItem>
+                <identifier>RecordPrimary_High_School_Account_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Intended_Term_of_Entry__c</fieldItem>
                 <identifier>RecordIntended_Term_of_Entry_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Term_Session__c</fieldItem>
+                <identifier>RecordTerm_Session_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Term_Start_Date__c</fieldItem>
+                <identifier>RecordTerm_Start_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Intended_Program_Name_on_Application__c</fieldItem>
+                <identifier>RecordIntended_Program_Name_on_Application_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -148,6 +139,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OwnerId</fieldItem>
                 <identifier>RecordOwnerIdField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Financial_Aid_Counselor__c</fieldItem>
+                <identifier>RecordFinancial_Aid_Counselor_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5a105136-3722-4146-8933-dbeb26f480bf</name>
@@ -182,26 +183,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Admission_Decision__c</fieldItem>
                 <identifier>RecordAdmission_Decision_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Withdrawal_Reason__c</fieldItem>
-                <identifier>RecordWithdrawal_Reason_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Institution_Attending__c</fieldItem>
-                <identifier>RecordInstitution_Attending_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -284,6 +265,16 @@
                 <identifier>RecordDon_t_Recalculate_Counselor_Assignment_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Placement_Exams__c</fieldItem>
+                <identifier>RecordPlacement_Exams_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-e2f86d58-1c6a-42b6-86c9-7e7385ef2de2</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -328,16 +319,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Applicant_Banner_Id__c</fieldItem>
-                <identifier>RecordApplicant_Banner_Id_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Applicant_Age__c</fieldItem>
                 <identifier>RecordApplicant_Age_cField</identifier>
             </fieldInstance>
@@ -360,6 +341,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Gender_Other__c</fieldItem>
                 <identifier>RecordGender_Other_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Legal_Sex__c</fieldItem>
+                <identifier>RecordLegal_Sex_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -420,6 +411,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Degree_Type__c</fieldItem>
                 <identifier>RecordDegree_Type_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Applicant_Type__c</fieldItem>
+                <identifier>RecordApplicant_Type_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -544,6 +545,56 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.MN_Transfer_Curr_Complete_Ind__c</fieldItem>
                 <identifier>RecordMN_Transfer_Curr_Complete_Ind_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CPF_Major__c</fieldItem>
+                <identifier>RecordCPF_Major_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CPF_Pre_Professional_Program__c</fieldItem>
+                <identifier>RecordCPF_Pre_Professional_Program_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Message_To_Applicant__c</fieldItem>
+                <identifier>RecordMessage_To_Applicant_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Communication_Merge_Text_Field__c</fieldItem>
+                <identifier>RecordCommunication_Merge_Text_Field_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Decision_Letter_Sent__c</fieldItem>
+                <identifier>RecordDecision_Letter_Sent_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d8f0e487-639c-44c0-9dff-8cba647f8618</name>
@@ -708,6 +759,66 @@
                 <identifier>RecordCurrent_US_Visa_Type_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FAFSA_Aid_Year__c</fieldItem>
+                <identifier>RecordFAFSA_Aid_Year_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Financial_Aid_Counselor__c</fieldItem>
+                <identifier>RecordFinancial_Aid_Counselor_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FAFSA_Filed__c</fieldItem>
+                <identifier>RecordFAFSA_Filed_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.MN_Dream_Act_Year__c</fieldItem>
+                <identifier>RecordMN_Dream_Act_Year_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.MN_Dream_Act_Filed__c</fieldItem>
+                <identifier>RecordMN_Dream_Act_Filed_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Notification_of_Award_Date__c</fieldItem>
+                <identifier>RecordNotification_of_Award_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-1f04f7d6-59fe-492b-bbd0-8e122f014c94</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -742,250 +853,28 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Ethnicity__c</fieldItem>
-                <identifier>RecordEthnicity_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Ethnicity_Other__c</fieldItem>
-                <identifier>RecordEthnicity_Other_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Hispanic_Background__c</fieldItem>
-                <identifier>RecordRace_Hispanic_Background_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Hispanic_Latino__c</fieldItem>
-                <identifier>RecordRace_Hispanic_Latino_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Other_Hispanic__c</fieldItem>
-                <identifier>RecordRace_Other_Hispanic_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Black_African_American_Background__c</fieldItem>
-                <identifier>RecordRace_Black_African_American_Background_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Other_Black_Background__c</fieldItem>
-                <identifier>RecordRace_Other_Black_Background_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Other_Black__c</fieldItem>
-                <identifier>RecordRace_Other_Black_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Native_Pacific_Islander_Background__c</fieldItem>
-                <identifier>RecordRace_Native_Pacific_Islander_Background_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Other_Pacific_Islander__c</fieldItem>
-                <identifier>RecordRace_Other_Pacific_Islander_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Applicant_Student_of_Color__c</fieldItem>
-                <identifier>RecordApplicant_Student_of_Color_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-a54bc0d5-2c8e-4a46-b563-237d320d62b1</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Tribe_Enrolled_Ind__c</fieldItem>
-                <identifier>RecordTribe_Enrolled_Ind_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Tribal_Identity__c</fieldItem>
-                <identifier>RecordTribal_Identity_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Tribe_Name__c</fieldItem>
-                <identifier>RecordTribe_Name_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Tribe_Number__c</fieldItem>
-                <identifier>RecordTribe_Number_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Asian_Background__c</fieldItem>
-                <identifier>RecordRace_Asian_Background_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Other_East_Asia__c</fieldItem>
-                <identifier>RecordRace_Other_East_Asia_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Other_South_Asia__c</fieldItem>
-                <identifier>RecordRace_Other_South_Asia_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Other_Southeast_Asia__c</fieldItem>
-                <identifier>RecordRace_Other_Southeast_Asia_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_White_Background__c</fieldItem>
-                <identifier>RecordRace_White_Background_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Race_Other_White__c</fieldItem>
-                <identifier>RecordRace_Other_White_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-8024f819-23d8-4a5c-bed2-b3aed095dc5b</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-a54bc0d5-2c8e-4a46-b563-237d320d62b1</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column11</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-8024f819-23d8-4a5c-bed2-b3aed095dc5b</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column12</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-bb1bc11a-f9e1-431f-a9a5-9352fff4d1a1</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Activity_Music__c</fieldItem>
                 <identifier>RecordActivity_Music_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Club_Intramural_Sports_Interest__c</fieldItem>
+                <identifier>RecordClub_Intramural_Sports_Interest_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Clubs_Activities__c</fieldItem>
+                <identifier>RecordClubs_Activities_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-b32706cd-a33e-4bab-a9d9-dd32740f87f0</name>
@@ -1204,26 +1093,6 @@
                 <identifier>RecordMurray_Scholarship_Signature_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Decision_Letter_Sent__c</fieldItem>
-                <identifier>RecordDecision_Letter_Sent_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Communication_Merge_Text_Field__c</fieldItem>
-                <identifier>RecordCommunication_Merge_Text_Field_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-b10284c7-0b65-48ad-8476-d71bc0d95647</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1298,6 +1167,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.ACT_SAT_Max_Composite_Score__c</fieldItem>
+                <identifier>RecordACT_SAT_Max_Composite_Score_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.ACT_Composite_Score__c</fieldItem>
                 <identifier>RecordACT_Composite_Score_cField</identifier>
             </fieldInstance>
@@ -1310,6 +1189,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.SAT_Composite_Score__c</fieldItem>
                 <identifier>RecordSAT_Composite_Score_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SAT_ACT_Conversion__c</fieldItem>
+                <identifier>RecordSAT_ACT_Conversion_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-1a1df62e-9197-4511-a8d3-adec02790e9f</name>
@@ -1354,6 +1243,76 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Self_Reported_Test_Acknowledgement_Date__c</fieldItem>
                 <identifier>RecordSelf_Reported_Test_Acknowledgement_Date_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Overall_Highest_ACT_Math__c</fieldItem>
+                <identifier>RecordOverall_Highest_ACT_Math_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Overall_Highest_ACT_English__c</fieldItem>
+                <identifier>RecordOverall_Highest_ACT_English_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Overall_Highest_ACT_Reading__c</fieldItem>
+                <identifier>RecordOverall_Highest_ACT_Reading_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Overall_Highest_ACT_Science_Reasoning__c</fieldItem>
+                <identifier>RecordOverall_Highest_ACT_Science_Reasoning_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Overall_Highest_SAT_Math__c</fieldItem>
+                <identifier>RecordOverall_Highest_SAT_Math_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Overall_Highest_SAT_Writing__c</fieldItem>
+                <identifier>RecordOverall_Highest_SAT_Writing_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Overall_Highest_SAT_Reading__c</fieldItem>
+                <identifier>RecordOverall_Highest_SAT_Reading_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-09ee6efc-b54d-4328-b60b-bdcda16599a7</name>
@@ -1478,6 +1437,16 @@
                 <identifier>RecordHighest_Math_Other_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.High_School_or_College__c</fieldItem>
+                <identifier>RecordHigh_School_or_College_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-1c8fa6ae-747f-44ac-a2a3-c3c2497ede05</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -1585,6 +1554,10 @@
                     <value>Facet-bcee309d-1b39-4de6-b0e8-081ade146111</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Application Type Info</value>
                 </componentInstanceProperties>
@@ -1601,82 +1574,10 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>Requirement_Item__c|CONTAINS|Transcript</value>
+                            <value>Requirement_Item_Record_Type__c|EQUALS|Document_Upload</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Status__c|NOT_EQUAL|[&quot;Received&quot;]</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Status__c|NOT_EQUAL|[]</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>maxRecordsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Application__c.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>Requirement_Responses__r</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListDisplayType</name>
-                    <value>ADVGRID</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListFieldAliases</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>NAME</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Requirement_Item__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>ValueTextEntry__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Internal_Comments__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Status__c</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListLabel</name>
-                    <value>Quick Edit Panel</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldAlias</name>
-                    <value>CREATED_DATE</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldOrder</name>
-                    <value>Descending</value>
-                </componentInstanceProperties>
-                <componentName>lst:dynamicRelatedList</componentName>
-                <identifier>lst_dynamicRelatedList8</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>actionNames</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>adminFilters</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>HasDocument__c|EQUALS|true</value>
+                            <value>Requirement_Item__c|NOT_CONTAIN|Recommendation</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -1718,7 +1619,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListLabel</name>
-                    <value>Uploaded Document Requirements</value>
+                    <value>Document Uploads</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showActionBar</name>
@@ -1740,6 +1641,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>New</value>
+                        </valueListItems>
+                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>adminFilters</name>
@@ -1819,6 +1725,10 @@
                     <value>Facet-58c4fbc4-ab23-4064-9b4e-27f4273ebfbd</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Application FIlters and Details</value>
                 </componentInstanceProperties>
@@ -1833,6 +1743,10 @@
                     <value>Facet-9863cfcc-a02e-476b-b0dd-58de7acc379c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Application - Profile</value>
                 </componentInstanceProperties>
@@ -1844,21 +1758,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-bb1bc11a-f9e1-431f-a9a5-9352fff4d1a1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Race/Ethnicity</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection6</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
                     <value>Facet-36b3c1f2-0685-4d76-9546-05c813d14db4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1875,6 +1779,10 @@
                     <value>Facet-b8f6306c-2d51-47d2-8be8-ffeeb4c97973</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Application - Additional Information</value>
                 </componentInstanceProperties>
@@ -1887,6 +1795,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-6d6785e7-90dd-409f-b073-da5a31decb92</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -1910,6 +1822,10 @@
                     <value>Facet-25f248e5-2059-4bd2-b683-ea201525c674</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Application - Education</value>
                 </componentInstanceProperties>
@@ -1922,6 +1838,10 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-9d89866a-f0a4-47a4-85df-aa12d90cc02d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -2190,16 +2110,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.External_Appliction_Type__c</fieldItem>
-                <identifier>RecordExternal_Appliction_Type_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.X18_Digit_Application_ID__c</fieldItem>
                 <identifier>RecordX18_Digit_Application_ID_cField</identifier>
             </fieldInstance>
@@ -2212,6 +2122,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.External_Application_ID__c</fieldItem>
                 <identifier>RecordExternal_Application_ID_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.External_Application_Type__c</fieldItem>
+                <identifier>RecordExternal_Application_Type_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.External_Appliction_Type__c</fieldItem>
+                <identifier>RecordExternal_Appliction_Type_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-3d3cabfe-2560-4732-9d7b-b6c9159aa497</name>
@@ -2259,6 +2189,10 @@
                     <value>Facet-6454f337-1ade-492f-b0e8-25e8d218319f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>System details</value>
                 </componentInstanceProperties>
@@ -2284,7 +2218,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>showLegacyActivityComposer</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
@@ -2293,27 +2227,120 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
-                    <value>Application__c.Id</value>
+                    <value>Application__c.Contact__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>AttachedContentDocuments</value>
+                    <value>Opportunities__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>OPPORTUNITY.NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Academic_Program__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Intended_Start_Term__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Athlete_Sport_1__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Opportunities for Parent Contact</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showActionBar</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer2</identifier>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>__DEFAULT__</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Default</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxRecordsToDisplay</name>
+                    <value>2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Application__c.Contact__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Awards__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListDisplayType</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListFieldAliases</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Award_Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Graduate_Scholarship_Type__c</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListLabel</name>
+                    <value>Contact Awards</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldAlias</name>
+                    <value>__DEFAULT__</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortFieldOrder</name>
+                    <value>Default</value>
+                </componentInstanceProperties>
+                <componentName>lst:dynamicRelatedList</componentName>
+                <identifier>lst_dynamicRelatedList12</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2385,6 +2412,32 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Application__c.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>AttachedContentDocuments</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
@@ -2446,67 +2499,6 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>actionNames</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>adminFilters</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>maxRecordsToDisplay</name>
-                    <value>5</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Application__c.Contact__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>Opportunities__r</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListDisplayType</name>
-                    <value>ADVGRID</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListFieldAliases</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>OPPORTUNITY.NAME</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Academic_Program__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Intended_Start_Term__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Athlete_Sport_1__c</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListLabel</name>
-                    <value>Opportunities for Parent Contact</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldAlias</name>
-                    <value>__DEFAULT__</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldOrder</name>
-                    <value>Default</value>
-                </componentInstanceProperties>
-                <componentName>lst:dynamicRelatedList</componentName>
-                <identifier>lst_dynamicRelatedList7</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -2642,75 +2634,6 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList4</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>New</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>adminFilters</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>maxRecordsToDisplay</name>
-                    <value>5</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Application__c.Contact__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>Scholarship_Applicants__r</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListDisplayType</name>
-                    <value>ADVGRID</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListFieldAliases</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>NAME</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Scholarship__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Scholarship_Status__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Scholarship_Date_Started__c</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Scholarship_Date_Submitted__c</value>
-                        </valueListItems>
-                    </valueList>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListLabel</name>
-                    <value>Scholarship Applicants for Parent Contact</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldAlias</name>
-                    <value>__DEFAULT__</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortFieldOrder</name>
-                    <value>Default</value>
-                </componentInstanceProperties>
-                <componentName>lst:dynamicRelatedList</componentName>
-                <identifier>lst_dynamicRelatedList12</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

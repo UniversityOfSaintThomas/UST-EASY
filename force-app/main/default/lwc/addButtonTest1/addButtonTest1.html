@@ -1,0 +1,35 @@
+<!--
+ - Created by nguy0092 on 3/8/2024.
+ -->
+
+<!-- Add Button Test 1 -->
+<template>
+    <div class="slds-box_border slds-m-around_small slds-grid slds-wrap">
+
+        <div class="slds-grid slds-wrap slds-m-around_small">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <lightning-datatable
+                        key-field="id"
+                        show-row-number-column
+                        data={questionJSON}
+                        hide-checkbox-column
+                        columns={columns}
+                        class='actionButtons'
+                        onrowaction={callRowAction}
+                >
+                </lightning-datatable>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+            <form>
+                <lightning-card title="Add Button Link" icon-name="utility:add">
+
+                    This is a form.
+
+                </lightning-card>
+            </form>
+        </div>
+    </div>
+
+</template>

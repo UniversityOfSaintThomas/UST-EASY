@@ -1,0 +1,18 @@
+<!--
+ - Created by nguy0092 on 3/7/2024.
+ -->
+
+<apex:page id="YNTESTPAGE1" lightningStyleSheets="true">
+
+    <c:YNTESTCOMPONENT1 ></c:YNTESTCOMPONENT1>
+
+<!--    <apex:slds/>-->
+
+<!--    <div class="slds-scope">-->
+
+<!--        <a class="slds-button slds-button_neutral" href="https://www.salesforce.com">Another Go To Salesforce!</a>-->
+<!--        <a class="slds-button slds-button_brand" href="https://www.salesforce.com">Why go to Salesforce?</a>-->
+
+<!--    </div>-->
+
+</apex:page>

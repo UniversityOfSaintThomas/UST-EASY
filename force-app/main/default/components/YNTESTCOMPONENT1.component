@@ -1,0 +1,21 @@
+<!--
+ - Created by nguy0092 on 3/7/2024.
+ -->
+
+<apex:component id="YNTESTCOMPONENT1">
+
+    <apex:pageblock>
+
+        <apex:slds/>
+
+        <div class="slds-scope">
+
+            <a class="slds-button slds-button_neutral" href="https://uofstthomasmn--edastaging.sandbox.my.site.com/Admissions/scholarshiphome" target="_blank">Apply for Scholarship</a>
+            <a class="slds-button slds-button_brand" href="https://www.stthomas.edu/admissions/undergraduate/campus-visits/" target="_blank">View Events</a>
+            <a class="slds-button slds-button_success" href="https://www.salesforce.com" target="_blank">Go to Salesforce</a>
+
+        </div>
+
+    </apex:pageblock>
+
+</apex:component>

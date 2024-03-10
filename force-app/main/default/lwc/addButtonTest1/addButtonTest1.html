@@ -4,32 +4,61 @@
 
 <!-- Add Button Test 1 -->
 <template>
-    <div class="slds-box_border slds-m-around_small slds-grid slds-wrap">
 
+    <div class="slds-box_border slds-m-around_small slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+            <form>
+                <lightning-card title="Create Link Button" icon-name="utility:add">
+
+                    <div class="slds-grid slds-wrap slds-gutters">
+
+                        <lightning-input class="slds-col slds-size_1-of-1 slds-large-size_1-of-4"
+                                         type="text"
+                                         name="ButtonLabel"
+                                         label='Button Label'
+                                         required="true"
+                                         value={button_label}
+                                         onchange={handleChange}></lightning-input>
+                        <lightning-input class="slds-col slds-size_1-of-1 slds-large-size_3-of-4"
+                                         type="text"
+                                         name="ButtonLink"
+                                         label='Button Link'
+                                         required="true"
+                                         value={button_link}
+                                         onchange={handleChange}></lightning-input>
+                    </div>
+
+                    <!-- Button to submit the additional question -->
+                    <p slot="footer">
+                        <lightning-button
+                                name="Submit"
+                                label="Add Link Button"
+                                onclick={validInput}
+                                icon-name="utility:add"
+                                variant="brand">
+                        </lightning-button>
+                    </p>
+
+                </lightning-card>
+
+            </form>
+        </div>
+    </div>
+
+    <template lwc:if={showDataTable}>
         <div class="slds-grid slds-wrap slds-m-around_small">
             <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
                 <lightning-datatable
                         key-field="id"
                         show-row-number-column
-                        data={questionJSON}
+                        data={buttonJSON}
                         hide-checkbox-column
                         columns={columns}
                         class='actionButtons'
-                        onrowaction={callRowAction}
-                >
+                        onrowaction={callRowAction}>
                 </lightning-datatable>
             </div>
         </div>
-
-        <div class="slds-p-around_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-            <form>
-                <lightning-card title="Add Button Link" icon-name="utility:add">
-
-                    This is a form.
-
-                </lightning-card>
-            </form>
-        </div>
-    </div>
+    </template>
 
 </template>

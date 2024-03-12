@@ -3121,9 +3121,9 @@
         <label>ET_GR_MS|MSEM</label>
     </customValue>
     <customValue>
-        <fullName>SE_GRCER|APAI</fullName>
+        <fullName>SE_GR_CER|APAI</fullName>
         <default>false</default>
-        <label>SE_GRCER|APAI</label>
+        <label>SE_GR_CER|APAI</label>
     </customValue>
     <masterLabel>Program(s)</masterLabel>
     <sorted>true</sorted>

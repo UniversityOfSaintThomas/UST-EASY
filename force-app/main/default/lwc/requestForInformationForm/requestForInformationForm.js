@@ -366,7 +366,6 @@ export default class RequestForInformationForm extends LightningElement {
                     if (this.academic_max_select == "1") {
                         this.multi_select_single = true;
                         this.field_labels.academic_interest_label = 'Academic Interest';
-                        this.academic_max_select_help = "Only one program of interest can be selected. Please submit a new form for each program of interest.";
                     } else {
                         this.field_labels.academic_interest_label = 'Academic Interest (Max ' + this.academic_max_select + ')';
                         this.academic_max_select_help = "You can only choose up to " + this.academic_max_select + " options";

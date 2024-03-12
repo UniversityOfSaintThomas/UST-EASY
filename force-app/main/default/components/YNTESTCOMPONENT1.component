@@ -10,9 +10,22 @@
 
         <div class="slds-scope">
 
-            <a class="slds-button slds-button_neutral" href="https://uofstthomasmn--edastaging.sandbox.my.site.com/Admissions/scholarshiphome" target="_blank">Apply for Scholarship</a>
-            <a class="slds-button slds-button_brand" href="https://www.stthomas.edu/admissions/undergraduate/campus-visits/" target="_blank">View Events</a>
-            <a class="slds-button slds-button_success" href="https://www.salesforce.com" target="_blank">Go to Salesforce</a>
+            <div class="slds-p-top_small slds-grid slds-grid_align-center">
+                <a class="slds-button slds-button_neutral"
+                   href="https://uofstthomasmn--edastaging.sandbox.my.site.com/Admissions/scholarshiphome"
+                   target="_blank">Apply for Scholarship</a>
+            </div>
+
+            <div class="slds-p-top_small slds-grid slds-grid_align-center">
+                <a class="slds-button slds-button_brand"
+                   href="https://www.stthomas.edu/admissions/undergraduate/campus-visits/" target="_blank">View
+                    Events</a>
+            </div>
+
+            <div class="slds-p-top_small slds-grid slds-grid_align-center">
+                <a class="slds-button slds-button_success" href="https://www.salesforce.com" target="_blank">Go to
+                    Salesforce</a>
+            </div>
 
         </div>
 

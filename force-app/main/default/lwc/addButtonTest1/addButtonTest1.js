@@ -17,7 +17,7 @@ export default class AddButtonTest1 extends LightningElement {
             label: 'Button Label',
             fieldName: 'buttonLabel',
             type: 'text',
-            initialWidth: 150,
+            initialWidth: 200,
             wrapText: true,
             hideDefaultActions: true
         },
@@ -25,12 +25,14 @@ export default class AddButtonTest1 extends LightningElement {
             label: 'Button Link',
             fieldName: 'buttonLink',
             type: 'text',
+            initialWidth: 575,
             wrapText: true,
             hideDefaultActions: true
         },
         {
+            label: 'Move Up',
             type: "button-icon",
-            initialWidth: 45,
+            initialWidth: 75,
             wrapText: true,
             typeAttributes: {
                 name: 'up',
@@ -41,8 +43,9 @@ export default class AddButtonTest1 extends LightningElement {
             }
         },
         {
+            label: 'Move Down',
             type: "button-icon",
-            initialWidth: 45,
+            initialWidth: 90,
             wrapText: true,
             typeAttributes: {
                 name: 'down',
@@ -53,8 +56,9 @@ export default class AddButtonTest1 extends LightningElement {
             }
         },
         {
+            label: 'Delete',
             type: "button-icon",
-            initialWidth: 45,
+            initialWidth: 60,
             wrapText: true,
             typeAttributes: {
                 name: 'delete',
@@ -107,6 +111,7 @@ export default class AddButtonTest1 extends LightningElement {
         ].reduce((validSoFar, inputCmp) => {
 
             inputCmp.reportValidity();
+
             return validSoFar && inputCmp.checkValidity();
         }, true);
 
@@ -116,129 +121,105 @@ export default class AddButtonTest1 extends LightningElement {
         } else {
 
             this.template.querySelector('.slds-has-error').scrollIntoView();
+
             return false;
         }
     }
 
     handleChange(event) {
 
+        const targetName = event.target.name;
+        const targetValue = event.target.value;
+
         this.buttonItem['id'] = this.buttonJSON.length;
 
-        if (event.target.name === 'ButtonLabel') {
+        switch (targetName) {
 
-            this.buttonItem['buttonLabel'] = event.target.value;
-        } else if (event.target.name === 'ButtonLink') {
+            case 'ButtonLabel':
 
-            this.buttonItem['buttonLink'] = event.target.value;
+                this.buttonItem['buttonLabel'] = targetValue;
+
+                break;
+            case 'ButtonLink':
+
+                this.buttonItem['buttonLink'] = targetValue;
+
+                break;
+            case 'Submit':
+
+                this.buttonJSON.push(this.buttonItem);
+
+                //Update the record field EASY_Widget__c.Button_Code__c with the new JSON
+                const fields = {};
+                fields[ID_FIELD.fieldApiName] = this.recordId;
+                fields[BUTTON_CODE.fieldApiName] = JSON.stringify(this.buttonJSON);
+
+                const recordInput = {fields};
+
+                updateRecord(recordInput).then(r => console.log(r)).catch(e => console.log(e));
+
+                //Reset form
+                this.template.querySelector("form").reset();
+
+                this.template.querySelectorAll('form lightning-input').forEach(each => {
+                    each.value = undefined;
+                });
+
+                this.buttonItem = {
+                    'id': '',
+                    'buttonLabel': '',
+                    'buttonLink': '',
+                };
+
+                break;
+        }
+    }
+
+    callRowAction(event) {
+
+        const actionName = event.detail.action.name;
+        const row = event.detail.row;
+
+        // Move row up or down in buttonJSON data structure
+        switch (actionName) {
+
+            case 'up':
+                if (row.id > 0) {
+
+                    const temp = this.buttonJSON[row.id - 1];
+                    this.buttonJSON[row.id - 1] = this.buttonJSON[row.id];
+                    this.buttonJSON[row.id] = temp;
+                }
+
+                break;
+            case 'down':
+                if (row.id < this.buttonJSON.length - 1) {
+
+                    const temp = this.buttonJSON[row.id + 1];
+                    this.buttonJSON[row.id + 1] = this.buttonJSON[row.id];
+                    this.buttonJSON[row.id] = temp;
+                }
+
+                break;
+            case 'delete': // Delete row
+                this.buttonJSON.splice(row.id, 1);
+
+                break;
+        }
+        //Fix ids to new index
+        for (let i = 0; i < this.buttonJSON.length; i++) {
+
+            this.buttonJSON[i].id = i;
         }
 
-        if (event.target.name === 'Submit') {
+        //Update the record field EASY_Widget__c.Button_Code__c with the new JSON
+        const fields = {};
+        fields[ID_FIELD.fieldApiName] = this.recordId;
+        fields[BUTTON_CODE.fieldApiName] = JSON.stringify(this.buttonJSON);
 
-            this.buttonJSON.push(this.buttonItem);
+        const recordInput = {fields};
 
-            const fields = {};
-            fields[ID_FIELD.fieldApiName] = this.recordId;
-            fields[BUTTON_CODE.fieldApiName] = JSON.stringify(this.buttonJSON);
-
-            const recordInput = {fields};
-
-            updateRecord(recordInput).then(r => console.log(r)).catch(e => console.log(e));
-
-            this.template.querySelector("form").reset();
-        }
-
-        // switch (event.target.name) {
-        //     case 'questionType':
-        //         this.isPicklist = false;
-        //         this.isEmail = false;
-        //         this.isTextarea = false;
-        //         this.isTextBox = false;
-        //         this.isStaticContent = false;
-        //         if (event.target.value === 'Picklist' || event.target.value === 'Picklist required') {
-        //             this.isPicklist = true;
-        //             this.inputItem['isPicklist'] = true;
-        //         }
-        //         if (event.target.value === 'Text box' || event.target.value === 'Text box required') {
-        //             this.isTextBox = true;
-        //             this.inputItem['isTextBox'] = true;
-        //         }
-        //         if (event.target.value === 'Textarea' || event.target.value === 'Textarea required') {
-        //             this.isTextarea = true;
-        //             this.inputItem['isTextarea'] = true;
-        //         }
-        //         if (event.target.value === 'Email' || event.target.value === 'Email required') {
-        //             this.isEmail = true;
-        //             this.inputItem['isEmail'] = true;
-        //         }
-        //         if (event.target.value === 'Static content') {
-        //             this.inputItem['isStaticContent'] = true;
-        //             this.isStaticContent = true;
-        //         }
-        //         this.inputItem['questionType'] = event.target.value;
-        //         if (event.target.value.includes('required')) {
-        //             this.inputItem['isRequired'] = true;
-        //             this.assistiveTextRequired = true;
-        //         } else {
-        //             this.assistiveTextRequired = false;
-        //             this.inputItem['isRequired'] = false;
-        //         }
-        //         break;
-        //     case 'fieldToApplyTo':
-        //         this.inputItem['fieldToApplyTo'] = event.target.value;
-        //         break;
-        //     case 'picklistValues':
-        //         let pickValues = event.target.value.split('\n');
-        //         let pickValuesArray = [];
-        //         pickValues.forEach(function (value, i) {    //Remove any blank lines
-        //             if (value !== '') {
-        //                 pickValuesArray.push({label: value, value: value});
-        //             }
-        //         })
-        //         this.inputItem['picklistValues'] = pickValuesArray;
-        //         this.inputItem['valuesFlat'] = pickValues.join(';');
-        //         break;
-        //     case 'staticContent':
-        //         this.inputItem['valuesFlat'] = event.target.value;
-        //         break;
-        //     case 'questionLabel':
-        //         this.inputItem['questionLabel'] = event.target.value;
-        //         break;
-        //     case 'assistiveText':
-        //         this.inputItem['assistiveText'] = event.target.value;
-        //         break;
-        //     case 'position':
-        //         this.inputItem['position'] = event.target.value;
-        //         break;
-        //     case 'Submit':
-        //         this.Submit = event.target.value;
-        //         //Now update the record field RFI_Controller__c.Additional_Questions__c with the new JSON
-        //         this.questionJSON.push(this.inputItem);
-        //         const fields = {};
-        //         fields[ID_FIELD.fieldApiName] = this.recordId;
-        //         fields[ADDITIONAL_QUESTIONS_FIELD.fieldApiName] = JSON.stringify(this.questionJSON);
-        //         const recordInput = {fields};
-        //         updateRecord(recordInput).then(r => console.log(r)).catch(e => console.log(e));
-        //         this.template.querySelector("form").reset();
-        //         this.template.querySelectorAll('form lightning-combobox, form lightning-input-rich-text').forEach(each => {
-        //             each.value = undefined;
-        //         });
-        //         this.inputItem = {
-        //             'questionLabel': '',
-        //             'questionType': '',
-        //             'fieldToApplyTo': '',
-        //             'assistiveText': '',
-        //             'isPicklist': false,
-        //             'isRequired': false,
-        //             'isTextBox': false,
-        //             'isTextarea': false,
-        //             'isRichText': false,
-        //             'isStaticContent': false,
-        //             'isEmail': false,
-        //             'picklistValues': [],
-        //             'valuesFlat': '',
-        //         };
-        //         break;
-        // }
+        updateRecord(recordInput).then(r => console.log(r)).catch(e => console.log(e));
     }
 
 }

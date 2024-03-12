@@ -8,7 +8,7 @@
     <div class="slds-box_border slds-m-around_small slds-grid slds-wrap">
         <div class="slds-p-around_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
             <form>
-                <lightning-card title="Create Link Button" icon-name="utility:add">
+                <lightning-card title="Create Button Link" icon-name="utility:add">
 
                     <div class="slds-grid slds-wrap slds-gutters">
 
@@ -18,21 +18,24 @@
                                          label='Button Label'
                                          required="true"
                                          value={button_label}
-                                         onchange={handleChange}></lightning-input>
+                                         onchange={handleChange}
+                                         field-level-help="Text displayed for button">
+                        </lightning-input>
                         <lightning-input class="slds-col slds-size_1-of-1 slds-large-size_3-of-4"
-                                         type="text"
+                                         type="url"
                                          name="ButtonLink"
                                          label='Button Link'
                                          required="true"
                                          value={button_link}
-                                         onchange={handleChange}></lightning-input>
+                                         onchange={handleChange}
+                                         field-level-help="URL destination for clicked button"></lightning-input>
                     </div>
 
                     <!-- Button to submit the additional question -->
                     <p slot="footer">
                         <lightning-button
                                 name="Submit"
-                                label="Add Link Button"
+                                label="Add"
                                 onclick={validInput}
                                 icon-name="utility:add"
                                 variant="brand">
@@ -43,22 +46,24 @@
 
             </form>
         </div>
-    </div>
 
-    <template lwc:if={showDataTable}>
-        <div class="slds-grid slds-wrap slds-m-around_small">
-            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                <lightning-datatable
-                        key-field="id"
-                        show-row-number-column
-                        data={buttonJSON}
-                        hide-checkbox-column
-                        columns={columns}
-                        class='actionButtons'
-                        onrowaction={callRowAction}>
-                </lightning-datatable>
+
+        <template lwc:if={showDataTable}>
+            <div class="slds-grid slds-wrap slds-m-around_small">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                    <lightning-datatable
+                            key-field="id"
+                            show-row-number-column
+                            data={buttonJSON}
+                            hide-checkbox-column
+                            columns={columns}
+                            class='actionButtons'
+                            onrowaction={callRowAction}>
+                    </lightning-datatable>
+                </div>
             </div>
-        </div>
-    </template>
+        </template>
+
+    </div>
 
 </template>

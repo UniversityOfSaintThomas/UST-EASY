@@ -3,10 +3,15 @@
  -->
 
 <apex:component id="EasyWidget" controller="EasyWidgetController">
-    <apex:attribute name="widget" description="Widget to process" type="EASY_Widget__c" required="false" assignTo="{!widgetDetails}"/>
-    <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String" required="false"/>
-    <apex:attribute name="appInfo" description="Wrapper with Application control and app information" required="false" type="EASYApplicationInfo"/>
-    <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
+    <apex:attribute name="widget" description="Widget to process" type="EASY_Widget__c" required="false"
+                    assignTo="{!widgetDetails}"/>
+    <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String"
+                    required="false"/>
+    <apex:attribute name="appInfo" description="Wrapper with Application control and app information" required="false"
+                    type="EASYApplicationInfo"/>
+    <apex:attribute name="checklistItems" type="RequirementWrapper[]"
+                    description="Requirement Wrapper to built checklists. Use checklistHelper in code."
+                    required="false"/>
 
     <article class="slds-card slds-m-bottom_medium">
         <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">
@@ -27,21 +32,19 @@
                 </div>
             </apex:outputPanel>
 
-            <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
+            <apex:outputText escape="false" value="{!widget.Scripts__c}"
+                             rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
 
-<!--            BEGIN TESTING-->
+            <!--            BEGIN TESTING-->
             <apex:repeat var="button" value="{!Buttons}">
                 <div class="slds-p-top_small slds-grid slds-gutters {!button.buttonPosition}">
-                    <a class="slds-button slds-button_outline-brand"
+                    <a class="slds-button {!button.buttonStyle}"
                        href="{!button.buttonLink}"
-                       target="_top"
-                       style="width: {!button.buttonSize}">{!button.buttonLabel}</a>
-
+                       target="_blank"
+                       style="width: {!button.buttonSize}; font-size: 16px">{!button.buttonLabel}</a>
                 </div>
             </apex:repeat>
-
-<!--            <apex:outputText escape="false" value="{!widget.Button_Code__c}" rendered="{!If(NOT(ISBLANK(widget.Button_Code__c)), true, false)}"/>-->
-<!--            END TESTING-->
+            <!--            END TESTING-->
 
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist' }">
                 <c:ApplicationChecklist appInfo="{!appInfo}" checklistItems="{!checklistItems}" widget="{!widget}"/>
@@ -53,10 +56,10 @@
                 <c:AdmissionsApplicationFinder appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'User Info Login/Logout' }">
-                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}" />
+                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Counselor Information' }">
-                <c:CounselorInfoWidget appInfo="{!appInfo}" widget="{!widget}" />
+                <c:CounselorInfoWidget appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist Multiple' }">
                 <c:ApplicationChecklistMultiple appInfo="{!appInfo}" widget="{!widget}"/>

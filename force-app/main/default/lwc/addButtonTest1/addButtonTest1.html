@@ -10,8 +10,7 @@
             <form>
                 <lightning-card title="Create Button Link" icon-name="utility:add">
 
-                    <div class="slds-grid slds-wrap slds-gutters">
-
+                    <div class="slds-p-bottom_small slds-grid slds-wrap slds-gutters">
                         <lightning-input class="slds-col slds-size_1-of-1 slds-large-size_1-of-4"
                                          type="text"
                                          name="ButtonLabel"
@@ -19,8 +18,7 @@
                                          required="true"
                                          value={button_label}
                                          onchange={handleChange}
-                                         field-level-help="Text displayed for button">
-                        </lightning-input>
+                                         field-level-help="Text displayed for button"></lightning-input>
                         <lightning-input class="slds-col slds-size_1-of-1 slds-large-size_3-of-4"
                                          type="url"
                                          name="ButtonLink"
@@ -28,7 +26,36 @@
                                          required="true"
                                          value={button_link}
                                          onchange={handleChange}
-                                         field-level-help="URL destination for clicked button"></lightning-input>
+                                         field-level-help="URL destination for clicked button. Must begin with https://."></lightning-input>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
+                                            name="ButtonStyle"
+                                            label="Button Style"
+                                            value={button_style}
+                                            placeholder=""
+                                            options={buttonStyleOptions}
+                                            onchange={handleChange}
+                                            required
+                                            field-level-help="Style of button"></lightning-combobox>
+                        <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
+                                            name="ButtonSize"
+                                            label="Button Size"
+                                            value={button_size}
+                                            placeholder=""
+                                            options={buttonSizeOptions}
+                                            onchange={handleChange}
+                                            required
+                                            field-level-help="Width size of button"></lightning-combobox>
+                        <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
+                                            name="ButtonPosition"
+                                            label="Button Position"
+                                            value={button_position}
+                                            placeholder=""
+                                            options={buttonPositionOptions}
+                                            onchange={handleChange}
+                                            required
+                                            field-level-help="Horizontal position of button"></lightning-combobox>
                     </div>
 
                     <!-- Button to submit the additional question -->
@@ -47,20 +74,18 @@
             </form>
         </div>
 
-
         <template lwc:if={showDataTable}>
-            <div class="slds-grid slds-wrap slds-m-around_small">
-                <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                    <lightning-datatable
-                            key-field="id"
-                            show-row-number-column
-                            data={buttonJSON}
-                            hide-checkbox-column
-                            columns={columns}
-                            class='actionButtons'
-                            onrowaction={callRowAction}>
-                    </lightning-datatable>
-                </div>
+            <div class="slds-p-around_small slds-col slds-wrap slds-size_1-of-1 slds-large-size_12-of-12">
+                <lightning-datatable
+                        key-field="id"
+                        show-row-number-column
+                        data={buttonJSON}
+                        hide-checkbox-column
+                        columns={columns}
+                        class='actionButtons'
+                        onrowaction={callRowAction}
+                        wrap-text-max-lines="5">
+                </lightning-datatable>
             </div>
         </template>
 

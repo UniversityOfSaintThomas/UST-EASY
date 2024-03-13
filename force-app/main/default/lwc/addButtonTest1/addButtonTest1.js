@@ -96,27 +96,31 @@ export default class AddButtonTest1 extends LightningElement {
 
     get buttonStyleOptions() {
         return [
-            { label: 'No Style', value: 'slds-button_no_style' }, //slds-button_no_style does not exist. Using to fulfill field value requirement check.
-            { label: 'Brand', value: 'slds-button_brand' },
-            { label: 'Outline Brand Button', value: 'slds-button_outline-brand' },
-            { label: 'Neutral', value: 'slds-button_neutral' },
+            {label: 'No Style', value: 'slds-button_no_style'}, //slds-button_no_style does not exist. Using to fulfill field value requirement check.
+            {label: 'Brand', value: 'slds-button_brand'},
+            {label: 'Outline Brand Button', value: 'slds-button_outline-brand'},
+            {label: 'Neutral', value: 'slds-button_neutral'},
         ];
     }
 
     get buttonSizeOptions() {
         return [
-            { label: 'Small: 100px', value: '100px' },
-            { label: 'Medium: 200px', value: '200px' },
-            { label: 'Large: 300px', value: '300px' },
-            { label: 'x-Large: 400px', value: '400px' },
+            {label: '1/8 of Widget', value: 'slds-large-size_1-of-8'},
+            {label: '2/8 of Widget', value: 'slds-large-size_2-of-8'},
+            {label: '3/8 of Widget', value: 'slds-large-size_3-of-8'},
+            {label: '4/8 of Widget', value: 'slds-large-size_4-of-8'},
+            {label: '5/8 of Widget', value: 'slds-large-size_5-of-8'},
+            {label: '6/8 of Widget', value: 'slds-large-size_6-of-8'},
+            {label: '7/8 of Widget', value: 'slds-large-size_7-of-8'},
+            {label: '8/8 of Widget', value: 'slds-large-size_8-of-8'},
         ];
     }
 
     get buttonPositionOptions() {
         return [
-            { label: 'Left', value: 'slds-grid_align-left' }, //Left position is default/no class. slds-grid_align-left does not exist. Using to fulfill field value requirement check.
-            { label: 'Center', value: 'slds-grid_align-center' },
-            { label: 'Right', value: 'slds-grid_align-end' },
+            {label: 'Left', value: 'slds-grid_align-left'}, //Left position is default/no class. slds-grid_align-left does not exist. Using to fulfill field value requirement check.
+            {label: 'Center', value: 'slds-grid_align-center'},
+            {label: 'Right', value: 'slds-grid_align-end'},
         ];
     }
 
@@ -232,7 +236,7 @@ export default class AddButtonTest1 extends LightningElement {
                 //Reset form
                 this.template.querySelector("form").reset();
 
-                this.template.querySelectorAll('form, lightning-input, lightning-combobox').forEach(each => {
+                this.template.querySelectorAll('form lightning-input, form lightning-combobox').forEach(each => {
                     each.value = undefined;
                 });
 

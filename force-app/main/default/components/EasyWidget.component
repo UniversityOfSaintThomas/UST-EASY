@@ -38,10 +38,12 @@
             <!--            BEGIN TESTING-->
             <apex:repeat var="button" value="{!Buttons}">
                 <div class="slds-p-top_small slds-grid slds-gutters {!button.buttonPosition}">
-                    <a class="slds-button {!button.buttonStyle}"
-                       href="{!button.buttonLink}"
-                       target="_blank"
-                       style="width: {!button.buttonSize}; font-size: 16px">{!button.buttonLabel}</a>
+                    <div class="slds-col slds-size_10-of-12 {!button.buttonSize}">
+                        <a class="slds-button slds-button_stretch {!button.buttonStyle}"
+                           href="{!button.buttonLink}"
+                           target="_blank"
+                           style="font-size:16px">{!button.buttonLabel}</a>
+                    </div>
                 </div>
             </apex:repeat>
             <!--            END TESTING-->

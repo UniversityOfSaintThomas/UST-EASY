@@ -6,10 +6,9 @@
 <template>
 
     <div class="slds-box_border slds-m-around_small slds-grid slds-wrap">
-        <div class="slds-p-around_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+        <div class="slds-p-around_small slds-col slds-size_1-of-1">
             <form>
                 <lightning-card title="Create Button Link" icon-name="utility:add">
-
                     <div class="slds-p-bottom_small slds-grid slds-wrap slds-gutters">
                         <lightning-input class="slds-col slds-size_1-of-1 slds-large-size_1-of-4"
                                          type="text"
@@ -28,7 +27,7 @@
                                          onchange={handleChange}
                                          field-level-help="URL destination for clicked button. Must begin with https://."></lightning-input>
                     </div>
-                    <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-p-bottom_small slds-grid slds-wrap slds-gutters">
                         <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
                                             name="ButtonStyle"
                                             label="Button Style"
@@ -46,7 +45,7 @@
                                             options={buttonSizeOptions}
                                             onchange={handleChange}
                                             required
-                                            field-level-help="Width size of button"></lightning-combobox>
+                                            field-level-help="Width of button relative to overall size of widget determined by Widget Screen Location field"></lightning-combobox>
                         <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
                                             name="ButtonPosition"
                                             label="Button Position"
@@ -58,7 +57,7 @@
                                             field-level-help="Horizontal position of button"></lightning-combobox>
                     </div>
 
-                    <!-- Button to submit the additional question -->
+                    <!-- Button to submit button link-->
                     <p slot="footer">
                         <lightning-button
                                 name="Submit"
@@ -68,14 +67,12 @@
                                 variant="brand">
                         </lightning-button>
                     </p>
-
                 </lightning-card>
-
             </form>
         </div>
 
         <template lwc:if={showDataTable}>
-            <div class="slds-p-around_small slds-col slds-wrap slds-size_1-of-1 slds-large-size_12-of-12">
+            <div class="slds-p-around_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
                 <lightning-datatable
                         key-field="id"
                         show-row-number-column
@@ -88,7 +85,6 @@
                 </lightning-datatable>
             </div>
         </template>
-
     </div>
 
 </template>

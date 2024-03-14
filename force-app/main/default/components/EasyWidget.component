@@ -36,16 +36,18 @@
                              rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
 
             <!--            BEGIN TESTING-->
-            <apex:repeat var="button" value="{!Buttons}">
-                <div class="slds-p-top_small slds-grid slds-gutters {!button.buttonPosition}">
-                    <div class="slds-col slds-size_10-of-12 {!button.buttonSize}">
-                        <a class="slds-button slds-button_stretch {!button.buttonStyle}"
-                           href="{!button.buttonLink}"
-                           target="_blank"
-                           style="font-size:16px">{!button.buttonLabel}</a>
+            <apex:outputPanel rendered="{!If(NOT(ISBLANK(widget.Button_Code__c)), true, false)}" layout="none">
+                <apex:repeat var="button" value="{!Buttons}">
+                    <div class="slds-p-top_small slds-grid slds-gutters {!button.buttonPosition}">
+                        <div class="slds-col slds-size_3-of-4 {!button.buttonSize}">
+                            <a class="slds-button slds-button_stretch {!button.buttonStyle}"
+                               href="{!button.buttonLink}"
+                               target="_blank"
+                               style="font-size:16px">{!button.buttonLabel}</a>
+                        </div>
                     </div>
-                </div>
-            </apex:repeat>
+                </apex:repeat>
+            </apex:outputPanel>
             <!--            END TESTING-->
 
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist' }">

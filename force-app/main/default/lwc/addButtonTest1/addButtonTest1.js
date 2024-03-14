@@ -105,14 +105,10 @@ export default class AddButtonTest1 extends LightningElement {
 
     get buttonSizeOptions() {
         return [
-            {label: '1/8 of Widget', value: 'slds-large-size_1-of-8'},
-            {label: '2/8 of Widget', value: 'slds-large-size_2-of-8'},
-            {label: '3/8 of Widget', value: 'slds-large-size_3-of-8'},
-            {label: '4/8 of Widget', value: 'slds-large-size_4-of-8'},
-            {label: '5/8 of Widget', value: 'slds-large-size_5-of-8'},
-            {label: '6/8 of Widget', value: 'slds-large-size_6-of-8'},
-            {label: '7/8 of Widget', value: 'slds-large-size_7-of-8'},
-            {label: '8/8 of Widget', value: 'slds-large-size_8-of-8'},
+            {label: 'Small: 1/4 widget', value: 'slds-large-size_1-of-4'},
+            {label: 'Medium: 1/2 widget', value: 'slds-large-size_2-of-4'},
+            {label: 'Large: 3/4 widget', value: 'slds-large-size_3-of-4'},
+            {label: 'X-Large: Full widget', value: 'slds-large-size_4-of-4'},
         ];
     }
 

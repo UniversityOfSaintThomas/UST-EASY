@@ -6,7 +6,7 @@ public with sharing class EasyWidgetController {
 
     public EASY_Widget__c widgetDetails { get; set; }
 
-    public class WidgetButton {
+    public class widgetButton {
 
         public String id { get; set; }
         public String buttonLabel { get; set; }
@@ -14,20 +14,20 @@ public with sharing class EasyWidgetController {
         public String buttonStyle { get; set; }
         public String buttonSize { get; set; }
         public String buttonPosition { get; set; }
-//        public String buttonTarget { get; set; }
+        public String buttonTarget { get; set; }
     }
 
     public EasyWidgetController() {
 
     }
 
-    public List<WidgetButton> getButtons() {
+    public List<widgetButton> getButtons() {
 
-        List<WidgetButton> returnButtonList = new List<WidgetButton>();
+        List<widgetButton> returnButtonList = new List<widgetButton>();
 
         if (String.isNotBlank(widgetDetails.Button_Code__c)) {
 
-            returnButtonList = (List<WidgetButton>) JSON.deserialize(widgetDetails.Button_Code__c, List<WidgetButton>.class);
+            returnButtonList = (List<widgetButton>) JSON.deserialize(widgetDetails.Button_Code__c, List<widgetButton>.class);
         }
 
         return returnButtonList;

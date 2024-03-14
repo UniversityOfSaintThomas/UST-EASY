@@ -4,9 +4,9 @@
 
 <apex:component id="YNTESTCOMPONENT1">
 
-    <apex:pageblock>
+    <apex:pageblock >
 
-        <apex:slds/>
+        <apex:slds />
 
         <div class="slds-scope">
 

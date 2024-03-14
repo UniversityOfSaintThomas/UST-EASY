@@ -14,5 +14,15 @@
     <columns>UPDATEDBY_USER</columns>
     <columns>Display_Text__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Display_Widget_On_Pages__c</field>
+        <operation>equals</operation>
+        <value>ApplicationPortal</value>
+    </filters>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>equals</operation>
+        <value>Undergraduate First-Year</value>
+    </filters>
     <label>All</label>
 </ListView>

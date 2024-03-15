@@ -1,14 +1,14 @@
 /**
- * @description       : 
+ * @description       :
  * @author            : nicole.b@digitalmass.com
- * @group             : 
+ * @group             :
  * @last modified on  : 09-06-2022
  * @last modified by  : nicole.b@digitalmass.com
-**/
+ **/
 
-import { LightningElement, api, wire, track } from 'lwc';
-import { generateRecordInputForCreate, getRecordCreateDefaults } from 'lightning/uiRecordApi';
-import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import {api, LightningElement, track, wire} from 'lwc';
+import {generateRecordInputForCreate, getRecordCreateDefaults} from 'lightning/uiRecordApi';
+import {getObjectInfo} from 'lightning/uiObjectInfoApi';
 
 import RECOMMENDATION_OBJECT from '@salesforce/schema/Recommendation__c';
 
@@ -18,10 +18,14 @@ import lookup from '@salesforce/apex/graduateRecommenderInfoController.lookup';
 import updateRecommendation from '@salesforce/apex/graduateRecommenderInfoController.updateRecommendation';
 import uploadFile from '@salesforce/apex/graduateRecommenderInfoController.uploadFile';
 import updateRequirementResponses from '@salesforce/apex/graduateRecommenderInfoController.updateRequirementResponses';
+
 export default class GraduateRecommenderInfo extends LightningElement {
 
     @api recId;
+    @api recordId;
+
     rec_email;
+
 
     // parent/related object ids
     @track recommendation_id = '';
@@ -65,7 +69,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
 
     // to display search results for reference non-picklist type questions
     reference_question_search_columns = [
-        { label: 'Name', fieldName: 'label', type: 'text' }
+        {label: 'Name', fieldName: 'label', type: 'text'}
     ];
 
     @track show_spinner = false;
@@ -77,12 +81,12 @@ export default class GraduateRecommenderInfo extends LightningElement {
     @track recommendation_submitted = false;
 
     /**
-    ******************************************
-    * Begin WIRES
-    ******************************************
-    */
+     ******************************************
+     * Begin WIRES
+     ******************************************
+     */
 
-    @wire(getObjectInfo, { objectApiName: RECOMMENDATION_OBJECT })
+    @wire(getObjectInfo, {objectApiName: RECOMMENDATION_OBJECT})
     object_info(result) {
         if (result.data) {
             let fields = new Map(Object.entries(result.data.fields));
@@ -95,70 +99,77 @@ export default class GraduateRecommenderInfo extends LightningElement {
         }
     }
 
-    @wire(getRecordCreateDefaults, { objectApiName: RECOMMENDATION_OBJECT})
+    @wire(getRecordCreateDefaults, {objectApiName: RECOMMENDATION_OBJECT})
     output(result) {
         this.show_spinner = true;
         if (result.data) {
             this.recommendation_input = generateRecordInputForCreate(result.data.record);
-            getRelatedObjectInfo({recId : this.recId})
-            .then(objectInfo => {
-                if (Boolean(objectInfo)) {
-                    if (objectInfo.submitted == 'true') {
-                        this.recommendation_already_submitted = true;
-                    } else {
-                        this.recommendation_id = objectInfo.recommendation_id;
-                        this.application_id = objectInfo.application_id;
-                        this.application_status = objectInfo.application_status;
-                        this.related_object_requirement_item_id = objectInfo.related_object_requirement_item_id;
-                        this.document_upload_requirement_item_id = objectInfo.document_upload_requirement_item_id;
-                        this.document_upload_requirement_item_file_types = objectInfo.document_upload_requirement_item_file_types;
-                        this.rec_email = objectInfo.rec_email;
-                        if (Boolean(this.document_upload_requirement_item_id)) {
-                            this.show_document_upload = 'true';
-                            if (Boolean(this.document_upload_requirement_item_file_types)) {
-                                let temp_accepted_file_types = '';
-                                let file_type_arr = this.document_upload_requirement_item_file_types.split(';');
-                                for (let type of file_type_arr) {
-                                    let type_converted = '.' + type.toLowerCase();
-                                    temp_accepted_file_types += type_converted + ', ';
+            if (!this.recId) {
+                this.recId = this.recordId;
+                console.log('recId: ' + this.recId);
+            }
+            getRelatedObjectInfo({recId: this.recId})
+                .then(objectInfo => {
+                    if (Boolean(objectInfo)) {
+                        if (objectInfo.submitted === 'true') {
+                            this.recommendation_already_submitted = true;
+                        } else {
+                            this.recommendation_id = objectInfo.recommendation_id;
+                            this.application_id = objectInfo.application_id;
+                            this.application_status = objectInfo.application_status;
+                            this.related_object_requirement_item_id = objectInfo.related_object_requirement_item_id;
+                            this.document_upload_requirement_item_id = objectInfo.document_upload_requirement_item_id;
+                            this.document_upload_requirement_item_file_types = objectInfo.document_upload_requirement_item_file_types;
+                            this.rec_email = objectInfo.rec_email;
+                            if (Boolean(this.document_upload_requirement_item_id)) {
+                                this.show_document_upload = 'true';
+                                if (Boolean(this.document_upload_requirement_item_file_types)) {
+                                    let temp_accepted_file_types = '';
+                                    let file_type_arr = this.document_upload_requirement_item_file_types.split(';');
+                                    for (let type of file_type_arr) {
+                                        let type_converted = '.' + type.toLowerCase();
+                                        temp_accepted_file_types += type_converted + ', ';
+                                    }
+                                    this.accepted_file_types = temp_accepted_file_types.substring(0, temp_accepted_file_types.length - 2);
                                 }
-                                this.accepted_file_types = temp_accepted_file_types.substring(0, temp_accepted_file_types.length - 2);
-                            }
-    
-                            if (Boolean(objectInfo.document_upload_requirement_item_required)) {
-                                if (objectInfo.document_upload_requirement_item_required.includes(this.application_status)) {
-                                    this.document_upload_requirement_item_required = true;
+
+                                if (Boolean(objectInfo.document_upload_requirement_item_required)) {
+                                    if (objectInfo.document_upload_requirement_item_required.includes(this.application_status)) {
+                                        this.document_upload_requirement_item_required = true;
+                                    }
                                 }
                             }
+
+                            if (objectInfo.document_upload_requirement_item_allow_text_entry === 'true') {
+                                this.show_manual_letter_entry = true;
+                            }
+
+                            if (objectInfo.display_instructive_text === 'true') {
+                                this.related_object_requirement_item_instructions = objectInfo.related_object_requirement_item_instructions;
+                                this.document_upload_requirement_item_instructions = objectInfo.document_upload_requirement_item_instructions;
+                            }
+
+                            getRelatedObjectQuestions({
+                                requirement_item_id: this.related_object_requirement_item_id,
+                                application_id: this.application_id
+                            })
+                                .then(questions => {
+                                    this.question_count = questions.length;
+                                    this.generateReferenceOptions(questions);
+                                    this.disable_submit = false;
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                    this.show_spinner = false;
+                                    this.disable_submit = true; // no related object requirement item
+                                })
                         }
-    
-                        if (objectInfo.document_upload_requirement_item_allow_text_entry == 'true') {
-                            this.show_manual_letter_entry = true;
-                        }
-    
-                        if (objectInfo.display_instructive_text == 'true') {
-                            this.related_object_requirement_item_instructions = objectInfo.related_object_requirement_item_instructions;
-                            this.document_upload_requirement_item_instructions = objectInfo.document_upload_requirement_item_instructions;
-                        }
-    
-                        getRelatedObjectQuestions({requirement_item_id: this.related_object_requirement_item_id, application_id: this.application_id})
-                        .then(questions => {
-                            this.question_count = questions.length;
-                            this.generateReferenceOptions(questions);
-                            this.disable_submit = false;
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            this.show_spinner = false;
-                            this.disable_submit = false; // no related object requirement item
-                        })
                     }
-                }
-            })
-            .catch(error => {
-                console.log(error);
-                this.show_spinner = false;
-            })
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.show_spinner = false;
+                })
         } else {
             console.log(result.error);
             this.show_spinner = false;
@@ -166,35 +177,39 @@ export default class GraduateRecommenderInfo extends LightningElement {
     }
 
     /**
-    ******************************************
-    * END Wires
-    ******************************************
-    ******************************************
-    * Begin Question Object Handling
-    ******************************************
-    */
+     ******************************************
+     * END Wires
+     ******************************************
+     ******************************************
+     * Begin Question Object Handling
+     ******************************************
+     */
 
     generateReferenceOptions(questions) {
         for (const question of questions) {
-            lookup({lookup_object : question.Lookup_Object__c, lookup_where_clause : question.Lookup_Where_Clause__c, name_field_api_name : question.Name_Field_API_Name__c})
-            .then((results) => {
-                if (JSON.stringify(results).length > 2) {
-                    let values = [];
-                    if(Boolean(results)) {
-                        for (const objectId in results) {
-                            values.push(
-                                {label: results[objectId][question.Name_Field_API_Name__c], value: objectId}
-                            );
+            lookup({
+                lookup_object: question.Lookup_Object__c,
+                lookup_where_clause: question.Lookup_Where_Clause__c,
+                name_field_api_name: question.Name_Field_API_Name__c
+            })
+                .then((results) => {
+                    if (JSON.stringify(results).length > 2) {
+                        let values = [];
+                        if (Boolean(results)) {
+                            for (const objectId in results) {
+                                values.push(
+                                    {label: results[objectId][question.Name_Field_API_Name__c], value: objectId}
+                                );
+                            }
                         }
+                        this.reference_question_options_map.set(question.Id, values);
                     }
-                    this.reference_question_options_map.set(question.Id, values);
-                }
-                this.handleQuestion(question);
-            })
-            .catch((error) => {
-                console.log(error);
-                this.show_spinner = false;
-            })
+                    this.handleQuestion(question);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.show_spinner = false;
+                })
         }
     }
 
@@ -209,29 +224,32 @@ export default class GraduateRecommenderInfo extends LightningElement {
             let label = this.handleLabel(question);
 
             let question_map = {
-                'RecordTypeDeveloperName' : question.RecordType.DeveloperName,
-                'Id' : question.Id,
-                'Label__c' : label,
-                'Help_Text__c' : question.Help_Text__c,
-                'Placeholder__c' : question.Placeholder__c,
-                'Static_Text__c' : question.Static_Text__c,
-                'Assistive_Text__c' : question.Assistive_Text__c,
-                'Display_as_Picklist__c' : question.Display_as_Picklist__c,
-                'Display_Order__c' : question.Display_Order__c,
-                'Additional_Field_Validation__c' : question.Additional_Field_Validation__c,
-                'Related_Object__c' : question.Related_Object__c,
-                'Related_Object_Field__c' : question.Related_Object_Field__c,
-                'Lookup_Object__c' : question.Lookup_Object__c,
-                'Lookup_Where_Clause__c' : question.Lookup_Where_Clause__c,
-                'Name_Field_API_Name__c' : question.Name_Field_API_Name__c,
-                'Picklist_Values__c' : picklist_values,
-                'Required__c' : required,
-                'Length__c' : length
+                'RecordTypeDeveloperName': question.RecordType.DeveloperName,
+                'Id': question.Id,
+                'Label__c': label,
+                'Help_Text__c': question.Help_Text__c,
+                'Placeholder__c': question.Placeholder__c,
+                'Static_Text__c': question.Static_Text__c,
+                'Assistive_Text__c': question.Assistive_Text__c,
+                'Display_as_Picklist__c': question.Display_as_Picklist__c,
+                'Display_Order__c': question.Display_Order__c,
+                'Additional_Field_Validation__c': question.Additional_Field_Validation__c,
+                'Related_Object__c': question.Related_Object__c,
+                'Related_Object_Field__c': question.Related_Object_Field__c,
+                'Lookup_Object__c': question.Lookup_Object__c,
+                'Lookup_Where_Clause__c': question.Lookup_Where_Clause__c,
+                'Name_Field_API_Name__c': question.Name_Field_API_Name__c,
+                'Picklist_Values__c': picklist_values,
+                'Required__c': required,
+                'Length__c': length
             }
             question_map[question.RecordType.DeveloperName] = true;
             this.questions_to_display_list.push(question_map);
-            if (this.current_count == this.question_count) {
-                this.display_questions = JSON.parse(JSON.stringify(this.questions_to_display_list.sort((a,b) => a.Display_Order__c - b.Display_Order__c)));
+            if (this.current_count === this.question_count) {
+                this.display_questions = JSON.parse(JSON.stringify(this.questions_to_display_list.sort((a, b) => a.Display_Order__c - b.Display_Order__c)));
+                if(this.display_questions.length === 0) {
+                    this.disable_submit = true;
+                }
                 this.show_spinner = false;
             }
             this.question_id_to_question_map_map.set(question.Id, question_map);
@@ -239,9 +257,8 @@ export default class GraduateRecommenderInfo extends LightningElement {
     }
 
     handleHardcodedValue(question) {
-        if (question.Related_Object__c == 'Recommendation__c' && this.all_recommendation_field_api_names.includes(question.Related_Object_Field__c)) {
-            let field_input = this.convertInput(question.Hardcoded_Value__c, question.Related_Object_Field__c);
-            this.recommendation_input.fields[question.Related_Object_Field__c] = field_input;
+        if (question.Related_Object__c === 'Recommendation__c' && this.all_recommendation_field_api_names.includes(question.Related_Object_Field__c)) {
+            this.recommendation_input.fields[question.Related_Object_Field__c] = this.convertInput(question.Hardcoded_Value__c, question.Related_Object_Field__c);
             if (question.Related_Object_Field__c.includes('Rec_Question_')) {
                 let question_text_field = question.Related_Object_Field__c.replace('Response', 'Text');
                 this.recommendation_input.fields[question_text_field] = this.handleLabel(question);
@@ -250,7 +267,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
     }
 
     handlePicklistValues(question) {
-        if (question.RecordType.DeveloperName == 'Reference') {
+        if (question.RecordType.DeveloperName === 'Reference') {
             return this.reference_question_options_map.get(question.Id);
         } else if (Boolean(question.Picklist_Values__c)) {
             let picklist_values = question.Picklist_Values__c.split('\n');
@@ -333,17 +350,17 @@ export default class GraduateRecommenderInfo extends LightningElement {
     }
 
     /**
-    ******************************************
-    * END Question Object Handling
-    ******************************************
-    ******************************************
-    * Begin OnChange
-    ******************************************
-    */
+     ******************************************
+     * END Question Object Handling
+     ******************************************
+     ******************************************
+     * Begin OnChange
+     ******************************************
+     */
 
     onChange(event) {
         let question = this.question_id_to_question_map_map.get(event.target.name);
-        if (Boolean(question) && Boolean(question.Related_Object_Field__c) && this.all_recommendation_field_api_names.includes(question.Related_Object_Field__c) && question.Related_Object__c == 'Recommendation__c') {
+        if (Boolean(question) && Boolean(question.Related_Object_Field__c) && this.all_recommendation_field_api_names.includes(question.Related_Object_Field__c) && question.Related_Object__c === 'Recommendation__c') {
             switch (question.RecordTypeDeveloperName) {
                 case 'MultiPicklist':
                     this.recommendation_input.fields[question.Related_Object_Field__c] = this.convertInput(event.detail.value.join(';'), question.Related_Object_Field__c);
@@ -365,7 +382,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
 
             }
 
-            if (question.RecordTypeDeveloperName == 'Reference' && question.Display_as_Picklist__c == false) {
+            if (question.RecordTypeDeveloperName === 'Reference' && question.Display_as_Picklist__c === false) {
                 try {
                     var selected_row = this.template.querySelector('lightning-datatable[data-id="' + question.Id + '"]').getSelectedRows();
                     this.recommendation_input.fields[question.Related_Object_Field__c] = this.convertInput(selected_row[0].value, question.Related_Object_Field__c);
@@ -383,8 +400,8 @@ export default class GraduateRecommenderInfo extends LightningElement {
 
     handleFileUpload(event) {
         this.unaccepted_file_type = false;
-        if (event.target.name == 'manual_letter_entry') {
-            this.recommendation_input.fields.Recommendation_JSON__c	= event.target.value;
+        if (event.target.name === 'manual_letter_entry') {
+            this.recommendation_input.fields.Recommendation_JSON__c = event.target.value;
         } else {
             const file = event.target.files[0];
             var reader = new FileReader();
@@ -392,8 +409,8 @@ export default class GraduateRecommenderInfo extends LightningElement {
                 var base64 = reader.result.split(',')[1];
                 this.file_name = file.name;
                 this.file_data = {
-                    'file_name' : file.name,
-                    'base_64' : base64
+                    'file_name': file.name,
+                    'base_64': base64
                 }
                 if (Boolean(this.accepted_file_types)) {
                     if (!this.accepted_file_types.includes(this.file_name.substring(this.file_name.length - 4, this.file_name.length))) {
@@ -426,45 +443,47 @@ export default class GraduateRecommenderInfo extends LightningElement {
     }
 
     /**
-    ******************************************
-    * END OnChange
-    ******************************************
-    ******************************************
-    * Begin OnClick
-    ******************************************
-    */
+     ******************************************
+     * END OnChange
+     ******************************************
+     ******************************************
+     * Begin OnClick
+     ******************************************
+     */
 
     handleSubmit() {
-        let email_mismatch = false;
-        for (let property in this.recommendation_input.fields) {
-            if (property == 'Rec_Email__c' && this.recommendation_input.fields[property] != this.rec_email && this.recommendation_input.fields[property] != null) {
-                email_mismatch = true;
+
+        if (!this.validateInput()) {
+            this.show_spinner = false;
+            return false;
+        }
+
+        if (this.recommendation_input.fields['Rec_Email__c'] !== null) {
+            console.log('rec_email_request: ' + this.recommendation_input.fields['Rec_Email__c'] + ' rec_email: ' + this.rec_email.toLowerCase());
+            let rec_email_request = this.recommendation_input.fields['Rec_Email__c'].toLowerCase();
+            if (rec_email_request !== this.rec_email.toLowerCase()) {
+                this.required_fields_missing = 'The Recommender Email entered above does not match the email recipient of this request.';
+                this.show_spinner = false;
+                return false;
             }
         }
-        if (!email_mismatch) {
-            this.required_fields_missing = '';
-            if (this.validateInput()) {
-                this.show_spinner = true;
-                if (Boolean(this.file_data)) {
-                    const {base_64, file_name} = this.file_data;
-                    uploadFile({base_64 : base_64, file_name : file_name, recommendation_id: this.recommendation_id})
-                    .then(result => {
-                        this.file_data = null;
-                        this.submitUpdates();
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.file_name = 'Upload failed. Please try again or type below.';
-                        this.show_spinner = false;
-                        this.file_data = null;
-                    })
-                } else {
-                    this.submitUpdates();
-                }
-            }
-        } else {
-            this.required_fields_missing = 'The Recommender Email entered above does not match the email recipient of this request.';
+
+        if (Boolean(this.file_data)) {
+            const {base_64, file_name} = this.file_data;
+            uploadFile({base_64: base_64, file_name: file_name, recommendation_id: this.recommendation_id})
+                .then(result => {
+                    this.file_data = null;
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.file_name = 'Upload failed. Please try again or type below.';
+                    this.show_spinner = false;
+                    this.file_data = null;
+                    return false;
+                })
         }
+
+        this.submitUpdates();
     }
 
     submitUpdates() {
@@ -477,41 +496,47 @@ export default class GraduateRecommenderInfo extends LightningElement {
             }
         }
         delete this.recommendation_input.fields.OwnerId;
-        updateRecommendation({record: JSON.stringify(this.recommendation_input.fields), objectApiName: this.recommendation_input.apiName})
-        .then(() => {
-            this.recommendation_submitted = true;
-            updateRequirementResponses({related_object_requirement_item_id : this.related_object_requirement_item_id, document_upload_requirement_item_id : this.document_upload_requirement_item_id})
+        updateRecommendation({
+            record: JSON.stringify(this.recommendation_input.fields),
+            objectApiName: this.recommendation_input.apiName
+        })
             .then(() => {
-                this.show_spinner = false;
+                this.recommendation_submitted = true;
+                updateRequirementResponses({
+                    related_object_requirement_item_id: this.related_object_requirement_item_id,
+                    document_upload_requirement_item_id: this.document_upload_requirement_item_id
+                })
+                    .then(() => {
+                        this.show_spinner = false;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.show_spinner = false;
+                    })
             })
             .catch(error => {
                 console.log(error);
                 this.show_spinner = false;
             })
-        })
-        .catch(error => {
-            console.log(error);
-            this.show_spinner = false;
-        })
     }
 
     /**
-    ******************************************
-    * END OnClick
-    ******************************************
-    ******************************************
-    * Begin Input Validation/Sanitization Methods
-    ******************************************
-    */
+     ******************************************
+     * END OnClick
+     ******************************************
+     ******************************************
+     * Begin Input Validation/Sanitization Methods
+     ******************************************
+     */
 
     convertInput(input, related_object_field) {
         if (this.all_recommendation_field_api_names.includes(related_object_field)) {
             let data_type = this.rec_fields_data_type_map.get(related_object_field).toLowerCase();
             switch (data_type) {
                 case 'boolean':
-                    if (input.toLowerCase() == 'true') {
+                    if (input.toLowerCase() === 'true') {
                         return true;
-                    } else if (input.toLowerCase() == 'false') {
+                    } else if (input.toLowerCase() === 'false') {
                         return false;
                     }
                     break;
@@ -638,7 +663,7 @@ export default class GraduateRecommenderInfo extends LightningElement {
     }
 
     validateLetterEntry() {
-        if (this.document_upload_requirement_item_required == true) {
+        if (this.document_upload_requirement_item_required === true) {
             if (Boolean(this.file_data) || Boolean(this.recommendation_input.fields.Recommendation_JSON__c)) {
                 this.show_letter_error = false;
                 return true;
@@ -653,13 +678,13 @@ export default class GraduateRecommenderInfo extends LightningElement {
     }
 
     /**
-    ******************************************
-    * End Input Validation/Sanitization Methods
-    ******************************************
-    ******************************************
-    * Begin Other/Helpers
-    ******************************************
-    */
+     ******************************************
+     * End Input Validation/Sanitization Methods
+     ******************************************
+     ******************************************
+     * Begin Other/Helpers
+     ******************************************
+     */
 
     getTodaysDate() {
         const date = new Date();

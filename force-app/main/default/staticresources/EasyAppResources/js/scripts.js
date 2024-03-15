@@ -24,7 +24,9 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
         field.setAttribute('disabled', 'disabled');
     });
 
-    sldsScope.querySelector('form').onkeypress = checkEnter;
+    if(checkEnter) {
+        sldsScope.querySelector('form').onkeypress = checkEnter;
+    }
 
     //Make sure inputs are typed with HTML5 standards
     sldsScope.querySelectorAll(".slds-is-required .slds-input, .slds-is-required .slds-textarea, .slds-is-required .slds-select").forEach(item => {
@@ -536,9 +538,11 @@ function disableCarousel() {
     carouselOn = false;
 
     let killerButton = document.getElementById('carousel-killer');
-    killerButton.innerText = "Restore Form";
-    killerButton.removeEventListener('click', disableCarousel);
-    killerButton.addEventListener('click', enableCarousel);
+    if(killerButton) {
+        killerButton.innerText = "Restore Form";
+        killerButton.removeEventListener('click', disableCarousel);
+        killerButton.addEventListener('click', enableCarousel);
+    }
 
     let items = document.getElementsByClassName("carousel__item");
     for (let i = 0; i < items.length; i++) {
@@ -578,9 +582,11 @@ function enableCarousel() {
     carouselOn = true;
 
     let killerButton = document.getElementById('carousel-killer');
-    killerButton.innerText = "Single-Page Form";
-    killerButton.removeEventListener('click', enableCarousel);
-    killerButton.addEventListener('click', disableCarousel);
+    if(killerButton) {
+        killerButton.innerText = "Single-Page Form";
+        killerButton.removeEventListener('click', enableCarousel);
+        killerButton.addEventListener('click', disableCarousel);
+    }
 
     let items = document.getElementsByClassName("carousel__item");
     for (let i = 0; i < items.length; i++) {
@@ -650,7 +656,9 @@ function activateCarousel(slideMoveTo) {
         function setEventListeners() {
             next.addEventListener('click', moveNext);
             prev.addEventListener('click', movePrev);
-            killerButton.addEventListener('click', disableCarousel);
+            if(killerButton) {
+                killerButton.addEventListener('click', disableCarousel);
+            }
             if (totalItems === 1) {
                 next.style.display = 'none';
                 prev.style.display = 'none';
@@ -781,7 +789,9 @@ function activateCarousel(slideMoveTo) {
         }
     }
     if (items.length <= 1) {
-        killerButton.style.display = 'none';
+        if(killerButton) {
+            killerButton.style.display = 'none';
+        }
     }
 }
 
@@ -789,7 +799,9 @@ function activateCarousel(slideMoveTo) {
 var spinnerFocusElement = null;
 
 function appHideLoadingSpinner(restoreFocus = true) {
-    document.getElementById('loadSpinner').style.display = "none";
+    if(document.getElementById('loadSpinner')) {
+        document.getElementById('loadSpinner').style.display = "none";
+    }
     if (restoreFocus == true && spinnerFocusElement != null) {
         document.getElementById(spinnerFocusElement).focus();
     }
@@ -798,12 +810,16 @@ function appHideLoadingSpinner(restoreFocus = true) {
 
 function appShowLoadingSpinner() {
     spinnerFocusElement = document.activeElement.id;
-    document.getElementById('loadSpinner').style.display = "block";
+    if(document.getElementById('loadSpinner')) {
+        document.getElementById('loadSpinner').style.display = "block";
+    }
     return true;
 }
 
 function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
-    document.getElementById("form-spinner").style.display = 'none';
+    if(document.getElementById('form-spinner')) {
+        document.getElementById("form-spinner").style.display = 'none';
+    }
     if (restoreFocus == true && spinnerFocusElement != null) {
         if (focusOnFirstInput == true) {
             let inputElements = document.getElementById(spinnerFocusElement.id).parentElement.parentElement.parentElement.querySelectorAll("select, input");
@@ -817,12 +833,16 @@ function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
 
 function showFormSpinner() {
     spinnerFocusElement = document.activeElement.id;
-    document.getElementById("form-spinner").style.display = 'block';
+    if(document.getElementById('form-spinner')) {
+        document.getElementById("form-spinner").style.display = 'block';
+    }
 }
 
 function showFormSpinnerRelatedRecord() {
     spinnerFocusElement = document.activeElement.parentElement.parentElement.parentElement;
-    document.getElementById("form-spinner").style.display = 'block';
+    if(document.getElementById('form-spinner')) {
+        document.getElementById("form-spinner").style.display = 'block';
+    }
 }
 
 /* Tooltip */

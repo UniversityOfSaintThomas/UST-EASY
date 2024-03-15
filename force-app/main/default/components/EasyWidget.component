@@ -43,7 +43,17 @@
                             <a class="slds-button slds-button_stretch {!button.buttonStyle}"
                                href="{!button.buttonLink}"
                                target="_blank"
-                               style="font-size:16px">{!button.buttonLabel}</a>
+                               style="font-size:16px">
+
+                                <!--BEGIN ADD BUTTON ICON-->
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                    <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/'+button.buttonIconName)}"></use>
+                                </svg>
+                                <!--END ADD BUTTON ICON-->
+
+                                {!button.buttonLabel}
+                            </a>
                         </div>
                     </div>
                 </apex:repeat>

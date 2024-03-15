@@ -14,7 +14,7 @@ public with sharing class EasyWidgetController {
         public String buttonStyle { get; set; }
         public String buttonSize { get; set; }
         public String buttonPosition { get; set; }
-        public String buttonTarget { get; set; }
+        public String buttonIconName { get; set; }
     }
 
     public EasyWidgetController() {

@@ -120,6 +120,14 @@ export default class AddButtonTest1 extends LightningElement {
         ];
     }
 
+    // get buttonIconName() {
+    //     return [
+    //         {label: 'Left', value: 'slds-grid_align-left'},
+    //         {label: 'Center', value: 'slds-grid_align-center'},
+    //         {label: 'Right', value: 'slds-grid_align-end'},
+    //     ];
+    // }
+
     showDataTable = false;
 
     @api recordId;
@@ -137,6 +145,7 @@ export default class AddButtonTest1 extends LightningElement {
         'buttonStyle': '',
         'buttonSize': '',
         'buttonPosition': '',
+        'buttonIconName': '',
     };
 
     @wire(getRecord, {recordId: '$recordId', fields: WIDGETFIELDS})

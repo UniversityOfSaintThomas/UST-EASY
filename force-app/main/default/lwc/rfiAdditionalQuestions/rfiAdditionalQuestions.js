@@ -170,16 +170,20 @@ export default class RfiAdditionalQuestions extends LightningElement {
                 //Check if field is updatable before adding it to the combobox options
                 //check if field is a text box or a textarea
                 let fieldType = field.dataType.toLowerCase();
-                if (((fieldType === 'string' || fieldType === 'textArea') && (this.isTextBox || this.isTextarea || this.isPicklist))
-                    || (fieldType === 'email' && this.isEmail)
+
+                if ((
+                    ((fieldType === 'string' || fieldType === 'textarea') && (this.isTextBox || this.isTextarea || this.isPicklist))
+                    || (fieldType === 'email' && this.isEmail))
                     && field.updateable && field.createable
                     && !fieldName.toLowerCase().startsWith('utm_')
                     && !fieldName.toLowerCase().startsWith('gclid')
-                    && !fieldName.toLowerCase().startsWith('linkedin')) {
+                    && !fieldName.toLowerCase().startsWith('linkedin_')) {
                     leadFields.push({label: field.label, value: fieldName});
                 }
             });
         }
+        //sort the lead fields label alphabetically
+        leadFields.sort((a, b) => { return a.label.localeCompare(b.label); });
         return leadFields;
     }
 

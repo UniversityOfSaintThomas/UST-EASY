@@ -56,56 +56,69 @@ ready(() => {
         }
     });
 
+    document.querySelectorAll(".validateRecommender").forEach(function (rec) {
+        rec.addEventListener("click", function (evt) {
+            evt.preventDefault();
+            let recWrap = rec.closest(".recommender");
+            let errorFound = false;
+            recWrap.querySelectorAll(".recName, .recEmail").forEach(function (input) {
+                if (input.classList.contains(".recEmail")) {
+                    if (!isValidEmailAddress(input.value)) {
+                        errorFound = true;
+                        addHasError(input);
+                    }
+                }
+                if (!input.value) {
+                    errorFound = true;
+                    addHasError(input);
+                }
+            });
+            console.log(!errorFound);
+            return !errorFound;
+        });
+    });
 });
+
+function addHasError(elem) {
+    elem.closest(".slds-form-element").classList.add("slds-has-error");
+    elem.addEventListener("change", function () {
+        elem.closest(".slds-form-element").classList.remove("slds-has-error");
+    });
+}
+
+function isValidEmailAddress(emailAddress) {
+    const pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    return pattern.test(emailAddress);
+}
 
 function validateCriteria() {
 
     let declaredTest = document.querySelector("[id$=Declared_Test]");
     if (declaredTest) {
-        let formWrap = declaredTest.closest(".slds-form-element");
-        let hepText = formWrap.querySelector(".slds-form-element__help");
         if (declaredTest.value < 10) {
-            formWrap.classList.add("slds-has-error");
+            addHasError(declaredTest);
         }
-        declaredTest.addEventListener("change", function () {
-            formWrap.classList.remove("slds-has-error");
-        });
     }
 
     let declaredGPA = document.querySelector("[id$=Declared_GPA]");
     if (declaredGPA) {
-        let formWrap = declaredGPA.closest(".slds-form-element");
-        let hepText = formWrap.querySelector(".slds-form-element__help");
         if (declaredGPA.value < 1.0) {
-            formWrap.classList.add("slds-has-error");
+            addHasError(declaredGPA);
         }
-        declaredGPA.addEventListener("change", function () {
-            formWrap.classList.remove("slds-has-error");
-        });
     }
 
     let criteriaChecked = document.querySelector("[id$=confirmCriteria]");
     if (criteriaChecked) {
-        let formWrap = criteriaChecked.closest(".slds-form-element");
-        let hepText = formWrap.querySelector(".slds-form-element__help");
         if (!criteriaChecked.checked) {
-            formWrap.classList.add("slds-has-error");
+            addHasError(criteriaChecked);
         }
-        criteriaChecked.addEventListener("change", function () {
-            if (criteriaChecked.checked) {
-                formWrap.classList.remove("slds-has-error");
-            }
-        });
     }
 
-    if (document.querySelectorAll(".slds-has-error").length > 0) {
-        return false
-    }
-    return true;
+    return document.querySelectorAll(".slds-has-error").length <= 0;
+
 }
 
 function checkForFile(fileSelector) {
-    removePreviousErrors();
     let file = document.querySelector("[id$=" + fileSelector + "]");
     if (file) {
         //get file extension
@@ -120,30 +133,6 @@ function checkForFile(fileSelector) {
         }
     }
     return true;
-}
-
-//
-// function validateRecommender(recId) {
-//     alert(recId);
-//     let recInfo = document.getElementById(recId).closest(".recommender");
-//     let recEmail = recInfo.find(".recEmail");
-//     let recError = recInfo.find(".errorMessages2");
-//     let recName = recInfo.find(".recName");
-//     recEmail.classList.remove("validationError");
-//     recName.classList.remove("validationError");
-//     recError.hide();
-//     if (!isValidEmailAddress(recEmail.value) || !recName.value) {
-//         recError.innerHTML("Please enter a name and a valid email.").show();
-//         recEmail.classList.add("validationError");
-//         recName.classList.add("validationError");
-//         return false;
-//     }
-//     return true;
-// }
-
-function isValidEmailAddress(emailAddress) {
-    const pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
-    return pattern.test(emailAddress);
 }
 
 function validateApplication() {
@@ -191,29 +180,11 @@ function validateApplication() {
                 errorFound = true;
             }
             if (errorFound) {
-                errorElement.closest(".slds-form-element").classList.add("slds-has-error");
-                errorElement.addEventListener("change", function () {
-                    errorElement.closest(".slds-form-element").classList.remove("slds-has-error");
-                });
+                addHasError(errorElement);
             }
         }
     });
 
+    return document.querySelectorAll(".slds-has-error").length <= 0;
 
-    if (document.querySelectorAll(".slds-has-error").length > 0) {
-        return false
-    }
-    return true;
-
-}
-
-
-function removePreviousErrors() {
-    document.querySelectorAll(".validationError").forEach(function (err) {
-        err.classList.remove("validationError");
-    });
-    let errorList = document.getElementById("validationErrorList");
-    if (errorList) {
-        errorList.remove();
-    }
 }

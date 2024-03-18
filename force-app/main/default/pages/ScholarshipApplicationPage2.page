@@ -177,7 +177,7 @@
                                                 <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
                                             </apex:outputPanel>
                                         </div>
-                                        <div class="slds-form-element__help">This field is required</div>
+                                        <div class="slds-form-element__help">This field is required,</div>
                                     </apex:outputPanel>
 
                                     <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
@@ -190,14 +190,14 @@
                                                 <apex:inputText value="{!applicant.Recommender2_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
                                             </apex:outputPanel>
                                         </div>
-                                        <div class="slds-form-element__help">This field is required</div>
+                                        <div class="slds-form-element__help">Please enter a valid email address.</div>
                                     </apex:outputPanel>
 
                                     <p class="recError" style="display:none">Please enter a name and a valid email.</p>
                                     <apex:outputPanel styleClass="slds-p-vertical_small" layout="block">
                                         <apex:outputPanel layout="none" rendered="{!(r == '1' && ISNULL(recommendRequestDate1)) || (r == '2' && ISNULL(recommendRequestDate2))}">
-                                            <apex:commandbutton styleClass="slds-button slds-button_brand slds-p-vertical_xx-small" action="{!SendRecommenderEmail}" value="Request Now">
-                                            </apex:commandbutton>
+                                            <apex:commandLink styleClass="slds-button slds-button_neutral slds-p-vertical_xx-small validateRecommender" action="{!SendRecommenderEmail}" value="Request Now">
+                                            </apex:commandLink>
                                         </apex:outputPanel>
                                         <apex:outputPanel rendered="{!r == '1'}" layout="none">
                                             <apex:outputText value="Recommendation request sent on {0, date, MMMM d',' yyyy hh:mm aaa}." rendered="{!NOT(ISNULL(recommendRequestDate1))}">

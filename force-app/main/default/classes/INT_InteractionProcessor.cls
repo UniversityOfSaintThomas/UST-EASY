@@ -3,7 +3,6 @@
 * Author: Sierra-Cedar
 * Description: Processes new Interaction__c records by inserting/converting Leads, upserting Opportunities,
 * updating Contacts, upserting Affiliations, and upserting CampaignMembers
- *
 ******************************************/
 public class INT_InteractionProcessor {
     private final List<Interaction__c> dupeInteractions = new List<Interaction__c>();
@@ -127,7 +126,7 @@ public class INT_InteractionProcessor {
 
     private Map<String, OpportunityStage> oppStageMap {
         get {
-            List<OpportunityStage> stages = [SELECT ApiName, DefaultProbability, ForecastCategory, ForecastCategoryName FROM OpportunityStage];
+            List<OpportunityStage> stages = [SELECT ApiName, DefaultProbability, ForecastCategoryName FROM OpportunityStage];
             Map<String, OpportunityStage> oppStageMap = new Map<String, OpportunityStage>();
             for (OpportunityStage stage : stages) {
                 oppStageMap.put(stage.ApiName, stage);
@@ -252,9 +251,43 @@ public class INT_InteractionProcessor {
         // Finally, associate referenced Opportunity and set Interaction_Status__c after processing and flag if errored.
         for (Interaction__c interaction : interactionsToProcess) {
             if (!String.isEmpty(interaction.Contact__c)) {
+
+                System.debug('Being called Interaction First_Name__c: ' + interaction.Contact__c + ' ' + interaction.First_Name__c);
+                System.debug('Being called Interaction Middle_Name__c: ' + interaction.Contact__c + ' ' + interaction.Middle_Name__c);
+                System.debug('Being called Interaction Last_Name__c: ' + interaction.Contact__c + ' ' + interaction.Last_Name__c);
+
                 Contact newCont = contactMappedFields.get(interaction.Contact__c);
+                Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping
+                List<String> compareFields = new List<String>{
+                        'FirstName', 'MiddleName', 'LastName'
+                }; //Existing to New Contact fields to compare. Make sure field is active on Interaction Mappings
+
                 if (newCont != null) {
                     intMappingService.applyDataToSObject(interaction, newCont);
+
+                    System.debug('First time newCont FirstName: ' + newCont.Id + ' ' + newCont.FirstName);
+                    System.debug('First time newCont MiddleName: ' + newCont.Id + ' ' + newCont.MiddleName);
+                    System.debug('First time newCont LastName: ' + newCont.Id + ' ' + newCont.LastName);
+
+                    //Don't update existing Contact fields found in list compareFields
+                    for (String field : compareFields) {
+
+                        try {
+
+                            if (String.isNotBlank(newContClone.get(field)?.toString()) && !newCont.get(field)?.toString().trim().equalsIgnoreCase(newContClone.get(field)?.toString().trim())) {
+
+                                newCont.put(field, newContClone.get(field));
+                            }
+                        } catch (Exception e) {
+
+                            System.debug('Error! Contact field compare: ' + e);
+                        }
+                    }
+
+                    System.debug('Second time newCont FirstName: ' + newCont.Id + ' ' + newCont.FirstName);
+                    System.debug('Second time newCont MiddleName: ' + newCont.Id + ' ' + newCont.MiddleName);
+                    System.debug('Second time newCont LastName: ' + newCont.Id + ' ' + newCont.LastName);
+
                     contactsToUpdate.add(newCont);
                 }
             }
@@ -568,7 +601,6 @@ public class INT_InteractionProcessor {
                     intMappingService.applyDataToInteraction(existingLeadMap.get(lcr.getLeadId()), interaction);
                 }
 
-//Interaction Opportunity Key is a formula field during Interaction creation. - YN
                 // Create new Opportunity for upsert if Opportunity Key is populated.
                 System.debug('&&& interaction: ' + interaction);
                 System.debug(' && !String.isEmpty(interaction.Opportunity_Key__c): ' + !String.isEmpty(interaction.Opportunity_Key__c));
@@ -634,13 +666,10 @@ public class INT_InteractionProcessor {
                         opportunitiesToUpsert.add(newOppty);
                         oppKeyToContactMap.put(newOppty.Opportunity_Key__c, interaction.Contact__c);
                     } else {
-/***CONCENTRATE HERE FOR OPPORTUNITY UPDATES
- * matchingOpp updates field in Interaction which Interaction Mappings uses to updates matchingOpp to add to Opportunities to upsert. - YN
-*/
                         for (Opportunity matchingOpp : matchingOpps) {
                             String oppName = matchingOpp.Name;
                             String oppStageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
-                            String matchingOppLeadSource = matchingOpp.LeadSource; //Used to preserve original Lead Source from initial Opportunity record. -YN
+                            String matchingOppLeadSource = matchingOpp.LeadSource; //Used to preserve original Lead Source from initial Opportunity record.
                             Id inqoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Inquiry Opportunity').getRecordTypeId();
                             Id appoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Applicant Opportunity').getRecordTypeId();
 
@@ -660,14 +689,14 @@ public class INT_InteractionProcessor {
                             interaction.Opportunity__r = matchingOpp;
                             //interaction.Opportunity_Record_Type__c = matchingOpp.RecordTypeId;
 
-                            if (inqOppStageList.contains(oppStageName)) { //Maybe here we check if matching opp record type is Application then don't update - YN
+                            if (inqOppStageList.contains(oppStageName)) {
                                 interaction.Opportunity_Record_Type__c = inqoppRTID;
                             } else {
                                 interaction.Opportunity_Record_Type__c = appoppRTID;
                             }
 
-                            intMappingService.applyDataToSObject(interaction, matchingOpp); //Uses Interaction Mapping to finalize fields to upsert matching Opportunity. -YN
-                            matchingOpp.LeadSource = matchingOppLeadSource; //Update Opportunity Lead Source back to original value without changing Lead Source on new Interaction - YN
+                            intMappingService.applyDataToSObject(interaction, matchingOpp);
+                            matchingOpp.LeadSource = matchingOppLeadSource; //Re-assigns initial Opportunity Lead Source.
                             opportunitiesToUpsert.add(matchingOpp);
                         }
                     }
@@ -835,13 +864,10 @@ public class INT_InteractionProcessor {
         OpportunityStage newStage = oppStageMap.get(newStageName);
         OpportunityStage previousStage = oppStageMap.get(previousStageName);
         System.debug('new stage (' + newStageName + '): ' + newStage.DefaultProbability + ', previous stage: (' + previousStageName + '): ' + previousStage.DefaultProbability);
-
-//        if (previousStage.DefaultProbability == 0.0 || previousStage.ForecastCategory == 'Omitted') {
-//            System.debug('previous stage assigned');
-//            return previousStageName;
-//        }
-//        else
-                if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
+        if (previousStage.ApiName == 'Denied' || previousStage.ApiName == 'Withdrawn') { //Update to never change Opportunity Stage if one of these previous stages.
+            System.debug('previous stage assigned based on certain previous stage');
+            return previousStageName;
+        } else if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
             System.debug('new stage assigned');
             return newStageName;
         } else if (newStage.ForecastCategoryName == 'Omitted') {

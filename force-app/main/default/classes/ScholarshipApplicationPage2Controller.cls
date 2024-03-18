@@ -58,6 +58,11 @@ public with sharing class ScholarshipApplicationPage2Controller {
     private PageReference uploadEssay(Attachment essay, Integer essayNum, String filename) {
 
         String ext = getFileExtension(filename);
+        // check if file extension is allowed (.pdf, .doc, .docx, .txt, .rtf);
+        if (ext != '.pdf' && ext != '.doc' && ext != '.docx' && ext != '.txt' && ext != '.rtf') {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Invalid file type. Please upload a .pdf, .doc, .docx, .txt, or .rtf file.'));
+            return null;
+        }
         essay.Id = null;
         essay.OwnerId = UserInfo.getUserId();
         if (essay.ParentId != applicant.Id) { // If user deletes and re-uploads, and it tries writing this field, it will find it already written, then explode. This SHOULD therefore only pass on first upload, but it COULD in theory pass if the second uploader somehow doesn't have the same applicant ID as the first uploader. That will still cause it to explode, and rightly so.
@@ -80,12 +85,13 @@ public with sharing class ScholarshipApplicationPage2Controller {
             insert essay;
             upsert applicant;
         } catch (DmlException e) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Error uploading essay' + essayNum + ' attachment'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Error uploading essay ' + essayNum + ' attachment. '));
+            return null;
         } finally {
             essay.Body = null; // If you don't explicitly erase the body, the Viewstate will crash (if the body is more than ~215KB). (Viewstate says 170KB but must be applying compression of some kind.)
             essay = new Attachment();
         }
-        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Essay ' + essayNum + ' uploaded successfully'));
+        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Essay ' + essayNum + ' uploaded successfully. '));
         return null;
     }
 

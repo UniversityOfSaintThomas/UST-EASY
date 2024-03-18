@@ -35,7 +35,7 @@
                 </nav>
 
 
-                <apex:pageMessages/>
+                <apex:pageMessages escape="false"/>
 
                 <apex:form styleClass="slds-grid slds-wrap ScholarshipAppForm">
 
@@ -79,13 +79,13 @@
                                 <apex:outputPanel rendered="{!scholarship['Essay_' + e + '_Allow_Upload__c']}" layout="none">
 
                                     <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" layout="block">
-                                        <apex:outputPanel styleClass="slds-form-element essayTypeSelection" layout="block">
+                                        <apex:outputPanel styleClass="slds-form-element" layout="block">
                                             <apex:outputLabel for="Essaydelivery" styleClass="slds-form-element__label">
                                                 I will enter my answer by:
                                             </apex:outputLabel>
                                             <apex:outputPanel styleClass="slds-form-element__control" layout="block">
                                                 <apex:outputPanel styleClass="slds-select_container" layout="block">
-                                                    <select id="EssayDelivery{!e}" class="slds-select essayTypeSelection" size="1">
+                                                    <select id="EssayDelivery{!e}" class="slds-select essayType" size="1">
                                                         <option value="">--Select--</option>
                                                         <option value="upload" itemLabel="Uploading an essay">Uploading an essay</option>
                                                         <option value="input" itemLabel="Copy and pasting an essay">Copy and pasting an essay</option>
@@ -97,39 +97,45 @@
 
 
                                     <apex:outputPanel rendered="{!e=='1'}" layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 essayUpload">
-                                        <apex:outputPanel layout="none" rendered="{!!applicant.Essay_1_Uploaded__c}">
-                                            <apex:inputFile value="{!essay1.body}" id="Essay1File" fileName="{!essay1Filename}" accept="doc, txt, pdf"/>
-                                            <apex:commandButton styleClass="button" onclick="return checkForFile('Essay1File');" action="{!UploadEssay1}" value="Upload Essay"/>
-                                        </apex:outputPanel>
-                                        <apex:outputPanel layout="none" rendered="{!applicant.Essay_1_Uploaded__c}">
-                                            <p class="slds-text-body_regular slds-p-bottom_x-small">
-                                                <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
-                                                You uploaded a file named: <strong>{!applicant.Essay_1_Uploaded_Orig_Filename__c}</strong></p>
-                                            <p class="slds-text-body_regular">
-                                                <apex:commandButton action="{!DeleteEssay1}" value="Delete and re-upload" styleClass="slds-button slds-button_neutral"/>
-                                            </p>
+                                        <apex:outputPanel styleClass="slds-form-element" layout="block">
+                                            <apex:outputPanel layout="none" rendered="{!!applicant.Essay_1_Uploaded__c}">
+                                                <apex:inputFile value="{!essay1.body}" id="Essay1File" fileName="{!essay1Filename}" accept="application/msword, application/pdf, text/plain, text/rtf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" styleClass="essayFile"/>
+                                                <apex:commandButton styleClass="slds-button slds-button_neutral" onclick="return checkForFile('Essay1File');" action="{!UploadEssay1}" value="Upload Essay"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel layout="none" rendered="{!applicant.Essay_1_Uploaded__c}">
+                                                <p class="slds-text-body_regular slds-p-bottom_x-small">
+                                                    <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
+                                                    You uploaded a file named: <strong>{!applicant.Essay_1_Uploaded_Orig_Filename__c}</strong></p>
+                                                <p class="slds-text-body_regular">
+                                                    <apex:commandButton action="{!DeleteEssay1}" value="Delete and re-upload" styleClass="slds-button slds-button_neutral"/>
+                                                </p>
+                                            </apex:outputPanel>
+                                            <div class="slds-form-element__help">Please upload a .pdf, .doc, .docx, .txt, or .rtf file.</div>
                                         </apex:outputPanel>
                                     </apex:outputPanel>
 
                                     <apex:outputPanel rendered="{!e=='2'}" layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 essayUpload">
-                                        <apex:outputPanel layout="none" rendered="{!!applicant.Essay_2_Uploaded__c}">
-                                            <apex:inputFile value="{!essay1.body}" id="Essay2File" fileName="{!essay2Filename}" accept="doc, txt, pdf"/>
-                                            <apex:commandButton styleClass="button" onclick="return checkForFile('Essay1File');" action="{!UploadEssay2}" value="Upload Essay"/>
-                                        </apex:outputPanel>
-                                        <apex:outputPanel layout="none" rendered="{!applicant.Essay_2_Uploaded__c}">
-                                            <p class="slds-text-body_regular slds-p-bottom_x-small">
-                                                <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
-                                                You uploaded a file named: <strong>{!applicant.Essay_2_Uploaded_Orig_Filename__c}</strong></p>
-                                            <p class="slds-text-body_regular">
-                                                <apex:commandButton action="{!DeleteEssay2}" value="Delete and re-upload" styleClass="slds-button slds-button_neutral"/>
-                                            </p>
+                                        <apex:outputPanel styleClass="slds-form-element" layout="block">
+                                            <apex:outputPanel layout="none" rendered="{!!applicant.Essay_2_Uploaded__c}">
+                                                <apex:inputFile value="{!essay2.body}" id="Essay2File" fileName="{!essay2Filename}" accept="application/msword, application/pdf, text/plain, text/rtf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" styleClass="essayFile"/>
+                                                <apex:commandButton styleClass="slds-button slds-button_neutral" onclick="return checkForFile('Essay2File');" action="{!UploadEssay2}" value="Upload Essay"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel layout="none" rendered="{!applicant.Essay_2_Uploaded__c}">
+                                                <p class="slds-text-body_regular slds-p-bottom_x-small">
+                                                    <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
+                                                    You uploaded a file named: <strong>{!applicant.Essay_2_Uploaded_Orig_Filename__c}</strong></p>
+                                                <p class="slds-text-body_regular">
+                                                    <apex:commandButton action="{!DeleteEssay2}" value="Delete and re-upload" styleClass="slds-button slds-button_neutral"/>
+                                                </p>
+                                            </apex:outputPanel>
+                                            <div class="slds-form-element__help">Please upload a .pdf, .doc, .docx, .txt, or .rtf file.</div>
                                         </apex:outputPanel>
                                     </apex:outputPanel>
 
                                 </apex:outputPanel>
 
                                 <!-- Rich Text input of Essay -->
-                                <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 essayInput" layout="block">
+                                <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 essayInputWrap" layout="block">
                                     <div class="slds-form-element">
                                         <div class="slds-form-element__control richText">
                                             <apex:inputTextarea richText="true" value="{!applicant['Essay_' + e + '_Answer__c']}" StyleClass="essayInput essay{!e}"/>

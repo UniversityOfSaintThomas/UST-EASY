@@ -97,6 +97,11 @@
     border: 1px solid red;
 }
 
+.slds-scope .slds-has-error input[type=file] {
+    border: solid 2px red;
+    padding: 3px;
+}
+
 .slds-scope .message.confirmM3 table {
     border: solid 1px green !important;
     border-collapse: initial;

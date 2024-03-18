@@ -7,28 +7,32 @@ ready(() => {
 
     document.querySelectorAll(".essayInputWrapper").forEach(function (essayWrap) {
         let essayNo = essayWrap.dataset.essayno;
-        essayWrap.querySelectorAll(".essayTypeSelection").forEach(function (essayType) {
+        essayWrap.querySelectorAll(".essayType").forEach(function (essayType) {
             let uploaded = essayInfo['essayUploaded' + essayNo];
             let textInput = essayInfo['essayInput' + essayNo];
-            essayWrap.querySelector(".essayInput").style.display = "none";
+            essayWrap.querySelector(".essayInputWrap").style.display = "none";
             essayWrap.querySelector(".essayUpload").style.display = "none"
             if (uploaded) {
                 essayType.value = "upload";
                 essayWrap.querySelector(".essayUpload").style.display = "block";
             } else if (textInput) {
                 essayType.value = "input";
-                essayWrap.querySelector(".essayInput").style.display = "block";
+                essayWrap.querySelector(".essayInputWrap").style.display = "block";
             }
             essayType.addEventListener("change", function () {
                 let selectedType = this.value;
+                //remove all slds-has-error classes
+                essayWrap.querySelectorAll(".slds-has-error").forEach(function (errorWrap) {
+                    errorWrap.classList.remove("slds-has-error");
+                });
                 if (selectedType === 'upload') {
                     essayInfo['essayUploaded' + essayNo] = true;
-                    essayWrap.querySelector(".essayInput").style.display = "none";
+                    essayWrap.querySelector(".essayInputWrap").style.display = "none";
                     essayWrap.querySelector(".essayUpload").style.display = "block";
                 } else if (selectedType === 'input') {
                     essayInfo['essayInput' + essayNo] = true;
                     essayWrap.querySelector(".essayUpload").style.display = "none";
-                    essayWrap.querySelector(".essayInput").style.display = "block";
+                    essayWrap.querySelector(".essayInputWrap").style.display = "block";
                 }
             });
         });
@@ -104,21 +108,18 @@ function checkForFile(fileSelector) {
     removePreviousErrors();
     let file = document.querySelector("[id$=" + fileSelector + "]");
     if (file) {
-        if (file.value) {
-            return true;
-        }
-    } else {
-        file.classList.add("validationError");
-        let errorMessages = document.querySelector(".errorMessages");
-        if (errorMessages) {
-            let errorList = document.createElement("div");
-            errorList.id = "validationErrorList";
-            errorList.innerHTML = "<ul><li>Select a file to upload.</li></ul>";
-            errorMessages.appendChild(errorList);
-            document.querySelector('.errorMessages').scrollIntoView({behavior: 'smooth'});
+        //get file extension
+        let fileExt = file.value.split('.').pop();
+        console.log(fileExt);
+        if (!file.value || (fileExt !== "pdf" && fileExt !== "doc" && fileExt !== "docx" && fileExt !== "rtf" && fileExt !== "txt")) {
+            file.closest(".slds-form-element").classList.add("slds-has-error");
+            file.addEventListener("change", function () {
+                file.closest(".slds-form-element").classList.remove("slds-has-error");
+            });
+            return false
         }
     }
-    return false;
+    return true;
 }
 
 //
@@ -163,28 +164,40 @@ function validateApplication() {
         }
     });
 
-    //Check for CKEditor content
-    let richQuerySelector = [];
-    if (essayInfo['essayInput1']) {
-        richQuerySelector.add(".essay1");
-    }
-    if (essayInfo['essayInput2']) {
-        richQuerySelector.add(".essay2");
-    }
-    richQuerySelector = richQuerySelector.join(", ");
-    if (richQuerySelector) {
-        document.querySelectorAll(richQuerySelector).forEach(function (editor) {
-            essayInfo['essayInput1'];
-
-            if (CKEDITOR.instances[editor.id].getData() === "") {
-                let inputWrap = editor.closest(".slds-form-element");
-                inputWrap.classList.add("slds-has-error");
-                CKEDITOR.instances[editor.id].on("change", function () {
-                    inputWrap.classList.remove("slds-has-error");
+    document.querySelectorAll(".essayInputWrapper").forEach(function (essayWrap) {
+        let essayType = essayWrap.querySelector(".essayType");
+        let errorElement;
+        let errorFound = false;
+        if (essayType) {
+            if (essayType.value === 'input') {
+                let essayInput = essayWrap.querySelector(".essayInput");
+                if (essayInput) {
+                    let essayInputId = essayInput.id;
+                    if (CKEDITOR.instances[essayInputId].getData() === "") {
+                        errorElement = essayInput;
+                        errorFound = true;
+                    }
+                }
+            } else if (essayType.value === 'upload') {
+                let essayFile = essayWrap.querySelector(".essayFile");
+                if (essayFile) {
+                    if (!essayFile.value) {
+                        errorElement = essayFile;
+                        errorFound = true;
+                    }
+                }
+            } else {
+                errorElement = essayType;
+                errorFound = true;
+            }
+            if (errorFound) {
+                errorElement.closest(".slds-form-element").classList.add("slds-has-error");
+                errorElement.addEventListener("change", function () {
+                    errorElement.closest(".slds-form-element").classList.remove("slds-has-error");
                 });
             }
-        });
-    }
+        }
+    });
 
 
     if (document.querySelectorAll(".slds-has-error").length > 0) {
@@ -192,9 +205,6 @@ function validateApplication() {
     }
     return true;
 
-    document.querySelectorAll(".essay1input, .essay2input").forEach(function (essay) {
-        alert(this.value);
-    });
 }
 
 

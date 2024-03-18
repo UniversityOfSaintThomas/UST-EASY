@@ -125,7 +125,7 @@ public with sharing class ScholarshipSharedUtilities {
                         WHERE Address = 'admissions@stthomas.edu'
                 ];
 
-                if (isScratchTrialOrg()){
+                if (isScratchTrialOrg()) {
                     owea = [
                             SELECT Id
                             FROM OrgWideEmailAddress
@@ -196,7 +196,8 @@ public with sharing class ScholarshipSharedUtilities {
     public static PageReference checkScholarshipAccess() {
         String scholarshipId = null;
         PageReference result = null;
-        if (String.isBlank(ApexPages.currentPage().getParameters().get('sid'))) {
+        System.debug('Checking scholarship');
+        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('sid'))) {
             String sId = ApexPages.currentPage().getParameters().get('sid');
             scholarshipId = sId;
             Scholarship__c scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
@@ -204,7 +205,9 @@ public with sharing class ScholarshipSharedUtilities {
                 return Page.ScholarshipHome.setRedirect(true);
             }
             Scholarship_Applicant__c scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
+            System.debug('ScholarshipSharedUtilities.checkScholarshipAccess():: scholarshipApplicant.Scholarship_Complete__c: ' + scholarshipApplicant.Scholarship_Complete__c);
             if (scholarshipApplicant.Scholarship_Complete__c) {
+
                 result = ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId);
             } else {
                 Boolean scholarshipOpen = ScholarshipSharedUtilities.isScholarshipOpen(scholarship);

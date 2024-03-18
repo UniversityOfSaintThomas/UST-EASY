@@ -6,10 +6,28 @@
         <apex:define name="body">
             <div class="slds-grid slds-wrap normalizeSLDS" xmlns="http://www.w3.org/2000/svg" version="1.1">
                 <apex:pageMessages escape="false"/>
-                <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
+                <nav class="slds-col slds-size_1-of-1">
                     <h1 class="slds-text-heading_large">
-                        {!scholarship.Name}
+                        Scholarships
                     </h1>
+                    <ul>
+                        <li>
+                            <apex:outputLink value="{!$Page.ScholarshipHome}">Scholarship List</apex:outputLink>
+                        </li>
+                        <li>
+                            <apex:outputLink value="{!$Page.ApplicationPortal}">Admissions Home</apex:outputLink>
+                        </li>
+                        <apex:outputPanel layout="none" rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">
+                            <li>
+                                <apex:outputLink value="{!$Site.Prefix}/ApplicationLogin">Login</apex:outputLink>
+                            </li>
+                        </apex:outputPanel>
+                    </ul>
+                </nav>
+                <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
+                    <h2 class="slds-text-heading_medium">
+                        {!scholarship.Name}
+                    </h2>
                     <p class="slds-text-body_regular">
                         Your application for the {!scholarship.Name} has been received and is being reviewed.
                     </p>

@@ -1,4 +1,4 @@
-.capricorn-main .text-count-message {
+.text-count-message {
     display: block;
     font-size: .9em;
     font-style: italic;
@@ -6,81 +6,86 @@
     text-align: right;
 }
 
-.capricorn-main .slds-scope p, .capricorn-main .slds-scope label, .capricorn-main .slds-scope .slds-form-element__label, .capricorn-main .slds-scope td {
+.slds-scope p, .slds-scope td {
     font-size: 1rem !important;
     margin-bottom: 1rem;
     color: initial;
 }
+.slds-scope label, .slds-scope .slds-form-element__label {
+    font-size: 1rem !important;
+    margin-bottom: 0rem;
+    color: initial;
+}
 
-.capricorn-main .slds-scope ul, .capricorn-main .slds-scope ol {
+.slds-scope ul, .slds-scope ol {
     font-size: 1rem;
     list-style: initial;
     margin-left: 1rem;
     margin-bottom: 1.1rem;
 }
 
-.capricorn-main .slds-scope li, .slds-scope li {
+.slds-scope li, .slds-scope li {
     margin-bottom: .6rem;
 }
 
-.capricorn-main .slds-scope .slds-form-element .slds-form-element__help {
+.slds-scope .slds-form-element .slds-form-element__help {
     display: none;
 }
 
-.capricorn-main .slds-scope .errorMessages {
+.slds-scope .errorMessages {
     display: none;
 }
 
-.capricorn-main .slds-scope .validationError input, .slds-scope .errorMessages {
+.slds-scope .validationError input, .slds-scope .errorMessages {
     border: 1px solid red;
 }
 
-.capricorn-main .slds-scope label.required {
+.slds-scope label.required {
     font-weight: bold;
 }
 
-.capricorn-main .slds-scope textarea.input-textbox {
+.slds-scope textarea.input-textbox {
     resize: none;
     white-space: nowrap;
     overflow-x: hidden;
 }
 
-.capricorn-main .slds-scope textarea {
+.slds-scope textarea {
     width: 100%;
     height: 75px;
 }
 
-.capricorn-main .slds-scope .warning {
+.slds-scope .warning {
     color: #510C76;
     font-style: italic;
     font-weight: bold;
 }
 
-.capricorn-main .slds-scope .scholarshipList td {
+.slds-scope .scholarshipList td {
     padding: 1rem 1rem;
 }
 
-.capricorn-main .slds-scope nav ul {
+.slds-scope nav ul {
     position: relative;
     float: left;
     width: 100%;
     margin: 0;
 }
 
-.capricorn-main .slds-scope nav ul li {
+.slds-scope nav ul li {
     list-style: none;
     display: inline-block !important;
 }
 
-.capricorn-main .slds-scope nav ul li a {
+.slds-scope nav ul li a {
     padding: .5rem .5rem .5rem .5rem;
 }
 
-.capricorn-main .slds-scope nav ul {
+.slds-scope nav ul {
     margin-left: -.5rem;
 }
 
-.capricorn-main .slds-scope nav ul li:nth-child(1) {
+.slds-scope nav ul li:nth-child(1) {
     border-right: solid 1px purple;
 }
 

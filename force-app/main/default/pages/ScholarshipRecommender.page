@@ -1,90 +1,99 @@
-<apex:page showHeader="false" sidebar="false" controller="ScholarshipRecommenderController" docType="html-5.0" standardStylesheets="false">
-    <apex:composition template="ScholarshipTemplate">
-        <apex:define name="head-extras">
-            <title>Recommendation for {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName} | Scholarships at St. Thomas</title>
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" docType="html-5.0" cache="false" controller="ScholarshipRecommenderController">
+    <apex:composition template="ScholarshipTemplate2024">
+        <apex:define name="metaPageTitle">
+            Recommendation for {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName} | Scholarships at St. Thomas
+        </apex:define>
+        <apex:define name="scriptsHead">
         </apex:define>
         <apex:define name="body">
-            <div class="row">
-                <div class="columns errorMessages">
-                    <apex:pageMessages/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="column">
-                    <h2>
+            <div class="slds-grid slds-wrap normalizeSLDS" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <apex:pageMessages escape="false"/>
+                <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
+                    <h1 class="slds-text-heading_large">
                         {!ScholarshipApplicant.Scholarship__r.Name}
-                    </h2>
+                    </h1>
                 </div>
-            </div>
-            <apex:form rendered="{!!recComplete}">
-                <apex:outputPanel rendered="{!IF(ISNULL(ScholarshipApplicant.Scholarship__r.Name), false,true)}">
-                    <div class="row">
-                        <div class="column">
+
+                <apex:form rendered="{!!recComplete}" styleClass="slds-grid slds-wrap ScholarshipAppForm">
+                    <apex:outputPanel rendered="{!IF(ISNULL(ScholarshipApplicant.Scholarship__r.Name), false,true)}">
+                        <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
+
                             <apex:outputPanel rendered="{!IF(incomingRecNum == 1, true, false)}">
-                                <p>
-                                    Greetings {!ScholarshipApplicant.Recommender_Name__c},
-                                </p>
-                                <p>
-                                    You have been requested
-                                    by {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName}
-                                    to provide a recommendation towards the {!ScholarshipApplicant.Scholarship__r.Name}.
-                                </p>
-                                <p>
-                                    <strong>Scholarship Description:</strong><br/>
-                                    <apex:outputText escape="false" value="{!ScholarshipApplicant.Scholarship__r.Description__c}"></apex:outputText>
-                                </p>
-                                <apex:outputText rendered="{!IF(ISNULL(ScholarshipApplicant.Scholarship__r.Recommender_Question__c), false, true)}">
-                                    <p>
-                                        <strong>Your Question:</strong><br/>
-                                        <apex:outputText escape="false" value="{!ScholarshipApplicant.Scholarship__r.Recommender_Question__c}"></apex:outputText>
+                                <div class="slds-col slds-size_1-of-1">
+                                    <p class="slds-text-body_regular">
+                                        Greetings {!ScholarshipApplicant.Recommender_Name__c},
                                     </p>
-                                </apex:outputText>
-                                <p>
-                                    <apex:inputTextarea rows="15" value="{!ScholarshipApplicant.Recommendation__c}" richText="true"/>
-                                </p>
-                                <p>
-                                    <apex:commandLink action="{!Save}" Value="Submit" styleClass="button"/>
-                                </p>
+                                    <p class="slds-text-body_regular">
+                                        You have been requested
+                                        by {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName}
+                                        to provide a recommendation towards the {!ScholarshipApplicant.Scholarship__r.Name}.
+                                    </p>
+                                    <h2 class="slds-text-heading_medium">
+                                        Scholarship Description
+                                    </h2>
+                                    <p class="slds-text-body_regular">
+                                        <apex:outputText escape="false" value="{!ScholarshipApplicant.Scholarship__r.Description__c}"></apex:outputText>
+                                    </p>
+                                    <apex:outputText rendered="{!IF(ISNULL(ScholarshipApplicant.Scholarship__r.Recommender_Question__c), false, true)}">
+
+                                        <h2 class="slds-text-heading_medium">
+                                            Your Question
+                                        </h2>
+                                        <p class="slds-text-body_regular">
+                                            <apex:outputText escape="false" value="{!ScholarshipApplicant.Scholarship__r.Recommender_Question__c}"></apex:outputText>
+                                        </p>
+
+                                    </apex:outputText>
+                                    <p class="slds-text-body_regular">
+                                        <apex:inputTextarea rows="15" value="{!ScholarshipApplicant.Recommendation__c}" richText="true"/>
+                                    </p>
+                                    <p class="slds-text-body_regular">
+                                        <apex:commandLink action="{!Save}" Value="Submit" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
+                                    </p>
+                                </div>
                             </apex:outputPanel>
                             <apex:outputPanel rendered="{!IF(incomingRecNum == 2, true, false)}">
-                                <p>
-                                    Greetings {!ScholarshipApplicant.Recommender2_Name__c},
-                                </p>
-                                <p>
-                                    You have been requested
-                                    by {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName}
-                                    to provide a recommendation towards the {!ScholarshipApplicant.Scholarship__r.Name}.
-                                </p>
-                                <apex:outputText escape="false" value='<strong>Scholarship Description:</strong><br/>{!ScholarshipApplicant.Scholarship__r.Description__c}'/>
-                                <apex:outputText rendered="{!IF(ISNULL(ScholarshipApplicant.Scholarship__r.Recommender2_Question__c), false, true)}">
-                                    <p>
-                                        <strong>Your Question:</strong><br/>
-                                        <apex:outputText escape="false" value="{!ScholarshipApplicant.Scholarship__r.Recommender2_Question__c}"></apex:outputText>
+                                <div class="slds-col slds-size_1-of-1">
+                                    <p class="slds-text-body_regular">
+                                        Greetings {!ScholarshipApplicant.Recommender2_Name__c},
                                     </p>
-                                </apex:outputText>
-                                <p>
-                                    <apex:inputTextarea rows="15" value="{!ScholarshipApplicant.Recommendation2__c}"
-                                                        richText="true"/>
-                                </p>
-                                <p>
-                                    <apex:commandLink action="{!Save}" Value="Submit" styleClass="button"/>
-                                </p>
+                                    <p class="slds-text-body_regular">
+                                        You have been requested
+                                        by {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName}
+                                        to provide a recommendation towards the {!ScholarshipApplicant.Scholarship__r.Name}.
+                                    </p>
+                                    <apex:outputText escape="false" value='<strong>Scholarship Description:</strong><br/>{!ScholarshipApplicant.Scholarship__r.Description__c}'/>
+                                    <apex:outputText rendered="{!IF(ISNULL(ScholarshipApplicant.Scholarship__r.Recommender2_Question__c), false, true)}">
+                                        <h2 class="slds-text-heading_medium">
+                                            Your Question
+                                        </h2>
+                                        <p class="slds-text-body_regular">
+                                            <apex:outputText escape="false" value="{!ScholarshipApplicant.Scholarship__r.Recommender2_Question__c}"></apex:outputText>
+                                        </p>
+                                    </apex:outputText>
+                                    <p class="slds-text-heading_large">
+                                        <apex:inputTextarea rows="15" value="{!ScholarshipApplicant.Recommendation2__c}" richText="true"/>
+                                    </p>
+                                    <p>
+                                        <apex:commandLink action="{!Save}" Value="Submit" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
+                                    </p>
+                                </div>
                             </apex:outputPanel>
 
                         </div>
-                    </div>
 
+                    </apex:outputPanel>
+
+
+                </apex:form>
+                <apex:outputPanel rendered="{!recComplete}">
+                    <div class="slds-col slds-size_1-of-1">
+                        <p class="slds-text-body_regular">
+                            Thank you for submitting your recommendation for {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName}.
+                        </p>
+                    </div>
                 </apex:outputPanel>
-
-
-            </apex:form>
-            <apex:outputPanel rendered="{!recComplete}">
-                <div class="row">
-                    <div class="column">
-                        Thank you for submitting your recommendation for {!scholarshipApplicantContactRecord.FirstName} {!scholarshipApplicantContactRecord.LastName}.
-                    </div>
-                </div>
-            </apex:outputPanel>
+            </div>
         </apex:define>
     </apex:composition>
 </apex:page>

@@ -1,4 +1,4 @@
-<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ScholarshipHomeController">
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" docType="html-5.0" cache="false" controller="ScholarshipHomeController">
     <apex:composition template="ScholarshipTemplate2024">
         <apex:define name="metaPageTitle">
             Home | Scholarships at St. Thomas

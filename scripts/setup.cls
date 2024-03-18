@@ -136,8 +136,9 @@ private static void permissionGuestUser() {
             SELECT Name, Id
             FROM PermissionSet
             WHERE Name = 'Application_Community_Guest'
-               OR Name = 'RFI_User'
-               OR Name = 'Graduate_Recommender'
+            OR Name = 'RFI_User'
+            OR Name = 'Graduate_Recommender'
+            OR Name = 'Scholarship_Recommenders'
     ];
 
     List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();

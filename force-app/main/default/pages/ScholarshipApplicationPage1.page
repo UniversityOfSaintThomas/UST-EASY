@@ -1,4 +1,4 @@
-<apex:page showHeader="false" sidebar="false" controller="ScholarshipApplicationPage1Controller" action="{!sanityCheck}">
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" docType="html-5.0" cache="false" controller="ScholarshipApplicationPage1Controller" action="{!sanityCheck}">
     <apex:composition template="ScholarshipTemplate2024">
         <apex:define name="metaPageTitle">
             {!scholarship.Name} - Page 1 | Scholarships at St. Thomas

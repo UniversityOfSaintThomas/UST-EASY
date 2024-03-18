@@ -1,27 +1,21 @@
-<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ScholarshipApplicationCompleteController">
-    <apex:composition template="ScholarshipTemplate">
-        <apex:define name="head-extras">
-            <title>Complete! | Scholarships at St. Thomas</title>
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" docType="html-5.0" cache="false" controller="ScholarshipApplicationCompleteController">
+    <apex:composition template="ScholarshipTemplate2024">
+        <apex:define name="metaPageTitle">
+            Complete! | Scholarships at St. Thomas
         </apex:define>
         <apex:define name="body">
-            <div class="row">
-                <div class="columns errorMessages">
-                    <apex:messages/>
+            <div class="slds-grid slds-wrap normalizeSLDS" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <apex:pageMessages escape="false"/>
+                <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
+                    <h1 class="slds-text-heading_large">
+                        {!scholarship.Name}
+                    </h1>
+                    <p class="slds-text-body_regular">
+                        Your application for the {!scholarship.Name} has been received and is being reviewed.
+                    </p>
+                    <apex:outputText escape="false" value="<h4>What happens next?</h4>{!scholarship.Review_Award_Process_Description__c}" rendered="{!IF(NOT(ISNULL(scholarship.Review_Award_Process_Description__c)), true, false)}"/>
                 </div>
             </div>
-            <apex:form enctype="multipart/form-data">
-                <div class="row">
-                    <div class="column">
-                        <h2>
-                            {!scholarship.Name}
-                        </h2>
-                        <p>
-                            Your application for the {!scholarship.Name} has been received and is being reviewed.
-                        </p>
-                        <apex:outputText escape="false" value="<h4>What happens next?</h4>{!scholarship.Review_Award_Process_Description__c}" rendered="{!IF(NOT(ISNULL(scholarship.Review_Award_Process_Description__c)), true, false)}"/>
-                    </div>
-                </div>
-            </apex:form>
         </apex:define>
     </apex:composition>
 </apex:page>

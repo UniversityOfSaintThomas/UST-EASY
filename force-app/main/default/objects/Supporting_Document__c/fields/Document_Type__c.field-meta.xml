@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Document_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Document Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Appeal</fullName>
+                <default>false</default>
+                <label>Appeal</label>
+            </value>
+            <value>
+                <fullName>Application</fullName>
+                <default>false</default>
+                <label>Application</label>
+            </value>
+            <value>
+                <fullName>Code of Conduct Form</fullName>
+                <default>false</default>
+                <label>Code of Conduct Form</label>
+            </value>
+            <value>
+                <fullName>Deans Waiver</fullName>
+                <default>false</default>
+                <label>Deans Waiver</label>
+            </value>
+            <value>
+                <fullName>Letter of Recommendation</fullName>
+                <default>false</default>
+                <label>Letter of Recommendation</label>
+            </value>
+            <value>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+                <label>Miscellaneous</label>
+            </value>
+            <value>
+                <fullName>Passport</fullName>
+                <default>false</default>
+                <label>Passport</label>
+            </value>
+            <value>
+                <fullName>Personal Statement</fullName>
+                <default>false</default>
+                <label>Personal Statement</label>
+            </value>
+            <value>
+                <fullName>PSEO Waiver</fullName>
+                <default>false</default>
+                <label>PSEO Waiver</label>
+            </value>
+            <value>
+                <fullName>Resume</fullName>
+                <default>false</default>
+                <label>Resume</label>
+            </value>
+            <value>
+                <fullName>School Profile</fullName>
+                <default>false</default>
+                <label>School Profile</label>
+            </value>
+            <value>
+                <fullName>Test Score</fullName>
+                <default>false</default>
+                <label>Test Score</label>
+            </value>
+            <value>
+                <fullName>Transcript - College</fullName>
+                <default>false</default>
+                <label>Transcript - College</label>
+            </value>
+            <value>
+                <fullName>Transcript Evaluation</fullName>
+                <default>false</default>
+                <label>Transcript Evaluation</label>
+            </value>
+            <value>
+                <fullName>Transcript - High School</fullName>
+                <default>false</default>
+                <label>Transcript - High School</label>
+            </value>
+            <value>
+                <fullName>Visa</fullName>
+                <default>false</default>
+                <label>Visa</label>
+            </value>
+            <value>
+                <fullName>Writing Sample</fullName>
+                <default>false</default>
+                <label>Writing Sample</label>
+            </value>
+            <value>
+                <fullName>English Proficiency</fullName>
+                <default>false</default>
+                <label>English Proficiency</label>
+            </value>
+            <value>
+                <fullName>Course Plan</fullName>
+                <default>false</default>
+                <label>Course Plan</label>
+            </value>
+            <value>
+                <fullName>Wealth Screening</fullName>
+                <default>false</default>
+                <label>Wealth Screening</label>
+            </value>
+            <value>
+                <fullName>Stewardship Report</fullName>
+                <default>false</default>
+                <label>Stewardship Report</label>
+            </value>
+            <value>
+                <fullName>Profile</fullName>
+                <default>false</default>
+                <label>Profile</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

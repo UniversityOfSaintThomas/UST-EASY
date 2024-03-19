@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admissions_Document</fullName>
+    <active>true</active>
+    <description>Documents used by the Enrollment Teams</description>
+    <label>Admissions Document</label>
+    <picklistValues>
+        <picklist>Document_Type__c</picklist>
+        <values>
+            <fullName>Appeal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Code of Conduct Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Course Plan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deans Waiver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>English Proficiency</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letter of Recommendation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Miscellaneous</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PSEO Waiver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resume</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>School Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Test Score</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transcript - College</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transcript - High School</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transcript Evaluation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Visa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Writing Sample</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Source__c</picklist>
+        <values>
+            <fullName>Common App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enrollment Rx</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Official</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parchment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unofficial</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -37,7 +37,9 @@
                          style="text-align:{!button.buttonPosition}; display:{!if(button.buttonStyle=='text_link','','none')}">
                         <a href="{!button.buttonLink}"
                            target="_blank"
-                           style="font-size:16px">{!button.buttonLabel}</a>
+                           style="font-size:16px">
+                            {!button.buttonLabel}
+                        </a>
                     </div>
                     <!--Button style link-->
                     <div class="slds-p-top_small slds-grid slds-gutters {!'slds-grid_align-'+button.buttonPosition}"
@@ -48,7 +50,7 @@
                                target="_blank"
                                style="font-size:16px">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true"
-                                     display="{!if(LEN(button.buttonIcon)==0,'none','')}">
+                                     display="{!if(ISBLANK(TRIM(button.buttonIcon)),'none','')}">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
                                          xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#'+button.buttonIcon)}"></use>
                                 </svg>

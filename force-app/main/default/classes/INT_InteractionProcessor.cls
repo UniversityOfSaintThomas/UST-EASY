@@ -252,41 +252,40 @@ public class INT_InteractionProcessor {
         for (Interaction__c interaction : interactionsToProcess) {
             if (!String.isEmpty(interaction.Contact__c)) {
 
-                System.debug('Being called Interaction First_Name__c: ' + interaction.Contact__c + ' ' + interaction.First_Name__c);
-                System.debug('Being called Interaction Middle_Name__c: ' + interaction.Contact__c + ' ' + interaction.Middle_Name__c);
-                System.debug('Being called Interaction Last_Name__c: ' + interaction.Contact__c + ' ' + interaction.Last_Name__c);
+                System.debug('***TESTING Interaction Name: ' + interaction.Contact__c +
+                            ' First_Name__c: ' + interaction.First_Name__c +
+                            ' Middle_Name__c: ' + interaction.Middle_Name__c +
+                            ' Last_Name__c: ' + interaction.Last_Name__c);
 
                 Contact newCont = contactMappedFields.get(interaction.Contact__c);
-                Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping
+                Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping query
                 List<String> compareFields = new List<String>{
                         'FirstName', 'MiddleName', 'LastName'
-                }; //Existing to New Contact fields to compare. Make sure field is active on Interaction Mappings
+                }; //List of existing to new Contact fields to compare. Make sure fields are active on Interaction Mappings
 
                 if (newCont != null) {
                     intMappingService.applyDataToSObject(interaction, newCont);
 
-                    System.debug('First time newCont FirstName: ' + newCont.Id + ' ' + newCont.FirstName);
-                    System.debug('First time newCont MiddleName: ' + newCont.Id + ' ' + newCont.MiddleName);
-                    System.debug('First time newCont LastName: ' + newCont.Id + ' ' + newCont.LastName);
+                    System.debug('*** TESTING First newCont: ' + newCont.Id +
+                            ' FirstName: ' + newCont.FirstName +
+                            ' MiddleName: ' + newCont.MiddleName +
+                            ' LastName: ' + newCont.LastName);
 
                     //Don't update existing Contact fields found in list compareFields
                     for (String field : compareFields) {
-
                         try {
-
                             if (String.isNotBlank(newContClone.get(field)?.toString()) && !newCont.get(field)?.toString().trim().equalsIgnoreCase(newContClone.get(field)?.toString().trim())) {
-
                                 newCont.put(field, newContClone.get(field));
                             }
                         } catch (Exception e) {
-
-                            System.debug('Error! Contact field compare: ' + e);
+                            System.debug('ERROR! Contact field compare: ' + e);
                         }
                     }
 
-                    System.debug('Second time newCont FirstName: ' + newCont.Id + ' ' + newCont.FirstName);
-                    System.debug('Second time newCont MiddleName: ' + newCont.Id + ' ' + newCont.MiddleName);
-                    System.debug('Second time newCont LastName: ' + newCont.Id + ' ' + newCont.LastName);
+                    System.debug('***TESTING Second newCont: ' + newCont.Id +
+                            ' FirstName: ' + newCont.FirstName +
+                            ' MiddleName: ' + newCont.MiddleName +
+                            ' LastName: ' + newCont.LastName);
 
                     contactsToUpdate.add(newCont);
                 }

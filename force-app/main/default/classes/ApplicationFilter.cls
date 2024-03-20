@@ -93,8 +93,6 @@ public class ApplicationFilter {
             return false;
         }
 
-        System.debug('returning true');
-
         return true;
     }
 
@@ -108,7 +106,6 @@ public class ApplicationFilter {
             //Only one generic filter needs to match
             for (String appFilter : appGenericFilterSet) {
                 if (objGenericFilterSet.contains(appFilter)) {
-                    System.debug('Filter found: ' + appFilter + ' in ' + objGenericFilterSet);
                     return false;
                 }
             }

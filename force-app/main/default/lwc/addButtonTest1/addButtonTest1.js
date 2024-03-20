@@ -12,9 +12,6 @@ const WIDGETFIELDS = [ID_FIELD, BUTTON_CODE];
 
 export default class AddButtonTest1 extends LightningElement {
 
-    // If linking to a requirement redirect to applicationlink page and include requirement id:
-    // https://momentum-drive-96642-dev-ed.scratch.my.site.com/Admissions/applicationlink?requirementId=a118N000000ceaHQAQ
-
     columns = [
         {
             label: 'Type',
@@ -121,62 +118,52 @@ export default class AddButtonTest1 extends LightningElement {
         }
     ];
 
-    get buttonTypeOptions() {
-        return [
-            {label: 'Requirement Item', value: 'Requirement'},
-            {label: 'URL', value: 'URL'},
-        ];
-    }
+    @track buttonTypeOptions = [
+        {label: 'Requirement Item', value: 'Requirement'},
+        {label: 'URL', value: 'URL'},
+    ];
 
-    get buttonStyleOptions() {
-        return [
-            {label: 'Text Link', value: 'text_link'},
-            // {label: 'No Style', value: 'no_style'}, //slds-button_no_style does not exist. Using to fulfill field value requirement check.
-            {label: 'Brand', value: 'brand'},
-            {label: 'Outline Brand Button', value: 'outline-brand'},
-            {label: 'Neutral', value: 'neutral'},
-        ];
-    }
+    @track buttonStyleOptions = [
+        {label: 'Text Link', value: 'text_link'},
+        // {label: 'No Style', value: 'no_style'}, //slds-button_no_style does not exist. Using to fulfill field value requirement check.
+        {label: 'Brand', value: 'brand'},
+        {label: 'Outline Brand Button', value: 'outline-brand'},
+        {label: 'Neutral', value: 'neutral'},
+    ];
 
-    get buttonSizeOptions() {
-        return [
-            {label: 'Small: 1/4 widget', value: '1-of-4'},
-            {label: 'Medium: 1/2 widget', value: '2-of-4'},
-            {label: 'Large: 3/4 widget', value: '3-of-4'},
-            {label: 'X-Large: Full widget', value: '4-of-4'},
-        ];
-    }
+    @track buttonSizeOptions = [
+        {label: 'Small: 1/4 widget', value: '1-of-4'},
+        {label: 'Medium: 1/2 widget', value: '2-of-4'},
+        {label: 'Large: 3/4 widget', value: '3-of-4'},
+        {label: 'X-Large: Full widget', value: '4-of-4'},
+    ];
 
-    get buttonPositionOptions() {
-        return [
-            {label: 'Left', value: 'left'}, //Left position is default/no class. slds-grid_align-left does not exist. Using to fulfill field value requirement check.
-            {label: 'Center', value: 'center'},
-            {label: 'Right', value: 'end'},
-        ];
-    }
+    @track buttonPositionOptions = [
+        {label: 'Left', value: 'left'}, //Left position is default/no class. slds-grid_align-left does not exist. Using to fulfill field value requirement check.
+        {label: 'Center', value: 'center'},
+        {label: 'Right', value: 'end'},
+    ];
 
-    get buttonIconOptions() {
-        return [
-            {label: 'Event', value: 'event'},
-            {label: 'Form', value: 'form'},
-            {label: 'People', value: 'people'},
-        ];
-    }
+    // @track buttonIconOptions = [
+    //     {label: 'Event', value: 'event'},
+    //     {label: 'Form', value: 'form'},
+    //     {label: 'People', value: 'people'},
+    // ];
 
     @api recordId;
 
     showDataTable = false;
     buttonUrlSelect = false;
     buttonRequirementSelect = false;
-    buttonSizeDisable = false;
+    buttonDisable = false;
 
-    @track button_label;
-    @track button_url;
-    @track button_requirement_id;
-    @track button_style;
-    @track button_size;
-    @track button_position;
-    @track button_icon;
+    button_label;
+    button_url;
+    button_requirement_id;
+    button_style;
+    button_size;
+    button_position;
+    button_icon;
 
     @track buttonJSON = [];
     @track buttonItem = {
@@ -283,14 +270,14 @@ export default class AddButtonTest1 extends LightningElement {
 
                 if (targetValue === 'text_link') {
 
-                    this.button_size = '1-of-4';
-                    this.buttonItem['buttonSize'] = '1-of-4';
-                    this.buttonSizeDisable = true;
-                } else {
-
+                    this.buttonDisable = true;
                     this.button_size = '';
                     this.buttonItem['buttonSize'] = '';
-                    this.buttonSizeDisable = false;
+                    this.button_icon = '';
+                    this.buttonItem['buttonIcon'] = '';
+                } else {
+
+                    this.buttonDisable = false;
                 }
 
                 break;
@@ -306,7 +293,7 @@ export default class AddButtonTest1 extends LightningElement {
                 break;
             case 'ButtonIcon':
 
-                this.buttonItem['buttonIcon'] = targetValue;
+                this.buttonItem['buttonIcon'] = targetValue.toLowerCase().trim();
 
                 break;
             case 'Submit':
@@ -324,7 +311,6 @@ export default class AddButtonTest1 extends LightningElement {
 
                 //Reset form
                 this.template.querySelector("form").reset();
-
                 this.template.querySelectorAll('form lightning-input, form lightning-combobox').forEach(each => {
                     each.value = undefined;
                 });
@@ -343,7 +329,7 @@ export default class AddButtonTest1 extends LightningElement {
 
                 this.buttonUrlSelect = false;
                 this.buttonRequirementSelect = false;
-                this.buttonSizeDisable = false;
+                this.buttonDisable = false;
 
                 break;
         }

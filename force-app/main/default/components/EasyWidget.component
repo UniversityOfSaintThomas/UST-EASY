@@ -3,15 +3,10 @@
  -->
 
 <apex:component id="EasyWidget" controller="EasyWidgetController">
-    <apex:attribute name="widget" description="Widget to process" type="EASY_Widget__c" required="false"
-                    assignTo="{!widgetDetails}"/>
-    <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String"
-                    required="false"/>
-    <apex:attribute name="appInfo" description="Wrapper with Application control and app information" required="false"
-                    type="EASYApplicationInfo"/>
-    <apex:attribute name="checklistItems" type="RequirementWrapper[]"
-                    description="Requirement Wrapper to built checklists. Use checklistHelper in code."
-                    required="false"/>
+    <apex:attribute name="widget" description="Widget to process" type="EASY_Widget__c" required="false" assignTo="{!widgetDetails}"/>
+    <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String" required="false"/>
+    <apex:attribute name="appInfo" description="Wrapper with Application control and app information" required="false" type="EASYApplicationInfo"/>
+    <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
 
     <article class="slds-card slds-m-bottom_medium">
         <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">
@@ -32,32 +27,37 @@
                 </div>
             </apex:outputPanel>
 
-            <apex:outputText escape="false" value="{!widget.Scripts__c}"
-                             rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
+            <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
 
-            <!--            BEGIN BUTTON TESTING-->
+            <!--Widget Buttons-->
             <apex:outputPanel rendered="{!If(NOT(ISBLANK(widget.Button_Code__c)), true, false)}" layout="none">
                 <apex:repeat var="button" value="{!Buttons}">
-                    <div class="slds-p-top_small slds-grid {!'slds-grid_align-'+button.buttonPosition}">
+                    <!--Text only link-->
+                    <div class="slds-p-top_xx-small"
+                         style="text-align:{!button.buttonPosition}; display:{!if(button.buttonStyle=='text_link','','none')}">
+                        <a href="{!button.buttonLink}"
+                           target="_blank"
+                           style="font-size:16px">{!button.buttonLabel}</a>
+                    </div>
+                    <!--Button style link-->
+                    <div class="slds-p-top_small slds-grid slds-gutters {!'slds-grid_align-'+button.buttonPosition}"
+                         style="display:{!if(button.buttonStyle=='text_link','none','')}">
                         <div class="slds-col slds-size_3-of-4 {!'slds-large-size_'+button.buttonSize}">
                             <a class="slds-button slds-button_stretch {!'slds-button_'+button.buttonStyle}"
                                href="{!button.buttonLink}"
                                target="_blank"
                                style="font-size:16px">
-
-                                <!--BEGIN ADD BUTTON ICON-->
-                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true" display="{!if(LEN(button.buttonIcon)==0,'none','')}">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#'+button.buttonIcon)}"></use>
+                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true"
+                                     display="{!if(LEN(button.buttonIcon)==0,'none','')}">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#'+button.buttonIcon)}"></use>
                                 </svg>
-                                <!--END ADD BUTTON ICON-->
-
                                 {!button.buttonLabel}
                             </a>
                         </div>
                     </div>
                 </apex:repeat>
             </apex:outputPanel>
-            <!--            END BUTTON TESTING-->
 
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist' }">
                 <c:ApplicationChecklist appInfo="{!appInfo}" checklistItems="{!checklistItems}" widget="{!widget}"/>

@@ -18,8 +18,8 @@
                                             options={buttonTypeOptions}
                                             onchange={handleChange}
                                             required
-                                            field-level-help="Style of button"></lightning-combobox>
-                        <lightning-input class="slds-col slds-size_1-of-1 slds-large-size_3-of-12"
+                                            field-level-help="Requirement: link to an Application requirement. URL: link to a web page."></lightning-combobox>
+                        <lightning-input class="slds-col slds-size_1-of-2 slds-large-size_3-of-12"
                                          type="text"
                                          name="ButtonLabel"
                                          label='Button Label'
@@ -28,14 +28,14 @@
                                          onchange={handleChange}
                                          field-level-help="Text displayed for button"></lightning-input>
                         <lightning-input lwc:if={buttonUrlSelect}
-                                         class="slds-col slds-size_1-of-2 slds-large-size_7-of-12"
+                                         class="slds-col slds-size_1-of-1 slds-large-size_7-of-12"
                                          type="url"
                                          name="ButtonUrl"
                                          label='Button Url'
                                          required={buttonUrlSelect}
                                          value={button_url}
                                          onchange={handleChange}
-                                         field-level-help="URL destination for clicked button. Must begin with https://."></lightning-input>
+                                         field-level-help="URL link. Must begin with https://."></lightning-input>
                         <lightning-input lwc:if={buttonRequirementSelect}
                                          class="slds-col slds-size_1-of-2 slds-large-size_3-of-12"
                                          type="text"
@@ -44,9 +44,9 @@
                                          required={buttonRequirementSelect}
                                          value={button_requirement_id}
                                          onchange={handleChange}
-                                         field-level-help="Application Requirement 18 digit ID."></lightning-input>
+                                         field-level-help="18 digit Application requirement ID."></lightning-input>
                     </div>
-                    <div class="slds-p-bottom_small slds-grid slds-wrap slds-gutters">
+                    <div class="slds-p-bottom_small slds-grid slds-wrap slds-gutters my-css">
                         <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
                                             name="ButtonStyle"
                                             label="Button Style"
@@ -64,7 +64,7 @@
                                             options={buttonSizeOptions}
                                             onchange={handleChange}
                                             required
-                                            disabled={buttonSizeDisable}
+                                            disabled={buttonDisable}
                                             field-level-help="Width of button relative to overall size of widget determined by Widget Screen Location field"></lightning-combobox>
                         <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
                                             name="ButtonPosition"
@@ -75,14 +75,31 @@
                                             onchange={handleChange}
                                             required
                                             field-level-help="Horizontal position of button"></lightning-combobox>
-                        <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
-                                            name="ButtonIcon"
-                                            label="Button Icon"
-                                            value={button_icon}
-                                            placeholder=""
-                                            options={buttonIconOptions}
-                                            onchange={handleChange}
-                                            field-level-help="Optional icon display inside button"></lightning-combobox>
+                        <div class="slds-p-top_xx-small slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+                            <label><a href="https://www.lightningdesignsystem.com/icons/#utility"
+                                      target=_blank>Button Icon</a> &nbsp;&nbsp;
+                                <sup>
+                                    <lightning-helptext
+                                            content='Click on Button Icon label to view a list of Utility icons'></lightning-helptext>
+                                </sup>
+                            </label>
+                            <lightning-input name="ButtonIcon"
+                                             label="Button Icon"
+                                             type="text"
+                                             value={button_icon}
+                                             placeholder="enter utility icon name (optional)"
+                                             disabled={buttonDisable}
+                                             variant="label-hidden"
+                                             onchange={handleChange}></lightning-input>
+                            <!--                            <lightning-combobox name="ButtonIcon"-->
+                            <!--                                                label="Button Icon"-->
+                            <!--                                                value={button_icon}-->
+                            <!--                                                placeholder=""-->
+                            <!--                                                options={buttonIconOptions}-->
+                            <!--                                                disabled={buttonDisable}-->
+                            <!--                                                onchange={handleChange}-->
+                            <!--                                                variant="label-hidden"></lightning-combobox>-->
+                        </div>
                     </div>
 
                     <!-- Button to submit button link-->

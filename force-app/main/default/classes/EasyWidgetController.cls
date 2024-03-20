@@ -26,7 +26,6 @@ public with sharing class EasyWidgetController {
 
     public List<widgetButton> getButtons() {
 
-//        List<widgetButton> buttonList = new List<widgetButton>();
         List<widgetButton> returnButtonList = new List<widgetButton>();
 
         if (String.isNotBlank(widgetDetails.Button_Code__c)) {

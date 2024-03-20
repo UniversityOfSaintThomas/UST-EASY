@@ -64,34 +64,56 @@ public class ApplicationFilter {
         if (String.isNotBlank(degreeTypes) && (String.isBlank(app.Degree_Type__c) || !(new Set<String>(degreeTypes.split(';'))).contains(app.Degree_Type__c))) {
             return false;
         }
-        if (String.isNotBlank(genericFilters1) && (String.isBlank(app.Generic_Filter_1__c) || !(new Set<String>(genericFilters1.split(';'))).contains(app.Generic_Filter_1__c))) {
+
+        if (filterNotFound(app.Generic_Filter_1__c, genericFilters1)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters2) && (String.isBlank(app.Generic_Filter_2__c) || !(new Set<String>(genericFilters2.split(';'))).contains(app.Generic_Filter_2__c))) {
+        if (filterNotFound(app.Generic_Filter_2__c, genericFilters2)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters3) && (String.isBlank(app.Generic_Filter_3__c) || !(new Set<String>(genericFilters3.split(';'))).contains(app.Generic_Filter_3__c))) {
+        if (filterNotFound(app.Generic_Filter_3__c, genericFilters3)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters4) && (String.isBlank(app.Generic_Filter_4__c) || !(new Set<String>(genericFilters4.split(';'))).contains(app.Generic_Filter_4__c))) {
+        if (filterNotFound(app.Generic_Filter_4__c, genericFilters4)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters5) && (String.isBlank(app.Generic_Filter_5__c) || !(new Set<String>(genericFilters5.split(';'))).contains(app.Generic_Filter_5__c))) {
+        if (filterNotFound(app.Generic_Filter_5__c, genericFilters5)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters6) && (String.isBlank(app.Generic_Filter_6__c) || !(new Set<String>(genericFilters6.split(';'))).contains(app.Generic_Filter_6__c))) {
+        if (filterNotFound(app.Generic_Filter_6__c, genericFilters6)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters7) && (String.isBlank(app.Generic_Filter_7__c) || !(new Set<String>(genericFilters7.split(';'))).contains(app.Generic_Filter_7__c))) {
+        if (filterNotFound(app.Generic_Filter_7__c, genericFilters7)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters8) && (String.isBlank(app.Generic_Filter_8__c) || !(new Set<String>(genericFilters8.split(';'))).contains(app.Generic_Filter_8__c))) {
+        if (filterNotFound(app.Generic_Filter_8__c, genericFilters8)) {
             return false;
         }
         if (checkStatus && (!UserInfo.getUserType().equals('Standard') || Test.isRunningTest()) && String.isNotBlank(appStatuses) && (String.isBlank(app.Application_Status__c) || !(new Set<String>(appStatuses.split(';'))).contains(app.Application_Status__c))) {
             return false;
         }
 
+        System.debug('returning true');
+
         return true;
+    }
+
+    //Split generic filters on application and compare them to the generic filters on another object then return true if they match
+    public static Boolean filterNotFound(String appGenericFilter, String objGenericFilter) {
+        if (String.isBlank(appGenericFilter) && String.isNotBlank(objGenericFilter)) {
+            return true;
+        } else if (String.isNotBlank(objGenericFilter) && String.isNotBlank(appGenericFilter)) {
+            Set<String> appGenericFilterSet = new Set<String>(appGenericFilter.split(';'));
+            Set<String> objGenericFilterSet = new Set<String>(objGenericFilter.split(';'));
+            //Only one generic filter needs to match
+            for (String appFilter : appGenericFilterSet) {
+                if (objGenericFilterSet.contains(appFilter)) {
+                    System.debug('Filter found: ' + appFilter + ' in ' + objGenericFilterSet);
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

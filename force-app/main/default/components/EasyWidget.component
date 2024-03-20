@@ -35,20 +35,19 @@
             <apex:outputText escape="false" value="{!widget.Scripts__c}"
                              rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
 
-            <!--            BEGIN TESTING-->
+            <!--            BEGIN BUTTON TESTING-->
             <apex:outputPanel rendered="{!If(NOT(ISBLANK(widget.Button_Code__c)), true, false)}" layout="none">
                 <apex:repeat var="button" value="{!Buttons}">
-                    <div class="slds-p-top_small slds-grid slds-gutters {!button.buttonPosition}">
-                        <div class="slds-col slds-size_3-of-4 {!button.buttonSize}">
-                            <a class="slds-button slds-button_stretch {!button.buttonStyle}"
+                    <div class="slds-p-top_small slds-grid {!'slds-grid_align-'+button.buttonPosition}">
+                        <div class="slds-col slds-size_3-of-4 {!'slds-large-size_'+button.buttonSize}">
+                            <a class="slds-button slds-button_stretch {!'slds-button_'+button.buttonStyle}"
                                href="{!button.buttonLink}"
                                target="_blank"
                                style="font-size:16px">
 
                                 <!--BEGIN ADD BUTTON ICON-->
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                     class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                    <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/'+button.buttonIconName)}"></use>
+                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true" display="{!if(LEN(button.buttonIcon)==0,'none','')}">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#'+button.buttonIcon)}"></use>
                                 </svg>
                                 <!--END ADD BUTTON ICON-->
 
@@ -58,7 +57,7 @@
                     </div>
                 </apex:repeat>
             </apex:outputPanel>
-            <!--            END TESTING-->
+            <!--            END BUTTON TESTING-->
 
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist' }">
                 <c:ApplicationChecklist appInfo="{!appInfo}" checklistItems="{!checklistItems}" widget="{!widget}"/>

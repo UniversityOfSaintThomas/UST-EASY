@@ -32,3 +32,9 @@ out
 
 # CumulusCI
 /test_results.*
+
+# force-app/main/
+force-app/main/default/networks
+force-app/main/default/dashboards/prm_channel_dashboard_folder/prm_ch_dashboards_sub_folder
+force-app/main/default/reports/prm_channel_reports_folder/prm_ch_reports_sub_folder/prm_winter24_reportsSPLIT1711042896923/prm_winter24_ch_sales_reports_folderSPLIT1711042896923
+force-app/main/default/flexipages/EASY_Widget_Record_Page.flexipage-meta.xml

@@ -10,7 +10,7 @@ import {getFieldValue, getRecord, notifyRecordUpdateAvailable, updateRecord} fro
 
 const WIDGETFIELDS = [ID_FIELD, BUTTON_CODE];
 
-export default class AddButtonTest1 extends LightningElement {
+export default class EasyWidgetButton extends LightningElement {
 
     columns = [
         {
@@ -119,23 +119,30 @@ export default class AddButtonTest1 extends LightningElement {
     ];
 
     @track buttonTypeOptions = [
-        {label: 'Requirement Item', value: 'Requirement'},
+        {label: 'Requirement Form', value: 'Requirement'},
         {label: 'URL', value: 'URL'},
     ];
 
     @track buttonStyleOptions = [
         {label: 'Text Link', value: 'text_link'},
-        // {label: 'No Style', value: 'no_style'}, //slds-button_no_style does not exist. Using to fulfill field value requirement check.
         {label: 'Brand', value: 'brand'},
         {label: 'Outline Brand Button', value: 'outline-brand'},
+        {label: 'Destructive', value: 'destructive'},
+        {label: 'Text Destructive', value: 'text-destructive'},
         {label: 'Neutral', value: 'neutral'},
+        {label: 'Success', value: 'success'},
+
     ];
 
     @track buttonSizeOptions = [
-        {label: 'Small: 1/4 widget', value: '1-of-4'},
-        {label: 'Medium: 1/2 widget', value: '2-of-4'},
-        {label: 'Large: 3/4 widget', value: '3-of-4'},
-        {label: 'X-Large: Full widget', value: '4-of-4'},
+        {label: '1/8 widget size', value: '1-of-8'},
+        {label: '2/8 widget size', value: '2-of-8'},
+        {label: '3/8 widget size', value: '3-of-8'},
+        {label: '4/8 Widget Size', value: '4-of-8'},
+        {label: '5/8 widget size', value: '5-of-8'},
+        {label: '6/8 widget size', value: '6-of-8'},
+        {label: '7/8 widget size', value: '7-of-8'},
+        {label: '8/8 widget size', value: '8-of-8'},
     ];
 
     @track buttonPositionOptions = [

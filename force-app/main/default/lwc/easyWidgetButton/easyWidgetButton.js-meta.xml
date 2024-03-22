@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
-    <description>Add Button Test 1</description>
+    <description>Easy Widget button creation panel</description>
     <isExposed>true</isExposed>
-    <masterLabel>Add Button Test 1</masterLabel>
+    <masterLabel>Easy Widget Button</masterLabel>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>

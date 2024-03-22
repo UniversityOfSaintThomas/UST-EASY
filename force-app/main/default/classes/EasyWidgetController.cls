@@ -39,7 +39,15 @@ public with sharing class EasyWidgetController {
 
                 when 'Requirement' {
 
-                    b.buttonLink = 'applicationlink?requirementId=' + b.buttonRequirementId;
+                    if (b.buttonRequirementId.length() == 15) {
+
+                        String keyPrefix = Requirement__c.SObjectType.getDescribe().getKeyPrefix();
+
+                        b.buttonLink = 'applicationlink?requirementId=' + keyPrefix + b.buttonRequirementId;
+                    } else {
+
+                        b.buttonLink = 'applicationlink?requirementId=' + b.buttonRequirementId;
+                    }
                 }
                 when 'URL' {
 

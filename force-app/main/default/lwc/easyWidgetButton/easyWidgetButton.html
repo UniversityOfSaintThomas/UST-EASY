@@ -34,8 +34,9 @@
                                          label='Button Url'
                                          required={buttonUrlSelect}
                                          value={button_url}
+                                         placeholder="include full url header e.g., https://"
                                          onchange={handleChange}
-                                         field-level-help="URL link. Must begin with https://."></lightning-input>
+                                         field-level-help="URL link destination"></lightning-input>
                         <lightning-input lwc:if={buttonRequirementSelect}
                                          class="slds-col slds-size_1-of-2 slds-large-size_3-of-12"
                                          type="text"
@@ -43,8 +44,9 @@
                                          label='Requirement ID'
                                          required={buttonRequirementSelect}
                                          value={button_requirement_id}
+                                         placeholder="enter application requirement ID"
                                          onchange={handleChange}
-                                         field-level-help="18 digit Application requirement ID."></lightning-input>
+                                         field-level-help="*Verify requirement ID exists in environment where button will be used*"></lightning-input>
                     </div>
                     <div class="slds-p-bottom_small slds-grid slds-wrap slds-gutters my-css">
                         <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"

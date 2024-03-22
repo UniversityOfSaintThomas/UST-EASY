@@ -251,12 +251,6 @@ public class INT_InteractionProcessor {
         // Finally, associate referenced Opportunity and set Interaction_Status__c after processing and flag if errored.
         for (Interaction__c interaction : interactionsToProcess) {
             if (!String.isEmpty(interaction.Contact__c)) {
-
-                System.debug('***TESTING Interaction Name: ' + interaction.Contact__c +
-                            ' First_Name__c: ' + interaction.First_Name__c +
-                            ' Middle_Name__c: ' + interaction.Middle_Name__c +
-                            ' Last_Name__c: ' + interaction.Last_Name__c);
-
                 Contact newCont = contactMappedFields.get(interaction.Contact__c);
                 Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping query
                 List<String> compareFields = new List<String>{
@@ -265,12 +259,6 @@ public class INT_InteractionProcessor {
 
                 if (newCont != null) {
                     intMappingService.applyDataToSObject(interaction, newCont);
-
-                    System.debug('*** TESTING First newCont: ' + newCont.Id +
-                            ' FirstName: ' + newCont.FirstName +
-                            ' MiddleName: ' + newCont.MiddleName +
-                            ' LastName: ' + newCont.LastName);
-
                     //Don't update existing Contact fields found in list compareFields
                     for (String field : compareFields) {
                         try {
@@ -281,11 +269,6 @@ public class INT_InteractionProcessor {
                             System.debug('ERROR! Contact field compare: ' + e);
                         }
                     }
-
-                    System.debug('***TESTING Second newCont: ' + newCont.Id +
-                            ' FirstName: ' + newCont.FirstName +
-                            ' MiddleName: ' + newCont.MiddleName +
-                            ' LastName: ' + newCont.LastName);
 
                     contactsToUpdate.add(newCont);
                 }

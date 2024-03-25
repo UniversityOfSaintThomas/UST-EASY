@@ -80,7 +80,7 @@ export default class EasyWidgetButton extends LightningElement {
         {
             label: '',
             type: "button-icon",
-            // initialWidth: 45,
+            initialWidth: 45,
             wrapText: true,
             typeAttributes: {
                 name: 'up',
@@ -93,7 +93,7 @@ export default class EasyWidgetButton extends LightningElement {
         {
             label: '',
             type: "button-icon",
-            // initialWidth: 45,
+            initialWidth: 45,
             wrapText: true,
             typeAttributes: {
                 name: 'down',
@@ -106,7 +106,7 @@ export default class EasyWidgetButton extends LightningElement {
         {
             label: '',
             type: "button-icon",
-            // initialWidth: 45,
+            initialWidth: 45,
             wrapText: true,
             typeAttributes: {
                 name: 'delete',
@@ -150,12 +150,6 @@ export default class EasyWidgetButton extends LightningElement {
         {label: 'Center', value: 'center'},
         {label: 'Right', value: 'end'},
     ];
-
-    // @track buttonIconOptions = [
-    //     {label: 'Event', value: 'event'},
-    //     {label: 'Form', value: 'form'},
-    //     {label: 'People', value: 'people'},
-    // ];
 
     @api recordId;
 

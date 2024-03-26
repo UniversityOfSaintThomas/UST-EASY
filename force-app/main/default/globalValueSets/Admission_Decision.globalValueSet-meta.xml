@@ -11,6 +11,54 @@
         <label>MSW Accelerated</label>
     </customValue>
     <customValue>
+        <fullName>Withdrawn Non-Refunded Deposit</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Withdrawn Non-Refunded Deposit</label>
+    </customValue>
+    <customValue>
+        <fullName>Withdrawn Probation</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Withdrawn Probation</label>
+    </customValue>
+    <customValue>
+        <fullName>Withdrawn Refunded</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Withdrawn Refunded</label>
+    </customValue>
+    <customValue>
+        <fullName>Withdrawn Rejected by Program</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Withdrawn Rejected by Program</label>
+    </customValue>
+    <customValue>
+        <fullName>Withdrawn Waitlisted</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Withdrawn Waitlisted</label>
+    </customValue>
+    <customValue>
+        <fullName>Accepted Conditionally and Probationally</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Accepted Conditionally and Probationally</label>
+    </customValue>
+    <customValue>
+        <fullName>Accepted</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Accepted</label>
+    </customValue>
+    <customValue>
+        <fullName>Accepted Conditionally</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Accepted Conditionally</label>
+    </customValue>
+    <customValue>
         <fullName>Accepted Incomplete</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -101,6 +149,12 @@
         <label>Withdrawn Incomplete</label>
     </customValue>
     <customValue>
+        <fullName>Withdrawn Moved to Student</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Withdrawn Moved to Student</label>
+    </customValue>
+    <customValue>
         <fullName>Withdrawn Application</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -111,60 +165,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Withdrawn Hold</label>
-    </customValue>
-    <customValue>
-        <fullName>Withdrawn Moved to Student</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Withdrawn Moved to Student</label>
-    </customValue>
-    <customValue>
-        <fullName>Withdrawn Non-Refunded Deposit</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Withdrawn Non-Refunded Deposit</label>
-    </customValue>
-    <customValue>
-        <fullName>Withdrawn Probation</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Withdrawn Probation</label>
-    </customValue>
-    <customValue>
-        <fullName>Withdrawn Refunded</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Withdrawn Refunded</label>
-    </customValue>
-    <customValue>
-        <fullName>Withdrawn Rejected by Program</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Withdrawn Rejected by Program</label>
-    </customValue>
-    <customValue>
-        <fullName>Withdrawn Waitlisted</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Withdrawn Waitlisted</label>
-    </customValue>
-    <customValue>
-        <fullName>Accepted Conditionally and Probationally</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Accepted Conditionally and Probationally</label>
-    </customValue>
-    <customValue>
-        <fullName>Accepted</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Accepted</label>
-    </customValue>
-    <customValue>
-        <fullName>Accepted Conditionally</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Accepted Conditionally</label>
     </customValue>
     <masterLabel>Admission Decision</masterLabel>
     <sorted>false</sorted>

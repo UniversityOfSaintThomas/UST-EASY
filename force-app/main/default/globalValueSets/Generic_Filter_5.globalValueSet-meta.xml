@@ -40,6 +40,11 @@
         <default>false</default>
         <label>STEM</label>
     </customValue>
+    <customValue>
+        <fullName>Non-STEM</fullName>
+        <default>false</default>
+        <label>Non-STEM</label>
+    </customValue>
     <masterLabel>Program Type</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

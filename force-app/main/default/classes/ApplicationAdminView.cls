@@ -94,7 +94,8 @@ public class ApplicationAdminView {
                         Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c, Related_List_Object__c, Related_List_Object_Master__c, Related_Object_Record_Type_ID__c,
                         Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Holding_Record_Id__c, Internal_Requirement_Item__c,
                         Editable_Application_Status__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
-                        Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c, (
+                        Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
+                        Uploaded_Document_Object__c, File_Name_Prefix__c, (
                         SELECT Id, Active__c, Hardcoded_Value__c, Required__c, Label__c, Intended_Program__c, Application_Status__c,
                                 Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c,
                                 Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c,

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <description>The field gives text to display if the document was processed or not.</description>
+    <externalId>false</externalId>
+    <formula>IF((NOT(ISBLANK(Document_Load_Date__c))&amp;&amp;ISBLANK(Processed_Date__c)),&quot;Unprocessed&quot;,
+IF(NOT(ISBLANK(Document_Load_Date__c))&amp;&amp;(NOT(ISBLANK(Processed_Date__c))),&quot;Processed&quot;,
+NULL))</formula>
+    <label>Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

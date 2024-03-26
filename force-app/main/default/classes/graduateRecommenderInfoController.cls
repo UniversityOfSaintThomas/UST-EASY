@@ -78,7 +78,9 @@ public without sharing class graduateRecommenderInfoController {
                     'File_Types__c, ' +
                     'RecordTypeId, ' +
                     'Required__c, ' +
-                    'Allow_Text_Entry__c ' +
+                    'Allow_Text_Entry__c, ' +
+                    'Uploaded_Document_Object__c' +
+                    'File_Name_Prefix__c, ' +
                     'FROM Requirement_Item__c ' +
                     'WHERE Application_Control_Id__c = \'' + app_control_case_sensitive_id + '\' ' +
                     'AND Requirement__c IN :applicable_requirement_ids ' +

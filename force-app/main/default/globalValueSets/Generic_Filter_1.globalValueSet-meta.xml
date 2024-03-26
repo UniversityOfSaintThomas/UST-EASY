@@ -2351,9 +2351,9 @@
         <label>ET_GR_CER|PELS</label>
     </customValue>
     <customValue>
-        <fullName>ET_GR_MICRO|MCDS</fullName>
+        <fullName>ET_GR_MICRO|MCSD</fullName>
         <default>false</default>
-        <label>ET_GR_MICRO|MCDS</label>
+        <label>ET_GR_MICRO|MCSD</label>
     </customValue>
     <customValue>
         <fullName>ET_GR_MME|MMSE</fullName>
@@ -3124,6 +3124,11 @@
         <fullName>SE_GR_CER|APAI</fullName>
         <default>false</default>
         <label>SE_GR_CER|APAI</label>
+    </customValue>
+    <customValue>
+        <fullName>DC_UG_AA|STEM</fullName>
+        <default>false</default>
+        <label>DC_UG_AA|STEM</label>
     </customValue>
     <masterLabel>Program(s)</masterLabel>
     <sorted>true</sorted>

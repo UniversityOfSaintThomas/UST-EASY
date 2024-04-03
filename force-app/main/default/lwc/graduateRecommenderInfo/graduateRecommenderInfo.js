@@ -106,7 +106,6 @@ export default class GraduateRecommenderInfo extends LightningElement {
             this.recommendation_input = generateRecordInputForCreate(result.data.record);
             if (!this.recId) {
                 this.recId = this.recordId;
-                console.log('recId: ' + this.recId);
             }
             getRelatedObjectInfo({recId: this.recId})
                 .then(objectInfo => {
@@ -459,7 +458,6 @@ export default class GraduateRecommenderInfo extends LightningElement {
         }
 
         if (this.recommendation_input.fields['Rec_Email__c'] !== null) {
-            console.log('rec_email_request: ' + this.recommendation_input.fields['Rec_Email__c'] + ' rec_email: ' + this.rec_email.toLowerCase());
             let rec_email_request = this.recommendation_input.fields['Rec_Email__c'].toLowerCase();
             if (rec_email_request !== this.rec_email.toLowerCase()) {
                 this.required_fields_missing = 'The Recommender Email entered above does not match the email recipient of this request.';

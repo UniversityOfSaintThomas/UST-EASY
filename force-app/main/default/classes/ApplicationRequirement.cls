@@ -371,7 +371,9 @@ public class ApplicationRequirement {
                 //Uploaded data evaluated
                 if (addData != null && addData.containsKey('attData')) {
                     Map<String, Object> attData = (Map<String, Object>) addData.get('attData');
+                    System.debug('attData: ' + attData.keySet());
                     if (attData != null && attData.containsKey('fileName')) {
+                        System.debug('File Name: ' + attData.get('fileName') + ' File Size: ' + attData.get('fileSize') + ' File Type: ' + attData.get('fileType') + ' File Id: ' + attData.get('fileId'));
                         String fileName = (String) attData.get('fileName');
                         //Check for file types
                         if (String.isNotBlank(fileName) && String.isNotBlank(g.item.File_Types__c)) {

@@ -3130,6 +3130,12 @@
         <default>false</default>
         <label>DC_UG_AA|STEM</label>
     </customValue>
+    <customValue>
+        <fullName>ET_GR_MICRO|MCDS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>ET_GR_MICRO|MCDS</label>
+    </customValue>
     <masterLabel>Program(s)</masterLabel>
     <sorted>true</sorted>
 </GlobalValueSet>

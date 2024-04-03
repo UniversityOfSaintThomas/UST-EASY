@@ -12,11 +12,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Admission Application</fullName>
-                <default>false</default>
-                <label>Admission Application</label>
-            </value>
-            <value>
                 <fullName>Common App</fullName>
                 <default>false</default>
                 <label>Common App</label>
@@ -45,6 +40,11 @@
                 <fullName>University Advancement</fullName>
                 <default>false</default>
                 <label>University Advancement</label>
+            </value>
+            <value>
+                <fullName>Admissions Application</fullName>
+                <default>false</default>
+                <label>Admissions Application</label>
             </value>
         </valueSetDefinition>
     </valueSet>

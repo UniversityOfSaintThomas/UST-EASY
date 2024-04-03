@@ -86,6 +86,10 @@
     <picklistValues>
         <picklist>Source__c</picklist>
         <values>
+            <fullName>Admissions Application</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Common App</fullName>
             <default>false</default>
         </values>

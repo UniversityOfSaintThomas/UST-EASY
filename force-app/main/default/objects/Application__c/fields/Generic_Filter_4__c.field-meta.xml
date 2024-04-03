@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Generic_Filter_4__c</fullName>
     <businessStatus>Active</businessStatus>
-    <deprecated>false</deprecated>
     <description>Term Name: The Start Term for an individual application. Data Cookbook Definition: https://stthomas.datacookbook.com/institution/terms/271288</description>
     <externalId>false</externalId>
     <inlineHelpText>Term Name: The Start Term for an individual application. Data Cookbook Definition: https://stthomas.datacookbook.com/institution/terms/271288</inlineHelpText>

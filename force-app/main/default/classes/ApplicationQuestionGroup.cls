@@ -779,10 +779,13 @@ public class ApplicationQuestionGroup {
                         }
                     }
                 }
+                String originalFileName = '';
                 if (documentUpload == true && additionalData != null && additionalData.containsKey('attData')) {
                     Map<String, Object> attData = (Map<String, Object>) additionalData.get('attData');
                     if (attData.containsKey('fileName')) {
                         att.Title = (String) attData.get('fileName');
+                        originalFileName = att.Title;
+                        response.Original_Uploaded_Document_File_Name__c = originalFileName;
                         if (String.isNotBlank(item.File_Name_Prefix__c)) {
                             String newTitle = item.File_Name_Prefix__c;
                             if (att.Title != null && att.Title.contains('.')) {
@@ -790,6 +793,7 @@ public class ApplicationQuestionGroup {
                             }
                             att.Title = newTitle;
                         }
+                        response.Saved_Uploaded_Document_File_Name__c = att.Title;
                     }
                     if (attData.containsKey('data')) {
                         att.VersionData = EncodingUtil.base64Decode(((String) attData.get('data')).substringAfter(','));
@@ -817,7 +821,10 @@ public class ApplicationQuestionGroup {
                             sd.Id = existingSupportingDocuments[0].Id;
                         }
                         sd.Contact__c = con.Id;
+                        sd.Original_Uploaded_Document_File_Name__c = originalFileName;
+                        sd.Saved_Uploaded_Document_File_Name__c = att.Title;
                         sd.Requirement_Response__c = response.Id;
+                        sd.Admissions_Application__c = app.Id;
                         sd.Document_Type__c = 'Application';
                         sd.Source__c = 'Admissions Application';
                         sd.Document_Load_Date__c = Date.today();

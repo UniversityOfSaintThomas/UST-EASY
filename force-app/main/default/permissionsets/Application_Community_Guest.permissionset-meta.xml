@@ -1436,6 +1436,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Requirement_Response__c.Original_Uploaded_Document_File_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Response__c.Question_Group_Requirement_Fulfilled_On__c</field>
         <readable>true</readable>
@@ -1443,6 +1448,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Requirement_Response__c.Requirement_Item__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Requirement_Response__c.Saved_Uploaded_Document_File_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1573,6 +1583,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Requirement__c.Viewing_Requirement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Supporting_Document__c.Admissions_Application__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Supporting_Document__c.Original_Uploaded_Document_File_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Supporting_Document__c.Saved_Uploaded_Document_File_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

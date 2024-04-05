@@ -273,7 +273,21 @@ public class ApplicationQuestionGroup_TEST {
     @IsTest
     public static void testVarious() {
         Contact student = [SELECT Id, Department, Name, (SELECT Id FROM ContentDocumentLinks) FROM Contact LIMIT 1];
-        Application__c app = [SELECT Id, Name, Contact__c, Application_Status__c, (SELECT Id FROM ContentDocumentLinks) FROM Application__c LIMIT 1];
+        Application__c app = [
+                SELECT Id,
+                        Name,
+                        Contact__c,
+                        Application_Status__c,
+                        Generic_Filter_1__c,
+                        Generic_Filter_2__c,
+                        Generic_Filter_3__c,
+                        Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c,
+                (SELECT Id FROM ContentDocumentLinks)
+                FROM Application__c LIMIT 1];
         Requirement_Item__c reqItem = [
                 SELECT Id,
                         RecordType.DeveloperName,
@@ -352,6 +366,10 @@ public class ApplicationQuestionGroup_TEST {
                         Generic_Filter_2__c,
                         Generic_Filter_3__c,
                         Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c,
                         Application_Status__c,
                         Hardcoded_Value__c,
                         Related_Object_Field__c,
@@ -493,7 +511,22 @@ public class ApplicationQuestionGroup_TEST {
     @IsTest
     public static void testAddress() {
         Contact student = [SELECT Id, Department, Name, (SELECT Id FROM ContentDocumentLinks) FROM Contact LIMIT 1];
-        Application__c app = [SELECT Id, Name, Contact__c, Application_Status__c FROM Application__c LIMIT 1];
+        Application__c app = [
+                SELECT Id,
+                        Name,
+                        Contact__c,
+                        Application_Status__c,
+                        Generic_Filter_1__c,
+                        Generic_Filter_2__c,
+                        Generic_Filter_3__c,
+                        Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c
+                FROM Application__c
+                LIMIT 1
+        ];
         Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
 
         Map<String, Id> rtMapRI = new Map<String, Id>();
@@ -615,6 +648,10 @@ public class ApplicationQuestionGroup_TEST {
                                 Generic_Filter_2__c,
                                 Generic_Filter_3__c,
                                 Generic_Filter_4__c,
+                                Generic_Filter_5__c,
+                                Generic_Filter_6__c,
+                                Generic_Filter_7__c,
+                                Generic_Filter_8__c,
                                 Application_Status__c,
                                 Hardcoded_Value__c,
                                 Related_Object_Field__c,
@@ -659,6 +696,10 @@ public class ApplicationQuestionGroup_TEST {
                         Generic_Filter_2__c,
                         Generic_Filter_3__c,
                         Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c,
                         Application_Status__c,
                         Hardcoded_Value__c,
                         Related_Object_Field__c,
@@ -784,6 +825,10 @@ public class ApplicationQuestionGroup_TEST {
                                 Generic_Filter_2__c,
                                 Generic_Filter_3__c,
                                 Generic_Filter_4__c,
+                                Generic_Filter_5__c,
+                                Generic_Filter_6__c,
+                                Generic_Filter_7__c,
+                                Generic_Filter_8__c,
                                 Application_Status__c,
                                 Hardcoded_Value__c,
                                 Related_Object_Field__c,
@@ -835,6 +880,10 @@ public class ApplicationQuestionGroup_TEST {
                                 Generic_Filter_2__c,
                                 Generic_Filter_3__c,
                                 Generic_Filter_4__c,
+                                Generic_Filter_5__c,
+                                Generic_Filter_6__c,
+                                Generic_Filter_7__c,
+                                Generic_Filter_8__c,
                                 Application_Status__c,
                                 Hardcoded_Value__c,
                                 Related_Object_Field__c,

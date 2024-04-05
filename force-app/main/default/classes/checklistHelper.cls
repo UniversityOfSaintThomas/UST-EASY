@@ -41,7 +41,7 @@ public with sharing class checklistHelper {
                         Do_Not_Mark_Requirement_as_Viewed__c
                 FROM Requirement__c
                 WHERE Application_Control__c = :appInfo.appControlId
-                AND Active__c = :true
+                AND Active__c = TRUE
                 AND Show_on_Application_Creation__c = FALSE
                 ORDER BY Display_Order__c, Label__c ASC NULLS LAST
         ]) {

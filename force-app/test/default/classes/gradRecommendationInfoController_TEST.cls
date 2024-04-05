@@ -17,10 +17,6 @@ public with sharing class gradRecommendationInfoController_TEST {
         );
         insert app_control;
 
-        // Create and insert Interaction Mapping Test Data
-        List<Interaction_Mapping__c> testMappings = INT_TestDataFactory.createTestMappings();
-        insert testMappings;
-        
         Requirement__c recommendation_requirement = new Requirement__c(
                 Application_Control__c = app_control.Id,
                 Name = 'Letter of Recommendation',
@@ -174,16 +170,16 @@ public with sharing class gradRecommendationInfoController_TEST {
         );
         insert ipt;
 
-        // Interaction__c inter = new Interaction__c(
-        //       Interaction_Source__c = 'Application',
-        //       Interaction_Status__c = 'New',
-        //       First_Name__c = student.FirstName,
-        //       Last_Name__c = student.LastName,
-        //       Email__c = student.Email,
-        //       Opportunity_Stage__c = 'Suspect',
-        //       Term__c = hed_term.Id
-        // );
-        // insert inter;
+        Interaction__c inter = new Interaction__c(
+                Interaction_Source__c = 'Application',
+                Interaction_Status__c = 'New',
+                First_Name__c = student.FirstName,
+                Last_Name__c = student.LastName,
+                Email__c = student.Email,
+                Opportunity_Stage__c = 'Suspect',
+                Term__c = hed_term.Id
+        );
+        insert inter;
 
         Opportunity opp = new Opportunity(
                 AccountId = acc.Id,
@@ -293,13 +289,13 @@ public with sharing class gradRecommendationInfoController_TEST {
         System.assertEquals(String.valueOf(recommendation.Display_Instructive_Text__c), related_object_info.get('display_instructive_text'));
         System.assertEquals(String.valueOf(recommendation.Submitted__c), related_object_info.get('submitted'));
         System.assertEquals(String.valueOf(recommendation.Rec_Email__c), related_object_info.get('rec_email'));
-        System.assertEquals(String.valueof(related_object_ri.Instructions__c), related_object_info.get('related_object_requirement_item_instructions'));
-        System.assertEquals(String.valueof(related_object_ri.Id), related_object_info.get('related_object_requirement_item_id'));
-        System.assertEquals(String.valueof(document_upload_ri.Instructions__c), related_object_info.get('document_upload_requirement_item_instructions'));
-        System.assertEquals(String.valueof(document_upload_ri.Id), related_object_info.get('document_upload_requirement_item_id'));
-        System.assertEquals(String.valueof(document_upload_ri.Allow_Text_Entry__c), related_object_info.get('document_upload_requirement_item_allow_text_entry'));
-        System.assertEquals(String.valueof(document_upload_ri.File_Types__c), related_object_info.get('document_upload_requirement_item_file_types'));
-        System.assertEquals(String.valueof(document_upload_ri.Required__c), related_object_info.get('document_upload_requirement_item_required'));
+        System.assertEquals(String.valueOf(related_object_ri.Instructions__c), related_object_info.get('related_object_requirement_item_instructions'));
+        System.assertEquals(String.valueOf(related_object_ri.Id), related_object_info.get('related_object_requirement_item_id'));
+        System.assertEquals(String.valueOf(document_upload_ri.Instructions__c), related_object_info.get('document_upload_requirement_item_instructions'));
+        System.assertEquals(String.valueOf(document_upload_ri.Id), related_object_info.get('document_upload_requirement_item_id'));
+        System.assertEquals(String.valueOf(document_upload_ri.Allow_Text_Entry__c), related_object_info.get('document_upload_requirement_item_allow_text_entry'));
+        System.assertEquals(String.valueOf(document_upload_ri.File_Types__c), related_object_info.get('document_upload_requirement_item_file_types'));
+        System.assertEquals(String.valueOf(document_upload_ri.Required__c), related_object_info.get('document_upload_requirement_item_required'));
     }
 
     @IsTest
@@ -373,31 +369,25 @@ public with sharing class gradRecommendationInfoController_TEST {
         );
         insert ipt;
 
+        Interaction__c inter = new Interaction__c(
+                Interaction_Source__c = 'Application',
+                Interaction_Status__c = 'New',
+                First_Name__c = student.FirstName,
+                Last_Name__c = student.LastName,
+                Email__c = student.Email,
+                Opportunity_Stage__c = 'Suspect',
+                Term__c = hed_term.Id
+        );
+        insert inter;
 
-       // Interaction__c inter = new Interaction__c(
-        //        Interaction_Source__c = 'Application',
-         //       Interaction_Status__c = 'New',
-         //       First_Name__c = student.FirstName,
-         //       Last_Name__c = student.LastName,
-         //       Email__c = student.Email,
-         //       Opportunity_Stage__c = 'Started App',
-         //       Term__c = hed_term.Id
-        //);
-       // insert inter;
-
-       // Opportunity opp = new Opportunity(
-       //         AccountId = acc.Id,
-       //         Contact__c = student.Id,
-       //         Name = 'TestLast|Test 2022|Test Program',
-       //         CloseDate = system.today(),
-        //        StageName = 'Started App',
-              //  Country__c = 'United States of America',
-        //        Academic_Program__c = program.Id,
-        //        Term__c = hed_term.Id,
-         //       Intended_Start_Term__c = term.Id
-       // );
-       // insert opp;
-
+        Opportunity opp = new Opportunity(
+                AccountId = acc.Id,
+                Contact__c = student.Id,
+                Name = 'TestLast|Test 2022|Test Program',
+                CloseDate = system.today(),
+                StageName = 'Started App'
+        );
+        insert opp;
 
 
         Application__c app = new Application__c(

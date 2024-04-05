@@ -126,6 +126,7 @@ public without sharing class graduateRecommenderInfoController {
 
             return id_map;
         } catch (Exception e) {
+            System.debug('Error retrieving related object information: ' + e.getMessage());
             throw new AuraHandledException('Error retrieving application information: ' + e.getMessage());
         }
     }

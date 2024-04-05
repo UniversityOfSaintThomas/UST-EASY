@@ -81,7 +81,7 @@ public with sharing class applicationHelper {
         return new Set<String>{
                 'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c',
                 'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'Application_Substatus__c', 'application_control__c',
-                'generic_filter_1__c', 'generic_filter_2__c', 'generic_filter_3__c', 'generic_filter_4__c',
+                'Generic_Filter_1__c', 'Generic_Filter_2__c', 'Generic_Filter_3__c', 'Generic_Filter_4__c',
                 'Generic_Filter_5__c', 'Generic_Filter_6__c', 'Generic_Filter_7__c', 'Generic_Filter_8__c',
                 'Intended_Program__r.Name', 'Intended_Program__r.Name',
                 'Intended_Program__r.Program_Name_on_Application__c', 'Intended_Term_of_Entry__r.Name',

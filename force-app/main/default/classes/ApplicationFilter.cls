@@ -65,7 +65,6 @@ public class ApplicationFilter {
             return false;
         }
 
-        System.debug('APPLICATION: ' + JSON.serializePretty(app));
         if (filterNotFound(app.Generic_Filter_1__c, genericFilters1)) {
             return false;
         }

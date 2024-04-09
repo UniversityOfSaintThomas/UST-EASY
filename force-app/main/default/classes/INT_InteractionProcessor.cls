@@ -313,12 +313,10 @@ public class INT_InteractionProcessor {
             for (Interactions_PreProcessing__c ipp : Interactions_PreProcessing__c.getAll().values()) {
                 System.debug(ipp);
                 if (!ipp.Active__c) {
-                    System.debug('Interaction skipped');
                     return interactions;
                 }
             }
         }
-        System.debug('Interaction active');
 
         Map<String, Interaction__c> filteredMap = new Map<String, Interaction__c>();
 
@@ -328,7 +326,6 @@ public class INT_InteractionProcessor {
             if (!filteredMap.containsKey(filterKey)) {
                 filteredMap.put(filterKey, interaction);
             } else {
-                System.debug('filterKey: ' + filterKey + ', interaction: ' + JSON.serializePretty(interaction));
                 interaction.Interaction_Status__c = 'Audit Required';
                 String error = ' Reason: this Interaction was not processed because it is a possible ' +
                         'duplicate of - ' + filteredMap.get(filterKey).Id + ': ' + filteredMap.get(filterKey).First_Name__c +

@@ -442,7 +442,6 @@ public class ApplicationQuestionGroup {
             relatedObject = false;
             externalResponse = false;
             if (response != null && response.ContentDocumentLinks != null && response.ContentDocumentLinks.size() > 0) {
-
                 String title = response.ContentDocumentLinks[0].ContentDocument.Title;
                 att = new ContentVersion();
                 att.Title = title;

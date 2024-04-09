@@ -152,7 +152,6 @@ public class ApplicationCreate {
                         ORDER BY Name ASC
                 ];
 
-                System.debug(JSON.serializePretty(programs));
                 intendedPrograms = new Map<Id, Program__c>(programs);
 
                 // Create new program question and add to list
@@ -302,7 +301,6 @@ public class ApplicationCreate {
 
             // Throw exception if not all required fields have been filled-out
             String errorMessage = '';
-            System.debug('no App: ' + noApplication);
             if (!noApplication) {
                 errorMessage = checkFields();
             }
@@ -367,7 +365,6 @@ public class ApplicationCreate {
 
             // Throw exception if invalid program was selected
             String programError = 'The selected program is not available.';
-            System.debug('App: ' + JSON.serializePretty(app));
             if (!noApplication) {
                 Program__c ip = intendedPrograms.get(app.Intended_Program__c);
                 if (!ApplicationFilter.filter(app, ip, false)) {
@@ -411,7 +408,6 @@ public class ApplicationCreate {
                             AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
                             AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
                     ]) {
-                        System.debug(ip.Number_of_Applications_Limit__c);
                         if (ip.Number_of_Applications_Limit__c.equals('One Application')) {
                             return 'You already have an application. Only one application is allowed.';
                         } else if ((ip.Number_of_Applications_Limit__c.equals('One Application Per Term') || ip.Number_of_Applications_Limit__c.equals('One Application Per Term Per Program')) && app.Intended_Term_of_Entry__c == a.Intended_Term_of_Entry__c) {
@@ -463,7 +459,6 @@ public class ApplicationCreate {
                 for (ApplicationQuestionGroup aqg : section.groups) {
                     for (ApplicationQuestion question : aqg.questions) {
                         if (String.isNotBlank(question.fieldName)) {
-                            System.debug('Field Name: ' + question.fieldName + ' = ' + question.resp);
                             if (question.fieldName.equalsIgnoreCase('Email__c')) {
                                 if (String.isNotBlank(String.valueOf(question.resp))) {
                                     app.Applicant_Email__c = String.valueOf(question.resp);

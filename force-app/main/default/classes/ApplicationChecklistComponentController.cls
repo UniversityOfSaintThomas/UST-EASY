@@ -52,9 +52,8 @@ public with sharing class ApplicationChecklistComponentController {
         PageReference navigateToPage = Page.ApplicationRequirement;
 
         if (String.isNotBlank(nextPage)) {
-            System.debug(nextPage);
+            //System.debug(nextPage);
             if (nextPage.equalsIgnoreCase('applicationhome')) {
-                System.debug('It equals home');
                 navigateToPage = Page.ApplicationHome;
             }
             if (nextPage.equalsIgnoreCase('applicationPortal')) {

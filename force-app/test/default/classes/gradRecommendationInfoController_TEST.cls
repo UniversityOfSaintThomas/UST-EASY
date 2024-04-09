@@ -322,9 +322,9 @@ public with sharing class gradRecommendationInfoController_TEST {
 
         // setup application
         Contact student = new Contact(
-                FirstName = 'TestFirst',
-                LastName = 'TestLast',
-                Email = 'testfirst@testlast.com'
+                FirstName = 'TestFirst2',
+                LastName = 'TestLast2',
+                Email = 'testfirst2@testlast.com'
         );
         insert student;
 

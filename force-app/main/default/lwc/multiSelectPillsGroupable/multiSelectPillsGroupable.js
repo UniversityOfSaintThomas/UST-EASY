@@ -74,9 +74,9 @@ export default class MultiSelectPillsGroupable extends LightningElement {
 
         this.options_ = this.options_.map(function (option) {
             if (valueSet.size > 0) {
-            if (valueSet.has(option.value)) {
-                option.selected = true;
-            }
+                if (valueSet.has(option.value)) {
+                    option.selected = true;
+                }
             }
             return option;
         });
@@ -108,8 +108,8 @@ export default class MultiSelectPillsGroupable extends LightningElement {
                 if (option.label.toLowerCase().includes('undecided')) {
                     values.push('undecided|' + option.value);
                 } else {
-                values.push(option.value);
-            }
+                    values.push(option.value);
+                }
             }
 
         });

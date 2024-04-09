@@ -6,8 +6,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
     public String pageURL { get; set; }
     public Scholarship__c scholarship { get; set; }
     public Scholarship_Applicant__c applicant { get; set; }
-    public boolean essay1HasText { get; set; }
-    public boolean essay2HasText { get; set; }
+    public Boolean essay1HasText { get; set; }
+    public Boolean essay2HasText { get; set; }
     public String essay1Filename { get; set; }
     public String essay2Filename { get; set; }
     public Attachment essay1 {
@@ -21,7 +21,6 @@ public with sharing class ScholarshipApplicationPage2Controller {
     public Attachment essay2 {
         get {
             if (essay2 == null) {
-                System.debug('essay2 generated');
                 essay2 = new Attachment();
             }
             return essay2;}

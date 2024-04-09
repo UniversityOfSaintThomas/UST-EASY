@@ -324,8 +324,10 @@ public with sharing class checklistHelper {
             }
 
         } catch (DmlException e) {
+            System.debug('Error: ' + e.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
         } catch (Exception e) {
+            System.debug('Error: ' + e.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 

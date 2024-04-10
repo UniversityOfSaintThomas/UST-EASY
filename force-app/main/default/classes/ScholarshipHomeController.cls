@@ -31,7 +31,6 @@ public class ScholarshipHomeController {
             System.debug('Return null. :( ');
             return null;
         }
-        pageURL = ScholarshipSharedUtilities.setHistoryPage(scholarshipId);
         System.debug('It should redirect now.');
         return ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationPage1, true, scholarshipId);
     }

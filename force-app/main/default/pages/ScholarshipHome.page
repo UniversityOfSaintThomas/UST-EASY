@@ -1,29 +1,48 @@
-<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ScholarshipHomeController" >
-    <apex:composition template="ScholarshipTemplate" >
-        <apex:define name="head-extras">
-            <title>Home | Scholarships at St. Thomas</title>
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" docType="html-5.0" cache="false" controller="ScholarshipHomeController">
+    <apex:composition template="ScholarshipTemplate2024">
+        <apex:define name="metaPageTitle">
+            Home | Scholarships at St. Thomas
         </apex:define>
         <apex:define name="body">
-            <script>
-                var historyPage = "{!PageURL}";
-            </script>
-            <apex:form >
-                <h2>
-                    Available Scholarships for {!firstNameLastName}
-                </h2>
-                <table> 
-                    <apex:repeat value="{!availableScholarships}" var="schol" id="scholarshipList">
-                        <tr>
-                            <td>
-                                <apex:commandLink value="{!schol.Name}" action="{!chooseScholarship}">
-                                    <apex:param name="scholarshipID" value="{!schol.Scholarship_ID__c}" assignTo="{!scholarshipID}"/>
-                                </apex:commandLink>
-                                <apex:outputText escape="false" value="<br/>{!schol.Short_Description__c}"></apex:outputText>
-                            </td>
-                        </tr> 
-                    </apex:repeat>
-                </table>
-            </apex:form>
+            <div class="slds-grid slds-wrap" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <apex:form styleClass="slds-grid slds-wrap">
+                    <nav class="slds-col slds-size_1-of-1">
+                        <h1 class="slds-text-heading_large">
+                            Scholarships
+                        </h1>
+                        <ul>
+                            <li>
+                                <apex:outputLink value="{!$Page.ScholarshipHome}">Scholarship List</apex:outputLink>
+                            </li>
+                            <li>
+                                <apex:outputLink value="{!$Page.ApplicationPortal}">Admissions Home</apex:outputLink>
+                            </li>
+                            <apex:outputPanel layout="none" rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">
+                                <li>
+                                    <apex:outputLink value="{!$Site.Prefix}/ApplicationLogin">Login</apex:outputLink>
+                                </li>
+                            </apex:outputPanel>
+                        </ul>
+                    </nav>
+                    <div class="slds-col slds-size_1-of-1">
+                        <h2 class="slds-text-heading_medium">
+                            Available Scholarships for {!firstNameLastName}
+                        </h2>
+                        <table class="scholarshipList">
+                            <apex:repeat value="{!availableScholarships}" var="schol" id="scholarshipList">
+                                <tr>
+                                    <td>
+                                        <apex:commandLink value="{!schol.Name}" action="{!chooseScholarship}" styleClass="slds-text-heading_small">
+                                            <apex:param name="scholarshipID" value="{!schol.Scholarship_ID__c}" assignTo="{!scholarshipID}"/>
+                                        </apex:commandLink>
+                                        <apex:outputText escape="false" value="<br/>{!schol.Short_Description__c}"></apex:outputText>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                    </div>
+                </apex:form>
+            </div>
         </apex:define>
     </apex:composition>
 </apex:page>

@@ -1,295 +1,255 @@
-<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ScholarshipApplicationPage2Controller" action="{!initialize}">
-    <apex:composition template="ScholarshipTemplate">
-        <apex:define name="head-extras">
-            <title>{!scholarship.Name} - Page 2 | Scholarships at St. Thomas</title>
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" docType="html-5.0" cache="false" controller="ScholarshipApplicationPage2Controller" action="{!initialize}">
+    <apex:composition template="ScholarshipTemplate2024">
+        <apex:define name="metaPageTitle">
+            {!scholarship.Name} - Page 2 | Scholarships at St. Thomas
+        </apex:define>
+        <apex:define name="scriptsHead">
+            <script>
+                const essayInfo = {
+                    essayInput1: {!essay1HasText},
+                    essayInput2: {!essay2HasText},
+                    essayUploaded1: {!applicant.Essay_1_Uploaded__c},
+                    essayUploaded2: {!applicant.Essay_2_Uploaded__c},
+                };
+            </script>
         </apex:define>
         <apex:define name="body">
-            <script>
-                var essay1HasText = {!essay1HasText};
-                var essay2HasText = {!essay2HasText};
-                var historyPage = '{!pageURL}';
-            </script>
-            <div class="row">
-                <div class="columns errorMessages">
-                    <apex:messages />
-                </div>
-            </div>
-            <apex:form enctype="multipart/form-data" styleClass="ScholarshipAppForm">
-                <div class="row">
-                    <div class="column">
-                        <h2>
+            <div class="slds-grid slds-wrap normalizeSLDS" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <nav class="slds-col slds-size_1-of-1">
+                    <h1 class="slds-text-heading_large">
+                        Scholarships
+                    </h1>
+                    <ul>
+                        <li>
+                            <apex:outputLink value="{!$Page.ScholarshipHome}">Scholarship List</apex:outputLink>
+                        </li>
+                        <li>
+                            <apex:outputLink value="{!$Page.ApplicationPortal}">Admissions Home</apex:outputLink>
+                        </li>
+                        <apex:outputPanel layout="none" rendered="{!(ISPICKVAL($User.UserType,'Guest'))}">
+                            <li>
+                                <apex:outputLink value="{!$Site.Prefix}/ApplicationLogin">Login</apex:outputLink>
+                            </li>
+                        </apex:outputPanel>
+                    </ul>
+                </nav>
+
+
+                <apex:pageMessages escape="false"/>
+
+                <apex:form styleClass="slds-grid slds-wrap ScholarshipAppForm">
+
+                    <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" layout="block">
+                        <h2 class="slds-text-heading_medium">
                             {!scholarship.Name}
                         </h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="column">
-                        <apex:outputText escape="false"
-                                         value="<p><strong>Scholarship description</strong><br/>{!scholarship.Description__c}</p>"
-                                         rendered="{!IF(ISNULL(scholarship.Description__c) , false , true)}"/>
-                    </div>
-                </div>
-                <apex:outputPanel styleClass="row" layout="block"
-                                  rendered="{!IF(ISNULL(scholarship.Question_1_Text__c) , false , true)}">
-                    <div class="column">
-                        <p>
-                            <apex:outputText escape="false" value="{!scholarship.Question_1_Text__c}"/>
-                        </p>
-                        <p>
-                            <apex:inputTextarea rows="10" value="{!applicant.Question_1_Answer__c}" id="question1" styleclass="question question1"/>
-                        </p>
-                    </div>
-                </apex:outputPanel>
-                <apex:outputPanel styleClass="row" layout="block"
-                                  rendered="{!IF(ISNULL(scholarship.Question_2_Text__c) , false , true)}">
-                    <div class="column">
-                        <p>
-                            <apex:outputText escape="false" value="{!scholarship.Question_2_Text__c}"/>
-                        </p>
-                        <p>
-                            <apex:inputTextarea rows="10" value="{!applicant.Question_2_Answer__c}" id="quesiton2" styleclass="question question2"/>
-                        </p>
-                    </div>
-                </apex:outputPanel>
-                <apex:outputPanel styleClass="row" layout="block"
-                                  rendered="{!IF(ISNULL(scholarship.Question_3_Text__c) , false , true)}">
-                    <div class="column">
-                        <p>
-                            <apex:outputText escape="false" value="{!scholarship.Question_3_Text__c}"/>
-                        </p>
-                        <p>
-                            <apex:inputTextarea rows="10" value="{!applicant.Question_3_Answer__c}" id="quesiton3" styleclass="question question3"/>
-                        </p>
-                    </div>
-                </apex:outputPanel>
-                <apex:outputPanel styleClass="row" layout="block"
-                                  rendered="{!IF(ISNULL(scholarship.Question_4_Text__c) , false , true)}">
-                    <div class="column">
-                        <p>
-                            <apex:outputText escape="false" value="{!scholarship.Question_4_Text__c}"/>
-                        </p>
-                        <p>
-                            <apex:inputTextarea rows="10" value="{!applicant.Question_4_Answer__c}" id="quesiton4" styleclass="question question4"/>
-                        </p>
-                    </div>
-                </apex:outputPanel>
+                    </apex:outputPanel>
 
-                <apex:outputText escape="false" rendered="{!If((ISNULL(scholarship.Essay_1_Text__c) && ISNULL(scholarship.Essay_2_Text__c)), false, true)}" value='<h4>Additional Information</h4>'/>
+                    <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!NOT(ISNULL(scholarship.Description__c))}">
+                        <div class="slds-text-body_regular">
+                            <p><strong>Scholarship description</strong></p>
+                            <apex:outputText escape="false" value="{!scholarship.Description__c}"/>
+                        </div>
+                    </apex:outputPanel>
 
-                <apex:outputPanel styleClass="essay1input" layout="block" rendered="{!IF(!ISNULL(scholarship.Essay_1_Text__c) && scholarship.Essay_1_Allow_Upload__c , true , false)}">
-                    <apex:outputText escape="false" value="{!scholarship.Essay_1_Text__c}"/>
-                    <apex:outputPanel rendered="{!!applicant.Essay_1_Uploaded__c}">
-                        <div class="row">
-                            <div class="column">
-                                <div class=" essayInputOptions">
-                                    <p>
-                                        I will enter my answer by:
-                                        <select id="Essay1delivery">
-                                            <option value="">--Select--</option>
-                                            <option value="upload">Uploading an essay</option>
-                                            <option value="input">Copy and pasting an essay</option>
-                                        </select>
+                    <apex:repeat value="{!["1"="1","2"="2", "3"="3", "4"="4"]}" var="q">
+                        <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!NOT(ISNULL(scholarship['Question_' + q + '_Text__c']))}">
+                            <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
+                                <apex:outputLabel styleClass="slds-form-element__label" for="questionInput">
+                                    <apex:outputText escape="false" value="{!scholarship['Question_' + q + '_Text__c']}"/>
+                                </apex:outputLabel>
+                                <!--Text input -->
+                                <apex:outputPanel layout="block" styleClass="slds-form-element__control">
+                                    <apex:inputField value="{!applicant['Question_' + q + '_Answer__c']}" styleClass="slds-textarea" id="questionInput"/>
+                                </apex:outputPanel>
+                                <div class="slds-form-element__help">This field is required</div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:repeat>
+
+                    <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(scholarship.Essay_2_Text__c)) || NOT(ISNULL(scholarship.Essay_1_Text__c))}">
+                        <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" layout="block">
+                            <h2 class="slds-text-heading_medium">Additional Information</h2>
+                        </apex:outputPanel>
+
+                        <apex:repeat value="{!["1"="1","2"="2"]}" var="e">
+                            <apex:outputPanel styleClass="essayInputWrapper" layout="block" rendered="{!NOT(ISNULL(scholarship['Essay_' + e + '_Text__c']))}" html-data-essayno="{!e}">
+                                <!-- Essay Description -->
+                                <apex:outputText escape="false" value="{!scholarship['Essay_' + e + '_Text__c']}"/>
+                                <apex:outputPanel rendered="{!scholarship['Essay_' + e + '_Allow_Upload__c']}" layout="none">
+
+                                    <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" layout="block">
+                                        <apex:outputPanel styleClass="slds-form-element" layout="block">
+                                            <apex:outputLabel for="Essaydelivery" styleClass="slds-form-element__label">
+                                                I will enter my answer by:
+                                            </apex:outputLabel>
+                                            <apex:outputPanel styleClass="slds-form-element__control" layout="block">
+                                                <apex:outputPanel styleClass="slds-select_container" layout="block">
+                                                    <select id="EssayDelivery{!e}" class="slds-select essayType" size="1">
+                                                        <option value="">--Select--</option>
+                                                        <option value="upload" itemLabel="Uploading an essay">Uploading an essay</option>
+                                                        <option value="input" itemLabel="Copy and pasting an essay">Copy and pasting an essay</option>
+                                                    </select>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+
+
+                                    <apex:outputPanel rendered="{!e=='1'}" layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 essayUpload">
+                                        <apex:outputPanel styleClass="slds-form-element" layout="block">
+                                            <apex:outputPanel layout="none" rendered="{!!applicant.Essay_1_Uploaded__c}">
+                                                <apex:inputFile value="{!essay1.body}" id="Essay1File" fileName="{!essay1Filename}" accept="application/msword, application/pdf, text/plain, text/rtf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" styleClass="essayFile"/>
+                                                <apex:commandButton styleClass="slds-button slds-button_neutral" onclick="return checkForFile('Essay1File');" action="{!UploadEssay1}" value="Upload Essay"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel layout="none" rendered="{!applicant.Essay_1_Uploaded__c}">
+                                                <p class="slds-text-body_regular slds-p-bottom_x-small">
+                                                    <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
+                                                    You uploaded a file named: <strong>{!applicant.Essay_1_Uploaded_Orig_Filename__c}</strong></p>
+                                                <p class="slds-text-body_regular">
+                                                    <apex:commandButton action="{!DeleteEssay1}" value="Delete and re-upload" styleClass="slds-button slds-button_neutral"/>
+                                                </p>
+                                            </apex:outputPanel>
+                                            <div class="slds-form-element__help">Please upload a .pdf, .doc, .docx, .txt, or .rtf file.</div>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!e=='2'}" layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 essayUpload">
+                                        <apex:outputPanel styleClass="slds-form-element" layout="block">
+                                            <apex:outputPanel layout="none" rendered="{!!applicant.Essay_2_Uploaded__c}">
+                                                <apex:inputFile value="{!essay2.body}" id="Essay2File" fileName="{!essay2Filename}" accept="application/msword, application/pdf, text/plain, text/rtf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" styleClass="essayFile"/>
+                                                <apex:commandButton styleClass="slds-button slds-button_neutral" onclick="return checkForFile('Essay2File');" action="{!UploadEssay2}" value="Upload Essay"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel layout="none" rendered="{!applicant.Essay_2_Uploaded__c}">
+                                                <p class="slds-text-body_regular slds-p-bottom_x-small">
+                                                    <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
+                                                    You uploaded a file named: <strong>{!applicant.Essay_2_Uploaded_Orig_Filename__c}</strong></p>
+                                                <p class="slds-text-body_regular">
+                                                    <apex:commandButton action="{!DeleteEssay2}" value="Delete and re-upload" styleClass="slds-button slds-button_neutral"/>
+                                                </p>
+                                            </apex:outputPanel>
+                                            <div class="slds-form-element__help">Please upload a .pdf, .doc, .docx, .txt, or .rtf file.</div>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+
+                                </apex:outputPanel>
+
+                                <!-- Rich Text input of Essay -->
+                                <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 essayInputWrap" layout="block">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control richText">
+                                            <apex:inputTextarea richText="true" value="{!applicant['Essay_' + e + '_Answer__c']}" StyleClass="essayInput essay{!e}"/>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+
+                            </apex:outputPanel>
+                        </apex:repeat>
+
+                    </apex:outputPanel>
+
+                    <apex:variable var="multipleRecs" value="{!IF(scholarship.Recommender2__c && scholarship.Recommender__c, true,false)}"/>
+
+                    <apex:outputPanel id="recommenderArea" layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!scholarship.Recommender2__c || scholarship.Recommender__c}">
+                        <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1">
+                            <h2 class="slds-text-heading_medium">
+                                Recommendation
+                            </h2>
+                        </apex:outputPanel>
+                        <apex:repeat value="{!["1"="1","2"="2"]}" var="r">
+                            <apex:variable var="blankOrNumber" value="{!If(r=="1","",r)}"/>
+                            <apex:variable var="showRecommender" value="{!scholarship['Recommender' + blankOrNumber + '__c']}"/>
+                            <apex:outputPanel layout="none" rendered="{!showRecommender}">
+                                <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 recommender" html-data-recnumber="{!r}">
+                                    <h3 class="slds-text-heading_medium">
+                                        Recommendation {!IF(multipleRecs,r,'')}
+                                    </h3>
+                                    <p class="slds-text-body_regular">
+                                        <apex:outputText escape="false" value="{!scholarship['Recommender' + blankOrNumber + '_Description__c']}"/>
                                     </p>
-                                    <div class="row" id="e1input">
-                                        <div class="column">
-                                            <p>
-                                                <apex:inputTextarea rows="15" value="{!applicant.Essay_1_Answer__c}"
-                                                                    StyleClass="essayInput essay1" id="essay1"
-                                                                    richText="true"/>
-                                            </p>
+                                    <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
+                                        <apex:outputLabel for="RecName{!r}" styleClass="slds-form-element__label">Name</apex:outputLabel>
+                                        <div class="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!r == '1'}" layout="none">
+                                                <apex:inputText value="{!applicant.Recommender_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!r == '2'}" layout="none">
+                                                <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
+                                            </apex:outputPanel>
                                         </div>
-                                    </div>
-                                    <div class="row" id="e1upload">
-                                        <div class="column">
-                                            <apex:inputFile value="{!essay1.body}" id="Essay1File"
-                                                            fileName="{!essay1Filename}" accept="doc, txt, pdf"/>
-                                            <apex:commandLink styleClass="button" onclick="return checkForfile('Essay1File');"
-                                                              action="{!UploadEssay1}" value="Upload Essay"/>
+                                        <div class="slds-form-element__help">This field is required,</div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
+                                        <apex:outputLabel for="RecEmail{!r}" styleClass="slds-form-element__label">Email</apex:outputLabel>
+                                        <div styleClass="slds-form-element__control" layout="block">
+                                            <apex:outputPanel rendered="{!r == '1'}" layout="none">
+                                                <apex:inputText value="{!applicant.Recommender_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!r == '2'}" layout="none">
+                                                <apex:inputText value="{!applicant.Recommender2_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
+                                            </apex:outputPanel>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                        <div class="slds-form-element__help">Please enter a valid email address.</div>
+                                    </apex:outputPanel>
 
+                                    <p class="recError" style="display:none">Please enter a name and a valid email.</p>
+                                    <apex:outputPanel styleClass="slds-p-vertical_small" layout="block">
+                                        <apex:outputPanel layout="none" rendered="{!(r == '1' && ISNULL(recommendRequestDate1)) || (r == '2' && ISNULL(recommendRequestDate2))}">
+                                            <apex:commandLink styleClass="slds-button slds-button_neutral slds-p-vertical_xx-small validateRecommender" action="{!SendRecommenderEmail}" value="Request Now">
+                                            </apex:commandLink>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!r == '1'}" layout="none">
+                                            <apex:outputText value="Recommendation request sent on {0, date, MMMM d',' yyyy hh:mm aaa}." rendered="{!NOT(ISNULL(recommendRequestDate1))}">
+                                                <apex:param value="{!recommendRequestDate1}"/>
+                                            </apex:outputText>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!r == '2'}" layout="none">
+                                            <apex:outputText value="Recommendation request sent on {0, date, MMMM d',' yyyy hh:mm aaa}." rendered="{!NOT(ISNULL(recommendRequestDate2))}">
+                                                <apex:param value="{!recommendRequestDate2}"/>
+                                            </apex:outputText>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </apex:repeat>
                     </apex:outputPanel>
-                    <apex:outputPanel rendered="{!applicant.Essay_1_Uploaded__c}">
-                        <div class=" essayInputOptions essay1Uploaded">
-                            <p>
-                                <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
-                                You uploaded a file named: <strong>{!applicant.Essay_1_Uploaded_Orig_Filename__c}</strong><br/>
-                                <apex:commandButton action="{!DeleteEssay1}" value="Delete and re-upload"/>
+
+                    <apex:outputPanel id="CompletionStatement" styleClass="" layout="block" rendered="{!NOT(ISNULL(scholarship.Completion_Statement__c))}">
+                        <apex:outputPanel styleClass="slds-col slds-p-top_x-small slds-size_1-of-1" layout="block">
+                            <h2 class="slds-text-heading_medium">
+                                {!scholarship.Name}
+                            </h2>
+                            <p class="slds-text-body_regular">
+                                <apex:outputText escape="false" value="{!scholarship.Completion_Statement__c}"/>
                             </p>
-                        </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel styleClass="slds-col slds-p-top_x-small slds-size_1-of-1 slds-size_6-of-12 slds-p-bottom_medium" layout="block">
+                            <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
+                                <apex:outputLabel for="Declared_Test" styleClass="slds-form-element__label">
+                                    <strong>
+                                        By initialing here you agree to the above statement.
+                                    </strong>
+                                </apex:outputLabel>
+                                <apex:outputPanel styleClass="slds-form-element__control" layout="block">
+                                    <apex:inputText value="{!applicant.Signature__c}" id="initials" styleClass="Declared_Test slds-input" title="Self Reported ACT or SAT is required."></apex:inputText>
+                                </apex:outputPanel>
+                                <div class="slds-form-element__help">This field is required</div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
                     </apex:outputPanel>
-                </apex:outputPanel>
 
-                <apex:outputPanel styleClass="essay1input" layout="block" rendered="{!IF(!ISNULL(scholarship.Essay_1_Text__c) && !scholarship.Essay_1_Allow_Upload__c , true , false)}">
-                    <div class="row">
-                        <div class="column">
-                            <apex:outputText escape="false" value="{!scholarship.Essay_1_Text__c}"/>
-                            <p>
-                                <apex:inputTextarea rows="15" value="{!applicant.Essay_1_Answer__c}" richText="true" StyleClass="essayInput essay1"/>
-                            </p>
-                        </div>
-                    </div>
-                </apex:outputPanel>
-
-                <apex:outputPanel styleClass="essay2input" layout="block" rendered="{!IF(!ISNULL(scholarship.Essay_2_Text__c) && scholarship.Essay_2_Allow_Upload__c , true , false)}">
-                    <apex:outputText escape="false" value="{!scholarship.Essay_2_Text__c}"/>
-                    <apex:outputPanel rendered="{!!applicant.Essay_2_Uploaded__c}">
-                        <div class="row">
-                            <div class="column">
-                                <div class=" essayInputOptions">
-                                    <p>
-                                        I will enter my answer by:
-                                        <select id="Essay2delivery">
-                                            <option value="">--Select--</option>
-                                            <option value="upload">Uploading an essay</option>
-                                            <option value="input">Copy and pasting an essay</option>
-                                        </select>
-                                    </p>
-                                    <div class="row" id="e2input">
-                                        <div class="column">
-                                            <p>
-                                                <apex:inputTextarea rows="15"
-                                                                    value="{!applicant.Essay_2_Answer__c}"
-                                                                    StyleClass="essayInput essay2" id="essay2" richText="true"/>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row" id="e2upload">
-                                        <div class="column">
-                                            <apex:inputFile value="{!essay2.body}" id="Essay2File"
-                                                            fileName="{!essay2Filename}" accept="doc, txt, pdf"/>
-                                            <apex:commandLink styleClass="button" onclick="return checkForfile('Essay2File');" action="{!UploadEssay2}"
-                                                              value="Upload Essay"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
+                        <apex:commandLink action="{!SaveComplete}" Value="Save & Complete" onClick="return validateApplication();" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
                     </apex:outputPanel>
-                    <apex:outputPanel rendered="{!applicant.Essay_2_Uploaded__c}">
-                        <div class=" essayInputOptions essay2Uploaded">
-                            <p>
-                                <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
-                                You uploaded a file named: <strong>{!applicant.Essay_2_Uploaded_Orig_Filename__c}</strong><br/>
-                                <apex:commandButton action="{!DeleteEssay2}" value="Delete and re-upload"/>
-                            </p>
-                        </div>
+                    <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
+                        <apex:commandLink action="{!SaveFinishLater}" id="saveFinishLater" Value="Save & Finish Later" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
                     </apex:outputPanel>
-                </apex:outputPanel>
-
-                <apex:outputPanel styleClass="essay2input" layout="block" rendered="{!IF(!ISNULL(scholarship.Essay_2_Text__c) && !scholarship.Essay_2_Allow_Upload__c , true , false)}">
-                    <div class="row">
-                        <div class="column">
-                            <apex:outputText escape="false" value="{!scholarship.Essay_2_Text__c}"/>
-                            <p>
-                                <apex:inputTextarea rows="15" value="{!applicant.Essay_2_Answer__c}" richText="true" StyleClass="essayInput essay2"/>
-                            </p>
-                        </div>
-                    </div>
-                </apex:outputPanel>
-
-                <apex:outputPanel id="Recommender" styleClass="row recommender" layout="block"
-                                  rendered="{!scholarship.Recommender__c}">
-                    <div class="column">
-                        <h4>
-                            Recommendation
-                        </h4>
-                        <p>
-                            <apex:outputText escape="false"
-                                             value="{!scholarship.Recommender_Description__c}"></apex:outputText>
-                        </p>
-                        <p class="errorMessages2"></p>
-                        <div class="row">
-                            <div class="columns small-6 medium-6 large-6">
-                                Name
-                                <apex:inputText value="{!applicant.Recommender_Name__c}" styleClass="recName" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
-                            </div>
-                            <div class="columns small-6 medium-6 large-6">
-                                Email
-                                <apex:inputText value="{!applicant.Recommender_Email__c}" styleClass="recEmail" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <apex:commandLink action="{!SendRecommenderEmail}" Value="Request Now"
-                                          onClick="return validateRecommender('rec1Button');" id="rec1Button" styleClass="button saveComplete" rendered="{!ISNULL(recommendRequestDate1)}"/>
-                        <apex:outputText value="Recommendation request sent on {0, date, MMMM d',' yyyy hh:mm aaa}." rendered="{!NOT(ISNULL(recommendRequestDate1))}">
-                            <apex:param value="{!recommendRequestDate1}"/>
-                        </apex:outputText>
-                    </div>
-                </apex:outputPanel>
-
-                <apex:outputPanel id="Recommender2" styleClass="row recommender" layout="block"
-                                  rendered="{!scholarship.Recommender2__c}">
-                    <div class="column">
-                        <h4>
-                            Recommendation
-                        </h4>
-                        <p>
-                            <apex:outputText escape="false"
-                                             value="{!scholarship.Recommender2_Description__c}"></apex:outputText>
-                        </p>
-                        <p class="errorMessages2"></p>
-                        <div class="row">
-                            <div class="columns small-6 medium-6 large-6">
-                                Name
-                                <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"></apex:inputText>
-                            </div>
-                            <div class="columns small-6 medium-6 large-6">
-                                Email
-                                <apex:inputText value="{!applicant.Recommender2_Email__c}" styleClass="recEmail" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <apex:commandLink action="{!SendRecommenderEmail}" Value="Request Now"
-                                          onClick="return validateRecommender('rec2Button');" id="rec2Button" styleClass="button saveComplete" rendered="{!ISNULL(recommendRequestDate2)}"/>
-
-                        <apex:outputText value="Recommendation request sent on {0, date, MMMM d',' yyyy hh:mm aaa}." rendered="{!NOT(ISNULL(recommendRequestDate2))}">
-                            <apex:param value="{!recommendRequestDate2}"/>
-                        </apex:outputText>
-
-                    </div>
-                </apex:outputPanel>
-
-                <apex:outputPanel id="CompletionStatment" styleClass="row" layout="block"
-                                  rendered="{!IF(ISNULL(scholarship.Completion_Statement__c) , false , true)}">
-                    <div class="column">
-                        <h4>
-                            Completion Statement
-                        </h4>
-                        <p>
-                            <apex:outputText escape="false" value="{!scholarship.Completion_Statement__c}"/>
-                        </p>
-                        <p>
-                            <strong>By initialing here you agree to the above statement.</strong><br/>
-                            <apex:inputText id="initials" styleClass="initials" value="{!applicant.Signature__c}"/>
-                        </p>
-                    </div>
-                </apex:outputPanel>
-
-                <div class="row">
-                    <p>
-                        &nbsp;
-                    </p>
-                    <div class="column small-3 medium-3 large-3">
-                        <apex:commandLink action="{!SaveComplete}" Value="Save & Complete"
-                                          onClick="return validateApplication();" styleClass="button saveComplete"/>
-                    </div>
-                    <div class="column small-3 medium-3 large-3">
-                        <apex:commandLink action="{!SaveFinishLater}" id="saveFinishLater" Value="Save & Finish Later"
-                                          styleClass="button saveFinishLater"/>
-                    </div>
-                    <div class="columns small-3 medium-3 large-3">
-                        <apex:commandLink action="{!GoCriteria}" Value="Previous Page" styleClass="button"/>
-                    </div>
-
-                </div>
-            </apex:form>
+                    <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
+                        <apex:commandLink action="{!GoCriteria}" Value="Previous Page" styleClass="slds-button slds-button_neutral slds-p-vertical_x-small"/>
+                    </apex:outputPanel>
+                </apex:form>
+            </div>
         </apex:define>
     </apex:composition>
 </apex:page>

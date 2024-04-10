@@ -7,7 +7,7 @@ public class ScholarshipClosedController {
     public boolean scholarshipNotYetOpen {get; set;}
     public boolean scholarshipAlreadyClosed {get; set;}
 
-    public void initialize() {
+    public ScholarshipClosedController() {
         String sId = ApexPages.currentPage().getParameters().get('sid');
         if (!String.isBlank(sId)) {
             this.scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);

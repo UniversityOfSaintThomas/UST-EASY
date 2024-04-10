@@ -1,0 +1,127 @@
+.text-count-message {
+    display: block;
+    font-size: .9em;
+    font-style: italic;
+    margin: -10px 0 10px 0;
+    text-align: right;
+}
+
+.slds-scope p, .slds-scope td {
+    font-size: 1rem !important;
+    margin-bottom: 1rem;
+    color: initial;
+}
+.slds-scope label, .slds-scope .slds-form-element__label {
+    font-size: 1rem !important;
+    margin-bottom: 0rem;
+    color: initial;
+}
+
+.slds-scope ul, .slds-scope ol {
+    font-size: 1rem;
+    list-style: initial;
+    margin-left: 1rem;
+    margin-bottom: 1.1rem;
+}
+
+.slds-scope li, .slds-scope li {
+    margin-bottom: .6rem;
+}
+
+.slds-scope .slds-form-element .slds-form-element__help {
+    display: none;
+}
+
+.slds-scope .errorMessages {
+    display: none;
+}
+
+.slds-scope .validationError input, .slds-scope .errorMessages {
+    border: 1px solid red;
+}
+
+.slds-scope label.required {
+    font-weight: bold;
+}
+
+.slds-scope textarea.input-textbox {
+    resize: none;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+.slds-scope textarea {
+    width: 100%;
+    height: 75px;
+}
+
+.slds-scope .warning {
+    color: #510C76;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.slds-scope .scholarshipList td {
+    padding: 1rem 1rem;
+}
+
+.slds-scope nav ul {
+    position: relative;
+    float: left;
+    width: 100%;
+    margin: 0;
+}
+
+.slds-scope nav ul li {
+    list-style: none;
+    display: inline-block !important;
+}
+
+.slds-scope nav ul li a {
+    padding: .5rem .5rem .5rem .5rem;
+}
+
+.slds-scope nav ul {
+    margin-left: -.5rem;
+}
+
+.slds-scope nav ul li:nth-child(1) {
+    border-right: solid 1px purple;
+}
+
+.text-count-wrapper {
+    displpaly: block;
+    text-align: right;
+}
+
+.slds-scope .slds-has-error .recError {
+    display: block;
+}
+
+.slds-scope .slds-has-error .richText {
+    border: 1px solid red;
+}
+
+.slds-scope .slds-has-error input[type=file] {
+    border: solid 2px red;
+    padding: 3px;
+}
+
+.slds-scope .message.confirmM3 table {
+    border: solid 1px green !important;
+    border-collapse: initial;
+}
+
+.slds-scope .message table td {
+    padding: 5px;
+    background-color: #e6f7e3;
+}
+
+.slds-scope .message table td h4 {
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.slds-scope .slds-has-error .slds-form-element__help {
+    display: block !important;
+}

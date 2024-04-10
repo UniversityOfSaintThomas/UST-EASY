@@ -252,8 +252,24 @@ public class INT_InteractionProcessor {
         for (Interaction__c interaction : interactionsToProcess) {
             if (!String.isEmpty(interaction.Contact__c)) {
                 Contact newCont = contactMappedFields.get(interaction.Contact__c);
+                Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping query
+                List<String> compareFields = new List<String>{
+                        'FirstName', 'MiddleName', 'LastName'
+                }; //List of existing to new Contact fields to compare. Make sure fields are active on Interaction Mappings
+
                 if (newCont != null) {
                     intMappingService.applyDataToSObject(interaction, newCont);
+                    //Don't update existing Contact fields found in list compareFields
+                    for (String field : compareFields) {
+                        try {
+                            if (String.isNotBlank(newContClone.get(field)?.toString()) && !newCont.get(field)?.toString().trim().equalsIgnoreCase(newContClone.get(field)?.toString().trim())) {
+                                newCont.put(field, newContClone.get(field));
+                            }
+                        } catch (Exception e) {
+                            System.debug('ERROR! Contact field compare: ' + e);
+                        }
+                    }
+
                     contactsToUpdate.add(newCont);
                 }
             }
@@ -588,10 +604,12 @@ public class INT_InteractionProcessor {
                         Pattern matchingPattern;
                         if (!String.isBlank(termName) && !String.isBlank(programName)) {
                             // matches: any opps without program and term information, or opportunities with exact program and term
-                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|(?:' + programName + ')*$');
+                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|(?:' + programName.replaceAll('\\(|\\)','') + ')*$');
+                            //matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|(?:' + programName + ')*$');
                         } else if (String.isBlank(termName) && !String.isBlank(programName)) {
                             // matches: any opportunities without program information, or opportunities with exact program
-                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|.*\\|(?:' + programName + ')*$');
+                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|.*\\|(?:' + programName.replaceAll('\\(|\\)','') + ')*$');
+                            //matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|.*\\|(?:' + programName + ')*$');
                         } else if (!String.isBlank(termName) && String.isBlank(programName)) {
                             // matches: any opportunities without term information, or opportunities  with exact term
                             matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|.*$');
@@ -602,8 +620,10 @@ public class INT_InteractionProcessor {
 
                         System.debug('Matching Pattern: ' + matchingPattern);
                         for (Opportunity opp : contactOppMap.get(interaction.Contact__c)) {
-                            System.debug('Cleaned Opportunity Name: ' + opp.Name.replaceAll('\'', ''));
-                            Matcher oppMatch = matchingPattern.matcher(opp.Name.replaceAll('\'', ''));
+                            System.debug('Cleaned Opportunity Name: ' + opp.Name.replaceAll('\'|\\(|\\)', ''));
+                            //System.debug('Cleaned Opportunity Name: ' + opp.Name.replaceAll('\'', ''));
+                            Matcher oppMatch = matchingPattern.matcher(opp.Name.replaceAll('\'|\\(|\\)', ''));
+                            //Matcher oppMatch = matchingPattern.matcher(opp.Name.replaceAll('\'', ''));
                             System.debug('Matched: ' + oppMatch.matches());
                             if (oppMatch.matches()) {
                                 if (matchingOpps.size() > 0) {
@@ -635,6 +655,7 @@ public class INT_InteractionProcessor {
                         for (Opportunity matchingOpp : matchingOpps) {
                             String oppName = matchingOpp.Name;
                             String oppStageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
+                            String matchingOppLeadSource = matchingOpp.LeadSource; //Used to preserve original Lead Source from initial Opportunity record.
                             Id inqoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Inquiry Opportunity').getRecordTypeId();
                             Id appoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Applicant Opportunity').getRecordTypeId();
 
@@ -661,6 +682,7 @@ public class INT_InteractionProcessor {
                             }
 
                             intMappingService.applyDataToSObject(interaction, matchingOpp);
+                            matchingOpp.LeadSource = matchingOppLeadSource; //Re-assigns initial Opportunity Lead Source.
                             opportunitiesToUpsert.add(matchingOpp);
                         }
                     }
@@ -828,7 +850,10 @@ public class INT_InteractionProcessor {
         OpportunityStage newStage = oppStageMap.get(newStageName);
         OpportunityStage previousStage = oppStageMap.get(previousStageName);
         System.debug('new stage (' + newStageName + '): ' + newStage.DefaultProbability + ', previous stage: (' + previousStageName + '): ' + previousStage.DefaultProbability);
-        if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
+        if (previousStage.ApiName == 'Denied' || previousStage.ApiName == 'Withdrawn') { //Update to never change Opportunity Stage if one of these previous stages.
+            System.debug('previous stage assigned based on certain previous stage');
+            return previousStageName;
+        } else if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
             System.debug('new stage assigned');
             return newStageName;
         } else if (newStage.ForecastCategoryName == 'Omitted') {

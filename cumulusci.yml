@@ -1,10 +1,10 @@
 minimum_cumulusci_version: '3.32.1'
 project:
-  name: UST-EASY-One
+  name: UST-EASY
   package:
     name: UST-EASY-Package-One
     namespace: null
-    api_version: '56.0'
+    api_version: '59.0'
   dependencies:
     - github: 'https://github.com/SalesforceFoundation/EDA'
     - github: 'https://github.com/SFDO-Community/Summit-Events-App.git'
@@ -257,6 +257,14 @@ tasks:
         - record_type: Family_Member__c.Parent_Guardian
           default: true
         - record_type: Family_Member__c.UST_Alumni_Family
+        - record_type: Scholarship_Applicant__c.Scholarship
+          default: true
+        - record_type: Scholarship_Applicant__c.Grant
+        - record_type: Scholarship__c.Graduate_Scholarship
+        - record_type: Scholarship__c.Scholarship
+          default: true
+        - record_type: Scholarship__c.Signature_Programs
+        - record_type: Scholarship__c.UG_Merit
 
   add_degree_piciklist:
     description: "Adds more picklist items to the degree earned list of EDA."

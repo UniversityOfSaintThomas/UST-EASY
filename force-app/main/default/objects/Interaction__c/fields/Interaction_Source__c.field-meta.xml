@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Interaction_Source__c</fullName>
+    <deprecated>false</deprecated>
     <description>The method by which the data is being added as an Interaction. Set to &quot;Manual Entry&quot; for hand entry, otherwise it represents the integration source (Webform, Purchase List, etc.) Also used in the Skip Mapping functionality on Interaction Mappings.</description>
     <externalId>false</externalId>
     <label>Interaction Source</label>
@@ -9,6 +10,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -50,6 +52,318 @@
                 <fullName>ERx Data Migration - Application</fullName>
                 <default>false</default>
                 <label>ERx Data Migration - Application</label>
+            </value>
+            <value>
+                <fullName>Test Score</fullName>
+                <default>false</default>
+                <label>Test Score</label>
+            </value>
+            <value>
+                <fullName>Qualtrics</fullName>
+                <default>false</default>
+                <label>Qualtrics</label>
+            </value>
+            <value>
+                <fullName>Booking</fullName>
+                <default>false</default>
+                <label>Booking</label>
+            </value>
+            <value>
+                <fullName>Event Registration</fullName>
+                <default>false</default>
+                <label>Event Registration</label>
+            </value>
+            <value>
+                <fullName>Common App</fullName>
+                <default>false</default>
+                <label>Common App</label>
+            </value>
+            <value>
+                <fullName>Common App Partial</fullName>
+                <default>false</default>
+                <label>Common App Partial</label>
+            </value>
+            <value>
+                <fullName>2023 MPCW</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>2023 MPCW</label>
+            </value>
+            <value>
+                <fullName>ABN-00008</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ABN-00008</label>
+            </value>
+            <value>
+                <fullName>ABN-00013</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ABN-00013</label>
+            </value>
+            <value>
+                <fullName>ABN-00015</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ABN-00015</label>
+            </value>
+            <value>
+                <fullName>ACT Score</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ACT Score</label>
+            </value>
+            <value>
+                <fullName>Anoka Hennepin Fair SP &apos;23</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Anoka Hennepin Fair SP &apos;23</label>
+            </value>
+            <value>
+                <fullName>Catholic Studies CLT, 2022</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Catholic Studies CLT, 2022</label>
+            </value>
+            <value>
+                <fullName>Cenntenial MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cenntenial MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>Comm. School of Excl Group Vis</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Comm. School of Excl Group Vis</label>
+            </value>
+            <value>
+                <fullName>Como Park MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Como Park MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>Dentfeld MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Dentfeld MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>Eagan HS AVID Group Visit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Eagan HS AVID Group Visit</label>
+            </value>
+            <value>
+                <fullName>Elk River HSV SP&apos;23</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Elk River HSV SP&apos;23</label>
+            </value>
+            <value>
+                <fullName>Fair For the Arts MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Fair For the Arts MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>Fridley HSV Fall 23</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Fridley HSV Fall 23</label>
+            </value>
+            <value>
+                <fullName>Hiawatha MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Hiawatha MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>Highland Park MnACC</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Highland Park MnACC</label>
+            </value>
+            <value>
+                <fullName>Johnson MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Johnson MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>KC Private HS College Night 23</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KC Private HS College Night 23</label>
+            </value>
+            <value>
+                <fullName>KCCCW 23 - Bishop Miej</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KCCCW 23 - Bishop Miej</label>
+            </value>
+            <value>
+                <fullName>KCCCW 23 - SMA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KCCCW 23 - SMA</label>
+            </value>
+            <value>
+                <fullName>KCCCW 23 - STA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KCCCW 23 - STA</label>
+            </value>
+            <value>
+                <fullName>KCCCW 23 - Sion</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KCCCW 23 - Sion</label>
+            </value>
+            <value>
+                <fullName>KCCCW 23 - St. Pius X</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KCCCW 23 - St. Pius X</label>
+            </value>
+            <value>
+                <fullName>KCCCW 23 - St. Thomas Aquinas</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KCCCW 23 - St. Thomas Aquinas</label>
+            </value>
+            <value>
+                <fullName>KCCCW 23 _ Barstow</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KCCCW 23 _ Barstow</label>
+            </value>
+            <value>
+                <fullName>KCCCW23 - Rockhurst HS</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KCCCW23 - Rockhurst HS</label>
+            </value>
+            <value>
+                <fullName>KCCCW23-Bishop Ward</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>KCCCW23-Bishop Ward</label>
+            </value>
+            <value>
+                <fullName>Kirkwood CF Fall 2023</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Kirkwood CF Fall 2023</label>
+            </value>
+            <value>
+                <fullName>Metro Youth Services Group Visit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Metro Youth Services Group Visit</label>
+            </value>
+            <value>
+                <fullName>Net Price Calculator</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Net Price Calculator</label>
+            </value>
+            <value>
+                <fullName>Park of Cottage Grove MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Park of Cottage Grove MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>RCF- Francis Howell Fall 23</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RCF- Francis Howell Fall 23</label>
+            </value>
+            <value>
+                <fullName>RCF- North Central Fall 23</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RCF- North Central Fall 23</label>
+            </value>
+            <value>
+                <fullName>RCF- Rockwood/Parkway Fall 2023</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RCF- Rockwood/Parkway Fall 2023</label>
+            </value>
+            <value>
+                <fullName>RCF- South Central Collab F23</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RCF- South Central Collab F23</label>
+            </value>
+            <value>
+                <fullName>RCF-Rockwood/Parkway Fall 2023</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RCF-Rockwood/Parkway Fall 2023</label>
+            </value>
+            <value>
+                <fullName>RNL Responder</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RNL Responder</label>
+            </value>
+            <value>
+                <fullName>Robbinsdale Cooper MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Robbinsdale Cooper MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>Roosevelt MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Roosevelt MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>SAT</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SAT</label>
+            </value>
+            <value>
+                <fullName>Saint Thomas Academy Group Visit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Saint Thomas Academy Group Visit</label>
+            </value>
+            <value>
+                <fullName>Southwest MnACC Fair</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Southwest MnACC Fair</label>
+            </value>
+            <value>
+                <fullName>St Louis Prioriy 2023</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>St Louis Prioriy 2023</label>
+            </value>
+            <value>
+                <fullName>St. Louis Reg. Maryville 4-23</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>St. Louis Reg. Maryville 4-23</label>
+            </value>
+            <value>
+                <fullName>UB AR College Group Visit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>UB AR College Group Visit</label>
+            </value>
+            <value>
+                <fullName>UNI College Fair Fall 2023</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>UNI College Fair Fall 2023</label>
             </value>
         </valueSetDefinition>
     </valueSet>

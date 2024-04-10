@@ -313,12 +313,10 @@ public class INT_InteractionProcessor {
             for (Interactions_PreProcessing__c ipp : Interactions_PreProcessing__c.getAll().values()) {
                 System.debug(ipp);
                 if (!ipp.Active__c) {
-                    System.debug('Interaction skipped');
                     return interactions;
                 }
             }
         }
-        System.debug('Interaction active');
 
         Map<String, Interaction__c> filteredMap = new Map<String, Interaction__c>();
 
@@ -328,7 +326,6 @@ public class INT_InteractionProcessor {
             if (!filteredMap.containsKey(filterKey)) {
                 filteredMap.put(filterKey, interaction);
             } else {
-                System.debug('filterKey: ' + filterKey + ', interaction: ' + JSON.serializePretty(interaction));
                 interaction.Interaction_Status__c = 'Audit Required';
                 String error = ' Reason: this Interaction was not processed because it is a possible ' +
                         'duplicate of - ' + filteredMap.get(filterKey).Id + ': ' + filteredMap.get(filterKey).First_Name__c +
@@ -635,6 +632,7 @@ public class INT_InteractionProcessor {
                         for (Opportunity matchingOpp : matchingOpps) {
                             String oppName = matchingOpp.Name;
                             String oppStageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
+                            String matchingOppLeadSource = matchingOpp.LeadSource; //Used to preserve original Lead Source from initial Opportunity record.
                             Id inqoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Inquiry Opportunity').getRecordTypeId();
                             Id appoppRTID = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Applicant Opportunity').getRecordTypeId();
 
@@ -661,6 +659,7 @@ public class INT_InteractionProcessor {
                             }
 
                             intMappingService.applyDataToSObject(interaction, matchingOpp);
+                            matchingOpp.LeadSource = matchingOppLeadSource; //Re-assigns initial Opportunity Lead Source.
                             opportunitiesToUpsert.add(matchingOpp);
                         }
                     }
@@ -828,7 +827,10 @@ public class INT_InteractionProcessor {
         OpportunityStage newStage = oppStageMap.get(newStageName);
         OpportunityStage previousStage = oppStageMap.get(previousStageName);
         System.debug('new stage (' + newStageName + '): ' + newStage.DefaultProbability + ', previous stage: (' + previousStageName + '): ' + previousStage.DefaultProbability);
-        if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
+        if (previousStage.ApiName == 'Denied' || previousStage.ApiName == 'Withdrawn') { //Update to never change Opportunity Stage if one of these previous stages.
+            System.debug('previous stage assigned based on certain previous stage');
+            return previousStageName;
+        } else if (newStage.DefaultProbability >= previousStage.DefaultProbability) {
             System.debug('new stage assigned');
             return newStageName;
         } else if (newStage.ForecastCategoryName == 'Omitted') {

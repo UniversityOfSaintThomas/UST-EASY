@@ -8,6 +8,7 @@
     <columns>Source_Field_API_Name__c</columns>
     <columns>Insert_Null__c</columns>
     <columns>Skip_Mapping__c</columns>
+    <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Target_Object_API_Name__c</field>

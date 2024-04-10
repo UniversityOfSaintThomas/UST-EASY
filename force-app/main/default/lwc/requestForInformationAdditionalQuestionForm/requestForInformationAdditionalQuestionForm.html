@@ -1,0 +1,75 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 2/20/2024.
+ -->
+
+<!-- Request For Information Additional Question Form -->
+<!-- Load additional questions -->
+<template>
+    <template for:each={additional_questions} for:item="question" style="slds-grid slds-wrap slds-gutters_medium slds-m-around_xx-small">
+        <div key={question.id} class="slds-m-bottom_medium">
+            <template lwc:if={question.isPicklist}>
+                <lightning-combobox
+                        required={question.isRequired}
+                        label={question.questionLabel}
+                        options={question.picklistValues}
+                        aria-label={question.questionLabel}
+                        onchange={dispatchChange}
+                        data-questionid={question.id}
+                        message-when-bad-input={question.assistiveText}
+                        message-when-value-missing={question.assistiveText}
+                        data-addquestion="true"
+                >
+                </lightning-combobox>
+            </template>
+            <template lwc:elseif={question.isTextBox}>
+                <lightning-input
+                        required={question.isRequired}
+                        type="text"
+                        label={question.questionLabel}
+                        aria-label={question.questionLabel}
+                        onchange={dispatchChange}
+                        message-when-bad-input={question.assistiveText}
+                        message-when-value-missing={question.assistiveText}
+                        data-questionid={question.id}
+                        data-addquestion="true"
+                >
+                </lightning-input>
+            </template>
+            <template lwc:elseif={question.isEmail}>
+                <lightning-input
+                        required={question.isRequired}
+                        type="email"
+                        label={question.questionLabel}
+                        aria-label={question.questionLabel}
+                        onchange={dispatchChange}
+                        message-when-bad-input={question.assistiveText}
+                        message-when-value-missing={question.assistiveText}
+                        data-questionid={question.id}
+                        data-addquestion="true"
+                >
+                </lightning-input>
+            </template>
+            <template lwc:elseif={question.isStaticContent}>
+                <lightning-formatted-rich-text
+                        value={question.valuesFlat}
+                        data-questionid={question.id}
+                        data-addquestion="true"
+                >
+                </lightning-formatted-rich-text>
+            </template>
+            <template lwc:else>
+                <lightning-textarea
+                        required={question.isRequired}
+                        label={question.questionLabel}
+                        aria-label={question.questionLabel}
+                        message-when-bad-input={question.assistiveText}
+                        message-when-value-missing={question.assistiveText}
+                        onchange={dispatchChange}
+                        data-questionid={question.id}
+                        data-addquestion="true"
+                >
+                </lightning-textarea>
+            </template>
+        </div>
+    </template>
+</template>

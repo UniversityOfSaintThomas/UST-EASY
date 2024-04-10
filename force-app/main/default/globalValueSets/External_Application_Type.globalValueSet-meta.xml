@@ -17,5 +17,5 @@
     </customValue>
     <description>External Application Type</description>
     <masterLabel>External Application Type</masterLabel>
-    <sorted>true</sorted>
+    <sorted>false</sorted>
 </GlobalValueSet>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admissions_Application__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The admissions application for which this file was uploaded in support.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The admissions application for which this file was uploaded in support.</inlineHelpText>
+    <label>Admissions Application</label>
+    <referenceTo>Application__c</referenceTo>
+    <relationshipLabel>Supporting Documents</relationshipLabel>
+    <relationshipName>Supporting_Documents</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

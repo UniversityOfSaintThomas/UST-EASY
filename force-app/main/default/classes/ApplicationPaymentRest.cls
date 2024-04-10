@@ -57,6 +57,7 @@ global with sharing class ApplicationPaymentRest {
                         Requirement_Response__c currentResponse = new Requirement_Response__c();
                         currentResponse.Id = responseId;
                         currentResponse.Viewed__c = true;
+                        currentResponse.Status__c = 'Received';
                         crudToDo.updateRequirementResponse(currentResponse);
 
                         //Create a new payment object

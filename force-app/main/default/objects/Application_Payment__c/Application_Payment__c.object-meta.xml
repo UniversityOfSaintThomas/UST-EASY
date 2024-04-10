@@ -162,7 +162,13 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Application Payments</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Admissions_Application__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TouchNet_Ext_Trans_Id__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Payment_Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Application_Owner_Full_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATED_DATE</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -4,9 +4,12 @@
         <name>Send_Recommender_Email_0_0</name>
         <label>Send Recommender Email</label>
         <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <actionName>Recommendation__c.Send_Recommendation_Request_Email</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Copy_1_of_Recommender_Email_Task_Visibility</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -19,9 +22,12 @@
         <name>Send_Recommender_Reminder_Email</name>
         <label>Send Recommender Reminder Email</label>
         <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <actionName>Recommendation__c.Send_Recommender_Reminder_Email</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Recommender_Email_Task_Visibility</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -30,12 +36,12 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <decisions>
         <name>New_or_Updated_Email</name>
         <label>New or Updated Email</label>
         <locationX>314</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Send_Email</name>
@@ -96,7 +102,9 @@
             <label>Send Reminder Email</label>
         </rules>
     </decisions>
-    <description>Sends initial Recommendation request when Recommendation object is created or Rec_Email__c is updated to a new non-null value. Sends reminder email when Resend__c date is updated</description>
+    <description>Sends initial Recommendation request when Recommendation object is created or Rec_Email__c is updated to a new non-null value. Sends reminder email when Resend__c date is updated
+Task created on Recommendation object to log email send</description>
+    <environments>Default</environments>
     <interviewLabel>Send Recommender Email {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send Recommender Email</label>
     <processMetadataValues>
@@ -118,6 +126,70 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Copy_1_of_Recommender_Email_Task_Visibility</name>
+        <label>Recommender Email Task Visibility</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.Owner:User.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Recommender Request Email Sent</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Recommender_Email_Task_Visibility</name>
+        <label>Recommender Remainder Email Task Visibility</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Recommender Reminder email sent</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <start>
         <locationX>188</locationX>
         <locationY>0</locationY>

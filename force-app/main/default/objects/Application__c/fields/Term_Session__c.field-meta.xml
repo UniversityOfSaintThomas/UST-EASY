@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Term_Session__c</fullName>
+    <description>Field used to capture Term Session dates for certain programs that may split sessions during a term.  https://www.stthomas.edu/summer/summeracademiccalendar/2024summeracademiccalendar</description>
+    <externalId>false</externalId>
+    <label>Term Session</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Fall 1 2023 (Start: Sept 6, 2023)</fullName>
+                <default>false</default>
+                <label>Fall 1 2023 (Start: Sept 6, 2023)</label>
+            </value>
+            <value>
+                <fullName>Fall 1 2024 (Start: Sept. 4, 2024)</fullName>
+                <default>false</default>
+                <label>Fall 1 2024 (Start: Sept. 4, 2024)</label>
+            </value>
+            <value>
+                <fullName>Fall 2 2023 (Start: Oct 24, 2023)</fullName>
+                <default>false</default>
+                <label>Fall 2 2023 (Start: Oct 24, 2023)</label>
+            </value>
+            <value>
+                <fullName>Fall 2 2023 (Start: Oct 26, 2023)</fullName>
+                <default>false</default>
+                <label>Fall 2 2023 (Start: Oct 26, 2023)</label>
+            </value>
+            <value>
+                <fullName>Fall 2 2024 (Start: Oct. 24, 2024)</fullName>
+                <default>false</default>
+                <label>Fall 2 2024 (Start: Oct. 24, 2024)</label>
+            </value>
+            <value>
+                <fullName>Spring 1 2024 (Start: Jan 29, 2024)</fullName>
+                <default>false</default>
+                <label>Spring 1 2024 (Start: Jan 29, 2024)</label>
+            </value>
+            <value>
+                <fullName>Spring 2 2024 (Start: March 18, 2024)</fullName>
+                <default>false</default>
+                <label>Spring 2 2024 (Start: March 18, 2024)</label>
+            </value>
+            <value>
+                <fullName>Summer 1 2024 (Start: May 22, 2024)</fullName>
+                <default>false</default>
+                <label>Summer 1 2024 (Start: May 22, 2024)</label>
+            </value>
+            <value>
+                <fullName>Summer 2 2024 (Start: July 8, 2024)</fullName>
+                <default>false</default>
+                <label>Summer 2 2024 (Start: July 8, 2024)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

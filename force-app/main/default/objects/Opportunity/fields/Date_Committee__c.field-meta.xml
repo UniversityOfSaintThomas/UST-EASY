@@ -6,6 +6,7 @@
     <inlineHelpText>Date when the app went to committee, populated by flow</inlineHelpText>
     <label>Date - Committee</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>

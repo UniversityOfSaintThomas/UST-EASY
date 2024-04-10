@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Legal_Sex__c</fullName>
+    <businessStatus>Active</businessStatus>
+    <description>The Legal Sex of an individual based on their drivers license, passport, or government ID. Options include Female, Male, X-Other or Unspecified. Data Cookbook: https://stthomas.datacookbook.com/institution/terms/280317</description>
     <externalId>false</externalId>
+    <inlineHelpText>The Legal Sex of an individual based on their drivers license, passport, or government ID. Options include Female, Male, X-Other or Unspecified. This is different then Gender Identity.</inlineHelpText>
     <label>Legal Sex</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

@@ -22,7 +22,7 @@
     <apex:attribute name="relatedRecords" description="Is part of a related records question" type="Boolean" required="false" default="false"/>
     <apex:attribute name="appInfo" description="Application control and basic application information" type="EASYApplicationInfo" required="true"/>
 
-    <apex:outputPanel rendered="{!inputType != 'Address' && !ISBLANK(inputLabel) && inputType != 'Checkbox' && inputType != 'MultiPicklist' && inputType != 'Hidden'}" layout="none">
+    <apex:outputPanel rendered="{!inputType != 'Address' && !ISBLANK(inputLabel) && inputType != 'Checkbox' && inputType != 'Hidden'}" layout="none">
         <label class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
             {!inputLabel}
             <apex:outputPanel rendered="{!isRequired}" layout="none">
@@ -75,14 +75,6 @@
 
     <!-- Multi Picklist -->
     <apex:outputPanel rendered="{!inputType == 'MultiPicklist'}" layout="block" styleClass="slds-form-element__control">
-        <fieldset>
-            <legend class="slds-form-element__label slds-p-vertical_x-small slds-text-body_regular">
-                {!inputLabel}
-                <apex:outputPanel rendered="{!isRequired}" layout="none">
-                    <abbr class='slds-required' title='required'>* </abbr>
-                </apex:outputPanel>
-            </legend>
-
         <div class="slds-checkbox">
             <apex:selectCheckboxes id="multiPicklistFieldRelated" value="{!multiPicklist}" rendered="{!relatedRecords}" layout="pageDirection" styleClass="slds-tabled-checklist validate{!inputType} {!IF(isRequired, 'setRequired' ,'')}" onChange="reRenderAllGroups('{!rerenderGroup}')">
                 <apex:selectOptions value="{!inputOptions}"/>
@@ -91,7 +83,6 @@
                 <apex:selectOptions value="{!inputOptions}"/>
             </apex:selectCheckboxes>
         </div>
-        </fieldset>
     </apex:outputPanel>
 
     <!-- Checkbox -->

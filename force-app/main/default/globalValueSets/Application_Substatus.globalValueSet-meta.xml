@@ -186,6 +186,54 @@
         <label>Writing Assessment</label>
     </customValue>
     <customValue>
+        <fullName>Interview Reviewed</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Interview Reviewed</label>
+    </customValue>
+    <customValue>
+        <fullName>Interview Invited</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Interview Invited</label>
+    </customValue>
+    <customValue>
+        <fullName>In Review</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>In Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Counselor Hold</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Counselor Hold</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual Update</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Manual Update</label>
+    </customValue>
+    <customValue>
+        <fullName>Withdraw</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Withdraw</label>
+    </customValue>
+    <customValue>
+        <fullName>With Concern</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>With Concern</label>
+    </customValue>
+    <customValue>
+        <fullName>Waitlist</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Waitlist</label>
+    </customValue>
+    <customValue>
         <fullName>Needs Items</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -210,6 +258,12 @@
         <label>Hold</label>
     </customValue>
     <customValue>
+        <fullName>From Waitlist for Inst Acc</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>From Waitlist for Inst Acc</label>
+    </customValue>
+    <customValue>
         <fullName>Exchange</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -228,64 +282,10 @@
         <label>Interview Scheduled</label>
     </customValue>
     <customValue>
-        <fullName>Interview Reviewed</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Interview Reviewed</label>
-    </customValue>
-    <customValue>
-        <fullName>Interview Invited</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Interview Invited</label>
-    </customValue>
-    <customValue>
         <fullName>Interview Completed</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Interview Completed</label>
-    </customValue>
-    <customValue>
-        <fullName>In Review</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>In Review</label>
-    </customValue>
-    <customValue>
-        <fullName>Counselor Hold</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Counselor Hold</label>
-    </customValue>
-    <customValue>
-        <fullName>Waitlist</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Waitlist</label>
-    </customValue>
-    <customValue>
-        <fullName>With Concern</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>With Concern</label>
-    </customValue>
-    <customValue>
-        <fullName>Withdraw</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Withdraw</label>
-    </customValue>
-    <customValue>
-        <fullName>Manual Update</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Manual Update</label>
-    </customValue>
-    <customValue>
-        <fullName>From Waitlist for Inst Acc</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>From Waitlist for Inst Acc</label>
     </customValue>
     <description>Used in conjunction with Application Status</description>
     <masterLabel>Application Substatus</masterLabel>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Status__c</fullName>
+    <description>Display the Application Status from the Application.  Used to assist Banner integration.</description>
+    <externalId>false</externalId>
+    <formula>Text(Triggering_Application__r.Application_Status__c)</formula>
+    <inlineHelpText>Display the Application Status from the Application.  Used to assist Banner integration.</inlineHelpText>
+    <label>Application Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -272,6 +272,19 @@ public class ApplicationQuestion {
         if (String.isNotBlank(ip.Generic_Filter_4__c) && (String.isBlank(application.Generic_Filter_4__c) || !(new Set<String>(ip.Generic_Filter_4__c.split(';'))).contains(application.Generic_Filter_4__c))) {
             return false;
         }
+        if (String.isNotBlank(ip.Generic_Filter_5__c) && (String.isBlank(application.Generic_Filter_5__c) || !(new Set<String>(ip.Generic_Filter_5__c.split(';'))).contains(application.Generic_Filter_5__c))) {
+            return false;
+        }
+        if (String.isNotBlank(ip.Generic_Filter_6__c) && (String.isBlank(application.Generic_Filter_6__c) || !(new Set<String>(ip.Generic_Filter_6__c.split(';'))).contains(application.Generic_Filter_6__c))) {
+            return false;
+        }
+        if (String.isNotBlank(ip.Generic_Filter_7__c) && (String.isBlank(application.Generic_Filter_7__c) || !(new Set<String>(ip.Generic_Filter_7__c.split(';'))).contains(application.Generic_Filter_7__c))) {
+            return false;
+        }
+        if (String.isNotBlank(ip.Generic_Filter_8__c) && (String.isBlank(application.Generic_Filter_8__c) || !(new Set<String>(ip.Generic_Filter_8__c.split(';'))).contains(application.Generic_Filter_8__c))) {
+            return false;
+        }
+
 
         return true;
     }
@@ -844,7 +857,7 @@ public class ApplicationQuestion {
             return response.ValueLongTextArea__c;
         } else if (String.isNotBlank(response.ValueURL__c)) {
             return response.ValueURL__c;
-        } else if (String.isNotBlank(response.ValueTextEncrypted__c)) {
+        } else if (String.isNotBlank(response.ValueTextEncrypted__c) && !response.ValueTextEncrypted__c.contains('XXX')) {
             return response.ValueTextEncrypted__c;
         } else if (String.isNotBlank(response.Country__c) && ((!response.Country__c.equals('US') && !response.Country__c.equals('United States')) || String.isNotBlank(response.State__c)) && String.isNotBlank(response.Street__c) && String.isNotBlank(response.PostalCode__c) && String.isNotBlank(response.City__c)) {
             return response.Street__c + ', ' + response.City__c + ', ' + (String.isBlank(response.State__c) ? '' : response.State__c + ', ') + response.Country__c + ', ' + response.PostalCode__c;

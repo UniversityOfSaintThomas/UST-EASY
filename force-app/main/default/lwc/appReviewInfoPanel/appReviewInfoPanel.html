@@ -1,0 +1,20 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/16/2023.
+ -->
+
+<!-- App Review Info Panel -->
+<template>
+    <lightning-card title="Application Info" icon-name="custom:custom14">
+        <template lwc:if={applicantInfo.data}>
+            <div class="slds-var-m-around_medium">
+                <p>{firstname}</p>
+                <p>{lastname}</p>
+                <p>{appId}</p>
+            </div>
+        </template>
+        <template lwc:elseif={applicantInfo.error}>
+            {applicantInfo.error}
+        </template>
+        <lightning-input value={appId} onchange={inputValueChange}></lightning-input>
+    </lightning-card>
+</template>

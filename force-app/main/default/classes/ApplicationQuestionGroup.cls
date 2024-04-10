@@ -732,7 +732,6 @@ public class ApplicationQuestionGroup {
                         }
                     }
                     if (lstInsert.size() > 0) {
-                        System.debug(JSON.serializePretty(lstInsert));
                         insert lstInsert;
                     }
                     if (lstUpdate.size() > 0) {
@@ -779,10 +778,21 @@ public class ApplicationQuestionGroup {
                         }
                     }
                 }
+                String originalFileName = '';
                 if (documentUpload == true && additionalData != null && additionalData.containsKey('attData')) {
                     Map<String, Object> attData = (Map<String, Object>) additionalData.get('attData');
                     if (attData.containsKey('fileName')) {
                         att.Title = (String) attData.get('fileName');
+                        originalFileName = att.Title;
+                        response.Original_Uploaded_Document_File_Name__c = originalFileName;
+                        if (String.isNotBlank(item.File_Name_Prefix__c)) {
+                            String newTitle = item.File_Name_Prefix__c;
+                            if (att.Title != null && att.Title.contains('.')) {
+                                newTitle += att.Title.substring(att.Title.lastIndexOf('.'), att.Title.length());
+                            }
+                            att.Title = newTitle;
+                        }
+                        response.Saved_Uploaded_Document_File_Name__c = att.Title;
                     }
                     if (attData.containsKey('data')) {
                         att.VersionData = EncodingUtil.base64Decode(((String) attData.get('data')).substringAfter(','));
@@ -796,6 +806,46 @@ public class ApplicationQuestionGroup {
                         att.put('NetworkId', Network.getNetworkId());
                     }
                     insert att;
+
+                    if (item.Uploaded_Document_Object__c != null && item.Uploaded_Document_Object__c == 'Supporting Documents') {
+                        Supporting_Document__c sd = new Supporting_Document__c();
+                        //Query supporting document for pre-existing requirement response
+                        List<Supporting_Document__c> existingSupportingDocuments = [
+                                SELECT Id, Requirement_Response__c
+                                FROM Supporting_Document__c
+                                WHERE Requirement_Response__c = :response.Id
+                                LIMIT 1
+                        ];
+                        if (existingSupportingDocuments.size() > 0) {
+                            sd.Id = existingSupportingDocuments[0].Id;
+                        }
+                        sd.Contact__c = con.Id;
+                        sd.Original_Uploaded_Document_File_Name__c = originalFileName;
+                        sd.Saved_Uploaded_Document_File_Name__c = att.Title;
+                        sd.Requirement_Response__c = response.Id;
+                        sd.Admissions_Application__c = app.Id;
+                        sd.Document_Type__c = 'Application';
+                        sd.Source__c = 'Admissions Application';
+                        sd.Document_Load_Date__c = Date.today();
+                        String admissionDocumentRecordType = Schema.getGlobalDescribe().get('Supporting_Document__c').getDescribe().getRecordTypeInfosByDeveloperName().get('Admissions_Document').getRecordTypeId();
+                        sd.RecordTypeId = admissionDocumentRecordType;
+                        upsert sd;
+
+                        //Query content version for the newly created content version
+                        ContentVersion contentVersion_2 = [
+                                SELECT Id, Title, ContentDocumentId
+                                FROM ContentVersion
+                                WHERE Id = :att.Id
+                                LIMIT 1
+                        ];
+                        //Create a contentDocumentLink to supporting_documents__c
+                        ContentDocumentLink cdl = new ContentDocumentLink();
+                        cdl.ContentDocumentId = (Id) contentVersion_2.ContentDocumentId;
+                        cdl.LinkedEntityId = sd.Id;
+                        cdl.ShareType = 'V';
+                        insert cdl;
+                    }
+
                     att.VersionData = null;
                     if (oldAttLink != null && oldAttLink.ContentDocumentId != null) {
                         delete new ContentDocument(Id = oldAttLink.ContentDocumentId);

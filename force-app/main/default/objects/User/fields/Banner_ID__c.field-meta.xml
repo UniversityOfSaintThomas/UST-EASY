@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Banner_ID__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Banner ID for the User record. The field is an external ID and unique so it could be used for integration jobs.</description>
+    <externalId>true</externalId>
+    <label>Banner ID</label>
+    <length>10</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

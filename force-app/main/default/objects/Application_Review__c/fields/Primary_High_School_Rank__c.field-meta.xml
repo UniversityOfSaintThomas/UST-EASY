@@ -3,7 +3,7 @@
     <fullName>Primary_High_School_Rank__c</fullName>
     <externalId>false</externalId>
     <label>Primary High School Rank</label>
-    <precision>3</precision>
+    <precision>5</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>

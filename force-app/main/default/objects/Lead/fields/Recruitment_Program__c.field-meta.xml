@@ -7,6 +7,20 @@
     <externalId>false</externalId>
     <inlineHelpText>The marketable name for an official Academic Program (or group of Programs) that the individual is interested in.</inlineHelpText>
     <label>Recruitment Program</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Program__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Academic Program</value>
+        </filterItems>
+        <filterItems>
+            <field>Program__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Program__c</referenceTo>
     <relationshipLabel>Leads with Recruitment Program</relationshipLabel>
     <relationshipName>Leads</relationshipName>

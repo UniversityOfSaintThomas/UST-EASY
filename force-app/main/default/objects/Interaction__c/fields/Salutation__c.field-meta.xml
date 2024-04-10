@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Salutation__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Salutation</label>
     <required>false</required>
@@ -16,14 +17,94 @@
                 <label>Mr.</label>
             </value>
             <value>
-                <fullName>Ms.</fullName>
+                <fullName>--None--</fullName>
                 <default>false</default>
-                <label>Ms.</label>
+                <label>--None--</label>
             </value>
             <value>
-                <fullName>Mrs.</fullName>
+                <fullName>1st Lt.</fullName>
                 <default>false</default>
-                <label>Mrs.</label>
+                <label>1st Lt.</label>
+            </value>
+            <value>
+                <fullName>2nd Lt.</fullName>
+                <default>false</default>
+                <label>2nd Lt.</label>
+            </value>
+            <value>
+                <fullName>Abbott</fullName>
+                <default>false</default>
+                <label>Abbott</label>
+            </value>
+            <value>
+                <fullName>Adm.</fullName>
+                <default>false</default>
+                <label>Adm.</label>
+            </value>
+            <value>
+                <fullName>Amb.</fullName>
+                <default>false</default>
+                <label>Amb.</label>
+            </value>
+            <value>
+                <fullName>Archpriest</fullName>
+                <default>false</default>
+                <label>Archpriest</label>
+            </value>
+            <value>
+                <fullName>Br.</fullName>
+                <default>false</default>
+                <label>Br.</label>
+            </value>
+            <value>
+                <fullName>Brig. Gen.</fullName>
+                <default>false</default>
+                <label>Brig. Gen.</label>
+            </value>
+            <value>
+                <fullName>Capt.</fullName>
+                <default>false</default>
+                <label>Capt.</label>
+            </value>
+            <value>
+                <fullName>Cdr.</fullName>
+                <default>false</default>
+                <label>Cdr.</label>
+            </value>
+            <value>
+                <fullName>Col.</fullName>
+                <default>false</default>
+                <label>Col.</label>
+            </value>
+            <value>
+                <fullName>Commissioner</fullName>
+                <default>false</default>
+                <label>Commissioner</label>
+            </value>
+            <value>
+                <fullName>Consul Gen.</fullName>
+                <default>false</default>
+                <label>Consul Gen.</label>
+            </value>
+            <value>
+                <fullName>Councilmember</fullName>
+                <default>false</default>
+                <label>Councilmember</label>
+            </value>
+            <value>
+                <fullName>Deacon</fullName>
+                <default>false</default>
+                <label>Deacon</label>
+            </value>
+            <value>
+                <fullName>Dean</fullName>
+                <default>false</default>
+                <label>Dean</label>
+            </value>
+            <value>
+                <fullName>Dr</fullName>
+                <default>false</default>
+                <label>Dr</label>
             </value>
             <value>
                 <fullName>Dr.</fullName>
@@ -31,9 +112,259 @@
                 <label>Dr.</label>
             </value>
             <value>
+                <fullName>Elder</fullName>
+                <default>false</default>
+                <label>Elder</label>
+            </value>
+            <value>
+                <fullName>Ens.</fullName>
+                <default>false</default>
+                <label>Ens.</label>
+            </value>
+            <value>
+                <fullName>Father</fullName>
+                <default>false</default>
+                <label>Father</label>
+            </value>
+            <value>
+                <fullName>Fr.</fullName>
+                <default>false</default>
+                <label>Fr.</label>
+            </value>
+            <value>
+                <fullName>Friar</fullName>
+                <default>false</default>
+                <label>Friar</label>
+            </value>
+            <value>
+                <fullName>Gen.</fullName>
+                <default>false</default>
+                <label>Gen.</label>
+            </value>
+            <value>
+                <fullName>Gov.</fullName>
+                <default>false</default>
+                <label>Gov.</label>
+            </value>
+            <value>
+                <fullName>His Eminence</fullName>
+                <default>false</default>
+                <label>His Eminence</label>
+            </value>
+            <value>
+                <fullName>Hon.</fullName>
+                <default>false</default>
+                <label>Hon.</label>
+            </value>
+            <value>
+                <fullName>Hon. Consul</fullName>
+                <default>false</default>
+                <label>Hon. Consul</label>
+            </value>
+            <value>
+                <fullName>Hon. Consul Gen.</fullName>
+                <default>false</default>
+                <label>Hon. Consul Gen.</label>
+            </value>
+            <value>
+                <fullName>Honorable</fullName>
+                <default>false</default>
+                <label>Honorable</label>
+            </value>
+            <value>
+                <fullName>Judge</fullName>
+                <default>false</default>
+                <label>Judge</label>
+            </value>
+            <value>
+                <fullName>Lt.</fullName>
+                <default>false</default>
+                <label>Lt.</label>
+            </value>
+            <value>
+                <fullName>Lt. Cdr.</fullName>
+                <default>false</default>
+                <label>Lt. Cdr.</label>
+            </value>
+            <value>
+                <fullName>Lt. Col.</fullName>
+                <default>false</default>
+                <label>Lt. Col.</label>
+            </value>
+            <value>
+                <fullName>M. Sgt.</fullName>
+                <default>false</default>
+                <label>M. Sgt.</label>
+            </value>
+            <value>
+                <fullName>Maj.</fullName>
+                <default>false</default>
+                <label>Maj.</label>
+            </value>
+            <value>
+                <fullName>Maj. Gen.</fullName>
+                <default>false</default>
+                <label>Maj. Gen.</label>
+            </value>
+            <value>
+                <fullName>Mayor</fullName>
+                <default>false</default>
+                <label>Mayor</label>
+            </value>
+            <value>
+                <fullName>Mdme.</fullName>
+                <default>false</default>
+                <label>Mdme.</label>
+            </value>
+            <value>
+                <fullName>Metropolitan</fullName>
+                <default>false</default>
+                <label>Metropolitan</label>
+            </value>
+            <value>
+                <fullName>Miss</fullName>
+                <default>false</default>
+                <label>Miss</label>
+            </value>
+            <value>
+                <fullName>Miss.</fullName>
+                <default>false</default>
+                <label>Miss.</label>
+            </value>
+            <value>
+                <fullName>Monsignor</fullName>
+                <default>false</default>
+                <label>Monsignor</label>
+            </value>
+            <value>
+                <fullName>Most Rev.</fullName>
+                <default>false</default>
+                <label>Most Rev.</label>
+            </value>
+            <value>
+                <fullName>Most Rev. Dr.</fullName>
+                <default>false</default>
+                <label>Most Rev. Dr.</label>
+            </value>
+            <value>
+                <fullName>Mr</fullName>
+                <default>false</default>
+                <label>Mr</label>
+            </value>
+            <value>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+                <label>Mrs</label>
+            </value>
+            <value>
+                <fullName>Mrs.</fullName>
+                <default>false</default>
+                <label>Mrs.</label>
+            </value>
+            <value>
+                <fullName>Ms</fullName>
+                <default>false</default>
+                <label>Ms</label>
+            </value>
+            <value>
+                <fullName>Ms.</fullName>
+                <default>false</default>
+                <label>Ms.</label>
+            </value>
+            <value>
+                <fullName>Msgr.</fullName>
+                <default>false</default>
+                <label>Msgr.</label>
+            </value>
+            <value>
+                <fullName>Pres.</fullName>
+                <default>false</default>
+                <label>Pres.</label>
+            </value>
+            <value>
                 <fullName>Prof.</fullName>
                 <default>false</default>
                 <label>Prof.</label>
+            </value>
+            <value>
+                <fullName>Pvt. 1st Cl.</fullName>
+                <default>false</default>
+                <label>Pvt. 1st Cl.</label>
+            </value>
+            <value>
+                <fullName>Rabbi</fullName>
+                <default>false</default>
+                <label>Rabbi</label>
+            </value>
+            <value>
+                <fullName>Rep.</fullName>
+                <default>false</default>
+                <label>Rep.</label>
+            </value>
+            <value>
+                <fullName>Rev.</fullName>
+                <default>false</default>
+                <label>Rev.</label>
+            </value>
+            <value>
+                <fullName>Rev. Canon</fullName>
+                <default>false</default>
+                <label>Rev. Canon</label>
+            </value>
+            <value>
+                <fullName>Rev. Dr.</fullName>
+                <default>false</default>
+                <label>Rev. Dr.</label>
+            </value>
+            <value>
+                <fullName>Rev. Mr.</fullName>
+                <default>false</default>
+                <label>Rev. Mr.</label>
+            </value>
+            <value>
+                <fullName>Rev. Msgr.</fullName>
+                <default>false</default>
+                <label>Rev. Msgr.</label>
+            </value>
+            <value>
+                <fullName>Rt. Rev.</fullName>
+                <default>false</default>
+                <label>Rt. Rev.</label>
+            </value>
+            <value>
+                <fullName>Sen.</fullName>
+                <default>false</default>
+                <label>Sen.</label>
+            </value>
+            <value>
+                <fullName>Sgt.</fullName>
+                <default>false</default>
+                <label>Sgt.</label>
+            </value>
+            <value>
+                <fullName>Sgt. 1st Cl.</fullName>
+                <default>false</default>
+                <label>Sgt. 1st Cl.</label>
+            </value>
+            <value>
+                <fullName>Spc.</fullName>
+                <default>false</default>
+                <label>Spc.</label>
+            </value>
+            <value>
+                <fullName>Sr.</fullName>
+                <default>false</default>
+                <label>Sr.</label>
+            </value>
+            <value>
+                <fullName>Staff Sgt.</fullName>
+                <default>false</default>
+                <label>Staff Sgt.</label>
+            </value>
+            <value>
+                <fullName>Very Rev.</fullName>
+                <default>false</default>
+                <label>Very Rev.</label>
             </value>
         </valueSetDefinition>
     </valueSet>

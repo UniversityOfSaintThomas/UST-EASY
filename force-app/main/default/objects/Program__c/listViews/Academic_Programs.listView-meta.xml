@@ -13,8 +13,9 @@
     <columns>School_College__c</columns>
     <columns>LAST_UPDATE</columns>
     <columns>Admit_Type__c</columns>
-    <columns>OBJECT_ID</columns>
     <columns>X18_Digit_Program_ID__c</columns>
+    <columns>Program_URL__c</columns>
+    <columns>Program_Type__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Program_Record_Type__c</field>
@@ -22,9 +23,9 @@
         <value>Academic Program</value>
     </filters>
     <filters>
-        <field>Associated_Schools__c</field>
+        <field>Active__c</field>
         <operation>equals</operation>
-        <value>School of Education</value>
+        <value>1</value>
     </filters>
     <label>Academic Programs</label>
 </ListView>

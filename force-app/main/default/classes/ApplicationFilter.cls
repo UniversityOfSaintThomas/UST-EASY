@@ -28,6 +28,10 @@ public class ApplicationFilter {
         String genericFilters2 = objFields.contains('generic_filter_2__c') ? String.valueOf(obj.get('generic_filter_2__c')) : null;
         String genericFilters3 = objFields.contains('generic_filter_3__c') ? String.valueOf(obj.get('generic_filter_3__c')) : null;
         String genericFilters4 = objFields.contains('generic_filter_4__c') ? String.valueOf(obj.get('generic_filter_4__c')) : null;
+        String genericFilters5 = objFields.contains('generic_filter_5__c') ? String.valueOf(obj.get('generic_filter_5__c')) : null;
+        String genericFilters6 = objFields.contains('generic_filter_6__c') ? String.valueOf(obj.get('generic_filter_6__c')) : null;
+        String genericFilters7 = objFields.contains('generic_filter_7__c') ? String.valueOf(obj.get('generic_filter_7__c')) : null;
+        String genericFilters8 = objFields.contains('generic_filter_8__c') ? String.valueOf(obj.get('generic_filter_8__c')) : null;
         String appStatuses = objFields.contains('application_status__c') ? String.valueOf(obj.get('application_status__c')) : null;
 
         if (app == null) {
@@ -60,16 +64,29 @@ public class ApplicationFilter {
         if (String.isNotBlank(degreeTypes) && (String.isBlank(app.Degree_Type__c) || !(new Set<String>(degreeTypes.split(';'))).contains(app.Degree_Type__c))) {
             return false;
         }
-        if (String.isNotBlank(genericFilters1) && (String.isBlank(app.Generic_Filter_1__c) || !(new Set<String>(genericFilters1.split(';'))).contains(app.Generic_Filter_1__c))) {
+
+        if (filterNotFound(app.Generic_Filter_1__c, genericFilters1)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters2) && (String.isBlank(app.Generic_Filter_2__c) || !(new Set<String>(genericFilters2.split(';'))).contains(app.Generic_Filter_2__c))) {
+        if (filterNotFound(app.Generic_Filter_2__c, genericFilters2)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters3) && (String.isBlank(app.Generic_Filter_3__c) || !(new Set<String>(genericFilters3.split(';'))).contains(app.Generic_Filter_3__c))) {
+        if (filterNotFound(app.Generic_Filter_3__c, genericFilters3)) {
             return false;
         }
-        if (String.isNotBlank(genericFilters4) && (String.isBlank(app.Generic_Filter_4__c) || !(new Set<String>(genericFilters4.split(';'))).contains(app.Generic_Filter_4__c))) {
+        if (filterNotFound(app.Generic_Filter_4__c, genericFilters4)) {
+            return false;
+        }
+        if (filterNotFound(app.Generic_Filter_5__c, genericFilters5)) {
+            return false;
+        }
+        if (filterNotFound(app.Generic_Filter_6__c, genericFilters6)) {
+            return false;
+        }
+        if (filterNotFound(app.Generic_Filter_7__c, genericFilters7)) {
+            return false;
+        }
+        if (filterNotFound(app.Generic_Filter_8__c, genericFilters8)) {
             return false;
         }
         if (checkStatus && (!UserInfo.getUserType().equals('Standard') || Test.isRunningTest()) && String.isNotBlank(appStatuses) && (String.isBlank(app.Application_Status__c) || !(new Set<String>(appStatuses.split(';'))).contains(app.Application_Status__c))) {
@@ -77,5 +94,23 @@ public class ApplicationFilter {
         }
 
         return true;
+    }
+
+    //Split generic filters on application and compare them to the generic filters on another object then return true if they match
+    public static Boolean filterNotFound(String appGenericFilter, String objGenericFilter) {
+        if (String.isBlank(appGenericFilter) && String.isNotBlank(objGenericFilter)) {
+            return true;
+        } else if (String.isNotBlank(objGenericFilter) && String.isNotBlank(appGenericFilter)) {
+            Set<String> appGenericFilterSet = new Set<String>(appGenericFilter.split(';'));
+            Set<String> objGenericFilterSet = new Set<String>(objGenericFilter.split(';'));
+            //Only one generic filter needs to match
+            for (String appFilter : appGenericFilterSet) {
+                if (objGenericFilterSet.contains(appFilter)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

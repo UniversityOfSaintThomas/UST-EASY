@@ -37,10 +37,11 @@ public with sharing class checklistHelper {
                 SELECT Id, Internal_Only__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c, Name, Label__c, Active__c,
                         Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c,
                         Residency__c, School_College__c, Student_Type__c, Generic_Filter_1__c, Generic_Filter_2__c,
-                        Generic_Filter_3__c, Generic_Filter_4__c
+                        Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
+                        Do_Not_Mark_Requirement_as_Viewed__c
                 FROM Requirement__c
                 WHERE Application_Control__c = :appInfo.appControlId
-                AND Active__c = :true
+                AND Active__c = TRUE
                 AND Show_on_Application_Creation__c = FALSE
                 ORDER BY Display_Order__c, Label__c ASC NULLS LAST
         ]) {
@@ -323,8 +324,10 @@ public with sharing class checklistHelper {
             }
 
         } catch (DmlException e) {
+            System.debug('Error: ' + e.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
         } catch (Exception e) {
+            System.debug('Error: ' + e.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
         }
 

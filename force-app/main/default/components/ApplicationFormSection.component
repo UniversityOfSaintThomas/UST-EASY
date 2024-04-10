@@ -90,7 +90,7 @@
                                                  allowTextEntry="{!group.item.Allow_Text_Entry__c}"
                                                  itemId="{!group.item.Id}"
                                                  odlAttachmentId="{!group.oldAttVersion.Id}"
-                                                 attachmentTitle="{!group.att.Title}"
+                                                 attachmentTitle="{!IF(!ISBLANK(group.response['Original_Uploaded_Document_File_Name__c']),group.response['Original_Uploaded_Document_File_Name__c'], group.att.Title)}"
                                                  acceptedFileTypes="{!group.item.File_Types__c}"
                                                  isRequiredUpload="{!isRequiredUpload}"
             />
@@ -160,12 +160,12 @@
 
                                                 <apex:outputPanel layout="none" rendered="{!question.fieldType!='Address' && !group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}">
                                                     <apex:outputPanel layout="none" rendered="{!question.fieldType != 'Date'}">
-                                                       {!rr.obj[question.question.Related_Object_Field__c]}
+                                                        {!rr.obj[question.question.Related_Object_Field__c]}
                                                     </apex:outputPanel>
                                                     <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Date'}">
                                                         <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
-                                                            <apex:param value="{!rr.obj[question.question.Related_Object_Field__c]}" />
-                                                </apex:outputText>
+                                                            <apex:param value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
+                                                        </apex:outputText>
                                                     </apex:outputPanel>
                                                 </apex:outputPanel>
 

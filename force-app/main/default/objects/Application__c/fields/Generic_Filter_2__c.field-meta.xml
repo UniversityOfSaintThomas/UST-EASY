@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Generic_Filter_2__c</fullName>
-    <description>Gender Identity for an individual. this is different than Legal Sex which is hed_gender__c field.  A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</description>
+    <businessStatus>Active</businessStatus>
+    <deprecated>false</deprecated>
+    <description>Self-Reported Gender Identity for an individual. this is different than Legal Sex which is Legal_Sex__C field on Application. Object. Data Cookbook: https://stthomas.datacookbook.com/institution/terms/285155</description>
     <externalId>false</externalId>
-    <inlineHelpText>https://stthomas.datacookbook.com/institution/terms/285155 A generic filter included in EASY that can be re-purposed for an individual institutions&apos; needs.</inlineHelpText>
+    <inlineHelpText>Self-Reported Gender Identity for an individual. this is different than Legal Sex which is Legal_Sex__C field on Application.</inlineHelpText>
     <label>Gender</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

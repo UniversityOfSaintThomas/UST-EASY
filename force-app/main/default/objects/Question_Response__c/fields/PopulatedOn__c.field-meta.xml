@@ -7,6 +7,7 @@
     <inlineHelpText>The date/time that IsPopulated was set to true</inlineHelpText>
     <label>PopulatedOn</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>DateTime</type>
 </CustomField>

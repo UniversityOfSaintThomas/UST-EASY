@@ -5,12 +5,11 @@
     <description>Distance from St. Thomas using latitude and longitude data points</description>
     <externalId>false</externalId>
     <formula>DISTANCE(MailingAddress,GEOLOCATION(44.9437701,-93.1934074), &apos;mi&apos;)</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <inlineHelpText>Distance from St. Thomas using latitude and longitude data points</inlineHelpText>
-    <label>Distance from St. Thomas (Miles)</label>
+    <label>Miles from Campus</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>0</scale>
     <trackHistory>false</trackHistory>
     <type>Number</type>
     <unique>false</unique>

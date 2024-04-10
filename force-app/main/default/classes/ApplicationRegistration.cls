@@ -136,7 +136,6 @@ public class ApplicationRegistration {
 
         Boolean dmlException = false;
         String errorMessage = '';
-        System.debug('INTERACTION: ' + JSON.serializePretty(interaction));
         errorMessage += appCreate.checkFields();
         errorMessage += populateInteraction();
         loginUser = null;
@@ -144,7 +143,6 @@ public class ApplicationRegistration {
         loginUrl = null;
         crudToDo doCrud = new crudToDo();
         // Throw exception if not all required fields have been filled-out
-        System.debug('Error Message' + errorMessage);
 
         if (String.isNotBlank(errorMessage)) {
             appCreate.additionalDataString = '';
@@ -155,7 +153,6 @@ public class ApplicationRegistration {
         System.Savepoint sp = Database.setSavepoint();
         try {
             // Insert interaction to create/update Contact
-            System.debug('INTERACTION: ' + JSON.serializePretty(interaction));
 
             insert interaction;
             interaction = [
@@ -178,7 +175,6 @@ public class ApplicationRegistration {
                     WHERE Id = :interaction.Contact__c
             ];
             appCreate.con.Id = con.Id;
-
 
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty()) {
@@ -348,7 +344,6 @@ public class ApplicationRegistration {
                 if (commonApplication.size() > 0 && String.isNotBlank(commonApplication[0].External_Application_ID__c)) {
                     String foundCommonAppId = commonApplication[0].External_Application_ID__c;
                     if (foundCommonAppId.containsIgnoreCase(interaction.External_Application_ID__c)) {
-                        System.debug('Check between interaction and app id successful');
                         interaction.Academic_Program__c = commonApplication[0].Intended_Program__c;
                         interaction.Intended_Start_Term__c = commonApplication[0].Intended_Term_of_Entry__c;
                         interaction.Admissions_Application__c = commonApplication[0].Id;
@@ -365,15 +360,16 @@ public class ApplicationRegistration {
 
 
         if (interaction.Academic_Program__c != null) {
-            Program__c program = [
+            List<Program__c> program = [
                     SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c
                     FROM Program__c
                     WHERE Id = :interaction.Academic_Program__c
+                    LIMIT 1
             ];
 
-            if (program != null) {
-                interaction.College_of_Interest__c = program.Program_College_of_Interest__c;
-                interaction.Admit_Type__c = program.Program_Applicant_Type__c;
+            if (!program.isEmpty()) {
+                interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
+                interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
             }
 
             List<Plan__c> relatedPlan = [

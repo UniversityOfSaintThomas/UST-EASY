@@ -7,7 +7,7 @@
     <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
     <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String" required="false" assignTo="{!currentPageParam}"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
-    <apex:form>
+    <apex:form rendered="{!allApplications.size >0}">
         <ul class="slds-grid slds-wrap slds-grid_pull-padded-medium slds-card-tile">
             <apex:variable var="appCount" value="{!0}"/>
             <apex:repeat var="app" value="{!allApplications}">

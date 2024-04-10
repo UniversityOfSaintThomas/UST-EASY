@@ -27,6 +27,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Graduate_Integration_Program_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Major_Code__c</field>
             </layoutItems>
             <layoutItems>
@@ -52,6 +56,21 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Application_Control_URL__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Admit_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X18_Digit_Program_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Primary_School_College_for_Assignment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -114,6 +133,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Program_URL__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Program_Image_URL__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -279,6 +302,18 @@
                 <behavior>Edit</behavior>
                 <field>Generic_Filter_4__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_6__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_7__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_8__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -330,6 +365,7 @@
         <fields>End_Application_Date__c</fields>
         <fields>Degree_Type__c</fields>
         <fields>Student_Type__c</fields>
+        <fields>Applicant_Type__c</fields>
         <fields>Application_Status__c</fields>
         <relatedList>Intended_Program_Term__c.Intended_Program__c</relatedList>
     </relatedLists>

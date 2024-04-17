@@ -9,7 +9,7 @@ public without sharing class graduateRecommenderInfoController {
 
     @AuraEnabled(cacheable=true)
     public static Map<String, String> getRelatedObjectInfo(String recId) {
-        //try {
+        try {
         Map<String, String> id_map = new Map<String, String>();
 
         Id recommendation_id = Id.valueOf(recId);
@@ -88,7 +88,6 @@ public without sharing class graduateRecommenderInfoController {
                 'AND (RecordTypeId = \'' + related_object_RT + '\' ' +
                 'OR RecordTypeId = \'' + document_upload_RT + '\') ' +
                 'AND Active__c = true ';
-        System.debug(query_string);
         query_string = filterQueryByApplication(query_string, app);
         query_string += ' LIMIT 2';
 
@@ -126,10 +125,9 @@ public without sharing class graduateRecommenderInfoController {
         }
 
         return id_map;
-        //  } catch (Exception e) {
-        //     System.debug('Error retrieving related object information: ' + e.getMessage());
-        //     throw new AuraHandledException('Error retrieving application information: ' + e.getMessage());
-        //  }
+        } catch (Exception e) {
+            throw new AuraHandledException('Error retrieving application information: ' + e.getMessage());
+        }
     }
 
     @AuraEnabled

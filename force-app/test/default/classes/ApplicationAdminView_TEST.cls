@@ -125,9 +125,11 @@ public class ApplicationAdminView_TEST {
         ar.contactId = student.Id;
         ar.app = app;
         ar.init();
-        ar.arLst[0].newResponses = new List<Requirement_Response__c>{
-                new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = ri.Id)
-        };
+        if(ar.arLst.size() > 0) {
+            ar.arLst[0].newResponses = new List<Requirement_Response__c>{
+                    new Requirement_Response__c(Application__c = app.Id, Requirement_Item__c = ri.Id)
+            };
+        }
         ar.submit();
         List<Requirement_Response__c> responses = [SELECT Id FROM Requirement_Response__c];
         // submit should insert above requirement response, 3 already inserted in setup

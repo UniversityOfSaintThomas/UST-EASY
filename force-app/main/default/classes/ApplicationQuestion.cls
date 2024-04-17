@@ -93,22 +93,21 @@ public class ApplicationQuestion {
                 }
             }
             if (section != null
-                && !section.groups.isEmpty()
-                && groupWithTermQuestion < section.groups.size()
-                && !section.groups[groupWithTermQuestion].questions.isEmpty()
-                && section.groups[groupWithTermQuestion].questions[0].question != null
-                && section.groups[groupWithTermQuestion].questions[0].question.Label__c == 'What term are you applying for?'
-                && section.groups[groupWithTermQuestion].questions[0].response != null
-                && !String.isEmpty(section.groups[groupWithTermQuestion].questions[0].response.ValueText__c))
-            {
+                    && !section.groups.isEmpty()
+                    && groupWithTermQuestion < section.groups.size()
+                    && !section.groups[groupWithTermQuestion].questions.isEmpty()
+                    && section.groups[groupWithTermQuestion].questions[0].question != null
+                    && section.groups[groupWithTermQuestion].questions[0].question.Label__c == 'What term are you applying for?'
+                    && section.groups[groupWithTermQuestion].questions[0].response != null
+                    && !String.isEmpty(section.groups[groupWithTermQuestion].questions[0].response.ValueText__c)) {
                 filterProgramsByTerm = true;
                 Id selectedTermId = Id.valueOf(section.groups[groupWithTermQuestion].questions[0].response.ValueText__c);
                 List<Intended_Program_Term__c> intendedProgramTerms = [
-                    SELECT Id, Intended_Program__c
-                    FROM Intended_Program_Term__c
-                    WHERE Academic_Term__c =: selectedTermId
-                    AND Application_Status__c = 'Active'
-                    AND Intended_Program__r.Application_Control__c =: application.Application_Control__c
+                        SELECT Id, Intended_Program__c
+                        FROM Intended_Program_Term__c
+                        WHERE Academic_Term__c = :selectedTermId
+                        AND Application_Status__c = 'Active'
+                        AND Intended_Program__r.Application_Control__c = :application.Application_Control__c
                 ];
                 for (Intended_Program_Term__c intendedProgramTerm : intendedProgramTerms) {
                     programsWithSelectedTerm.add(intendedProgramTerm.Intended_Program__c);
@@ -126,10 +125,10 @@ public class ApplicationQuestion {
                             options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
                         }
                     } else {
-                    if (showIntendedProgram(ip)) {
-                        options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
+                        if (showIntendedProgram(ip)) {
+                            options.add(new SelectOption(ip.Id, String.isNotBlank(ip.Program_Name_on_Application__c) ? ip.Program_Name_on_Application__c : ip.Name));
+                        }
                     }
-                }
                 }
                 return options;
 
@@ -835,7 +834,7 @@ public class ApplicationQuestion {
             return null;
         } else if (String.isNotBlank(response.ValueText__c) && fieldType != null && !fieldType.equalsIgnoreCase('payment')) {
             return response.ValueText__c;
-        } else if (fieldType != null && (fieldType.equals('Checkbox')||fieldType.equalsIgnoreCase('payment'))) {
+        } else if (fieldType != null && (fieldType.equals('Checkbox') || fieldType.equalsIgnoreCase('payment'))) {
             return response.ValueCheckbox__c;
         } else if (String.isNotBlank(response.ValuePhone__c)) {
             return response.ValuePhone__c;

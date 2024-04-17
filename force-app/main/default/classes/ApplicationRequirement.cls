@@ -135,6 +135,7 @@ public class ApplicationRequirement {
         if ((String.isNotBlank(appInfo.appId) && app == null)) {
             String query = applicationHelper.getApplicationFields(items);
             query = 'SELECT ' + query + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
+            System.debug('query: ' + query);
             app = ((List<Application__c>) Database.query(query)).get(0);
         }
 

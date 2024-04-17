@@ -7,11 +7,6 @@ public with sharing class applicationHelper {
 
     public static List<Requirement_Item__c> getRequirementQuestions(Set<Id> requirementIds, Boolean IsStandardUser) {
 
-        if(UserInfo.getUserType().equals('Standard')) {
-            IsStandardUser = true;
-        } else {
-            IsStandardUser = false;
-        }
         List<Requirement_Item__c> requirementItems = new List<Requirement_Item__c>();
         requirementItems = [
                 SELECT Id, File_Types__c, Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Active__c, Required__c,
@@ -83,7 +78,7 @@ public with sharing class applicationHelper {
 
 
     public static Set<String> getStandardAppFields() {
-        return new Set<String>{
+        Set<String> standardFields = new Set<String>{
                 'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c',
                 'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'Application_Substatus__c', 'application_control__c',
                 'Generic_Filter_1__c', 'Generic_Filter_2__c', 'Generic_Filter_3__c', 'Generic_Filter_4__c',
@@ -92,6 +87,11 @@ public with sharing class applicationHelper {
                 'Intended_Program__r.Program_Name_on_Application__c', 'Intended_Term_of_Entry__r.Name',
                 'Intended_Term_of_Entry__r.Term_Status_Type__c'
         };
+        Set<String> lowerCaseSet = new Set<String>();
+        for(String s : standardFields) {
+            lowerCaseSet.add(s.toLowerCase());
+        }
+        return lowerCaseSet;
     }
 
     public static String getAllItemApplicationFieldsByAppControlId(List<Id> appControlIds) {

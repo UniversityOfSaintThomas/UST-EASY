@@ -1,6 +1,6 @@
 minimum_cumulusci_version: '3.32.1'
 project:
-  name: UST-EASY
+  name: UST-EASY-ECRMSF-612
   package:
     name: UST-EASY-Package-One
     namespace: null

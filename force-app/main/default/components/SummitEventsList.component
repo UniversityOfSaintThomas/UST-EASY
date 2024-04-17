@@ -1,0 +1,6 @@
+<!--
+ - Created by nguy0092 on 4/16/2024.
+ -->
+
+<apex:component id="SummitEventsList">
+</apex:component>

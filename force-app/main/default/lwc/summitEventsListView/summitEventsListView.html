@@ -1,0 +1,18 @@
+<!--
+ - Created by nguy0092 on 4/17/2024.
+ -->
+
+<!-- Summit Events List View -->
+<template>
+
+    <div class="slds-var-m-horizontal_medium">
+        <template lwc:if={events}>
+            <lightning-datatable key-field="Id"
+                                 data={events}
+                                 columns={columns}
+                                 hide-checkbox-column>
+            </lightning-datatable>
+        </template>
+    </div>
+
+</template>

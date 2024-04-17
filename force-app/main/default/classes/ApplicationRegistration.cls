@@ -136,6 +136,7 @@ public class ApplicationRegistration {
 
         Boolean dmlException = false;
         String errorMessage = '';
+        System.debug('INTERACTION: ' + JSON.serializePretty(interaction));
         errorMessage += appCreate.checkFields();
         errorMessage += populateInteraction();
         loginUser = null;
@@ -143,6 +144,7 @@ public class ApplicationRegistration {
         loginUrl = null;
         crudToDo doCrud = new crudToDo();
         // Throw exception if not all required fields have been filled-out
+        System.debug('Error Message' + errorMessage);
 
         if (String.isNotBlank(errorMessage)) {
             appCreate.additionalDataString = '';
@@ -153,6 +155,7 @@ public class ApplicationRegistration {
         System.Savepoint sp = Database.setSavepoint();
         try {
             // Insert interaction to create/update Contact
+            System.debug('INTERACTION: ' + JSON.serializePretty(interaction));
 
             insert interaction;
             interaction = [
@@ -344,6 +347,7 @@ public class ApplicationRegistration {
                 if (commonApplication.size() > 0 && String.isNotBlank(commonApplication[0].External_Application_ID__c)) {
                     String foundCommonAppId = commonApplication[0].External_Application_ID__c;
                     if (foundCommonAppId.containsIgnoreCase(interaction.External_Application_ID__c)) {
+                        System.debug('Check between interaction and app id successful');
                         interaction.Academic_Program__c = commonApplication[0].Intended_Program__c;
                         interaction.Intended_Start_Term__c = commonApplication[0].Intended_Term_of_Entry__c;
                         interaction.Admissions_Application__c = commonApplication[0].Id;

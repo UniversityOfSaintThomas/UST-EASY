@@ -1,0 +1,28 @@
+<!--
+ - Created by nguy0092 on 4/15/2024.
+ -->
+
+<apex:page id="YenTestPage1" showHeader="false" standardStylesheets="false" applyHtmlTag="false"
+           lightningStyleSheets="true" docType="html-5.0">
+    <apex:includeLightning/>
+
+    <div id="lightningvf"/>
+
+    <h1>This is my page here!</h1>
+
+    <script>
+        $Lightning.use("c:YenTestAura1", function () {
+            $Lightning.createComponent("c:summitEventsListView",
+                {
+                    // helloId : ''
+                },
+                "lightningvf",
+                function (cmp) {
+                    console.log("button was created");
+                    // do some stuff
+                }
+            );
+        });
+    </script>
+
+</apex:page>

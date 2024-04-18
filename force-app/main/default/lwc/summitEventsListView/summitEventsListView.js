@@ -6,23 +6,42 @@ import {LightningElement, api, wire} from 'lwc';
 import {gql, graphql} from "lightning/uiGraphQLApi";
 
 const columns = [
+    // {
+    //     label: "Event Instance",
+    //     fieldName: "EventInstance"
+    // },
     {
-        label: "Event",
+        label: "Event Name",
         fieldName: "EventName"
     },
     {
-        label: "End Date",
-        fieldName: "EndDate",
-        type: "date"
+        label: "Event Date",
+        fieldName: "EventDate",
+        type: "text"
+        // typeAttributes: {
+        //     weekday: "long",
+        //     year: "numeric",
+        //     month: "long",
+        //     day: "2-digit"
+        // }
     },
     {
-        label: "End Time",
-        fieldName: "EndTime",
-        type: "date",
-        typeAttributes: {
-            hour: "2-digit",
-            minute: "2-digit"
-        }
+        label: "Event Time",
+        fieldName: "EventTime",
+        type: "text"
+        // typeAttributes: {
+        //     hour: "2-digit",
+        //     minute: "2-digit"
+        // }
+    },
+    {
+        label: "Event Date & Time",
+        fieldName: "EventDateTime",
+        type: "text"
+        // typeAttributes: {
+        //     hour: "2-digit",
+        //     minute: "2-digit"
+        // }
     },
 ];
 
@@ -32,6 +51,18 @@ export default class SummitEventsListView extends LightningElement {
     errors;
 
     columns = columns;
+
+    dateOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    };
+
+    timeOptions = {
+        hour: "2-digit",
+        minute: "2-digit"
+    };
 
     @wire(graphql, {
         query: gql`
@@ -44,6 +75,7 @@ export default class SummitEventsListView extends LightningElement {
                   Id
                   Name {value}
                   summit__Event_Name__c {value}
+                  summit__Event_Instance__c {value}
                   summit__Event_Instance__r { summit__Instance_Start_Date__c {value} }
                   summit__Event_Instance__r { summit__Instance_Start_Time__c {value} }
                   summit__Event_Instance__r { summit__Instance_End_Time__c {value} }
@@ -61,9 +93,13 @@ export default class SummitEventsListView extends LightningElement {
             this.events = data.uiapi.query.summit__Summit_Events_Registration__c.edges.map((edge) => ({
                 Id: edge.node.Id,
                 EventName: edge.node.summit__Event_Name__c.value,
-                StartDate: edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value,
-                StartTime: edge.node.summit__Event_Instance__r.summit__Instance_Start_Time__c.value,
-                EndTime: edge.node.summit__Event_Instance__r.summit__Instance_End_Time__c.value,
+                EventInstance: edge.node.summit__Event_Instance__c.value,
+                EventDate: new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T08:00:00').toLocaleDateString("en-US", this.dateOptions),
+                EventTime: new Date('2099-01-01T'+edge.node.summit__Event_Instance__r.summit__Instance_Start_Time__c.value.slice(0, -2)).toLocaleTimeString("en-US", this.timeOptions)+' - '+
+                           new Date('2099-01-01T'+edge.node.summit__Event_Instance__r.summit__Instance_End_Time__c.value.slice(0, -2)).toLocaleTimeString("en-US", this.timeOptions),
+                EventDateTime: new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T08:00:00').toLocaleDateString("en-US", this.dateOptions)+' ('+
+                               new Date('2099-01-01T'+edge.node.summit__Event_Instance__r.summit__Instance_Start_Time__c.value.slice(0, -2)).toLocaleTimeString("en-US", this.timeOptions)+' - '+
+                               new Date('2099-01-01T'+edge.node.summit__Event_Instance__r.summit__Instance_End_Time__c.value.slice(0, -2)).toLocaleTimeString("en-US", this.timeOptions)+')'
             }));
         }
         this.errors = errors;

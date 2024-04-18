@@ -360,16 +360,15 @@ public class ApplicationRegistration {
 
 
         if (interaction.Academic_Program__c != null) {
-            List<Program__c> program = [
+            Program__c program = [
                     SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c
                     FROM Program__c
                     WHERE Id = :interaction.Academic_Program__c
-                    LIMIT 1
             ];
 
-            if (!program.isEmpty()) {
-                interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
-                interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
+            if (program != null) {
+                interaction.College_of_Interest__c = program.Program_College_of_Interest__c;
+                interaction.Admit_Type__c = program.Program_Applicant_Type__c;
             }
 
             List<Plan__c> relatedPlan = [

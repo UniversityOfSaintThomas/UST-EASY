@@ -6,23 +6,10 @@
            lightningStyleSheets="true" docType="html-5.0">
     <apex:includeLightning/>
 
-    <div id="lightningvf"/>
+    <apex:outputPanel layout="none">
 
-    <h1>This is my page here!</h1>
+        <c:SummitEventsList appInfo="" widget=""/>
 
-    <script>
-        $Lightning.use("c:YenTestAura1", function () {
-            $Lightning.createComponent("c:summitEventsListView",
-                {
-                    // helloId : ''
-                },
-                "lightningvf",
-                function (cmp) {
-                    console.log("button was created");
-                    // do some stuff
-                }
-            );
-        });
-    </script>
+    </apex:outputPanel>
 
 </apex:page>

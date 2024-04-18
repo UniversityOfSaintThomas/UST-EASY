@@ -50,13 +50,15 @@ export default class SummitEventsListView extends LightningElement {
     events;
     errors;
 
+    @api contactId;
+
     columns = columns;
 
     dateOptions = {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
-        day: 'numeric',
+        day: 'numeric'
     };
 
     timeOptions = {
@@ -66,26 +68,27 @@ export default class SummitEventsListView extends LightningElement {
 
     @wire(graphql, {
         query: gql`
-      query SummitEventRegistrations {
-        uiapi {
-          query {
-            summit__Summit_Events_Registration__c {
-              edges {
-                node {
-                  Id
-                  Name {value}
-                  summit__Event_Name__c {value}
-                  summit__Event_Instance__c {value}
-                  summit__Event_Instance__r { summit__Instance_Start_Date__c {value} }
-                  summit__Event_Instance__r { summit__Instance_Start_Time__c {value} }
-                  summit__Event_Instance__r { summit__Instance_End_Time__c {value} }
+          query SummitEventRegistrations ($contactId: ID) {
+            uiapi {
+              query {
+                summit__Summit_Events_Registration__c (where: {summit__Contact__c: { eq: $contactId } }) {
+                  edges {
+                    node {
+                      Id
+                      Name {value}
+                      summit__Event_Name__c {value}
+                      summit__Event_Instance__c {value}
+                      summit__Event_Instance__r { summit__Instance_Start_Date__c {value} }
+                      summit__Event_Instance__r { summit__Instance_Start_Time__c {value} }
+                      summit__Event_Instance__r { summit__Instance_End_Time__c {value} }
+                    }
+                  }
                 }
               }
             }
           }
-        }
-      }
-    `,
+        `,
+        variables: "$variables",
     })
     graphqlQueryResult({data, errors}) {
         if (data) {
@@ -94,15 +97,22 @@ export default class SummitEventsListView extends LightningElement {
                 Id: edge.node.Id,
                 EventName: edge.node.summit__Event_Name__c.value,
                 EventInstance: edge.node.summit__Event_Instance__c.value,
-                EventDate: new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T08:00:00').toLocaleDateString("en-US", this.dateOptions),
-                EventTime: new Date('2099-01-01T'+edge.node.summit__Event_Instance__r.summit__Instance_Start_Time__c.value.slice(0, -2)).toLocaleTimeString("en-US", this.timeOptions)+' - '+
-                           new Date('2099-01-01T'+edge.node.summit__Event_Instance__r.summit__Instance_End_Time__c.value.slice(0, -2)).toLocaleTimeString("en-US", this.timeOptions),
-                EventDateTime: new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T08:00:00').toLocaleDateString("en-US", this.dateOptions)+' ('+
-                               new Date('2099-01-01T'+edge.node.summit__Event_Instance__r.summit__Instance_Start_Time__c.value.slice(0, -2)).toLocaleTimeString("en-US", this.timeOptions)+' - '+
-                               new Date('2099-01-01T'+edge.node.summit__Event_Instance__r.summit__Instance_End_Time__c.value.slice(0, -2)).toLocaleTimeString("en-US", this.timeOptions)+')'
+                EventDate: new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T'+edge.node.summit__Event_Instance__r.summit__Instance_Start_Time__c.value.slice(0, -8)).toLocaleDateString("en-US", this.dateOptions),
+                EventTime: new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T'+edge.node.summit__Event_Instance__r.summit__Instance_Start_Time__c.value.slice(0, -8)).toLocaleTimeString("en-US", this.timeOptions)+' - '+
+                           new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T'+edge.node.summit__Event_Instance__r.summit__Instance_End_Time__c.value.slice(0, -8)).toLocaleTimeString("en-US", this.timeOptions),
+                EventDateTime: new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T'+edge.node.summit__Event_Instance__r.summit__Instance_Start_Time__c.value.slice(0, -8)).toLocaleDateString("en-US", this.dateOptions)+' '+
+                               new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T'+edge.node.summit__Event_Instance__r.summit__Instance_Start_Time__c.value.slice(0, -8)).toLocaleTimeString("en-US", this.timeOptions)+' - '+
+                               new Date(edge.node.summit__Event_Instance__r.summit__Instance_Start_Date__c.value+'T'+edge.node.summit__Event_Instance__r.summit__Instance_End_Time__c.value.slice(0, -2)).toLocaleTimeString("en-US", this.timeOptions)
             }));
         }
         this.errors = errors;
+    }
+
+    get variables() {
+        return {
+            contactId: this.contactId,
+
+        }
     }
 
 }

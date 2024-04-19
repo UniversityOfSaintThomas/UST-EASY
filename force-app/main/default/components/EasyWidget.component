@@ -90,7 +90,8 @@
             </apex:outputPanel>
 
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Summit Events List' }">
-                <c:SummitEventsList appInfo="{!appInfo}" widget="{!widget}"/>
+                <c:SummitEventsList />
+<!--                <c:SummitEventsList appInfo="{!appInfo}" widget="{!widget}"/>-->
             </apex:outputPanel>
 
         </div>

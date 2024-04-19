@@ -4,18 +4,19 @@
 
 <apex:component id="SummitEventsList">
     <apex:includeLightning/>
-<!--    <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true"/>-->
-<!--    <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>-->
+    <!--    <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true"/>-->
+    <!--    <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>-->
 
-<!--    <h3>This is a list of your Event Registrations! {!appInfo.contactId}</h3>-->
+<!--    <h3>This is a list of your Event Registrations!</h3>-->
+    <!--    <h3>{!appInfo.contactId}</h3>-->
 
-    <div id="lightningvf" />
+    <div id="lightningvf"/>
 
     <script>
         $Lightning.use("c:summitEventsListApp", function () {
-            $Lightning.createComponent("c:summitEventsListView",
+            $Lightning.createComponent("c:yenLWC1",
                 {
-                    // contactId : '00303000013EvRqAAK'
+                    contactId: '00303000013FeEdAAK'
                 },
                 "lightningvf",
                 function (cmp) {

@@ -17,7 +17,7 @@ public with sharing class YnSummitEventsList {
         public String EventDateTime { get; set; }
     }
 
-    @AuraEnabled(Cacheable=false)
+    @AuraEnabled(Cacheable=true)
     public static List<EventRegistrationWrapper> eventsRegistrations(String contactId) {
 
         List<EventRegistrationWrapper> registrationList = new List<EventRegistrationWrapper>();

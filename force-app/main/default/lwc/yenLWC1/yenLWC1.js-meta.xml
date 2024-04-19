@@ -4,4 +4,10 @@
     <description>Yen LWC 1</description>
     <isExposed>true</isExposed>
     <masterLabel>Yen Lwc 1</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
 </LightningComponentBundle>

@@ -179,6 +179,7 @@ public class ApplicationRegistration {
             ];
             appCreate.con.Id = con.Id;
 
+
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty()) {
                 throw new ApplicationUtilities.ApplicationException(' An account with this email already exists. Please sign in with the button to the right for existing users."', true, true);
@@ -322,6 +323,10 @@ public class ApplicationRegistration {
                     if (question.label.equalsIgnoreCase('Last Name')) {
                         interaction.Last_Name__c = String.valueOf(question.resp).trim();
                     }
+                    //YN_ADDING TO TEST
+                    if (question.label.equalsIgnoreCase('What is your date of birth? (MM/DD/YYYY)')) {
+                        interaction.Birthdate__c = (Date)question.resp;
+                    }
                 }
             }
         }
@@ -364,16 +369,16 @@ public class ApplicationRegistration {
 
 
         if (interaction.Academic_Program__c != null) {
-            List<Program__c> program = [
+            Program__c program = [
                     SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c
                     FROM Program__c
                     WHERE Id = :interaction.Academic_Program__c
                     LIMIT 1
             ];
 
-            if (!program.isEmpty()) {
-                interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
-                interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
+            if (program != null) {
+                interaction.College_of_Interest__c = program.Program_College_of_Interest__c;
+                interaction.Admit_Type__c = program.Program_Applicant_Type__c;
             }
 
             List<Plan__c> relatedPlan = [
@@ -398,7 +403,7 @@ public class ApplicationRegistration {
                 interaction.Term__c = academicTerm[0].Term__c;
             }
         }
-
+        System.debug('YN_What is Interaction Birthday? '+interaction.Birthdate__c);
         return errorMessage;
     }
 

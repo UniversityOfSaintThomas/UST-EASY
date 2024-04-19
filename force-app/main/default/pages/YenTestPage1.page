@@ -8,7 +8,8 @@
 
     <apex:outputPanel layout="none">
 
-        <c:SummitEventsList appInfo="" widget=""/>
+<!--        <c:SummitEventsList appInfo="" widget=""/>-->
+        <c:SummitEventsList/>
 
     </apex:outputPanel>
 

@@ -5,9 +5,20 @@
 <!-- Yen Lwc 1 -->
 <template>
 
-    <h1>This is LWC!</h1>
-    <lightning-button label="hello"></lightning-button>
+    <lightning-card>
+        <div class="slds-var-m-horizontal_medium">
+            <template lwc:if={registrationList.data}>
+                <template for:each={registrationList.data} for:item="registration">
+                    <p key={registration.Id}>{registration.EventName} {registration.EventDateTime}</p>
+                </template>
+            </template>
 
-    <p class="slds-p-horizontal_small">{helloId}</p> <br>
+            <!--            <lightning-datatable key-field="Id"-->
+            <!--                                 data={registrationList.data}-->
+            <!--                                 columns={eventRegistrationColumns}-->
+            <!--                                 hide-checkbox-column>-->
+            <!--            </lightning-datatable>-->
+        </div>
+    </lightning-card>
 
 </template>

@@ -188,6 +188,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track text_message_requested = false;
     @track is_transfer = false;
     @track academic_undecided_selected = false;
+    @track rfi_data_loaded = false;
 
     //@track mobile_phone_value;
 
@@ -519,6 +520,7 @@ export default class RequestForInformationForm extends LightningElement {
                         });
                 }
                 this.text_message_requested = this.require_fields.Mobile_Phone
+                this.rfi_data_loaded = true;
                 this.show_spinner = false;
             }
         } else {

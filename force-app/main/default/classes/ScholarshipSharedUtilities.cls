@@ -12,7 +12,7 @@ public with sharing class ScholarshipSharedUtilities {
         Contact result = null;
         if (contactId != null) {
             List<Contact> resultIds = [
-                    SELECT FirstName, LastName
+                    SELECT FirstName, LastName, Email
                     FROM Contact
                     WHERE Id = :contactId
             ];
@@ -51,10 +51,10 @@ public with sharing class ScholarshipSharedUtilities {
     public static Scholarship__c getScholarshipInfo() {
         Scholarship__c scholarshipInfo = null;
         String scholarshipId = ApexPages.currentPage().getParameters().get('sid');
-        if(String.isNotBlank(scholarshipId)){
+        if (String.isBlank(ApexPages.currentPage().getParameters().get('sid'))) {
             scholarshipId = getCookie();
         }
-        if(String.isNotBlank(scholarshipId)) {
+        if (String.isNotBlank(scholarshipId)) {
             List<Scholarship__c> ScholarshipInfos = [
                     SELECT Close_Date__c, Completion_Statement__c, Criteria_Statement__c, Description__c, Essay_1_Text__c, Essay_2_Text__c,
                             Id, Name, Open_Date__c, OwnerId, Question_1_Text__c, Question_2_Text__c, Question_3_Text__c, Question_4_Text__c,

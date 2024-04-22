@@ -79,13 +79,43 @@ public with sharing class applicationHelper {
 
     public static Set<String> getStandardAppFields() {
         Set<String> standardFields = new Set<String>{
-                'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c',
-                'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'Application_Substatus__c', 'application_control__c',
-                'Generic_Filter_1__c', 'Generic_Filter_2__c', 'Generic_Filter_3__c', 'Generic_Filter_4__c',
-                'Generic_Filter_5__c', 'Generic_Filter_6__c', 'Generic_Filter_7__c', 'Generic_Filter_8__c',
-                'Intended_Program__r.Name', 'Intended_Program__r.Name',
-                'Intended_Program__r.Program_Name_on_Application__c', 'Intended_Term_of_Entry__r.Name',
-                'Intended_Term_of_Entry__r.Term_Status_Type__c'
+                'id',
+                'intended_program__c',
+                'applicant_type__c',
+                'citizenship__c',
+                'delivery_type__c',
+                'student_type__c',
+                'contact__c',
+                'school_college__c',
+                'residency__c',
+                'degree_type__c',
+                'application_status__c',
+                'Application_Substatus__c',
+                'application_control__c',
+                'Generic_Filter_1__c',
+                'Generic_Filter_2__c',
+                'Generic_Filter_3__c',
+                'Generic_Filter_4__c',
+                'Generic_Filter_5__c',
+                'Generic_Filter_6__c',
+                'Generic_Filter_7__c',
+                'Generic_Filter_8__c',
+                'Intended_Program__r.Name',
+                'Intended_Program__r.Name',
+                'Intended_Term_of_Entry__r.Term_Status_Type__c',
+                'Intended_Program__r.Program_Name_on_Application__c',
+                'Intended_Term_of_Entry__r.Name',
+                //Added for personal data tags
+                'Contact_Email__c',
+                'Account_Claimed_Portal_Text__c',
+                'Application_Control__r.URL_Parameter__c',
+                'Aquinas_Scholars_Portal_Text__c',
+                'Documents_Missing_Text__c',
+                'Applicant_Banner_Id__c',
+                'Contact__r.Id',
+                'Contact_Mailing_First_Name__c',
+                'Contact__r.LastName',
+                'Contact__r.hed__UniversityEmail__c'
         };
         Set<String> lowerCaseSet = new Set<String>();
         for(String s : standardFields) {

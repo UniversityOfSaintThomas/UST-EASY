@@ -45,7 +45,7 @@
                     <div class="slds-p-top_small slds-grid slds-gutters {!'slds-grid_align-'+button.buttonPosition}"
                          style="display:{!if(button.buttonStyle=='text_link','none','')}">
                         <div class="slds-col slds-size_3-of-4 {!'slds-large-size_'+button.buttonSize}">
-                            <a class="slds-button slds-button_stretch {!'slds-button_'+button.buttonStyle}"
+                            <a class="slds-button slds-button_stretch {!'slds-button_'+button.buttonStyle} slds-wrap"
                                href="{!button.buttonLink}"
                                target="_blank"
                                style="font-size:16px">
@@ -64,21 +64,27 @@
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist' }">
                 <c:ApplicationChecklist appInfo="{!appInfo}" checklistItems="{!checklistItems}" widget="{!widget}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Progress Bar' }">
                 <c:ApplicationProgressBar appInfo="{!appInfo}" reqs="{!checklistItems}" widget="{!widget}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Finder' }">
                 <c:AdmissionsApplicationFinder appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'User Info Login/Logout' }">
                 <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Counselor Information' }">
                 <c:CounselorInfoWidget appInfo="{!appInfo}" widget="{!widget}" />
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist Multiple' }">
                 <c:ApplicationChecklistMultiple appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'List of Applications' }">
                 <c:ApplicationList appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
             </apex:outputPanel>

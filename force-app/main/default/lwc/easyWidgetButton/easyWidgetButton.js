@@ -135,14 +135,10 @@ export default class EasyWidgetButton extends LightningElement {
     ];
 
     @track buttonSizeOptions = [
-        {label: '1/8 widget size', value: '1-of-8'},
-        {label: '2/8 widget size', value: '2-of-8'},
-        {label: '3/8 widget size', value: '3-of-8'},
-        {label: '4/8 Widget Size', value: '4-of-8'},
-        {label: '5/8 widget size', value: '5-of-8'},
-        {label: '6/8 widget size', value: '6-of-8'},
-        {label: '7/8 widget size', value: '7-of-8'},
-        {label: '8/8 widget size', value: '8-of-8'},
+        {label: 'Quarter size', value: '1-of-4'},
+        {label: 'Half size', value: '2-of-4'},
+        {label: 'Three Quarter size', value: '3-of-4'},
+        {label: 'Full Size', value: '4-of-4'},
     ];
 
     @track buttonPositionOptions = [

@@ -405,11 +405,6 @@ public with sharing class ApplicationBodyController {
                         if (String.isNotBlank(widget.Scripts__c)) {
                             widget.Scripts__c = replaceDataTags(widget.Scripts__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                         }
-//                        BEGIN TESTING
-                        if (String.isNotBlank(widget.Button_Code__c)) {
-                            widget.Button_Code__c = replaceDataTags(widget.Button_Code__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
-                        }
-//                        END TESTING
                     }
                 }
 
@@ -519,8 +514,8 @@ public with sharing class ApplicationBodyController {
                     //The documents_missing tab contains a comma seperated list inside brackets I want to turn into a bulleted list
                     String documentsMissing = (String) tagMap.get(lowerCaseUppercaseTagMap.get(tab_data.toLowerCase()));
                     if(String.isNotBlank(documentsMissing)){
-                        System.debug('documentsMissing: ' + documentsMissing);
-                        //remove <p>[ from front of tag
+                        //System.debug('documentsMissing: ' + documentsMissing);
+                        //remove <p>[ from front of tag and ]</p> from end of tag added by flow creation
                         documentsMissing = documentsMissing.removeStart('<p>');
                         documentsMissing = documentsMissing.removeStart('[');
                         documentsMissing = documentsMissing.removeEnd('</p>');

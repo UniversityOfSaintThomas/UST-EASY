@@ -323,6 +323,10 @@ public class ApplicationRegistration {
                     if (question.label.equalsIgnoreCase('Last Name')) {
                         interaction.Last_Name__c = String.valueOf(question.resp).trim();
                     }
+                    //YN_ADDING TO TEST
+                    if (question.label.equalsIgnoreCase('What is your date of birth? (MM/DD/YYYY)')) {
+                        interaction.Birthdate__c = (Date) question.resp;
+                    }
                 }
             }
         }
@@ -398,7 +402,7 @@ public class ApplicationRegistration {
                 interaction.Term__c = academicTerm[0].Term__c;
             }
         }
-
+        System.debug('YN_What is Interaction Birthday? '+interaction.Birthdate__c);
         return errorMessage;
     }
 

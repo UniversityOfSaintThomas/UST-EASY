@@ -33,11 +33,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
     public String sId { get; set; }
 
     public ScholarshipApplicationPage2Controller() {
-        sId = ApexPages.currentPage().getParameters().get('sid');
-        String scholarshipId = null;
-        if (!String.isBlank(sId)) {
-            scholarshipId = sId;
-            scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
+        scholarship = ScholarshipSharedUtilities.getScholarshipInfo();
+        if (scholarship != null) {
             applicant = ScholarshipSharedUtilities.getApplicantInfo(scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
             essay1HasText = !String.isEmpty(applicant.Essay_1_Answer__c);
             essay2HasText = !String.isEmpty(applicant.Essay_2_Answer__c);
@@ -48,7 +45,6 @@ public with sharing class ScholarshipApplicationPage2Controller {
                 recommendRequestDate2 = ScholarshipSharedUtilities.adjustForCentralTime(applicant.Recommendation2_Request_Date__c);
             }
         }
-
     }
 
     public PageReference initialize() {
@@ -205,8 +201,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
         }
-        String msgComplete = 'Your scholarship application has been saved and you can return to it at any time.';
-        msgComplete += ' It has not been completed and will not be considered for an award until you complete it by clicking \"Save & Complete\" below.';
+        String msgComplete = 'Your scholarship application has been saved and you can return to it at any time. ';
+        msgComplete += 'Your scholarship will not be submitted until you click “Save & Submit” below.';
 
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, msgComplete));
         return null;

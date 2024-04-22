@@ -44,17 +44,38 @@ ready(() => {
             if (textCounter === null) {
                 textCounter = document.createElement("div");
                 textCounter.classList.add("text-count-wrapper");
-                textCounter.textContent = 'Characters remaining: ' + input.maxLength;
                 input.parentNode.appendChild(textCounter);
+                textCounter.textContent = countWords(input);
             }
             input.addEventListener("keyup", function () {
-                let counter = input.parentNode.querySelector(".text-count-wrapper");
-                let max = input.maxLength;
-                let current = input.value.length;
-                counter.textContent = 'Characters remaining: ' + (max - current);
+                textCounter.textContent = countWords(input);
             });
         }
     });
+
+    function countWords(input) {
+        let max = input.maxLength;
+        let current = input.value.length;
+        // Line breaks count as 2 characters so count them separately and add the amount to the total
+        let linebreaks = (input.value.match(/\n/g) || []).length;
+        current = current + linebreaks;
+        let remaining = max - current;
+        let countString = '';
+        if (remaining <= 0) {
+            input.value = input.value.substring(0, max - linebreaks);
+        }
+        let wordcount = input.value.split(' ').length - 1;
+        if (wordcount === 1 && input.value.length > 0) {
+            countString = wordcount + ' word.'
+        } else if (wordcount > 1) {
+            countString = wordcount + ' words.'
+        }
+        if (remaining < 0) {
+            remaining = 0;
+        }
+        countString += ' Characters remaining: ' + remaining;
+        return countString;
+    }
 
     document.querySelectorAll(".validateRecommender").forEach(function (rec) {
         rec.addEventListener("click", function (evt) {

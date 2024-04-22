@@ -138,7 +138,7 @@
                                 <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 essayInputWrap" layout="block">
                                     <div class="slds-form-element">
                                         <div class="slds-form-element__control richText">
-                                            <apex:inputTextarea richText="true" value="{!applicant['Essay_' + e + '_Answer__c']}" StyleClass="essayInput essay{!e}"/>
+                                            <apex:inputField value="{!applicant['Essay_' + e + '_Answer__c']}" StyleClass="essayInput essay{!e}"/>
                                         </div>
                                     </div>
                                 </apex:outputPanel>
@@ -240,7 +240,7 @@
                     </apex:outputPanel>
 
                     <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
-                        <apex:commandLink action="{!SaveComplete}" Value="Save & Complete" onClick="return validateApplication();" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
+                        <apex:commandLink action="{!SaveComplete}" Value="Save & Submit" onClick="return validateApplication();" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
                     </apex:outputPanel>
                     <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
                         <apex:commandLink action="{!SaveFinishLater}" id="saveFinishLater" Value="Save & Finish Later" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>

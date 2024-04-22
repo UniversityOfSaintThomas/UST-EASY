@@ -260,9 +260,9 @@ public class ScholarshipController_TEST {
         ScholarshipSharedUtilities.getContactRecord(ScholarshipSharedUtilities.getActiveUserId());
         ScholarshipSharedUtilities.getActiveContactId();
         ScholarshipSharedUtilities.setSid(System.currentPageReference(), false, 'Scholarship-FAKE');
-        ScholarshipSharedUtilities.getScholarshipInfo('Scholarship-FAKE');
+        ScholarshipSharedUtilities.getScholarshipInfo();
         ScholarshipSharedUtilities.getApplicantInfo('Scholarship-FAKE', ScholarshipSharedUtilities.getActiveUserId());
-        ScholarshipSharedUtilities.isScholarshipOpen(ScholarshipSharedUtilities.getScholarshipInfo('Scholarship-FAKE'));
+        ScholarshipSharedUtilities.isScholarshipOpen(ScholarshipSharedUtilities.getScholarshipInfo());
         ScholarshipSharedUtilities.adjustForCentralTime(Datetime.newInstance(2022, 10, 11));
         ScholarshipSharedUtilities.sendEmail('na', 'testemail20221011@stthomas-test.edu',
                 'Test Email Subject', '<p>Test Email HTML Body</p>',

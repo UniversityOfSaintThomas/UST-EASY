@@ -104,8 +104,7 @@
                                             </apex:outputPanel>
                                             <apex:outputPanel layout="none" rendered="{!applicant.Essay_1_Uploaded__c}">
                                                 <p class="slds-text-body_regular slds-p-bottom_x-small">
-                                                    <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
-                                                    You uploaded a file named: <strong>{!applicant.Essay_1_Uploaded_Orig_Filename__c}</strong></p>
+                                                    <strong>{!applicant.Essay_1_Uploaded_Orig_Filename__c}</strong> has been uploaded to your application.</p>
                                                 <p class="slds-text-body_regular">
                                                     <apex:commandButton action="{!DeleteEssay1}" value="Delete and re-upload" styleClass="slds-button slds-button_neutral"/>
                                                 </p>

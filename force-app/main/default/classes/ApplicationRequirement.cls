@@ -150,6 +150,7 @@ public class ApplicationRequirement {
             appInfo.allowConfirm = allowConfirm;
 
             //Assign values to personal data tags
+            personalDataTags.Banner_ID = app.Applicant_Banner_Id__c;
             personalDataTags.Contact_Id = app.Contact__r.Id;
             personalDataTags.UGAQUSCHLRS = app.Aquinas_Scholars_Portal_Text__c;
             personalDataTags.Applicant_Email = app.Contact_Email__c;

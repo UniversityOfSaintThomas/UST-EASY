@@ -140,8 +140,8 @@ public class ApplicationRequirement {
             app = ((List<Application__c>) Database.query(query)).get(0);
         }
 
+        //Add application data to personal data tags
         personalDataTags = new EASYPersonalDataTags();
-
         if (queryItems == true) {
             checklistItems = checklistHelper.checklistRequirements(app, appInfo);
             allowSubmit = checklistHelper.allowSubmit(checklistItems, appInfo);
@@ -276,24 +276,12 @@ public class ApplicationRequirement {
                     i.Instructions__c = ApplicationUtilities.replaceDataTags(i.Instructions__c, personalDataTags);
                 }
 
-                if (String.isNotBlank(i.Label__c)) {
-                    i.Label__c = ApplicationUtilities.replaceDataTags(i.Label__c, personalDataTags);
-                }
-
-                if (String.isNotBlank(i.Requirement__r.Label__c)) {
-                    i.Requirement__r.Label__c = ApplicationUtilities.replaceDataTags(i.Requirement__r.Label__c, personalDataTags);
-                }
-                if (i.Questions__r.size() > 0) {
-
-                    if (String.isNotBlank(i.Questions__r[0].Static_Text__c)) {
-                        i.Questions__r[0].Static_Text__c = ApplicationUtilities.replaceDataTags(i.Questions__r[0].Static_Text__c, personalDataTags);
+                for(Question__c q : i.Questions__r) {
+                    if (String.isNotBlank(q.Static_Text__c)) {
+                        q.Static_Text__c = ApplicationUtilities.replaceDataTags(q.Static_Text__c, personalDataTags);
                     }
-
-                    if (String.isNotBlank(i.Questions__r[0].Label__c)) {
-                        i.Questions__r[0].Label__c = ApplicationUtilities.replaceDataTags(i.Questions__r[0].Label__c, personalDataTags);
-                    }
-
                 }
+
                 // Filter out external requirements based on the hashcode
                 if ((ignoreExternalFilter != null && ignoreExternalFilter) || !(i.Internal_Requirement_Item__c != null && UserInfo.getUserType() != 'Standard' && !ApexPages.currentPage().getParameters().containsKey('h'))) {
                     riLst.add(i);

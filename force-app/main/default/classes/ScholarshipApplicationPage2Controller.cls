@@ -201,7 +201,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
         }
-        String msgComplete = 'Your scholarship application has been saved and you can return to it at any time. ';
+        String msgComplete = '<strong>Saved:</strong> Your scholarship application has been saved and you can return to it at any time. ';
         msgComplete += 'Your scholarship will not be submitted until you click “Save & Submit” below.';
 
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, msgComplete));

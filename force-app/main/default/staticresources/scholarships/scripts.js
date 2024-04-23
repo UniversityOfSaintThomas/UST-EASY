@@ -60,20 +60,16 @@ ready(() => {
         let linebreaks = (input.value.match(/\n/g) || []).length;
         current = current + linebreaks;
         let remaining = max - current;
-        let countString = '';
+        let countString = 'Word count: ';
         if (remaining <= 0) {
-            input.value = input.value.substring(0, max - linebreaks);
+            input.value = input.value.substring(0, max - linebreaks);git
         }
         let wordcount = input.value.split(' ').length - 1;
-        if (wordcount === 1 && input.value.length > 0) {
-            countString = wordcount + ' word.'
-        } else if (wordcount > 1) {
-            countString = wordcount + ' words.'
-        }
+        countString += wordcount;
         if (remaining < 0) {
             remaining = 0;
         }
-        countString += ' Characters remaining: ' + remaining;
+        //countString += ' Characters remaining: ' + remaining;
         return countString;
     }
 

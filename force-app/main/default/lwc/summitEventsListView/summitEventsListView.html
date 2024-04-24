@@ -7,20 +7,22 @@
 
     <template lwc:if={events}>
         <template for:each={events} for:item="registration">
-            <lightning-layout key={registration.Id}>
-                <lightning-layout-item>
+            <div class="slds-grid slds-wrap" key={registration.Id}>
+                <div>
+                    <span>&#x2022; </span>
+                    <lightning-formatted-date-time value={registration.EventStartDateTime}
+                                                   year="numeric"
+                                                   month="numeric"
+                                                   day="numeric"
+                                                   hour="2-digit"
+                                                   minute="2-digit"
+                                                   time-zone="UTC"></lightning-formatted-date-time>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-small-size_2-of-3 slds-p-horizontal_x-small">
                     <a href={registration.EventRegistrationLink}
                        target=_blank>{registration.EventName}</a>
-                </lightning-layout-item>
-                <lightning-layout-item padding="horizontal-small">
-                    <lightning-formatted-date-time value={registration.EventStartDate}
-                                                   weekday="long"
-                                                   year="numeric"
-                                                   month="long"
-                                                   day="numeric"
-                                                   time-zone="UTC"></lightning-formatted-date-time>
-                </lightning-layout-item>
-            </lightning-layout>
+                </div>
+            </div>
         </template>
     </template>
 

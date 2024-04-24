@@ -409,7 +409,7 @@ public class INT_InteractionProcessor {
 
             intMappingService.applyDataToSObject(interaction, newCon);
             newCons.add(newCon);
-            System.debug('YN_WHAT IS BDAY: '+newCon.Birthdate);
+            System.debug('TESTING: Initial Interaction mapping Birthdate: '+newCon.Birthdate);
         }
 
         // Break list into list of lists with maximum size of 50 because of duplicate find limits
@@ -435,7 +435,7 @@ public class INT_InteractionProcessor {
                         for (Datacloud.MatchResult matchResult : result.getMatchResults()) {
                             if (matchResult.getEntityType() == 'Contact' && !matchResult.getMatchRecords().isEmpty()) {
                                 interactions[interactionsIndex].Contact__c = matchResult.getMatchRecords()[0].getRecord().Id;
-                                System.debug('YN_I GOT MATCH: '+interactions[interactionsIndex].Contact__c);
+                                System.debug('TESTING: Contact Match Record: '+interactions[interactionsIndex].Contact__c);
                                 break;
                             }
                         }

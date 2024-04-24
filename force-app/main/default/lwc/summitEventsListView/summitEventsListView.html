@@ -5,18 +5,23 @@
 <!-- Summit Events List View -->
 <template>
 
-    <div class="slds-var-m-horizontal_medium">
-        <template lwc:if={events}>
-            <lightning-datatable key-field="Id"
-                                 data={events}
-                                 columns={columns}
-                                 show-row-number-column
-                                 hide-checkbox-column>
-            </lightning-datatable>
+    <template lwc:if={events}>
+        <template for:each={events} for:item="registration">
+            <lightning-layout key={registration.Id}>
+                <lightning-layout-item>
+                    <a href={registration.EventRegistrationLink}
+                       target=_blank>{registration.EventName}</a>
+                </lightning-layout-item>
+                <lightning-layout-item padding="horizontal-small">
+                    <lightning-formatted-date-time value={registration.EventStartDate}
+                                                   weekday="long"
+                                                   year="numeric"
+                                                   month="long"
+                                                   day="numeric"
+                                                   time-zone="UTC"></lightning-formatted-date-time>
+                </lightning-layout-item>
+            </lightning-layout>
         </template>
-        <!--    <div>-->
-        <!--        Hello World!-->
-        <!--    </div>-->
-    </div>
+    </template>
 
 </template>

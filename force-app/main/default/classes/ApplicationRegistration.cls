@@ -182,7 +182,7 @@ public class ApplicationRegistration {
 
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty()) {
-                throw new ApplicationUtilities.ApplicationException(' An account with this email already exists. Please sign in with the button to the right for existing users."', true, true);
+                throw new ApplicationUtilities.ApplicationException(' An account with this email or birthdate already exists. Please sign in with the button to the right for existing users.', true, true);
             }
 
             if (String.isNotBlank(interaction.Academic_Program__c)) {
@@ -323,7 +323,7 @@ public class ApplicationRegistration {
                     if (question.label.equalsIgnoreCase('Last Name')) {
                         interaction.Last_Name__c = String.valueOf(question.resp).trim();
                     }
-                    //YN_ADDING TO TEST
+                    //TESTING: Adding birthdate to initial Interaction mapping for Contact matching
                     if (question.label.equalsIgnoreCase('What is your date of birth? (MM/DD/YYYY)')) {
                         interaction.Birthdate__c = (Date)question.resp;
                     }
@@ -373,7 +373,6 @@ public class ApplicationRegistration {
                     SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c
                     FROM Program__c
                     WHERE Id = :interaction.Academic_Program__c
-                    LIMIT 1
             ];
 
             if (program != null) {
@@ -403,7 +402,7 @@ public class ApplicationRegistration {
                 interaction.Term__c = academicTerm[0].Term__c;
             }
         }
-        System.debug('YN_What is Interaction Birthday? '+interaction.Birthdate__c);
+        System.debug('TESTING: Initial Interaction birthdate from ApplicationRegistration: '+interaction.Birthdate__c);
         return errorMessage;
     }
 

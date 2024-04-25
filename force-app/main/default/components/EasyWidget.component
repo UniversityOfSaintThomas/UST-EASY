@@ -45,7 +45,7 @@
                     <div class="slds-p-top_small slds-grid slds-gutters {!'slds-grid_align-'+button.buttonPosition}"
                          style="display:{!if(button.buttonStyle=='text_link','none','')}">
                         <div class="slds-col slds-size_3-of-4 {!'slds-large-size_'+button.buttonSize}">
-                            <a class="slds-button slds-button_stretch {!'slds-button_'+button.buttonStyle}"
+                            <a class="slds-button slds-button_stretch {!'slds-button_'+button.buttonStyle} slds-wrap"
                                href="{!button.buttonLink}"
                                target="_blank"
                                style="font-size:16px">
@@ -90,7 +90,6 @@
             </apex:outputPanel>
 
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Summit Events List' }">
-<!--                <c:SummitEventsList />-->
                 <c:SummitEventsList appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
 

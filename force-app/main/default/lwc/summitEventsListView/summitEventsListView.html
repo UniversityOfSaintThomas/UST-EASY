@@ -5,7 +5,7 @@
 <!-- Summit Events List View -->
 <template>
 
-    <template lwc:if={events}>
+    <template lwc:if={eventsLength}>
         <template for:each={events} for:item="registration">
             <div class="slds-grid slds-wrap" key={registration.Id}>
                 <div>
@@ -18,12 +18,15 @@
                                                    minute="2-digit"
                                                    time-zone="UTC"></lightning-formatted-date-time>
                 </div>
-                <div class="slds-col slds-size_1-of-1 slds-small-size_2-of-3 slds-p-horizontal_x-small">
+                <div class="slds-p-horizontal_x-small">
                     <a href={registration.EventRegistrationLink}
                        target=_blank>{registration.EventName}</a>
                 </div>
             </div>
         </template>
+    </template>
+    <template lwc:else>
+        <div>You do not have any registrations.</div>
     </template>
 
 </template>

@@ -3,13 +3,11 @@
  -->
 
 <apex:component id="SummitEventsList">
-    <apex:includeLightning/>
         <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true"/>
-        <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
+        <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/> <!-- for potential options passed in widget controller -->
+
 
     <div id="lightningvf"/>
-
-<!--    What is contact ID: {!appInfo.contactId}-->
 
     <script>
         $Lightning.use("c:summitEventsListApp", function () {
@@ -19,7 +17,7 @@
                 },
                 "lightningvf",
                 function (cmp) {
-                    console.log("LWC Loaded")
+                    console.log("LWC summitEventsListView Loaded")
                 }
             );
         });

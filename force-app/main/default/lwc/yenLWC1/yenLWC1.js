@@ -3,52 +3,39 @@
  */
 
 import {LightningElement, api, wire} from 'lwc';
-import eventRegistrationList from "@salesforce/apex/YnSummitEventsList.eventsRegistrations";
-// import eventRegistrationListTest from "@salesforce/apex/YnSummitEventsListTEST1.eventsRegistrations";
+import eventRegistrationListTest from "@salesforce/apex/YnSummitEventsList.eventsRegistrations";
 
-// const EVENTREGISTRATIONCOLUMNS = [
-//     // {label: 'Id', fieldName: 'Id'},
-//     {label: 'Event Name', fieldName: 'EventName'},
-//     {label: 'Event Date Time', fieldName: 'EventDateTime'}
-// ];
 
 export default class YenLwc1 extends LightningElement {
 
-    // registrationList;
+    @api contactIdIn = "003DC00000Wp9DCYAZ";
 
-    // @wire(eventRegistrationListTest, {})
-    // registrations
-    // registrations({ error, data }) {
-    //     if (data) {
-    //         //note you'll need to change your template to handle this - remove the `data` object when you access activities
-    //         this.registrationList = data;
-    //     } else if (error) {
-    //         console.log("this is error: "+error);
-    //     }
-    // }
+    registrationList;
+    registrationObject = {};
+    newList = [];
 
-    // registrationListError;
-    // eventRegistrationColumns = EVENTREGISTRATIONCOLUMNS;
 
-    @api contactId = '00303000013FeEdAAK';
+    @wire(eventRegistrationListTest, {contactId: "$contactIdIn"})
+    eventlist(results) {
 
-    @wire(eventRegistrationList, {contactId: '$contactId'})
-    registrationList
+        if (results.data) {
 
-    // registrations(result) {
-    //
-    //     if (result.data) {
-    //
-    //         this.registrationList = result.data;
-    //
-    //
-    //     } else if (result.error) {
-    //
-    //         this.registrationListError = result.error;
-    //         this.registrationList = undefined;
-    //
-    //     }
-    //
-    // }
 
+            this.registrationList = results.data;
+            // Data comes back as an array of Objects. So it is possible to iterate in HTML.
+            // Needs to be Javascript Array to iterate.
+
+            for (let i = 0; i < this.registrationList.length; i++) {
+
+                this.registrationObject.Id = this.registrationList[i].Id;
+                this.registrationObject.newDate = this.registrationList[i].EventDate;
+                this.registrationObject.weirdString = this.registrationList[i].randomString;
+
+                this.newList[i]= this.registrationObject;
+
+                // I created a Javascript Object registrationObject then added to Javascript Array newList to iterate in HTML for display.
+                // Needs to be Javascript Array to iterate.
+            }
+        }
+    }
 }

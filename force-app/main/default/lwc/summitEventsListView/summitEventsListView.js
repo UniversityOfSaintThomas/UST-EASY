@@ -20,10 +20,10 @@ export default class SummitEventsListView extends LightningElement {
 
     @wire(graphql, {
         query: gql`
-          query SummitEventRegistrations ($contactId: ID) {
+          query SummitEventRegistrations ($contactIdGql: ID) {
             uiapi {
               query {
-                summit__Summit_Events_Registration__c ( where: { summit__Contact__c: { eq: $contactId } 
+                summit__Summit_Events_Registration__c ( where: { summit__Contact__c: { eq: $contactIdGql } 
                                                                  summit__Event_Instance__r: { summit__Instance_Start_Date__c: { gte: {literal: TODAY } } } 
                                                                  summit__Status__c: { in: ["Registered", "Confirmed", "In Progress"] }
                                                                },
@@ -54,7 +54,6 @@ export default class SummitEventsListView extends LightningElement {
     })
     graphqlQueryResult({data, errors}) {
         if (data) {
-            // this.results = data.uiapi.query.summit__Summit_Events_Registration__c.edges.map((edge) => edge.node); //Just adds all to property. No value reassignment.
 
             this.events = data.uiapi.query.summit__Summit_Events_Registration__c.edges.map((edge) => ({
                 Id: edge.node.Id,
@@ -65,16 +64,15 @@ export default class SummitEventsListView extends LightningElement {
                 EventRegistrationLink: edge.node.summit__Event_Instance__r.summit__Registration_Link__c.value.split("\"")[1],
             }));
 
-            this.eventsLength = this.events.length > 0;
+            this.eventsLength = this.events.length;
         }
         this.errors = errors;
     }
 
     get variables() {
         return {
-            contactId: this.contactId,
+            contactIdGql: this.contactId,
             // dateFilter: this.dateFilter,
-
         }
     }
 

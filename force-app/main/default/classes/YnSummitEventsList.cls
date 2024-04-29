@@ -10,11 +10,13 @@ public with sharing class YnSummitEventsList {
         @AuraEnabled
         public String EventName { get; set; }
         @AuraEnabled
-        public String EventDate { get; set; }
+        public Date EventDate { get; set; }
         @AuraEnabled
-        public String EventTime { get; set; }
+        public Time EventTime { get; set; }
         @AuraEnabled
         public String EventDateTime { get; set; }
+        @AuraEnabled
+        public String randomString { get; set;}
     }
 
     @AuraEnabled(Cacheable=true)
@@ -54,7 +56,10 @@ public with sharing class YnSummitEventsList {
 
             registrationWrapper.Id = r.Id;
             registrationWrapper.EventName = r.summit__Event_Name__c;
+            registrationWrapper.EventDate = r.summit__Event_Instance__r.summit__Instance_Start_Date__c;
+            registrationWrapper.EventTime = r.summit__Event_Instance__r.summit__Instance_Start_Time__c;
             registrationWrapper.EventDateTime = formatStartDate + ' ' + formatStartTime + ' - ' + formatEndTime;
+            registrationWrapper.randomString = 'Now this is different';
 
             System.debug('This is registration wrapper: ' + registrationWrapper);
 

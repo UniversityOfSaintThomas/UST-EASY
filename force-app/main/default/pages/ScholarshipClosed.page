@@ -1,31 +1,34 @@
-<apex:page showHeader="false" sidebar="false" controller="ScholarshipClosedController"  action="{!initialize}">
-    <apex:composition template="ScholarshipTemplate">
-        <apex:define name="head-extras">
-            <title>Closed | Scholarships at St. Thomas</title>
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false" docType="html-5.0" cache="false" controller="ScholarshipClosedController">
+    <apex:composition template="ScholarshipTemplate2024">
+        <apex:define name="metaPageTitle">
+            Closed | Scholarships at St. Thomas
         </apex:define>
         <apex:define name="body">
-            <h2>
-                {!scholarship.Name}
-            </h2>
-
-            <apex:outputText rendered="{!scholarshipAlreadyClosed}" escape="false">
-                <p>
-                    We're sorry. The {!scholarship.Name} closed on {!scholarship.Close_Date__c}. Thank you for
-                    your interest.
-                </p>
-            </apex:outputText>
-            <apex:outputText rendered="{!scholarshipNotYetOpen}" escape="false">
-                <p>
-                    We're sorry. The {!scholarship.Name} has not opened yet. It will open
-                    on {!scholarship.Open_Date__c}. Please return after the open date and fill out your application then.
-                    Thank you for your interest!
-                </p>
-            </apex:outputText>
-            <apex:outputText rendered="{!IF(scholarshipNotYetOpen == false && scholarshipAlreadyClosed == false, true, false)}" escape="false">
-                <p>
-                    We're sorry. The {!scholarship.Name} is currently closed. Thank you for your interest!
-                </p>
-            </apex:outputText>
+            <div class="slds-grid slds-wrap normalizeSLDS" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
+                    <h1 class="slds-text-heading_large">
+                        {!scholarship.Name}
+                    </h1>
+                    <apex:outputText rendered="{!scholarshipAlreadyClosed}" escape="false">
+                        <p class="slds-text-body_regular">
+                            We're sorry. The {!scholarship.Name} closed on {!scholarship.Close_Date__c}. Thank you for
+                            your interest.
+                        </p>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!scholarshipNotYetOpen}" escape="false">
+                        <p class="slds-text-body_regular">
+                            We're sorry. The {!scholarship.Name} has not opened yet. It will open
+                            on {!scholarship.Open_Date__c}. Please return after the open date and fill out your application then.
+                            Thank you for your interest!
+                        </p>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!IF(scholarshipNotYetOpen == false && scholarshipAlreadyClosed == false, true, false)}" escape="false">
+                        <p class="slds-text-body_regular">
+                            We're sorry. The {!scholarship.Name} is currently closed. Thank you for your interest!
+                        </p>
+                    </apex:outputText>
+                </div>
+            </div>
         </apex:define>
     </apex:composition>
 </apex:page>

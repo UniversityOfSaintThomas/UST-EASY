@@ -9,22 +9,22 @@ public class ApplicationQuestion_TEST {
     public static void testSetup() {
         Account acc = new Account(Name = 'NewAcc');
         insert acc;
-        
+
         Contact student = new Contact(FirstName = 'TestFirst', LastName = 'TestStudent', Email = 'testfirst@teststudent.com');
         insert student;
 
         Map<String, Id> rtMap = new Map<String, Id>();
-        for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Question__c']) {
+        for (RecordType rt : [SELECT Id, DeveloperName FROM RecordType WHERE SobjectType = 'Question__c']) {
             rtMap.put(rt.DeveloperName, rt.Id);
         }
 
         Map<String, Id> rtMapQD = new Map<String, Id>();
-        for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Question_Dependency__c']) {
+        for (RecordType rt : [SELECT Id, DeveloperName FROM RecordType WHERE SobjectType = 'Question_Dependency__c']) {
             rtMapQD.put(rt.DeveloperName, rt.Id);
         }
 
         Map<String, Id> rtMapRI = new Map<String, Id>();
-        for (RecordType rt : [SELECT Id,DeveloperName FROM RecordType WHERE SobjectType = 'Requirement_Item__c']) {
+        for (RecordType rt : [SELECT Id, DeveloperName FROM RecordType WHERE SobjectType = 'Requirement_Item__c']) {
             rtMapRI.put(rt.DeveloperName, rt.Id);
         }
 
@@ -74,11 +74,13 @@ public class ApplicationQuestion_TEST {
 
         Question__c q1 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test', Label__c = 'Test', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', Dependency_Logic__c = 'AND');
         Question__c q2 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test2', Label__c = 'Test2', Requirement_Item__c = riQG2.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName');
-        Question__c q5 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Radio'), Name = 'Test5', Label__c = 'Test5', Picklist_Values__c = 'Test1;Test2', Requirement_Item__c = riQG2.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', URL_Parameter__c = 'test');
         Question__c q3 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Text'), Name = 'Test3', Label__c = 'Test3', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', Hardcoded_Value__c = 'Test', Contact_Field__c = 'Additional_Family_Members__c');
         Question__c q4 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Reference'), Name = 'Test4', Label__c = 'Test3', Requirement_Item__c = riQG.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', Lookup_Object__c = 'Contact', Display_as_Picklist__c = true, URL_Parameter__c = 'test', Lookup_Where_Clause__c = 'Name != null');
+        Question__c q5 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Radio'), Name = 'Test5', Label__c = 'Test5', Picklist_Values__c = 'Test1;Test2', Requirement_Item__c = riQG2.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', URL_Parameter__c = 'test');
+        Question__c q6 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('MultiPicklist'), Name = 'Test6', Label__c = 'Test6', Picklist_Values__c = 'Test1;Test2', Requirement_Item__c = riQG2.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), Additional_Field_Validation__c = 'validateName', URL_Parameter__c = 'test');
+        Question__c q7 = new Question__c(Active__c = true, RecordTypeId = rtMap.get('Address'), Name = 'Test7', Label__c = 'Test7', Requirement_Item__c = riQG2.Id, Question_Integration_External_Id__c = ApplicationUtilities.getUUID(), URL_Parameter__c = 'test', Contact_Field__c = 'MailingAddress');
         insert new List<Question__c>{
-                q1, q2, q3, q4
+                q1, q2, q3, q4, q5, q6, q7
         };
 
         Question_Dependency__c qd1 = new Question_Dependency__c(Question__c = q1.Id, Controlling_Question__c = q2.Id, Value__c = 'Test', Question_Dependency_Integration_Ext_Id__c = ApplicationUtilities.getUUID());
@@ -104,22 +106,20 @@ public class ApplicationQuestion_TEST {
         Application__c app = [SELECT Id, Applicant_Type__c, Citizenship__c, Student_Type__c, School_College__c, Delivery_Type__c, Degree_Type__c, Residency__c FROM Application__c LIMIT 1];
         Account acc = [SELECT Id FROM Account LIMIT 1];
         List<Question__c> questions = [
-            SELECT Id, 
-                Name, 
-                Lookup_Where_Clause__c, 
-                Name_Field_API_Name__c, 
-                Additional_Field_Validation__c, 
-                URL_Parameter__c, 
-                Lookup_Object__c, 
-                Display_as_Picklist__c, 
-                RecordType.DeveloperName, 
-                Placeholder__c,
-                Label__c,
-                Help_Text__c,
-                Assistive_Text__c
-            FROM Question__c 
-            WHERE Name = 'Test4' OR Name = 'Test5' 
-            LIMIT 2
+                SELECT Id,
+                        Name,
+                        Lookup_Where_Clause__c,
+                        Name_Field_API_Name__c,
+                        Additional_Field_Validation__c,
+                        URL_Parameter__c,
+                        Lookup_Object__c,
+                        Display_as_Picklist__c,
+                        RecordType.DeveloperName,
+                        Placeholder__c,
+                        Label__c,
+                        Help_Text__c,
+                        Assistive_Text__c
+                FROM Question__c
         ];
         Question__c question;
         Question__c question2;
@@ -134,30 +134,38 @@ public class ApplicationQuestion_TEST {
         ApplicationQuestion appQuestion = new ApplicationQuestion(student, app, 'Test Label', app, 'Contact__c', 'Test Placeholder');
 
         Program__c program = new Program__c(
-            Name = 'Test Program',
-            Hide_Citizenship__c = 'International',
-            Hide_Applicant_Type__c = 'First-Year',
-            Hide_Student_Type__c = 'Software',
-            Delivery_Type__c = 'Online',
-            Degree_Type__c = 'Non-Degree',
-            Residency__c = 'Resident'
+                Name = 'Test Program',
+                Hide_Citizenship__c = 'International',
+                Hide_Applicant_Type__c = 'First-Year',
+                Hide_Student_Type__c = 'Software',
+                Delivery_Type__c = 'Online',
+                Degree_Type__c = 'Non-Degree',
+                Residency__c = 'Resident'
         );
         Program__c program2 = new Program__c(
-            Name = 'Test Program 2'
+                Name = 'Test Program 2'
         );
-        insert new List<Program__c>{program, program2};
+        insert new List<Program__c>{
+                program, program2
+        };
 
         PageReference pageRef = Page.ApplicationPortal;
         pageRef.getParameters().put('test', '123');
         Test.setCurrentPage(pageRef);
 
         Test.startTest();
-        ApplicationQuestionGroup appQuestionGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{appQuestion});
+        ApplicationQuestionGroup appQuestionGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+                appQuestion
+        });
 
-        ApplicationQuestionSection appQuestionSection = new ApplicationQuestionSection(new List<ApplicationQuestionGroup>{appQuestionGroup});
+        ApplicationQuestionSection appQuestionSection = new ApplicationQuestionSection(new List<ApplicationQuestionGroup>{
+                appQuestionGroup
+        });
         appQuestion.section = appQuestionSection;
-        appQuestion.addIntendedProgramFilteringList(new List<Program__c>{program, program2});
-        
+        appQuestion.addIntendedProgramFilteringList(new List<Program__c>{
+                program, program2
+        });
+
         appQuestion.acc = acc;
 
         Map<String, String> submap = new Map<String, String>();
@@ -201,14 +209,18 @@ public class ApplicationQuestion_TEST {
         appQuestion.setTextEncryptedValue('test encrypt');
         String decrypt = appQuestion.getTextEncryptedValue();
 
-        appQuestion.addControllingQuestion(new ApplicationQuestion(student, app, 'Test Label', app, 'Contact__c', 'Test Placeholder'), new Set<String>{'test value'});
-        
+        appQuestion.addControllingQuestion(new ApplicationQuestion(student, app, 'Test Label', app, 'Contact__c', 'Test Placeholder'), new Set<String>{
+                'test value'
+        });
+
         Map<ApplicationQuestion, Set<String>> controllingQuestions = new Map<ApplicationQuestion, Set<String>>();
-        controllingQuestions.put(new ApplicationQuestion(student, app, 'Test Label', app, 'Contact__c', 'Test Placeholder'), new Set<String>{'test value'});
+        controllingQuestions.put(new ApplicationQuestion(student, app, 'Test Label', app, 'Contact__c', 'Test Placeholder'), new Set<String>{
+                'test value'
+        });
         appQuestion.addControllingQuestions(controllingQuestions);
 
         Boolean multiControlQuestion = appQuestion.checkMultiControllingQuestion();
-        
+
         appQuestion.question = question;
 
         Boolean enabled = ApplicationQuestion.getStateAndCountryPicklistEnabled();
@@ -216,20 +228,24 @@ public class ApplicationQuestion_TEST {
 
         SelectOption selectOption1 = new SelectOption('', '--None--');
         SelectOption selectOption2 = new SelectOption(program2.Id, 'Test Program 2');
-        List<SelectOption> expectedSelectOptions = new List<SelectOption>{selectOption1, selectOption2};
+        List<SelectOption> expectedSelectOptions = new List<SelectOption>{
+                selectOption1, selectOption2
+        };
 
         SelectOption selectOption3 = new SelectOption('test dep key', 'test dep value');
-        List<SelectOption> depSelectOptions = new List<SelectOption>{selectOption1, selectOption3};
+        List<SelectOption> depSelectOptions = new List<SelectOption>{
+                selectOption1, selectOption3
+        };
         Map<String, List<SelectOption>> expectedDependentOptions = new Map<String, List<SelectOption>>();
         expectedDependentOptions.put('test dep key', depSelectOptions);
 
         Question_Response__c expectedResponse = new Question_Response__c(
-            PopulatedOn__c = currentDateTime,
-            IsPopulated__c = true,
-            ValueDateTime__c = currentDateTime,
-            ValueDate__c = currentDate,
-            ValueText__c = 'test value',
-            ValueTextEncrypted__c = 'XXXXXXXXXXXX'
+                PopulatedOn__c = currentDateTime,
+                IsPopulated__c = true,
+                ValueDateTime__c = currentDateTime,
+                ValueDate__c = currentDate,
+                ValueText__c = 'test value',
+                ValueTextEncrypted__c = 'XXXXXXXXXXXX'
         );
 
         System.assertEquals(expectedSelectOptions, selectOptions);
@@ -241,15 +257,182 @@ public class ApplicationQuestion_TEST {
         System.assertEquals(String.valueOf(expectedResponse), String.valueOf(appQuestion.response));
         System.assertEquals(currentDateTime, dt);
         System.assertEquals(currentDate, d);
-        System.assertEquals(new List<String>{'test value'}, picklists);
+        System.assertEquals(new List<String>{
+                'test value'
+        }, picklists);
         System.assertEquals('test encrypt', decrypt);
         System.assertEquals('ValueText__c', appQuestion.defaultFieldName);
         System.assertEquals('validateName', appQuestion.additionalValidation);
         System.assertEquals(null, appQuestion.responseId);
         System.assertEquals(false, multiControlQuestion);
         System.assertEquals(app.Id, appQuestion.controllingQuestion.application.Id);
-        System.assertEquals(new Set<String>{'test value'}, appQuestion.showValues);
+        System.assertEquals(new Set<String>{
+                'test value'
+        }, appQuestion.showValues);
         System.assertEquals(1, appQuestion.multiControllingQuestions.size());
         System.assertEquals(true, enabled);
     }
+
+    @IsTest
+    static void testPopulateContactFieldOnResponse() {
+        // Prepare data
+        Contact student = [
+                SELECT Id,
+                        MailingStreet,
+                        MailingCity,
+                        MailingState,
+                        MailingPostalCode,
+                        MailingCountry,
+                        MailingAddress
+                FROM Contact
+                LIMIT 1
+        ];
+
+        Application__c app = [
+                SELECT
+                        Id,
+                        Applicant_Type__c,
+                        Citizenship__c,
+                        Student_Type__c,
+                        School_College__c,
+                        Delivery_Type__c,
+                        Degree_Type__c,
+                        Residency__c,
+                        Generic_Filter_1__c,
+                        Generic_Filter_2__c,
+                        Generic_Filter_3__c,
+                        Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c,
+                        Application_Status__c
+                FROM Application__c
+                LIMIT 1
+        ];
+        Account acc = [SELECT Id FROM Account LIMIT 1];
+        Question__c question = [
+                SELECT RecordType.DeveloperName,
+                        RecordType.Name,
+                        Contact_Field__c,
+                        Application_Field__c,
+                        URL_Parameter__c,
+                        Length__c,
+                        Placeholder__c,
+                        Label__c,
+                        Help_Text__c,
+                        Assistive_Text__c,
+                        Active__c,
+                        Intended_Program__c,
+                        Applicant_Type__c,
+                        Citizenship__c,
+                        School_College__c,
+                        Delivery_Type__c,
+                        Residency__c,
+                        Student_Type__c,
+                        Degree_Type__c,
+                        Generic_Filter_1__c,
+                        Generic_Filter_2__c,
+                        Generic_Filter_3__c,
+                        Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c,
+                        Application_Status__c,
+                        Hardcoded_Value__c,
+                        Related_Object_Field__c,
+                        Required__c,
+                        New_Reference_Field__c,
+                        Lookup_Object__c,
+                        Editable_Application_Status__c,
+                        Display_as_Picklist__c,
+                        Payment_Gateway__c,
+                        Payment_Type__c,
+                        Payment_Custom_Amount__c,
+                        Payment_name__c,
+                        Additional_Field_Validation__c
+                FROM Question__c
+                WHERE Name = 'Test7'
+                LIMIT 1
+        ];
+
+        ApplicationQuestion appQuestion = new ApplicationQuestion(student, app, 'Test Label', student, 'MailingAddress', 'Test Placeholder');
+
+        Program__c program = new Program__c(
+                Name = 'Test Program',
+                Hide_Citizenship__c = 'International',
+                Hide_Applicant_Type__c = 'First-Year',
+                Hide_Student_Type__c = 'Software',
+                Delivery_Type__c = 'Online',
+                Degree_Type__c = 'Non-Degree',
+                Residency__c = 'Resident'
+        );
+        Program__c program2 = new Program__c(
+                Name = 'Test Program 2'
+        );
+        insert new List<Program__c>{
+                program, program2
+        };
+
+        PageReference pageRef = Page.ApplicationPortal;
+        pageRef.getParameters().put('test', '123');
+        Test.setCurrentPage(pageRef);
+
+        Test.startTest();
+        ApplicationQuestionGroup appQuestionGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
+                appQuestion
+        });
+
+        ApplicationQuestionSection appQuestionSection = new ApplicationQuestionSection(new List<ApplicationQuestionGroup>{
+                appQuestionGroup
+        });
+        appQuestion.section = appQuestionSection;
+        appQuestion.addIntendedProgramFilteringList(new List<Program__c>{
+                program, program2
+        });
+
+        appQuestion.acc = acc;
+        appQuestion.addQuestionObject(question);
+        appQuestion.showRelatedLabel(true);
+
+        Datetime currentDateTime = System.now();
+        appQuestion.setDatetimeValue(currentDateTime);
+        Datetime dt = appQuestion.getDatetimeValue();
+
+        Date currentDate = System.today();
+        appQuestion.setDateValue(currentDate);
+        Date d = appQuestion.getDateValue();
+
+        appQuestion.question = question;
+        Boolean enabled = ApplicationQuestion.getStateAndCountryPicklistEnabled();
+
+        String usCountryValue = 'United States';
+        String usStateValue = 'Minnesota';
+        if (ApplicationTESTUtilities.doesPicklistContain(Schema.Interaction__c.Country__c, 'United States of America')) {
+            usCountryValue = 'United States of America';
+        }
+        if (ApplicationTESTUtilities.doesPicklistContain(Schema.Interaction__c.State__c, 'Minnesota')) {
+            usStateValue = 'MN';
+        }
+
+        appQuestion.response = new Question_Response__c(
+                State__c = usStateValue,
+                Country__c = usCountryValue,
+                PostalCode__c = '12345',
+                City__c = 'Test City',
+                Street__c = '123 Test St'
+        );
+
+        appQuestion.processValue();
+
+
+        Test.stopTest();
+
+        // Asserts
+        System.assertEquals('123 Test St', appQuestion.contact.MailingStreet);
+        System.assertEquals('Test City', appQuestion.contact.MailingCity);
+        System.assertEquals('12345', appQuestion.contact.MailingPostalCode);
+    }
+
 }

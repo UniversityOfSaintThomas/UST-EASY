@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Graduate_Scholarship_Type__c</fullName>
+    <description>Graduate Scholarship Type controlled by School</description>
+    <externalId>false</externalId>
+    <label>Graduate Scholarship Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Graduate_School__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Alumni Referral</fullName>
+                <default>false</default>
+                <label>Alumni Referral</label>
+            </value>
+            <value>
+                <fullName>Corporate Partners</fullName>
+                <default>false</default>
+                <label>Corporate Partners</label>
+            </value>
+            <value>
+                <fullName>Dean’s</fullName>
+                <default>false</default>
+                <label>Dean’s</label>
+            </value>
+            <value>
+                <fullName>DEI</fullName>
+                <default>false</default>
+                <label>DEI</label>
+            </value>
+            <value>
+                <fullName>Event Attendance</fullName>
+                <default>false</default>
+                <label>Event Attendance</label>
+            </value>
+            <value>
+                <fullName>Guaranteed (For HC &amp; EX)</fullName>
+                <default>false</default>
+                <label>Guaranteed (For HC &amp; EX)</label>
+            </value>
+            <value>
+                <fullName>MN Private College</fullName>
+                <default>false</default>
+                <label>MN Private College</label>
+            </value>
+            <value>
+                <fullName>Nonprofit</fullName>
+                <default>false</default>
+                <label>Nonprofit</label>
+            </value>
+            <value>
+                <fullName>Nursing</fullName>
+                <default>false</default>
+                <label>Nursing</label>
+            </value>
+            <value>
+                <fullName>Tommie Alumni</fullName>
+                <default>false</default>
+                <label>Tommie Alumni</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>Alumni Referral</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>Corporate Partners</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>Dean’s</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>DEI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>Event Attendance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>Guaranteed (For HC &amp; EX)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>MN Private College</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>Nonprofit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>Nursing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Opus College of Business</controllingFieldValue>
+            <valueName>Tommie Alumni</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

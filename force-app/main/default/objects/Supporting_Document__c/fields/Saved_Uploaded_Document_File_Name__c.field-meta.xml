@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Saved_Uploaded_Document_File_Name__c</fullName>
+    <description>The filename of the document saved into Salesforce. This may have be different the the original filename if the file prefix is set on the requirement item.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The filename of the document saved into Salesforce. This may have be different the the original filename if the file prefix is set on the requirement item.</inlineHelpText>
+    <label>Saved Uploaded Document File Name</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

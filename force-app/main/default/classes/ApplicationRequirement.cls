@@ -27,7 +27,6 @@ public class ApplicationRequirement {
     public Boolean isInvalid { get; set; }
     public Boolean ignoreExternalFilter { get; set; }
     public EASYApplicationInfo appInfo { get; set; }
-
     public Boolean allowSubmit { get; set; }
     public Boolean allowConfirm { get; set; }
     public transient String additionalDataString { get; set; }
@@ -83,12 +82,6 @@ public class ApplicationRequirement {
     }
 
     public ApplicationRequirement(Id contactId, Id applicationId, Id requirementId, List<Requirement_Item__c> items, List<Requirement_Response__c> requirementResponses, List<Question_Response__c> questionResponses, List<Question_Dependency__c> questionDependencies) {
-/*
-        appInfo = this.appInfo;
-        appInfo.contactId = contactId;
-        appInfo.appId = applicationId;
-        appInfo.requirementId = requirementId;
-        ApplicationUtilities.createEncryptedCookie(JSON.serialize(appInfo));*/
         this.items = items;
         this.requirementResponses = requirementResponses;
         this.questionResponses = questionResponses;
@@ -142,6 +135,7 @@ public class ApplicationRequirement {
         if ((String.isNotBlank(appInfo.appId) && app == null)) {
             String query = applicationHelper.getApplicationFields(items);
             query = 'SELECT ' + query + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
+            System.debug('query: ' + query);
             app = ((List<Application__c>) Database.query(query)).get(0);
         }
 
@@ -272,12 +266,6 @@ public class ApplicationRequirement {
                 relatedFieldDescribes.put(result.getName(), result.fields.getMap());
             }
         }
-/*
-        moved to checklist helper
-        if (preventUpdates == false) {
-            insert newResponses;
-        }
-*/
 
         section = new ApplicationQuestionSection(con, app, riLst, dQuestions, responses, dResponses, relatedFieldDescribes);
 
@@ -402,11 +390,7 @@ public class ApplicationRequirement {
                             }
                         }
                     }
-                } 
-                // else if (addData == null && g.att != null && String.isEmpty(g.att.Title) && g.item.Required__c.contains(app.Application_Status__c)) {
-                //     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Upload required.'));
-                //     hasError = true;
-                // }
+                }
             }
         }
 
@@ -420,7 +404,10 @@ public class ApplicationRequirement {
         Map<Id, Id> requirement_item_ids_of_external_email_rrs = new Map<Id, Id>();
         for (ApplicationQuestionGroup aqg : section.groups) {
             if (aqg.response != null && aqg.isEditable) {
-                aqg.response.Viewed__c = true;
+                //Skip marking requirement response as viewed as directed by requirement
+                if (!aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c) {
+                    aqg.response.Viewed__c = true;
+                }
                 if (String.isNotBlank(aqg.response.External_Email__c)) {
                     requirement_item_ids_of_external_email_rrs.put(aqg.response.Requirement_Item__c, aqg.response.Id);
                 }
@@ -444,10 +431,8 @@ public class ApplicationRequirement {
                         Question_Response__c qResp = q.response;
                         qResp.Application__c = app.Id;
 
-                        // Clone Question Response and apply ID if this is an external user
-                        // in order to get around the restriction of external users not being
-                        // able to edit objects.
-                        if (appInfo.isExternalUser) {
+                        // Clone Question Response and apply ID if this user is a guest user to let guest user edit object
+                        if (Auth.CommunitiesUtil.isGuestUser()) {
                             qResp = q.response.clone(false, true, false, false);
                             qResp.Id = q.responseId;
                         }

@@ -13,10 +13,6 @@
     <columns>UPDATEDBY_USER</columns>
     <columns>PopulatedOn__c</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>Question_Name__c</field>
-        <operation>contains</operation>
-        <value>Confirm Program and Term</value>
-    </filters>
     <label>All</label>
+    <language>en_US</language>
 </ListView>

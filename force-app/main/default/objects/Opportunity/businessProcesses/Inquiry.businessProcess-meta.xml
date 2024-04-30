@@ -23,4 +23,8 @@
         <fullName>Suspect</fullName>
         <default>false</default>
     </values>
+    <values>
+        <fullName>Withdrawn</fullName>
+        <default>false</default>
+    </values>
 </BusinessProcess>

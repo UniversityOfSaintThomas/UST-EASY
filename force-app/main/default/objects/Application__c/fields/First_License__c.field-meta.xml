@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>First_License__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>First License</label>
     <required>false</required>

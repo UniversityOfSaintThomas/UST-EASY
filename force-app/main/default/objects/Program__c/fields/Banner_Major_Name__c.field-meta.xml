@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Banner_Major_Name__c</fullName>
+    <deprecated>false</deprecated>
     <description>STVMAJR_DESC</description>
     <externalId>false</externalId>
     <inlineHelpText>STVMAJR_DESC</inlineHelpText>

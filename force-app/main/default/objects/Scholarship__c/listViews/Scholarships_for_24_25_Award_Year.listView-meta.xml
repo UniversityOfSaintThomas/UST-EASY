@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scholarships_for_24_25_Award_Year</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Award_Year__c</field>
+        <operation>equals</operation>
+        <value>2425</value>
+    </filters>
+    <label>Scholarships for 24-25 Award Year</label>
+</ListView>

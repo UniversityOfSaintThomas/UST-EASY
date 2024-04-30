@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Clubs_Activities__c</fullName>
+    <description>Field to land data from the Question Response from the student application to the Admissions Application field.</description>
+    <externalId>false</externalId>
+    <label>Clubs/Activities</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Clubs_Activities</valueSetName>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Days_Document_is_Unprocessed__c</fullName>
+    <externalId>false</externalId>
+    <formula>If (ISBLANK(Processed_Date__c), (Today()- Document_Load_Date__c), NULL)</formula>
+    <label>Days Document is Unprocessed</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

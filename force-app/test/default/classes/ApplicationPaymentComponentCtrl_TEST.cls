@@ -213,6 +213,10 @@ private class ApplicationPaymentComponentCtrl_TEST {
                         Generic_Filter_2__c,
                         Generic_Filter_3__c,
                         Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c,
                         Application_Status__c,
                         Hardcoded_Value__c,
                         Related_Object_Field__c,
@@ -255,7 +259,7 @@ private class ApplicationPaymentComponentCtrl_TEST {
 
         String valCode = 'tommiesValidate';
 
-        if (gatewayInfo.size() > 0 ) {
+        if (gatewayInfo.size() > 0) {
             valCode = gatewayInfo[0].Validation_Key__c;
         }
 

@@ -13,7 +13,7 @@
     <customValue>
         <fullName>Affordability/Financial Aid/Business Office Challenges</fullName>
         <default>false</default>
-        <label>Affordability/Financial Aid/Business Office Challenges</label>
+        <label>Affordability</label>
     </customValue>
     <customValue>
         <fullName>Belonging/Connection/Campus Climate</fullName>
@@ -21,9 +21,9 @@
         <label>Belonging/Connection/Campus Climate</label>
     </customValue>
     <customValue>
-        <fullName>Health Challenge (personal or family)</fullName>
+        <fullName>Mental Health</fullName>
         <default>false</default>
-        <label>Health Challenge (personal or family)</label>
+        <label>Mental Health</label>
     </customValue>
     <customValue>
         <fullName>Course Availability/Curriculum/Online Course Environment</fullName>
@@ -69,6 +69,111 @@
         <fullName>Proximity to home (too far)</fullName>
         <default>false</default>
         <label>Proximity to home (too far)</label>
+    </customValue>
+    <customValue>
+        <fullName>Accepted to another school under binding admissions decision</fullName>
+        <default>false</default>
+        <label>Accepted to another school under binding admissions decision</label>
+    </customValue>
+    <customValue>
+        <fullName>Academic Reputation or Ranking</fullName>
+        <default>false</default>
+        <label>Academic Reputation or Ranking</label>
+    </customValue>
+    <customValue>
+        <fullName>Athletic Program</fullName>
+        <default>false</default>
+        <label>Athletic Program</label>
+    </customValue>
+    <customValue>
+        <fullName>Chose Other Institution</fullName>
+        <default>false</default>
+        <label>Chose Other Institution</label>
+    </customValue>
+    <customValue>
+        <fullName>Distance From Home</fullName>
+        <default>false</default>
+        <label>Distance From Home</label>
+    </customValue>
+    <customValue>
+        <fullName>Gap Year/Gap Semester</fullName>
+        <default>false</default>
+        <label>Gap Year/Gap Semester</label>
+    </customValue>
+    <customValue>
+        <fullName>Housing and Dining</fullName>
+        <default>false</default>
+        <label>Housing and Dining</label>
+    </customValue>
+    <customValue>
+        <fullName>Length of Time to Graduate</fullName>
+        <default>false</default>
+        <label>Length of Time to Graduate</label>
+    </customValue>
+    <customValue>
+        <fullName>Multiple App</fullName>
+        <default>false</default>
+        <label>Multiple App</label>
+    </customValue>
+    <customValue>
+        <fullName>Negative Visit Experience</fullName>
+        <default>false</default>
+        <label>Negative Visit Experience</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Level</fullName>
+        <default>false</default>
+        <label>Other Level</label>
+    </customValue>
+    <customValue>
+        <fullName>Religious Identity of the Institution</fullName>
+        <default>false</default>
+        <label>Religious Identity of the Institution</label>
+    </customValue>
+    <customValue>
+        <fullName>Size of School</fullName>
+        <default>false</default>
+        <label>Size of School</label>
+    </customValue>
+    <customValue>
+        <fullName>Social Atmosphere</fullName>
+        <default>false</default>
+        <label>Social Atmosphere</label>
+    </customValue>
+    <customValue>
+        <fullName>Switched to Pathway</fullName>
+        <default>false</default>
+        <label>Switched to Pathway</label>
+    </customValue>
+    <customValue>
+        <fullName>Transferability of Prior College Credit</fullName>
+        <default>false</default>
+        <label>Transferability of Prior College Credit</label>
+    </customValue>
+    <customValue>
+        <fullName>Wants Other Term</fullName>
+        <default>false</default>
+        <label>Wants Other Term</label>
+    </customValue>
+    <customValue>
+        <fullName>Visa Denial</fullName>
+        <default>false</default>
+        <label>Visa Denial</label>
+    </customValue>
+    <customValue>
+        <fullName>Visa Problems (not denial)</fullName>
+        <default>false</default>
+        <label>Visa Problems (not denial)</label>
+    </customValue>
+    <customValue>
+        <fullName>Physical Health</fullName>
+        <default>false</default>
+        <label>Physical Health</label>
+    </customValue>
+    <customValue>
+        <fullName>Did not get into Nursing Program</fullName>
+        <default>false</default>
+        <label>Did not get into Nursing Program</label>
     </customValue>
     <masterLabel>Withdrawal Reasons</masterLabel>
     <sorted>false</sorted>

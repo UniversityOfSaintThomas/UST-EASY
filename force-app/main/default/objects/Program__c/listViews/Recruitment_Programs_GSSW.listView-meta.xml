@@ -3,12 +3,15 @@
     <fullName>Recruitment_Programs_GSSW</fullName>
     <columns>NAME</columns>
     <columns>Program_Major_Concentration__c</columns>
+    <columns>Major_Code__c</columns>
     <columns>Application_Control__c</columns>
     <columns>Degree_Type__c</columns>
     <columns>Applicant_Type__c</columns>
     <columns>Student_Type__c</columns>
     <columns>Application_Fee_Amount__c</columns>
     <columns>Active__c</columns>
+    <columns>RECORDTYPE</columns>
+    <columns>Program_Record_Type__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Program_Record_Type__c</field>
@@ -16,8 +19,13 @@
         <value>Recruitment Program</value>
     </filters>
     <filters>
-        <field>College_Code__c</field>
+        <field>RECORDTYPE</field>
         <operation>equals</operation>
+        <value>Program__c.Recruitment_Program</value>
+    </filters>
+    <filters>
+        <field>Program_Major_Concentration__c</field>
+        <operation>startsWith</operation>
         <value>SW</value>
     </filters>
     <label>Recruitment Programs - GSSW</label>

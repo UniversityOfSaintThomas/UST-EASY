@@ -39,6 +39,10 @@
                 <behavior>Edit</behavior>
                 <field>Display_on_Checklist__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Academic_Level__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -60,6 +64,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Internal_Only_Show_on_Checklist__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Do_Not_Mark_Requirement_as_Viewed__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -108,6 +116,14 @@
                 <behavior>Edit</behavior>
                 <field>Generic_Filter_2__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_5__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_6__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -133,6 +149,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Generic_Filter_4__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_7__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_8__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -250,13 +274,13 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Label__c</fields>
+        <fields>Internal_Requirement_Item__c</fields>
         <fields>RECORDTYPE</fields>
         <fields>Display_Order__c</fields>
         <fields>Active__c</fields>
-        <fields>CREATEDBY_USER</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>UPDATEDBY_USER</fields>
-        <fields>LAST_UPDATE</fields>
+        <fields>Generic_Filter_1__c</fields>
+        <fields>Student_Type__c</fields>
+        <fields>Degree_Type__c</fields>
         <relatedList>Requirement_Item__c.Requirement__c</relatedList>
         <sortField>Display_Order__c</sortField>
         <sortOrder>Asc</sortOrder>

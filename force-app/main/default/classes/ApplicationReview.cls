@@ -8,7 +8,7 @@ public class ApplicationReview {
 
     public List<Requirement__c> reqs { get; set; }
     public Id contactId { get; set; }
-    //public Id applicationId { get; set; }
+    public Id applicationId { get; set; }
     public Application__c app { get; set; }
     public Set<Id> requirementIds { get; set; }
     public List<ApplicationRequirement> arLst { get; set; }
@@ -29,22 +29,16 @@ public class ApplicationReview {
     public ApplicationReview() {
         appInfo = ApplicationUtilities.gatherApplicationInfo();
         questionHolderMap = new Map<String, ApplicationQuestion>();
-        //applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
+        applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
         contactId = [
                 SELECT Contact__c
                 FROM Application__c
-                WHERE Id = :appInfo.appId
+                WHERE Id = :applicationId
                 LIMIT 1
         ].Contact__c;
 
         ApexPages.currentPage().getParameters().put('contactId', contactId);
-        app = [
-                SELECT Id, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c, Citizenship__c,
-                        Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Residency__c, Degree_Type__c,
-                        Application_Control__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c
-                FROM Application__c
-                WHERE Id = :appInfo.appId
-        ];
+        app = [SELECT Id, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c, Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, School_College__c, Residency__c, Degree_Type__c, Application_Control__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Application__c WHERE Id = :applicationId];
         appControl = ApplicationUtilities.getApplicationControls(app.Application_Control__c);
     }
     /*******************************************************************************
@@ -52,24 +46,24 @@ public class ApplicationReview {
     ********************************************************************************/
     public void init() {
         appInfo = ApplicationUtilities.gatherApplicationInfo();
-        //applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
+        applicationId = Id.valueOf(ApexPages.currentPage().getParameters().get('applicationId'));
 
-//        contactId = [
-//                SELECT Contact__c
-//                FROM Application__c
-//                WHERE Id = :appInfo.contactId
-//                LIMIT 1
-//        ].Contact__c;
+        contactId = [
+                SELECT Contact__c
+                FROM Application__c
+                WHERE Id = :applicationId
+                LIMIT 1
+        ].Contact__c;
 
-//        ApexPages.currentPage().getParameters().put('contactId', contactId);
-//        app = [SELECT Id, Application_Control__r.URL_Parameter__c, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c, Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, Residency__c, School_College__c, Degree_Type__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Application__c WHERE Id = :applicationId];
-//        ApexPages.currentPage().getParameters().put('at', app.Application_Control__r.URL_Parameter__c);
+        ApexPages.currentPage().getParameters().put('contactId', contactId);
+        app = [SELECT Id, Application_Control__r.URL_Parameter__c, Intended_Program__r.Name, Intended_Term_of_Entry__r.Name, Intended_Program__c, Applicant_Type__c, Citizenship__c, Delivery_Type__c, Student_Type__c, Application_Status__c, Residency__c, School_College__c, Degree_Type__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c FROM Application__c WHERE Id = :applicationId];
+        ApexPages.currentPage().getParameters().put('at', app.Application_Control__r.URL_Parameter__c);
 
         requirementIds = new Set<Id>();
         for (Requirement_Response__c rr : [
                 SELECT Id, Requirement_Item__r.Requirement__c
                 FROM Requirement_Response__c
-                WHERE Application__c = :appInfo.appId
+                WHERE Application__c = :applicationId
                 AND Requirement_Item__r.Active__c = :true
                 AND Requirement_Item__r.Requirement__r.Active__c = :true
                 AND Requirement_Item__r.Display_on_Admin_Review_Pages__c = :true
@@ -89,14 +83,15 @@ public class ApplicationReview {
                         Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Allow_Text_Entry__c,
                         Related_List_Object__c, Related_List_Object_Master__c, Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Related_Object_Record_Type_ID__c,
                         Holding_Record_Id__c, Internal_Requirement_Item__c, Editable_Application_Status__c, Allow_Supporting_Documentation_Upload__c,
-                        Required_Supporting_Documentation__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, RecordType.Name, (
+                        Required_Supporting_Documentation__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
+                        Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c, (
                         SELECT Id, Active__c, Hardcoded_Value__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c,
                                 Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
                                 Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c,
                                 Lookup_Object__c, Lookup_Where_Clause__c, Contact_Field__c, Application_Field__c, External_Email_Field__c,
                                 Editable_Application_Status__c, URL_Parameter__c, New_Reference_Field__c, Static_Text__c, Name_Field_API_Name__c,
                                 Display_as_Picklist__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
-                                Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c, RecordType.Name
+                                Assistive_Text__c, Related_Object__c, Additional_Field_Validation__c
                         FROM Questions__r
                         WHERE Active__c = :true
                         AND Display_on_Admin_Review_Pages__c = :true
@@ -138,7 +133,7 @@ public class ApplicationReview {
                 )
                 FROM Requirement_Response__c
                 WHERE Requirement_Item__r.Requirement__c IN :requirementIds
-                AND Application__c = :appInfo.appId
+                AND Application__c = :applicationId
                 AND Requirement_Item__r.Display_on_Admin_Review_Pages__c = :true
         ]) {
             if (!rrMap.containsKey(rr.Requirement_Item__r.Requirement__c)) {
@@ -169,15 +164,7 @@ public class ApplicationReview {
 
         //Question responses
         Map<Id, List<Question_Response__c>> qrMap = new Map<Id, List<Question_Response__c>>();
-        for (Question_Response__c qr : [
-                SELECT Id, IsPopulated__c, PopulatedOn__c, Question__r.Requirement_Item__r.Requirement__c, Question__c, Question__r.Required__c,
-                        ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c,
-                        ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c,
-                        PostalCode__c
-                FROM Question_Response__c
-                WHERE Question__c IN :questionItemSet
-                AND Requirement_Response__r.Application__c = :appInfo.appId
-        ]) {
+        for (Question_Response__c qr : [SELECT Id, IsPopulated__c, PopulatedOn__c, Question__r.Requirement_Item__r.Requirement__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c, ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c, ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c, Street__c, City__c, State__c, Country__c, PostalCode__c FROM Question_Response__c WHERE Question__c IN :questionItemSet AND Requirement_Response__r.Application__c = :applicationId]) {
             if (!qrMap.containsKey(qdReqMap.get(qr.Question__c))) {
                 qrMap.put(qdReqMap.get(qr.Question__c), new List<Question_Response__c>());
             }
@@ -217,10 +204,10 @@ public class ApplicationReview {
                 questionResponses = new List<Question_Response__c>();
             }
 
-            ApplicationRequirement ar = new ApplicationRequirement(contactId, appInfo.appId, rid, items, requirementResponses, questionResponses, questionDependencies);
+            ApplicationRequirement ar = new ApplicationRequirement(contactId, applicationId, rid, items, requirementResponses, questionResponses, questionDependencies);
             ar.preventUpdates = true;
             arLst.add(ar);
-            //ar.applicationRequirementInit();
+            ar.applicationRequirementInit();
         }
 
         //Application_Review__c
@@ -229,12 +216,12 @@ public class ApplicationReview {
             fieldSetFields.add(f.getFieldPath());
             questionHolderMap.put(f.getFieldPath(), new ApplicationQuestion(f, review, Application_Review__c.SObjectType));
         }
-        List<Application_Review__c> reviewLst = Database.query('SELECT Id ' + (fieldSetFields.size() > 0 ? ', ' : '') + String.join(new List<String>(fieldSetFields), ', ') + ' FROM Application_Review__c WHERE Application__c = :appInfo.appId AND CreatedById = \'' + UserInfo.getUserId() + '\' LIMIT 1');
+        List<Application_Review__c> reviewLst = Database.query('SELECT Id ' + (fieldSetFields.size() > 0 ? ', ' : '') + String.join(new List<String>(fieldSetFields), ', ') + ' FROM Application_Review__c WHERE Application__c = :applicationId AND CreatedById = \'' + UserInfo.getUserId() + '\' LIMIT 1');
         try {
             if (reviewLst.size() > 0) {
                 review = reviewLst[0];
             } else {
-                review = new Application_Review__c(Application__c = appInfo.appId);
+                review = new Application_Review__c(Application__c = applicationId);
                 insert review;
             }
         } catch (DmlException e) {
@@ -249,7 +236,7 @@ public class ApplicationReview {
     public PageReference submit() {
         try {
             update review;
-            PageReference pr = new PageReference('/' + appInfo.appId);
+            PageReference pr = new PageReference('/' + applicationId);
             pr.setRedirect(true);
             return pr;
         } catch (DmlException e) {

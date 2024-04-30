@@ -175,7 +175,19 @@ public class checklistHelper_TEST {
 
     @IsTest
     public static void testChecklistRequirements() {
-        Application__c app = [SELECT Id, Applicant_Type__c FROM Application__c LIMIT 1];
+        Application__c app = [
+                SELECT Id,
+                        Applicant_Type__c ,
+                        Generic_Filter_1__c,
+                        Generic_Filter_2__c,
+                        Generic_Filter_3__c,
+                        Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c
+                FROM Application__c
+                LIMIT 1];
         Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
         List<Requirement__c> reqs = [
                 SELECT Id,

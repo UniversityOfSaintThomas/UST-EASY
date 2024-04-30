@@ -1,0 +1,20 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 11/2/2023.
+ -->
+
+<!-- App Review Nav -->
+<template>
+    <lightning-vertical-navigation onselect={handleMenuClick} selected-item={selectedNav}>
+        <template lwc:if={menu}>
+            <lightning-vertical-navigation-section>
+                <template for:each={menu.requirements} for:item="req">
+                    <template lwc:if={req.requirement}>
+                        <template lwc:if={req.requirement.Label__c}>
+                            <lightning-vertical-navigation-item label={req.requirement.Label__c} name={req.requirement.Id} key={req.requirement.Id}></lightning-vertical-navigation-item>
+                        </template>
+                    </template>
+                </template>
+            </lightning-vertical-navigation-section>
+        </template>
+    </lightning-vertical-navigation>
+</template>

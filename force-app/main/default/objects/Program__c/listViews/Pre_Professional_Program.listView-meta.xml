@@ -7,6 +7,7 @@
     <columns>Recruitment_Program__c</columns>
     <columns>OBJECT_ID</columns>
     <columns>Program_Record_Type__c</columns>
+    <columns>Program_Major_Concentration__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Program_Type__c</field>
@@ -14,5 +15,4 @@
         <value>Pre-Professional</value>
     </filters>
     <label>Pre-Professional Program</label>
-    <language>en_US</language>
 </ListView>

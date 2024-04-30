@@ -147,7 +147,7 @@
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
+    <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
@@ -185,6 +185,8 @@
         <searchResultsAdditionalFields>Scholarship_Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Scholarship_Date_Started__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Scholarship_Date_Submitted__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LAST_UPDATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

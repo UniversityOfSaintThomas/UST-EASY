@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Populate_Amount_and_Percentage</fullName>
+    <active>true</active>
+    <description>When completing the award record users should be able to input either the Award Amount or the Award % but should NOT be required to input both to be able to save.</description>
+    <errorConditionFormula>(!ISNULL(Award_Amount__c))&amp;&amp;(!ISNULL(Award_Percentage__c))</errorConditionFormula>
+    <errorDisplayField>Award_Amount__c</errorDisplayField>
+    <errorMessage>When completing the award record users should be able to input either the Award Amount or the Award % but should NOT be required to input both to be able to save.</errorMessage>
+</ValidationRule>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Related_List_Where_Clause__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>SOQL WHERE clause to filter existing data that gets displayed to an applicant (e.g. only High Schools get displayed from the full Education History)</inlineHelpText>
     <label>Related List Where Clause</label>

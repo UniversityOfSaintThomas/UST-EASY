@@ -54,7 +54,7 @@
                         </article>
                     </apex:outputPanel>
 
-                    <apex:outputPanel rendered="{!appInfo.allowConfirm}" layout="none">
+<!--                    <apex:outputPanel rendered="{!appInfo.allowConfirm}" layout="none">
                         <article class="slds-card slds-m-bottom_medium">
                             <div class="slds-card__header slds-grid">
                                 <header>
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </article>
-                    </apex:outputPanel>
+                    </apex:outputPanel>-->
 
                     <nav class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_x-small">
                         <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">

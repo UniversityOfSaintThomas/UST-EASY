@@ -11,10 +11,9 @@
         <label>MSW Accelerated</label>
     </customValue>
     <customValue>
-        <fullName>Accepted Incomplete</fullName>
+        <fullName>Dual Law Degree</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Accepted Incomplete</label>
+        <label>Dual Law Degree</label>
     </customValue>
     <customValue>
         <fullName>Accepted Probationally</fullName>
@@ -147,6 +146,12 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Withdrawn Waitlisted</label>
+    </customValue>
+    <customValue>
+        <fullName>Accepted Incomplete</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Accepted Incomplete</label>
     </customValue>
     <customValue>
         <fullName>Accepted Conditionally and Probationally</fullName>

@@ -28,24 +28,31 @@
             </apex:outputPanel>
 
             <apex:outputText escape="false" value="{!widget.Scripts__c}" rendered="{!If(NOT(ISBLANK(widget.Scripts__c)), true, false)}"/>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist' }">
                 <c:ApplicationChecklist appInfo="{!appInfo}" checklistItems="{!checklistItems}" widget="{!widget}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Progress Bar' }">
                 <c:ApplicationProgressBar appInfo="{!appInfo}" reqs="{!checklistItems}" widget="{!widget}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Finder' }">
                 <c:AdmissionsApplicationFinder appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'User Info Login/Logout' }">
-                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}" />
+                <c:UserInfoLogoutWidget appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Counselor Information' }">
                 <c:CounselorInfoWidget appInfo="{!appInfo}" widget="{!widget}" />
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Checklist Multiple' }">
                 <c:ApplicationChecklistMultiple appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
+
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'List of Applications' }">
                 <c:ApplicationList appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
             </apex:outputPanel>

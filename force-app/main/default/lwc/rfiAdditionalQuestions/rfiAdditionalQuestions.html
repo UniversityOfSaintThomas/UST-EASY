@@ -1,0 +1,124 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 12/13/2023.
+ -->
+
+<!-- Rfi Additional Questions -->
+<template>
+    <template lwc:if={showDataTable}>
+        <div class="slds-grid slds-wrap slds-m-around_small">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <lightning-datatable
+                        key-field="id"
+                        show-row-number-column
+                        data={questionJSON}
+                        hide-checkbox-column
+                        columns={columns}
+                        class='actionButtons'
+                        onrowaction={callRowAction}
+                >
+                </lightning-datatable>
+            </div>
+        </div>
+    </template>
+
+    <div class="slds-box_border slds-m-around_small slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+            <form>
+                <lightning-card title="Add a Question" icon-name="utility:add">
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                            <!-- Get what type of question it is -->
+                            <lightning-combobox
+                                    name="questionType"
+                                    label="Question Type"
+                                    placeholder="Select an option"
+                                    options={questionTypes}
+                                    onchange={handleChange}
+                                    required>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                            <!-- Get what type of question it is -->
+                            <lightning-combobox
+                                    name="position"
+                                    label="Position"
+                                    placeholder="Select an option"
+                                    options={positionOptions}
+                                    onchange={handleChange}
+                                    required>
+                            </lightning-combobox>
+                        </div>
+                        <template if:false={isStaticContent}>
+                            <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                                <!-- Get all Lead fields and choose which one to apply to the additional questions -->
+                                <lightning-combobox
+                                        name="fieldToApplyTo"
+                                        label="Lead Field to Apply to"
+                                        placeholder="Select an option"
+                                        options={leadFields}
+                                        onchange={handleChange}
+                                        required>
+                                </lightning-combobox>
+                            </div>
+                        </template>
+
+                        <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                            <!-- Get the label content for the additional questions -->
+                            <lightning-input
+                                    label='Question Label'
+                                    name="questionLabel"
+                                    onchange={handleChange}
+                                    required>
+                            </lightning-input>
+                        </div>
+
+                        <template if:false={isStaticContent}>
+                            <template if:true={assistiveTextRequired}>
+                                <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                                    <!-- Get the label content for the additional questions -->
+                                    <lightning-input
+                                            label='Assistive Text'
+                                            name="assistiveText"
+                                            onchange={handleChange}
+                                            required={assistiveTextRequired}
+                                    >
+                                    </lightning-input>
+                                </div>
+                            </template>
+                        </template>
+                        <template lwc:if={isPicklist}>
+                            <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                                <lightning-textarea name="picklistValues"
+                                                    label="Picklist Values"
+                                                    onchange={handleChange}
+                                                    required>
+                                </lightning-textarea>
+                            </div>
+                        </template>
+                        <template lwc:if={isStaticContent}>
+                            <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                                <lightning-input-rich-text
+                                        label='Static Content'
+                                        name="staticContent"
+                                        onchange={handleChange}
+                                >
+                                </lightning-input-rich-text>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Button to submit the additional question -->
+                    <p slot="footer">
+                        <lightning-button
+                                label="Add Question"
+                                name="Submit"
+                                onclick={validInput}
+                                icon-name="utility:add"
+                                variant="brand">
+                        </lightning-button>
+                    </p>
+                </lightning-card>
+            </form>
+        </div>
+    </div>
+</template>

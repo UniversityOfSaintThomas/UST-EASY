@@ -3,12 +3,27 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>Active__c</columns>
-    <columns>Application_Status__c</columns>
-    <columns>Viewing_Requirement__c</columns>
     <columns>Degree_Type__c</columns>
+    <columns>Residency__c</columns>
     <columns>Citizenship__c</columns>
+    <columns>Student_Type__c</columns>
     <columns>LAST_UPDATE</columns>
     <columns>Application_Control__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>contains</operation>
+        <value>recommendation</value>
+    </filters>
+    <filters>
+        <field>Active__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>NAME</field>
+        <operation>notContain</operation>
+        <value>UG</value>
+    </filters>
     <label>All</label>
 </ListView>

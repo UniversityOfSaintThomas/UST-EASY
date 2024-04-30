@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Major_3__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
     <description>Selected on the application</description>
     <externalId>false</externalId>
     <inlineHelpText>Selected on the application</inlineHelpText>

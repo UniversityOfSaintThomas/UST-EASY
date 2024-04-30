@@ -151,10 +151,8 @@ public class ApplicationRequirement {
         if (con == null) {
             if (appInfo.contactId != null) {
                 String query = applicationHelper.getApplicationContactFields(items);
-    System.debug('LOOK QUERY HERE YEN 1: '+query);
                 query = 'SELECT ' + query + ' FROM Contact WHERE Id = \'' + appInfo.contactId + '\'';
                 con = ((List<Contact>) Database.query(query)).get(0);
-    System.debug('LOOK CON HERE YEN 2: '+json.serializePretty(con));
             }
         }
 
@@ -458,13 +456,13 @@ public class ApplicationRequirement {
         } catch (Exception ex) {
             System.debug(ex.getMessage());
         }
-//        try {
-        System.debug('LOOK CON HERE YEN 3: '+ json.serializePretty(con));
+
+        try {
             update con;
-//        } catch (Exception ex) {
-//            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, ex.getMessage()));
-//            System.debug(ex.getMessage());
-//        }
+        } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, ex.getMessage()));
+            System.debug(ex.getMessage());
+        }
 
         try {
 

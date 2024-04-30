@@ -456,6 +456,7 @@ public class ApplicationRequirement {
         } catch (Exception ex) {
             System.debug(ex.getMessage());
         }
+
         try {
             update con;
         } catch (Exception ex) {

@@ -186,6 +186,7 @@ public with sharing class applicationHelper {
                     contactFields.add(q.Contact_Field__c.toLowerCase());
                 }
             }
+
         }
         fields = String.join(new List<String>(contactFields), ',');
         return fields;

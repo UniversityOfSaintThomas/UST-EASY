@@ -120,6 +120,8 @@ public class ApplicationQuestionGroup_TEST {
                 Requirement__c = req.Id,
                 Name = 'Test RI 2',
                 Active__c = true,
+                Uploaded_Document_Object__c = 'Supporting Documents',
+                File_Name_Prefix__c = 'TEST_DOC',
                 RecordTypeId = rtMapRI.get('Document_Upload'),
                 Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID()
         );
@@ -285,9 +287,10 @@ public class ApplicationQuestionGroup_TEST {
                         Generic_Filter_5__c,
                         Generic_Filter_6__c,
                         Generic_Filter_7__c,
-                        Generic_Filter_8__c,
-                (SELECT Id FROM ContentDocumentLinks)
-                FROM Application__c LIMIT 1];
+                        Generic_Filter_8__c, (SELECT Id FROM ContentDocumentLinks)
+                FROM Application__c
+                LIMIT 1
+        ];
         Requirement_Item__c reqItem = [
                 SELECT Id,
                         RecordType.DeveloperName,
@@ -459,6 +462,7 @@ public class ApplicationQuestionGroup_TEST {
         SObject newReferenceObject = appQuestionGroup.newReferenceObject;
         appQuestionGroup.newReferenceObjectSelectedWrapper = String.valueOf(student.Id);
         appQuestionGroup.newReferenceObjectSelectedWrapperName = String.valueOf(student.Id);
+        appQuestionGroup.addNewReferenceObject();
         Boolean isInternal = appQuestionGroup.isInternal;
         String instructions = appQuestionGroup.instructions;
         Map<String, Map<String, Object>> fieldResultMap = appQuestionGroup.fieldResultMap;
@@ -506,6 +510,235 @@ public class ApplicationQuestionGroup_TEST {
         System.assertEquals(expectedFieldResultMap, fieldResultMap);
         System.assertEquals(true, creatingNewRelatedRecord);
         System.assertEquals(student.Id, selectedRelatedId);
+    }
+
+
+    @IsTest
+    static void testSupportingDocuments() {
+        // Setup test data
+
+        Contact student = [SELECT Id, FirstName, LastName FROM Contact WHERE FirstName = 'TestFirst' AND LastName = 'Student' AND Email = 'testfirst@student.com' LIMIT 1];
+        Application__c app = [
+                SELECT Id,
+                        Name,
+                        Contact__c,
+                        Application_Status__c,
+                        Generic_Filter_1__c,
+                        Generic_Filter_2__c,
+                        Generic_Filter_3__c,
+                        Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c
+                FROM Application__c
+                WHERE Contact__c = :student.Id
+                LIMIT 1
+        ];
+
+        Requirement__c req = [SELECT Id FROM Requirement__c LIMIT 1];
+
+        RecordType rt = [SELECT Id, DeveloperName FROM RecordType WHERE SobjectType = 'Requirement_Item__c' AND DeveloperName = 'Document_Upload' LIMIT 1];
+        System.debug('rt: ' + JSON.serializePretty(rt));
+
+        Requirement_Item__c reqItem = new Requirement_Item__c(
+                Requirement__c = req.Id,
+                Name = 'Upload Test',
+                Active__c = true,
+                RecordTypeId = rt.Id,
+                File_Name_Prefix__c = 'TEST_DOC',
+                Uploaded_Document_Object__c = 'Supporting Documents',
+                Allow_Text_Entry__c = true,
+                Viewing_Requirement__c = true,
+                Display_on_Admin_Review_Pages__c = true,
+                Display_on_Checklist__c = true,
+                Instructions__c = 'Upload a document',
+                Label__c = 'Upload',
+                Requirement_Item_Integration_Ext_Id__c = ApplicationUtilities.getUUID(),
+                Internal_Only__c = true
+        );
+        insert reqItem;
+
+        reqItem = [
+                SELECT Id,
+                        RecordType.DeveloperName,
+                        Internal_Only__c,
+                        Instructions__c,
+                        Related_List_Object_Master__c,
+                        Related_List_Object__c,
+                        Related_List_Object_Master_Field__c,
+                        Related_List_Where_Clause__c,
+                        Required_Number_of_Children__c,
+                        Editable_Application_Status__c,
+                        File_Name_Prefix__c,
+                        Uploaded_Document_Object__c, (
+                        SELECT Id,
+                                RecordType.DeveloperName,
+                                RecordType.Name,
+                                Contact_Field__c,
+                                Application_Field__c,
+                                URL_Parameter__c,
+                                Length__c,
+                                Placeholder__c,
+                                Label__c,
+                                Help_Text__c,
+                                Assistive_Text__c,
+                                Active__c,
+                                Intended_Program__c,
+                                Applicant_Type__c,
+                                Citizenship__c,
+                                School_College__c,
+                                Delivery_Type__c,
+                                Residency__c,
+                                Student_Type__c,
+                                Degree_Type__c,
+                                Generic_Filter_1__c,
+                                Generic_Filter_2__c,
+                                Generic_Filter_3__c,
+                                Generic_Filter_4__c,
+                                Generic_Filter_5__c,
+                                Generic_Filter_6__c,
+                                Generic_Filter_7__c,
+                                Generic_Filter_8__c,
+                                Application_Status__c,
+                                Hardcoded_Value__c,
+                                Related_Object_Field__c,
+                                Required__c,
+                                New_Reference_Field__c,
+                                Lookup_Object__c,
+                                Editable_Application_Status__c,
+                                Display_as_Picklist__c
+                        FROM Questions__r
+                )
+                FROM Requirement_Item__c
+                WHERE Id = :reqItem.Id
+                LIMIT 1
+        ];
+
+        Requirement_Response__c rr = new Requirement_Response__c(
+                Application__c = app.Id,
+                Requirement_Item__c = reqItem.Id,
+                External_Email__c = 'testaddress@test.com'
+        );
+        insert rr;
+
+        // Create an instance of ApplicationQuestionGroup
+        ApplicationQuestionGroup aqg = new ApplicationQuestionGroup(student, app, reqItem, null, rr, null, null, false);
+
+        // Prepare additionalData for processValues method
+        Map<String, Object> additionalData = new Map<String, Object>();
+        additionalData.put('attData', new Map<String, String>{
+                'fileName' => 'test.txt',
+                'itemId' => reqItem.Id,
+                'data' => 'data:text/plain;base64,VEVTVA==',
+                'VersionData' => ''
+        });
+
+        // EncodingUtil.base64Decode(((String) attData.get('data')).substringAfter(','));
+
+        // Call the method to test
+        Test.startTest();
+        aqg.processValues(additionalData);
+        Test.stopTest();
+
+        // Assert expected outcomes (this will depend on your specific logic)
+        // For example, if you expect the response.HasDocument__c to be true after calling processValues
+        Requirement_Response__c updatedResponse = [SELECT HasDocument__c FROM Requirement_Response__c WHERE Id = :rr.Id];
+
+        ContentDocumentLink cdl = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :rr.Id Limit 1];
+        ContentDocument cd = [SELECT Title FROM ContentDocument WHERE Id = :cdl.ContentDocumentId LIMIT 1];
+        //ContentVersion cv = [SELECT VersionData FROM ContentVersion WHERE ContentDocumentId = :cdl.ContentDocumentId];
+
+        System.assertEquals('TEST_DOC.txt', cd.Title, 'Document found on requirement response with correct TEST_DOC.txt title.');
+    }
+
+    @IsTest
+    static void testAddNewReferenceObject() {
+        // Setup test data
+        Contact student = [
+                SELECT
+                        Id,
+                        FirstName,
+                        LastName
+                FROM Contact
+                WHERE FirstName = 'TestFirst'
+                AND LastName = 'Student'
+                AND Email = 'testfirst@student.com'
+                LIMIT 1
+        ];
+
+        Application__c app = [
+                SELECT Id,
+                        Name,
+                        Contact__c,
+                        Application_Status__c,
+                        Generic_Filter_1__c,
+                        Generic_Filter_2__c,
+                        Generic_Filter_3__c,
+                        Generic_Filter_4__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c
+                FROM Application__c
+                WHERE Contact__c = :student.Id
+                LIMIT 1
+        ];
+
+        Requirement__c req = [
+                SELECT
+                        Id
+                FROM Requirement__c
+                LIMIT 1
+        ];
+
+        Requirement_Item__c reqItem = [
+                SELECT
+                        Id,
+                        RecordType.DeveloperName,
+                        Holding_Record_Id__c
+                FROM Requirement_Item__c
+                WHERE Name = 'Test RI'
+                LIMIT 1
+        ];
+
+        Requirement_Response__c rr = new Requirement_Response__c(
+                Application__c = app.Id,
+                Requirement_Item__c = reqItem.Id,
+                External_Email__c = 'testaddress@test.com'
+        );
+        insert rr;
+
+        // Create an instance of ApplicationQuestionGroup
+        ApplicationQuestionGroup aqg = new ApplicationQuestionGroup(student, app, reqItem, null, rr, null, null, false);
+
+        // Set the newReferenceObjectSelectedWrapper and newReferenceObject
+        aqg.newReferenceObjectSelectedWrapper = 'testWrapper';
+        aqg.newReferenceObject = new Account(Name = 'Test Account');
+
+        // Add a related object to the relatedObjectsMap
+        SObject family = new Family__c(First_Name__c = 'Papa', Last_Name__c = 'Bear');
+        ApplicationQuestionGroup.SObjectWrapper wrapper = new ApplicationQuestionGroup.SObjectWrapper(aqg, 'testWrapper', family, true);
+        aqg.relatedObjectsMap = new Map<String, ApplicationQuestionGroup.SObjectWrapper>();
+        aqg.relatedObjectsMap.put('testWrapper', wrapper);
+
+        // Add a related reference question
+        Question__c question = new Question__c(Name = 'Test Question', Related_Object_Field__c = 'Name', Hardcoded_Value__c = 'Test Value', Requirement_Item__c = reqItem.Id);
+        insert question;
+        ApplicationQuestion appQuestion = new ApplicationQuestion(family, question, null, false);
+        aqg.relatedReferenceQuestions.add(appQuestion);
+
+        // Call the method to test
+        Test.startTest();
+        aqg.addNewReferenceObject();
+        Test.stopTest();
+
+        // Assert expected outcomes
+        System.assertEquals('Papa', aqg.relatedObjectsMap.get('testWrapper').obj.get('First_Name__c'));
+        System.assertEquals('Test Value', aqg.relatedObjectsMap.get('testWrapper').obj.get('Holding_Name__c'));
+        System.assertEquals(null, aqg.newReferenceObject);
+        System.assertEquals(null, aqg.newReferenceObjectSelectedWrapper);
+        System.assertEquals(false, aqg.creatingNewRelatedRecord);
     }
 
     @IsTest

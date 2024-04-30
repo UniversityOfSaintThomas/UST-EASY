@@ -155,7 +155,6 @@ public with sharing class applicationHelper {
             for (Question__c q : ri.Questions__r) {
                 if (String.isNotBlank(q.Contact_Field__c)) {
                     contactFields.add(q.Contact_Field__c.toLowerCase());
-               System.debug('LOOK HERE YEN 4: '+q.Contact_Field__c);
                 }
             }
 

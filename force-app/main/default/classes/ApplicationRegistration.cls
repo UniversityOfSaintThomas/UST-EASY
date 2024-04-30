@@ -323,7 +323,6 @@ public class ApplicationRegistration {
                     if (question.label.equalsIgnoreCase('Last Name')) {
                         interaction.Last_Name__c = String.valueOf(question.resp).trim();
                     }
-                    //TESTING: Adding birthdate to initial Interaction mapping for Contact matching
                     if (question.label.equalsIgnoreCase('What is your date of birth? (MM/DD/YYYY)')) {
                         interaction.Birthdate__c = (Date)question.resp;
                     }

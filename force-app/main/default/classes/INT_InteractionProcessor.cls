@@ -329,12 +329,10 @@ public class INT_InteractionProcessor {
             for (Interactions_PreProcessing__c ipp : Interactions_PreProcessing__c.getAll().values()) {
                 System.debug(ipp);
                 if (!ipp.Active__c) {
-                    System.debug('Interaction skipped');
                     return interactions;
                 }
             }
         }
-        System.debug('Interaction active');
 
         Map<String, Interaction__c> filteredMap = new Map<String, Interaction__c>();
 
@@ -344,7 +342,6 @@ public class INT_InteractionProcessor {
             if (!filteredMap.containsKey(filterKey)) {
                 filteredMap.put(filterKey, interaction);
             } else {
-                System.debug('filterKey: ' + filterKey + ', interaction: ' + JSON.serializePretty(interaction));
                 interaction.Interaction_Status__c = 'Audit Required';
                 String error = ' Reason: this Interaction was not processed because it is a possible ' +
                         'duplicate of - ' + filteredMap.get(filterKey).Id + ': ' + filteredMap.get(filterKey).First_Name__c +
@@ -409,7 +406,6 @@ public class INT_InteractionProcessor {
 
             intMappingService.applyDataToSObject(interaction, newCon);
             newCons.add(newCon);
-            System.debug('TESTING: Initial Interaction mapping Birthdate: '+newCon.Birthdate);
         }
 
         // Break list into list of lists with maximum size of 50 because of duplicate find limits
@@ -435,7 +431,6 @@ public class INT_InteractionProcessor {
                         for (Datacloud.MatchResult matchResult : result.getMatchResults()) {
                             if (matchResult.getEntityType() == 'Contact' && !matchResult.getMatchRecords().isEmpty()) {
                                 interactions[interactionsIndex].Contact__c = matchResult.getMatchRecords()[0].getRecord().Id;
-                                System.debug('TESTING: Contact Match Record: '+interactions[interactionsIndex].Contact__c);
                                 break;
                             }
                         }

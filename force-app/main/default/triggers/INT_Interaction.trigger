@@ -10,8 +10,6 @@ trigger INT_Interaction on Interaction__c (after insert, after update) {
     // Filter the new Interactions by Lead Only vs. those to process normally
     for (Interaction__c interaction : Trigger.new) {
         Interaction__c clonedInteraction = interaction.clone(true, true, true, true); // Clone because After Trigger context, we need the Id for processing.
-        System.debug('WHAT IS INTERACTION STATUS: '+interaction.Interaction_Status__c);
-        System.debug('WHAT IS CLONE INTERACTION STATUS: '+clonedInteraction.Interaction_Status__c);
         if (clonedInteraction.Interaction_Status__c == 'New') { // Only process New Interactions
             clonedInteraction.Audit_Reason__c = ''; // Clear audit reason in case any failed previously and are being re-processed.
 

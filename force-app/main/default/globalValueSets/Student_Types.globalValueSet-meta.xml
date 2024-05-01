@@ -116,18 +116,6 @@
         <label>Advanced Standing</label>
     </customValue>
     <customValue>
-        <fullName>Art History</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Art History</label>
-    </customValue>
-    <customValue>
-        <fullName>Graduate</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Graduate</label>
-    </customValue>
-    <customValue>
         <fullName>Undergraduate</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -144,6 +132,18 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Traditional</label>
+    </customValue>
+    <customValue>
+        <fullName>Graduate</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Graduate</label>
+    </customValue>
+    <customValue>
+        <fullName>Art History</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Art History</label>
     </customValue>
     <description>Student types for admissions.</description>
     <masterLabel>Student Types</masterLabel>

@@ -11,7 +11,7 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>AP Art 2D Design</fullName>
                 <default>false</default>
@@ -53,9 +53,9 @@
                 <label>AP Chemistry</label>
             </value>
             <value>
-                <fullName>AP Chinese Language</fullName>
+                <fullName>AP Chinese Language/Culture</fullName>
                 <default>false</default>
-                <label>AP Chinese Language</label>
+                <label>AP Chinese Language/Culture</label>
             </value>
             <value>
                 <fullName>AP Comp Government/POLS</fullName>
@@ -98,9 +98,9 @@
                 <label>AP European History</label>
             </value>
             <value>
-                <fullName>AP French Language</fullName>
+                <fullName>AP French Language/Culture</fullName>
                 <default>false</default>
-                <label>AP French Language</label>
+                <label>AP French Language/Culture</label>
             </value>
             <value>
                 <fullName>AP French Literature</fullName>
@@ -108,9 +108,9 @@
                 <label>AP French Literature</label>
             </value>
             <value>
-                <fullName>AP German Language</fullName>
+                <fullName>AP German Language/Culture</fullName>
                 <default>false</default>
-                <label>AP German Language</label>
+                <label>AP German Language/Culture</label>
             </value>
             <value>
                 <fullName>AP Human Geography</fullName>
@@ -208,14 +208,14 @@
                 <label>AP Seminar</label>
             </value>
             <value>
-                <fullName>AP Spanish Language</fullName>
+                <fullName>AP Spanish Language/Culture</fullName>
                 <default>false</default>
-                <label>AP Spanish Language</label>
+                <label>AP Spanish Language/Culture</label>
             </value>
             <value>
-                <fullName>AP Spanish Literature</fullName>
+                <fullName>AP Spanish Literature/Culture</fullName>
                 <default>false</default>
-                <label>AP Spanish Literature</label>
+                <label>AP Spanish Literature/Culture</label>
             </value>
             <value>
                 <fullName>AP Statistics</fullName>

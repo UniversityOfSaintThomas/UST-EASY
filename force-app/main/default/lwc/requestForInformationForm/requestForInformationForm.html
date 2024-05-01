@@ -24,6 +24,16 @@
 
             <template if:false={form_submitted_successfully}>
                 <!-- BEGIN FORM -->
+
+                <template if:true={has_additional_questions_top}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2">
+                        <c-request-for-information-additional-question-form
+                                additional_questions={additional_questions_top}
+                                oncustevent={onChange}>
+                        </c-request-for-information-additional-question-form>
+                    </div>
+                </template>
+                <template if:false={disable_standard_fields}>
                 <template if:true={show_fields.I_will_apply_to_St_Thomas_as_a}>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium slds-m-bottom_medium field-admit-type">
                         <lightning-combobox
@@ -62,7 +72,7 @@
                 </template>
                 <template if:true={show_fields.Academic_Interest}>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium slds-m-bottom_medium field-academic-interest">
-                        <template lwc:if={multi_select_standard}>
+                            <template lwc:if={multi_select_standard}>
                             <lightning-dual-listbox
                                     required={require_fields.Academic_Interest}
                                     label={field_labels.academic_interest_label}
@@ -71,57 +81,57 @@
                                     options={academic_interest_picklist_values}
                                     aria-label="Academic Interest"
                                     onchange={onChange}
-                                    max={academic_max_select}
+                                        max={academic_max_select}
                                     field-level-help=""
                                     variant="label-stacked"
                                     disable-reordering="true"
                             >
                             </lightning-dual-listbox>
                         </template>
-                        <template lwc:else>
+                            <template lwc:else>
                             <c-multi-select-pills-groupable
                                     required={require_fields.Academic_Interest}
                                     label={field_labels.academic_interest_label}
                                     options={academic_interest_picklist_values}
                                     onchange={onChange}
                                     dropdown-length="10"
-                                    max={academic_max_select}
+                                        max={academic_max_select}
+                                        hint="Select an academic interest..."
+                                        alert="You must choose at least one academic interest"
+                                        help={academic_max_select_help}
+                                ></c-multi-select-pills-groupable>
+                            </template>
+                        </div>
+                    </template>
+                    <template if:true={academic_undecided_selected}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium slds-m-bottom_medium field-academic-interest">
+                            <template lwc:if={multi_select_standard}>
+                                <lightning-dual-listbox
+                                        required=true
+                                        label="What programs are you considering (max 3)?"
+                                        source-label="Available"
+                                        selected-label="Selected"
+                                        options={academic_interest_picklist_values_no_undecided}
+                                        aria-label="Academic Interest"
+                                        onchange={onChange}
+                                        max="3"
+                                        field-level-help=""
+                                        variant="label-stacked"
+                                        disable-reordering="true"
+                                >
+                                </lightning-dual-listbox>
+                            </template>
+                            <template lwc:else>
+                                <c-multi-select-pills-groupable
+                                        required=true
+                                        label="What programs are you considering (max 3)?"
+                                        options={academic_interest_picklist_values_no_undecided}
+                                        onchange={onChange}
+                                        dropdown-length="10"
+                                        max="3"
                                     hint="Select an academic interest..."
                                     alert="You must choose at least one academic interest"
-                                    help={academic_max_select_help}
-                            ></c-multi-select-pills-groupable>
-                        </template>
-                    </div>
-                </template>
-                <template if:true={academic_undecided_selected}>
-                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium slds-m-bottom_medium field-academic-interest">
-                        <template lwc:if={multi_select_standard}>
-                            <lightning-dual-listbox
-                                    required=true
-                                    label="What programs are you considering (max 3)?"
-                                    source-label="Available"
-                                    selected-label="Selected"
-                                    options={academic_interest_picklist_values_no_undecided}
-                                    aria-label="Academic Interest"
-                                    onchange={onChange}
-                                    max="3"
-                                    field-level-help=""
-                                    variant="label-stacked"
-                                    disable-reordering="true"
-                            >
-                            </lightning-dual-listbox>
-                        </template>
-                        <template lwc:else>
-                            <c-multi-select-pills-groupable
-                                    required=true
-                                    label="What programs are you considering (max 3)?"
-                                    options={academic_interest_picklist_values_no_undecided}
-                                    onchange={onChange}
-                                    dropdown-length="10"
-                                    max="3"
-                                    hint="Select an academic interest..."
-                                    alert="You must choose at least one academic interest"
-                                    help="You can only choose up to 3 options"
+                                        help="You can only choose up to 3 options"
                             ></c-multi-select-pills-groupable>
                         </template>
                     </div>
@@ -504,7 +514,6 @@
                         </lightning-textarea>
                     </div>
                 </template>
-
                 <template if:true={show_fields.Tell_us_about_yourself}>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-description">
                         <lightning-textarea
@@ -514,51 +523,13 @@
                         </lightning-textarea>
                     </div>
                 </template>
-
-                <!-- Load additional questions -->
-                <template for:each={additional_questions} for:item="question">
-                    <div key={question.id} class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium">
-                        <template lwc:if={question.isPicklist}>
-                            <lightning-combobox
-                                    required={question.isRequired}
-                                    label={question.questionLabel}
-                                    options={question.picklistValues}
-                                    aria-label={question.questionLabel}
-                                    onchange={onChange}
-                                    data-questionid={question.id}
-                                    message-when-bad-input={question.assistiveText}
-                                    message-when-value-missing={question.assistiveText}
-                                    data-addquestion="true"
-                            >
-                            </lightning-combobox>
-                        </template>
-                        <template lwc:elseif={question.isTextBox}>
-                            <lightning-input
-                                    required={question.isRequired}
-                                    type="text"
-                                    label={question.questionLabel}
-                                    aria-label={question.questionLabel}
-                                    onchange={onChange}
-                                    message-when-bad-input={question.assistiveText}
-                                    message-when-value-missing={question.assistiveText}
-                                    data-questionid={question.id}
-                                    data-addquestion="true"
-                            >
-                            </lightning-input>
-                        </template>
-                        <template lwc:else>
-                            <lightning-textarea
-                                    required={question.isRequired}
-                                    label={question.questionLabel}
-                                    aria-label={question.questionLabel}
-                                    message-when-bad-input={question.assistiveText}
-                                    message-when-value-missing={question.assistiveText}
-                                    onchange={onChange}
-                                    data-questionid={question.id}
-                                    data-addquestion="true"
-                            >
-                            </lightning-textarea>
-                        </template>
+                </template>
+                <template if:true={has_additional_questions_bottom}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2">
+                        <c-request-for-information-additional-question-form
+                                additional_questions={additional_questions_bottom}
+                                oncustevent={onChange}>
+                        </c-request-for-information-additional-question-form>
                     </div>
                 </template>
 

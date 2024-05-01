@@ -38,16 +38,29 @@
                             </lightning-combobox>
                         </div>
                         <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
-                            <!-- Get all Lead fields and choose which one to apply to the additional questions -->
+                            <!-- Get what type of question it is -->
                             <lightning-combobox
-                                    name="fieldToApplyTo"
-                                    label="Lead Field to Apply to"
+                                    name="position"
+                                    label="Position"
                                     placeholder="Select an option"
-                                    options={leadFields}
+                                    options={positionOptions}
                                     onchange={handleChange}
                                     required>
                             </lightning-combobox>
                         </div>
+                        <template if:false={isStaticContent}>
+                            <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                                <!-- Get all Lead fields and choose which one to apply to the additional questions -->
+                                <lightning-combobox
+                                        name="fieldToApplyTo"
+                                        label="Lead Field to Apply to"
+                                        placeholder="Select an option"
+                                        options={leadFields}
+                                        onchange={handleChange}
+                                        required>
+                                </lightning-combobox>
+                            </div>
+                        </template>
 
                         <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
                             <!-- Get the label content for the additional questions -->
@@ -59,25 +72,39 @@
                             </lightning-input>
                         </div>
 
-                        <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
-                            <!-- Get the label content for the additional questions -->
-                            <lightning-input
-                                    label='Assistive Text'
-                                    name="assistiveText"
-                                    onchange={handleChange}
-                                    required>
-                            </lightning-input>
-                        </div>
-
-                        <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
-                            <template lwc:if={isPicklist}>
+                        <template if:false={isStaticContent}>
+                            <template if:true={assistiveTextRequired}>
+                                <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                                    <!-- Get the label content for the additional questions -->
+                                    <lightning-input
+                                            label='Assistive Text'
+                                            name="assistiveText"
+                                            onchange={handleChange}
+                                            required={assistiveTextRequired}
+                                    >
+                                    </lightning-input>
+                                </div>
+                            </template>
+                        </template>
+                        <template lwc:if={isPicklist}>
+                            <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_6-of-12">
                                 <lightning-textarea name="picklistValues"
                                                     label="Picklist Values"
                                                     onchange={handleChange}
                                                     required>
                                 </lightning-textarea>
-                            </template>
-                        </div>
+                            </div>
+                        </template>
+                        <template lwc:if={isStaticContent}>
+                            <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                                <lightning-input-rich-text
+                                        label='Static Content'
+                                        name="staticContent"
+                                        onchange={handleChange}
+                                >
+                                </lightning-input-rich-text>
+                            </div>
+                        </template>
                     </div>
 
                     <!-- Button to submit the additional question -->
@@ -85,7 +112,7 @@
                         <lightning-button
                                 label="Add Question"
                                 name="Submit"
-                                onclick={handleChange}
+                                onclick={validInput}
                                 icon-name="utility:add"
                                 variant="brand">
                         </lightning-button>

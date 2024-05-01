@@ -156,7 +156,16 @@ public class ApplicationRegistration {
 
             insert interaction;
             interaction = [
-                    SELECT Id, Contact__c, First_Name__c, Middle_Name__c, Last_Name__c, Email__c, External_Application_ID__c
+                    SELECT
+                            Id,
+                            Contact__c,
+                            First_Name__c,
+                            Middle_Name__c,
+                            Last_Name__c,
+                            Email__c,
+                            External_Application_ID__c,
+                            Academic_Program__c,
+                            Intended_Start_Term__c
                     FROM Interaction__c
                     WHERE Id = :interaction.Id
             ];
@@ -170,6 +179,42 @@ public class ApplicationRegistration {
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty()) {
                 throw new ApplicationUtilities.ApplicationException(' An account with this email already exists. Please sign in with the button to the right for existing users.', true, true);
+            }
+
+            if (String.isNotBlank(interaction.Academic_Program__c)) {
+                List<Application__c> a = [
+                        SELECT
+                                Id,
+                                Intended_Program__c,
+                                Intended_Program__r.Number_of_Applications_Limit__c,
+                                Intended_Term_of_Entry__c,
+                                Application_Status__c,
+                                Application_Substatus__c,
+                                Applicant_Type__c
+                        FROM Application__c
+                        WHERE Contact__r.Email = :con.Email
+                        AND Application_Status__c != 'Wrong Application'
+                        AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
+                        AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
+                        AND Applicant_Type__c = 'Common App'
+                        AND Intended_Program__c = :interaction.Academic_Program__c
+                        AND Intended_Program__r.Number_of_Applications_Limit__c LIKE 'One Application%'
+                        AND Intended_Term_of_Entry__c = :interaction.Intended_Start_Term__c
+                ];
+
+                Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+                String currentUrl = AppSettings.Community_URL__c;
+                if (!currentUrl.endsWith('/')) {
+                    currentUrl += '/';
+                }
+                currentUrl += 'ApplicationRegistration?at=commonapp';
+                if (!currentUrl.startsWith('http')) {
+                    currentUrl = 'https://' + currentUrl;
+                }
+
+                if (a.size() > 0 && !commonAppApplication) {
+                    throw new ApplicationUtilities.ApplicationException('You need to claim your Common App application. <a href="' + currentUrl + '">Please follow this link for more information and to claim your account</a>.', true, true);
+                }
             }
 
             // Update Account owner to Site admin if owner is current user (guest user)
@@ -315,16 +360,15 @@ public class ApplicationRegistration {
 
 
         if (interaction.Academic_Program__c != null) {
-            List<Program__c> program = [
+            Program__c program = [
                     SELECT Id, Program_College_of_Interest__c, Program_Applicant_Type__c
                     FROM Program__c
                     WHERE Id = :interaction.Academic_Program__c
-                    LIMIT 1
             ];
 
-            if (!program.isEmpty()) {
-                interaction.College_of_Interest__c = program[0].Program_College_of_Interest__c;
-                interaction.Admit_Type__c = program[0].Program_Applicant_Type__c;
+            if (program != null) {
+                interaction.College_of_Interest__c = program.Program_College_of_Interest__c;
+                interaction.Admit_Type__c = program.Program_Applicant_Type__c;
             }
 
             List<Plan__c> relatedPlan = [

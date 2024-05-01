@@ -64,11 +64,23 @@
                 <behavior>Readonly</behavior>
                 <field>Requirement_Id__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Academic_Level__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_of_Recommendations_Required__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Record_Type_Id__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -81,6 +93,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Internal_Requirement_Item__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Allow_Supporting_Documentation_Upload__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>File_Name_Prefix__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Uploaded_Document_Object__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -204,6 +228,14 @@
                 <behavior>Edit</behavior>
                 <field>Generic_Filter_2__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_5__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_6__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -230,6 +262,14 @@
                 <behavior>Edit</behavior>
                 <field>Generic_Filter_4__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_7__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Generic_Filter_8__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -253,6 +293,10 @@
                 <behavior>Required</behavior>
                 <field>Requirement_Item_Integration_Ext_Id__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Common_App_Unique_ReqItem_Nickname__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -269,17 +313,27 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Label__c</fields>
-        <fields>RECORDTYPE</fields>
         <fields>Active__c</fields>
         <fields>Display_Order__c</fields>
         <fields>Requirement_Item_Name__c</fields>
         <fields>Contact_Field__c</fields>
         <fields>Application_Field__c</fields>
         <fields>Related_Object_Field__c</fields>
-        <fields>UPDATEDBY_USER</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Question__c.Requirement_Item__c</relatedList>
-        <sortField>Display_Order__c</sortField>
-        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Application__c</fields>
+        <fields>Fulfilled_On__c</fields>
+        <fields>HasDocument__c</fields>
+        <fields>Viewed__c</fields>
+        <fields>ValueTextEntry__c</fields>
+        <fields>Status__c</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <fields>Waive_Requirement__c</fields>
+        <relatedList>Requirement_Response__c.Requirement_Item__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -287,7 +341,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hJ0000007pOaU</masterLabel>
+        <masterLabel>00h8K0000038zrM</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

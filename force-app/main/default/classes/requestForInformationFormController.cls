@@ -91,7 +91,8 @@ public without sharing class requestForInformationFormController {
                             Redirect_After_Form_Submission__c,
                             Multi_Select_Display_Type__c,
                             Additional_Questions__c,
-                            Academic_Interest_Max_Selection__c
+                            Academic_Interest_Max_Selection__c,
+                            Disable_fields_to_display__c
                     FROM RFI_Controller__c
                     WHERE Name = :rfi_controller_name
                     LIMIT 1
@@ -176,7 +177,7 @@ public without sharing class requestForInformationFormController {
             Date today = System.today();
             Date today_plus_four_years = today.addYears(4);
             // Academic Term -> intended start term
-            // limit by 4 years, show Fall and Spring
+            // limit by 4 years, show Fall and Spring 
             Map<Id, Academic_Term__c> terms = new Map<Id, Academic_Term__c>([
                     SELECT
                             Id,

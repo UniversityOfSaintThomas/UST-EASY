@@ -4,6 +4,20 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Major/Program 3</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Program__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Recruitment Program</value>
+        </filterItems>
+        <filterItems>
+            <field>Program__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Program__c</referenceTo>
     <relationshipLabel>Leads (Major/Program 3)</relationshipLabel>
     <relationshipName>Leads_Major_3</relationshipName>

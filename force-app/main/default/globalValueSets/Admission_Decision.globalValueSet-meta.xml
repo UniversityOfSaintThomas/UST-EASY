@@ -11,6 +11,23 @@
         <label>MSW Accelerated</label>
     </customValue>
     <customValue>
+        <fullName>Dual Law Degree</fullName>
+        <default>false</default>
+        <label>Dual Law Degree</label>
+    </customValue>
+    <customValue>
+        <fullName>Accepted Probationally</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Accepted Probationally</label>
+    </customValue>
+    <customValue>
+        <fullName>Deferred</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Deferred</label>
+    </customValue>
+    <customValue>
         <fullName>Hold</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -131,6 +148,12 @@
         <label>Withdrawn Waitlisted</label>
     </customValue>
     <customValue>
+        <fullName>Accepted Incomplete</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Accepted Incomplete</label>
+    </customValue>
+    <customValue>
         <fullName>Accepted Conditionally and Probationally</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -147,24 +170,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Accepted Conditionally</label>
-    </customValue>
-    <customValue>
-        <fullName>Deferred</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Deferred</label>
-    </customValue>
-    <customValue>
-        <fullName>Accepted Incomplete</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Accepted Incomplete</label>
-    </customValue>
-    <customValue>
-        <fullName>Accepted Probationally</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Accepted Probationally</label>
     </customValue>
     <masterLabel>Admission Decision</masterLabel>
     <sorted>false</sorted>

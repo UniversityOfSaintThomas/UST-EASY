@@ -90,7 +90,7 @@
                                                  allowTextEntry="{!group.item.Allow_Text_Entry__c}"
                                                  itemId="{!group.item.Id}"
                                                  odlAttachmentId="{!group.oldAttVersion.Id}"
-                                                 attachmentTitle="{!group.att.Title}"
+                                                 attachmentTitle="{!IF(!ISBLANK(group.response['Original_Uploaded_Document_File_Name__c']),group.response['Original_Uploaded_Document_File_Name__c'], group.att.Title)}"
                                                  acceptedFileTypes="{!group.item.File_Types__c}"
                                                  isRequiredUpload="{!isRequiredUpload}"
             />
@@ -131,13 +131,6 @@
                     <apex:outputPanel rendered="{!CONTAINS(group.item.Required__c, group.app.Application_Status__c) && group.item.Required_Number_of_Children__c != null && group.item.Required_Number_of_Children__c > 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
                         <p tabindex="0">At least {!group.item.Required_Number_of_Children__c} record{!IF(group.item.Required_Number_of_Children__c > 1, 's are', ' is')} required.</p>
                     </apex:outputPanel>
-
-                    <apex:commandLink styleClass="slds-button slds-button_brand" onClick="showFormSpinner();" action="{!group.newRow}" onComplete="pageLoadReRendered();" reRender="theTable">
-                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#new")}"></use>
-                        </svg>
-                        New Record
-                    </apex:commandLink>
                 </apex:outputPanel>
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size > 0}">
@@ -167,12 +160,12 @@
 
                                                 <apex:outputPanel layout="none" rendered="{!question.fieldType!='Address' && !group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}">
                                                     <apex:outputPanel layout="none" rendered="{!question.fieldType != 'Date'}">
-                                                       {!rr.obj[question.question.Related_Object_Field__c]}
+                                                        {!rr.obj[question.question.Related_Object_Field__c]}
                                                     </apex:outputPanel>
                                                     <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Date'}">
                                                         <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
-                                                            <apex:param value="{!rr.obj[question.question.Related_Object_Field__c]}" />
-                                                </apex:outputText>
+                                                            <apex:param value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
+                                                        </apex:outputText>
                                                     </apex:outputPanel>
                                                 </apex:outputPanel>
 
@@ -216,18 +209,18 @@
                         </apex:outputPanel>
 
                         <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && !rr.isEditMode && !preventUpdates && group.isEditable}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" onClick="showFormSpinner()" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_brand slds-m-right-small">
+                            <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" onClick="showFormSpinnerRelatedRecord()" onComplete="pageLoadReRendered(true);" styleClass="slds-button slds-button_brand slds-m-right-small">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#edit_form")}"></use>
                                 </svg>
-                                Edit
+                                Edit Record
                                 <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                             </apex:commandLink>
-                            <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" onClick="showFormSpinner()" onComplete="pageLoadReRendered();" styleClass="slds-button slds-button_brand">
+                            <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" onClick="showFormSpinnerRelatedRecord()" onComplete="pageLoadReRendered(true);" styleClass="slds-button slds-button_brand">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#delete")}"></use>
                                 </svg>
-                                Delete
+                                Delete Record
                                 <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
                             </apex:commandLink>
                         </apex:outputPanel>
@@ -270,6 +263,15 @@
                         </apex:outputPanel>
                     </apex:repeat>
 
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
+                    <apex:commandLink styleClass="slds-button slds-button_brand" onClick="showFormSpinnerRelatedRecord();" action="{!group.newRow}" onComplete="pageLoadReRendered(true)" reRender="theTable">
+                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#new")}"></use>
+                        </svg>
+                        New Record
+                    </apex:commandLink>
                 </apex:outputPanel>
 
             </apex:outputPanel>

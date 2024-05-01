@@ -4,10 +4,16 @@ project:
   package:
     name: UST-EASY-Package
     namespace: null
-    api_version: '56.0'
+    api_version: '59.0'
   dependencies:
     - github: 'https://github.com/SalesforceFoundation/EDA'
+    - github: 'https://github.com/SFDO-Community/Summit-Events-App.git'
   source_format: sfdx
+
+sources:
+  sea:
+    github: 'https://github.com/SFDO-Community/Summit-Events-App'
+    branch: 'master'
 
 tasks:
   robot:
@@ -33,6 +39,7 @@ tasks:
       description: EASY application portal
       template: Build Your Own
       url_path_prefix: Admissions
+      skip_existing: True
 
   permission_guest_user:
     description: 'Applies permission set to guest community guest user'
@@ -84,13 +91,14 @@ tasks:
       mapping: datasets/mapping.yml
       sql_path: datasets/data.sql
       inject_namespaces: False
+      ignore_row_errors: True
 
   load_scholarship_test_data:
     description: 'Load test data associated with EASY scholarships'
     class_path: cumulusci.tasks.bulkdata.load.LoadData
     options:
-      mapping: datasets/scholarships/scholarships-default.latest.mapping.yml
-      sql_path: datasets/scholarships/scholarships-latest.dataset.sql
+      mapping: datasets/scholarships/mapping.yml
+      sql_path: datasets/scholarships/dataset.sql
       inject_namespaces: False
 
   load_prod_application_data:
@@ -250,6 +258,14 @@ tasks:
         - record_type: Family_Member__c.Parent_Guardian
           default: true
         - record_type: Family_Member__c.UST_Alumni_Family
+        - record_type: Scholarship_Applicant__c.Scholarship
+          default: true
+        - record_type: Scholarship_Applicant__c.Grant
+        - record_type: Scholarship__c.Graduate_Scholarship
+        - record_type: Scholarship__c.Scholarship
+          default: true
+        - record_type: Scholarship__c.Signature_Programs
+        - record_type: Scholarship__c.UG_Merit
 
   add_degree_piciklist:
     description: "Adds more picklist items to the degree earned list of EDA."
@@ -328,13 +344,25 @@ flows:
       18:
         task: turn_on_duplicate_rules
       19:
-        task: configure_network_setting
+        task: sea:deploy_permission_set
       20:
-        task: configure_community_settings
+        task: sea:deploy_site_config
       21:
+        task: sea:deploy_site_settings
+      22:
+        task: sea:deploy_guest_permission_set
+      23:
+        task: sea:deploy_namespaced_guest_sharing_rules
+      24:
+        task: sea:load_sample_data
+      25:
+        task: configure_network_setting
+      26:
+        task: configure_community_settings
+      27:
         task: configure_community
-      #22:
-      #  task: load_scholarship_test_data
+      28:
+        task: load_scholarship_test_data
 
   release_unlocked_beta:
     steps:

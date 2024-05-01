@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>Recruitment_Interaction</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <description>Interaction Log and Staging Object</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>

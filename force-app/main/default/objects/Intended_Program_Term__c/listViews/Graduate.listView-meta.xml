@@ -11,13 +11,13 @@
     <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>Student_Type__c</field>
-        <operation>equals</operation>
-        <value>District Partnerships,Teacher Education,Educational Leadership,Special Education,Non-Degree</value>
+        <field>Program_Application_Control__c</field>
+        <operation>contains</operation>
+        <value>engineering</value>
     </filters>
     <filters>
         <field>Academic_Term__c</field>
-        <operation>contains</operation>
+        <operation>equals</operation>
         <value>Spring 2023</value>
     </filters>
     <label>Graduate</label>

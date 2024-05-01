@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Show_on_Application_Creation__c</fullName>
     <defaultValue>false</defaultValue>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Checked if this requirement should display when creating a new application and not on the checklist</inlineHelpText>
     <label>Show on Application Creation</label>

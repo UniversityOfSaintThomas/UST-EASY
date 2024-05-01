@@ -16,7 +16,7 @@
         }
     ],
     "namespace": null,
-    "sourceApiVersion": "56.0",
+    "sourceApiVersion": "59.0",
     "packageAliases": {
         "USTEasy": "0Ho4P000000fxa0SAA",
         "USTEasy@1.0.0-7": "04t4P000002KnOtQAK",

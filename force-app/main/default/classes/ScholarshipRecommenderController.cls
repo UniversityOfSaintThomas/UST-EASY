@@ -4,7 +4,7 @@ public class ScholarshipRecommenderController {
     public Integer incomingRecNum { get; set; }
     public Scholarship_Applicant__c ScholarshipApplicant { get; set; }
     public Contact scholarshipApplicantContactRecord { get; set; }
-    public boolean recComplete { get; set; }
+    public Boolean recComplete { get; set; }
 
     public ScholarshipRecommenderController() {
         String incomingRecId = '';
@@ -23,11 +23,11 @@ public class ScholarshipRecommenderController {
 
         //If rec number isn't 1 or 2 then error
         if (incomingRecNum <= 0 || incomingRecNum > 2) {
-            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Could not determine recommender number. -- ' + incomingRecId));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, 'Could not determine recommender number. -- ' + incomingRecId));
         }
 
         //Check the rest of the recId in url minus the last character to make sure it is an Id
-        if(incomingRecId.length() > 2) {
+        if (incomingRecId.length() > 2) {
             incomingRecId = incomingRecId.substring(0, incomingRecId.length() - 1);
         }
 
@@ -54,8 +54,6 @@ public class ScholarshipRecommenderController {
                 if (this.ScholarshipApplicant != null) {
                     this.scholarshipApplicantContactRecord = ScholarshipSharedUtilities.getContactRecord(this.ScholarshipApplicant.Contact__c);
                 }
-
-                System.debug(JSON.serializePretty(ScholarshipApplicant));
                 if (incomingRecNum == 1) {
                     if (ScholarshipApplicant.Recommendation_Received__c != null) {
                         recComplete = true;
@@ -74,10 +72,6 @@ public class ScholarshipRecommenderController {
 
     }
 
-    public PageReference buildRecommendation() {
-        return null;
-    }
-
     public PageReference Save() {
         if (this.ScholarshipApplicant != null) {
             doCRUD CRUDToDo = new doCRUD();
@@ -86,7 +80,7 @@ public class ScholarshipRecommenderController {
             } else if (this.incomingRecNum == 2) {
                 this.ScholarshipApplicant.Recommendation2_Received__c = Datetime.now();
             }
-            If (String.isNotBlank(this.recId)) {
+            if (String.isNotBlank(this.recId)) {
                 CRUDToDo.saveRecommendation(this.ScholarshipApplicant, this.recId);
                 this.recComplete = true;
             }

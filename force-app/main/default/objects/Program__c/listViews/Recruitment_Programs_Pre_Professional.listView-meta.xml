@@ -4,6 +4,10 @@
     <columns>NAME</columns>
     <columns>Career__c</columns>
     <columns>Department__c</columns>
+    <columns>Program_Record_Type__c</columns>
+    <columns>Program_Display__c</columns>
+    <columns>Program_Type__c</columns>
+    <columns>Active__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Program_Record_Type__c</field>

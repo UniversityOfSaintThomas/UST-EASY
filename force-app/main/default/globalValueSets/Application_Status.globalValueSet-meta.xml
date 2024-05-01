@@ -91,28 +91,10 @@
         <label>System Admin</label>
     </customValue>
     <customValue>
-        <fullName>Deposit Waived</fullName>
+        <fullName>Deposit Paid</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Deposit Waived</label>
-    </customValue>
-    <customValue>
-        <fullName>Cancelled</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Cancelled</label>
-    </customValue>
-    <customValue>
-        <fullName>Complete-Decision Made</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Complete-Decision Made</label>
-    </customValue>
-    <customValue>
-        <fullName>Complete-Pending Additional Review</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Complete-Pending Additional Review</label>
+        <label>Deposit Paid</label>
     </customValue>
     <customValue>
         <fullName>Deferred</fullName>
@@ -127,10 +109,22 @@
         <label>Incomplete</label>
     </customValue>
     <customValue>
-        <fullName>Deposit Paid</fullName>
+        <fullName>Complete-Decision Made</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Deposit Paid</label>
+        <label>Complete-Decision Made</label>
+    </customValue>
+    <customValue>
+        <fullName>Complete-Pending Additional Review</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Complete-Pending Additional Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cancelled</label>
     </customValue>
     <customValue>
         <fullName>Complete-Pending Review</fullName>
@@ -143,6 +137,12 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Wrong Application</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposit Waived</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Deposit Waived</label>
     </customValue>
     <masterLabel>Application Status</masterLabel>
     <sorted>false</sorted>

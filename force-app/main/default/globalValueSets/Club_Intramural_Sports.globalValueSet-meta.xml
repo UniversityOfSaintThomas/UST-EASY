@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Club Alpine/Nordic Ski</fullName>
-        <default>false</default>
-        <label>Club Alpine/Nordic Ski</label>
-    </customValue>
-    <customValue>
         <fullName>Club Disc Golf</fullName>
         <default>false</default>
         <label>Club Disc Golf</label>
@@ -21,6 +16,11 @@
         <label>Club Golf</label>
     </customValue>
     <customValue>
+        <fullName>Club Nordic Ski</fullName>
+        <default>false</default>
+        <label>Club Nordic Ski</label>
+    </customValue>
+    <customValue>
         <fullName>Club Rowing</fullName>
         <default>false</default>
         <label>Club Rowing</label>
@@ -31,9 +31,9 @@
         <label>Club Sailing</label>
     </customValue>
     <customValue>
-        <fullName>Club Soccer</fullName>
+        <fullName>Club Softball</fullName>
         <default>false</default>
-        <label>Club Soccer</label>
+        <label>Club Softball</label>
     </customValue>
     <customValue>
         <fullName>Club Tennis</fullName>
@@ -44,6 +44,11 @@
         <fullName>Club Ultimate Frisbee</fullName>
         <default>false</default>
         <label>Club Ultimate Frisbee</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Badminton</fullName>
+        <default>false</default>
+        <label>Intramural Badminton</label>
     </customValue>
     <customValue>
         <fullName>Intramural Basketball</fullName>
@@ -61,9 +66,19 @@
         <label>Intramural Dodgeball</label>
     </customValue>
     <customValue>
+        <fullName>Intramural Floor Hockey</fullName>
+        <default>false</default>
+        <label>Intramural Floor Hockey</label>
+    </customValue>
+    <customValue>
         <fullName>Intramural Football</fullName>
         <default>false</default>
         <label>Intramural Football</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Frisbee Golf</fullName>
+        <default>false</default>
+        <label>Intramural Frisbee Golf</label>
     </customValue>
     <customValue>
         <fullName>Intramural Futsal</fullName>
@@ -71,9 +86,49 @@
         <label>Intramural Futsal</label>
     </customValue>
     <customValue>
+        <fullName>Intramural Golf Tournament</fullName>
+        <default>false</default>
+        <label>Intramural Golf Tournament</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Kickball</fullName>
+        <default>false</default>
+        <label>Intramural Kickball</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Pickleball</fullName>
+        <default>false</default>
+        <label>Intramural Pickleball</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Racquetball</fullName>
+        <default>false</default>
+        <label>Intramural Racquetball</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Soccer</fullName>
+        <default>false</default>
+        <label>Intramural Soccer</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Softball</fullName>
+        <default>false</default>
+        <label>Intramural Softball</label>
+    </customValue>
+    <customValue>
         <fullName>Intramural Spikeball</fullName>
         <default>false</default>
         <label>Intramural Spikeball</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Tennis</fullName>
+        <default>false</default>
+        <label>Intramural Tennis</label>
+    </customValue>
+    <customValue>
+        <fullName>Intramural Video Games</fullName>
+        <default>false</default>
+        <label>Intramural Video Games</label>
     </customValue>
     <customValue>
         <fullName>Intramural Volleyball</fullName>
@@ -106,9 +161,19 @@
         <label>Men&apos;s Club Soccer</label>
     </customValue>
     <customValue>
+        <fullName>Men&apos;s Club Ultimate Frisbee</fullName>
+        <default>false</default>
+        <label>Men&apos;s Club Ultimate Frisbee</label>
+    </customValue>
+    <customValue>
         <fullName>Men&apos;s Club Volleyball</fullName>
         <default>false</default>
         <label>Men&apos;s Club Volleyball</label>
+    </customValue>
+    <customValue>
+        <fullName>Men&apos;s Lacrosse</fullName>
+        <default>false</default>
+        <label>Men&apos;s Lacrosse</label>
     </customValue>
     <customValue>
         <fullName>Women&apos;s Club Hockey</fullName>
@@ -131,28 +196,15 @@
         <label>Women&apos;s Club Volleyball</label>
     </customValue>
     <customValue>
-        <fullName>Intramural Kickball</fullName>
+        <fullName>Intramural Ultimate Frisbee</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Kickball</label>
+        <label>Intramural Ultimate Frisbee</label>
     </customValue>
     <customValue>
-        <fullName>Intramural Frisbee Golf</fullName>
+        <fullName>Intramural Golf</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Intramural Frisbee Golf</label>
-    </customValue>
-    <customValue>
-        <fullName>Intramural Floor Hockey</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Floor Hockey</label>
-    </customValue>
-    <customValue>
-        <fullName>Intramural Badminton</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Badminton</label>
+        <label>Intramural Golf</label>
     </customValue>
     <customValue>
         <fullName>Women&apos;s Club Ultimate Frisbee</fullName>
@@ -161,52 +213,10 @@
         <label>Women&apos;s Club Ultimate Frisbee</label>
     </customValue>
     <customValue>
-        <fullName>Men&apos;s Club Ultimate Frisbee</fullName>
+        <fullName>Club Soccer</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Men&apos;s Club Ultimate Frisbee</label>
-    </customValue>
-    <customValue>
-        <fullName>Intramural Video Games</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Video Games</label>
-    </customValue>
-    <customValue>
-        <fullName>Intramural Ultimate Frisbee</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Ultimate Frisbee</label>
-    </customValue>
-    <customValue>
-        <fullName>Intramural Racquetball</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Racquetball</label>
-    </customValue>
-    <customValue>
-        <fullName>Intramural Soccer</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Soccer</label>
-    </customValue>
-    <customValue>
-        <fullName>Intramural Softball</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Softball</label>
-    </customValue>
-    <customValue>
-        <fullName>Intramural Tennis</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Tennis</label>
-    </customValue>
-    <customValue>
-        <fullName>Intramural Golf</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Intramural Golf</label>
+        <label>Club Soccer</label>
     </customValue>
     <description>Club/Intramural Sports Interest values created in July 2023.</description>
     <masterLabel>Club/Intramural Sports</masterLabel>

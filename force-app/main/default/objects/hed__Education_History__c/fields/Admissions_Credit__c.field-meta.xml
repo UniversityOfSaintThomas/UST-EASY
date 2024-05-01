@@ -3,7 +3,7 @@
     <fullName>Admissions_Credit__c</fullName>
     <description>Credit Hours</description>
     <externalId>false</externalId>
-    <inlineHelpText>Admissions use only</inlineHelpText>
+    <inlineHelpText>Credit Hours-Admissions use only</inlineHelpText>
     <label>Admissions Credit</label>
     <precision>7</precision>
     <required>false</required>

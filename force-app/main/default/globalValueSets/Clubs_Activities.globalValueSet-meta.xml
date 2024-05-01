@@ -810,6 +810,81 @@
         <default>false</default>
         <label>Tommie Ski &amp; Snowboard Club</label>
     </customValue>
+    <customValue>
+        <fullName>Aquinas Scholars (Honors Program)</fullName>
+        <default>false</default>
+        <label>Aquinas Scholars (Honors Program)</label>
+    </customValue>
+    <customValue>
+        <fullName>Bluegrass and Old Time Music Club</fullName>
+        <default>false</default>
+        <label>Bluegrass and Old Time Music Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Business Law &amp; Compliance Club</fullName>
+        <default>false</default>
+        <label>Business Law &amp; Compliance Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Create 360</fullName>
+        <default>false</default>
+        <label>Create 360</label>
+    </customValue>
+    <customValue>
+        <fullName>GHR Fellows</fullName>
+        <default>false</default>
+        <label>GHR Fellows</label>
+    </customValue>
+    <customValue>
+        <fullName>History Club</fullName>
+        <default>false</default>
+        <label>History Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Omicron Delta Kappa (Nat&apos;l Leadership Honor Society)</fullName>
+        <default>false</default>
+        <label>Omicron Delta Kappa (Nat&apos;l Leadership Honor Society)</label>
+    </customValue>
+    <customValue>
+        <fullName>Pinky Swear PACK St. Thomas</fullName>
+        <default>false</default>
+        <label>Pinky Swear PACK St. Thomas</label>
+    </customValue>
+    <customValue>
+        <fullName>Public Relations Student Society of America</fullName>
+        <default>false</default>
+        <label>Public Relations Student Society of America</label>
+    </customValue>
+    <customValue>
+        <fullName>Social Work Club</fullName>
+        <default>false</default>
+        <label>Social Work Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Society for Human Resource Management</fullName>
+        <default>false</default>
+        <label>Society for Human Resource Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Sociology &amp; Criminal Justice Club</fullName>
+        <default>false</default>
+        <label>Sociology &amp; Criminal Justice Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Special Olympics Club</fullName>
+        <default>false</default>
+        <label>Special Olympics Club</label>
+    </customValue>
+    <customValue>
+        <fullName>Students for Justice &amp; Peace</fullName>
+        <default>false</default>
+        <label>Students for Justice &amp; Peace</label>
+    </customValue>
+    <customValue>
+        <fullName>Wrestling Club</fullName>
+        <default>false</default>
+        <label>Wrestling Club</label>
+    </customValue>
     <description>Field to populate choices from the application to the application record.</description>
     <masterLabel>Clubs/Activities</masterLabel>
     <sorted>true</sorted>

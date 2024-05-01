@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Program_Areas_of_Interest__c</fullName>
+    <deprecated>false</deprecated>
     <description>Areas of Interest for Program Finder</description>
     <externalId>false</externalId>
     <inlineHelpText>Areas of Interest for Program Finder</inlineHelpText>

@@ -4,7 +4,7 @@
     <description>This is the statement a student agrees to upon completion of the scholarship application.</description>
     <externalId>false</externalId>
     <label>Completion Statement</label>
-    <length>2000</length>
+    <length>100000</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Html</type>

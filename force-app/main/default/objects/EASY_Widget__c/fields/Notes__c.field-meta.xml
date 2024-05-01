@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Notes__c</fullName>
+    <description>Field used to explain the purpose of the widgets, background on the code used and any other tips on widget creation and maintenance.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Field used to explain the purpose of the widgets, background on the code used and any other tips on widget creation and maintenance.</inlineHelpText>
+    <label>Notes</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>Html</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

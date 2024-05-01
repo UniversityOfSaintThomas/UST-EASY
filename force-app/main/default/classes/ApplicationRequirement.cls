@@ -133,6 +133,7 @@ public class ApplicationRequirement {
         if ((String.isNotBlank(appInfo.appId) && app == null)) {
             String query = applicationHelper.getApplicationFields(items);
             query = 'SELECT ' + query + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
+            System.debug('query: ' + query);
             app = ((List<Application__c>) Database.query(query)).get(0);
         }
 
@@ -397,7 +398,10 @@ public class ApplicationRequirement {
         Map<Id, Id> requirement_item_ids_of_external_email_rrs = new Map<Id, Id>();
         for (ApplicationQuestionGroup aqg : section.groups) {
             if (aqg.response != null && aqg.isEditable) {
-                aqg.response.Viewed__c = true;
+                //Skip marking requirement response as viewed as directed by requirement
+                if (!aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c) {
+                    aqg.response.Viewed__c = true;
+                }
                 if (String.isNotBlank(aqg.response.External_Email__c)) {
                     requirement_item_ids_of_external_email_rrs.put(aqg.response.Requirement_Item__c, aqg.response.Id);
                 }
@@ -448,6 +452,7 @@ public class ApplicationRequirement {
         } catch (Exception ex) {
             System.debug(ex.getMessage());
         }
+
         try {
             update con;
         } catch (Exception ex) {

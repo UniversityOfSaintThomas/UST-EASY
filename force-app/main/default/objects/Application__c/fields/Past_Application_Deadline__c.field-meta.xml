@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Past_Application_Deadline__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(TODAY()&gt; Intended_Term_of_Entry__r.End_Application_Date__c, TRUE, FALSE)</formula>
+    <label>Past Application Deadline</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

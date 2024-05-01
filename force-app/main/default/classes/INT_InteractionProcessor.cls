@@ -252,8 +252,24 @@ public class INT_InteractionProcessor {
         for (Interaction__c interaction : interactionsToProcess) {
             if (!String.isEmpty(interaction.Contact__c)) {
                 Contact newCont = contactMappedFields.get(interaction.Contact__c);
+                Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping query
+                List<String> compareFields = new List<String>{
+                        'FirstName', 'MiddleName', 'LastName'
+                }; //List of existing to new Contact fields to compare. Make sure fields are active on Interaction Mappings
+
                 if (newCont != null) {
                     intMappingService.applyDataToSObject(interaction, newCont);
+                    //Don't update existing Contact fields found in list compareFields
+                    for (String field : compareFields) {
+                        try {
+                            if (String.isNotBlank(newContClone.get(field)?.toString()) && !newCont.get(field)?.toString().trim().equalsIgnoreCase(newContClone.get(field)?.toString().trim())) {
+                                newCont.put(field, newContClone.get(field));
+                            }
+                        } catch (Exception e) {
+                            System.debug('ERROR! Contact field compare: ' + e);
+                        }
+                    }
+
                     contactsToUpdate.add(newCont);
                 }
             }
@@ -585,10 +601,12 @@ public class INT_InteractionProcessor {
                         Pattern matchingPattern;
                         if (!String.isBlank(termName) && !String.isBlank(programName)) {
                             // matches: any opps without program and term information, or opportunities with exact program and term
-                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|(?:' + programName + ')*$');
+                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|(?:' + programName.replaceAll('\\(|\\)','') + ')*$');
+                            //matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|(?:' + programName + ')*$');
                         } else if (String.isBlank(termName) && !String.isBlank(programName)) {
                             // matches: any opportunities without program information, or opportunities with exact program
-                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|.*\\|(?:' + programName + ')*$');
+                            matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|.*\\|(?:' + programName.replaceAll('\\(|\\)','') + ')*$');
+                            //matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|.*\\|(?:' + programName + ')*$');
                         } else if (!String.isBlank(termName) && String.isBlank(programName)) {
                             // matches: any opportunities without term information, or opportunities  with exact term
                             matchingPattern = Pattern.compile('(?i)^(?:' + lastNameCleaned + ')\\|(?:' + termName + ')*\\|.*$');
@@ -599,8 +617,10 @@ public class INT_InteractionProcessor {
 
                         System.debug('Matching Pattern: ' + matchingPattern);
                         for (Opportunity opp : contactOppMap.get(interaction.Contact__c)) {
-                            System.debug('Cleaned Opportunity Name: ' + opp.Name.replaceAll('\'', ''));
-                            Matcher oppMatch = matchingPattern.matcher(opp.Name.replaceAll('\'', ''));
+                            System.debug('Cleaned Opportunity Name: ' + opp.Name.replaceAll('\'|\\(|\\)', ''));
+                            //System.debug('Cleaned Opportunity Name: ' + opp.Name.replaceAll('\'', ''));
+                            Matcher oppMatch = matchingPattern.matcher(opp.Name.replaceAll('\'|\\(|\\)', ''));
+                            //Matcher oppMatch = matchingPattern.matcher(opp.Name.replaceAll('\'', ''));
                             System.debug('Matched: ' + oppMatch.matches());
                             if (oppMatch.matches()) {
                                 if (matchingOpps.size() > 0) {

@@ -16,8 +16,7 @@ public with sharing class applicationHelper {
                         Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
                         Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
                         Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c, Requirement__c, Uploaded_Document_Object__c,
-                        File_Name_Prefix__c,
-                        (
+                        File_Name_Prefix__c, (
                         SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c,
                                 Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c,
                                 Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Lookup_Object__c, Lookup_Where_Clause__c, Name_Field_API_Name__c, Contact_Field__c,
@@ -59,7 +58,7 @@ public with sharing class applicationHelper {
                 SELECT Id, Requirement_Item__r.Requirement__c, Requirement_Item__c, ValueTextEntry__c, Incomplete_Questions__c,
                         Question_Group_Requirement_Fulfilled_On__c, HasDocument__c, Waive_Requirement__c, Document_Requirement_Fulfilled_On__c,
                         Has_Child_Requirement__c, Child_Requirement_Fulfilled_On__c, Application__c, Application__r.Contact__c, External_Email__c,
-                        Hashcode__c, Send_Reminder__c, Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c, Original_Uploaded_Document_File_Name__c,(
+                        Hashcode__c, Send_Reminder__c, Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c, Original_Uploaded_Document_File_Name__c, (
                         SELECT Id, IsPopulated__c, PopulatedOn__c, Question__c, Question__r.Required__c, ValueText__c, ValueCheckbox__c,
                                 ValuePhone__c, ValueEmail__c, ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueNumber__c,
                                 ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c,
@@ -79,16 +78,46 @@ public with sharing class applicationHelper {
 
     public static Set<String> getStandardAppFields() {
         Set<String> standardFields = new Set<String>{
-                'id', 'intended_program__c', 'applicant_type__c', 'citizenship__c', 'delivery_type__c', 'student_type__c', 'contact__c',
-                'school_college__c', 'residency__c', 'degree_type__c', 'application_status__c', 'Application_Substatus__c', 'application_control__c',
-                'Generic_Filter_1__c', 'Generic_Filter_2__c', 'Generic_Filter_3__c', 'Generic_Filter_4__c',
-                'Generic_Filter_5__c', 'Generic_Filter_6__c', 'Generic_Filter_7__c', 'Generic_Filter_8__c',
-                'Intended_Program__r.Name', 'Intended_Program__r.Name',
-                'Intended_Program__r.Program_Name_on_Application__c', 'Intended_Term_of_Entry__r.Name',
-                'Intended_Term_of_Entry__r.Term_Status_Type__c'
+                'id',
+                'intended_program__c',
+                'applicant_type__c',
+                'citizenship__c',
+                'delivery_type__c',
+                'student_type__c',
+                'contact__c',
+                'school_college__c',
+                'residency__c',
+                'degree_type__c',
+                'application_status__c',
+                'Application_Substatus__c',
+                'application_control__c',
+                'Generic_Filter_1__c',
+                'Generic_Filter_2__c',
+                'Generic_Filter_3__c',
+                'Generic_Filter_4__c',
+                'Generic_Filter_5__c',
+                'Generic_Filter_6__c',
+                'Generic_Filter_7__c',
+                'Generic_Filter_8__c',
+                'Intended_Program__r.Name',
+                'Intended_Program__r.Name',
+                'Intended_Term_of_Entry__r.Term_Status_Type__c',
+                'Intended_Program__r.Program_Name_on_Application__c',
+                'Intended_Term_of_Entry__r.Name',
+                //Added for personal data tags
+                'Contact_Email__c',
+                'Account_Claimed_Portal_Text__c',
+                'Application_Control__r.URL_Parameter__c',
+                'Aquinas_Scholars_Portal_Text__c',
+                'Documents_Missing_Text__c',
+                'Applicant_Banner_Id__c',
+                'Contact__r.Id',
+                'Contact_Mailing_First_Name__c',
+                'Contact__r.LastName',
+                'Contact__r.hed__UniversityEmail__c'
         };
         Set<String> lowerCaseSet = new Set<String>();
-        for(String s : standardFields) {
+        for (String s : standardFields) {
             lowerCaseSet.add(s.toLowerCase());
         }
         return lowerCaseSet;
@@ -157,6 +186,7 @@ public with sharing class applicationHelper {
                     contactFields.add(q.Contact_Field__c.toLowerCase());
                 }
             }
+
         }
         fields = String.join(new List<String>(contactFields), ',');
         return fields;

@@ -163,7 +163,8 @@ public class ApplicationRegistration {
                             Email__c,
                             External_Application_ID__c,
                             Academic_Program__c,
-                            Intended_Start_Term__c
+                            Intended_Start_Term__c,
+                            Birthdate__c
                     FROM Interaction__c
                     WHERE Id = :interaction.Id
             ];

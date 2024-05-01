@@ -361,7 +361,11 @@ flows:
         task: configure_community_settings
       27:
         task: configure_community
+<<<<<<< HEAD
       28:
+=======
+      22:
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
         task: load_scholarship_test_data
 
   release_unlocked_beta:

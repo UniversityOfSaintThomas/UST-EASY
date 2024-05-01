@@ -41,11 +41,14 @@
                 <default>false</default>
                 <label>University Advancement</label>
             </value>
+<<<<<<< HEAD
             <value>
                 <fullName>Admissions Application</fullName>
                 <default>false</default>
                 <label>Admissions Application</label>
             </value>
+=======
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
         </valueSetDefinition>
     </valueSet>
 </CustomField>

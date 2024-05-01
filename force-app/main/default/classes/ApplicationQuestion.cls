@@ -56,11 +56,11 @@ public class ApplicationQuestion {
     public String fieldName { get; set; }
     public String defaultFieldName { get {return String.isBlank(fieldDefaultAPINames.get(fieldType)) ? 'ValueText__c' : fieldDefaultAPINames.get(fieldType);} }
     public String value;
-   // public Boolean checkboxValue;
-   // public Decimal decimalValue;
-    //public Datetime datetimeValue;
-    //public Date dateValue;
-   // public String textEncryptedValue;
+    public Boolean checkboxValue;
+    public Decimal decimalValue;
+    public Datetime datetimeValue;
+    public Date dateValue;
+    public String textEncryptedValue;
     public Boolean hasDependentQuestions { get; set; }
     public Integer integerValue;
     public String placeholder { get; set; }
@@ -219,14 +219,14 @@ public class ApplicationQuestion {
     public Boolean isEditable {
 
         get {
-//            if (!UserInfo.getUserType().equals('Standard') || Test.isRunningTest()) {
-//                if (application != null && String.isNotBlank(application.Application_Status__c)) {
-//                    if (question != null && (String.isBlank(question.Editable_Application_Status__c) || (String.isNotBlank(question.Editable_Application_Status__c) && new Set<String>(question.Editable_Application_Status__c.split(';')).contains(application.Application_Status__c)))) {
-//                        return true;
-//                    }
-//                    return question == null;
-//                }
-//            }
+            if (!UserInfo.getUserType().equals('Standard') || Test.isRunningTest()) {
+                if (application != null && String.isNotBlank(application.Application_Status__c)) {
+                    if (question != null && (String.isBlank(question.Editable_Application_Status__c) || (String.isNotBlank(question.Editable_Application_Status__c) && new Set<String>(question.Editable_Application_Status__c.split(';')).contains(application.Application_Status__c)))) {
+                        return true;
+                    }
+                    return question == null;
+                }
+            }
             return true;
         }
     }
@@ -470,7 +470,7 @@ public class ApplicationQuestion {
                 response.ValuePercent__c = null;
                 response.ValuePhone__c = null;
                 response.ValueText__c = null;
-                response.ValueTextEncrypted__c = '';
+                response.ValueTextEncrypted__c = null;
                 response.ValueTextArea__c = null;
                 response.ValueLongTextArea__c = null;
                 response.ValueURL__c = null;
@@ -857,7 +857,7 @@ public class ApplicationQuestion {
             return response.ValueLongTextArea__c;
         } else if (String.isNotBlank(response.ValueURL__c)) {
             return response.ValueURL__c;
-        } else if (String.isNotBlank(response.ValueTextEncrypted__c) && !response.ValueTextEncrypted__c.contains('XXX')) {
+        } else if (String.isNotBlank(response.ValueTextEncrypted__c)) {
             return response.ValueTextEncrypted__c;
         } else if (String.isNotBlank(response.Country__c) && ((!response.Country__c.equals('US') && !response.Country__c.equals('United States')) || String.isNotBlank(response.State__c)) && String.isNotBlank(response.Street__c) && String.isNotBlank(response.PostalCode__c) && String.isNotBlank(response.City__c)) {
             return response.Street__c + ', ' + response.City__c + ', ' + (String.isBlank(response.State__c) ? '' : response.State__c + ', ') + response.Country__c + ', ' + response.PostalCode__c;

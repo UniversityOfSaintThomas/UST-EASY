@@ -43,10 +43,13 @@
                 <behavior>Edit</behavior>
                 <field>Requirement_Response__c</field>
             </layoutItems>
+<<<<<<< HEAD
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Admissions_Application__c</field>
             </layoutItems>
+=======
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -69,6 +72,7 @@
                 <behavior>Readonly</behavior>
                 <field>Days_Took_to_Process__c</field>
             </layoutItems>
+<<<<<<< HEAD
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Original_Uploaded_Document_File_Name__c</field>
@@ -77,6 +81,8 @@
                 <behavior>Edit</behavior>
                 <field>Saved_Uploaded_Document_File_Name__c</field>
             </layoutItems>
+=======
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -148,7 +154,11 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
+<<<<<<< HEAD
         <masterLabel>00h8K000003906G</masterLabel>
+=======
+        <masterLabel>00hP00000042jyD</masterLabel>
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

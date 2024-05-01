@@ -28,6 +28,7 @@
                 </a>
             </p>
         </apex:outputPanel>
+
         <apex:outputPanel layout="none" rendered="{!ISPICKVAL($User.UserType,'Guest')}">
             <p class="slds-text-body_regular">If you have an existing St. Thomas application or have accessed your Admissions Portal before, sign in to access your application(s).</p>
             <p class="slds-text-body_regular slds-p-vertical_x-small"><a class="slds-button slds-button_outline-brand" href="{!$Site.Prefix}/ApplicationLogin">
@@ -38,6 +39,7 @@
                 </a>
             </p>
         </apex:outputPanel>
+
 
     </div>
 </apex:component>

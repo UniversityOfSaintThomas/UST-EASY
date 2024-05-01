@@ -3,7 +3,6 @@
  */
 
 public with sharing class ScholarshipApplicationPage2Controller {
-    public String pageURL { get; set; }
     public Scholarship__c scholarship { get; set; }
     public Scholarship_Applicant__c applicant { get; set; }
     public Boolean essay1HasText { get; set; }

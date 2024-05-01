@@ -98,8 +98,15 @@
                         <template lwc:if={isStaticContent}>
                             <div class="slds-p-bottom_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
                                 <lightning-input-rich-text
+<<<<<<< HEAD
                                         label='Static Content'
                                         name="staticContent"
+=======
+                                        formats="font,color,bold,italic,underline,strike,link,code,blockquote,header,indent,outdent,align,clear,table,ul,ol,undo,redo"
+                                        label='Static Content'
+                                        name="staticContent"
+                                        custom-buttons={customButtons}
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
                                         onchange={handleChange}
                                 >
                                 </lightning-input-rich-text>

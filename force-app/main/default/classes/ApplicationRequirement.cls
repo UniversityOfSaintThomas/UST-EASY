@@ -372,7 +372,9 @@ public class ApplicationRequirement {
                 //Uploaded data evaluated
                 if (addData != null && addData.containsKey('attData')) {
                     Map<String, Object> attData = (Map<String, Object>) addData.get('attData');
+                    System.debug('attData: ' + attData.keySet());
                     if (attData != null && attData.containsKey('fileName')) {
+                        System.debug('File Name: ' + attData.get('fileName') + ' File Size: ' + attData.get('fileSize') + ' File Type: ' + attData.get('fileType') + ' File Id: ' + attData.get('fileId'));
                         String fileName = (String) attData.get('fileName');
                         //Check for file types
                         if (String.isNotBlank(fileName) && String.isNotBlank(g.item.File_Types__c)) {
@@ -398,10 +400,15 @@ public class ApplicationRequirement {
         Map<Id, Id> requirement_item_ids_of_external_email_rrs = new Map<Id, Id>();
         for (ApplicationQuestionGroup aqg : section.groups) {
             if (aqg.response != null && aqg.isEditable) {
+<<<<<<< HEAD
                 //Skip marking requirement response as viewed as directed by requirement
                 if (!aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c) {
                     aqg.response.Viewed__c = true;
                 }
+=======
+                ///Boolean test = aqg.response.Requirement_Item__r.IsDeleted;
+                aqg.response.Viewed__c = true;
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
                 if (String.isNotBlank(aqg.response.External_Email__c)) {
                     requirement_item_ids_of_external_email_rrs.put(aqg.response.Requirement_Item__c, aqg.response.Id);
                 }

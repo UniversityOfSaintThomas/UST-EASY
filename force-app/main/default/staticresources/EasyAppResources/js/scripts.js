@@ -64,6 +64,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
     activateAutoComplete();
     activateTooltips();
     fileUploadAreas();
+    passwordInputPseudoInput();
     //Hide the form spinner if it is active
     hideFormSpinner(true, isRelatedRecordReRender);
 }
@@ -73,6 +74,19 @@ function findApplicationLinkTargetSelf() {
         if (link.href.toLowerCase().includes('/applicationlink?')) {
             link.setAttribute('target', '_self');
         }
+    });
+}
+
+function passwordInputPseudoInput() {
+    document.querySelectorAll('.passwordHidden').forEach(item => {
+        console.log('password field found');
+        item.querySelector('.pseudoInput').addEventListener('keyup', function () {
+            // Query select fields with ids that end with textEncryptedField
+            let encryptedField = item.querySelector("[id$='textEncryptedField']");
+            if (encryptedField) {
+                encryptedField.value = item.querySelector('.pseudoInput').value;
+            }
+        });
     });
 }
 

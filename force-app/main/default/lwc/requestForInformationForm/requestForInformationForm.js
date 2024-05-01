@@ -306,7 +306,10 @@ export default class RequestForInformationForm extends LightningElement {
     @track timeline_picklist_values;
     @track scholarship_picklist;
     @track heard_about_us_picklist;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
 
     //intermediate values
     address1;
@@ -464,7 +467,7 @@ export default class RequestForInformationForm extends LightningElement {
                                         this.academic_max_select = "1";
                                         this.multi_select_single = true;
                                         this.field_labels.academic_interest_label = 'Academic Interest';
-                                        this.academic_max_select_help = "You can only choose up to " + this.academic_max_select + " options";
+                                        this.academic_max_select_help = "Only one program of interest can be selected. Please submit a new form for each program of interest.";
                                     }
                                 }
 
@@ -477,6 +480,21 @@ export default class RequestForInformationForm extends LightningElement {
                                         if (last_group === '' || last_group !== programs[program].Degree__c) {
                                         last_group = programs[program].Degree__c
                                             if (label_value && programs[program].Degree__c) {
+<<<<<<< HEAD
+=======
+                                                values.push(
+                                                    {
+                                                        label: programs[program].Degree__c,
+                                                        value: programs[program].Degree__c,
+                                                        description: programs[program].Degree__c,
+                                                        is_group: true
+                                                    }
+                                                );
+                                            }
+                                        }
+                                    }
+                                    if (label_value && programs[program].Id) {
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
                                         values.push(
                                             {
                                                 label: programs[program].Degree__c,
@@ -629,6 +647,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields[fieldToApplyTo] = event.detail.value;
             }
         } else {
+<<<<<<< HEAD
         switch (event.target.label) {
             case this.field_labels.first_name_label:
                 this.record_input.fields.FirstName = event.target.value;
@@ -678,6 +697,57 @@ export default class RequestForInformationForm extends LightningElement {
             case this.field_labels.country_label:
                 this.record_input.fields.Country = event.target.options.find(opt => opt.value === event.detail.value).label;
                 this.record_input.fields.CountryCode = event.target.value;
+=======
+            switch (event.target.label) {
+                case this.field_labels.first_name_label:
+                    this.record_input.fields.FirstName = event.target.value;
+                    break;
+                case this.field_labels.last_name_label:
+                    this.record_input.fields.LastName = event.target.value;
+                    break;
+                case this.field_labels.email_label:
+                    this.record_input.fields.Email = event.target.value;
+                    break;
+                case this.field_labels.home_phone_label:
+                    this.record_input.fields.Phone = event.target.value;
+                    break;
+                case this.field_labels.mobile_phone_label:
+                    this.record_input.fields.MobilePhone = event.target.value;
+                    break;
+                case this.field_labels.phone_label:
+                    this.record_input.fields.MobilePhone = event.target.value;
+                    break;
+                case this.field_labels.address1_label:
+                    this.address1 = event.target.value;
+                    break;
+                case this.field_labels.address2_label:
+                    this.address2 = event.target.value;
+                    break;
+                case this.field_labels.address3_label:
+                    this.address3 = event.target.value;
+                    break;
+                case this.field_labels.city_label:
+                    this.record_input.fields.City = event.target.value;
+                    break;
+                case this.field_labels.state_label:
+                    this.record_input.fields.State = event.target.value;
+                    break;
+                case this.field_labels.region_label:
+                    this.record_input.fields.State = event.target.value;
+                    break;
+                case this.field_labels.zipcode_label:
+                    this.record_input.fields.PostalCode = event.target.value;
+                    if (String(event.target.value).length === 5
+                        && String(event.target.value).match(/^[0-9]+$/) != null
+                        && !this.international_citizen_type
+                    ) {
+                        this.populateUSCityStateAndCountry(event.target.value);
+                    }
+                    break;
+                case this.field_labels.country_label:
+                    this.record_input.fields.Country = event.target.options.find(opt => opt.value === event.detail.value).label;
+                    this.record_input.fields.CountryCode = event.target.value;
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
                     this.international_citizen_type = !this.record_input.fields.Country.toLowerCase().startsWith('united states') && this.record_input.fields.Country.toLowerCase() !== 'us';
                 break;
             case this.field_labels.text_messages_label:
@@ -711,6 +781,7 @@ export default class RequestForInformationForm extends LightningElement {
                         this.academic_undecided_selected = false;
                         this.single_selected_program = '';
                         this.academic_interest_id_list = null;
+<<<<<<< HEAD
                     }
                     //if academic_value value is not a list assign the value to single selected program
                     if (!Array.isArray(event.detail.value) && academic_value) {
@@ -719,6 +790,16 @@ export default class RequestForInformationForm extends LightningElement {
                 this.academic_interest_id_list = event.detail.value;
                     }
                 break;
+=======
+                    }
+                    //if academic_value value is not a list assign the value to single selected program
+                    if (!Array.isArray(event.detail.value) && academic_value) {
+                        this.single_selected_program = academic_value;
+                    } else {
+                        this.academic_interest_id_list = event.detail.value;
+                    }
+                    break;
+>>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
                 case "What programs are you considering (max 3)?":
                     //Hard coded label for undecided academic interest. First value blank=
                     this.academic_interest_id_list = event.detail.value;

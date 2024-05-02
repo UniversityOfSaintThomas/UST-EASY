@@ -202,7 +202,7 @@ public with sharing class ApplicationBodyController {
                                 Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
                                 Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
                                 Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
-                                Applicant_Type__c
+                                Applicant_Type__c, Button_Code__c
                         FROM EASY_Widget__c
                         WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
                         AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)

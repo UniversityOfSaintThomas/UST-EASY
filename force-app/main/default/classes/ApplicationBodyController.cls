@@ -397,13 +397,13 @@ public with sharing class ApplicationBodyController {
                     //Process data tags here
                     if (dataTagsMap.containsKey(widget.Application_Control__r.URL_Parameter__c)) {
                         if (String.isNotBlank(widget.Display_Text__c)) {
-                            widget.Display_Text__c = replaceDataTags(widget.Display_Text__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                            widget.Display_Text__c = ApplicationUtilities.replaceDataTags(widget.Display_Text__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                         }
                         if (String.isNotBlank(widget.Display_Heading__c)) {
-                            widget.Display_Heading__c = replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                            widget.Display_Heading__c = ApplicationUtilities.replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                         }
                         if (String.isNotBlank(widget.Scripts__c)) {
-                            widget.Scripts__c = replaceDataTags(widget.Scripts__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                            widget.Scripts__c = ApplicationUtilities.replaceDataTags(widget.Scripts__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                         }
                     }
                 }

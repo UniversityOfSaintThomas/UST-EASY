@@ -1,0 +1,26 @@
+<!--
+ - Created by nguy0092 on 4/16/2024.
+ -->
+
+<apex:component id="SummitEventsList">
+        <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true"/>
+        <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
+
+
+    <div id="lightningvf{!widget.Id}"/>
+
+    <script>
+        $Lightning.use("c:summitEventsListApp", function () {
+            $Lightning.createComponent("c:summitEventsListView",
+                {
+                    contactId: "{!appInfo.contactId}"
+                },
+                "lightningvf{!widget.Id}",
+                function (cmp) {
+                    console.log("LWC summitEventsListView Loaded")
+                }
+            );
+        });
+    </script>
+
+</apex:component>

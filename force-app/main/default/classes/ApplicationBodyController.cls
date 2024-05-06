@@ -202,7 +202,7 @@ public with sharing class ApplicationBodyController {
                                 Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
                                 Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
                                 Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
-                                Applicant_Type__c
+                                Applicant_Type__c, Button_Code__c
                         FROM EASY_Widget__c
                         WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
                         AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
@@ -397,13 +397,13 @@ public with sharing class ApplicationBodyController {
                     //Process data tags here
                     if (dataTagsMap.containsKey(widget.Application_Control__r.URL_Parameter__c)) {
                         if (String.isNotBlank(widget.Display_Text__c)) {
-                            widget.Display_Text__c = replaceDataTags(widget.Display_Text__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                            widget.Display_Text__c = ApplicationUtilities.replaceDataTags(widget.Display_Text__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                         }
                         if (String.isNotBlank(widget.Display_Heading__c)) {
-                            widget.Display_Heading__c = replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                            widget.Display_Heading__c = ApplicationUtilities.replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                         }
                         if (String.isNotBlank(widget.Scripts__c)) {
-                            widget.Scripts__c = replaceDataTags(widget.Scripts__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                            widget.Scripts__c = ApplicationUtilities.replaceDataTags(widget.Scripts__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                         }
                     }
                 }
@@ -467,77 +467,6 @@ public with sharing class ApplicationBodyController {
         }
         return filterMap;
     }
-
-    public String replaceDataTags(String widgetContent, EASYPersonalDataTags tagWrapper) {
-        //widgetContent = 'This is a {{Banner <strong>Id</strong>}} in the middle of something. {<strong>{Nothing here</strong>}}. asdfsdfa {{Banner Id}}. Then what if you find a tag like {{This one<strong>}</strong>}';
-
-        //Serialize EASYPersonalDataTags data so we can get field names and retrieve with get method
-        Map<String, Object> tagMap = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(tagWrapper));
-
-        //Create lower/uppercase of EASYPersonalDataTags fields so that we can find them case insensitive
-        Map<String, String> lowerCaseUppercaseTagMap = new Map<String, String>();
-        for (String k : tagMap.keySet()) {
-            lowerCaseUppercaseTagMap.put(k.toLowerCase(), k);
-        }
-
-        //Get all tags in content that start with {{ and end with }} even if interrupted with html
-        Pattern tagPattern = Pattern.compile('\\{.(.*?)\\}(.*?|)[\\}\\s]');
-        Matcher tagMatcher = tagPattern.matcher(widgetContent);
-        Set<String> matchingTags = new Set<String>();
-        while (tagMatcher.find ()) {
-            matchingTags.add(tagMatcher.group() .trim());
-        }
-
-        //Loop through tag matches set to sanitize and replace all
-        for (String tag : matchingTags) {
-
-            //Remove all HTML elements from the tag to avoid things like this {<em>{</em>Tag}}
-            String tab_data = tag.replaceAll('<[^>]*>', '');
-
-            //Remove tag delineators to get at data identifier
-            tab_data = tab_data.removeStart('{{');
-            tab_data = tab_data.removeEnd('}}');
-            tab_data = tab_data.trim();
-
-            //Add underscore to space in so that user can be agnostic of the need
-            tab_data = tab_data.replace(' ', '_');
-
-            //Find if lowercase version of tag is in our map of lower/uppercase tags and use uppercase to grab data
-            if (lowerCaseUppercaseTagMap.keySet().contains(tab_data.toLowerCase())) {
-                //find if the tag is Documents_Missing
-                String caseSensitiveTag = lowerCaseUppercaseTagMap.get(tab_data.toLowerCase());
-
-                //If the value is blank we want to replace tag with an empty string
-                String valueForTag = String.isNotBlank((String) tagMap.get(caseSensitiveTag)) ? (String) tagMap.get(caseSensitiveTag) : '' ;
-
-                if(tab_data.toLowerCase() == 'documents_missing' && String.isNotBlank(valueForTag)){
-                    //The documents_missing tab contains a comma seperated list inside brackets I want to turn into a bulleted list
-                    String documentsMissing = (String) tagMap.get(lowerCaseUppercaseTagMap.get(tab_data.toLowerCase()));
-                    if(String.isNotBlank(documentsMissing)){
-                        //System.debug('documentsMissing: ' + documentsMissing);
-                        //remove <p>[ from front of tag and ]</p> from end of tag added by flow creation
-                        documentsMissing = documentsMissing.removeStart('<p>');
-                        documentsMissing = documentsMissing.removeStart('[');
-                        documentsMissing = documentsMissing.removeEnd('</p>');
-                        documentsMissing = documentsMissing.removeEnd(']');
-                        String[] documentsMissingList = documentsMissing.split(',');
-                        String documentsMissingListHTML = '<ul>';
-                        for(String document : documentsMissingList){
-                            documentsMissingListHTML += '<li>' + document + '</li>';
-                        }
-                        documentsMissingListHTML += '</ul>';
-                        valueForTag = documentsMissingListHTML;
-                    }
-                }
-
-                //Replace the original tag (as it may contain html,ect, with the found value)
-                widgetContent = widgetContent.replace(tag, valueForTag);
-            }
-        }
-
-        return widgetContent;
-    }
-
 
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
         for (String l : list1) {

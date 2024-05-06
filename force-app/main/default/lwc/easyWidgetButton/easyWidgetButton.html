@@ -1,0 +1,142 @@
+<!--
+ - Created by nguy0092 on 3/8/2024.
+ -->
+
+<!-- Add Button Test 1 -->
+<template>
+
+    <div class="slds-box_border slds-m-around_small slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-col slds-size_1-of-1">
+            <form>
+                <lightning-card title="Create Button Link" icon-name="utility:add">
+                    <div class="slds-p-bottom_small slds-wrap slds-grid slds-gutters">
+                        <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_2-of-12 slds-p-bottom_small"
+                                            name="ButtonType"
+                                            label="Button Type"
+                                            value={button_type}
+                                            placeholder=""
+                                            options={buttonTypeOptions}
+                                            required
+                                            onchange={handleChange}
+                                            field-level-help="Link to Application requirement form or web page URL."></lightning-combobox>
+                        <lightning-input class="slds-col slds-size_1-of-2 slds-large-size_3-of-12 slds-p-bottom_small"
+                                         type="text"
+                                         name="ButtonLabel"
+                                         label='Button Label'
+                                         required="true"
+                                         value={button_label}
+                                         onchange={handleChange}
+                                         field-level-help="Text displayed for button"></lightning-input>
+                        <lightning-input lwc:if={buttonUrlSelect}
+                                         class="slds-col slds-size_1-of-1 slds-large-size_7-of-12"
+                                         type="url"
+                                         name="ButtonUrl"
+                                         label='Button Url'
+                                         required={buttonUrlSelect}
+                                         value={button_url}
+                                         placeholder="Include full url header e.g., https://"
+                                         onchange={handleChange}
+                                         field-level-help="URL link destination"></lightning-input>
+                        <lightning-input lwc:if={buttonRequirementSelect}
+                                         class="slds-col slds-size_1-of-2 slds-large-size_3-of-12"
+                                         type="text"
+                                         name="ButtonRequirementId"
+                                         label='Requirement Form ID'
+                                         required={buttonRequirementSelect}
+                                         value={button_requirement_id}
+                                         placeholder="15 or 18 digit ID"
+                                         pattern="([a-zA-Z0-9]{15}|[a-zA-Z0-9]{18})"
+                                         message-when-pattern-mismatch="Requirement form ID is 15 or 18 digits"
+                                         onchange={handleChange}
+                                         field-level-help="*Verify requirement form ID exists in environment where button will be used."></lightning-input>
+                    </div>
+                    <div class="slds-p-bottom_small slds-grid slds-wrap slds-gutters my-css">
+                        <div class="slds-form-element slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+                            <label class="slds-form-element__label" for="ButtonStyle">
+                                <span class="slds-required" title="required">*</span>
+                                <a href="https://www.lightningdesignsystem.com/components/buttons/#Variations"
+                                   target=_blank>Button Style</a>
+                            </label>
+                            <lightning-helptext
+                                    content="Click on 'Button Style' label to view a list of button styles">
+                            </lightning-helptext>
+                                <lightning-combobox class="slds-p-bottom_small"
+                                                    id="ButtonStyle"
+                                                    name="ButtonStyle"
+                                                    label="Button Style"
+                                                    value={button_style}
+                                                    placeholder=""
+                                                    options={buttonStyleOptions}
+                                                    required
+                                                    variant="label-hidden"
+                                                    onchange={handleChange}></lightning-combobox>
+                        </div>
+                            <lightning-combobox class="slds-form-element slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-p-bottom_small"
+                                                name="ButtonSize"
+                                                label="Button Size"
+                                                value={button_size}
+                                                placeholder=""
+                                                options={buttonSizeOptions}
+                                                required
+                                                disabled={buttonDisable}
+                                                onchange={handleChange}
+                                                field-level-help="Button size is representative of ratio of width of button to width of widget; width may look different based on widget location."></lightning-combobox>
+                            <lightning-combobox class="slds-col slds-size_1-of-2 slds-large-size_1-of-4"
+                                            name="ButtonPosition"
+                                            label="Button Position"
+                                            value={button_position}
+                                            placeholder=""
+                                            options={buttonPositionOptions}
+                                            required
+                                            onchange={handleChange}
+                                            field-level-help="Horizontal position of button"></lightning-combobox>
+                        <div class="slds-form-element slds-col slds-size_1-of-2 slds-large-size_1-of-4">
+                            <label class="slds-form-element__label" for="ButtonStyle">
+                                <a href="https://www.lightningdesignsystem.com/icons/#utility"
+                                   target=_blank>Button Icon</a>
+                            </label>
+                            <lightning-helptext
+                                    content="Click on 'Button Icon' label to view a list of Utility Icons">
+                            </lightning-helptext>
+                            <lightning-input name="ButtonIcon"
+                                             label="Button Icon"
+                                             type="text"
+                                             value={button_icon}
+                                             placeholder="Utility Icon name (optional)"
+                                             disabled={buttonDisable}
+                                             variant="label-hidden"
+                                             onchange={handleChange}></lightning-input>
+                        </div>
+                    </div>
+
+                    <!-- Button to submit button link-->
+                    <p slot="footer">
+                        <lightning-button
+                                name="Submit"
+                                label="Add"
+                                onclick={validInput}
+                                icon-name="utility:add"
+                                variant="brand">
+                        </lightning-button>
+                    </p>
+                </lightning-card>
+            </form>
+        </div>
+
+        <template lwc:if={showDataTable}>
+            <div class="slds-p-around_small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <lightning-datatable
+                        key-field="id"
+                        show-row-number-column
+                        data={buttonJSON}
+                        hide-checkbox-column
+                        columns={columns}
+                        class='actionButtons'
+                        onrowaction={callRowAction}
+                        wrap-text-max-lines="5">
+                </lightning-datatable>
+            </div>
+        </template>
+    </div>
+
+</template>

@@ -142,7 +142,6 @@ public class ApplicationRegistration {
         loginPassword = null;
         loginUrl = null;
         crudToDo doCrud = new crudToDo();
-        // Throw exception if not all required fields have been filled-out
 
         if (String.isNotBlank(errorMessage)) {
             appCreate.additionalDataString = '';
@@ -152,7 +151,6 @@ public class ApplicationRegistration {
 
         System.Savepoint sp = Database.setSavepoint();
         try {
-            // Insert interaction to create/update Contact
 
             insert interaction;
             interaction = [
@@ -165,7 +163,8 @@ public class ApplicationRegistration {
                             Email__c,
                             External_Application_ID__c,
                             Academic_Program__c,
-                            Intended_Start_Term__c
+                            Intended_Start_Term__c,
+                            Birthdate__c
                     FROM Interaction__c
                     WHERE Id = :interaction.Id
             ];
@@ -176,9 +175,10 @@ public class ApplicationRegistration {
             ];
             appCreate.con.Id = con.Id;
 
+
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty()) {
-                throw new ApplicationUtilities.ApplicationException(' An account with this email already exists. Please sign in with the button to the right for existing users."', true, true);
+                throw new ApplicationUtilities.ApplicationException(' An account with this email or birthdate already exists. Please sign in with the button to the right for existing users.', true, true);
             }
 
             if (String.isNotBlank(interaction.Academic_Program__c)) {
@@ -318,6 +318,9 @@ public class ApplicationRegistration {
                     }
                     if (question.label.equalsIgnoreCase('Last Name')) {
                         interaction.Last_Name__c = String.valueOf(question.resp).trim();
+                    }
+                    if (question.label.equalsIgnoreCase('What is your date of birth? (MM/DD/YYYY)')) {
+                        interaction.Birthdate__c = (Date)question.resp;
                     }
                 }
             }

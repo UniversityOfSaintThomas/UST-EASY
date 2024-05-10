@@ -1,4 +1,3 @@
-
 function docReady(fn) {
     // see if DOM is already available
     if (document.readyState === "complete" || document.readyState === "interactive") {
@@ -9,7 +8,7 @@ function docReady(fn) {
     }
 }
 
-docReady(function() {
+docReady(function () {
     appHideLoadingSpinner();
     pageLoadReRendered();
     activateCarousel();
@@ -24,7 +23,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
         field.setAttribute('disabled', 'disabled');
     });
 
-    if(checkEnter) {
+    if (checkEnter) {
         sldsScope.querySelector('form').onkeypress = checkEnter;
     }
 
@@ -538,7 +537,7 @@ function disableCarousel() {
     carouselOn = false;
 
     let killerButton = document.getElementById('carousel-killer');
-    if(killerButton) {
+    if (killerButton) {
         killerButton.innerText = "Restore Form";
         killerButton.removeEventListener('click', disableCarousel);
         killerButton.addEventListener('click', enableCarousel);
@@ -582,7 +581,7 @@ function enableCarousel() {
     carouselOn = true;
 
     let killerButton = document.getElementById('carousel-killer');
-    if(killerButton) {
+    if (killerButton) {
         killerButton.innerText = "Single-Page Form";
         killerButton.removeEventListener('click', enableCarousel);
         killerButton.addEventListener('click', disableCarousel);
@@ -656,7 +655,7 @@ function activateCarousel(slideMoveTo) {
         function setEventListeners() {
             next.addEventListener('click', moveNext);
             prev.addEventListener('click', movePrev);
-            if(killerButton) {
+            if (killerButton) {
                 killerButton.addEventListener('click', disableCarousel);
             }
             if (totalItems === 1) {
@@ -789,7 +788,7 @@ function activateCarousel(slideMoveTo) {
         }
     }
     if (items.length <= 1) {
-        if(killerButton) {
+        if (killerButton) {
             killerButton.style.display = 'none';
         }
     }
@@ -799,7 +798,7 @@ function activateCarousel(slideMoveTo) {
 var spinnerFocusElement = null;
 
 function appHideLoadingSpinner(restoreFocus = true) {
-    if(document.getElementById('loadSpinner')) {
+    if (document.getElementById('loadSpinner')) {
         document.getElementById('loadSpinner').style.display = "none";
     }
     if (restoreFocus == true && spinnerFocusElement != null) {
@@ -810,14 +809,14 @@ function appHideLoadingSpinner(restoreFocus = true) {
 
 function appShowLoadingSpinner() {
     spinnerFocusElement = document.activeElement.id;
-    if(document.getElementById('loadSpinner')) {
+    if (document.getElementById('loadSpinner')) {
         document.getElementById('loadSpinner').style.display = "block";
     }
     return true;
 }
 
 function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
-    if(document.getElementById('form-spinner')) {
+    if (document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'none';
     }
     if (restoreFocus == true && spinnerFocusElement != null) {
@@ -833,14 +832,14 @@ function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
 
 function showFormSpinner() {
     spinnerFocusElement = document.activeElement.id;
-    if(document.getElementById('form-spinner')) {
+    if (document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'block';
     }
 }
 
 function showFormSpinnerRelatedRecord() {
     spinnerFocusElement = document.activeElement.parentElement.parentElement.parentElement;
-    if(document.getElementById('form-spinner')) {
+    if (document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'block';
     }
 }
@@ -1105,3 +1104,38 @@ function validateFileType(obj) {
     }
     return true;
 }
+
+
+document.addEventListener("keydown", (e) => {
+
+        const keyPress = e.key;
+        const keyExempt = [
+            "Backspace",
+            "Delete",
+            "Shift",
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "ArrowRight",
+            "Tab",
+            " ",
+            "Spacebar"
+        ];
+        const keyTarget = e.target;
+
+        if (keyTarget.type === "password") {
+
+            if (!keyExempt.includes(keyPress)) {
+
+                keyTarget.type = "text"
+
+                setTimeout(() => {
+
+                    keyTarget.type = "password"
+                    console.log("What key did I press: " + keyPress)
+
+                }, 500);
+            }
+        }
+    }
+);

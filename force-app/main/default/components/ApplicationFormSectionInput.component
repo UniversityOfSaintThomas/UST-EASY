@@ -3,6 +3,9 @@
  -->
 
 <apex:component id="ApplicationFormSectionInput">
+
+    <apex:attribute name="testInput" description="" type="String" required="false"/>
+
     <apex:attribute name="inputLabel" description="" type="String" required="false"/>
     <apex:attribute name="multiPicklist" description="" type="List" required="false"/>
     <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
@@ -100,7 +103,12 @@
 
     <!-- TextEncrypted -->
     <apex:outputPanel rendered="{!inputType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input find-me-class validate{!inputType}"/>
+
+        <button id="ynTestButton1" onclick="showTextEcnrypted">Text</button>
+
+        YN: Here is encrypted field.
+
     </apex:outputPanel>
 
     <!-- Currency -->

@@ -14,6 +14,7 @@ docReady(function () {
     activateCarousel();
 });
 
+
 function pageLoadReRendered(isRelatedRecordReRender = false) {
 
     //Disable fields that are set to not be editable
@@ -63,6 +64,11 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
     activateAutoComplete();
     activateTooltips();
     fileUploadAreas();
+
+    //YN Add
+    encryptedTextShowHide();
+
+
     //Hide the form spinner if it is active
     hideFormSpinner(true, isRelatedRecordReRender);
 }
@@ -1106,36 +1112,93 @@ function validateFileType(obj) {
 }
 
 
-document.addEventListener("keydown", (e) => {
+function encryptedTextShowHide() {
 
-        const keyPress = e.key;
-        const keyExempt = [
-            "Backspace",
-            "Delete",
-            "Shift",
-            "ArrowUp",
-            "ArrowDown",
-            "ArrowLeft",
-            "ArrowRight",
-            "Tab",
-            " ",
-            "Spacebar"
-        ];
-        const keyTarget = e.target;
+    let allEncryptFields = document.querySelectorAll('.find-me-class');
 
-        if (keyTarget.type === "password") {
+    allEncryptFields.forEach(encryptField => {
 
-            if (!keyExempt.includes(keyPress)) {
+        encryptField.addEventListener('keyup', function (e) {
 
-                keyTarget.type = "text"
+            const keyPress = e.key;
+            const keyExempt = [
+                'Backspace',
+                'Delete',
+                'Shift',
+                'ArrowUp',
+                'ArrowDown',
+                'ArrowLeft',
+                'ArrowRight',
+                'Tab',
+                ' ',
+                'Spacebar',
+                'Control'
+            ];
+            const keyInputField = e.target;
 
-                setTimeout(() => {
+            if (keyInputField.type === 'password') {
 
-                    keyTarget.type = "password"
-                    console.log("What key did I press: " + keyPress)
+                if (!keyExempt.includes(keyPress)) {
 
-                }, 500);
+                    keyInputField.type = 'text'
+
+                    setTimeout(() => {
+
+                        keyInputField.type = 'password'
+                    }, 500);
+                }
             }
-        }
-    }
-);
+        })
+    })
+
+    let allShowMeFields = document.querySelectorAll('.linkClick');
+
+    allShowMeFields.forEach(showMeField => {
+
+        showMeField.addEventListener('click', function (e) {
+
+                console.log('What is evt: ' + e);
+                console.log('What is evttarget: ' + e.target);
+
+                const eventTarget = e.target;
+
+                let keyInputField = eventTarget.previousElementSibling;
+
+                console.log('What is previous element: ' + keyInputField);
+
+                while (keyInputField) {
+
+                    console.log('what is id: ' + keyInputField.classList);
+
+                    if (keyInputField.matches('.find-me-class')) {
+
+                        console.log('Found match: ' + keyInputField.id)
+
+                        break;
+                    } else {
+
+                        keyInputField = keyInputField.previousElementSibling;
+                    }
+                }
+
+                if (keyInputField) {
+
+                    if (keyInputField.type === "password") {
+
+                        keyInputField.type = "text";
+                        eventTarget.innerHTML = 'hide'
+                        console.log("What is element (password): " + keyInputField);
+                    } else {
+
+                        keyInputField.type = "password";
+                        eventTarget.innerHTML = 'show'
+                        console.log("What is element (text): " + keyInputField);
+                    }
+
+                }
+            }
+        )
+
+    })
+}
+

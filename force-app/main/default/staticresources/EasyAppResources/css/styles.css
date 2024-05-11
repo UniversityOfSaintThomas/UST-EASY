@@ -327,3 +327,7 @@ div.slds-progress {
     clear: both;
     display: table;
 }
+
+.linkClick:hover {
+    cursor:pointer;
+}

@@ -66,7 +66,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
     fileUploadAreas();
 
     //YN Add
-    encryptedTextShowHide();
+    encryptedTextShow();
 
 
     //Hide the form spinner if it is active
@@ -1112,13 +1112,13 @@ function validateFileType(obj) {
 }
 
 
-function encryptedTextShowHide() {
+function encryptedTextShow() {
 
-    let allEncryptFields = document.querySelectorAll('.find-me-class');
+    let allEncryptedFields = document.querySelectorAll('.find-me-class');
 
-    allEncryptFields.forEach(encryptField => {
+    allEncryptedFields.forEach(encryptedField => {
 
-        encryptField.addEventListener('keyup', function (e) {
+        encryptedField.addEventListener('keyup', function (e) {
 
             const keyPress = e.key;
             const keyExempt = [
@@ -1145,60 +1145,129 @@ function encryptedTextShowHide() {
                     setTimeout(() => {
 
                         keyInputField.type = 'password'
+
                     }, 500);
                 }
             }
         })
     })
 
-    let allShowMeFields = document.querySelectorAll('.linkClick');
+    function encryptedFieldFromTarget(eventInstance) {
 
-    allShowMeFields.forEach(showMeField => {
+        const eventTarget = eventInstance.target;
+        let eventInputField = eventTarget.previousElementSibling;
+
+        while (eventInputField) {
+
+            if (eventInputField.matches('.find-me-class')) {
+
+                return eventInputField;
+
+            } else {
+
+                eventInputField = eventInputField.previousElementSibling;
+            }
+        }
+    }
+
+    let allShowClickFields = document.querySelectorAll('.clickShow');
+
+    allShowClickFields.forEach(showMeField => {
+
+        let clickIntervalId;
 
         showMeField.addEventListener('click', function (e) {
 
-                console.log('What is evt: ' + e);
-                console.log('What is evttarget: ' + e.target);
+                const encryptedInputField = encryptedFieldFromTarget(e);
 
-                const eventTarget = e.target;
+                if (encryptedInputField) {
 
-                let keyInputField = eventTarget.previousElementSibling;
+                    if (encryptedInputField.type === "password") {
 
-                console.log('What is previous element: ' + keyInputField);
+                        encryptedInputField.type = "text";
+                        e.target.innerHTML = '(click hide)'
 
-                while (keyInputField) {
+                        let timeLeft = 10;
 
-                    console.log('what is id: ' + keyInputField.classList);
+                        clickIntervalId = setInterval(function () {
 
-                    if (keyInputField.matches('.find-me-class')) {
+                            timeLeft--;
 
-                        console.log('Found match: ' + keyInputField.id)
+                            if (timeLeft > 0 && timeLeft <= 5) {
 
-                        break;
+                                e.target.innerHTML = 'hide in '+timeLeft;
+                            }
+
+                            if (timeLeft === 0) {
+
+                                clearInterval(clickIntervalId);
+                                encryptedInputField.type = "password";
+                                e.target.innerHTML = '(click show)';
+                            }
+
+                        }, 1000);
+
                     } else {
 
-                        keyInputField = keyInputField.previousElementSibling;
-                    }
-                }
-
-                if (keyInputField) {
-
-                    if (keyInputField.type === "password") {
-
-                        keyInputField.type = "text";
-                        eventTarget.innerHTML = 'hide'
-                        console.log("What is element (password): " + keyInputField);
-                    } else {
-
-                        keyInputField.type = "password";
-                        eventTarget.innerHTML = 'show'
-                        console.log("What is element (text): " + keyInputField);
+                        clearInterval(clickIntervalId);
+                        encryptedInputField.type = "password";
+                        e.target.innerHTML = '(click show)'
                     }
 
                 }
             }
         )
 
+    })
+
+    let allShowHoverFields = document.querySelectorAll('.hoverShow');
+
+    allShowHoverFields.forEach(showMeField => {
+
+        let hoverIntervalId;
+
+        showMeField.addEventListener('mouseover', (e) => {
+
+            const encryptedInputField = encryptedFieldFromTarget(e);
+
+            if (encryptedInputField) {
+
+                encryptedInputField.type = "text";
+
+                let timeLeft = 10;
+
+                hoverIntervalId = setInterval(function () {
+
+                    timeLeft--;
+
+                    if (timeLeft > 0 && timeLeft <= 5) {
+
+                        e.target.innerHTML = 'hide in '+timeLeft;
+                    }
+
+                    if (timeLeft === 0) {
+
+                        clearInterval(hoverIntervalId);
+                        encryptedInputField.type = "password";
+                        e.target.innerHTML = '(hover show)';
+                    }
+
+                }, 1000);
+            }
+        })
+
+        showMeField.addEventListener("mouseout", (e) => {
+
+            const encryptedInputField = encryptedFieldFromTarget(e);
+
+            if (encryptedInputField) {
+
+                clearInterval(hoverIntervalId);
+                encryptedInputField.type = "password"
+                e.target.innerHTML = '(hover show)';
+            }
+
+        })
     })
 }
 

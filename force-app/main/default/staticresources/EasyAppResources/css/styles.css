@@ -328,6 +328,16 @@ div.slds-progress {
     display: table;
 }
 
-.linkClick:hover {
+.clickShow:hover {
     cursor:pointer;
+    color:blue;
+}
+
+.hoverShow {
+    margin-left: 50px;
+}
+
+.hoverShow:hover {
+    cursor:pointer;
+    color:blue;
 }

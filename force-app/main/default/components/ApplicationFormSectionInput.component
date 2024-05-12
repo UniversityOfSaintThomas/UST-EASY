@@ -105,8 +105,8 @@
     <apex:outputPanel rendered="{!inputType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
         <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input find-me-class validate{!inputType}"/>
 
-        <span class="linkClick">show</span>
-        YN: Here is encrypted field.
+        <span class="clickShow">(click show)</span>  <span class="hoverShow">(hover show)</span>
+<!--        YN: Here is encrypted field.-->
 
     </apex:outputPanel>
 

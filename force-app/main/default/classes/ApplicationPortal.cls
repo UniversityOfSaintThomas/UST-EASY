@@ -9,8 +9,10 @@ public class ApplicationPortal {
     public EASYApplicationInfo appInfo { get; set; }
     public String template { get; set; }
     public Boolean noApplication { get; set; }
+    public String userType { get; set; }
 
     public ApplicationPortal() {
+        userType = UserInfo.getUserType();
         noApplication = false;
         if (appInfo == null) {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
@@ -25,7 +27,7 @@ public class ApplicationPortal {
 
     public PageReference applicationPortalInit() {
 
-        String userType = UserInfo.getUserType();
+        userType = UserInfo.getUserType();
         PageReference pageRef = null;
 
         if (!userType.equalsIgnoreCase('CSPLitePortal') && !userType.equalsIgnoreCase('standard')) {

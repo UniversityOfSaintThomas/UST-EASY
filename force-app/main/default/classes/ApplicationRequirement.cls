@@ -273,7 +273,7 @@ public class ApplicationRequirement {
                 }
 
                 // Apply personal data tags to instructions and questions
-                if (String.isNOtBlank(i.Instructions__c)) {
+                if (String.isNotBlank(i.Instructions__c)) {
                     i.Instructions__c = ApplicationUtilities.replaceDataTags(i.Instructions__c, personalDataTags);
                 }
 

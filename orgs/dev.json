@@ -1,6 +1,7 @@
 {
   "orgName": "EASY-Open-Source-Solution - Dev Org",
   "edition": "Developer",
+  "release": "preview",
   "features": [
     "Communities",
     "Sites",

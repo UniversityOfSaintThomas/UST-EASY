@@ -69,11 +69,10 @@ public with sharing class ApplicationBodyController {
         Map<String, EASYPersonalDataTags> dataTagsMap = new Map<String, EASYPersonalDataTags>();
 
         if (appInfoParam != null) {
-
             if (currentPageName.equalsIgnoreCase('applicationregistration')) {
                 mapAtAppInfo.put(appInfoParam.at, appInfoParam);
             } else {
-                String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c,';
+                String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c, OwnerId,';
                 appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c, Id,';
                 appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact__r.Id, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
                 appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Contact__r.hed__UniversityEmail__c, Intended_Program__r.Program_Name_on_Application__c,';
@@ -94,8 +93,6 @@ public with sharing class ApplicationBodyController {
                 } catch (Exception e) {
                     System.debug(e.getMessage());
                 }
-
-                //System.debug(JSON.serializePretty(apps));
 
                 //Create map of application control URLs and tag data associated with them for processing below.
                 for (Application__c app : apps.values()) {
@@ -121,6 +118,7 @@ public with sharing class ApplicationBodyController {
                         dataTags.Housing_Pref = '';
                         dataTags.UGFYClass = '';
                         dataTags.Application_ID = app.Id;
+                        dataTags.AppOwner_ID = app.OwnerId;
                     }
 
                     dataTagsMap.put(app.Application_Control__r.URL_Parameter__c, dataTags);
@@ -139,11 +137,8 @@ public with sharing class ApplicationBodyController {
                             )
                     ]);
 
-                    //System.debug(JSON.serializePretty(appControlsByAppIds));
-
                     //setApplicationInfo
                     if (!mapAtAppInfo.containsKey(app.Application_Control__r.URL_Parameter__c)) {
-                        //System.debug('at=' + app.Application_Control__r.URL_Parameter__c);
                         EASYApplicationInfo tempAppInfo = ApplicationUtilities.setApplicationInfo(appControlsByAppIds.get(app.Application_Control__c), app);
                         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
                             mapAtAppInfo.put(app.Application_Control__r.URL_Parameter__c, tempAppInfo);
@@ -189,6 +184,7 @@ public with sharing class ApplicationBodyController {
                 if (apps.size() > 0) {
                     noApplication = false;
                 } else {
+                    mapAtAppInfo.put('noapp', appInfoParam);
                     noApplication = true;
                 }
             }

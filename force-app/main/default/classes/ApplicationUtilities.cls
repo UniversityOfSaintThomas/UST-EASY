@@ -103,7 +103,7 @@ public class ApplicationUtilities {
             appInfo.contactId = requestedContact;
         }
 
-        if (userType.equalsIgnoreCase('standard')) {
+/*        if (userType.equalsIgnoreCase('standard')) {
             try {
                 appInfo.at = ApexPages.currentPage().getParameters().get('at');
             } catch (Exception ex) {
@@ -116,9 +116,10 @@ public class ApplicationUtilities {
             if (String.isBlank(appInfo.requirementId) && String.isNotBlank(ApexPages.currentPage().getParameters().get('requirementId'))) {
                 appInfo.requirementId = ApexPages.currentPage().getParameters().get('requirementId');
             }
-        }
+        }*/
 
         appInfo.isExternalUser = isExternalUser();
+
 
         if (String.isBlank(appInfo.appId) && String.isBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
             //If we've arrived with no cookie or parameters; Get last updated application
@@ -141,6 +142,13 @@ public class ApplicationUtilities {
             }
         }
 
+        //Contact did not find app so now we need to set the appControl to 'noapp' application control
+        if (String.isBlank(appInfo.appId) && String.isBlank(appInfo.at)) {
+            Application_Control__c appControl = getApplicationControls('noapp');
+            appInfo = flattenAppControl(appControl, appInfo);
+        }
+
+        //No template is selected for the application control so use the default
         if (String.isBlank(appInfo.template)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;
@@ -248,7 +256,7 @@ public class ApplicationUtilities {
 
     public static String createEncryptedCookie(String stringToEncrypt) {
         String encodedCipherText = createEncryptedString(stringToEncrypt);
-        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'strict');
+        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'Strict');
         ApexPages.currentPage().setCookies(new Cookie[]{
                 EASYCookie
         });

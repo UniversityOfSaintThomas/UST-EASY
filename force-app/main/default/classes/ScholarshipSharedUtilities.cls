@@ -12,7 +12,7 @@ public with sharing class ScholarshipSharedUtilities {
         Contact result = null;
         if (contactId != null) {
             List<Contact> resultIds = [
-                    SELECT FirstName, LastName
+                    SELECT FirstName, LastName, Email
                     FROM Contact
                     WHERE Id = :contactId
             ];
@@ -41,26 +41,33 @@ public with sharing class ScholarshipSharedUtilities {
 
     public static PageReference setSid(PageReference pageRef, Boolean redir, String scholarshipId) {
         if (!String.isEmpty(scholarshipId)) {
+            createCookie(scholarshipId);
             pageRef.getParameters().put('sid', scholarshipId);
         }
         pageRef.setRedirect(redir);
         return pageRef;
     }
 
-    public static Scholarship__c getScholarshipInfo(String scholarshipId) {
+    public static Scholarship__c getScholarshipInfo() {
         Scholarship__c scholarshipInfo = null;
-        //System.debug('getApplicantInfo():: scholarshipId: ' + scholarshipId);
-        List<Scholarship__c> ScholarshipInfos = [
-                SELECT Close_Date__c, Completion_Statement__c, Criteria_Statement__c, Description__c, Essay_1_Text__c, Essay_2_Text__c,
-                        Id, Name, Open_Date__c, OwnerId, Question_1_Text__c, Question_2_Text__c, Question_3_Text__c, Question_4_Text__c,
-                        Recommender2_Auto_Send__c, Recommender2_Description__c, Recommender2_Question__c, Recommender2__c, Recommender_Auto_Send__c,
-                        Recommender_Description__c, Recommender_Question__c, Recommender__c, Scholarship_ID__c, Short_Description__c,
-                        Review_Award_Process_Description__c, Self_Report_ACT_GPA_Criteria__c, Essay_1_Allow_Upload__c, Essay_2_Allow_Upload__c
-                FROM Scholarship__c
-                WHERE Scholarship_ID__c = :scholarshipId
-        ];
-        if (ScholarshipInfos.size() > 0) {
-            scholarshipInfo = ScholarshipInfos[0];
+        String scholarshipId = ApexPages.currentPage().getParameters().get('sid');
+        if (String.isBlank(ApexPages.currentPage().getParameters().get('sid'))) {
+            scholarshipId = getCookie();
+        }
+        if (String.isNotBlank(scholarshipId)) {
+            List<Scholarship__c> ScholarshipInfos = [
+                    SELECT Close_Date__c, Completion_Statement__c, Criteria_Statement__c, Description__c, Essay_1_Text__c, Essay_2_Text__c,
+                            Id, Name, Open_Date__c, OwnerId, Question_1_Text__c, Question_2_Text__c, Question_3_Text__c, Question_4_Text__c,
+                            Recommender2_Auto_Send__c, Recommender2_Description__c, Recommender2_Question__c, Recommender2__c, Recommender_Auto_Send__c,
+                            Recommender_Description__c, Recommender_Question__c, Recommender__c, Scholarship_ID__c, Short_Description__c,
+                            Review_Award_Process_Description__c, Self_Report_ACT_GPA_Criteria__c, Essay_1_Allow_Upload__c, Essay_2_Allow_Upload__c
+                    FROM Scholarship__c
+                    WHERE Scholarship_ID__c = :scholarshipId
+            ];
+            if (ScholarshipInfos.size() > 0) {
+                scholarshipInfo = ScholarshipInfos[0];
+                createCookie(scholarshipId);
+            }
         }
 
         return scholarshipInfo;
@@ -196,18 +203,11 @@ public with sharing class ScholarshipSharedUtilities {
     public static PageReference checkScholarshipAccess() {
         String scholarshipId = null;
         PageReference result = null;
-        System.debug('Checking scholarship');
-        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('sid'))) {
-            String sId = ApexPages.currentPage().getParameters().get('sid');
-            scholarshipId = sId;
-            Scholarship__c scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
-            if (scholarship == null) {
-                return Page.ScholarshipHome.setRedirect(true);
-            }
+        Scholarship__c scholarship = ScholarshipSharedUtilities.getScholarshipInfo();
+        if (scholarship != null) {
             Scholarship_Applicant__c scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
             System.debug('ScholarshipSharedUtilities.checkScholarshipAccess():: scholarshipApplicant.Scholarship_Complete__c: ' + scholarshipApplicant.Scholarship_Complete__c);
             if (scholarshipApplicant.Scholarship_Complete__c) {
-
                 result = ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarshipId);
             } else {
                 Boolean scholarshipOpen = ScholarshipSharedUtilities.isScholarshipOpen(scholarship);
@@ -216,8 +216,24 @@ public with sharing class ScholarshipSharedUtilities {
                 }
             }
         } else {
-            Page.ScholarshipHome.setRedirect(true);
+            return Page.ScholarshipHome.setRedirect(true);
         }
         return result;
+    }
+
+    public static String createCookie(String scholarshipId) {
+        Cookie scholarshipCookie = new Cookie('USTScholarship', scholarshipId, null, -1, true, 'Strict');
+        ApexPages.currentPage().setCookies(new Cookie[]{
+                scholarshipCookie
+        });
+        return scholarshipCookie.getValue();
+    }
+
+    public static String getCookie() {
+        Cookie encodedCipherText = ApexPages.currentPage().getCookies().get('USTScholarship');
+        if (encodedCipherText != null) {
+            return encodedCipherText.getValue();
+        }
+        return '';
     }
 }

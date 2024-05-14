@@ -100,7 +100,9 @@
 
     <!-- TextEncrypted -->
     <apex:outputPanel rendered="{!inputType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input validate{!inputType}"/>
+        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input encryptedFieldFlag validate{!inputType}"/>
+
+        <span class="hoverEncryptedShowLink">show</span>
     </apex:outputPanel>
 
     <!-- Currency -->

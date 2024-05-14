@@ -327,3 +327,15 @@ div.slds-progress {
     clear: both;
     display: table;
 }
+
+.hoverEncryptedShowLink {
+    font-size: 12px;
+    margin-left: 5px;
+    color:#53a1e3;
+}
+
+.hoverEncryptedShowLink:hover {
+    cursor:pointer;
+    font-style: italic;
+    color:red;
+}

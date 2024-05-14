@@ -35,7 +35,7 @@ public class ApplicationUtilities {
     }
 
     public static EASYApplicationInfo flattenAppControl(Application_Control__c appControl, EASYApplicationInfo appInfo) {
-        if(appControl != null) {
+        if (appControl != null) {
             appInfo.hideTermProgram = appControl.Hide_Term_Program__c;
             appInfo.allowWithdrawFrom = appControl.Allow_Withdraw_From__c;
             appInfo.allowSubmitFrom = appControl.Allow_Submit_From__c;
@@ -63,6 +63,8 @@ public class ApplicationUtilities {
         appInfo.appSubStatus = 'none';
         appInfo.appStatus = 'none';
         appInfo.allowSubmit = false;
+        appInfo.allowCancelFrom = '';
+        appInfo.allowWithdrawFrom = '';
         if (String.isBlank(appControl.Template__c)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;
@@ -103,7 +105,7 @@ public class ApplicationUtilities {
             appInfo.contactId = requestedContact;
         }
 
-/*        if (userType.equalsIgnoreCase('standard')) {
+        if (userType.equalsIgnoreCase('standard')) {
             try {
                 appInfo.at = ApexPages.currentPage().getParameters().get('at');
             } catch (Exception ex) {
@@ -116,7 +118,7 @@ public class ApplicationUtilities {
             if (String.isBlank(appInfo.requirementId) && String.isNotBlank(ApexPages.currentPage().getParameters().get('requirementId'))) {
                 appInfo.requirementId = ApexPages.currentPage().getParameters().get('requirementId');
             }
-        }*/
+        }
 
         appInfo.isExternalUser = isExternalUser();
 
@@ -131,8 +133,8 @@ public class ApplicationUtilities {
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     AND Application_Status__c != 'Wrong Application'
-                    AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
-                    AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
+                    AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
+                    AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
                     ORDER BY LastModifiedDate
             ];
             if (lastApps.size() > 0) {
@@ -146,6 +148,13 @@ public class ApplicationUtilities {
         if (String.isBlank(appInfo.appId) && String.isBlank(appInfo.at)) {
             Application_Control__c appControl = getApplicationControls('noapp');
             appInfo = flattenAppControl(appControl, appInfo);
+            appInfo.contactId = ApplicationUtilities.getAppContactId();
+            appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
+            appInfo.appSubStatus = 'none';
+            appInfo.appStatus = 'none';
+            appInfo.allowSubmit = false;
+            appInfo.allowCancelFrom = '';
+            appInfo.allowWithdrawFrom = '';
         }
 
         //No template is selected for the application control so use the default
@@ -445,10 +454,10 @@ public class ApplicationUtilities {
                 //If the value is blank we want to replace tag with an empty string
                 String valueForTag = String.isNotBlank((String) tagMap.get(caseSensitiveTag)) ? (String) tagMap.get(caseSensitiveTag) : '' ;
 
-                if(tab_data.toLowerCase() == 'documents_missing' && String.isNotBlank(valueForTag)){
+                if (tab_data.toLowerCase() == 'documents_missing' && String.isNotBlank(valueForTag)) {
                     //The documents_missing tab contains a comma seperated list inside brackets I want to turn into a bulleted list
                     String documentsMissing = (String) tagMap.get(lowerCaseUppercaseTagMap.get(tab_data.toLowerCase()));
-                    if(String.isNotBlank(documentsMissing)){
+                    if (String.isNotBlank(documentsMissing)) {
                         //System.debug('documentsMissing: ' + documentsMissing);
                         //remove <p>[ from front of tag and ]</p> from end of tag added by flow creation
                         documentsMissing = documentsMissing.removeStart('<p>');
@@ -457,7 +466,7 @@ public class ApplicationUtilities {
                         documentsMissing = documentsMissing.removeEnd(']');
                         String[] documentsMissingList = documentsMissing.split(',');
                         String documentsMissingListHTML = '<ul>';
-                        for(String document : documentsMissingList){
+                        for (String document : documentsMissingList) {
                             documentsMissingListHTML += '<li>' + document + '</li>';
                         }
                         documentsMissingListHTML += '</ul>';

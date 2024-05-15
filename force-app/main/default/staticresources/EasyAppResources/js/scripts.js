@@ -945,6 +945,9 @@ function textValidations(checkFormValidate, documentStart) {
     const re_phone = /[\d+\-\(\) ]/;
     const re_snn = /^\d{3}-\d{2}-\d{4}$/;
     const re_snnFormat = /(\d{3})(\d{2})(\d{4})$/;
+
+    const re_ssnException = /^.x+$/i;
+
     const re_ssnIllegals = /[^\d+-]/;
     const re_nameIllegals = /[\d\(\)@#$,]/;
 
@@ -1044,7 +1047,7 @@ function textValidations(checkFormValidate, documentStart) {
         });
 
         if (checkFormValidate && ssn.value) {
-            if (!ssn.value.match(re_snn)) {
+            if (!ssn.value.match(re_snn) && !ssn.value.match(re_ssnException)) {
                 activateErrorState(ssn, 'change');
             }
         }

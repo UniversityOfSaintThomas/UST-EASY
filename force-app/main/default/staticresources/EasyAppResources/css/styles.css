@@ -329,24 +329,14 @@ div.slds-progress {
 }
 
 .encryptShowHideIcon {
-    width: 65px;
-}
-
-.encryptShowIcon {
+    width: 85px;
+    cursor: pointer;
     margin-left: 5px;
-    opacity: 0.6;
 }
 
 .encryptHideIcon {
-    margin-left: 5px;
-    opacity: 0.6;
     color: red;
     font-style: italic;
-}
-
-.encryptShowIconText,
-.encryptHideIconText {
-    font-size: 10px;
 }
 
 span.dateFormat{

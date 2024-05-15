@@ -99,10 +99,26 @@
     </apex:outputPanel>
 
     <!-- TextEncrypted -->
-    <apex:outputPanel rendered="{!inputType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
-        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input encryptedFieldFlag validate{!inputType}"/>
-
-        <span class="hoverEncryptedShowLink">show</span>
+    <apex:outputPanel rendered="{!inputType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control textEncryptedWrap">
+        <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input {!questionWrapper['additionalValidation']} validate{!inputType}"/>
+        <div class="encryptShowHideIcon">
+            <span class="slds-icon_container slds-icon-utility-preview encryptShowIcon" title="Show encrypted field">
+                  <svg class="slds-icon slds-icon-text-default slds-icon_xx-small" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                         xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#preview')}"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Show encrypted field</span>
+                  <span class="encryptShowIconText">show</span>
+            </span>
+            <span class="slds-icon_container slds-icon-utility-preview slds-current-color encryptHideIcon" title="Hide encrypted field">
+                  <svg class="slds-icon slds-icon_xx-small" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                         xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#hide')}"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Hide encrypted field</span>
+                  <span class="encryptHideIconText">Hide</span>
+            </span>
+        </div>
     </apex:outputPanel>
 
     <!-- Currency -->

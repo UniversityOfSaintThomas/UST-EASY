@@ -65,7 +65,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
     activateTooltips();
     fileUploadAreas();
 
-    // encryptedFieldShow();
+    encryptedFieldShow();
 
     //Hide the form spinner if it is active
     hideFormSpinner(true, isRelatedRecordReRender);
@@ -910,6 +910,12 @@ function checkForm() {
         }
         return false;
     }
+
+    document.querySelectorAll('.validateTextEncrypted').forEach(encryptedFieldWrap => {
+
+        encryptedFieldWrap.type = 'password';
+    });
+
     return true;
 }
 
@@ -1033,7 +1039,7 @@ function textValidations(checkFormValidate, documentStart) {
                     ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
                 }
             } else {
-                activateErrorState(ssn, 'change');
+                // activateErrorState(ssn, 'change');
             }
         });
 
@@ -1109,101 +1115,73 @@ function validateFileType(obj) {
     return true;
 }
 
-// function encryptedFieldShow() {
-//
-//     // TEST REMOVE DATEPICKER TODAY DATE
-//     const allDatePickerTodayDate = document.querySelectorAll('span.dateFormat');
-//
-//     allDatePickerTodayDate.forEach(DatePickerTodayDate => {
-//
-//         DatePickerTodayDate.setAttribute('hidden', '');
-//     })
-//     // END TEST
-//
-//
-//     function encryptedFieldFromTarget(eventTarget, className, siblingPosition) {
-//
-//         let eventInputField = eventTarget[siblingPosition];
-//
-//         while (eventInputField) {
-//
-//             if (eventInputField.matches([className])) {
-//
-//                 return eventInputField;
-//             } else {
-//
-//                 eventInputField = eventInputField[siblingPosition];
-//             }
-//         }
-//     }
-//
-//     let allEncryptedFields = document.querySelectorAll('.encryptedFieldFlag');
-//
-//     allEncryptedFields.forEach(encryptedField => {
-//
-//         if (encryptedField.value) {
-//
-//             let hoverShowLink = encryptedFieldFromTarget(encryptedField, '.hoverEncryptedShowLink', 'nextElementSibling')
-//
-//             hoverShowLink.style.visibility = 'hidden';
-//         }
-//
-//         encryptedField.addEventListener('keyup', function (e) {
-//
-//             if (!e.target.value) {
-//
-//                 let hoverShowLink = encryptedFieldFromTarget(e.target, '.hoverEncryptedShowLink', 'nextElementSibling');
-//
-//                 hoverShowLink.style.visibility = 'visible';
-//             }
-//         })
-//     })
-//
-//     let allShowEncryptedHoverLinks = document.querySelectorAll('.hoverEncryptedShowLink');
-//
-//     allShowEncryptedHoverLinks.forEach(hoverLink => {
-//
-//         let hoverIntervalId;
-//
-//         hoverLink.addEventListener('mouseover', (e) => {
-//
-//             const encryptedInputField = encryptedFieldFromTarget(e.target, '.encryptedFieldFlag', 'previousElementSibling');
-//
-//             if (encryptedInputField.value) {
-//
-//                 encryptedInputField.type = "text";
-//
-//                 let timeLeft = 8;
-//
-//                 hoverIntervalId = setInterval(function () {
-//
-//                     timeLeft--;
-//
-//                     if (timeLeft > 0 && timeLeft <= 5) {
-//
-//                         e.target.innerHTML = 'hide in ' + timeLeft;
-//                     }
-//
-//                     if (timeLeft === 0) {
-//
-//                         clearInterval(hoverIntervalId);
-//                         encryptedInputField.type = "password";
-//                         e.target.innerHTML = 'show';
-//                     }
-//                 }, 1000);
-//             }
-//         })
-//
-//         hoverLink.addEventListener("mouseout", (e) => {
-//
-//             const encryptedInputField = encryptedFieldFromTarget(e.target, '.encryptedFieldFlag', 'previousElementSibling');
-//
-//             if (encryptedInputField) {
-//
-//                 clearInterval(hoverIntervalId);
-//                 encryptedInputField.type = "password"
-//                 e.target.innerHTML = 'show';
-//             }
-//         })
-//     })
-// }
+function encryptedFieldShow() {
+
+    document.querySelectorAll('.textEncryptedWrap').forEach(function (encryptedFieldWrap) {
+
+        const encryptField = encryptedFieldWrap.querySelector('.validateTextEncrypted'); //using class validate{!inputType}
+        const iconPanel = encryptedFieldWrap.querySelector('.encryptShowHideIcon');
+        const iconShow = encryptedFieldWrap.querySelector('span.encryptShowIcon');
+        const iconHide = encryptedFieldWrap.querySelector('span.encryptHideIcon');
+        const iconText = encryptedFieldWrap.querySelector('span.encryptHideIconText');
+
+        if (encryptField) {
+
+            if (iconPanel) {
+
+                if (encryptField.value) {
+                    iconPanel.style.display = 'none';
+                } else {
+                    iconHide.style.display = 'none';
+                }
+
+                let clickIntervalId;
+
+                iconPanel.addEventListener('click', function () {
+
+                    if (encryptField.value) {
+
+                        if (encryptField.type === "password") {
+                            encryptField.type = "text";
+                            iconShow.style.display = 'none';
+                            iconHide.style.display = '';
+
+                            let timeLeft = 6;
+
+                            clickIntervalId = setInterval(function () {
+                                timeLeft--;
+
+                                if (timeLeft > 0 && timeLeft <= 3) {
+                                    iconText.innerHTML = 'hide in ' + timeLeft;
+                                }
+
+                                if (timeLeft === 0) {
+                                    encryptField.type = "password";
+                                    iconShow.style.display = '';
+                                    iconHide.style.display = 'none';
+                                    iconText.innerHTML = 'hide';
+                                    clearInterval(clickIntervalId);
+                                }
+                            }, 1000);
+
+                        } else {
+                            encryptField.type = "password";
+                            iconShow.style.display = '';
+                            iconHide.style.display = 'none';
+                            iconText.innerHTML = 'hide';
+                            clearInterval(clickIntervalId);
+                        }
+                    }
+                })
+            }
+
+            encryptField.addEventListener('keyup', function (e) {
+
+                if (!e.target.value) {
+                    iconPanel.style.display = '';
+                    iconHide.style.display = 'none';
+                }
+            })
+        }
+    })
+}

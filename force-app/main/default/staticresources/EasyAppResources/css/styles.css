@@ -328,14 +328,27 @@ div.slds-progress {
     display: table;
 }
 
-.hoverEncryptedShowLink {
-    font-size: 12px;
-    margin-left: 5px;
-    color:#53a1e3;
+.encryptShowHideIcon {
+    width: 65px;
 }
 
-.hoverEncryptedShowLink:hover {
-    cursor:pointer;
+.encryptShowIcon {
+    margin-left: 5px;
+    opacity: 0.6;
+}
+
+.encryptHideIcon {
+    margin-left: 5px;
+    opacity: 0.6;
+    color: red;
     font-style: italic;
-    color:red;
+}
+
+.encryptShowIconText,
+.encryptHideIconText {
+    font-size: 10px;
+}
+
+span.dateFormat{
+    display: none;
 }

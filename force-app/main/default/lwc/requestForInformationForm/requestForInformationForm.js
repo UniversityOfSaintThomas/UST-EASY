@@ -136,7 +136,7 @@ export default class RequestForInformationForm extends LightningElement {
         return new URL(url).searchParams.get(key);
     }
 
-    // // RFI controller info
+    // RFI controller info
     @api rfi_controller = 'RFI Controller 0000';
 
     @api recordId;
@@ -188,7 +188,6 @@ export default class RequestForInformationForm extends LightningElement {
     @track text_message_requested = false;
     @track is_transfer = false;
     @track academic_undecided_selected = false;
-    @track rfi_data_loaded = false;
 
     //@track mobile_phone_value;
 
@@ -463,7 +462,7 @@ export default class RequestForInformationForm extends LightningElement {
                                         this.academic_max_select = "1";
                                         this.multi_select_single = true;
                                         this.field_labels.academic_interest_label = 'Academic Interest';
-                                        this.academic_max_select_help = "You can only choose up to " + this.academic_max_select + " options";
+                                        this.academic_max_select_help = "Only one program of interest can be selected.";
                                     }
                                 }
 
@@ -520,7 +519,6 @@ export default class RequestForInformationForm extends LightningElement {
                         });
                 }
                 this.text_message_requested = this.require_fields.Mobile_Phone
-                this.rfi_data_loaded = true;
                 this.show_spinner = false;
             }
         } else {

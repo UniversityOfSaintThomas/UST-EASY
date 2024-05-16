@@ -15,7 +15,7 @@
                         size="medium">
                 </lightning-spinner>
             </template>
-            <template if:true={rfi_data_loaded}>
+
                 <template if:false={hide_form_title}>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium slds-m-bottom_medium">
                         <div class="slds-text-heading_medium">{academic_level} Request for Information {school_college_title}</div>
@@ -149,7 +149,6 @@
                             <div class="slds-col slds-size_0-of-1 slds-medium-size_1-of-2">
                             </div>
                         </template>
-                        <template if:true={rfi_data_loaded}>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium filed-first-name">
                                 <lightning-input
                                         required="true"
@@ -168,7 +167,6 @@
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
-                        </template>
                         <template if:true={show_fields.Email}>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-email">
                                 <lightning-input
@@ -547,7 +545,7 @@
                         </div>
                     </div>
                 </template>
-            </template>
+
             <template if:true={form_submitted_successfully}>
                 <div class="slds-text-heading_large slds-align_absolute-center thank-you-message">Thank you! You will receive information shortly.</div>
             </template>

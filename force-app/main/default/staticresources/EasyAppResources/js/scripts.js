@@ -64,9 +64,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
     activateAutoComplete();
     activateTooltips();
     fileUploadAreas();
-
     encryptedFieldShow();
-
     //Hide the form spinner if it is active
     hideFormSpinner(true, isRelatedRecordReRender);
 }
@@ -911,6 +909,7 @@ function checkForm() {
         return false;
     }
 
+    //Sets back all fields with class validate{!inputType}=validateTextEncrypted back to type "password" for submit.
     document.querySelectorAll('.validateTextEncrypted').forEach(encryptedFieldWrap => {
 
         encryptedFieldWrap.type = 'password';
@@ -945,9 +944,6 @@ function textValidations(checkFormValidate, documentStart) {
     const re_phone = /[\d+\-\(\) ]/;
     const re_snn = /^\d{3}-\d{2}-\d{4}$/;
     const re_snnFormat = /(\d{3})(\d{2})(\d{4})$/;
-
-    const re_ssnException = /^.x+$/i;
-
     const re_ssnIllegals = /[^\d+-]/;
     const re_nameIllegals = /[\d\(\)@#$,]/;
 
@@ -1012,8 +1008,6 @@ function textValidations(checkFormValidate, documentStart) {
                 activateErrorState(phone, 'change');
             }
         }
-
-
     });
 
 
@@ -1041,16 +1035,16 @@ function textValidations(checkFormValidate, documentStart) {
                 if (match) {
                     ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
                 }
-            } else {
-                // activateErrorState(ssn, 'change');
+            // } else {
+            //     activateErrorState(ssn, 'change');
             }
         });
 
-        if (checkFormValidate && ssn.value) {
-            if (!ssn.value.match(re_snn) && !ssn.value.match(re_ssnException)) {
-                activateErrorState(ssn, 'change');
-            }
-        }
+        // if (checkFormValidate && ssn.value) {
+        //     if (!ssn.value.match(re_snn)) {
+        //         activateErrorState(ssn, 'change');
+        //     }
+        // }
     });
 
     //Email Validation

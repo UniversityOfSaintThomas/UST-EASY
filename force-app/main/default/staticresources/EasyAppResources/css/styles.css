@@ -329,7 +329,7 @@ div.slds-progress {
 }
 
 .encryptShowHideIcon {
-    width: 85px;
+    display: inline-block;
     cursor: pointer;
     margin-left: 5px;
 }

@@ -124,7 +124,7 @@
                 <apex:pageMessages />
 
                 <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
-                    <p tabindex="0">You haven't created any records yet. Click "New Record," below, to create one.</p>
+                    <p tabindex="0">Create a record by clicking “New Record” below.</p>
                 </apex:outputPanel>
 
                 <apex:outputPanel rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">

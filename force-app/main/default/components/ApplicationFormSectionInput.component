@@ -193,7 +193,6 @@
     <!-- Address Question -->
     <c:ApplicationFormSectionInputAddress responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" inputType="{!inputType}"/>
 
-
     <!-- Reference Question -->
     <apex:outputPanel layout="none" rendered="{!!questionWrapper['question']['Display_As_Picklist__c'] && inputType == 'Reference' && LOWER($CurrentPage.Name) != 'applicationregistration' && LOWER($CurrentPage.Name) != 'applicationcreate'}">
         <c:ApplicationFormSectionInputReference responseObject="{!responseObject}" questionWrapper="{!questionWrapper}" itemId="{!itemId}" inputType="{!inputType}" fieldAPI="{!fieldAPI}"/>
@@ -217,7 +216,8 @@
 
     <!-- Question Help Text -->
     <apex:outputPanel layout="none" rendered="{!!ISBLANK(questionWrapper['helpText'])}">
-        <p class="slds-text-body_regular">{!questionWrapper['helpText']}</p>
+        <apex:outputText value="{!questionWrapper['helpText']}" escape="false"/>
+<!--        <p class="slds-text-body_regular">{!questionWrapper['helpText']}</p>-->
     </apex:outputPanel>
 
 </apex:component>

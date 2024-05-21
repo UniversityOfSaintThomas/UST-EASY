@@ -217,7 +217,6 @@
     <!-- Question Help Text -->
     <apex:outputPanel layout="none" rendered="{!!ISBLANK(questionWrapper['helpText'])}">
         <apex:outputText value="{!questionWrapper['helpText']}" escape="false"/>
-<!--        <p class="slds-text-body_regular">{!questionWrapper['helpText']}</p>-->
     </apex:outputPanel>
 
 </apex:component>

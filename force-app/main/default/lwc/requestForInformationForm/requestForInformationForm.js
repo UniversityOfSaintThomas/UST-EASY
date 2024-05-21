@@ -136,7 +136,7 @@ export default class RequestForInformationForm extends LightningElement {
         return new URL(url).searchParams.get(key);
     }
 
-    // // RFI controller info
+    // RFI controller info
     @api rfi_controller = 'RFI Controller 0000';
 
     @api recordId;
@@ -462,7 +462,7 @@ export default class RequestForInformationForm extends LightningElement {
                                         this.academic_max_select = "1";
                                         this.multi_select_single = true;
                                         this.field_labels.academic_interest_label = 'Academic Interest';
-                                        this.academic_max_select_help = "You can only choose up to " + this.academic_max_select + " options";
+                                        this.academic_max_select_help = "Only one program of interest can be selected.";
                                     }
                                 }
 

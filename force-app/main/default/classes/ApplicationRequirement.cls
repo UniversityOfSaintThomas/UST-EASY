@@ -35,7 +35,12 @@ public class ApplicationRequirement {
     public String userType { get; set; }
     public Boolean isStandardUser { get; set; }
 
-    public Application_Control__c appControl { get; set; }
+//YN ADD
+    public String contentDocId { get; set; }
+    public String reqResponseId { get; set; }
+
+
+public Application_Control__c appControl { get; set; }
 
     public Id nextReqId {
         get {
@@ -653,4 +658,36 @@ public class ApplicationRequirement {
             }
         }
     }
+
+
+//YN ADD TO DELETE UPLOADED DOCUMENT
+    public PageReference deletePreviousFile() {
+
+        try {
+            delete [
+                    SELECT Id
+                    FROM ContentDocument
+                    WHERE Id = :contentDocId
+            ];
+
+            Requirement_Response__c responseRecord = [
+                    SELECT Id,
+                            Original_Uploaded_Document_File_Name__c,
+                            Saved_Uploaded_Document_File_Name__c
+                    FROM Requirement_Response__c
+                    WHERE Id = :reqResponseId
+            ];
+
+            responseRecord.Original_Uploaded_Document_File_Name__c = '';
+            responseRecord.Saved_Uploaded_Document_File_Name__c = '';
+
+            update responseRecord;
+        } catch (Exception e) {
+
+            System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());
+        }
+
+        return null;
+    }
+
 }

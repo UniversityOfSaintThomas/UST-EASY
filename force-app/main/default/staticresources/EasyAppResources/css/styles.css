@@ -341,3 +341,12 @@ div.slds-progress {
     cursor:pointer;
     color:blue;
 }
+
+.deletePreviousFileIcon:hover,
+.clearSelectFileIcon:hover{
+    cursor: pointer;
+    color: red;
+}
+
+
+

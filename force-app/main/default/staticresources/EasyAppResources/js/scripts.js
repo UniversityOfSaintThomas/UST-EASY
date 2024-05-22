@@ -1,3 +1,4 @@
+
 function docReady(fn) {
     // see if DOM is already available
     if (document.readyState === "complete" || document.readyState === "interactive") {
@@ -8,12 +9,11 @@ function docReady(fn) {
     }
 }
 
-docReady(function () {
+docReady(function() {
     appHideLoadingSpinner();
     pageLoadReRendered();
     activateCarousel();
 });
-
 
 function pageLoadReRendered(isRelatedRecordReRender = false) {
 
@@ -24,7 +24,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
         field.setAttribute('disabled', 'disabled');
     });
 
-    if (checkEnter) {
+    if(checkEnter) {
         sldsScope.querySelector('form').onkeypress = checkEnter;
     }
 
@@ -177,6 +177,26 @@ function fileUploadAreas() {
             currentFile.innerHTML = findFileName(fileInput.value);
         });
     })
+
+    // YN ADD
+    document.querySelectorAll('.file_selector_wrapper').forEach(selectWrapper => {
+
+        let fileInput = selectWrapper.querySelector('.docUploadInput');
+        let clearSelectFileIcon = selectWrapper.querySelector('.clearSelectFileIcon');
+
+        if (clearSelectFileIcon) {
+
+            clearSelectFileIcon.addEventListener('click', function (e) {
+
+                if (fileInput.value) {
+                    const event = new Event("change");
+                    fileInput.value = "";
+                    fileInput.dispatchEvent(event);
+                }
+            })
+        }
+    })
+
 }
 
 function findFileName(filePath) {
@@ -186,7 +206,7 @@ function findFileName(filePath) {
     } else {
         filePath = 'None';
     }
-    filePath = '<strong>Currently Selected:</strong> ' + filePath;
+    filePath = '<strong>Selected File:</strong> ' + filePath;
     return filePath;
 }
 
@@ -543,7 +563,7 @@ function disableCarousel() {
     carouselOn = false;
 
     let killerButton = document.getElementById('carousel-killer');
-    if (killerButton) {
+    if(killerButton) {
         killerButton.innerText = "Restore Form";
         killerButton.removeEventListener('click', disableCarousel);
         killerButton.addEventListener('click', enableCarousel);
@@ -587,7 +607,7 @@ function enableCarousel() {
     carouselOn = true;
 
     let killerButton = document.getElementById('carousel-killer');
-    if (killerButton) {
+    if(killerButton) {
         killerButton.innerText = "Single-Page Form";
         killerButton.removeEventListener('click', enableCarousel);
         killerButton.addEventListener('click', disableCarousel);
@@ -661,7 +681,7 @@ function activateCarousel(slideMoveTo) {
         function setEventListeners() {
             next.addEventListener('click', moveNext);
             prev.addEventListener('click', movePrev);
-            if (killerButton) {
+            if(killerButton) {
                 killerButton.addEventListener('click', disableCarousel);
             }
             if (totalItems === 1) {
@@ -794,7 +814,7 @@ function activateCarousel(slideMoveTo) {
         }
     }
     if (items.length <= 1) {
-        if (killerButton) {
+        if(killerButton) {
             killerButton.style.display = 'none';
         }
     }
@@ -804,7 +824,7 @@ function activateCarousel(slideMoveTo) {
 var spinnerFocusElement = null;
 
 function appHideLoadingSpinner(restoreFocus = true) {
-    if (document.getElementById('loadSpinner')) {
+    if(document.getElementById('loadSpinner')) {
         document.getElementById('loadSpinner').style.display = "none";
     }
     if (restoreFocus == true && spinnerFocusElement != null) {
@@ -815,14 +835,14 @@ function appHideLoadingSpinner(restoreFocus = true) {
 
 function appShowLoadingSpinner() {
     spinnerFocusElement = document.activeElement.id;
-    if (document.getElementById('loadSpinner')) {
+    if(document.getElementById('loadSpinner')) {
         document.getElementById('loadSpinner').style.display = "block";
     }
     return true;
 }
 
 function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
-    if (document.getElementById('form-spinner')) {
+    if(document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'none';
     }
     if (restoreFocus == true && spinnerFocusElement != null) {
@@ -838,14 +858,14 @@ function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
 
 function showFormSpinner() {
     spinnerFocusElement = document.activeElement.id;
-    if (document.getElementById('form-spinner')) {
+    if(document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'block';
     }
 }
 
 function showFormSpinnerRelatedRecord() {
     spinnerFocusElement = document.activeElement.parentElement.parentElement.parentElement;
-    if (document.getElementById('form-spinner')) {
+    if(document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'block';
     }
 }
@@ -1114,6 +1134,15 @@ function validateFileType(obj) {
 
 function encryptedTextShow() {
 
+    // TEST REMOVE DATEPICKER TODAY DATE
+    const allDatePickerTodayDate = document.querySelectorAll('span.dateFormat');
+
+    allDatePickerTodayDate.forEach(DatePickerTodayDate => {
+
+        DatePickerTodayDate.setAttribute('hidden', '');
+    })
+    // END TEST
+
     let allEncryptedFields = document.querySelectorAll('.find-me-class');
 
     allEncryptedFields.forEach(encryptedField => {
@@ -1269,5 +1298,51 @@ function encryptedTextShow() {
 
         })
     })
+}
+
+function deletePrevious(contentDocId, reqResponseId) {
+
+    if (confirm("Delete previous uploaded file?")) {
+
+        console.log("contentDocumentId: " + contentDocId + " Requirement Response Id: " + reqResponseId);
+
+        appShowLoadingSpinner();
+
+        deletePreviousFile(contentDocId, reqResponseId);
+    }
+
+    return true;
+}
+
+function removeTempFile(e){
+
+    // const buttonTarget = e;
+    let buttonForm = e.previousElementSibling;
+
+    while (buttonForm) {
+
+        if (buttonForm.matches('.slds-form-element__control')) {
+
+            // return buttonForm;
+            break;
+        } else {
+
+            buttonForm = buttonForm.previousElementSibling;
+        }
+    }
+
+    console.log("What is buttonform: "+buttonForm);
+
+    let inputField = buttonForm.querySelector(".docUploadInput");
+
+    console.log("What is input field: "+inputField);
+    console.log("What is input field value: "+inputField.value);
+
+    if(inputField.value){
+
+        const event = new Event("change");
+        inputField.value = "";
+        inputField.dispatchEvent(event);
+    }
 }
 

@@ -248,7 +248,7 @@ public class ApplicationUtilities {
 
     public static String createEncryptedCookie(String stringToEncrypt) {
         String encodedCipherText = createEncryptedString(stringToEncrypt);
-        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'strict');
+        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'Strict');
         ApexPages.currentPage().setCookies(new Cookie[]{
                 EASYCookie
         });

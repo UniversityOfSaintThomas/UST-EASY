@@ -3,9 +3,6 @@
  -->
 
 <apex:component id="ApplicationFormSectionInput">
-
-    <apex:attribute name="testInput" description="" type="String" required="false"/>
-
     <apex:attribute name="inputLabel" description="" type="String" required="false"/>
     <apex:attribute name="multiPicklist" description="" type="List" required="false"/>
     <apex:attribute name="responseObject" description="" type="SObject" required="false"/>
@@ -105,7 +102,7 @@
     <apex:outputPanel rendered="{!inputType == 'TextEncrypted'}" layout="block" styleClass="slds-form-element__control">
         <apex:inputSecret redisplay="true" id="textEncryptedField" value="{!responseObject[fieldAPI]}" styleClass="slds-input find-me-class validate{!inputType}"/>
 
-        <span class="clickShow">(click show)</span>  <span class="hoverShow">(hover show)</span>
+<!--        <span class="clickShow">(click show)</span>  <span class="hoverShow">(hover show)</span>-->
 <!--        YN: Here is encrypted field.-->
 
     </apex:outputPanel>
@@ -206,7 +203,8 @@
 
     <!-- Question Help Text -->
     <apex:outputPanel layout="none" rendered="{!!ISBLANK(questionWrapper['helpText'])}">
-        <p class="slds-text-body_regular">{!questionWrapper['helpText']}</p>
+        <apex:outputText styleClass="slds-text-body_regular" value="{!questionWrapper['helpText']}" escape="false"/>
+<!--        <p class="slds-text-body_regular">ARE YOU HERE! {!questionWrapper['helpText']}</p>-->
     </apex:outputPanel>
 
 </apex:component>

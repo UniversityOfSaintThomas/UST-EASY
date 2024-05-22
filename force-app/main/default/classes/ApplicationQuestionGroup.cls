@@ -20,6 +20,9 @@ public class ApplicationQuestionGroup {
     private Id oldAttId;
     public ContentDocumentLink oldAttLink { get; set; }
     public ContentVersion oldAttVersion { get; set; }
+
+    public Id oldAttContentDocumentId { get; set; }
+
     public Boolean questionGroup { get; set; }
     public Boolean documentUpload { get; set; }
     public Boolean relatedObject { get; set; }
@@ -347,6 +350,8 @@ public class ApplicationQuestionGroup {
         } else {
             att = new ContentVersion();
         }
+
+        System.debug('YN What is contentDocumentId'+oldAttLink.ContentDocumentId);
     }
 
     public ApplicationQuestionGroup(List<ApplicationQuestion> questions) {
@@ -448,7 +453,8 @@ public class ApplicationQuestionGroup {
                 oldAttId = response.ContentDocumentLinks[0].Id;
                 oldAttLink = response.ContentDocumentLinks[0];
                 List<ContentVersion> conV = [
-                        SELECT Id
+                        SELECT Id,
+                                ContentDocumentId
                         FROM ContentVersion
                         WHERE ContentDocumentId = :oldAttLink.ContentDocumentId
                         ORDER BY CreatedDate DESC
@@ -456,9 +462,15 @@ public class ApplicationQuestionGroup {
                 ];
                 if (conV.size() > 0) {
                     oldAttVersion = conV[0];
+                    oldAttContentDocumentId = oldAttLink.ContentDocumentId;
+
+                    System.debug('YN What is contentDocumentId1: '+oldAttLink.ContentDocumentId);
+                    System.debug('YN What is oldAttVersion Id: '+oldAttVersion.Id);
                 }
             } else {
                 att = new ContentVersion();
+
+                System.debug('YN No contentDocumentId1');
             }
         } else if (item.RecordType.DeveloperName.equals('Related_Object')) {
 

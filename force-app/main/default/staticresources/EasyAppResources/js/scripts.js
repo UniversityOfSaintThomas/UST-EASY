@@ -1008,6 +1008,8 @@ function textValidations(checkFormValidate, documentStart) {
                 activateErrorState(phone, 'change');
             }
         }
+
+
     });
 
 

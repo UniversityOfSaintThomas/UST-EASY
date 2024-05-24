@@ -58,15 +58,20 @@
             <div class="slds-card__body slds-card__body_inner file_selector_wrapper">
 
                 <apex:outputPanel styleClass="slds-form-element" rendered="{!NOT(ISBLANK(oldAttContentDocumentId))}">
-                    <apex:outputLabel value="Saved File: " style="font-weight:bold;"/>
-                    <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!odlAttachmentId}" target="_blank" title="Download File">{!attachmentTitle}</apex:outputLink>
-                    <span class="slds-icon_container slds-icon-utility-delete slds-current-color slds-m-bottom_medium deletePreviousFileIcon" title="Delete Saved File" onclick="deletePrevious('{!oldAttContentDocumentId}', '{!responseObjectID}')">
-                        <svg class="slds-icon slds-icon_x-small slds-m-left_xx-small slds-m-bottom_xx-small" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#delete')}"></use>
-                        </svg>
-                        <span class="slds-assistive-text">Delete Saved File</span>
-                    </span>
+                    <div class="slds-form-element__control">
+                        <apex:outputLabel value="Saved File: " style="font-weight:bold;"/>
+                        <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!odlAttachmentId}" target="_blank" title="Download File">{!attachmentTitle}</apex:outputLink>
+                        <span class="slds-icon_container slds-icon-utility-delete slds-current-color slds-m-bottom_medium deletePreviousFileIcon" title="Delete Saved File" onclick="deletePrevious('{!oldAttContentDocumentId}', '{!responseObjectID}', '{!attachmentTitle}')">
+                            <svg class="slds-icon slds-icon_x-small slds-m-left_xx-small slds-m-bottom_xx-small" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#delete')}"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Delete Saved File</span>
+                        </span>
+                    </div>
+
+                    <span onclick="activateModal('Review','Font Weight','Delete')">Click Me</span>
+
                 </apex:outputPanel>
 
                 <div class="slds-form-element__control slds-m-bottom_medium">

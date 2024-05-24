@@ -660,8 +660,38 @@ public Application_Control__c appControl { get; set; }
     }
 
 
-//YN ADD TO DELETE UPLOADED DOCUMENT
+//Delete previous uploaded files and linked Supporting Documents records
     public PageReference deletePreviousFile() {
+
+        Requirement_Response__c responseRecord = [
+                SELECT Id,
+                        Original_Uploaded_Document_File_Name__c,
+                        Saved_Uploaded_Document_File_Name__c
+                FROM Requirement_Response__c
+                WHERE Id = :reqResponseId
+        ];
+        responseRecord.Original_Uploaded_Document_File_Name__c = '';
+        responseRecord.Saved_Uploaded_Document_File_Name__c = '';
+
+        List<String> supportingDocIds = new List<String>();
+        List<ContentDocumentLink> contentLinks = [
+                SELECT Id,
+                        ContentDocumentId,
+                        LinkedEntityId
+                FROM ContentDocumentLink
+                WHERE ContentDocumentId = :contentDocId
+        ];
+
+        System.debug('What is contentLinks:'+contentLinks);
+
+        for (ContentDocumentLink link : contentLinks) {
+
+            if (link.LinkedEntityId.getSobjectType().getDescribe().getName() == 'Supporting_Document__c') {
+                supportingDocIds.add(link.LinkedEntityId);
+            }
+        }
+
+        System.debug('What is supportingDocIds:'+supportingDocIds);
 
         try {
             delete [
@@ -670,18 +700,13 @@ public Application_Control__c appControl { get; set; }
                     WHERE Id = :contentDocId
             ];
 
-            Requirement_Response__c responseRecord = [
-                    SELECT Id,
-                            Original_Uploaded_Document_File_Name__c,
-                            Saved_Uploaded_Document_File_Name__c
-                    FROM Requirement_Response__c
-                    WHERE Id = :reqResponseId
-            ];
-
-            responseRecord.Original_Uploaded_Document_File_Name__c = '';
-            responseRecord.Saved_Uploaded_Document_File_Name__c = '';
-
             update responseRecord;
+
+            delete [
+                    SELECT Id
+                    FROM Supporting_Document__c
+                    WHERE Id IN :supportingDocIds
+            ];
         } catch (Exception e) {
 
             System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());

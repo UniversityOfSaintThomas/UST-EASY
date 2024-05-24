@@ -66,7 +66,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
     fileUploadAreas();
 
     //YN Add
-    encryptedTextShow();
+    // encryptedTextShow();
 
 
     //Hide the form spinner if it is active
@@ -1131,218 +1131,233 @@ function validateFileType(obj) {
     return true;
 }
 
+function deletePrevious(contentDocId, reqResponseId, fileTitle) {
 
-function encryptedTextShow() {
-
-    // TEST REMOVE DATEPICKER TODAY DATE
-    const allDatePickerTodayDate = document.querySelectorAll('span.dateFormat');
-
-    allDatePickerTodayDate.forEach(DatePickerTodayDate => {
-
-        DatePickerTodayDate.setAttribute('hidden', '');
-    })
-    // END TEST
-
-    let allEncryptedFields = document.querySelectorAll('.find-me-class');
-
-    allEncryptedFields.forEach(encryptedField => {
-
-        encryptedField.addEventListener('keyup', function (e) {
-
-            const keyPress = e.key;
-            const keyExempt = [
-                'Backspace',
-                'Delete',
-                'Shift',
-                'ArrowUp',
-                'ArrowDown',
-                'ArrowLeft',
-                'ArrowRight',
-                'Tab',
-                ' ',
-                'Spacebar',
-                'Control'
-            ];
-            const keyInputField = e.target;
-
-            if (keyInputField.type === 'password') {
-
-                if (!keyExempt.includes(keyPress)) {
-
-                    keyInputField.type = 'text'
-
-                    setTimeout(() => {
-
-                        keyInputField.type = 'password'
-
-                    }, 500);
-                }
-            }
+    activateModal('Review',
+        '<strong>Delete Saved File: </strong>' + fileTitle,
+        'Delete',
+        function () {
+            appShowLoadingSpinner();
+            deletePreviousFile(contentDocId, reqResponseId)
         })
-    })
-
-    function encryptedFieldFromTarget(eventInstance) {
-
-        const eventTarget = eventInstance.target;
-        let eventInputField = eventTarget.previousElementSibling;
-
-        while (eventInputField) {
-
-            if (eventInputField.matches('.find-me-class')) {
-
-                return eventInputField;
-
-            } else {
-
-                eventInputField = eventInputField.previousElementSibling;
-            }
-        }
-    }
-
-    let allShowClickFields = document.querySelectorAll('.clickShow');
-
-    allShowClickFields.forEach(showMeField => {
-
-        let clickIntervalId;
-
-        showMeField.addEventListener('click', function (e) {
-
-                const encryptedInputField = encryptedFieldFromTarget(e);
-
-                if (encryptedInputField) {
-
-                    if (encryptedInputField.type === "password") {
-
-                        encryptedInputField.type = "text";
-                        e.target.innerHTML = '(click hide)'
-
-                        let timeLeft = 10;
-
-                        clickIntervalId = setInterval(function () {
-
-                            timeLeft--;
-
-                            if (timeLeft > 0 && timeLeft <= 5) {
-
-                                e.target.innerHTML = 'hide in '+timeLeft;
-                            }
-
-                            if (timeLeft === 0) {
-
-                                clearInterval(clickIntervalId);
-                                encryptedInputField.type = "password";
-                                e.target.innerHTML = '(click show)';
-                            }
-
-                        }, 1000);
-
-                    } else {
-
-                        clearInterval(clickIntervalId);
-                        encryptedInputField.type = "password";
-                        e.target.innerHTML = '(click show)'
-                    }
-
-                }
-            }
-        )
-
-    })
-
-    let allShowHoverFields = document.querySelectorAll('.hoverShow');
-
-    allShowHoverFields.forEach(showMeField => {
-
-        let hoverIntervalId;
-
-        showMeField.addEventListener('mouseover', (e) => {
-
-            const encryptedInputField = encryptedFieldFromTarget(e);
-
-            if (encryptedInputField) {
-
-                encryptedInputField.type = "text";
-
-                let timeLeft = 10;
-
-                hoverIntervalId = setInterval(function () {
-
-                    timeLeft--;
-
-                    if (timeLeft > 0 && timeLeft <= 5) {
-
-                        e.target.innerHTML = 'hide in '+timeLeft;
-                    }
-
-                    if (timeLeft === 0) {
-
-                        clearInterval(hoverIntervalId);
-                        encryptedInputField.type = "password";
-                        e.target.innerHTML = '(hover show)';
-                    }
-
-                }, 1000);
-            }
-        })
-
-        showMeField.addEventListener("mouseout", (e) => {
-
-            const encryptedInputField = encryptedFieldFromTarget(e);
-
-            if (encryptedInputField) {
-
-                clearInterval(hoverIntervalId);
-                encryptedInputField.type = "password"
-                e.target.innerHTML = '(hover show)';
-            }
-
-        })
-    })
-}
-
-function deletePrevious(contentDocId, reqResponseId) {
-
-    if (confirm("Delete previous uploaded file?")) {
-
-        console.log("contentDocumentId: " + contentDocId + " Requirement Response Id: " + reqResponseId);
-
-        appShowLoadingSpinner();
-
-        deletePreviousFile(contentDocId, reqResponseId);
-    }
 
     return true;
 }
 
-function removeTempFile(e){
+// function encryptedTextShow() {
+//
+//     // TEST REMOVE DATEPICKER TODAY DATE
+//     const allDatePickerTodayDate = document.querySelectorAll('span.dateFormat');
+//
+//     allDatePickerTodayDate.forEach(DatePickerTodayDate => {
+//
+//         DatePickerTodayDate.setAttribute('hidden', '');
+//     })
+//     // END TEST
+//
+//     let allEncryptedFields = document.querySelectorAll('.find-me-class');
+//
+//     allEncryptedFields.forEach(encryptedField => {
+//
+//         encryptedField.addEventListener('keyup', function (e) {
+//
+//             const keyPress = e.key;
+//             const keyExempt = [
+//                 'Backspace',
+//                 'Delete',
+//                 'Shift',
+//                 'ArrowUp',
+//                 'ArrowDown',
+//                 'ArrowLeft',
+//                 'ArrowRight',
+//                 'Tab',
+//                 ' ',
+//                 'Spacebar',
+//                 'Control'
+//             ];
+//             const keyInputField = e.target;
+//
+//             if (keyInputField.type === 'password') {
+//
+//                 if (!keyExempt.includes(keyPress)) {
+//
+//                     keyInputField.type = 'text'
+//
+//                     setTimeout(() => {
+//
+//                         keyInputField.type = 'password'
+//
+//                     }, 500);
+//                 }
+//             }
+//         })
+//     })
 
-    // const buttonTarget = e;
-    let buttonForm = e.previousElementSibling;
+//     function encryptedFieldFromTarget(eventInstance) {
+//
+//         const eventTarget = eventInstance.target;
+//         let eventInputField = eventTarget.previousElementSibling;
+//
+//         while (eventInputField) {
+//
+//             if (eventInputField.matches('.find-me-class')) {
+//
+//                 return eventInputField;
+//
+//             } else {
+//
+//                 eventInputField = eventInputField.previousElementSibling;
+//             }
+//         }
+//     }
+//
+//     let allShowClickFields = document.querySelectorAll('.clickShow');
+//
+//     allShowClickFields.forEach(showMeField => {
+//
+//         let clickIntervalId;
+//
+//         showMeField.addEventListener('click', function (e) {
+//
+//                 const encryptedInputField = encryptedFieldFromTarget(e);
+//
+//                 if (encryptedInputField) {
+//
+//                     if (encryptedInputField.type === "password") {
+//
+//                         encryptedInputField.type = "text";
+//                         e.target.innerHTML = '(click hide)'
+//
+//                         let timeLeft = 10;
+//
+//                         clickIntervalId = setInterval(function () {
+//
+//                             timeLeft--;
+//
+//                             if (timeLeft > 0 && timeLeft <= 5) {
+//
+//                                 e.target.innerHTML = 'hide in '+timeLeft;
+//                             }
+//
+//                             if (timeLeft === 0) {
+//
+//                                 clearInterval(clickIntervalId);
+//                                 encryptedInputField.type = "password";
+//                                 e.target.innerHTML = '(click show)';
+//                             }
+//
+//                         }, 1000);
+//
+//                     } else {
+//
+//                         clearInterval(clickIntervalId);
+//                         encryptedInputField.type = "password";
+//                         e.target.innerHTML = '(click show)'
+//                     }
+//
+//                 }
+//             }
+//         )
+//
+//     })
+//
+//     let allShowHoverFields = document.querySelectorAll('.hoverShow');
+//
+//     allShowHoverFields.forEach(showMeField => {
+//
+//         let hoverIntervalId;
+//
+//         showMeField.addEventListener('mouseover', (e) => {
+//
+//             const encryptedInputField = encryptedFieldFromTarget(e);
+//
+//             if (encryptedInputField) {
+//
+//                 encryptedInputField.type = "text";
+//
+//                 let timeLeft = 10;
+//
+//                 hoverIntervalId = setInterval(function () {
+//
+//                     timeLeft--;
+//
+//                     if (timeLeft > 0 && timeLeft <= 5) {
+//
+//                         e.target.innerHTML = 'hide in '+timeLeft;
+//                     }
+//
+//                     if (timeLeft === 0) {
+//
+//                         clearInterval(hoverIntervalId);
+//                         encryptedInputField.type = "password";
+//                         e.target.innerHTML = '(hover show)';
+//                     }
+//
+//                 }, 1000);
+//             }
+//         })
+//
+//         showMeField.addEventListener("mouseout", (e) => {
+//
+//             const encryptedInputField = encryptedFieldFromTarget(e);
+//
+//             if (encryptedInputField) {
+//
+//                 clearInterval(hoverIntervalId);
+//                 encryptedInputField.type = "password"
+//                 e.target.innerHTML = '(hover show)';
+//             }
+//
+//         })
+//     })
+// }
 
-    while (buttonForm) {
-
-        if (buttonForm.matches('.slds-form-element__control')) {
-
-            // return buttonForm;
-            break;
-        } else {
-
-            buttonForm = buttonForm.previousElementSibling;
-        }
-    }
-
-    console.log("What is buttonform: "+buttonForm);
-
-    let inputField = buttonForm.querySelector(".docUploadInput");
-
-    console.log("What is input field: "+inputField);
-    console.log("What is input field value: "+inputField.value);
-
-    if(inputField.value){
-
-        const event = new Event("change");
-        inputField.value = "";
-        inputField.dispatchEvent(event);
-    }
-}
+// function testClick2(clickMessage) {
+//
+//     console.log("Why am I being clicked: "+clickMessage);
+// }
+//
+// function testClick1(hello) {
+//
+//     activateModal('header',
+//         'message',
+//         'buttonName',
+//         // function(){
+//         //
+//         //     console.log("Why am I being clicked: "+clickMessage);
+//         //     }
+//         testClick2(hello)
+//     )
+// }
+// function removeTempFile(e){
+//
+//     // const buttonTarget = e;
+//     let buttonForm = e.previousElementSibling;
+//
+//     while (buttonForm) {
+//
+//         if (buttonForm.matches('.slds-form-element__control')) {
+//
+//             // return buttonForm;
+//             break;
+//         } else {
+//
+//             buttonForm = buttonForm.previousElementSibling;
+//         }
+//     }
+//
+//     console.log("What is buttonform: "+buttonForm);
+//
+//     let inputField = buttonForm.querySelector(".docUploadInput");
+//
+//     console.log("What is input field: "+inputField);
+//     console.log("What is input field value: "+inputField.value);
+//
+//     if(inputField.value){
+//
+//         const event = new Event("change");
+//         inputField.value = "";
+//         inputField.dispatchEvent(event);
+//     }
+// }
 

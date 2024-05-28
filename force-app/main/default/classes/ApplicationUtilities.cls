@@ -35,7 +35,7 @@ public class ApplicationUtilities {
     }
 
     public static EASYApplicationInfo flattenAppControl(Application_Control__c appControl, EASYApplicationInfo appInfo) {
-        if(appControl != null) {
+        if (appControl != null) {
             appInfo.hideTermProgram = appControl.Hide_Term_Program__c;
             appInfo.allowWithdrawFrom = appControl.Allow_Withdraw_From__c;
             appInfo.allowSubmitFrom = appControl.Allow_Submit_From__c;
@@ -63,6 +63,8 @@ public class ApplicationUtilities {
         appInfo.appSubStatus = 'none';
         appInfo.appStatus = 'none';
         appInfo.allowSubmit = false;
+        appInfo.allowCancelFrom = '';
+        appInfo.allowWithdrawFrom = '';
         if (String.isBlank(appControl.Template__c)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;
@@ -120,6 +122,7 @@ public class ApplicationUtilities {
 
         appInfo.isExternalUser = isExternalUser();
 
+
         if (String.isBlank(appInfo.appId) && String.isBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
             //If we've arrived with no cookie or parameters; Get last updated application
             List<Application__c> lastApps = [
@@ -130,8 +133,8 @@ public class ApplicationUtilities {
                     FROM Application__c
                     WHERE Contact__c = :appInfo.contactId
                     AND Application_Status__c != 'Wrong Application'
-                    AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
-                    AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
+                    AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
+                    AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
                     ORDER BY LastModifiedDate
             ];
             if (lastApps.size() > 0) {
@@ -141,6 +144,20 @@ public class ApplicationUtilities {
             }
         }
 
+        //Contact did not find app so now we need to set the appControl to 'noapp' application control
+        if (String.isBlank(appInfo.appId) && String.isBlank(appInfo.at)) {
+            Application_Control__c appControl = getApplicationControls('noapp');
+            appInfo = flattenAppControl(appControl, appInfo);
+            appInfo.contactId = ApplicationUtilities.getAppContactId();
+            appInfo.isExternalUser = ApplicationUtilities.isExternalUser();
+            appInfo.appSubStatus = 'none';
+            appInfo.appStatus = 'none';
+            appInfo.allowSubmit = false;
+            appInfo.allowCancelFrom = '';
+            appInfo.allowWithdrawFrom = '';
+        }
+
+        //No template is selected for the application control so use the default
         if (String.isBlank(appInfo.template)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;
@@ -248,7 +265,7 @@ public class ApplicationUtilities {
 
     public static String createEncryptedCookie(String stringToEncrypt) {
         String encodedCipherText = createEncryptedString(stringToEncrypt);
-        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'strict');
+        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'Strict');
         ApexPages.currentPage().setCookies(new Cookie[]{
                 EASYCookie
         });
@@ -393,5 +410,75 @@ public class ApplicationUtilities {
             converted = adjustForTimeZone(converted, timezoneString);
         }
         return converted;
+    }
+
+    public static String replaceDataTags(String widgetContent, EASYPersonalDataTags tagWrapper) {
+        //widgetContent = 'This is a {{Banner <strong>Id</strong>}} in the middle of something. {<strong>{Nothing here</strong>}}. asdfsdfa {{Banner Id}}. Then what if you find a tag like {{This one<strong>}</strong>}';
+
+        //Serialize EASYPersonalDataTags data so we can get field names and retrieve with get method
+        Map<String, Object> tagMap = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(tagWrapper));
+
+        //Create lower/uppercase of EASYPersonalDataTags fields so that we can find them case insensitive
+        Map<String, String> lowerCaseUppercaseTagMap = new Map<String, String>();
+        for (String k : tagMap.keySet()) {
+            lowerCaseUppercaseTagMap.put(k.toLowerCase(), k);
+        }
+
+        //Get all tags in content that start with {{ and end with }} even if interrupted with html
+        Pattern tagPattern = Pattern.compile('\\{.(.*?)\\}(.*?|)[\\}\\s]');
+        Matcher tagMatcher = tagPattern.matcher(widgetContent);
+        Set<String> matchingTags = new Set<String>();
+        while (tagMatcher.find ()) {
+            matchingTags.add(tagMatcher.group() .trim());
+        }
+
+        //Loop through tag matches set to sanitize and replace all
+        for (String tag : matchingTags) {
+
+            //Remove all HTML elements from the tag to avoid things like this {<em>{</em>Tag}}
+            String tab_data = tag.replaceAll('<[^>]*>', '');
+
+            //Remove tag delineators to get at data identifier
+            tab_data = tab_data.removeStart('{{');
+            tab_data = tab_data.removeEnd('}}');
+            tab_data = tab_data.trim();
+
+            //Add underscore to space in so that user can be agnostic of the need
+            tab_data = tab_data.replace(' ', '_');
+
+            //Find if lowercase version of tag is in our map of lower/uppercase tags and use uppercase to grab data
+            if (lowerCaseUppercaseTagMap.keySet().contains(tab_data.toLowerCase())) {
+                //find if the tag is Documents_Missing
+                String caseSensitiveTag = lowerCaseUppercaseTagMap.get(tab_data.toLowerCase());
+
+                //If the value is blank we want to replace tag with an empty string
+                String valueForTag = String.isNotBlank((String) tagMap.get(caseSensitiveTag)) ? (String) tagMap.get(caseSensitiveTag) : '' ;
+
+                if (tab_data.toLowerCase() == 'documents_missing' && String.isNotBlank(valueForTag)) {
+                    //The documents_missing tab contains a comma seperated list inside brackets I want to turn into a bulleted list
+                    String documentsMissing = (String) tagMap.get(lowerCaseUppercaseTagMap.get(tab_data.toLowerCase()));
+                    if (String.isNotBlank(documentsMissing)) {
+                        //System.debug('documentsMissing: ' + documentsMissing);
+                        //remove <p>[ from front of tag and ]</p> from end of tag added by flow creation
+                        documentsMissing = documentsMissing.removeStart('<p>');
+                        documentsMissing = documentsMissing.removeStart('[');
+                        documentsMissing = documentsMissing.removeEnd('</p>');
+                        documentsMissing = documentsMissing.removeEnd(']');
+                        String[] documentsMissingList = documentsMissing.split(',');
+                        String documentsMissingListHTML = '<ul>';
+                        for (String document : documentsMissingList) {
+                            documentsMissingListHTML += '<li>' + document + '</li>';
+                        }
+                        documentsMissingListHTML += '</ul>';
+                        valueForTag = documentsMissingListHTML;
+                    }
+                }
+
+                //Replace the original tag (as it may contain html,ect, with the found value)
+                widgetContent = widgetContent.replace(tag, valueForTag);
+            }
+        }
+
+        return widgetContent;
     }
 }

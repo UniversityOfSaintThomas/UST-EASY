@@ -1,4 +1,4 @@
-@isTest
+@IsTest
 public class AdmissionsApplicationFinderCmp_TEST {
     @TestSetup
     static void setup() {
@@ -15,12 +15,12 @@ public class AdmissionsApplicationFinderCmp_TEST {
                 Withdraw_Status__c = Application_Control__c.Withdraw_Status__c.getDescribe().getPicklistValues()[0].getValue(),
                 School_College__c = 'Undergraduate',
                 Name = 'Name',
-                Show_on_App_Finder__c = true 
+                Show_on_App_Finder__c = true
         );
         insert appControl;
     }
 
-    @isTest
+    @IsTest
     public static void testGetSchools() {
         AdmissionsApplicationFinderComponent component = new AdmissionsApplicationFinderComponent();
 
@@ -36,7 +36,7 @@ public class AdmissionsApplicationFinderCmp_TEST {
     }
 
     @IsTest
-    public static void testgetACs(){
+    public static void testgetACs() {
         AdmissionsApplicationFinderComponent component = new AdmissionsApplicationFinderComponent();
         List<SelectOption> expected = new List<SelectOption>();
         expected.add(new SelectOption('', 'Select application type'));
@@ -51,10 +51,10 @@ public class AdmissionsApplicationFinderCmp_TEST {
 
     }
 
-    @isTest
+    @IsTest
     public static void testGoToApp() {
         AdmissionsApplicationFinderComponent component = new AdmissionsApplicationFinderComponent();
-        component.selectedACs = 'test';
+        component.selectedApplicationControl = 'test';
 
         Test.startTest();
         PageReference returnPage = component.goToApp();

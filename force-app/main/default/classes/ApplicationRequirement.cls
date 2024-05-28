@@ -16,11 +16,12 @@ public class ApplicationRequirement {
     public Contact con { get; set; }
     public Application__c app { get; set; }
     public List<Question_Response__c> qResponses { get; set; }
-    //private Boolean queryItems = true;
+    private Boolean queryItems = true;
     List<Requirement_Response__c> requirementResponses { get; set; }
     List<Question_Response__c> questionResponses { get; set; }
     List<Question_Dependency__c> questionDependencies { get; set; }
     public List<RequirementWrapper> checklistItems { get; set; }
+    public EASYPersonalDataTags personalDataTags { get; set; }
     public Boolean preventUpdates { get; set; }
     public List<Requirement_Response__c> newResponses { get; set; }
     public Boolean showSuccess { get; set; }
@@ -50,7 +51,6 @@ public class ApplicationRequirement {
         }
         set;
     }
-
     public Id prevReqId {
         get {
             if (appInfo != null && String.isNotBlank(appInfo.requirementId)) {
@@ -88,6 +88,7 @@ public class ApplicationRequirement {
         this.questionResponses = questionResponses;
         this.questionDependencies = questionDependencies;
         this.preventUpdates = true;
+        queryItems = false;
         isInvalid = false;
     }
 
@@ -125,23 +126,48 @@ public class ApplicationRequirement {
             return new PageReference(Site.getPathPrefix() + '/SiteLogin?startURL=' + EncodingUtil.urlEncode(startUrl, 'UTF-8'));
         }
 
-        items = applicationHelper.getRequirementQuestions(new Set<Id>{
-                appInfo.requirementId
-        }, appInfo.isExternalUser);
+        if (queryItems == true) {
+            items = applicationHelper.getRequirementQuestions(new Set<Id>{
+                    appInfo.requirementId
+            }, appInfo.isExternalUser);
+        }
 
         //Get the application values for this requirement
         if ((String.isNotBlank(appInfo.appId) && app == null)) {
             String query = applicationHelper.getApplicationFields(items);
             query = 'SELECT ' + query + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
-            System.debug('query: ' + query);
             app = ((List<Application__c>) Database.query(query)).get(0);
         }
 
-        checklistItems = checklistHelper.checklistRequirements(app, appInfo);
-        allowSubmit = checklistHelper.allowSubmit(checklistItems, appInfo);
-        appInfo.allowSubmit = allowSubmit;
-        allowConfirm = checklistHelper.allowConfirm(checklistItems, appInfo);
-        appInfo.allowConfirm = allowConfirm;
+        //Add application data to personal data tags
+        personalDataTags = new EASYPersonalDataTags();
+        if (queryItems == true) {
+            checklistItems = checklistHelper.checklistRequirements(app, appInfo);
+            allowSubmit = checklistHelper.allowSubmit(checklistItems, appInfo);
+            appInfo.allowSubmit = allowSubmit;
+            allowConfirm = checklistHelper.allowConfirm(checklistItems, appInfo);
+            appInfo.allowConfirm = allowConfirm;
+
+            //Assign values to personal data tags
+            personalDataTags.Banner_ID = app.Applicant_Banner_Id__c;
+            personalDataTags.Contact_Id = app.Contact__r.Id;
+            personalDataTags.UGAQUSCHLRS = app.Aquinas_Scholars_Portal_Text__c;
+            personalDataTags.Applicant_Email = app.Contact_Email__c;
+            personalDataTags.UGAcctClaimTxt = app.Account_Claimed_Portal_Text__c;
+            personalDataTags.Documents_Missing = app.Documents_Missing_Text__c;
+            personalDataTags.First_Name = app.Contact_Mailing_First_Name__c;
+            personalDataTags.Last_Name = app.Contact__r.LastName;
+            personalDataTags.Application_ID = app.Id;
+            personalDataTags.AppOwner_ID = app.OwnerId;
+            personalDataTags.Portal_University_email = app.Contact__r.hed__UniversityEmail__c;
+            personalDataTags.LastTranscript = '';
+            personalDataTags.Course_Pref = '';
+            personalDataTags.Housing_Pref = '';
+            personalDataTags.UGFYClass = '';
+            personalDataTags.AppOwner_ID = app.OwnerId;
+
+        }
+
 
         //Get needed values from Contact record
         if (con == null) {
@@ -247,11 +273,23 @@ public class ApplicationRequirement {
                     relatedObjects.add(i.Related_List_Object__c);
                 }
 
+                // Apply personal data tags to instructions and questions
+                if (String.isNotBlank(i.Instructions__c)) {
+                    i.Instructions__c = ApplicationUtilities.replaceDataTags(i.Instructions__c, personalDataTags);
+                }
+
+                for(Question__c q : i.Questions__r) {
+                    if (String.isNotBlank(q.Static_Text__c)) {
+                        q.Static_Text__c = ApplicationUtilities.replaceDataTags(q.Static_Text__c, personalDataTags);
+                    }
+                }
 
                 // Filter out external requirements based on the hashcode
                 if ((ignoreExternalFilter != null && ignoreExternalFilter) || !(i.Internal_Requirement_Item__c != null && UserInfo.getUserType() != 'Standard' && !ApexPages.currentPage().getParameters().containsKey('h'))) {
                     riLst.add(i);
                 }
+
+
             }
         }
 
@@ -265,18 +303,18 @@ public class ApplicationRequirement {
 
         // Clone Question Response records and store ID if this is an external user
         // in order to get around restriction of external users being able to edit objects
-        //if (appInfo.isExternalUser != null && appInfo.isExternalUser) {
-        for (ApplicationQuestionGroup aqg : section.groups) {
-            if (aqg.questionGroup && aqg.questions != null) {
-                for (ApplicationQuestion aq : aqg.questions) {
-                    if (aq.response != null && aq.response.Id != null) {
-                        aq.responseId = aq.response.Id;
-                        aq.response = aq.response.clone(false, true, false, false);
+        if (appInfo.isExternalUser != null && appInfo.isExternalUser) {
+            for (ApplicationQuestionGroup aqg : section.groups) {
+                if (aqg.questionGroup && aqg.questions != null) {
+                    for (ApplicationQuestion aq : aqg.questions) {
+                        if (aq.response != null && aq.response.Id != null) {
+                            aq.responseId = aq.response.Id;
+                            aq.response = aq.response.clone(false, true, false, false);
+                        }
                     }
                 }
             }
         }
-        //}
         return null;
     }
 
@@ -372,9 +410,7 @@ public class ApplicationRequirement {
                 //Uploaded data evaluated
                 if (addData != null && addData.containsKey('attData')) {
                     Map<String, Object> attData = (Map<String, Object>) addData.get('attData');
-                    System.debug('attData: ' + attData.keySet());
                     if (attData != null && attData.containsKey('fileName')) {
-                        System.debug('File Name: ' + attData.get('fileName') + ' File Size: ' + attData.get('fileSize') + ' File Type: ' + attData.get('fileType') + ' File Id: ' + attData.get('fileId'));
                         String fileName = (String) attData.get('fileName');
                         //Check for file types
                         if (String.isNotBlank(fileName) && String.isNotBlank(g.item.File_Types__c)) {
@@ -400,15 +436,14 @@ public class ApplicationRequirement {
         Map<Id, Id> requirement_item_ids_of_external_email_rrs = new Map<Id, Id>();
         for (ApplicationQuestionGroup aqg : section.groups) {
             if (aqg.response != null && aqg.isEditable) {
-<<<<<<< HEAD
                 //Skip marking requirement response as viewed as directed by requirement
+                System.debug('Do_Not_Mark_Requirement_as_Viewed__c: ' + aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c);
                 if (!aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c) {
+                    System.debug('Marking requirement response as viewed');
                     aqg.response.Viewed__c = true;
+                } else {
+                    System.debug('Skipping marking requirement response as viewed because Do_Not_Mark_Requirement_as_Viewed__c is true');
                 }
-=======
-                ///Boolean test = aqg.response.Requirement_Item__r.IsDeleted;
-                aqg.response.Viewed__c = true;
->>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
                 if (String.isNotBlank(aqg.response.External_Email__c)) {
                     requirement_item_ids_of_external_email_rrs.put(aqg.response.Requirement_Item__c, aqg.response.Id);
                 }

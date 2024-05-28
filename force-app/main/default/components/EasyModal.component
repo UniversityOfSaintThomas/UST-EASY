@@ -18,7 +18,7 @@
             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
             </div>
             <div class="slds-modal__footer">
-                <button class="slds-button slds-button_neutral easyModalClose" aria-label="Cancel and close">Cancel</button>
+                <button class="slds-button slds-button_neutral easyModalClose easyModalCloseBtn" aria-label="Cancel and close">Cancel</button>
                 <button class="slds-button slds-button_brand slds-modal-button-action"></button>
             </div>
         </div>
@@ -30,7 +30,7 @@
     <script type="text/javascript">
 
 
-        function activateModal(header, message, buttonName, callback) {
+        function activateModal(header, message, buttonName, callback, cancelButtonName) {
             const modal = document.getElementById('easyModal');
             const backdrop = document.getElementById('easyModalBackdrop');
             const modalHead = modal.querySelector('.slds-modal__title');
@@ -52,11 +52,17 @@
             }
 
             closeButtons.forEach(closeBtn => {
+                if (closeBtn.classList.contains('easyModalCloseBtn')) {
+                    if (cancelButtonName) {
+                        closeBtn.innerText = cancelButtonName;
+                    }
+                }
                 closeBtn.addEventListener('click', function () {
                     modal.style.display = 'none';
                     backdrop.style.display = 'none';
                 });
             });
+
             if (header) {
                 modalHead.innerText = header;
             } else {

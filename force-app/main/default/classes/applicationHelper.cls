@@ -119,7 +119,8 @@ public with sharing class applicationHelper {
                 'Contact__r.Id',
                 'Contact_Mailing_First_Name__c',
                 'Contact__r.LastName',
-                'Contact__r.hed__UniversityEmail__c'
+                'Contact__r.hed__UniversityEmail__c',
+                'OwnerId'
         };
         Set<String> lowerCaseSet = new Set<String>();
         for (String s : standardFields) {
@@ -191,7 +192,6 @@ public with sharing class applicationHelper {
                     contactFields.add(q.Contact_Field__c.toLowerCase());
                 }
             }
-
         }
         fields = String.join(new List<String>(contactFields), ',');
         return fields;

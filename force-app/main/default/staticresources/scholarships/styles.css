@@ -11,6 +11,7 @@
     margin-bottom: 1rem;
     color: initial;
 }
+
 .slds-scope label, .slds-scope .slds-form-element__label {
     font-size: 1rem !important;
     margin-bottom: 0rem;
@@ -108,13 +109,34 @@
 }
 
 .slds-scope .message.confirmM3 table {
-    border: solid 1px green !important;
+    border: solid 1px #f7b611 !important;
     border-collapse: initial;
+    width: 100%;
 }
 
-.slds-scope .message table td {
+.slds-scope .message.confirmM3 table td {
     padding: 5px;
-    background-color: #e6f7e3;
+    background-color: #fff5cc;
+}
+
+.slds-scope .message.confirmM3 table h4 {
+    display: none;
+}
+
+.errorMsg, .errorMsg strong {
+    color: red !important;
+    padding: 7px 0px;
+}
+
+.slds-scope .message.errorM3 table {
+    border: solid 1px red !important;
+    border-collapse: initial;
+    width: 100%;
+}
+
+.slds-scope .message.errorM3 table td {
+    padding: 5px;
+    background-color: #fff2f2;
 }
 
 .slds-scope .message table td h4 {

@@ -104,8 +104,7 @@
                                             </apex:outputPanel>
                                             <apex:outputPanel layout="none" rendered="{!applicant.Essay_1_Uploaded__c}">
                                                 <p class="slds-text-body_regular slds-p-bottom_x-small">
-                                                    <strong>Congratulations, your essay file is uploaded and attached.</strong><br/>
-                                                    You uploaded a file named: <strong>{!applicant.Essay_1_Uploaded_Orig_Filename__c}</strong></p>
+                                                    <strong>{!applicant.Essay_1_Uploaded_Orig_Filename__c}</strong> has been uploaded to your application.</p>
                                                 <p class="slds-text-body_regular">
                                                     <apex:commandButton action="{!DeleteEssay1}" value="Delete and re-upload" styleClass="slds-button slds-button_neutral"/>
                                                 </p>
@@ -138,7 +137,7 @@
                                 <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 essayInputWrap" layout="block">
                                     <div class="slds-form-element">
                                         <div class="slds-form-element__control richText">
-                                            <apex:inputTextarea richText="true" value="{!applicant['Essay_' + e + '_Answer__c']}" StyleClass="essayInput essay{!e}"/>
+                                            <apex:inputField value="{!applicant['Essay_' + e + '_Answer__c']}" StyleClass="essayInput essay{!e}"/>
                                         </div>
                                     </div>
                                 </apex:outputPanel>
@@ -177,7 +176,7 @@
                                                 <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
                                             </apex:outputPanel>
                                         </div>
-                                        <div class="slds-form-element__help">This field is required,</div>
+                                        <div class="slds-form-element__help">This field is required.</div>
                                     </apex:outputPanel>
 
                                     <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
@@ -240,7 +239,7 @@
                     </apex:outputPanel>
 
                     <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
-                        <apex:commandLink action="{!SaveComplete}" Value="Save & Complete" onClick="return validateApplication();" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
+                        <apex:commandLink action="{!SaveComplete}" Value="Save & Submit" onClick="return validateApplication();" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
                     </apex:outputPanel>
                     <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
                         <apex:commandLink action="{!SaveFinishLater}" id="saveFinishLater" Value="Save & Finish Later" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>

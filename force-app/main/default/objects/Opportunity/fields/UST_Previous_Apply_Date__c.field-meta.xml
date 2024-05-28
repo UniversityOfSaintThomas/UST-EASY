@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>UST Previous Apply Date</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Date</type>
 </CustomField>

@@ -2431,387 +2431,93 @@
         <label>EX_EL_CER|ECIL</label>
     </customValue>
     <customValue>
-        <fullName>ED_SP_MA|SPEC</fullName>
+        <fullName>EX_EL_CER|ECSA</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_SP_MA|SPEC</label>
+        <label>EX_EL_CER|ECSA</label>
     </customValue>
     <customValue>
-        <fullName>ED_SP_MA|SPEM</fullName>
+        <fullName>EX_EL_CER|EDSL</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_SP_MA|SPEM</label>
+        <label>EX_EL_CER|EDSL</label>
     </customValue>
     <customValue>
-        <fullName>ED_SP_MA|SPLD</fullName>
+        <fullName>EX_EL_EDD|EDLE</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_SP_MA|SPLD</label>
+        <label>EX_EL_EDD|EDLE</label>
     </customValue>
     <customValue>
-        <fullName>ED_TE_CER|ACDD</fullName>
+        <fullName>EX_EL_EDS|ESEA</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_CER|ACDD</label>
+        <label>EX_EL_EDS|ESEA</label>
     </customValue>
     <customValue>
-        <fullName>ED_TE_CER|CRSE</fullName>
+        <fullName>EX_EL_LIC|ELDI</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_CER|CRSE</label>
+        <label>EX_EL_LIC|ELDI</label>
     </customValue>
     <customValue>
-        <fullName>ED_TE_MA|TECI|TEND</fullName>
+        <fullName>EX_EL_LIC|ELPR</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TECI|TEND</label>
+        <label>EX_EL_LIC|ELPR</label>
     </customValue>
     <customValue>
-        <fullName>ED_TE_MA|CIED</fullName>
+        <fullName>EX_EL_MA|EDSL</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|CIED</label>
+        <label>EX_EL_MA|EDSL</label>
     </customValue>
     <customValue>
-        <fullName>ED_TE_MA|TECI</fullName>
+        <fullName>EX_EL_MA|ESEA</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TECI</label>
+        <label>EX_EL_MA|ESEA</label>
     </customValue>
     <customValue>
-        <fullName>ED_TE_MA|TECI|TEED</fullName>
+        <fullName>EX_OL_MA|LHRD</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TECI|TEED</label>
+        <label>EX_OL_MA|LHRD</label>
     </customValue>
     <customValue>
-        <fullName>ED_TE_MA|TECI|TMED</fullName>
+        <fullName>EX_SE_LIC|SADI</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TECI|TMED</label>
+        <label>EX_SE_LIC|SADI</label>
     </customValue>
     <customValue>
-        <fullName>ED_TE_MA|TECI|TRED</fullName>
+        <fullName>EX_SE_LIC|SPAB</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TECI|TRED</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TECI|TSED</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TECI|TSED</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TLMS|ELCL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TLMS|ELCL</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TLMS|ELFR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TLMS|ELFR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TLMS|ELGR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TLMS|ELGR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TLMS|ELMA</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TLMS|ELMA</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TLMS|ELSI</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TLMS|ELSI</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TLMS|ELSP</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TLMS|ELSP</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TLMS|ELSS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TLMS|ELSS</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPEL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPEL</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPEL|ELCL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPEL|ELCL</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPEL|ELFR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPEL|ELFR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPEL|ELGR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPEL|ELGR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPEL|ELMA</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPEL|ELMA</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPEL|ELSI</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPEL|ELSI</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPEL|ELSP</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPEL|ELSP</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPEL|ELSS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPEL|ELSS</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|ELFR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|ELFR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|ELGR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|ELGR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|ELSP</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|ELSP</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|ESFR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|ESFR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|ESGR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|ESGR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|ESSP</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|ESSP</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|ESTA</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|ESTA</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|MEIN</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|MEIN</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|ESFR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|ESFR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|MEVO</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|MEVO</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|PEHE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|PEHE</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPKT|PETE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPKT|PETE</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|ESGR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|ESGR</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|ESSP</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|ESSP</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MEIN</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MEIN</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MEVO</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MEVO</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MSCH</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MSCH</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MSCL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MSCL</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MSES</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MSES</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MSHL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MSHL</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MSLS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MSLS</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MSMA</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MSMA</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MSPH</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MSPH</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|MSSS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|MSSS</label>
-    </customValue>
-    <customValue>
-        <fullName>ED_TE_MA|TPST|PETE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_TE_MA|TPST|PETE</label>
-    </customValue>
-    <customValue>
-        <fullName>ET_GR_CER|MCCS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ET_GR_CER|MCCS</label>
-    </customValue>
-    <customValue>
-        <fullName>ET_GR_CER|MCPD</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ET_GR_CER|MCPD</label>
-    </customValue>
-    <customValue>
-        <fullName>ET_GR_CER|MCQU</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ET_GR_CER|MCQU</label>
-    </customValue>
-    <customValue>
-        <fullName>ET_GR_MS|MSMS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>ET_GR_MS|MSMS</label>
+        <label>EX_SE_LIC|SPAB</label>
     </customValue>
     <customValue>
         <fullName>EX_SE_LIC|SPAS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>EX_SE_LIC|SPAS</label>
     </customValue>
     <customValue>
         <fullName>EX_SE_LIC|SPDD</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>EX_SE_LIC|SPDD</label>
     </customValue>
     <customValue>
         <fullName>EX_SE_LIC|SPEC</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>EX_SE_LIC|SPEC</label>
     </customValue>
     <customValue>
         <fullName>EX_SE_LIC|SPEM</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>EX_SE_LIC|SPEM</label>
     </customValue>
     <customValue>
         <fullName>EX_SE_LIC|SPLD</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>EX_SE_LIC|SPLD</label>
     </customValue>
     <customValue>
         <fullName>EX_SE_MA|SPAB</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>EX_SE_MA|SPAB</label>
     </customValue>
     <customValue>
         <fullName>EX_SE_MA|SPAS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>EX_SE_MA|SPAS</label>
     </customValue>
     <customValue>
@@ -2952,14 +2658,12 @@
     <customValue>
         <fullName>LW_GR_JD|LAWS|CMPL</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>DV_SM_DIV|XTHL</label>
+        <label>LW_GR_JD|LAWS|CMPL</label>
     </customValue>
     <customValue>
-        <fullName>DV_TH_MA|MTHL</fullName>
+        <fullName>LW_GR_LLM|LACO</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>DV_TH_MA|MTHL</label>
+        <label>LW_GR_LLM|LACO</label>
     </customValue>
     <customValue>
         <fullName>LW_GR_LLM|LAUS</fullName>
@@ -3054,44 +2758,37 @@
     <customValue>
         <fullName>PS_GR_PSD|CPSY</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>ED_SE_CER|SPTX</label>
+        <label>PS_GR_PSD|CPSY</label>
     </customValue>
     <customValue>
-        <fullName>ED_SE_MA|SPAB</fullName>
+        <fullName>PS_GR_PSD|CPSY|LMFT</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>ED_SE_MA|SPAB</label>
+        <label>PS_GR_PSD|CPSY|LMFT</label>
     </customValue>
     <customValue>
-        <fullName>ED_SE_MA|SPAS</fullName>
+        <fullName>SE_GR_CER|BGDT</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>ED_SE_MA|SPAS</label>
+        <label>SE_GR_CER|BGDT</label>
     </customValue>
     <customValue>
-        <fullName>ED_SE_MA|SPDD</fullName>
+        <fullName>SE_GR_CER|BUAN</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>ED_SE_MA|SPDD</label>
+        <label>SE_GR_CER|BUAN</label>
     </customValue>
     <customValue>
-        <fullName>ED_SE_MA|SPEC</fullName>
+        <fullName>SE_GR_CER|CPCS</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>ED_SE_MA|SPEC</label>
+        <label>SE_GR_CER|CPCS</label>
     </customValue>
     <customValue>
-        <fullName>ED_SE_MA|SPEM</fullName>
+        <fullName>SE_GR_CER|CSSD</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>ED_SE_MA|SPEM</label>
+        <label>SE_GR_CER|CSSD</label>
     </customValue>
     <customValue>
-        <fullName>ED_SE_MA|SPLD</fullName>
+        <fullName>SE_GR_CER|CYSC</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>ED_SE_MA|SPLD</label>
+        <label>SE_GR_CER|CYSC</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_CER|DAAN</fullName>
@@ -3114,16 +2811,14 @@
         <label>SE_GR_CER|DSAI</label>
     </customValue>
     <customValue>
-        <fullName>AS_DLC_MA|CATH</fullName>
+        <fullName>SE_GR_CER|ECOM</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>AS_DLC_MA|CATH</label>
+        <label>SE_GR_CER|ECOM</label>
     </customValue>
     <customValue>
-        <fullName>AS_AH_MAC|ARTH</fullName>
+        <fullName>SE_GR_CER|EMSY</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>AS_AH_MAC|ARTH</label>
+        <label>SE_GR_CER|EMSY</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_CER|FSDV</fullName>
@@ -3141,13 +2836,12 @@
         <label>SE_GR_CER|HCAN</label>
     </customValue>
     <customValue>
-        <fullName>BU_DLB_MBA|PTMB|JDMB</fullName>
+        <fullName>SE_GR_CER|IOTH</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>BU_DLB_MBA|PTMB|JDMB</label>
+        <label>SE_GR_CER|IOTH</label>
     </customValue>
     <customValue>
-        <fullName>LW_DLB_JD|CMPL</fullName>
+        <fullName>SE_GR_CER|SDDV</fullName>
         <default>false</default>
         <label>SE_GR_CER|SDDV</label>
     </customValue>
@@ -3192,297 +2886,249 @@
         <label>SE_GR_CPM|SEAS</label>
     </customValue>
     <customValue>
-        <fullName>MLTCOL_MA|CPSY</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>MLTCOL_MA|CPSY</label>
-    </customValue>
-    <customValue>
-        <fullName>MLTCOL_MA|MTHL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>MLTCOL_MA|MTHL</label>
-    </customValue>
-    <customValue>
-        <fullName>SE_GR_CER|SEAS|BINF</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>SE_GR_CER|SEAS|BINF</label>
-    </customValue>
-    <customValue>
-        <fullName>SE_GR_CER|SEAS|CPCM</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>SE_GR_CER|SEAS|CPCM</label>
-    </customValue>
-    <customValue>
-        <fullName>SE_GR_CER|SEAS|CPCS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>SE_GR_CER|SEAS|CPCS</label>
-    </customValue>
-    <customValue>
-        <fullName>SE_GR_CER|SEAS|DBIR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>SE_GR_CER|SEAS|DBIR</label>
-    </customValue>
-    <customValue>
-        <fullName>SE_GR_CER|SEAS|EMSY</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>SE_GR_CER|SEAS|EMSY</label>
-    </customValue>
-    <customValue>
-        <fullName>SE_GR_CER|SEAS|KNBS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>SE_GR_CER|SEAS|KNBS</label>
-    </customValue>
-    <customValue>
-        <fullName>SE_GR_CER|SEAS|OBOR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>SE_GR_CER|SEAS|OBOR</label>
-    </customValue>
-    <customValue>
         <fullName>SE_GR_CPM|SEAS|BINF</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_CPM|SEAS|BINF</label>
-    </customValue>
-    <customValue>
-        <fullName>SE_GR_CPM|SEAS|EMSY</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>SE_GR_CPM|SEAS|EMSY</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_CPM|SEAS|CPCM</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_CPM|SEAS|CPCM</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_CPM|SEAS|CPCS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_CPM|SEAS|CPCS</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_CPM|SEAS|DBIR</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_CPM|SEAS|DBIR</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_CPM|SEAS|EMSY</fullName>
+        <default>false</default>
+        <label>SE_GR_CPM|SEAS|EMSY</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_CPM|SEAS|KNBS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_CPM|SEAS|KNBS</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_CPM|SEAS|OBOR</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_CPM|SEAS|OBOR</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MICRO|MCDL</fullName>
+        <default>false</default>
+        <label>SE_GR_MICRO|MCDL</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MICRO|MCDP</fullName>
+        <default>false</default>
+        <label>SE_GR_MICRO|MCDP</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MICRO|MCIS</fullName>
+        <default>false</default>
+        <label>SE_GR_MICRO|MCIS</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MICRO|MCMI</fullName>
+        <default>false</default>
+        <label>SE_GR_MICRO|MCMI</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MS|MSAI</fullName>
+        <default>false</default>
+        <label>SE_GR_MS|MSAI</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MS|MSDS</fullName>
+        <default>false</default>
+        <label>SE_GR_MS|MSDS</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MS|MSIT</fullName>
+        <default>false</default>
+        <label>SE_GR_MS|MSIT</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MS|MSSE</fullName>
+        <default>false</default>
+        <label>SE_GR_MS|MSSE</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSE|BINF</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSE|BINF</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSE|CPCM</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSE|CPCM</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSE|CPCS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSE|CPCS</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSE|DBIR</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSE|DBIR</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSE|EMSY</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSE|EMSY</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSE|KNBS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSE|KNBS</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSE|OBOR</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSE|OBOR</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MS|MSSM</fullName>
+        <default>false</default>
+        <label>SE_GR_MS|MSSM</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSM|BINF</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSM|BINF</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSM|CPCM</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSM|CPCM</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSM|CPCS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSM|CPCS</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSM|DBIR</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSM|DBIR</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSM|EMSY</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSM|EMSY</label>
-    </customValue>
-    <customValue>
-        <fullName>AS_GR_CER|SPCT</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>AS_GR_CER|SPCT</label>
     </customValue>
     <customValue>
         <fullName>SE_GR_MS|MSSM|OBOR</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>SE_GR_MS|MSSM|OBOR</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MSD|MSDD</fullName>
+        <default>false</default>
+        <label>SE_GR_MSD|MSDD</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_MSS|MSWS</fullName>
+        <default>false</default>
+        <label>SE_GR_MSS|MSWS</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_GR_NDO|NDND</fullName>
+        <default>false</default>
+        <label>SE_GR_NDO|NDND</label>
+    </customValue>
+    <customValue>
+        <fullName>SOEDASD</fullName>
+        <default>false</default>
+        <label>SOEDASD</label>
+    </customValue>
+    <customValue>
+        <fullName>SOEDBTI</fullName>
+        <default>false</default>
+        <label>SOEDBTI</label>
+    </customValue>
+    <customValue>
+        <fullName>SOEDCCE</fullName>
+        <default>false</default>
+        <label>SOEDCCE</label>
+    </customValue>
+    <customValue>
+        <fullName>SW_DLS_MSW|MSWA</fullName>
+        <default>false</default>
+        <label>SW_DLS_MSW|MSWA</label>
+    </customValue>
+    <customValue>
+        <fullName>SW_DLS_MSW|SOWK</fullName>
+        <default>false</default>
+        <label>SW_DLS_MSW|SOWK</label>
+    </customValue>
+    <customValue>
+        <fullName>SW_GR_DSW|SOWK</fullName>
+        <default>false</default>
+        <label>SW_GR_DSW|SOWK</label>
+    </customValue>
+    <customValue>
+        <fullName>SW_GR_MSW|MSWA</fullName>
+        <default>false</default>
+        <label>SW_GR_MSW|MSWA</label>
+    </customValue>
+    <customValue>
+        <fullName>SW_GR_MSW|SOWK</fullName>
+        <default>false</default>
+        <label>SW_GR_MSW|SOWK</label>
+    </customValue>
+    <customValue>
+        <fullName>SW_GR_NDO|NDND</fullName>
+        <default>false</default>
+        <label>SW_GR_NDO|NDND</label>
+    </customValue>
+    <customValue>
+        <fullName>UN_N_BS</fullName>
+        <default>false</default>
+        <label>UN_N_BS</label>
     </customValue>
     <customValue>
         <fullName>AS_GR_CER|AHCT</fullName>
         <default>false</default>
-        <isActive>true</isActive>
         <label>AS_GR_CER|AHCT</label>
     </customValue>
     <customValue>
-        <fullName>AS_GR_CER|ENCT</fullName>
+        <fullName>BU_GR_ZZ|BUZZ</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>AS_GR_CER|ENCT</label>
+        <label>BU_GR_ZZ|BUZZ</label>
     </customValue>
     <customValue>
-        <fullName>AS_GR_CER|MCCE</fullName>
+        <fullName>|BUZZ</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>AS_GR_CER|MCCE</label>
+        <label>|BUZZ</label>
     </customValue>
     <customValue>
-        <fullName>AS_GR_CER|MSCT</fullName>
+        <fullName>BU_SC_MS|BUSU</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>AS_GR_CER|MSCT</label>
+        <label>BU_SC_MS|BUSU</label>
     </customValue>
     <customValue>
-        <fullName>AS_MU_MA|MEMA</fullName>
+        <fullName>ET_GR_MS|MSEM</fullName>
         <default>false</default>
-        <isActive>true</isActive>
-        <label>AS_MU_MA|MEMA</label>
+        <label>ET_GR_MS|MSEM</label>
     </customValue>
     <customValue>
-        <fullName>AS_PL_MA|PLLD</fullName>
+        <fullName>SE_GR_CER|APAI</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>AS_PL_MA|PLLD</label>
+        <label>SE_GR_CER|APAI</label>
     </customValue>
     <customValue>
-        <fullName>EX_EL_CER|EDSL</fullName>
+        <fullName>DC_UG_AA|STEM</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_CER|EDSL</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_EL_CER|ECHL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_CER|ECHL</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_EL_CER|ECIL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_CER|ECIL</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_EL_CER|ECSA</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_CER|ECSA</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_EL_EDD|EDLE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_EDD|EDLE</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_EL_EDS|ESEA</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_EDS|ESEA</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_EL_LIC|ELDI</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_LIC|ELDI</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_EL_LIC|ELPR</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_LIC|ELPR</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_EL_MA|EDSL</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_MA|EDSL</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_EL_MA|ESEA</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_EL_MA|ESEA</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_OL_MA|LHRD</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_OL_MA|LHRD</label>
-    </customValue>
-    <customValue>
-        <fullName>EX_SE_LIC|SPAB</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>EX_SE_LIC|SPAB</label>
-    </customValue>
-    <customValue>
-        <fullName>EASY_NC_NC|NCNC</fullName>
-        <default>false</default>
-        <label>EASY_NC_NC|NCNC</label>
+        <label>DC_UG_AA|STEM</label>
     </customValue>
     <masterLabel>Program(s)</masterLabel>
     <sorted>true</sorted>

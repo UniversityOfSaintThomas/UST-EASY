@@ -317,8 +317,8 @@ flows:
         task: create_bulk_data_permission_set
       5:
         task: turn_off_duplicate_rules
-#      6:
-#        task: create_fake_school_data
+      6:
+        task: create_fake_school_data
       7:
         task: update_admin_profile
       8:
@@ -361,11 +361,7 @@ flows:
         task: configure_community_settings
       27:
         task: configure_community
-<<<<<<< HEAD
       28:
-=======
-      22:
->>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
         task: load_scholarship_test_data
 
   release_unlocked_beta:

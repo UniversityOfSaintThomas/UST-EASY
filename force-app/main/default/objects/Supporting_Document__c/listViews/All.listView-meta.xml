@@ -2,15 +2,6 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
-<<<<<<< HEAD
-=======
-    <columns>Contact__c</columns>
-    <columns>Source__c</columns>
-    <columns>Document_Type__c</columns>
-    <columns>Status__c</columns>
-    <columns>CREATED_DATE</columns>
-    <columns>LAST_UPDATE</columns>
->>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

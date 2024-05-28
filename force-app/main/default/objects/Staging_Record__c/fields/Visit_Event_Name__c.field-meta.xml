@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Visit_Event_Name__c</fullName>
+    <deprecated>false</deprecated>
     <description>Touchpoint Text Field Event_Name__c</description>
     <externalId>false</externalId>
     <label>Visit/Event Name</label>

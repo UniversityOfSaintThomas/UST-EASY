@@ -285,9 +285,6 @@ public with sharing class checklistHelper {
             }
 
         }
-
-        System.debug('NEW RESPONSE SIZE : ' + newResponses.size());
-
         if (newResponses.size() > 0 && doDML) {
             insert newResponses;
         }

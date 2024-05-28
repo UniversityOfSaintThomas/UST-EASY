@@ -170,29 +170,16 @@ export default class RfiAdditionalQuestions extends LightningElement {
                 //Check if field is updatable before adding it to the combobox options
                 //check if field is a text box or a textarea
                 let fieldType = field.dataType.toLowerCase();
-<<<<<<< HEAD
                 if (((fieldType === 'string' || fieldType === 'textArea') && (this.isTextBox || this.isTextarea || this.isPicklist))
                     || (fieldType === 'email' && this.isEmail)
                     && field.updateable && field.createable
                     && !fieldName.toLowerCase().startsWith('utm_')
                     && !fieldName.toLowerCase().startsWith('gclid')
                     && !fieldName.toLowerCase().startsWith('linkedin')) {
-=======
-
-                if ((
-                    ((fieldType === 'string' || fieldType === 'textarea') && (this.isTextBox || this.isTextarea || this.isPicklist))
-                    || (fieldType === 'email' && this.isEmail))
-                    && field.updateable && field.createable
-                    && !fieldName.toLowerCase().startsWith('utm_')
-                    && !fieldName.toLowerCase().startsWith('gclid')
-                    && !fieldName.toLowerCase().startsWith('linkedin_')) {
->>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
                     leadFields.push({label: field.label, value: fieldName});
                 }
             });
         }
-        //sort the lead fields label alphabetically
-        leadFields.sort((a, b) => { return a.label.localeCompare(b.label); });
         return leadFields;
     }
 
@@ -345,28 +332,4 @@ export default class RfiAdditionalQuestions extends LightningElement {
         updateRecord(recordInput).then(r => console.log(r)).catch(e => console.log(e));
 
     }
-<<<<<<< HEAD
-=======
-
-    customButtons = [
-        {
-            category: "FORMAT_TEXT",
-            label: 'Format Text',
-            buttons: [
-                {
-                    value: 'like',
-                    label: 'Like',
-                    iconName: 'utility:like',
-                    format: 'header',
-                    handler: function () {
-                        // format selection to be h1...
-                        this.quill.format('header', 'h1');
-                        this.quill.classList.add('slds-text-heading_large');
-                    }
-                }
-            ]
-        },
-
-    ];
->>>>>>> 8506b0ee40bd6e9f78f7f57e9c579da3df57a02c
 }

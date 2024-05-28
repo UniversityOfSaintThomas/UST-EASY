@@ -27,7 +27,7 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>59.0</apiVersion>
+    <apiVersion>56.0</apiVersion>
     <assignments>
         <name>Count_Records</name>
         <label>Count Records</label>

@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>URL_Parameter__c</fullName>
     <caseSensitive>false</caseSensitive>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Text to be included at the end of a link to reference this Application Control. Format is &quot;?at=[URL_PARAMETER]&quot;</inlineHelpText>
     <label>URL Parameter</label>

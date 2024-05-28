@@ -16,6 +16,11 @@ global with sharing class ApplicationPaymentRest {
             String contentBody = EncodingUtil.base64Decode(EncodingUtil.base64Encode(req.requestBody)).toString();
             parameters = (Map<String, String>) JSON.deserialize(contentBody, Map<String, String>.class);
 
+            //Debug all passed values
+            /*for (String key : parameters.keySet()) {
+                System.debug(key + ' : ' + parameters.get(key));
+            }*/
+
             if (parameters.containsKey('pmt_status')) {
                 if (String.isNotBlank(parameters.get('pmt_status'))) {
 

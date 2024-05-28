@@ -7,7 +7,7 @@
     <inlineHelpText>The name of the desired campus related to this Opportunity.</inlineHelpText>
     <label>Desired Campus</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

@@ -7,5 +7,6 @@
     <inlineHelpText>If this is checked, then it will be included in the OCB Pardot data sync</inlineHelpText>
     <label>Pardot Sync - OCB</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

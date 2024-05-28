@@ -217,42 +217,6 @@ public class ApplicationRegistration {
                 }
             }
 
-            if (String.isNotBlank(interaction.Academic_Program__c)) {
-                List<Application__c> a = [
-                        SELECT
-                                Id,
-                                Intended_Program__c,
-                                Intended_Program__r.Number_of_Applications_Limit__c,
-                                Intended_Term_of_Entry__c,
-                                Application_Status__c,
-                                Application_Substatus__c,
-                                Applicant_Type__c
-                        FROM Application__c
-                        WHERE Contact__r.Email = :con.Email
-                        AND Application_Status__c != 'Wrong Application'
-                        AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
-                        AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
-                        AND Applicant_Type__c = 'Common App'
-                        AND Intended_Program__c = :interaction.Academic_Program__c
-                        AND Intended_Program__r.Number_of_Applications_Limit__c LIKE 'One Application%'
-                        AND Intended_Term_of_Entry__c = :interaction.Intended_Start_Term__c
-                ];
-
-                Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-                String currentUrl = AppSettings.Community_URL__c;
-                if (!currentUrl.endsWith('/')) {
-                    currentUrl += '/';
-                }
-                currentUrl += 'ApplicationRegistration?at=commonapp';
-                if (!currentUrl.startsWith('http')) {
-                    currentUrl = 'https://' + currentUrl;
-                }
-
-                if (a.size() > 0 && !commonAppApplication) {
-                    throw new ApplicationUtilities.ApplicationException('You need to claim your Common App application. <a href="' + currentUrl + '">Please follow this link for more information and to claim your account</a>.', true, true);
-                }
-            }
-
             // Update Account owner to Site admin if owner is current user (guest user)
             if (con.Account.OwnerId == UserInfo.getUserId()) {
                 update new Account(Id = con.AccountId, OwnerId = Test.isRunningTest() ? UserInfo.getUserId() : Site.getAdminId());

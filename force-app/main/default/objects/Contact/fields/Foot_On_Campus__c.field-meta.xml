@@ -7,5 +7,6 @@
     <inlineHelpText>Manually populated field to identify who has stepped on campus in an easy way to capture and report. If checked (Yes), this contact has been on campus through the admissions office at some point. This field only gets checked once and does not change for t</inlineHelpText>
     <label>Foot On Campus?</label>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

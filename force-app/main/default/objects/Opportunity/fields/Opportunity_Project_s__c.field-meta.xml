@@ -5,6 +5,7 @@
     <formula>MID(Name,(find(&apos;for &apos;,Name,1)+4), ((find(&apos; due &apos;,Name,1)) - (find(&apos;for &apos;,Name,1)+4)))</formula>
     <label>Opportunity Project(s)</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

@@ -1634,17 +1634,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>RFI_Controller__c.Academic_Interest_Max_Selection__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>RFI_Controller__c.Academic_Interests_To_Display__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>RFI_Controller__c.Additional_Questions__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1675,11 +1665,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>RFI_Controller__c.Lead_Source__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>RFI_Controller__c.Multi_Select_Display_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

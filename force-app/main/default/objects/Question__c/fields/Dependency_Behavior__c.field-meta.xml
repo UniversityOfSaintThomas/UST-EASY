@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Dependency_Behavior__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <inlineHelpText>Behavior that occurs when the question dependency logic evaluates to true. If blank, &quot;Show&quot; is used.</inlineHelpText>
     <label>Dependency Behavior</label>

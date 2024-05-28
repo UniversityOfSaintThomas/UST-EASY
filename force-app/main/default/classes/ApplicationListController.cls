@@ -37,7 +37,7 @@ public with sharing class ApplicationListController {
                 allApplications = newAppList;
             }
         }
-
+        
         appAmount = allApplications.size();
         return allApplications;
     }

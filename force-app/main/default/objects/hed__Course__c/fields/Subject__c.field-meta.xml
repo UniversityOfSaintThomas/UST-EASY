@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Subject__c</fullName>
+    <deprecated>false</deprecated>
     <description>Custom St. Thomas Course field created to display a subject code.</description>
     <externalId>false</externalId>
     <label>Subject</label>

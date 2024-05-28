@@ -217,7 +217,6 @@ public class ApplicationQuestion {
     * @description Determines if this question is editable based on the application status
     ********************************************************************************/
     public Boolean isEditable {
-
         get {
             if (!UserInfo.getUserType().equals('Standard') || Test.isRunningTest()) {
                 if (application != null && String.isNotBlank(application.Application_Status__c)) {

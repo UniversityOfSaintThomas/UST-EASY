@@ -327,3 +327,18 @@ div.slds-progress {
     clear: both;
     display: table;
 }
+
+.encryptShowHideIcon {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.encryptHideIcon {
+    color: red;
+    font-style: italic;
+}
+
+span.dateFormat{
+    display: none;
+}

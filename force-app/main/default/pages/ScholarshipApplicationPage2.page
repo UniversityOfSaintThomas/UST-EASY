@@ -176,7 +176,7 @@
                                                 <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
                                             </apex:outputPanel>
                                         </div>
-                                        <div class="slds-form-element__help">This field is required,</div>
+                                        <div class="slds-form-element__help">This field is required.</div>
                                     </apex:outputPanel>
 
                                     <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">

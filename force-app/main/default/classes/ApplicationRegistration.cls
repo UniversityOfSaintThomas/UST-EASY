@@ -300,7 +300,7 @@ public class ApplicationRegistration {
 
         for (ApplicationQuestionGroup questionGroup : appCreate.section.groups) {
             for (ApplicationQuestion question : questionGroup.questions) {
-                if (String.isNotBlank(String.valueOf(question.resp))) {
+                if (String.isNotBlank(String.valueOf(question.resp)) && String.isNotBlank(question.label)) {
                     if (question.label == 'What term are you applying for?') {
                         interaction.Intended_Start_Term__c = Id.valueOf(String.valueOf(question.resp));
                     }

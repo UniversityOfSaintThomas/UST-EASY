@@ -123,7 +123,7 @@
                         <p>Status: Withdrawn</p>
                     </apex:outputPanel>
 
-                    <apex:outputPanel rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" layout="none">
+<!--                    <apex:outputPanel rendered="{!appInfo.allowConfirm && appInfo.appStatus = 'Admit'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">
                             <p>All requirements have been met.</p>
                         </div>
@@ -133,7 +133,7 @@
                                 <apex:param name="confirmedAppStatus" value="{!appInfoParam.confirmStatus}" assignTo="{!confirmedAppStatus}"/>
                             </apex:commandLink>
                         </div>
-                    </apex:outputPanel>
+                    </apex:outputPanel>-->
 
                     <!--<apex:outputPanel rendered="{!appInfo.appStatus != 'Started App'}" layout="none">
                         <div class="slds-p-bottom_small slds-p-top_medium">

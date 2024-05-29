@@ -9,6 +9,8 @@
     <apex:attribute name="vfPageName" description="The visualForce page name currently on." type="String" required="false" assignTo="{!currentPageName}"/>
     <apex:attribute name="noApp" description="Lets the body controller know there is no application tied to this user." type="Boolean" assignTo="{!noApplication}" default="false" required="false"/>
 
+    <apex:includeLightning />
+
     <div id="loadSpinner" class="popupBackground">
         <div id="loading" class="PopupPanel">
             <div class="background"></div>
@@ -67,7 +69,7 @@
 
             <!-- BODY -->
             <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                <apex:componentBody/>
+                <apex:componentBody />
             </apex:outputPanel>
 
             <!-- CONTENT BOTTOM WIDGETS -->
@@ -79,7 +81,7 @@
             </apex:outputPanel>
 
             <!-- Load component for modal pop-up -->
-            <c:EasyModal/>
+            <c:EasyModal />
 
         </apex:outputPanel>
 

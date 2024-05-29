@@ -8,11 +8,8 @@ public class ScholarshipApplicationPage1Controller {
     public Scholarship_Applicant__c scholarshipApplicant { get; set; }
 
     public ScholarshipApplicationPage1Controller() {
-        String sId = ApexPages.currentPage().getParameters().get('sid');
-        String scholarshipId = null;
-        if (String.isNotBlank(sId)) {
-            scholarshipId = sId;
-            scholarship = ScholarshipSharedUtilities.getScholarshipInfo(sId);
+        scholarship = ScholarshipSharedUtilities.getScholarshipInfo();
+        if (scholarship != null) {
             scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
         }
     }

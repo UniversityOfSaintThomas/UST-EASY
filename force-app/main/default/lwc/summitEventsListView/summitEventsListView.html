@@ -1,0 +1,36 @@
+<!--
+ - Created by nguy0092 on 4/17/2024.
+ -->
+
+<!-- Summit Events List View -->
+<template>
+
+        <template lwc:if={eventsLength}>
+            <ul class="slds-p-bottom_x-small">
+                <template for:each={events} for:item="registration">
+                    <li key={registration.Id}>
+                        <div class="slds-grid slds-wrap">
+                            <div>
+                                <lightning-formatted-date-time value={registration.EventStartDateTime}
+                                                               year="numeric"
+                                                               month="numeric"
+                                                               day="numeric"
+                                                               hour="2-digit"
+                                                               minute="2-digit"
+                                                               time-zone="UTC"></lightning-formatted-date-time>
+                            </div>
+                            <div class="slds-p-left_x-small">
+                                {registration.EventName}
+                                <!--<a href={registration.EventRegistrationLink}-->
+                                <!--target=_blank>{registration.EventName}</a>-->
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </template>
+        <template lwc:else>
+            <div class="slds-p-bottom_x-small">You do not have any registrations.</div>
+        </template>
+
+</template>

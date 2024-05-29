@@ -1,4 +1,3 @@
-
 function docReady(fn) {
     // see if DOM is already available
     if (document.readyState === "complete" || document.readyState === "interactive") {
@@ -9,7 +8,7 @@ function docReady(fn) {
     }
 }
 
-docReady(function() {
+docReady(function () {
     appHideLoadingSpinner();
     pageLoadReRendered();
     activateCarousel();
@@ -24,7 +23,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
         field.setAttribute('disabled', 'disabled');
     });
 
-    if(checkEnter) {
+    if (checkEnter) {
         sldsScope.querySelector('form').onkeypress = checkEnter;
     }
 
@@ -53,6 +52,14 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
         item.type = "tel";
     });
 
+    sldsScope.querySelectorAll('.new-record-button').forEach(newRecButton => {
+        let saveRec = newRecButton.closest('.slds-card').querySelector('.save-record-button');
+        //If saveRec exists make the newRecButton hidden
+        if (saveRec) {
+            newRecButton.style.display = 'none';
+        }
+    });
+
     //Arranging Visualforce inputs to achieve SLDS accessibility
     findApplicationLinkTargetSelf();
     vfCountryPicklist();
@@ -64,6 +71,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
     activateAutoComplete();
     activateTooltips();
     fileUploadAreas();
+    encryptedFieldShow();
     //Hide the form spinner if it is active
     hideFormSpinner(true, isRelatedRecordReRender);
 }
@@ -518,27 +526,44 @@ function vfCountryPicklist() {
 
 function navigateRequirementGroup(redirectTo) {
     appShowLoadingSpinner();
-    if (redirectTo === 'forwards') {
-        if (checkForm()) {
-            performDocUploadSave(nextRequirement);
-        } else {
-            appHideLoadingSpinner();
-            hideFormSpinner();
-        }
-    } else if (redirectTo === 'back') {
-        performDocUploadSave(previousRequirement);
+    if (document.querySelector('.save-record-button') !== null) {
+        activateModal(
+            'Unsaved records',
+            '<p>It appears you have unsaved records. If this is intended click "Continue Anyway". Otherwise, hit "Cancel" then either click "Save Record" or "Cancel" your record.</p>',
+            'Continue Anyway',
+            function () {
+                redirectAfterSave(redirectTo);
+            }
+        );
+        appHideLoadingSpinner();
+        return false;
     } else {
-        performDocUploadSave(redirectTo);
+        redirectAfterSave(redirectTo);
+    }
+
+    function redirectAfterSave(redirectTo) {
+        if (redirectTo === 'forwards') {
+            if (checkForm()) {
+                performDocUploadSave(nextRequirement);
+            } else {
+                appHideLoadingSpinner();
+                hideFormSpinner();
+            }
+        } else if (redirectTo === 'back') {
+            performDocUploadSave(previousRequirement);
+        } else {
+            performDocUploadSave(redirectTo);
+        }
     }
 }
 
-var carouselOn = false;
+let carouselOn = false;
 
 function disableCarousel() {
     carouselOn = false;
 
     let killerButton = document.getElementById('carousel-killer');
-    if(killerButton) {
+    if (killerButton) {
         killerButton.innerText = "Restore Form";
         killerButton.removeEventListener('click', disableCarousel);
         killerButton.addEventListener('click', enableCarousel);
@@ -582,7 +607,7 @@ function enableCarousel() {
     carouselOn = true;
 
     let killerButton = document.getElementById('carousel-killer');
-    if(killerButton) {
+    if (killerButton) {
         killerButton.innerText = "Single-Page Form";
         killerButton.removeEventListener('click', enableCarousel);
         killerButton.addEventListener('click', disableCarousel);
@@ -656,7 +681,7 @@ function activateCarousel(slideMoveTo) {
         function setEventListeners() {
             next.addEventListener('click', moveNext);
             prev.addEventListener('click', movePrev);
-            if(killerButton) {
+            if (killerButton) {
                 killerButton.addEventListener('click', disableCarousel);
             }
             if (totalItems === 1) {
@@ -759,7 +784,7 @@ function activateCarousel(slideMoveTo) {
                 } else {
                     slide++;
                 }
-                moveCarouselTo(slide);
+                unsavedRecords(slide);
             }
         }
 
@@ -770,8 +795,31 @@ function activateCarousel(slideMoveTo) {
                 } else {
                     slide--;
                 }
-                moveCarouselTo(slide);
+                unsavedRecords(slide);
             }
+        }
+
+        function unsavedRecords(nextSlide) {
+
+            let closeOpenRecord = function () {
+                document.querySelectorAll('.cancel-records-button').forEach(cancelBtn => {
+                    cancelBtn.click();
+                });
+                moveCarouselTo(nextSlide);
+            }
+
+            if (document.querySelector('.save-record-button') !== null) {
+                activateModal(
+                    'Unsaved records',
+                    '<p>It appears you have unsaved records. If this is intended click "Continue Anyway". Otherwise, hit "Cancel" then either click "Save Record" or "Cancel" your record.</p>',
+                    'Continue Anyway',
+                    closeOpenRecord
+                );
+                return false;
+            } else {
+                moveCarouselTo(nextSlide);
+            }
+
         }
 
         function initCarousel() {
@@ -789,7 +837,7 @@ function activateCarousel(slideMoveTo) {
         }
     }
     if (items.length <= 1) {
-        if(killerButton) {
+        if (killerButton) {
             killerButton.style.display = 'none';
         }
     }
@@ -799,7 +847,7 @@ function activateCarousel(slideMoveTo) {
 var spinnerFocusElement = null;
 
 function appHideLoadingSpinner(restoreFocus = true) {
-    if(document.getElementById('loadSpinner')) {
+    if (document.getElementById('loadSpinner')) {
         document.getElementById('loadSpinner').style.display = "none";
     }
     if (restoreFocus == true && spinnerFocusElement != null) {
@@ -810,14 +858,14 @@ function appHideLoadingSpinner(restoreFocus = true) {
 
 function appShowLoadingSpinner() {
     spinnerFocusElement = document.activeElement.id;
-    if(document.getElementById('loadSpinner')) {
+    if (document.getElementById('loadSpinner')) {
         document.getElementById('loadSpinner').style.display = "block";
     }
     return true;
 }
 
 function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
-    if(document.getElementById('form-spinner')) {
+    if (document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'none';
     }
     if (restoreFocus == true && spinnerFocusElement != null) {
@@ -833,14 +881,14 @@ function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
 
 function showFormSpinner() {
     spinnerFocusElement = document.activeElement.id;
-    if(document.getElementById('form-spinner')) {
+    if (document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'block';
     }
 }
 
 function showFormSpinnerRelatedRecord() {
     spinnerFocusElement = document.activeElement.parentElement.parentElement.parentElement;
-    if(document.getElementById('form-spinner')) {
+    if (document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'block';
     }
 }
@@ -907,6 +955,13 @@ function checkForm() {
         }
         return false;
     }
+
+    //Sets back all fields with class validate{!inputType}=validateTextEncrypted back to type "password" for submit.
+    document.querySelectorAll('.validateTextEncrypted').forEach(encryptedFieldWrap => {
+
+        encryptedFieldWrap.type = 'password';
+    });
+
     return true;
 }
 
@@ -1029,16 +1084,16 @@ function textValidations(checkFormValidate, documentStart) {
                 if (match) {
                     ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
                 }
-            } else {
-                activateErrorState(ssn, 'change');
+            // } else {
+            //     activateErrorState(ssn, 'change');
             }
         });
 
-        if (checkFormValidate && ssn.value) {
-            if (!ssn.value.match(re_snn)) {
-                activateErrorState(ssn, 'change');
-            }
-        }
+        // if (checkFormValidate && ssn.value) {
+        //     if (!ssn.value.match(re_snn)) {
+        //         activateErrorState(ssn, 'change');
+        //     }
+        // }
     });
 
     //Email Validation
@@ -1104,4 +1159,75 @@ function validateFileType(obj) {
         }
     }
     return true;
+}
+
+function encryptedFieldShow() {
+
+    document.querySelectorAll('.textEncryptedWrap').forEach(function (encryptedFieldWrap) {
+
+        const encryptField = encryptedFieldWrap.querySelector('.validateTextEncrypted'); //using class validate{!inputType}
+        const iconPanel = encryptedFieldWrap.querySelector('.encryptShowHideIcon');
+        const iconShow = encryptedFieldWrap.querySelector('span.encryptShowIcon');
+        const iconHide = encryptedFieldWrap.querySelector('span.encryptHideIcon');
+        const iconText = encryptedFieldWrap.querySelector('span.encryptHideIconText');
+
+        if (encryptField) {
+
+            if (iconPanel) {
+
+                if (encryptField.value) {
+                    iconPanel.style.display = 'none';
+                } else {
+                    iconHide.style.display = 'none';
+                }
+
+                let clickIntervalId;
+
+                iconPanel.addEventListener('click', function () {
+
+                    if (encryptField.value) {
+
+                        if (encryptField.type === "password") {
+                            encryptField.type = "text";
+                            iconShow.style.display = 'none';
+                            iconHide.style.display = '';
+
+                            let timeLeft = 6;
+
+                            clickIntervalId = setInterval(function () {
+                                timeLeft--;
+
+                                if (timeLeft > 0 && timeLeft <= 3) {
+                                    iconText.innerHTML = 'hide in ' + timeLeft;
+}
+
+                                if (timeLeft === 0) {
+                                    encryptField.type = "password";
+                                    iconShow.style.display = '';
+                                    iconHide.style.display = 'none';
+                                    iconText.innerHTML = 'hide';
+                                    clearInterval(clickIntervalId);
+                                }
+                            }, 1000);
+
+                        } else {
+                            encryptField.type = "password";
+                            iconShow.style.display = '';
+                            iconHide.style.display = 'none';
+                            iconText.innerHTML = 'hide';
+                            clearInterval(clickIntervalId);
+                        }
+                    }
+                })
+            }
+
+            encryptField.addEventListener('keyup', function (e) {
+
+                if (!e.target.value) {
+                    iconPanel.style.display = '';
+                    iconHide.style.display = 'none';
+                }
+            })
+        }
+    })
 }

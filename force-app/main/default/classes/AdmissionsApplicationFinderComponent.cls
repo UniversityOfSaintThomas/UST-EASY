@@ -5,10 +5,7 @@
 
 public with sharing class AdmissionsApplicationFinderComponent {
 
-    public String schoolURLParameter { get; set; }
-    public String selectedSchool { get; set; }
-    public String selectedApp { get; set; }
-    public String selectedAcs {get; set; }
+    public String selectedApplicationControl { get; set; }
     public Map<String, List<Application_Control__c>> acMapBySchool { get; set; }
 
     public AdmissionsApplicationFinderComponent() {
@@ -31,18 +28,18 @@ public with sharing class AdmissionsApplicationFinderComponent {
         }
     }
 
-    public List<SelectOption> getACs(){
+    public List<SelectOption> getACs() {
         List<SelectOption> options = new List<SelectOption>();
-        try{
-            options.add(new SelectOption('','Select application type'));
-            List<Application_Control__c> allACs = [SELECT URL_Parameter__c, Name FROM Application_Control__c WHERE Active__c = TRUE AND Show_on_App_Finder__c = TRUE ORDER BY Name ];
+        try {
+            options.add(new SelectOption('', 'Select application type'));
+            List<Application_Control__c> allACs = [SELECT URL_Parameter__c, Name FROM Application_Control__c WHERE Active__c = TRUE AND Show_on_App_Finder__c = TRUE ORDER BY Name];
 
-            for(Application_Control__c acs : allAcs) {
+            for (Application_Control__c acs : allACs) {
                 options.add(new SelectOption(acs.URL_Parameter__c, acs.Name));
             }
 
-        } catch(Exception e){
-            Apexpages.addMessage(new Apexpages.Message(Apexpages.severity.ERROR, e.getMessage() + '*' + e.getStackTraceString()));
+        } catch (Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage() + '*' + e.getStackTraceString()));
         }
         return options;
     }
@@ -58,21 +55,10 @@ public with sharing class AdmissionsApplicationFinderComponent {
         }
         return options;
     }
-    /**
-    public List<SelectOption> getApps() {
-        List<SelectOption> options = new List<SelectOption>();
-        options.add(new SelectOption('', 'Select application type'));
-        if (String.isNotBlank(selectedSchool)) {
-            for (Application_Control__c ac : acMapBySchool.get(selectedSchool)) {
-                options.add(new SelectOption(ac.URL_Parameter__c, ac.Name));
-            }
-        }
-        return options;
-    }
-     */
+
     public PageReference goToApp() {
         PageReference appCreate = Page.ApplicationCreate;
-        appCreate.getParameters().put('at', selectedAcs);
+        appCreate.getParameters().put('at', selectedApplicationControl);
         appCreate.setRedirect(true);
         return appCreate;
     }

@@ -21,6 +21,7 @@ public class ApplicationRequirement {
     List<Question_Response__c> questionResponses { get; set; }
     List<Question_Dependency__c> questionDependencies { get; set; }
     public List<RequirementWrapper> checklistItems { get; set; }
+    public EASYPersonalDataTags personalDataTags { get; set; }
     public Boolean preventUpdates { get; set; }
     public List<Requirement_Response__c> newResponses { get; set; }
     public Boolean showSuccess { get; set; }
@@ -135,17 +136,38 @@ public class ApplicationRequirement {
         if ((String.isNotBlank(appInfo.appId) && app == null)) {
             String query = applicationHelper.getApplicationFields(items);
             query = 'SELECT ' + query + ' FROM Application__c WHERE Contact__c = \'' + appInfo.contactId + '\' AND Id = \'' + appInfo.appId + '\'';
-            System.debug('query: ' + query);
             app = ((List<Application__c>) Database.query(query)).get(0);
         }
 
+        //Add application data to personal data tags
+        personalDataTags = new EASYPersonalDataTags();
         if (queryItems == true) {
             checklistItems = checklistHelper.checklistRequirements(app, appInfo);
             allowSubmit = checklistHelper.allowSubmit(checklistItems, appInfo);
             appInfo.allowSubmit = allowSubmit;
             allowConfirm = checklistHelper.allowConfirm(checklistItems, appInfo);
             appInfo.allowConfirm = allowConfirm;
+
+            //Assign values to personal data tags
+            personalDataTags.Banner_ID = app.Applicant_Banner_Id__c;
+            personalDataTags.Contact_Id = app.Contact__r.Id;
+            personalDataTags.UGAQUSCHLRS = app.Aquinas_Scholars_Portal_Text__c;
+            personalDataTags.Applicant_Email = app.Contact_Email__c;
+            personalDataTags.UGAcctClaimTxt = app.Account_Claimed_Portal_Text__c;
+            personalDataTags.Documents_Missing = app.Documents_Missing_Text__c;
+            personalDataTags.First_Name = app.Contact_Mailing_First_Name__c;
+            personalDataTags.Last_Name = app.Contact__r.LastName;
+            personalDataTags.Application_ID = app.Id;
+            personalDataTags.AppOwner_ID = app.OwnerId;
+            personalDataTags.Portal_University_email = app.Contact__r.hed__UniversityEmail__c;
+            personalDataTags.LastTranscript = '';
+            personalDataTags.Course_Pref = '';
+            personalDataTags.Housing_Pref = '';
+            personalDataTags.UGFYClass = '';
+            personalDataTags.AppOwner_ID = app.OwnerId;
+
         }
+
 
         //Get needed values from Contact record
         if (con == null) {
@@ -251,11 +273,23 @@ public class ApplicationRequirement {
                     relatedObjects.add(i.Related_List_Object__c);
                 }
 
+                // Apply personal data tags to instructions and questions
+                if (String.isNotBlank(i.Instructions__c)) {
+                    i.Instructions__c = ApplicationUtilities.replaceDataTags(i.Instructions__c, personalDataTags);
+                }
+
+                for(Question__c q : i.Questions__r) {
+                    if (String.isNotBlank(q.Static_Text__c)) {
+                        q.Static_Text__c = ApplicationUtilities.replaceDataTags(q.Static_Text__c, personalDataTags);
+                    }
+                }
 
                 // Filter out external requirements based on the hashcode
                 if ((ignoreExternalFilter != null && ignoreExternalFilter) || !(i.Internal_Requirement_Item__c != null && UserInfo.getUserType() != 'Standard' && !ApexPages.currentPage().getParameters().containsKey('h'))) {
                     riLst.add(i);
                 }
+
+
             }
         }
 
@@ -403,8 +437,12 @@ public class ApplicationRequirement {
         for (ApplicationQuestionGroup aqg : section.groups) {
             if (aqg.response != null && aqg.isEditable) {
                 //Skip marking requirement response as viewed as directed by requirement
+                System.debug('Do_Not_Mark_Requirement_as_Viewed__c: ' + aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c);
                 if (!aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c) {
+                    System.debug('Marking requirement response as viewed');
                     aqg.response.Viewed__c = true;
+                } else {
+                    System.debug('Skipping marking requirement response as viewed because Do_Not_Mark_Requirement_as_Viewed__c is true');
                 }
                 if (String.isNotBlank(aqg.response.External_Email__c)) {
                     requirement_item_ids_of_external_email_rrs.put(aqg.response.Requirement_Item__c, aqg.response.Id);
@@ -456,6 +494,7 @@ public class ApplicationRequirement {
         } catch (Exception ex) {
             System.debug(ex.getMessage());
         }
+
         try {
             update con;
         } catch (Exception ex) {

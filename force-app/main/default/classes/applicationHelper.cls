@@ -34,12 +34,12 @@ public with sharing class applicationHelper {
                 AND Requirement__r.Active__c = TRUE
                 AND Active__c = TRUE
                 //If not standard user
-                AND (
-                        (Internal_Only__c = :isStandardUser AND Requirement__r.Internal_Only__c = :isStandardUser)
-                        OR (
-                                Internal_Only_Show_on_Checklist__c = :!isStandardUser AND Requirement__r.Internal_Only_Show_on_Checklist__c = :!isStandardUser
-                        )
-                )
+//                AND (
+//                        (Internal_Only__c = :isStandardUser AND Requirement__r.Internal_Only__c = :isStandardUser)
+//                        OR (
+//                                Internal_Only_Show_on_Checklist__c = :!isStandardUser AND Requirement__r.Internal_Only_Show_on_Checklist__c = :!isStandardUser
+//                        )
+//                )
 
                 //TODO: Figure out how to get this into the plain query rather than have to build a string query
                 /*
@@ -64,6 +64,7 @@ public with sharing class applicationHelper {
                                 ValuePercent__c, ValueTextArea__c, ValueTextEncrypted__c, ValueLongTextArea__c, ValueURL__c,
                                 Street__c, City__c, State__c, Country__c, PostalCode__c, Requirement_Response__c
                         FROM Question_Responses__r
+                        ORDER BY LastModifiedDate ASC
                 ), (
                         SELECT Id, LinkedEntityId, ContentDocumentId, ContentDocument.Title
                         FROM ContentDocumentLinks
@@ -71,6 +72,7 @@ public with sharing class applicationHelper {
                 FROM Requirement_Response__c
                 WHERE Requirement_Item__r.Requirement__c IN :requirementIds
                 AND Application__c = :ApplicationId
+                ORDER BY LastModifiedDate ASC
         ];
         return requirementResponses;
     }

@@ -813,6 +813,7 @@ public class ApplicationQuestion {
             }
 
             response.IsPopulated__c = resp != null;
+
             if (obj != null) {
                 try {
                     obj.put(fieldName, resp);
@@ -902,7 +903,7 @@ public class ApplicationQuestion {
             }
             response.IsPopulated__c = true;
         } catch (Exception e) {
-
+            System.debug('Write response error: ' + e.getMessage());
         }
     }
 

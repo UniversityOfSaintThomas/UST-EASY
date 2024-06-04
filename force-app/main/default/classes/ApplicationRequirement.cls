@@ -670,10 +670,10 @@ public Application_Control__c appControl { get; set; }
                 FROM Requirement_Response__c
                 WHERE Id = :reqResponseId
         ];
+
         responseRecord.Original_Uploaded_Document_File_Name__c = '';
         responseRecord.Saved_Uploaded_Document_File_Name__c = '';
 
-        List<String> supportingDocIds = new List<String>();
         List<ContentDocumentLink> contentLinks = [
                 SELECT Id,
                         ContentDocumentId,
@@ -682,35 +682,50 @@ public Application_Control__c appControl { get; set; }
                 WHERE ContentDocumentId = :contentDocId
         ];
 
+        List<String> supportingDocIds = new List<String>();
+
         System.debug('What is contentLinks:'+contentLinks);
 
         for (ContentDocumentLink link : contentLinks) {
 
             if (link.LinkedEntityId.getSobjectType().getDescribe().getName() == 'Supporting_Document__c') {
-                supportingDocIds.add(link.LinkedEntityId);
+
+                List<ContentDocumentLink> contentLinksCount = [
+                        SELECT Id,
+                                ContentDocumentId
+                        FROM ContentDocumentLink
+                        WHERE LinkedEntityId = :link.LinkedEntityId
+                ];
+
+                System.debug('What is List Count: '+link.LinkedEntityId+' '+contentLinksCount.size());
+
+                if (contentLinksCount.size() == 1) {
+
+                    supportingDocIds.add(link.LinkedEntityId);
+                }
             }
         }
 
         System.debug('What is supportingDocIds:'+supportingDocIds);
 
-        try {
-            delete [
-                    SELECT Id
-                    FROM ContentDocument
-                    WHERE Id = :contentDocId
-            ];
-
-            update responseRecord;
-
-            delete [
-                    SELECT Id
-                    FROM Supporting_Document__c
-                    WHERE Id IN :supportingDocIds
-            ];
-        } catch (Exception e) {
-
-            System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());
-        }
+//        try {
+//            delete [
+//                    SELECT Id
+//                    FROM ContentDocument
+//                    WHERE Id = :contentDocId
+//            ];
+//
+//            update responseRecord;
+//
+//            delete [
+//                    SELECT Id
+//                    FROM Supporting_Document__c
+//                    WHERE Id IN :supportingDocIds
+//            ];
+//        } catch (Exception e) {
+//
+//            System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());
+//        }
 
         return null;
     }

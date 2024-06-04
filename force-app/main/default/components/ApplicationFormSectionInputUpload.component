@@ -70,7 +70,7 @@
                         </span>
                     </div>
 
-                    <span onclick="activateModal('Review','Font Weight','Delete')">Click Me</span>
+<!--                    <span onclick="activateModal('Review','Font Weight','Delete')">Click Me</span>-->
 
                 </apex:outputPanel>
 
@@ -98,8 +98,11 @@
                 <p style="color:#ea001e;" id="error-108{!itemId}"></p>
                 <span class="slds-text-body_medium slds-m-top_small currentlySelectedFile"><strong>Selected File:</strong> None</span>
 
-                <span class="slds-icon_container slds-icon-utility-clear slds-current-color clearSelectFileIcon" title="Clear Selected File">
-                    <svg class="slds-icon slds-icon_x-small slds-m-left_xx-small slds-m-bottom_xx-small" aria-hidden="true">
+                <span class="slds-icon_container slds-icon-utility-clear slds-current-color clearSelectFileIcon"
+                      title="Clear Selected File"
+                      style="display: none">
+                    <svg class="slds-icon slds-icon_x-small slds-m-left_xx-small slds-m-bottom_xx-small"
+                         aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink"
                              xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#clear')}"></use>
                     </svg>

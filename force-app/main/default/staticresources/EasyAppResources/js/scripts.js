@@ -145,6 +145,8 @@ function fileUploadAreas() {
         let fileCard = upload.closest('.slds-card');
         let currentFile = fileCard.querySelector('.currentlySelectedFile');
 
+        const fileChangeEvent = new Event("change");
+
         ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(evt => {
             upload.addEventListener(evt, function (e) {
                 e.preventDefault();
@@ -167,6 +169,7 @@ function fileUploadAreas() {
         upload.addEventListener('drop', function (e) {
             fileInput.files = e.dataTransfer.files;
             currentFile.innerHTML = findFileName(fileInput.value);
+            fileInput.dispatchEvent(fileChangeEvent);
         });
 
         upload.addEventListener('click', function () {
@@ -174,28 +177,50 @@ function fileUploadAreas() {
         });
 
         fileInput.addEventListener('change', function () {
+            let clearSelectFileIcon = upload.closest('.file_selector_wrapper').querySelector('.clearSelectFileIcon');
+
             currentFile.innerHTML = findFileName(fileInput.value);
+
+            if (currentFile.innerHTML === "<strong>Selected File:</strong> None") {
+
+                clearSelectFileIcon.style.display = "none";
+            } else {
+
+                clearSelectFileIcon.style.display = "";
+
+                if (clearSelectFileIcon) {
+
+                    clearSelectFileIcon.addEventListener('click', function (e) {
+
+                        if (fileInput.value) {
+
+                            fileInput.value = "";
+                            fileInput.dispatchEvent(fileChangeEvent);
+                        }
+                    })
+                }
+            }
         });
     })
 
-    // YN ADD
-    document.querySelectorAll('.file_selector_wrapper').forEach(selectWrapper => {
-
-        let fileInput = selectWrapper.querySelector('.docUploadInput');
-        let clearSelectFileIcon = selectWrapper.querySelector('.clearSelectFileIcon');
-
-        if (clearSelectFileIcon) {
-
-            clearSelectFileIcon.addEventListener('click', function (e) {
-
-                if (fileInput.value) {
-                    const event = new Event("change");
-                    fileInput.value = "";
-                    fileInput.dispatchEvent(event);
-                }
-            })
-        }
-    })
+    // YN ADD TO CLEAR SELECTED FILE
+    // document.querySelectorAll('.file_selector_wrapper').forEach(selectWrapper => {
+    //
+    //     let fileInput = selectWrapper.querySelector('.docUploadInput');
+    //     let clearSelectFileIcon = selectWrapper.querySelector('.clearSelectFileIcon');
+    //
+    //     if (clearSelectFileIcon) {
+    //
+    //         clearSelectFileIcon.addEventListener('click', function (e) {
+    //
+    //             if (fileInput.value) {
+    //                 const event = new Event("change");
+    //                 fileInput.value = "";
+    //                 fileInput.dispatchEvent(event);
+    //             }
+    //         })
+    //     }
+    // })
 
 }
 
@@ -1133,12 +1158,12 @@ function validateFileType(obj) {
 
 function deletePrevious(contentDocId, reqResponseId, fileTitle) {
 
-    activateModal('Review',
+    activateModal('Confirm',
         '<strong>Delete Saved File: </strong>' + fileTitle,
         'Delete',
         function () {
             appShowLoadingSpinner();
-            deletePreviousFile(contentDocId, reqResponseId)
+            deletePreviousFile(contentDocId, reqResponseId);
         })
 
     return true;

@@ -10,10 +10,5 @@
     <columns>Fulfilled_On__c</columns>
     <columns>Viewed__c</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>CREATEDBY_USER</field>
-        <operation>contains</operation>
-        <value>Crunch</value>
-    </filters>
     <label>All</label>
 </ListView>

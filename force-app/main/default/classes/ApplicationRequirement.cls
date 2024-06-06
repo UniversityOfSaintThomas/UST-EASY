@@ -708,24 +708,25 @@ public Application_Control__c appControl { get; set; }
 
         System.debug('What is supportingDocIds:'+supportingDocIds);
 
-//        try {
-//            delete [
-//                    SELECT Id
-//                    FROM ContentDocument
-//                    WHERE Id = :contentDocId
-//            ];
-//
-//            update responseRecord;
-//
-//            delete [
-//                    SELECT Id
-//                    FROM Supporting_Document__c
-//                    WHERE Id IN :supportingDocIds
-//            ];
-//        } catch (Exception e) {
-//
-//            System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());
-//        }
+        try {
+
+            delete [
+                    SELECT Id
+                    FROM ContentDocument
+                    WHERE Id = :contentDocId
+            ];
+
+            update responseRecord;
+
+            delete [
+                    SELECT Id
+                    FROM Supporting_Document__c
+                    WHERE Id IN :supportingDocIds
+            ];
+        } catch (Exception e) {
+
+            System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());
+        }
 
         return null;
     }

@@ -435,6 +435,8 @@ public class INT_InteractionProcessor {
                             }
                         }
 
+                        System.debug('YN WHAT IS DUPE ID: '+interactions[interactionsIndex].Contact__c);
+
                         if (interactions[interactionsIndex].Contact__c != null) {
                             break;
                         }

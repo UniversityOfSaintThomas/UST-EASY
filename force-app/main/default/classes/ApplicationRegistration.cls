@@ -175,6 +175,8 @@ public class ApplicationRegistration {
             ];
             appCreate.con.Id = con.Id;
 
+            System.debug('YN WHAT IS CON ID: '+con.Id);
+            System.debug('YN WHAT IS CON EMAIL: '+con.Email);
 
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty()) {
@@ -258,6 +260,16 @@ public class ApplicationRegistration {
                 loginUser = new User(Id = uId, Username = u.Username);
                 loginPassword = pass;
                 loginUrl = checklistUrl;
+
+                if (con.Email != interaction.Email__c) {
+
+                    updateUserInfo(uId, interaction.Email__c);
+                    System.debug('YN con.email not equal to interaction.email - call future method');
+                } else {
+
+                    System.debug('YN con.email EQUALS to interaction.email');
+                }
+
                 return Site.login(loginUser.Username, loginPassword, loginUrl);
             }
 
@@ -280,8 +292,28 @@ public class ApplicationRegistration {
             }
             dmlException = false;
         }
+
         return null;
     }
+
+    //YN BEGIN TESTING UPDATE USER INFO
+    @Future
+    public static void updateUserInfo(Id userId, String interactionEmail) {
+
+        try {
+            User uUpdate = [SELECT Id, Email, Username, CommunityNickname FROM User WHERE Id = :userId];
+
+            uUpdate.Email = interactionEmail;
+            uUpdate.Username = interactionEmail;
+            uUpdate.CommunityNickname = (uUpdate.Email.length() > 40) ? uUpdate.Email.substring(0, 40) : uUpdate.Email;
+
+            update uUpdate;
+        } catch (Exception e) {
+
+            System.debug('Error: Unable to update User Info: ' + e);
+        }
+    }
+    //YN END TESTING UPDATE USER INFO
 
 
     public String populateInteraction() {

@@ -270,6 +270,8 @@ public class ApplicationRegistration {
                     System.debug('YN con.email EQUALS to interaction.email');
                 }
 
+                System.debug('YN what is loginUser.Username: '+loginUser.Username);
+
                 return Site.login(loginUser.Username, loginPassword, loginUrl);
             }
 

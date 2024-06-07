@@ -147,6 +147,7 @@ function fileUploadAreas() {
         let fileInput = upload.querySelector('input');
         let fileCard = upload.closest('.slds-card');
         let currentFile = fileCard.querySelector('.currentlySelectedFile');
+        const fileChangeEvent = new Event("change");
 
         ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(evt => {
             upload.addEventListener(evt, function (e) {
@@ -170,6 +171,7 @@ function fileUploadAreas() {
         upload.addEventListener('drop', function (e) {
             fileInput.files = e.dataTransfer.files;
             currentFile.innerHTML = findFileName(fileInput.value);
+            fileInput.dispatchEvent(fileChangeEvent);
         });
 
         upload.addEventListener('click', function () {
@@ -177,7 +179,29 @@ function fileUploadAreas() {
         });
 
         fileInput.addEventListener('change', function () {
+            let clearSelectFileIcon = upload.closest('.file_selector_wrapper').querySelector('.clearSelectFileIcon');
+
             currentFile.innerHTML = findFileName(fileInput.value);
+
+            if (currentFile.innerHTML === "<strong>Selected File:</strong> None") {
+
+                clearSelectFileIcon.style.display = "none";
+            } else {
+
+                clearSelectFileIcon.style.display = "";
+
+                if (clearSelectFileIcon) {
+
+                    clearSelectFileIcon.addEventListener('click', function (e) {
+
+                        if (fileInput.value) {
+
+                            fileInput.value = "";
+                            fileInput.dispatchEvent(fileChangeEvent);
+                        }
+                    })
+                }
+            }
         });
     })
 }
@@ -189,7 +213,7 @@ function findFileName(filePath) {
     } else {
         filePath = 'None';
     }
-    filePath = '<strong>Currently Selected:</strong> ' + filePath;
+    filePath = '<strong>Selected File:</strong> ' + filePath;
     return filePath;
 }
 
@@ -1199,7 +1223,7 @@ function encryptedFieldShow() {
 
                                 if (timeLeft > 0 && timeLeft <= 3) {
                                     iconText.innerHTML = 'hide in ' + timeLeft;
-}
+                                }
 
                                 if (timeLeft === 0) {
                                     encryptField.type = "password";
@@ -1230,4 +1254,17 @@ function encryptedFieldShow() {
             })
         }
     })
+}
+
+function deletePrevious(contentDocId, reqResponseId, fileTitle) {
+
+    activateModal('Confirm',
+        '<strong>Delete Saved File: </strong>' + fileTitle,
+        'Delete',
+        function () {
+            appShowLoadingSpinner();
+            deletePreviousFile(contentDocId, reqResponseId);
+        })
+
+    return true;
 }

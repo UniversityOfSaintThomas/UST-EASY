@@ -34,8 +34,9 @@ public class ApplicationRequirement {
     public String redirectPage { get; set; }
     public String userType { get; set; }
     public Boolean isStandardUser { get; set; }
-
     public Application_Control__c appControl { get; set; }
+    public String contentDocId { get; set; }
+    public String reqResponseId { get; set; }
 
     public Id nextReqId {
         get {
@@ -658,4 +659,64 @@ public class ApplicationRequirement {
             }
         }
     }
+
+//Delete previous uploaded files and linked Supporting Documents records
+    public PageReference deletePreviousFile() {
+
+        Requirement_Response__c responseRecord = [
+                SELECT Id,
+                        Original_Uploaded_Document_File_Name__c,
+                        Saved_Uploaded_Document_File_Name__c
+                FROM Requirement_Response__c
+                WHERE Id = :reqResponseId
+        ];
+
+        responseRecord.Original_Uploaded_Document_File_Name__c = '';
+        responseRecord.Saved_Uploaded_Document_File_Name__c = '';
+
+        List<ContentDocumentLink> contentLinks = [
+                SELECT Id,
+                        ContentDocumentId,
+                        LinkedEntityId
+                FROM ContentDocumentLink
+                WHERE ContentDocumentId = :contentDocId
+        ];
+
+        List<String> supportingDocIds = new List<String>();
+
+        System.debug('What is contentLinks:'+contentLinks);
+
+        for (ContentDocumentLink link : contentLinks) {
+
+            if (link.LinkedEntityId.getSobjectType().getDescribe().getName() == 'Supporting_Document__c') {
+
+                supportingDocIds.add(link.LinkedEntityId);
+            }
+        }
+
+        System.debug('What is supportingDocIds:'+supportingDocIds);
+
+        try {
+
+            delete [
+                    SELECT Id
+                    FROM ContentDocument
+                    WHERE Id = :contentDocId
+            ];
+
+            update responseRecord;
+
+            delete [
+                    SELECT Id
+                    FROM Supporting_Document__c
+                    WHERE Id IN :supportingDocIds
+            ];
+        } catch (Exception e) {
+
+            System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());
+        }
+
+        return null;
+    }
+
 }

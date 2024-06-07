@@ -654,8 +654,12 @@ public class ApplicationCreate {
                     WHERE Contact__c = :currentApplication.Contact__c
                     AND Intended_Start_Term__c = :currentApplication.Intended_Term_of_Entry__c
                     AND Academic_Program__c = :currentApplication.Intended_Program__c
+                    ORDER BY CreatedDate DESC
                     LIMIT 1
             ];
+
+            System.debug('YN WHICH INTERACTION: '+interaction.Id);
+
             interaction.Admissions_Application__c = app.Id;
             interaction.Gender__c = currentApplication.Generic_Filter_2__c;
             interaction.Degree_Level__c = currentApplication.Degree_Level__c;

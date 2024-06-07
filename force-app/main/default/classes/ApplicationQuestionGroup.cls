@@ -20,7 +20,6 @@ public class ApplicationQuestionGroup {
     private Id oldAttId;
     public ContentDocumentLink oldAttLink { get; set; }
     public ContentVersion oldAttVersion { get; set; }
-//    public Id oldAttContentDocumentId { get; set; }
     public Boolean questionGroup { get; set; }
     public Boolean documentUpload { get; set; }
     public Boolean relatedObject { get; set; }
@@ -459,7 +458,6 @@ public class ApplicationQuestionGroup {
                 ];
                 if (conV.size() > 0) {
                     oldAttVersion = conV[0];
-//                    oldAttContentDocumentId = oldAttLink.ContentDocumentId;
                 }
             } else {
                 att = new ContentVersion();

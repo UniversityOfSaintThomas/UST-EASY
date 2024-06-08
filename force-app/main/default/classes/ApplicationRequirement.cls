@@ -671,17 +671,7 @@ public class ApplicationRequirement {
 //Delete previous uploaded files and linked Supporting Documents records
     public PageReference deletePreviousFile() {
 
-        Requirement_Response__c responseRecord = [
-                SELECT Id,
-                        Original_Uploaded_Document_File_Name__c,
-                        Saved_Uploaded_Document_File_Name__c
-                FROM Requirement_Response__c
-                WHERE Id = :reqResponseId
-        ];
-
-        responseRecord.Original_Uploaded_Document_File_Name__c = '';
-        responseRecord.Saved_Uploaded_Document_File_Name__c = '';
-
+        List<String> supportingDocIds = new List<String>();
         List<ContentDocumentLink> contentLinks = [
                 SELECT Id,
                         ContentDocumentId,
@@ -689,8 +679,6 @@ public class ApplicationRequirement {
                 FROM ContentDocumentLink
                 WHERE ContentDocumentId = :contentDocId
         ];
-
-        List<String> supportingDocIds = new List<String>();
 
         for (ContentDocumentLink link : contentLinks) {
 
@@ -707,12 +695,15 @@ public class ApplicationRequirement {
                     WHERE Id = :contentDocId
             ];
 
-            update responseRecord;
+            update new Requirement_Response__c(Id = reqResponseId,
+                                            Original_Uploaded_Document_File_Name__c = '',
+                                            Saved_Uploaded_Document_File_Name__c = '');
 
             delete [
                     SELECT Id
                     FROM Supporting_Document__c
                     WHERE Id IN :supportingDocIds
+                    AND Requirement_Response__c = :reqResponseId
             ];
         } catch (Exception e) {
 

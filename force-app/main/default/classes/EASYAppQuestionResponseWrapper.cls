@@ -10,6 +10,7 @@ public with sharing class EASYAppQuestionResponseWrapper {
         @AuraEnabled public String stringValue { get; set; }
         @AuraEnabled public Datetime dateTimeValue { get; set; }
         @AuraEnabled public String link { get; set; }
+        @AuraEnabled public String linkName { get; set; }
     }
     @AuraEnabled public Boolean dependencies_met { get; set; }
 }

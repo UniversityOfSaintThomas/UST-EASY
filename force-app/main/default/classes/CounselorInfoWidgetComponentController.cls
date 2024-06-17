@@ -50,9 +50,12 @@ public with sharing class CounselorInfoWidgetComponentController {
                     if (u != null) {
 
                         String cascadeUserImage;
-                        cascadeUserImage = u.Name.replace(' ', '_').toLowerCase();
-                        cascadeUserImage = cascadeUserImage.replace('\'', '');
-                        cascadeUserImage = cascadeUserImage + '.jpg'.replace('\'', '');
+                        cascadeUserImage = u.FirstName.toLowerCase();
+                        cascadeUserImage += '_';
+                        cascadeUserImage += u.LastName.toLowerCase();
+                        cascadeUserImage = cascadeUserImage.toLowerCase();
+                        cascadeUserImage = cascadeUserImage.replaceAll('[^a-zA-Z0-9-_]', '');
+                        cascadeUserImage += '.jpg';
 
                         cw.message = app.Message_To_Applicant__c;
                         cw.CounselorName = u.Name;
@@ -83,7 +86,7 @@ public with sharing class CounselorInfoWidgetComponentController {
         private User readUserById(Id userId) {
             try {
                 User cUser = [
-                        SELECT Name, Email, College__c, Major__c, Hometown__c, About_Me__c, What_I_Love_About_St_Thomas__c, Words_of_Advice__c,
+                        SELECT Name, FirstName, LastName, Email, College__c, Major__c, Hometown__c, About_Me__c, What_I_Love_About_St_Thomas__c, Words_of_Advice__c,
                                 SmallPhotoUrl, FullPhotoUrl, Title, Phone, Street, State, City, PostalCode, Extension, Admissions_Counselor__c
                         FROM User
                         WHERE Id = :userId

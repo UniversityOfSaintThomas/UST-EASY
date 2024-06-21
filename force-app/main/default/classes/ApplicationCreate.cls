@@ -657,9 +657,6 @@ public class ApplicationCreate {
                     ORDER BY CreatedDate DESC
                     LIMIT 1
             ];
-
-            System.debug('YN WHICH INTERACTION: '+interaction.Id);
-
             interaction.Admissions_Application__c = app.Id;
             interaction.Gender__c = currentApplication.Generic_Filter_2__c;
             interaction.Degree_Level__c = currentApplication.Degree_Level__c;

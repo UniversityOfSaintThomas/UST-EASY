@@ -144,6 +144,10 @@ function disableReminderEmailButton(button) {
 function fileUploadAreas() {
 
     document.querySelectorAll('.slds-file-selector__dropzone').forEach(upload => {
+        if (upload.dataset.eventsAdded) {
+            return; // Skip this element if the events have already been added
+        }
+
         let fileInput = upload.querySelector('input');
         let fileCard = upload.closest('.slds-card');
         let currentFile = fileCard.querySelector('.currentlySelectedFile');
@@ -174,9 +178,6 @@ function fileUploadAreas() {
             fileInput.dispatchEvent(fileChangeEvent);
         });
 
-        upload.addEventListener('click', function () {
-            fileInput.click();
-        });
 
         fileInput.addEventListener('change', function () {
             let clearSelectFileIcon = upload.closest('.file_selector_wrapper').querySelector('.clearSelectFileIcon');
@@ -195,7 +196,6 @@ function fileUploadAreas() {
                     clearSelectFileIcon.addEventListener('click', function (e) {
 
                         if (fileInput.value) {
-
                             fileInput.value = "";
                             fileInput.dispatchEvent(fileChangeEvent);
                         }
@@ -203,7 +203,13 @@ function fileUploadAreas() {
                 }
             }
         });
-    })
+
+        upload.addEventListener('click', function () {
+            fileInput.click();
+        });
+
+        upload.dataset.eventsAdded = true;
+    });
 }
 
 function findFileName(filePath) {

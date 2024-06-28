@@ -892,7 +892,6 @@ function showFormSpinner() {
 }
 
 function showFormSpinnerRelatedRecord() {
-    spinnerFocusElement = document.activeElement.parentElement.parentElement.parentElement;
     if (document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'block';
     }

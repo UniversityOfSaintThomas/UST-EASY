@@ -151,7 +151,6 @@ function fileUploadAreas() {
         let fileInput = upload.querySelector('input');
         let fileCard = upload.closest('.slds-card');
         let currentFile = fileCard.querySelector('.currentlySelectedFile');
-        const fileChangeEvent = new Event("change");
 
         ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(evt => {
             upload.addEventListener(evt, function (e) {
@@ -175,39 +174,15 @@ function fileUploadAreas() {
         upload.addEventListener('drop', function (e) {
             fileInput.files = e.dataTransfer.files;
             currentFile.innerHTML = findFileName(fileInput.value);
-            fileInput.dispatchEvent(fileChangeEvent);
-        });
-
-
-        fileInput.addEventListener('change', function () {
-            let clearSelectFileIcon = upload.closest('.file_selector_wrapper').querySelector('.clearSelectFileIcon');
-
-            currentFile.innerHTML = findFileName(fileInput.value);
-
-            if (currentFile.innerHTML === "<strong>Selected File:</strong> None") {
-
-                clearSelectFileIcon.style.display = "none";
-            } else {
-
-                clearSelectFileIcon.style.display = "";
-
-                if (clearSelectFileIcon) {
-
-                    clearSelectFileIcon.addEventListener('click', function (e) {
-
-                        if (fileInput.value) {
-                            fileInput.value = "";
-                            fileInput.dispatchEvent(fileChangeEvent);
-                        }
-                    })
-                }
-            }
         });
 
         upload.addEventListener('click', function () {
             fileInput.click();
         });
 
+        fileInput.addEventListener('change', function () {
+            currentFile.innerHTML = findFileName(fileInput.value);
+        });
         upload.dataset.eventsAdded = true;
     });
 }
@@ -219,7 +194,7 @@ function findFileName(filePath) {
     } else {
         filePath = 'None';
     }
-    filePath = '<strong>Selected File:</strong> ' + filePath;
+    filePath = '<strong>Currently Selected:</strong> ' + filePath;
     return filePath;
 }
 
@@ -917,7 +892,6 @@ function showFormSpinner() {
 }
 
 function showFormSpinnerRelatedRecord() {
-    spinnerFocusElement = document.activeElement.parentElement.parentElement.parentElement;
     if (document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'block';
     }
@@ -1114,8 +1088,8 @@ function textValidations(checkFormValidate, documentStart) {
                 if (match) {
                     ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
                 }
-                // } else {
-                //     activateErrorState(ssn, 'change');
+            // } else {
+            //     activateErrorState(ssn, 'change');
             }
         });
 
@@ -1229,7 +1203,7 @@ function encryptedFieldShow() {
 
                                 if (timeLeft > 0 && timeLeft <= 3) {
                                     iconText.innerHTML = 'hide in ' + timeLeft;
-                                }
+}
 
                                 if (timeLeft === 0) {
                                     encryptField.type = "password";
@@ -1260,17 +1234,4 @@ function encryptedFieldShow() {
             })
         }
     })
-}
-
-function deletePrevious(contentDocId, reqResponseId, fileTitle) {
-
-    activateModal('Confirm',
-        '<strong>Delete Saved File: </strong>' + fileTitle,
-        'Delete',
-        function () {
-            appShowLoadingSpinner();
-            deletePreviousFile(contentDocId, reqResponseId);
-        })
-
-    return true;
 }

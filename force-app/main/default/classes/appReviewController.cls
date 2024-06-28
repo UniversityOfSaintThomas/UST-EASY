@@ -53,7 +53,7 @@ public with sharing class appReviewController {
                 Map<Id, Requirement_Item__c> requirementItems = new Map<Id, Requirement_Item__c>(
                 [
                         SELECT Id, Name, Requirement__c, Active__c, Instructions__c, Label__c, Required__c,
-                                Display_Order__c, RecordType.DeveloperName, RecordType.DeveloperName
+                                Display_Order__c, RecordType.DeveloperName
                         FROM Requirement_Item__c
                         WHERE Requirement__c IN :requirements.keySet()
                         AND Active__c = TRUE
@@ -104,22 +104,23 @@ public with sharing class appReviewController {
                 }
 
                 // Get all requirement items that are upload document record type and get the link to the document
-                Map<Id, ContentVersion> documentLinks = new Map<Id, ContentVersion>();
-                for (Requirement_Item__c ri : requirementItems.values()) {
-                    if (ri.RecordType.DeveloperName == 'Upload_Document') {
-                        List<ContentVersion> cv = [
-                                SELECT Id, Title, ContentDocumentId, ContentDocument.LatestPublishedVersionId, ContentDocument.LatestPublishedVersion.Title
-                                FROM ContentVersion
-                                WHERE LinkedEntityId = :appId
-                                AND Title = :ri.Name
-                                ORDER BY CreatedDate DESC
-                                LIMIT 1
-                        ];
-                        if (cv.size() > 0) {
-                            documentLinks.put(ri.Id, cv[0]);
-                        }
-                    }
-                }
+//                Map<Id, ContentVersion> documentLinks = new Map<Id, ContentVersion>();
+//                for (Requirement_Item__c ri : requirementItems.values()) {
+//                    if (ri.RecordType.DeveloperName == 'Upload_Document') {
+//                        List<ContentVersion> cv = [
+//                                SELECT Id, Title, ContentDocumentId, ContentDocument.LatestPublishedVersionId,
+//                                        ContentDocument.LatestPublishedVersion.Title, ContentUrl, CreatedDate
+//                                FROM ContentVersion
+//                                WHERE LinkedEntityId = :appId
+//                                AND Title = :ri.Name
+//                                ORDER BY CreatedDate DESC
+//                                LIMIT 1
+//                        ];
+//                        if (cv.size() > 0) {
+//                            documentLinks.put(ri.Id, cv[0]);
+//                        }
+//                    }
+//                }
 
                 Map<Id, Requirement_Response__c> requirementResponses = new Map<Id, Requirement_Response__c>([
                         SELECT Id, Name, Requirement_Item__c, Viewed__c, Status__c, ValueTextEntry__c, Has_Child_Requirement__c,
@@ -130,7 +131,7 @@ public with sharing class appReviewController {
                 // Get all requirement responses that have requirement items with the upload document record type and get the link to the document
                 for (Requirement_Response__c rr : requirementResponses.values()) {
                     if(rr.Requirement_Item__r.RecordType.DeveloperName == 'Upload_Document') {
-                        rr.documentLink = documentLinks.get(rr.Requirement_Item__c);
+                       // rr.documentLink = documentLinks.get(rr.Requirement_Item__c);
                     }
                 }
 

@@ -32,7 +32,7 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
         item.required = true;
     });
 
-    sldsScope.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent, .validateACT, .validateSATComposite, .validateSATSubject").forEach(item => {
+    sldsScope.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent, .validateACT, .validateSATComposite, .validateSATSubject, .validateAge").forEach(item => {
         item.type = "number";
         if (item.classList.contains('validateACT')) {
             item.setAttribute('min', '0');
@@ -45,6 +45,10 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
         if (item.classList.contains('validateSATSubject')) {
             item.setAttribute('min', '0');
             item.setAttribute('max', '800');
+        }
+        if (item.classList.contains('validateAge')) {
+            item.setAttribute('min', '0');
+            item.setAttribute('max', '120');
         }
     });
 
@@ -917,7 +921,6 @@ function showFormSpinner() {
 }
 
 function showFormSpinnerRelatedRecord() {
-    spinnerFocusElement = document.activeElement.parentElement.parentElement.parentElement;
     if (document.getElementById('form-spinner')) {
         document.getElementById("form-spinner").style.display = 'block';
     }

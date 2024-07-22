@@ -103,10 +103,6 @@
                     <span class="slds-assistive-text">Clear Selected File</span>
                 </span>
                 <p class="slds-text-body_medium slds-m-top_small currentlySelectedFile"><em>Currently selected files will be uploaded once the "Save and Continue" button at the end of this grouping.</em></p>
-<!--                <apex:outputPanel styleClass="slds-form-element" rendered="{!(preventUpdates || !isEditable) && NOT(ISBLANK(odlAttachmentId))}">-->
-<!--                    <apex:outputLabel value="Previously Uploaded Document: "/>-->
-<!--                    <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!odlAttachmentId}" target="_blank">{!attachmentTitle}</apex:outputLink>-->
-<!--                </apex:outputPanel>-->
             </div>
         </article>
     </apex:outputPanel>

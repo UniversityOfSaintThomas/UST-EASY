@@ -32,6 +32,11 @@
                         <apex:param name="p2" value="" assignTo="{!redirectPage}"/>
                     </apex:actionFunction>
 
+                    <apex:actionFunction name="deletePreviousFile" action="{!deletePreviousFile}" reRender="none" onComplete="location.reload();">
+                        <apex:param name="firstParam" value="" assignTo="{!contentDocId}"/>
+                        <apex:param name="secondParam" value="" assignTo="{!reqResponseId}"/>
+                    </apex:actionFunction>
+
                     <apex:outputPanel rendered="{!appInfo.allowSubmit}" layout="none">
                         <article class="slds-card slds-m-bottom_medium">
                             <div class="slds-card__header slds-grid">

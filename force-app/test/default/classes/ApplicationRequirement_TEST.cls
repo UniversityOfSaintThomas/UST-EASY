@@ -631,6 +631,72 @@ public class ApplicationRequirement_TEST {
         System.assertEquals(1, recommendation.size());
     }
 
+    @IsTest
+    public static void testDeletePreviousFile() {
+
+        Application__c a = new Application__c();
+
+        insert a;
+
+        Requirement_Response__c r = new Requirement_Response__c (Application__c = a.Id,
+                Original_Uploaded_Document_File_Name__c = 'Hello',
+                Saved_Uploaded_Document_File_Name__c = 'World');
+
+        insert r;
+
+        Supporting_Document__c s = new Supporting_Document__c();
+
+        insert s;
+
+        ContentVersion contentVersion = new ContentVersion(
+                Title = 'Content Version Name',
+                PathOnClient = 'Content Version Name.pdf',
+                VersionData = Blob.valueOf('data'),
+                Origin = 'C'
+        );
+
+        insert contentVersion;
+
+        ContentDocument cd = [
+                SELECT Id
+                FROM ContentDocument
+                WHERE LatestPublishedVersionId = :contentVersion.Id
+        ];
+
+        ContentDocumentLink requirementResponseLink = new ContentDocumentLink(
+                ContentDocumentId = cd.Id,
+                LinkedEntityId = r.Id,
+                ShareType = 'V'
+        );
+
+        insert requirementResponseLink;
+
+        ContentDocumentLink supportingDocumentLink = new ContentDocumentLink(
+                ContentDocumentId = cd.Id,
+                LinkedEntityId = s.Id,
+                ShareType = 'V'
+        );
+
+        insert supportingDocumentLink;
+
+        ApplicationRequirement ar = new ApplicationRequirement();
+
+        ar.contentDocId = cd.Id;
+        ar.reqResponseId = r.Id;
+
+        Test.startTest();
+        ar.deletePreviousFile();
+        Test.stopTest();
+
+        List<ContentDocument> cdDeleted = [
+                SELECT Id
+                FROM ContentDocument
+                WHERE Id = :cd.Id
+        ];
+
+        System.assertEquals(0, cdDeleted.size());
+    }
+
     // @IsTest
     // public static void testRelatedObject() {
     //     Application__c app = [SELECT Id FROM Application__c LIMIT 1];

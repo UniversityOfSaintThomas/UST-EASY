@@ -1,6 +1,6 @@
 minimum_cumulusci_version: '3.32.1'
 project:
-  name: UST-EASY-june2024sprint
+  name: UST-EASY
   package:
     name: UST-EASY-Package
     namespace: null

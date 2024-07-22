@@ -335,7 +335,8 @@ public class ApplicationQuestionGroup {
             oldAttId = ((List<ContentDocumentLink>) obj.getSObjects('ContentDocumentLinks'))[0].Id;
             oldAttLink = ((List<ContentDocumentLink>) obj.getSObjects('ContentDocumentLinks'))[0];
             List<ContentVersion> conV = [
-                    SELECT Id
+                    SELECT Id,
+                            ContentDocumentId
                     FROM ContentVersion
                     WHERE ContentDocumentId = :oldAttLink.ContentDocumentId
                     ORDER BY CreatedDate DESC
@@ -448,7 +449,8 @@ public class ApplicationQuestionGroup {
                 oldAttId = response.ContentDocumentLinks[0].Id;
                 oldAttLink = response.ContentDocumentLinks[0];
                 List<ContentVersion> conV = [
-                        SELECT Id
+                        SELECT Id,
+                                ContentDocumentId
                         FROM ContentVersion
                         WHERE ContentDocumentId = :oldAttLink.ContentDocumentId
                         ORDER BY CreatedDate DESC

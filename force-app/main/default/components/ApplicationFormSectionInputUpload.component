@@ -3,7 +3,6 @@
  -->
 
  <apex:component id="ApplicationFormSectionInputUpload">
-
     <apex:attribute name="isEditable" description="" type="Boolean" required="false"/>
     <apex:attribute name="preventUpdates" description="" type="Boolean" required="false"/>
     <apex:attribute name="allowTextEntry" description="" type="Boolean" required="true"/>
@@ -41,7 +40,8 @@
                     <div class="slds-media__figure">
                                 <span class="slds-icon_container slds-icon-standard-account" title="Upload file">
                                   <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/standard-sprite/svg/symbols.svg#file")}"></use>
+                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/standard-sprite/svg/symbols.svg#file")}"></use>
                                   </svg>
                                   <span class="slds-assistive-text">Upload file</span>
                                 </span>
@@ -57,7 +57,7 @@
             </div>
             <div class="slds-card__body slds-card__body_inner file_selector_wrapper">
                 <apex:outputPanel styleClass="slds-form-element" rendered="{!NOT(ISBLANK(oldAttContentDocumentId))}">
-                <div class="slds-form-element__control">
+                    <div class="slds-form-element__control">
                         <apex:outputLabel value="Saved File: " style="font-weight:bold;"/>
                         <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!odlAttachmentId}" target="_blank" title="Download File">{!attachmentTitle}</apex:outputLink>
                         <span class="slds-icon_container slds-icon-utility-delete slds-current-color slds-m-bottom_medium deletePreviousFileIcon" title="Delete Saved File" onclick="deletePrevious('{!oldAttContentDocumentId}', '{!responseObjectID}', '{!attachmentTitle}')">
@@ -72,14 +72,20 @@
                 <div class="slds-form-element__control slds-m-bottom_medium">
                     <div class="slds-file-selector slds-file-selector_files" style="width:100%;">
                         <div class="slds-file-selector__dropzone slds-var-p-around_large" style="width:100%;">
-                            <input class="docUploadInput slds-file-selector__input slds-assistive-text" name="{!itemId}" data-respid="{!itemId}" onChange="return validateFileType(this);" title="{!acceptedFileTypes}" placeholder="{!isRequiredUpload && ISBLANK(attachmentTitle)}" type="file" aria-labelledby="file-selector-primary-label file-selector-secondary-label"/>
+                            <input class="docUploadInput slds-file-selector__input slds-assistive-text"
+                                   name="{!itemId}" data-respid="{!itemId}"
+                                   onChange="return validateFileType(this);" title="{!acceptedFileTypes}"
+                                   placeholder="{!isRequiredUpload && ISBLANK(attachmentTitle)}" type="file"
+                                   aria-labelledby="file-selector-primary-label file-selector-secondary-label"/>
                             <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
-                                        <span class="slds-file-selector__button slds-button slds-button_neutral">
-                                            <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                                <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#upload")}"></use>
-                                            </svg>
+                                    <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                            <use xmlns="http://www.w3.org/2000/svg"
+                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                 xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#upload")}"></use>
+                                        </svg>
                                         Select File
-                                        </span>
+                                    </span>
                                 <span class="slds-file-selector__text slds-medium-show">or Drop File</span></label>
                         </div>
                     </div>
@@ -97,12 +103,7 @@
                     <span class="slds-assistive-text">Clear Selected File</span>
                 </span>
                 <p class="slds-text-body_medium slds-m-top_small currentlySelectedFile"><em>Currently selected files will be uploaded once the "Save and Continue" button at the end of this grouping.</em></p>
-<!--                <apex:outputPanel styleClass="slds-form-element" rendered="{!(preventUpdates || !isEditable) && NOT(ISBLANK(odlAttachmentId))}">-->
-<!--                    <apex:outputLabel value="Previously Uploaded Document: "/>-->
-<!--                    <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!odlAttachmentId}" target="_blank">{!attachmentTitle}</apex:outputLink>-->
-<!--                </apex:outputPanel>-->
             </div>
         </article>
-
     </apex:outputPanel>
 </apex:component>

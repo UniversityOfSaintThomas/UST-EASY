@@ -35,6 +35,8 @@ public class ApplicationRequirement {
     public String userType { get; set; }
 
     public Application_Control__c appControl { get; set; }
+    public String contentDocId { get; set; }
+    public String reqResponseId { get; set; }
 
     public Id nextReqId {
         get {
@@ -665,4 +667,50 @@ public class ApplicationRequirement {
             }
         }
     }
+
+//Delete previous uploaded files and linked Supporting Documents records
+    public PageReference deletePreviousFile() {
+
+        List<String> supportingDocIds = new List<String>();
+        List<ContentDocumentLink> contentLinks = [
+                SELECT Id,
+                        ContentDocumentId,
+                        LinkedEntityId
+                FROM ContentDocumentLink
+                WHERE ContentDocumentId = :contentDocId
+        ];
+
+        for (ContentDocumentLink link : contentLinks) {
+
+            if (link.LinkedEntityId.getSobjectType().getDescribe().getName() == 'Supporting_Document__c') {
+
+                supportingDocIds.add(link.LinkedEntityId);
+            }
+        }
+
+        try {
+            delete [
+                    SELECT Id
+                    FROM ContentDocument
+                    WHERE Id = :contentDocId
+            ];
+
+            update new Requirement_Response__c(Id = reqResponseId,
+                                            Original_Uploaded_Document_File_Name__c = '',
+                                            Saved_Uploaded_Document_File_Name__c = '');
+
+            delete [
+                    SELECT Id
+                    FROM Supporting_Document__c
+                    WHERE Id IN :supportingDocIds
+                    AND Requirement_Response__c = :reqResponseId
+            ];
+        } catch (Exception e) {
+
+            System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());
+        }
+
+        return null;
+    }
+
 }

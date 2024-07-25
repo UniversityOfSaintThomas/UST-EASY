@@ -7,7 +7,7 @@
     <lightning-card title="Application Info" icon-name="custom:custom14">
         <div class="slds-grid slds-wrap slds-gutters">
             <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
-                <c-app-review-nav app={applicationControl.data} onnewrequirement={handleNewRequirement}></c-app-review-nav>
+                <c-easy-app-review-nav app={applicationControl.data} onnewrequirement={handleNewRequirement}></c-easy-app-review-nav>
             </div>
             <div class="slds-col slds-size_1-of-1 slds-large-size_9-of-12">
                 <template lwc:if={requirements}>
@@ -41,6 +41,7 @@
                                                    ValueURL__c, Street__c, State__c
                                                    -->
                                                 <template lwc:if={questionResponse.ValueText__c}>
+                                                    <p>ValueText</p>
                                                     <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large">{questionResponse.ValueText__c}</p>
                                                 </template>
                                                 <template lwc:if={questionResponse.ValueDate__c}>

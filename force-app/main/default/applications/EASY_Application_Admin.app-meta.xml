@@ -22,7 +22,7 @@
     <tabs>Interaction_Mapping__c</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>Application__c</tabs>
-    <tabs>Application_Review</tabs>
+    <tabs>EASY_Application_Review</tabs>
     <tabs>Question_Dependency__c</tabs>
     <tabs>Question_Response__c</tabs>
     <tabs>Requirement_Response__c</tabs>

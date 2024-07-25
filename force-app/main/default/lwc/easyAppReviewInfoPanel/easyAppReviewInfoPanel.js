@@ -5,16 +5,16 @@
 import {LightningElement, wire, track, api} from 'lwc';
 import {getSObjectValue} from '@salesforce/apex';
 
-import getApplicantInfo from '@salesforce/apex/appReviewController.getApplicantInfo';
+import getApplicantInfo from '@salesforce/apex/EASYAppReviewController.getApplicantInfo';
 import FIRST_NAME from '@salesforce/schema/Application__c.Contact__r.FirstName';
 import LAST_NAME from '@salesforce/schema/Application__c.Contact__r.LastName';
 
 import {MessageContext, publish, subscribe} from 'lightning/messageService';
-import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/App_Selected__c';
+import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/EASY_App_Selected__c';
 import {CurrentPageReference} from "lightning/navigation";
-import {adjustURLParams, setAppIdFromURL} from 'c/appReviewUtility';
+import {adjustURLParams, setAppIdFromURL} from 'c/easyAppReviewUtility';
 
-export default class AppReviewInfoPanel extends LightningElement {
+export default class EasyAppReviewInfoPanel extends LightningElement {
 
     @track appId;
 

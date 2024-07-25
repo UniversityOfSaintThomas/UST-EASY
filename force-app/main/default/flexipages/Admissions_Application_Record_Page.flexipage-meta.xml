@@ -68,16 +68,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>easyApplicationReview</componentName>
-                <identifier>c_easyApplicationReview</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-c8a5a87b-9aa5-4431-a9ce-d2468de85fc9</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
@@ -106,20 +96,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>relatedListsTab</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-c8a5a87b-9aa5-4431-a9ce-d2468de85fc9</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Review</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

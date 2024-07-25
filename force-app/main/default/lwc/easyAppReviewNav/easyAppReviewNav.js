@@ -4,7 +4,7 @@
 
 import {api, LightningElement} from 'lwc';
 
-export default class AppReviewNav extends LightningElement {
+export default class EasyAppReviewNav extends LightningElement {
 
     selectedNav;
 

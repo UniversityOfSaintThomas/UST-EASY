@@ -7,8 +7,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>appReviewApplicationView</componentName>
-                <identifier>c_appReviewApplicationView</identifier>
+                <componentName>easyAppReview</componentName>
+                <identifier>c_easyAppReview2</identifier>
             </componentInstance>
         </itemInstances>
         <name>region2</name>
@@ -17,8 +17,38 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>appReviewInfoPanel</componentName>
-                <identifier>c_appReviewInfoPanel2</identifier>
+                <componentName>easyAppReviewInfoPanel</componentName>
+                <identifier>c_easyAppReviewInfoPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>enableInlineEdit</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>entityName</name>
+                    <value>Application__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterName</name>
+                    <value>All</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideActionBar</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideSearchBar</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>pageSize</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:filterListCard</componentName>
+                <identifier>flexipage_filterListCard</identifier>
             </componentInstance>
         </itemInstances>
         <name>region3</name>

@@ -4,10 +4,10 @@
 
 import {api, LightningElement, track, wire} from 'lwc';
 import {MessageContext, publish, subscribe} from 'lightning/messageService';
-import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/App_Selected__c';
+import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/EASY_App_Selected__c';
 import {CurrentPageReference} from "lightning/navigation";
-import {adjustURLParams, setAppIdFromURL} from 'c/appReviewUtility';
-import getApplicationControl from '@salesforce/apex/appReviewController.getApplicationControl';
+import {adjustURLParams, setAppIdFromURL} from 'c/easyAppReviewUtility';
+import getApplicationControl from '@salesforce/apex/EASYAppReviewController.getApplicationControl';
 
 export default class AppReviewApplicationView extends LightningElement {
 

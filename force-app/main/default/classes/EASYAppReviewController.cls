@@ -1,4 +1,4 @@
-public with sharing class appReviewController {
+public with sharing class EASYAppReviewController {
 
     @AuraEnabled(Cacheable=true)
     public static Application__c getApplicantInfo(String appId) {
@@ -53,9 +53,10 @@ public with sharing class appReviewController {
                 Map<Id, Requirement_Item__c> requirementItems = new Map<Id, Requirement_Item__c>(
                 [
                         SELECT Id, Name, Requirement__c, Active__c, Instructions__c, Label__c, Required__c,
-                                Display_Order__c, RecordType.DeveloperName
+                                Display_Order__c, RecordType.DeveloperName, Application_Control__c, Display_on_Admin_Review_Pages__c
                         FROM Requirement_Item__c
                         WHERE Requirement__c IN :requirements.keySet()
+                       // AND Application_Control__c = :appControlId
                         AND Active__c = TRUE
                         AND Display_on_Admin_Review_Pages__c = TRUE
                         ORDER BY Display_Order__c
@@ -122,11 +123,13 @@ public with sharing class appReviewController {
 //                    }
 //                }
 
+                System.debug('Requirement Items: ' + requirementItems.keySet().toString());
                 Map<Id, Requirement_Response__c> requirementResponses = new Map<Id, Requirement_Response__c>([
                         SELECT Id, Name, Requirement_Item__c, Viewed__c, Status__c, ValueTextEntry__c, Has_Child_Requirement__c,
                                 HasDocument__c, Related_Record__c, Requirement_Item__r.RecordType.DeveloperName
                         FROM Requirement_Response__c
                         WHERE Requirement_Item__c IN :requirementItems.keySet()
+                        AND Application__c = :appId
                 ]);
                 // Get all requirement responses that have requirement items with the upload document record type and get the link to the document
                 for (Requirement_Response__c rr : requirementResponses.values()) {
@@ -135,8 +138,8 @@ public with sharing class appReviewController {
                     }
                 }
 
-
-                Map<Id, Question_Response__c> questionResponses = new Map<Id, Question_Response__c>([
+                Map<Id, Question_Response__c> questionResponses = new Map<Id, Question_Response__c>(
+                [
                         SELECT Id, Name, Question_Label__c, IsShown__c, IsComplete__c, IsPopulated__c, IsRequired__c, Application__c,
                                 Requirement_Response__r.Requirement_Item__c, Question__c, ValueText__c, ValueCheckbox__c,
                                 ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueEmail__c, ValueLongTextArea__c,
@@ -144,10 +147,17 @@ public with sharing class appReviewController {
                                 ValueURL__c, Street__c, State__c, City__c, PostalCode__c, Country__c
                         FROM Question_Response__c
                         WHERE Requirement_Response__r.Requirement_Item__c IN :requirementItems.keySet()
-                ]);
+                        AND Application__c = :appId
+                        WITH SECURITY_ENFORCED
+                        ORDER BY CreatedDate DESC NULLS LAST
+                ]
+                );
 
                 Map<Id, Question_Response__c> questionResponsesByQuestionId = new Map<Id, Question_Response__c>();
                 for (Question_Response__c qr : questionResponses.values()) {
+                    if(String.isNotBlank(qr.ValueTextEncrypted__c)) {
+                        qr.ValueTextEncrypted__c = '** Encrypted **';
+                    }
                     questionResponsesByQuestionId.put(qr.Question__c, qr);
                 }
 

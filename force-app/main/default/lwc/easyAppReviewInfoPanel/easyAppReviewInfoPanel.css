@@ -1,3 +1,41 @@
 /**
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/16/2023.
  */
+
+/*.header-column {*/
+/*    padding: 0 2rem;*/
+/*}*/
+
+.field-title {
+    font-size: .75rem;
+    line-height: 1.25;
+    color: #54698d;
+    margin-bottom: .25rem;
+}
+
+.accordion-class {
+    --sds-c-accordion-heading-font-size: .90rem;
+    /*margin-top: 20px;*/
+}
+
+/*.helpTextField {*/
+/*    position: relative;*/
+/*    top: -12px;*/
+/*    left: 2px;*/
+/*}*/
+
+/*.helpTextSection {*/
+/*    position: relative;*/
+/*    bottom: -30px;*/
+/*    right: -80px;*/
+/*}*/
+
+/*.fieldPosition {*/
+/*    position: relative;*/
+/*    top: -7.5px;*/
+/*}*/
+
+/*.appInfoContainer {*/
+/*    height: 600px;*/
+/*    overflow: auto;*/
+/*}*/

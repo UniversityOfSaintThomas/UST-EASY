@@ -121,7 +121,7 @@
 
                             <lightning-accordion allow-multiple-sections-open
                                                  active-section-name={activeSections}
-                                                 class="accordion-class">
+                                                 class="accordion-nested">
                                 <lightning-accordion-section class="slds-m-left_small" name="ACT" label="ACT">
                                     <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                         <lightning-layout-item size="6">
@@ -144,7 +144,7 @@
 
                             <lightning-accordion allow-multiple-sections-open
                                                  active-section-name={activeSections}
-                                                 class="accordion-class">
+                                                 class="accordion-nested">
                                 <lightning-accordion-section class="slds-m-left_small" name="SAT" label="SAT">
                                     <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                         <lightning-layout-item size="6">
@@ -273,17 +273,38 @@
                                     <lightning-input-field field-name={committeeDecisionNotes}></lightning-input-field>
                                 </lightning-layout-item>
                             </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="5">
+                                    <lightning-input-field field-name={startDate}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="5">
+                                    <lightning-input-field field-name={dueDate}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={completed}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={terminated}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium" multiple-rows>
+                                <lightning-layout-item size="8">
+                                    <lightning-input-field field-name={dateCompleted}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
                         </lightning-accordion-section>
                     </lightning-accordion>
-                    <div class=slds-p-around_medium>
+
+                    <div class="slds-m-left_x-large slds-m-top_medium slds-m-bottom_large">
                         <lightning-button
-                                class="slds-m-left_medium slds-m-top_small"
                                 variant="brand"
                                 type="submit"
                                 name="update"
                                 label="Update"></lightning-button>
                         <lightning-button
-                                class="slds-m-left_small slds-m-top_small "
+                                class="slds-m-left_small"
                                 label="Cancel"
                                 onclick={handleReset}
                         ></lightning-button>

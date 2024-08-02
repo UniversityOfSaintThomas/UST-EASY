@@ -13,9 +13,8 @@
     margin-bottom: .25rem;
 }
 
-.accordion-class {
+.accordion-nested {
     --sds-c-accordion-heading-font-size: .90rem;
-    /*margin-top: 20px;*/
 }
 
 /*.helpTextField {*/

@@ -9,8 +9,12 @@ import getApplicantInfo from '@salesforce/apex/EASYAppReviewController.getApplic
 import FIRST_NAME from '@salesforce/schema/Application__c.Contact__r.FirstName';
 import LAST_NAME from '@salesforce/schema/Application__c.Contact__r.LastName';
 
+import {MessageContext, publish, subscribe} from 'lightning/messageService';
+import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/EASY_App_Selected__c';
+import {CurrentPageReference} from "lightning/navigation";
+import {adjustURLParams, setAppIdFromURL} from 'c/easyAppReviewUtility';
+
 import getAppInfoDetails from '@salesforce/apex/EASYAppInfoController.upsertAppReviewData';
-import displayAppInfoDetails from '@salesforce/apex/EASYAppInfoController.displayAppReviewInfo';
 
 import TEST_SCORE_PREFERENCE from '@salesforce/schema/Application_Review__c.Test_Score_Preference__c';
 import APPLICATION from '@salesforce/schema/Application_Review__c.Application__c';
@@ -64,12 +68,11 @@ import COUNSELOR_DECISION_NOTES from '@salesforce/schema/Application_Review__c.C
 import COMMITTEE_DECISION from '@salesforce/schema/Application_Review__c.Committee_Decision__c';
 import INITIAL_COMMITTEE_REVIEW from '@salesforce/schema/Application_Review__c.Initial_Committee_Review__c';
 import COMMITTEE_DECISION_NOTES from '@salesforce/schema/Application_Review__c.Committee_Decision_Notes__c';
-
-
-import {MessageContext, publish, subscribe} from 'lightning/messageService';
-import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/EASY_App_Selected__c';
-import {CurrentPageReference} from "lightning/navigation";
-import {adjustURLParams, setAppIdFromURL} from 'c/easyAppReviewUtility';
+import COMPLETED from '@salesforce/schema/Application_Review__c.Completed__c';
+import TERMINATED from '@salesforce/schema/Application_Review__c.Terminated__c';
+import START_DATE from '@salesforce/schema/Application_Review__c.Start_Date__c';
+import DUE_DATE from '@salesforce/schema/Application_Review__c.Due_Date__c';
+import DATE_COMPLETED from '@salesforce/schema/Application_Review__c.Date_Completed__c';
 
 export default class EasyAppReviewInfoPanel extends LightningElement {
 
@@ -136,9 +139,11 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     committeeDecision= COMMITTEE_DECISION;
     initialCommitteeReview= INITIAL_COMMITTEE_REVIEW;
     committeeDecisionNotes= COMMITTEE_DECISION_NOTES;
-
-
-
+    completed= COMPLETED;
+    terminated= TERMINATED;
+    startDate= START_DATE;
+    dueDate= DUE_DATE;
+    dateCompleted= DATE_COMPLETED;
 
     connectedCallback() {
         this.lmsSubscription();
@@ -192,9 +197,7 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     }
 
     handleReset(event) {
-        const inputFields = this.template.querySelectorAll(
-            'lightning-input-field'
-        );
+        const inputFields = this.template.querySelectorAll('lightning-input-field');
         if (inputFields) {
             inputFields.forEach(field => {
                 field.reset();

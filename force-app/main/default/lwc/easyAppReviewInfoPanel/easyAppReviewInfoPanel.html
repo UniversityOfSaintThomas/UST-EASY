@@ -20,7 +20,8 @@
         <div class="appInfoContainer">
             <template lwc:if={applicantInfo.data}>
                 <lightning-record-edit-form object-api-name="Application_Review__c"
-                                            record-id={appReviewId}>
+                                            record-id={appReviewId}
+                                            onsuccess={updateSuccess}>
                     <lightning-accordion allow-multiple-sections-open
                                          active-section-name={activeSections}>
                         <lightning-accordion-section name="APPLICATION_DETAILS" label="Application Details">
@@ -302,11 +303,13 @@
                                 variant="brand"
                                 type="submit"
                                 name="update"
-                                label="Update"></lightning-button>
+                                label="Update"
+                                disabled={isDisabled}></lightning-button>
                         <lightning-button
                                 class="slds-m-left_small"
                                 label="Cancel"
-                                onclick={handleReset}
+                                onclick={cancelReset}
+                                disabled={isDisabled}
                         ></lightning-button>
                     </div>
                 </lightning-record-edit-form>

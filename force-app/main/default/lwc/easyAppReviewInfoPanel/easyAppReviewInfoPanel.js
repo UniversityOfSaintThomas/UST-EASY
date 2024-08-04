@@ -4,6 +4,7 @@
 
 import {LightningElement, wire, track, api} from 'lwc';
 import {getSObjectValue} from '@salesforce/apex';
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 import getApplicantInfo from '@salesforce/apex/EASYAppReviewController.getApplicantInfo';
 import FIRST_NAME from '@salesforce/schema/Application__c.Contact__r.FirstName';
@@ -145,6 +146,8 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     dueDate= DUE_DATE;
     dateCompleted= DATE_COMPLETED;
 
+    isDisabled = true;
+
     connectedCallback() {
         this.lmsSubscription();
 
@@ -152,6 +155,11 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
 
             this.appReviewId = value;
         })
+    }
+
+    renderedCallback() {
+
+        this.enableUpdate();
     }
 
     lmsSubscription() {
@@ -190,19 +198,46 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         const payload = {appId: event.detail.value};
         publish(this.messageContext, APP_SELECTED_CHANNEL, payload);
 
-        getAppInfoDetails({appId: this.appId}).then(value => {
+        getAppInfoDetails({appId: this.appId}).then(returnValue => {
 
-            this.appReviewId = value;
+            this.appReviewId = returnValue;
         });
     }
 
-    handleReset(event) {
+    enableUpdate() {
         const inputFields = this.template.querySelectorAll('lightning-input-field');
+
+        if (inputFields) {
+            inputFields.forEach(field => {
+                field.addEventListener('change', (evt) => {
+                    this.isDisabled = false;
+                });
+            });
+        }
+    }
+
+    cancelReset(event) {
+        const inputFields = this.template.querySelectorAll('lightning-input-field');
+
         if (inputFields) {
             inputFields.forEach(field => {
                 field.reset();
             });
         }
+
+        this.isDisabled = true;
+    }
+
+    updateSuccess(){
+        const evt = new ShowToastEvent({
+            title: 'Application Review Update Success',
+            message: '',
+            variant: 'success',
+        });
+
+        this.dispatchEvent(evt);
+
+        this.isDisabled = true;
     }
 
 }

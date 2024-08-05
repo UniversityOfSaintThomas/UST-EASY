@@ -77,16 +77,19 @@ import DATE_COMPLETED from '@salesforce/schema/Application_Review__c.Date_Comple
 
 export default class EasyAppReviewInfoPanel extends LightningElement {
 
-    activeSections = ['APPLICATION_DETAILS',
-                            'STUDENT_INFORMATION',
-                            'ACADEMIC_INFORMATION',
-                            'TEST_SCORES',
-                            'ACT',
-                            'SAT',
-                            'TRANSCRIPT_REVIEW',
-                            'ESSAY_REVIEW',
-                            'INVOLVEMENT',
-                            'REVIEW_RECOMMENDATION'];
+    @track allSections = ['APPLICATION_DETAILS',
+                                'STUDENT_INFORMATION',
+                                'ACADEMIC_INFORMATION',
+                                'TEST_SCORES',
+                                'TRANSCRIPT_REVIEW',
+                                'ESSAY_REVIEW',
+                                'INVOLVEMENT',
+                                'REVIEW_RECOMMENDATION'];
+
+    @track testsSections = ['ACT',
+                                    'SAT']
+
+    @track activeSections = [];
 
     testScorePreference= TEST_SCORE_PREFERENCE;
     application= APPLICATION;
@@ -147,6 +150,9 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     dateCompleted= DATE_COMPLETED;
 
     isDisabled = true;
+    activeAllSections = true;
+    openSections = [];
+    btnLabel = 'Close All';
 
     connectedCallback() {
         this.lmsSubscription();
@@ -155,6 +161,8 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
 
             this.appReviewId = value;
         })
+
+        this.activeSections = this.allSections;
     }
 
     renderedCallback() {
@@ -238,6 +246,40 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         this.dispatchEvent(evt);
 
         this.isDisabled = true;
+    }
+
+    closeAll(evt){
+        this.activeSections = [];
+    }
+
+    expandAll(evt) {
+        this.activeSections = this.allSections;
+        this.activeAllSections = true;
+    }
+
+    handleSectionToggle(evt) {
+        this.openSections = evt.detail.openSections;
+    }
+
+    openSection(evt) {
+
+        let section = evt.target.name;
+
+        if (!this.activeAllSections) {
+
+            let idx = this.openSections.indexOf(section);
+
+            if (idx === -1) {
+                this.openSections.push(section);
+                this.activeSections = this.openSections;
+            } else {
+                this.activeSections = this.openSections.toSpliced(idx, 1);
+            }
+        } else {
+            this.activeSections = [section];
+            this.activeAllSections = false;
+        }
+
     }
 
 }

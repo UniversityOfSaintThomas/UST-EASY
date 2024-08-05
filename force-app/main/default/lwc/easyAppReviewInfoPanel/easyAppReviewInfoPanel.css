@@ -17,6 +17,11 @@
     --sds-c-accordion-heading-font-size: .90rem;
 }
 
+.sectionButtons {
+    font-size: .75rem;
+    height:20px;
+}
+
 /*.appInfoContainer {*/
 /*    height: 600px;*/
 /*    overflow: auto;*/

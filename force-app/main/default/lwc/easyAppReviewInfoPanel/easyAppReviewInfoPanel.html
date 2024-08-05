@@ -5,17 +5,45 @@
 <!-- App Review Info Panel -->
 <template>
     <lightning-card title="Application Info" icon-name="custom:custom14">
-        <template lwc:if={applicantInfo.data}>
-            <div class="slds-var-m-around_medium">
-                <p>{firstname}</p>
-                <p>{lastname}</p>
-                <p>{appId}</p>
-            </div>
-        </template>
-        <template lwc:elseif={applicantInfo.error}>
-            {applicantInfo.error}
-        </template>
+
+<!--        <template lwc:if={applicantInfo.data}>-->
+<!--            <div class="slds-var-m-around_medium">-->
+<!--                <p>{firstname}</p>-->
+<!--                <p>{lastname}</p>-->
+<!--                <p>{appId}</p>-->
+<!--            </div>-->
+<!--        </template>-->
+<!--        <template lwc:elseif={applicantInfo.error}>-->
+<!--            {applicantInfo.error}-->
+<!--        </template>-->
         <lightning-input value={appId} onchange={inputValueChange}></lightning-input>
+
+        <div class="slds-m-left_x-small">
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" onclick={closeAll}>Close All</button>
+            <!--            <lightning-button label="Close All" onclick={closeAll}></lightning-button>-->
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" onclick={expandAll}>Expand All</button>
+            <!--            <lightning-button label="Expand All" onclick={expandAll}></lightning-button>-->
+        </div>
+        <div class="slds-m-left_x-small">
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" name="APPLICATION_DETAILS" onclick={openSection}>Application Details</button>
+            <!--            <lightning-button name="APPLICATION_DETAILS" label="Application Details" onclick={openSection}></lightning-button>-->
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" name="STUDENT_INFORMATION" onclick={openSection}>Student Information</button>
+            <!--            <lightning-button name="STUDENT_INFORMATION" label="Student Information" onclick={openSection}></lightning-button>-->
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" name="ACADEMIC_INFORMATION" onclick={openSection}>Academic Information</button>
+            <!--            <lightning-button name="ACADEMIC_INFORMATION" label="Academic Information" onclick={openSection}></lightning-button>-->
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" name="TEST_SCORES" onclick={openSection}>Test Scores</button>
+            <!--            <lightning-button name="TEST_SCORES" label="Test Scores" onclick={openSection}></lightning-button>-->
+        </div>
+        <div class="slds-m-left_x-small">
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" name="REVIEW_RECOMMENDATION" onclick={openSection}>Review Recommendation</button>
+            <!--            <lightning-button name="REVIEW_RECOMMENDATION" label="Review Recommendation" onclick={openSection}></lightning-button>-->
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" name="TRANSCRIPT_REVIEW" onclick={openSection}>Transcript Review</button>
+            <!--            <lightning-button name="TRANSCRIPT_REVIEW" label="Transcript Review" onclick={openSection}></lightning-button>-->
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" name="ESSAY_REVIEW" onclick={openSection}>Essay Review</button>
+            <!--            <lightning-button name="ESSAY_REVIEW" label="Essay Review" onclick={openSection}></lightning-button>-->
+            <button class="slds-button slds-p-left_xx-small slds-p-right_xx-small sectionButtons" name="INVOLVEMENT" onclick={openSection}>Involvement</button>
+            <!--            <lightning-button name="INVOLVEMENT" label="Involvement" onclick={openSection}></lightning-button>-->
+        </div>
 
         <div class="appInfoContainer">
             <template lwc:if={applicantInfo.data}>
@@ -23,7 +51,8 @@
                                             record-id={appReviewId}
                                             onsuccess={updateSuccess}>
                     <lightning-accordion allow-multiple-sections-open
-                                         active-section-name={activeSections}>
+                                         active-section-name={activeSections}
+                                         onsectiontoggle={handleSectionToggle}>
                         <lightning-accordion-section name="APPLICATION_DETAILS" label="Application Details">
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="6">
@@ -121,7 +150,7 @@
                             </lightning-layout>
 
                             <lightning-accordion allow-multiple-sections-open
-                                                 active-section-name={activeSections}
+                                                 active-section-name={testsSections}
                                                  class="accordion-nested">
                                 <lightning-accordion-section class="slds-m-left_small" name="ACT" label="ACT">
                                     <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
@@ -144,7 +173,7 @@
                             </lightning-accordion>
 
                             <lightning-accordion allow-multiple-sections-open
-                                                 active-section-name={activeSections}
+                                                 active-section-name={testsSections}
                                                  class="accordion-nested">
                                 <lightning-accordion-section class="slds-m-left_small" name="SAT" label="SAT">
                                     <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>

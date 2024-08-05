@@ -166,7 +166,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     }
 
     renderedCallback() {
-
         this.enableUpdate();
     }
 
@@ -207,7 +206,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         publish(this.messageContext, APP_SELECTED_CHANNEL, payload);
 
         getAppInfoDetails({appId: this.appId}).then(returnValue => {
-
             this.appReviewId = returnValue;
         });
     }
@@ -244,7 +242,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         });
 
         this.dispatchEvent(evt);
-
         this.isDisabled = true;
     }
 

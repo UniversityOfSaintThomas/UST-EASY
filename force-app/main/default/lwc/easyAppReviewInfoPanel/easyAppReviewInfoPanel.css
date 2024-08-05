@@ -17,9 +17,26 @@
     --sds-c-accordion-heading-font-size: .90rem;
 }
 
+.slotButtons {
+    font-size: .70rem;
+    height: 25px;
+    border: solid 1px;
+}
+
 .sectionButtons {
-    font-size: .75rem;
-    height:20px;
+    font-size: .70rem;
+    height: 25px;
+    border: solid 1px;
+    border-radius: 8px;
+}
+
+.sectionButtonsSelect {
+    font-size: .70rem;
+    height: 25px;
+    border: solid 1px;
+    background-color: #00A1E0;
+    color: white;
+    border-radius: 8px;
 }
 
 /*.appInfoContainer {*/

@@ -17,6 +17,12 @@ import {adjustURLParams, setAppIdFromURL} from 'c/easyAppReviewUtility';
 
 import getAppInfoDetails from '@salesforce/apex/EASYAppInfoController.upsertAppReviewData';
 
+import CONTACT_NAME from '@salesforce/schema/Application_Review__c.Contact_Name__c';
+import FIRST_GENERATION from '@salesforce/schema/Application_Review__c.First_Generation__c';
+import MOBILE from '@salesforce/schema/Application_Review__c.Mobile__c';
+import COACHES_LIST from '@salesforce/schema/Application_Review__c.Coaches_List__c';
+import EMAIL from '@salesforce/schema/Application_Review__c.Email__c';
+import CITY_STATE from '@salesforce/schema/Application_Review__c.City_State__c';
 import TEST_SCORE_PREFERENCE from '@salesforce/schema/Application_Review__c.Test_Score_Preference__c';
 import APPLICATION from '@salesforce/schema/Application_Review__c.Application__c';
 import APPLICATION_ADMISSION_PLAN from '@salesforce/schema/Application_Review__c.Application_Admission_Plan__c';
@@ -24,12 +30,6 @@ import APPLICATION_ADMISSION_STATUS from '@salesforce/schema/Application_Review_
 import APPLICATION_START_TERM from '@salesforce/schema/Application_Review__c.Application_Start_Term__c';
 import APPLICATION_TERM_START_DATE from '@salesforce/schema/Application_Review__c.Application_Term_Start_Date__c';
 import APPLICATION_ADMISSIONS_SUBSTATUS from '@salesforce/schema/Application_Review__c.Application_Admissions_Substatus__c';
-import CONTACT_NAME from '@salesforce/schema/Application_Review__c.Contact_Name__c';
-import FIRST_GENERATION from '@salesforce/schema/Application_Review__c.First_Generation__c';
-import MOBILE from '@salesforce/schema/Application_Review__c.Mobile__c';
-import COACHES_LIST from '@salesforce/schema/Application_Review__c.Coaches_List__c';
-import EMAIL from '@salesforce/schema/Application_Review__c.Email__c';
-import CITY_STATE from '@salesforce/schema/Application_Review__c.City_State__c';
 import HIGH_SCHOOL from '@salesforce/schema/Application_Review__c.High_School__c';
 import HIGH_SCHOOL_GPA from '@salesforce/schema/Application_Review__c.High_School_GPA__c';
 import PRIMARY_HIGH_SCHOOL_RANK from '@salesforce/schema/Application_Review__c.Primary_High_School_Rank__c';
@@ -77,8 +77,8 @@ import DATE_COMPLETED from '@salesforce/schema/Application_Review__c.Date_Comple
 
 export default class EasyAppReviewInfoPanel extends LightningElement {
 
-    @track allSections = ['APPLICATION_DETAILS',
-                                'STUDENT_INFORMATION',
+    @track allSections = ['STUDENT_INFORMATION',
+                                'APPLICATION_DETAILS',
                                 'ACADEMIC_INFORMATION',
                                 'TEST_SCORES',
                                 'TRANSCRIPT_REVIEW',
@@ -91,6 +91,12 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
 
     @track activeSections = [];
 
+    contactName= CONTACT_NAME;
+    firstGeneration= FIRST_GENERATION;
+    mobile= MOBILE;
+    coachesList= COACHES_LIST;
+    email= EMAIL;
+    cityState= CITY_STATE;
     testScorePreference= TEST_SCORE_PREFERENCE;
     application= APPLICATION;
     applicationAdmissionPlan= APPLICATION_ADMISSION_PLAN;
@@ -98,12 +104,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     applicationStartTerm= APPLICATION_START_TERM;
     applicationTermStartDate= APPLICATION_TERM_START_DATE;
     applicationAdmissionsSubstatus= APPLICATION_ADMISSIONS_SUBSTATUS;
-    contactName= CONTACT_NAME;
-    firstGeneration= FIRST_GENERATION;
-    mobile= MOBILE;
-    coachesList= COACHES_LIST;
-    email= EMAIL;
-    cityState= CITY_STATE;
     highSchool= HIGH_SCHOOL;
     highSchoolGpa= HIGH_SCHOOL_GPA;
     primaryHighSchoolRank= PRIMARY_HIGH_SCHOOL_RANK;
@@ -150,9 +150,8 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     dateCompleted= DATE_COMPLETED;
 
     isDisabled = true;
-    activeAllSections = true;
+    activeAllSections = false;
     openSections = [];
-    btnLabel = 'Close All';
 
     connectedCallback() {
         this.lmsSubscription();
@@ -162,7 +161,7 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
             this.appReviewId = value;
         })
 
-        this.activeSections = this.allSections;
+        this.activeSections = ['STUDENT_INFORMATION'];
     }
 
     renderedCallback() {
@@ -214,7 +213,9 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         const inputFields = this.template.querySelectorAll('lightning-input-field');
 
         if (inputFields) {
+
             inputFields.forEach(field => {
+
                 field.addEventListener('change', (evt) => {
                     this.isDisabled = false;
                 });
@@ -226,7 +227,9 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         const inputFields = this.template.querySelectorAll('lightning-input-field');
 
         if (inputFields) {
+
             inputFields.forEach(field => {
+
                 field.reset();
             });
         }
@@ -245,6 +248,36 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         this.isDisabled = true;
     }
 
+    handleSectionToggle(evt) {
+        this.openSections = evt.detail.openSections;
+
+        let sectionButton = this.template.querySelectorAll('.sectionButtonsSelect, .sectionButtons');
+
+        if (this.openSections) {
+
+            if (sectionButton) {
+
+                sectionButton.forEach(button => {
+
+                    if (this.openSections.includes(button.name)) {
+                        button.classList.remove("sectionButtons");
+                        button.classList.add("sectionButtonsSelect");
+                    } else {
+                        button.classList.remove("sectionButtonsSelect");
+                        button.classList.add("sectionButtons");
+                    }
+                });
+            }
+        } else {
+
+            sectionButton.forEach(button => {
+
+                button.classList.remove("sectionButtonsSelect");
+                button.classList.add("sectionButtons");
+            });
+        }
+    }
+
     closeAll(evt){
         this.activeSections = [];
     }
@@ -254,11 +287,7 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         this.activeAllSections = true;
     }
 
-    handleSectionToggle(evt) {
-        this.openSections = evt.detail.openSections;
-    }
-
-    openSection(evt) {
+    sectionButtonsClick(evt) {
 
         let section = evt.target.name;
 
@@ -276,7 +305,5 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
             this.activeSections = [section];
             this.activeAllSections = false;
         }
-
     }
-
 }

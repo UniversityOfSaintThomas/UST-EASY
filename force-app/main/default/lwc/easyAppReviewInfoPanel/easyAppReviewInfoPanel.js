@@ -17,6 +17,7 @@ import {adjustURLParams, setAppIdFromURL} from 'c/easyAppReviewUtility';
 
 import getAppInfoDetails from '@salesforce/apex/EASYAppInfoController.upsertAppReviewData';
 
+import RECORDTYPEID from '@salesforce/schema/Application_Review__c.RecordTypeId';
 import CONTACT_NAME from '@salesforce/schema/Application_Review__c.Contact_Name__c';
 import FIRST_GENERATION from '@salesforce/schema/Application_Review__c.First_Generation__c';
 import MOBILE from '@salesforce/schema/Application_Review__c.Mobile__c';
@@ -78,19 +79,20 @@ import DATE_COMPLETED from '@salesforce/schema/Application_Review__c.Date_Comple
 export default class EasyAppReviewInfoPanel extends LightningElement {
 
     @track allSections = ['STUDENT_INFORMATION',
-                                'APPLICATION_DETAILS',
-                                'ACADEMIC_INFORMATION',
-                                'TEST_SCORES',
-                                'TRANSCRIPT_REVIEW',
-                                'ESSAY_REVIEW',
-                                'INVOLVEMENT',
-                                'REVIEW_RECOMMENDATION'];
+        'APPLICATION_DETAILS',
+        'ACADEMIC_INFORMATION',
+        'TEST_SCORES',
+        'TRANSCRIPT_REVIEW',
+        'ESSAY_REVIEW',
+        'INVOLVEMENT',
+        'REVIEW_RECOMMENDATION'];
 
     @track testsSections = ['ACT',
-                                    'SAT']
+        'SAT']
 
     @track activeSections = [];
 
+    recordtypeid = RECORDTYPEID;
     contactName= CONTACT_NAME;
     firstGeneration= FIRST_GENERATION;
     mobile= MOBILE;
@@ -149,6 +151,11 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     dueDate= DUE_DATE;
     dateCompleted= DATE_COMPLETED;
 
+    appId;
+    appReviewId;
+    appReviewRecordId;
+    onLoadRecord;
+    onLoadFields;
     isDisabled = true;
     activeAllSections = false;
     openSections = [];
@@ -158,7 +165,8 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
 
         getAppInfoDetails({appId: this.appId}).then((value)=>{
 
-            this.appReviewId = value;
+            this.appReviewId = value.Id;
+            this.appReviewRecordId = value.RecordTypeId;
         })
 
         this.activeSections = ['STUDENT_INFORMATION'];
@@ -167,19 +175,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     renderedCallback() {
         this.enableUpdate();
     }
-
-    lmsSubscription() {
-        subscribe(this.messageContext, APP_SELECTED_CHANNEL, (message) => {
-            this.appId = message.appId;
-            adjustURLParams('c__appId', this.appId);
-        });
-
-        setAppIdFromURL(this.messageContext, APP_SELECTED_CHANNEL, this.currentPageReference, this.appId);
-    }
-
-    @track appId;
-
-    @track appReviewId;
 
     @wire(MessageContext)
     messageContext;
@@ -209,22 +204,60 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         });
     }
 
+    lmsSubscription() {
+        subscribe(this.messageContext, APP_SELECTED_CHANNEL, (message) => {
+            this.appId = message.appId;
+            adjustURLParams('c__appId', this.appId);
+        });
+
+        setAppIdFromURL(this.messageContext, APP_SELECTED_CHANNEL, this.currentPageReference, this.appId);
+    }
+
     enableUpdate() {
-        const inputFields = this.template.querySelectorAll('lightning-input-field');
+        let inputFields = this.template.querySelectorAll('lightning-input-field');
 
         if (inputFields) {
 
-            inputFields.forEach(field => {
+            if (inputFields.length > 0) {
 
-                field.addEventListener('change', (evt) => {
-                    this.isDisabled = false;
+                inputFields.forEach(field => {
+
+                    field.addEventListener('change', (evt) => {
+
+                        if (field.value !== this.onLoadFields[field.fieldName].value) {
+
+                            let accordionSection;
+                            let sectionWarning;
+
+                            accordionSection = field.closest(".accordionSection");
+
+                            if (accordionSection) {
+
+                                sectionWarning = accordionSection.querySelector(".sectionSaveWarning");
+                            }
+
+                            if (sectionWarning) {
+
+                                sectionWarning.style.display = "block";
+                            }
+
+                            evt.target.classList.add("fieldBorderWarning");
+                            this.isDisabled = false;
+                        }
+                    });
                 });
-            });
+            }
         }
     }
 
+    onloadHandler(evt){
+
+        this.onLoadRecord = evt.detail.records;
+        this.onLoadFields = this.onLoadRecord[this.appReviewId].fields;
+    }
+
     cancelReset(event) {
-        const inputFields = this.template.querySelectorAll('lightning-input-field');
+        let inputFields = this.template.querySelectorAll('lightning-input-field');
 
         if (inputFields) {
 
@@ -234,6 +267,7 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
             });
         }
 
+        this.clearSaveWarnings();
         this.isDisabled = true;
     }
 
@@ -245,7 +279,29 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         });
 
         this.dispatchEvent(evt);
+        this.clearSaveWarnings();
         this.isDisabled = true;
+    }
+
+    clearSaveWarnings() {
+        let sectionWarningText = this.template.querySelectorAll(".sectionSaveWarning");
+        let fieldWarningBorder = this.template.querySelectorAll(".fieldBorderWarning");
+
+        if (sectionWarningText) {
+
+            sectionWarningText.forEach(field => {
+
+                field.style.display = "none";
+            })
+        }
+
+        if (fieldWarningBorder) {
+
+            fieldWarningBorder.forEach(field => {
+
+                field.classList.remove("fieldBorderWarning")
+            })
+        }
     }
 
     handleSectionToggle(evt) {
@@ -260,16 +316,17 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
                 sectionButton.forEach(button => {
 
                     if (this.openSections.includes(button.name)) {
+
                         button.classList.remove("sectionButtons");
                         button.classList.add("sectionButtonsSelect");
                     } else {
+
                         button.classList.remove("sectionButtonsSelect");
                         button.classList.add("sectionButtons");
                     }
                 });
             }
         } else {
-
             sectionButton.forEach(button => {
 
                 button.classList.remove("sectionButtonsSelect");
@@ -288,7 +345,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     }
 
     sectionButtonsClick(evt) {
-
         let section = evt.target.name;
 
         if (!this.activeAllSections) {
@@ -296,12 +352,15 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
             let idx = this.openSections.indexOf(section);
 
             if (idx === -1) {
+
                 this.openSections.push(section);
                 this.activeSections = this.openSections;
             } else {
+
                 this.activeSections = this.openSections.toSpliced(idx, 1);
             }
         } else {
+
             this.activeSections = [section];
             this.activeAllSections = false;
         }

@@ -44,11 +44,15 @@
             <template lwc:if={applicantInfo.data}>
                 <lightning-record-edit-form object-api-name="Application_Review__c"
                                             record-id={appReviewId}
-                                            onsuccess={updateSuccess}>
+                                            record-type-id={appReviewRecordId}
+                                            onsuccess={updateSuccess}
+                                            onload={onloadHandler}>
                     <lightning-accordion allow-multiple-sections-open
                                          active-section-name={activeSections}
                                          onsectiontoggle={handleSectionToggle}>
-                        <lightning-accordion-section name="STUDENT_INFORMATION" label="Student Information">
+                        <div>
+                        <lightning-accordion-section name="STUDENT_INFORMATION" label="Student Information" class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not Saved</div>
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="6">
                                     <lightning-output-field field-name={contactName}></lightning-output-field>
@@ -74,6 +78,7 @@
                                 </lightning-layout-item>
                             </lightning-layout>
                         </lightning-accordion-section>
+                        </div>
 
                         <lightning-accordion-section name="APPLICATION_DETAILS" label="Application Details">
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
@@ -103,6 +108,9 @@
                             <lightning-layout class="slds-m-left_medium" multiple-rows>
                                 <lightning-layout-item size="6">
                                     <lightning-output-field field-name={applicationTermStartDate}></lightning-output-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-output-field field-name={recordtypeid}></lightning-output-field>
                                 </lightning-layout-item>
                             </lightning-layout>
                         </lightning-accordion-section>
@@ -188,7 +196,8 @@
                             </lightning-accordion>
                         </lightning-accordion-section>
 
-                        <lightning-accordion-section name="TRANSCRIPT_REVIEW" label="Transcript Review">
+                        <lightning-accordion-section name="TRANSCRIPT_REVIEW" label="Transcript Review" class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not Saved</div>
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="12">
                                     <lightning-input-field field-name={transcriptReivew}></lightning-input-field>
@@ -242,7 +251,8 @@
                             </lightning-layout>
                         </lightning-accordion-section>
 
-                        <lightning-accordion-section name="ESSAY_REVIEW" label="Essay Review">
+                        <lightning-accordion-section name="ESSAY_REVIEW" label="Essay Review" class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not Saved</div>
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="12">
                                     <lightning-input-field field-name={essayReview}></lightning-input-field>
@@ -263,7 +273,8 @@
                             </lightning-layout>
                         </lightning-accordion-section>
 
-                        <lightning-accordion-section name="INVOLVEMENT" label="Involvement">
+                        <lightning-accordion-section name="INVOLVEMENT" label="Involvement" class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not Saved</div>
                             <lightning-layout class="slds-m-left_medium" multiple-rows>
                                 <lightning-layout-item size="12">
                                     <lightning-input-field field-name={studentInvolvement}></lightning-input-field>
@@ -271,7 +282,8 @@
                             </lightning-layout>
                         </lightning-accordion-section>
 
-                        <lightning-accordion-section name="REVIEW_RECOMMENDATION" label="Review & Recommendation">
+                        <lightning-accordion-section name="REVIEW_RECOMMENDATION" label="Review & Recommendation" class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not Saved</div>
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="6">
                                     <lightning-input-field field-name={counselorRecommendation}></lightning-input-field>

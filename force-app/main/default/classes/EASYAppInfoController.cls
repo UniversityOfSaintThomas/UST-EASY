@@ -5,65 +5,68 @@
 public with sharing class EASYAppInfoController {
 
     @AuraEnabled(Cacheable=false)
-    public static String upsertAppReviewData(String appId) {
+    public static Application_Review__c upsertAppReviewData(String appId) {
 
         Application__c applicationInfo = new Application__c();
         hed__Education_History__c eduHistory = new hed__Education_History__c();
         Application_Review__c appReview = new Application_Review__c();
 
-        if (!String.isBlank(appId)) {
-            List<Application__c> applicationInfoList = [
-                    SELECT Id,
-                            Name,
-                            Contact__c,
-                            Highest_ACT_Composite__c,
-                            Highest_ACT_English__c,
-                            Highest_ACT_Math__c,
-                            Highest_ACT_Reading__c,
-                            Highest_ACT_Science_Reasoning__c,
-                            Highest_SAT_Composite__c,
-                            Highest_SAT_Math__c,
-                            Highest_SAT_Reading__c,
-                            Highest_SAT_Writing__c,
-                            SR_ACT_Composite__c,
-                            SR_ACT_English__c,
-                            SR_ACT_Math__c,
-                            SR_ACT_Reading__c,
-                            SR_ACT_Science_Reasoning__c,
-                            SR_SAT_Composite__c,
-                            SR_SAT_Math__c,
-                            SR_SAT_Reading__c,
-                            SR_SAT_Verbal__c,
-                            Highest_Level_Math__c
-                    FROM Application__c
-                    WHERE Id = :appId
-                    AND Id != NULL
-            ];
+        String recTypeTestOptional = '';
+        String recTypeTestScores = '';
 
-            if (applicationInfoList.size() > 0) {
-                applicationInfo = applicationInfoList[0];
+        List<Application__c> applicationInfoList = [
+                SELECT Id,
+                        Name,
+                        Contact__c,
+                        Generic_Filter_3__c,
+                        Highest_ACT_Composite__c,
+                        Highest_ACT_English__c,
+                        Highest_ACT_Math__c,
+                        Highest_ACT_Reading__c,
+                        Highest_ACT_Science_Reasoning__c,
+                        Highest_SAT_Composite__c,
+                        Highest_SAT_Math__c,
+                        Highest_SAT_Reading__c,
+                        Highest_SAT_Writing__c,
+                        SR_ACT_Composite__c,
+                        SR_ACT_English__c,
+                        SR_ACT_Math__c,
+                        SR_ACT_Reading__c,
+                        SR_ACT_Science_Reasoning__c,
+                        SR_SAT_Composite__c,
+                        SR_SAT_Math__c,
+                        SR_SAT_Reading__c,
+                        SR_SAT_Verbal__c,
+                        Highest_Level_Math__c
+                FROM Application__c
+                WHERE Id = :appId
+                AND Id != NULL
+        ];
 
-                appReview.Application__c = applicationInfo.Id;
-                appReview.Highest_ACT_Composite__c = applicationInfo.Highest_ACT_Composite__c;
-                appReview.Highest_ACT_English__c = applicationInfo.Highest_ACT_English__c;
-                appReview.Highest_ACT_Math__c = applicationInfo.Highest_ACT_Math__c;
-                appReview.Highest_ACT_Reading__c = applicationInfo.Highest_ACT_Reading__c;
-                appReview.Highest_ACT_Science_Reasoning__c = applicationInfo.Highest_ACT_Science_Reasoning__c;
-                appReview.Highest_SAT_Composite__c = applicationInfo.Highest_SAT_Composite__c;
-                appReview.Highest_SAT_Math__c = applicationInfo.Highest_SAT_Math__c;
-                appReview.Highest_SAT_Reading__c = applicationInfo.Highest_SAT_Reading__c;
-                appReview.Highest_SAT_Writing__c = applicationInfo.Highest_SAT_Writing__c;
-                appReview.SR_ACT_Composite__c = applicationInfo.SR_ACT_Composite__c;
-                appReview.SR_ACT_English__c = applicationInfo.SR_ACT_English__c;
-                appReview.SR_ACT_Math__c = applicationInfo.SR_ACT_Math__c;
-                appReview.SR_ACT_Reading__c = applicationInfo.SR_ACT_Reading__c;
-                appReview.SR_ACT_Science_Reasoning__c = applicationInfo.SR_ACT_Science_Reasoning__c;
-                appReview.SR_SAT_Composite__c = applicationInfo.SR_SAT_Composite__c;
-                appReview.SR_SAT_Math__c = applicationInfo.SR_SAT_Math__c;
-                appReview.SR_SAT_Reading__c = applicationInfo.SR_SAT_Reading__c;
-                appReview.SR_SAT_Verbal__c = applicationInfo.SR_SAT_Verbal__c;
-                appReview.Highest_Level_Math_Complete_Testing__c = applicationInfo.Highest_Level_Math__c;
-            }
+        if (applicationInfoList.size() > 0) {
+
+            applicationInfo = applicationInfoList[0];
+
+            appReview.Application__c = applicationInfo.Id;
+            appReview.Highest_ACT_Composite__c = applicationInfo.Highest_ACT_Composite__c;
+            appReview.Highest_ACT_English__c = applicationInfo.Highest_ACT_English__c;
+            appReview.Highest_ACT_Math__c = applicationInfo.Highest_ACT_Math__c;
+            appReview.Highest_ACT_Reading__c = applicationInfo.Highest_ACT_Reading__c;
+            appReview.Highest_ACT_Science_Reasoning__c = applicationInfo.Highest_ACT_Science_Reasoning__c;
+            appReview.Highest_SAT_Composite__c = applicationInfo.Highest_SAT_Composite__c;
+            appReview.Highest_SAT_Math__c = applicationInfo.Highest_SAT_Math__c;
+            appReview.Highest_SAT_Reading__c = applicationInfo.Highest_SAT_Reading__c;
+            appReview.Highest_SAT_Writing__c = applicationInfo.Highest_SAT_Writing__c;
+            appReview.SR_ACT_Composite__c = applicationInfo.SR_ACT_Composite__c;
+            appReview.SR_ACT_English__c = applicationInfo.SR_ACT_English__c;
+            appReview.SR_ACT_Math__c = applicationInfo.SR_ACT_Math__c;
+            appReview.SR_ACT_Reading__c = applicationInfo.SR_ACT_Reading__c;
+            appReview.SR_ACT_Science_Reasoning__c = applicationInfo.SR_ACT_Science_Reasoning__c;
+            appReview.SR_SAT_Composite__c = applicationInfo.SR_SAT_Composite__c;
+            appReview.SR_SAT_Math__c = applicationInfo.SR_SAT_Math__c;
+            appReview.SR_SAT_Reading__c = applicationInfo.SR_SAT_Reading__c;
+            appReview.SR_SAT_Verbal__c = applicationInfo.SR_SAT_Verbal__c;
+            appReview.Highest_Level_Math_Complete_Testing__c = applicationInfo.Highest_Level_Math__c;
 
             List<hed__Education_History__c> eduHistoryList = [
                     SELECT Id,
@@ -88,6 +91,36 @@ public with sharing class EASYAppInfoController {
                 appReview.Primary_HS_Graduation_Date__c = eduHistory.Diploma_GED_Earned_Date__c;
             }
 
+            List<RecordType> recType = [
+                    SELECT Id,
+                            Name
+                    FROM RecordType
+                    WHERE SobjectType = 'Application_Review__c'
+                    AND DeveloperName IN ('Test_Optional', 'Test_Score')
+            ];
+
+            if (recType.size() > 0) {
+
+                for (RecordType rec : recType) {
+
+                    if (rec.Name == 'Test Score') {
+
+                        recTypeTestScores = rec.Id;
+                    } else if (rec.Name == 'Test Optional') {
+
+                        recTypeTestOptional = rec.Id;
+                    }
+                }
+            }
+
+            if(applicationInfo.Generic_Filter_3__c == 'Apply With Standardized Test'){
+
+                appReview.RecordTypeId = recTypeTestScores;
+            } else {
+
+                appReview.RecordTypeId = recTypeTestOptional;
+            }
+
             List<Application_Review__c> appReviewList = [
                     SELECT Id
                     FROM Application_Review__c
@@ -103,42 +136,11 @@ public with sharing class EASYAppInfoController {
             }
 
             upsert appReview;
+
         }
 
-        return appReview.Id;
+        return appReview;
+
     }
 
-//    @AuraEnabled(Cacheable=true)
-//    public static Application_Review__c displayAppReviewInfo(String appReviewId) {
-//
-//        Application_Review__c appReviewData = new Application_Review__c();
-//        List<String> queryFields = new List<String>();
-//
-//        Map<String, Schema.SObjectField> appReviewFields = Schema.getGlobalDescribe().get('Application_Review__c').getDescribe().fields.getMap();
-//
-//        for (String fieldName : appReviewFields.keySet()) {
-//
-//            queryFields.add(fieldName);
-//        }
-//
-//        List<String> additionalFields = new List<String> {'Application__r.Name',
-//                                                          'Application__r.Intended_Term_of_Entry__r.Name',
-//                                                          'High_School__r.Name'};
-//
-//        queryFields.addAll(additionalFields);
-//
-//        String appReviewQuery = 'SELECT ' + String.join(queryFields, ',') +
-//                                ' FROM Application_Review__c WHERE Id = :appReviewId AND Id != NULL';
-//
-//        List<Application_Review__c> appReviewList = Database.query(appReviewQuery);
-//
-//        if (appReviewList.size() > 0) {
-//
-//            return appReviewData = appReviewList[0];
-//        } else {
-//
-//            return null;
-//        }
-//
-//    }
 }

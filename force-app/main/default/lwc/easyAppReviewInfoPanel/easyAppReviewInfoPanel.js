@@ -5,6 +5,7 @@
 import {LightningElement, wire, track, api} from 'lwc';
 import {getSObjectValue} from '@salesforce/apex';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import LightningAlert from "lightning/alert";
 
 import getApplicantInfo from '@salesforce/apex/EASYAppReviewController.getApplicantInfo';
 import FIRST_NAME from '@salesforce/schema/Application__c.Contact__r.FirstName';
@@ -243,6 +244,10 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
 
                             evt.target.classList.add("fieldBorderWarning");
                             this.isDisabled = false;
+                            window.addEventListener("beforeunload", this.beforeUnloadHandler);
+                        } else {
+
+                            window.removeEventListener("beforeunload", this.beforeUnloadHandler);
                         }
                     });
                 });
@@ -255,6 +260,12 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         this.onLoadRecord = evt.detail.records;
         this.onLoadFields = this.onLoadRecord[this.appReviewId].fields;
     }
+
+    beforeUnloadHandler = (evt) => {
+
+        evt.preventDefault();
+        evt.returnValue = true;
+    };
 
     cancelReset(event) {
         let inputFields = this.template.querySelectorAll('lightning-input-field');
@@ -281,6 +292,7 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         this.dispatchEvent(evt);
         this.clearSaveWarnings();
         this.isDisabled = true;
+        window.removeEventListener("beforeunload", this.beforeUnloadHandler);
     }
 
     clearSaveWarnings() {
@@ -365,4 +377,5 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
             this.activeAllSections = false;
         }
     }
+
 }

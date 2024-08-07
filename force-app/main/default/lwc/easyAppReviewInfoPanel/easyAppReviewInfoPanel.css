@@ -13,6 +13,11 @@
     margin-bottom: .25rem;
 }
 
+.appInfoContainer {
+    height: 600px;
+    overflow: auto;
+}
+
 .sectionSaveWarning{
     font-size: .70rem;
     color: red;
@@ -22,14 +27,12 @@
     --slds-c-input-color-border: red;
 }
 
-.accordion-nested {
-    --slds-c-accordion-heading-font-size: .90rem;
+.accordionSection {
+    --slds-c-accordion-heading-font-size: .95rem;
 }
 
-.notSavedButton {
-    font-size: .70rem;
-    height: 15px;
-    color: red;
+.accordionSectionNested {
+    --slds-c-accordion-heading-font-size: .90rem;
 }
 
 .slotButtons {
@@ -53,10 +56,3 @@
     color: white;
     border-radius: 8px;
 }
-
-
-
-/*.appInfoContainer {*/
-/*    height: 600px;*/
-/*    overflow: auto;*/
-/*}*/

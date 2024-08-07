@@ -40,7 +40,7 @@
                 <button class="slds-button slds-p-left_x-small slds-p-right_x-small sectionButtons" name="REVIEW_RECOMMENDATION" onclick={sectionButtonsClick}>Review Recommendation</button>
             </div>
         </template>
-        <div class="slds-m-top_medium appInfoContainer">
+        <div class="slds-m-top_large appInfoContainer">
             <template lwc:if={applicantInfo.data}>
                 <lightning-record-edit-form object-api-name="Application_Review__c"
                                             record-id={appReviewId}
@@ -80,7 +80,7 @@
                         </lightning-accordion-section>
                         </div>
 
-                        <lightning-accordion-section name="APPLICATION_DETAILS" label="Application Details">
+                        <lightning-accordion-section name="APPLICATION_DETAILS" label="Application Details" class="accordionSection">
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="6">
                                     <lightning-output-field field-name={testScorePreference}></lightning-output-field>
@@ -115,7 +115,7 @@
                             </lightning-layout>
                         </lightning-accordion-section>
 
-                        <lightning-accordion-section name="ACADEMIC_INFORMATION" label="Academic Information">
+                        <lightning-accordion-section name="ACADEMIC_INFORMATION" label="Academic Information" class="accordionSection">
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="6">
                                     <lightning-output-field field-name={highSchool}></lightning-output-field>
@@ -134,7 +134,7 @@
                             </lightning-layout>
                         </lightning-accordion-section>
 
-                        <lightning-accordion-section name="TEST_SCORES" label="Test Scores">
+                        <lightning-accordion-section name="TEST_SCORES" label="Test Scores" class="accordionSection">
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="6">
                                     <lightning-output-field field-name={testScoresBelowMinimum}></lightning-output-field>
@@ -154,7 +154,7 @@
 
                             <lightning-accordion allow-multiple-sections-open
                                                  active-section-name={testsSections}
-                                                 class="accordion-nested">
+                                                 class="accordionSectionNested">
                                 <lightning-accordion-section class="slds-m-left_small" name="ACT" label="ACT">
                                     <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                         <lightning-layout-item size="6">
@@ -177,7 +177,7 @@
 
                             <lightning-accordion allow-multiple-sections-open
                                                  active-section-name={testsSections}
-                                                 class="accordion-nested">
+                                                 class="accordionSectionNested">
                                 <lightning-accordion-section class="slds-m-left_small" name="SAT" label="SAT">
                                     <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                         <lightning-layout-item size="6">

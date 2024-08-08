@@ -79,17 +79,23 @@ import DATE_COMPLETED from '@salesforce/schema/Application_Review__c.Date_Comple
 
 export default class EasyAppReviewInfoPanel extends LightningElement {
 
+    progressSteps = [
+        {label: 'Counselor Review', value: 'step-1'},
+        {label: 'Committee Decision', value: 'step-2'},
+        {label: 'Complete', value: 'step-3'},
+    ];
+
     @track allSections = ['STUDENT_INFORMATION',
-        'APPLICATION_DETAILS',
-        'ACADEMIC_INFORMATION',
-        'TEST_SCORES',
-        'TRANSCRIPT_REVIEW',
-        'ESSAY_REVIEW',
-        'INVOLVEMENT',
-        'REVIEW_RECOMMENDATION'];
+                                'APPLICATION_DETAILS',
+                                'ACADEMIC_INFORMATION',
+                                'TEST_SCORES',
+                                'TRANSCRIPT_REVIEW',
+                                'ESSAY_REVIEW',
+                                'INVOLVEMENT',
+                                'REVIEW_RECOMMENDATION'];
 
     @track testsSections = ['ACT',
-        'SAT']
+                                    'SAT']
 
     @track activeSections = [];
 
@@ -164,10 +170,10 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     connectedCallback() {
         this.lmsSubscription();
 
-        getAppInfoDetails({appId: this.appId}).then((value)=>{
+        getAppInfoDetails({appId: this.appId}).then((returnValue)=>{
 
-            this.appReviewId = value.Id;
-            this.appReviewRecordId = value.RecordTypeId;
+            this.appReviewId = returnValue.Id;
+            this.appReviewRecordId = returnValue.RecordTypeId;
         })
 
         this.activeSections = ['STUDENT_INFORMATION'];
@@ -201,7 +207,9 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         publish(this.messageContext, APP_SELECTED_CHANNEL, payload);
 
         getAppInfoDetails({appId: this.appId}).then(returnValue => {
-            this.appReviewId = returnValue;
+
+            this.appReviewId = returnValue.Id;
+            this.appReviewRecordId = returnValue.RecordTypeId;
         });
     }
 
@@ -276,10 +284,11 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
 
                 field.reset();
             });
-        }
 
-        this.clearSaveWarnings();
-        this.isDisabled = true;
+            this.clearSaveWarnings();
+            this.isDisabled = true;
+            window.removeEventListener("beforeunload", this.beforeUnloadHandler);
+        }
     }
 
     updateSuccess(){

@@ -13,26 +13,31 @@
     margin-bottom: .25rem;
 }
 
-.appInfoContainer {
-    height: 600px;
-    overflow: auto;
-}
+/*.appInfoContainer {*/
+/*    height: 600px;*/
+/*    overflow: auto;*/
+/*}*/
 
 .sectionSaveWarning{
     font-size: .70rem;
+    font-style: italic;
     color: red;
 }
 
 .fieldBorderWarning{
     --slds-c-input-color-border: red;
+    --slds-c-checkbox-color-border: red;
+    --slds-c-checkbox-color-border-checked: red;
+    --slds-c-textarea-color-border: red;
 }
 
 .accordionSection {
     --slds-c-accordion-heading-font-size: .95rem;
 }
 
-.accordionSectionNested {
-    --slds-c-accordion-heading-font-size: .90rem;
+.sectionNested {
+    font-size: .8rem;
+    margin-left: 3px;
 }
 
 .slotButtons {
@@ -43,16 +48,16 @@
 
 .sectionButtons {
     font-size: .70rem;
-    height: 25px;
+    height: 23px;
     border: solid 1px;
     border-radius: 8px;
 }
 
 .sectionButtonsSelect {
     font-size: .70rem;
-    height: 25px;
+    height: 23px;
     border: solid 1px;
-    background-color: #00A1E0;
+    background-color: #8348ad;
     color: white;
     border-radius: 8px;
 }

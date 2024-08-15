@@ -57,7 +57,8 @@
     font-size: .70rem;
     height: 23px;
     border: solid 1px;
-    background-color: #8348ad;
+    /*background-color: #8348ad;*/
+    background-color: rgba(131, 72, 173, 0.76);
     color: white;
     border-radius: 8px;
 }

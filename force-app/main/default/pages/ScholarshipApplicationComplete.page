@@ -31,7 +31,10 @@
                     <p class="slds-text-body_regular">
                         Your application for the {!scholarship.Name} has been received and is being reviewed.
                     </p>
-                    <apex:outputText escape="false" value="<h4>What happens next?</h4>{!scholarship.Review_Award_Process_Description__c}" rendered="{!IF(NOT(ISNULL(scholarship.Review_Award_Process_Description__c)), true, false)}"/>
+                    <h2 class="slds-text-heading_medium slds-p-vertical_small">
+                        What happens next?
+                    </h2>
+                    <apex:outputText escape="false" value="{!scholarship.Review_Award_Process_Description__c}" rendered="{!IF(NOT(ISNULL(scholarship.Review_Award_Process_Description__c)), true, false)}"/>
                 </div>
             </div>
         </apex:define>

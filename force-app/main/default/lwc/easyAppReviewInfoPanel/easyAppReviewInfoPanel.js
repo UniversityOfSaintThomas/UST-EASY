@@ -176,7 +176,8 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
             this.appReviewRecordId = returnValue.RecordTypeId;
         })
 
-        this.activeSections = ['STUDENT_INFORMATION'];
+        this.activeSections = ['STUDENT_INFORMATION',
+                                'APPLICATION_DETAILS'];
     }
 
     renderedCallback() {

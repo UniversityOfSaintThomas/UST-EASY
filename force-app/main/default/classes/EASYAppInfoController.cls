@@ -43,7 +43,7 @@ public with sharing class EASYAppInfoController {
                 AND Id != NULL
         ];
 
-        if (applicationInfoList.size() > 0) {
+        if (!applicationInfoList.isEmpty()) {
 
             applicationInfo = applicationInfoList[0];
 
@@ -82,7 +82,7 @@ public with sharing class EASYAppInfoController {
                     LIMIT 1
             ];
 
-            if (eduHistoryList.size() > 0) {
+            if (!eduHistoryList.isEmpty()) {
 
                 eduHistory = eduHistoryList[0];
                 appReview.High_School__c = eduHistory.hed__Account__c;
@@ -99,7 +99,7 @@ public with sharing class EASYAppInfoController {
                     AND DeveloperName IN ('Test_Optional', 'Test_Score')
             ];
 
-            if (recType.size() > 0) {
+            if (!recType.isEmpty()) {
 
                 for (RecordType rec : recType) {
 
@@ -130,7 +130,7 @@ public with sharing class EASYAppInfoController {
                     LIMIT 1
             ];
 
-            if (appReviewList.size() > 0) {
+            if (!appReviewList.isEmpty()) {
 
                 appReview.Id = appReviewList[0].Id;
             }

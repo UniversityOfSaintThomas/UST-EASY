@@ -1,3 +1,64 @@
 /**
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/16/2023.
  */
+
+/*.header-column {*/
+/*    padding: 0 2rem;*/
+/*}*/
+
+.field-title {
+    font-size: .75rem;
+    line-height: 1.25;
+    color: #54698d;
+    margin-bottom: .25rem;
+}
+
+/*.appInfoContainer {*/
+/*    height: 600px;*/
+/*    overflow: auto;*/
+/*}*/
+
+.sectionSaveWarning{
+    font-size: .70rem;
+    font-style: italic;
+    color: red;
+}
+
+.fieldBorderWarning{
+    --slds-c-input-color-border: red;
+    --slds-c-checkbox-color-border: red;
+    --slds-c-checkbox-color-border-checked: red;
+    --slds-c-textarea-color-border: red;
+}
+
+.accordionSection {
+    --slds-c-accordion-heading-font-size: .95rem;
+}
+
+.sectionNested {
+    font-size: .8rem;
+    margin-left: 3px;
+}
+
+.slotButtons {
+    font-size: .70rem;
+    height: 25px;
+    border: solid 1px;
+}
+
+.sectionButtons {
+    font-size: .70rem;
+    height: 23px;
+    border: solid 1px;
+    border-radius: 8px;
+}
+
+.sectionButtonsSelect {
+    font-size: .70rem;
+    height: 23px;
+    border: solid 1px;
+    /*background-color: #8348ad;*/
+    background-color: rgba(131, 72, 173, 0.76);
+    color: white;
+    border-radius: 8px;
+}

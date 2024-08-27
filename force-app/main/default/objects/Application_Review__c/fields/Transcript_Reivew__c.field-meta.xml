@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Transcript_Reivew__c</fullName>
     <defaultValue>&quot;Please consider the following: Grade Trends, Type of courses taken (Honors, PSEO, CIS, IB, etc. OR ELL, Developmental, etc.), Course selection - core or on-academic, Grades in English and Math - are they on track, Areas of Concern&quot;</defaultValue>
-    <externalId>false</externalId>
     <label>Transcript Review</label>
     <length>32768</length>
     <trackHistory>false</trackHistory>

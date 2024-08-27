@@ -3,7 +3,6 @@
     <fullName>High_School__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
     <description>School that the student is currently attending</description>
-    <externalId>false</externalId>
     <label>High School</label>
     <referenceTo>Account</referenceTo>
     <relationshipName>UG_Application_Review</relationshipName>

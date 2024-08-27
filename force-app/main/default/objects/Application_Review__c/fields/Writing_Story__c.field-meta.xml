@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Writing_Story__c</fullName>
     <description>STORY: does the applicant tell you more about their lived experience, interests and/or academic history</description>
-    <externalId>false</externalId>
     <inlineHelpText>Exceeds - Meaningful personal experience, insight to who they, information not included in the app
             Meets  - Repeated info from app, helps understand motivation and applicant
             Does Not Meet - Not much substance, essay for class, no info about applicant</inlineHelpText>

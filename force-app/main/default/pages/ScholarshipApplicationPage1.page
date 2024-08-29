@@ -29,12 +29,12 @@
                 <apex:form styleClass="criteriaForm slds-grid slds-wrap" id="criteriaForm">
                     <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!IF(ISNULL(scholarship.Name) , false , true)}">
                         <h2 class="slds-text-heading_medium">
-                            {!scholarship.Name}
+                            <strong>{!scholarship.Name}</strong>
                         </h2>
                     </apex:outputPanel>
 
                     <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!IF(ISNULL(scholarship.Description__c) , false , true)}">
-                        <h2 class="slds-text-heading_medium">Scholarship Description</h2>
+                        <h2 class="slds-text-heading_medium">Description</h2>
                         <apex:outputText escape="false" value="{!scholarship.Description__c}"></apex:outputText>
                     </apex:outputPanel>
 

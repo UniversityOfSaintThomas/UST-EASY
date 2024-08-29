@@ -41,7 +41,7 @@
 
                     <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" layout="block">
                         <h2 class="slds-text-heading_medium">
-                            {!scholarship.Name}
+                            <strong>{!scholarship.Name}</strong>
                         </h2>
                     </apex:outputPanel>
 
@@ -167,50 +167,50 @@
 <!--                                Recommendation-->
 <!--                            </h2>-->
 <!--                        </apex:outputPanel>-->
-                        <apex:repeat value="{!["1"="1","2"="2"]}" var="r">
-                            <apex:variable var="blankOrNumber" value="{!If(r=="1","",r)}"/>
-                            <apex:variable var="showRecommender" value="{!scholarship['Recommender' + blankOrNumber + '__c']}"/>
-                            <apex:outputPanel layout="none" rendered="{!showRecommender}">
+                        <apex:repeat value="{!recommenderCheck}" var="r">
+<!--                            <apex:variable var="blankOrNumber" value="{!If(r=="1","",r)}"/>-->
+<!--                            <apex:variable var="showRecommender" value="{!scholarship['Recommender' + blankOrNumber + '__c']}"/>-->
+                            <apex:outputPanel layout="none" rendered="{!scholarship['Recommender' + r + '__c']}">
                                 <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 recommender" html-data-recnumber="{!r}">
                                     <h3 class="slds-text-heading_medium">
                                         Recommendation {!IF(multipleRecs,r,'')}
                                     </h3>
                                     <p class="slds-text-body_regular">
-                                        <apex:outputText escape="false" value="{!scholarship['Recommender' + blankOrNumber + '_Description__c']}"/>
+                                        <apex:outputText escape="false" value="{!scholarship['Recommender' + r + '_Description__c']}"/>
                                     </p>
                                     <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
                                         <apex:outputLabel for="RecName{!r}" styleClass="slds-form-element__label">Name</apex:outputLabel>
-                                        <div class="slds-form-element__control">
-                                            <apex:outputPanel rendered="{!r == '1'}" layout="none">
-                                                <apex:inputText value="{!applicant.Recommender_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
+                                        <apex:outputPanel layout="block" styleclass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!r == ''}" layout="none">
+                                                <apex:inputText value="{!applicant.Recommender_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate1))}"></apex:inputText>
                                             </apex:outputPanel>
                                             <apex:outputPanel rendered="{!r == '2'}" layout="none">
-                                                <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
+                                                <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"></apex:inputText>
                                             </apex:outputPanel>
-                                        </div>
+                                        </apex:outputPanel>
                                         <div class="slds-form-element__help">This field is required.</div>
                                     </apex:outputPanel>
 
                                     <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
                                         <apex:outputLabel for="RecEmail{!r}" styleClass="slds-form-element__label">Email</apex:outputLabel>
-                                        <div styleClass="slds-form-element__control" layout="block">
-                                            <apex:outputPanel rendered="{!r == '1'}" layout="none">
-                                                <apex:inputText value="{!applicant.Recommender_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
+                                        <apex:outputPanel layout="block" styleclass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!r == ''}" layout="none">
+                                                <apex:inputText value="{!applicant.Recommender_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate1))}"></apex:inputText>
                                             </apex:outputPanel>
                                             <apex:outputPanel rendered="{!r == '2'}" layout="none">
-                                                <apex:inputText value="{!applicant.Recommender2_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
+                                                <apex:inputText value="{!applicant.Recommender2_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate2))}"></apex:inputText>
                                             </apex:outputPanel>
-                                        </div>
+                                        </apex:outputPanel>
                                         <div class="slds-form-element__help">Please enter a valid email address.</div>
                                     </apex:outputPanel>
 
                                     <p class="recError" style="display:none">Please enter a name and a valid email.</p>
                                     <apex:outputPanel styleClass="slds-p-vertical_small" layout="block">
-                                        <apex:outputPanel layout="none" rendered="{!(r == '1' && ISNULL(recommendRequestDate1)) || (r == '2' && ISNULL(recommendRequestDate2))}">
+                                        <apex:outputPanel layout="none" rendered="{!(r == '' && ISNULL(recommendRequestDate1)) || (r == '2' && ISNULL(recommendRequestDate2))}">
                                             <apex:commandLink styleClass="slds-button slds-button_neutral slds-p-vertical_xx-small validateRecommender" action="{!SendRecommenderEmail}" value="Request Now">
                                             </apex:commandLink>
                                         </apex:outputPanel>
-                                        <apex:outputPanel rendered="{!r == '1'}" layout="none">
+                                        <apex:outputPanel rendered="{!r == ''}" layout="none">
                                             <apex:outputText value="Recommendation request sent on {0, date, MMMM d',' yyyy hh:mm aaa}." rendered="{!NOT(ISNULL(recommendRequestDate1))}">
                                                 <apex:param value="{!recommendRequestDate1}"/>
                                             </apex:outputText>

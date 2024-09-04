@@ -30,10 +30,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
     }
     public List<String> recommenderCheck {
         get {
-
             return new List<String>{'','2'};
         }
-        set;
     }
     public Datetime recommendRequestDate1 { get; set; }
     public Datetime recommendRequestDate2 { get; set; }
@@ -162,6 +160,9 @@ public with sharing class ScholarshipApplicationPage2Controller {
         String styles = ' style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: rgb(85, 85, 85);font-family: Palatino Linotype, Georgia, serif;font-size: 16px;line-height: 150%;text-align: left;"';
         String styledP = '<p ' + styles + '>';
         String RecMessage = styledP + UserInfo.getFirstName() + ' ' + UserInfo.getLastName() + ' has applied for the ' + scholarship.Name + ' at the University of St. Thomas and indicated that you would be willing to write a recommendation. </p>';
+        String recMessageLink1;
+        String recMessageLink2;
+
         if (String.isNotBlank(scholarship.Description__c)) {
             String scholarshipDescription = scholarship.Description__c;
             scholarshipDescription = scholarshipDescription.replaceAll('<p>', styledP);
@@ -174,17 +175,19 @@ public with sharing class ScholarshipApplicationPage2Controller {
         }
 
         if (String.isNotBlank(recName1) && String.isNotBlank(recEmail1) && applicant.Recommendation_Request_Date__c == null) {
-            RecMessage += styledP + '<a href="' + recLink1 + '" class="button">Submit your recommendation</a></p>';
+            recMessageLink1 = RecMessage;
+            recMessageLink1 += styledP + '<a href="' + recLink1 + '" class="button">Submit your recommendation</a></p>';
             if (!String.isEmpty(recEmail1)) {
-                emailsToSend.add(ScholarshipSharedUtilities.sendEmail(recName1, recEmail1, RecSubject, RecMessage, RecMessage, scholarship.Name));
+                emailsToSend.add(ScholarshipSharedUtilities.sendEmail(recName1, recEmail1, RecSubject, recMessageLink1, recMessageLink1, scholarship.Name));
                 applicant.Recommendation_Request_Date__c = Datetime.now();
             }
         }
 
         if (String.isNotBlank(recName2) && String.isNotBlank(recEmail2) && applicant.Recommendation2_Request_Date__c == null) {
-            RecMessage += styledP + '<a href="' + recLink2 + '" class="button">Submit your recommendation</a></p>';
+            recMessageLink2 = RecMessage;
+            recMessageLink2 += styledP + '<a href="' + recLink2 + '" class="button">Submit your recommendation</a></p>';
             if (!String.isEmpty(recEmail2)) {
-                emailsToSend.add(ScholarshipSharedUtilities.sendEmail(recName2, recEmail2, RecSubject, RecMessage, RecMessage, scholarship.Name));
+                emailsToSend.add(ScholarshipSharedUtilities.sendEmail(recName2, recEmail2, RecSubject, recMessageLink2, recMessageLink2, scholarship.Name));
                 applicant.Recommendation2_Request_Date__c = Datetime.now();
             }
         }

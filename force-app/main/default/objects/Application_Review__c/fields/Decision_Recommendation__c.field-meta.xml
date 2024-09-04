@@ -3,7 +3,6 @@
     <fullName>Decision_Recommendation__c</fullName>
     <deprecated>false</deprecated>
     <description>This is the decision recommendation of the reviewer.</description>
-    <externalId>false</externalId>
     <label>Decision Recommendation</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

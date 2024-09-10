@@ -143,10 +143,6 @@ public with sharing class ScholarshipApplicationPage2Controller {
         redirectPage.getParameters().put('sid', sid);
         //return redirectPage;
 
-        System.debug('SendRecommender1: '+applicant.Recommender_Name__c+' '+applicant.Recommender_Email__c);
-        System.debug('Application Question Answer 1: '+applicant.Question_1_Answer__c);
-        System.debug('Application Essay 1: '+applicant.Essay_1_Answer__c);
-
         String recName1 = applicant.Recommender_Name__c;
         String recEmail1 = applicant.Recommender_Email__c;
         String recLink1 = applicant.Recommendation_Link__c;
@@ -208,18 +204,12 @@ public with sharing class ScholarshipApplicationPage2Controller {
     }
 
     public PageReference SaveFinishLater() {
-
-        System.debug('Recommender1: '+applicant.Recommender_Name__c+' '+applicant.Recommender_Email__c);
-        System.debug('Recommender2: '+applicant.Recommender2_Name__c+' '+applicant.Recommender2_Email__c);
-        System.debug('Applicant Signature: '+applicant.Signature__c);
-
         try {
             upsert applicant;
             essay1HasText = !String.isEmpty(applicant.Essay_1_Answer__c);
             essay2HasText = !String.isEmpty(applicant.Essay_2_Answer__c);
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
-            System.debug('Upsert Error: '+ex.getMessage());
         }
         String msgComplete = '<strong>Saved:</strong> Your scholarship application has been saved and you can return to it at any time. ';
         msgComplete += 'Your scholarship will not be submitted until you click “Save & Submit” below.';

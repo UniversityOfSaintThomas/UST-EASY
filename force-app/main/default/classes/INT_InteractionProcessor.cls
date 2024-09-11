@@ -426,17 +426,21 @@ public class INT_InteractionProcessor {
             List<Datacloud.FindDuplicatesResult> results = Datacloud.FindDuplicates.findDuplicates(cons);
 
             for (Integer i = 0; i < cons.size(); i++) {
-                if (interactions[interactionsIndex].Lead_Only__c == false) {
-                    for (Datacloud.DuplicateResult result : results[i].getDuplicateResults()) {
-                        for (Datacloud.MatchResult matchResult : result.getMatchResults()) {
-                            if (matchResult.getEntityType() == 'Contact' && !matchResult.getMatchRecords().isEmpty()) {
-                                interactions[interactionsIndex].Contact__c = matchResult.getMatchRecords()[0].getRecord().Id;
+
+                if (String.isBlank(interactions[interactionsIndex].Contact__c)) {
+
+                    if (interactions[interactionsIndex].Lead_Only__c == false) {
+                        for (Datacloud.DuplicateResult result : results[i].getDuplicateResults()) {
+                            for (Datacloud.MatchResult matchResult : result.getMatchResults()) {
+                                if (matchResult.getEntityType() == 'Contact' && !matchResult.getMatchRecords().isEmpty()) {
+                                    interactions[interactionsIndex].Contact__c = matchResult.getMatchRecords()[0].getRecord().Id;
+                                    break;
+                                }
+                            }
+
+                            if (interactions[interactionsIndex].Contact__c != null) {
                                 break;
                             }
-                        }
-
-                        if (interactions[interactionsIndex].Contact__c != null) {
-                            break;
                         }
                     }
                 }

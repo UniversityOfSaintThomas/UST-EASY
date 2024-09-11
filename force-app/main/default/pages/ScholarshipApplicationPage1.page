@@ -24,7 +24,7 @@
                     </ul>
                 </nav>
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:form styleClass="criteriaForm slds-grid slds-wrap" id="criteriaForm">
                     <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!IF(ISNULL(scholarship.Name) , false , true)}">

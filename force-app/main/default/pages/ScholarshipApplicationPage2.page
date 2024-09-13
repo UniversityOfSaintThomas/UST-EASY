@@ -67,9 +67,9 @@
                     <apex:repeat value="{!["1"="1","2"="2", "3"="3", "4"="4"]}" var="q">
                         <apex:outputPanel layout="block" styleClass="slds-col slds-p-bottom_x-small slds-size_1-of-1" rendered="{!NOT(ISNULL(scholarship['Question_' + q + '_Text__c']))}">
                             <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
-                                <apex:outputLabel styleClass="slds-form-element__label" for="questionInput">
-                                    <apex:outputText escape="false" value="{!scholarship['Question_' + q + '_Text__c']}"/>
-                                </apex:outputLabel>
+<!--                                <apex:outputLabel styleClass="slds-form-element__label" for="questionInput"/>-->
+                                <apex:outputText escape="false" value="{!scholarship['Question_' + q + '_Text__c']}"></apex:outputText>
+<!--                                </apex:outputLabel>-->
                                 <!--Text input -->
                                 <apex:outputPanel layout="block" styleClass="slds-form-element__control">
                                     <apex:inputField value="{!applicant['Question_' + q + '_Answer__c']}" styleClass="slds-textarea" id="questionInput"/>
@@ -87,7 +87,7 @@
                         <apex:repeat value="{!["1"="1","2"="2"]}" var="e">
                             <apex:outputPanel styleClass="essayInputWrapper slds-p-top_x-small" layout="block" rendered="{!NOT(ISNULL(scholarship['Essay_' + e + '_Text__c']))}" html-data-essayno="{!e}">
                                 <!-- Essay Description -->
-                                <apex:outputText escape="false" value="{!scholarship['Essay_' + e + '_Text__c']}"/>
+                                <apex:outputText escape="false" value="{!scholarship['Essay_' + e + '_Text__c']}"></apex:outputText>
                                 <apex:outputPanel rendered="{!scholarship['Essay_' + e + '_Allow_Upload__c']}" layout="none">
 
                                     <apex:outputPanel styleClass="slds-col slds-p-bottom_x-small slds-size_1-of-1" layout="block">

@@ -622,7 +622,7 @@ export default class RequestForInformationForm extends LightningElement {
     onChange(event) {
         if (event.detail.addquestion) {
             if (this.additional_questions[event.detail.questionid].questionType.toLowerCase() !== 'static content') {
-                console.log(JSON.stringify(this.additional_questions[event.detail.questionid], null, 2))
+                //console.log(JSON.stringify(this.additional_questions[event.detail.questionid], null, 2))
                 let fieldToApplyTo = this.additional_questions[event.detail.questionid].fieldToApplyTo;
                 this.record_input.fields[fieldToApplyTo] = event.detail.value;
             }
@@ -742,12 +742,16 @@ export default class RequestForInformationForm extends LightningElement {
                 }
                 break;
             case this.field_labels.high_school_search_label:
+                if (this.manually_enter_high_school) {
+                    this.record_input.fields.hed__Most_Recent_School__c = event.detail.value;
+                } else {
                 this.record_input.fields.High_School_or_College__c = event.detail.id;
-                this.record_input.fields.Most_Recent_School__c = event.detail.mainField;
+                    this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
+                }
                 break;
             case this.field_labels.college_search_label:
                 this.record_input.fields.High_School_or_College__c = event.detail.id;
-                this.record_input.fields.Most_Recent_School__c = event.detail.mainField;
+                this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
                 break;
             case this.field_labels.employer_label:
                 this.record_input.fields.Company = event.target.value;

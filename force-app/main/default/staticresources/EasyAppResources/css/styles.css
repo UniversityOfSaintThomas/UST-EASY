@@ -342,3 +342,9 @@ div.slds-progress {
 span.dateFormat{
     display: none;
 }
+
+.deletePreviousFileIcon:hover,
+.clearSelectFileIcon:hover{
+    cursor: pointer;
+    color: red;
+}

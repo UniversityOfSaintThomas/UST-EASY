@@ -93,6 +93,8 @@
                                                  attachmentTitle="{!IF(!ISBLANK(group.response['Original_Uploaded_Document_File_Name__c']),group.response['Original_Uploaded_Document_File_Name__c'], group.att.Title)}"
                                                  acceptedFileTypes="{!group.item.File_Types__c}"
                                                  isRequiredUpload="{!isRequiredUpload}"
+                                                 oldAttContentDocumentId="{!group.oldAttVersion.ContentDocumentId}"
+                                                 responseObjectID="{!group.response['Id']}"
             />
         </apex:outputPanel>
 

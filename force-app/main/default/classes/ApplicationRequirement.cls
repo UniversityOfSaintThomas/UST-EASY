@@ -33,9 +33,10 @@ public class ApplicationRequirement {
     public transient String additionalDataString { get; set; }
     public String redirectPage { get; set; }
     public String userType { get; set; }
-    public Boolean isStandardUser { get; set; }
 
     public Application_Control__c appControl { get; set; }
+    public String contentDocId { get; set; }
+    public String reqResponseId { get; set; }
 
     public Id nextReqId {
         get {
@@ -118,9 +119,7 @@ public class ApplicationRequirement {
             return portalPage;
         }
 
-        //isExternalUser = appInfo.isExternalUser;
         userType = String.valueOf(UserInfo.getUserType());
-        isStandardUser = userType.equalsIgnoreCase('standard');
         if (userType.equalsIgnoreCase('guest')) {
             String startUrl = System.currentPageReference().getParameters().get('startURL');
             return new PageReference(Site.getPathPrefix() + '/SiteLogin?startURL=' + EncodingUtil.urlEncode(startUrl, 'UTF-8'));
@@ -241,6 +240,7 @@ public class ApplicationRequirement {
                     FROM Question_Response__c
                     WHERE Question__c IN :questionItemSet
                     AND Requirement_Response__r.Application__c = :appInfo.appId
+                    ORDER BY LastModifiedDate ASC
             ];
         } else if (questionResponses == null) {
             questionResponses = new List<Question_Response__c>();
@@ -303,13 +303,14 @@ public class ApplicationRequirement {
 
         // Clone Question Response records and store ID if this is an external user
         // in order to get around restriction of external users being able to edit objects
-        if (appInfo.isExternalUser != null && appInfo.isExternalUser) {
+        if (Auth.CommunitiesUtil.isGuestUser()) {
             for (ApplicationQuestionGroup aqg : section.groups) {
                 if (aqg.questionGroup && aqg.questions != null) {
                     for (ApplicationQuestion aq : aqg.questions) {
                         if (aq.response != null && aq.response.Id != null) {
                             aq.responseId = aq.response.Id;
                             aq.response = aq.response.clone(false, true, false, false);
+                            aq.response.id = aq.responseId;
                         }
                     }
                 }
@@ -437,12 +438,8 @@ public class ApplicationRequirement {
         for (ApplicationQuestionGroup aqg : section.groups) {
             if (aqg.response != null && aqg.isEditable) {
                 //Skip marking requirement response as viewed as directed by requirement
-                System.debug('Do_Not_Mark_Requirement_as_Viewed__c: ' + aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c);
                 if (!aqg.response.Requirement_Item__r.Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c) {
-                    System.debug('Marking requirement response as viewed');
                     aqg.response.Viewed__c = true;
-                } else {
-                    System.debug('Skipping marking requirement response as viewed because Do_Not_Mark_Requirement_as_Viewed__c is true');
                 }
                 if (String.isNotBlank(aqg.response.External_Email__c)) {
                     requirement_item_ids_of_external_email_rrs.put(aqg.response.Requirement_Item__c, aqg.response.Id);
@@ -494,6 +491,18 @@ public class ApplicationRequirement {
         } catch (Exception ex) {
             System.debug(ex.getMessage());
         }
+
+        String emergency = 'none';
+        emergency = 'today';
+        emergency = 'today';
+        emergency = 'today';
+        emergency = 'today';
+        emergency = 'today';
+        emergency = 'today';
+        emergency = 'today';
+        emergency = 'today';
+        emergency = 'today';
+        emergency = 'today';
 
         try {
             update con;
@@ -658,4 +667,50 @@ public class ApplicationRequirement {
             }
         }
     }
+
+//Delete previous uploaded files and linked Supporting Documents records
+    public PageReference deletePreviousFile() {
+
+        List<String> supportingDocIds = new List<String>();
+        List<ContentDocumentLink> contentLinks = [
+                SELECT Id,
+                        ContentDocumentId,
+                        LinkedEntityId
+                FROM ContentDocumentLink
+                WHERE ContentDocumentId = :contentDocId
+        ];
+
+        for (ContentDocumentLink link : contentLinks) {
+
+            if (link.LinkedEntityId.getSobjectType().getDescribe().getName() == 'Supporting_Document__c') {
+
+                supportingDocIds.add(link.LinkedEntityId);
+            }
+        }
+
+        try {
+            delete [
+                    SELECT Id
+                    FROM ContentDocument
+                    WHERE Id = :contentDocId
+            ];
+
+            update new Requirement_Response__c(Id = reqResponseId,
+                                            Original_Uploaded_Document_File_Name__c = '',
+                                            Saved_Uploaded_Document_File_Name__c = '');
+
+            delete [
+                    SELECT Id
+                    FROM Supporting_Document__c
+                    WHERE Id IN :supportingDocIds
+                    AND Requirement_Response__c = :reqResponseId
+            ];
+        } catch (Exception e) {
+
+            System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());
+        }
+
+        return null;
+    }
+
 }

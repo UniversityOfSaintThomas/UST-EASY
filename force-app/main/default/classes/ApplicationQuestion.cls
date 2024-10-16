@@ -902,7 +902,7 @@ public class ApplicationQuestion {
             }
             response.IsPopulated__c = true;
         } catch (Exception e) {
-
+            System.debug('Write response error: ' + e.getMessage());
         }
     }
 

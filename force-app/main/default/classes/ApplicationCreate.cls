@@ -654,6 +654,7 @@ public class ApplicationCreate {
                     WHERE Contact__c = :currentApplication.Contact__c
                     AND Intended_Start_Term__c = :currentApplication.Intended_Term_of_Entry__c
                     AND Academic_Program__c = :currentApplication.Intended_Program__c
+                    ORDER BY CreatedDate DESC
                     LIMIT 1
             ];
             interaction.Admissions_Application__c = app.Id;

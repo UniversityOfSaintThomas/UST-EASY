@@ -74,7 +74,11 @@ public class ApplicationUtilities {
 
     public static Boolean isExternalUser() {
         // Is external may be guest user like recommender
-        if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h')) && String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))) {
+//        if (!UserInfo.getUserType().equals('Standard') && String.isNotBlank(ApexPages.currentPage().getParameters().get('h')) && String.isNotBlank(ApexPages.currentPage().getParameters().get('r'))) {
+//            return false;
+//        }
+        String userType = UserInfo.getUserType();
+        if (!userType.equalsIgnoreCase('CSPLitePortal') && !userType.equalsIgnoreCase('standard')) {
             return false;
         }
         return true;

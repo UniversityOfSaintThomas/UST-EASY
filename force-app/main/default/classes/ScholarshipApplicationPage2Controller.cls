@@ -204,18 +204,12 @@ public with sharing class ScholarshipApplicationPage2Controller {
     }
 
     public PageReference SaveFinishLater() {
-
-        System.debug('Recommender1: '+applicant.Recommender_Name__c+' '+applicant.Recommender_Email__c);
-        System.debug('Recommender2: '+applicant.Recommender2_Name__c+' '+applicant.Recommender2_Email__c);
-        System.debug('Applicant Signature: '+applicant.Signature__c);
-
         try {
             upsert applicant;
             essay1HasText = !String.isEmpty(applicant.Essay_1_Answer__c);
             essay2HasText = !String.isEmpty(applicant.Essay_2_Answer__c);
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
-            System.debug('Upsert Error: '+ex.getMessage());
         }
         String msgComplete = '<strong>Saved:</strong> Your scholarship application has been saved and you can return to it at any time. ';
         msgComplete += 'Your scholarship will not be submitted until you click “Save & Submit” below.';

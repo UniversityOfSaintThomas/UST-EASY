@@ -143,10 +143,6 @@ public with sharing class ScholarshipApplicationPage2Controller {
         redirectPage.getParameters().put('sid', sid);
         //return redirectPage;
 
-        System.debug('SendRecommender1: '+applicant.Recommender_Name__c+' '+applicant.Recommender_Email__c);
-        System.debug('Application Question Answer 1: '+applicant.Question_1_Answer__c);
-        System.debug('Application Essay 1: '+applicant.Essay_1_Answer__c);
-
         String recName1 = applicant.Recommender_Name__c;
         String recEmail1 = applicant.Recommender_Email__c;
         String recLink1 = applicant.Recommendation_Link__c;

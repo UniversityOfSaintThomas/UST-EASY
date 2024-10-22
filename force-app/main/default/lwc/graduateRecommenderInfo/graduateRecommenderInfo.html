@@ -21,244 +21,244 @@
                 <div class="slds-grid slds-grid_vertical slds-m-left_medium slds-m-right_medium slds-m-top_small">
                     <template for:each={display_questions} for:item="question">
                         <!-- ADDRESS -->
-                        <template if:true={question.Address}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Address}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input-address
-                                        name={question.Id}
-                                        address-label={question.Label__c}
+                                        name={q.Id}
+                                        address-label={q.Label__c}
                                         street-label="Street"
                                         city-label="City"
                                         country-label="Country"
                                         province-label="State/Province"
                                         postal-code-label="Zipcode"
-                                        field-level-help={question.Help_Text__c}
-                                        required={question.Required__c}
+                                        field-level-help={q.Help_Text__c}
+                                        required={q.Required__c}
                                         onchange={onChange}>
                                 </lightning-input-address>
                             </div>
                         </template>
 
                         <!-- CHECKBOX -->
-                        <template if:true={question.Checkbox}>
-                            <div class="slds-col slds-p-top_x-small" key={question.id}>
+                        <template if:true={q.Checkbox}>
+                            <div class="slds-col slds-p-top_x-small" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="checkbox"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        required={question.Required__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        required={q.Required__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- CURRENCY -->
-                        <template if:true={question.Currency}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Currency}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="number"
                                         formatter="currency"
                                         step="0.01"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        max={question.Length__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        max={q.Length__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- DATE -->
-                        <template if:true={question.Date}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Date}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="date"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- DATETIME -->
-                        <template if:true={question.DateTime}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.DateTime}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="datetime"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        required={question.Required__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        required={q.Required__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- EMAIL -->
-                        <template if:true={question.Email}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Email}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="email"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
-                                        max-length={question.Length__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
+                                        max-length={q.Length__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- NUMBER -->
-                        <template if:true={question.Number}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Number}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="number"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
-                                        max={question.Length__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
+                                        max={q.Length__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- PERCENT -->
-                        <template if:true={question.Percent}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Percent}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="number"
                                         formatter="percent"
                                         step="0.01"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
-                                        max={question.Length__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
+                                        max={q.Length__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- PHONE -->
-                        <template if:true={question.Phone}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Phone}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="tel"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
-                                        max-length={question.Length__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
+                                        max-length={q.Length__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- PICKLIST -->
-                        <template if:true={question.Picklist}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Picklist}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-combobox
-                                        name={question.Id}
-                                        label={question.Label__c}
-                                        options={question.Picklist_Values__c}
-                                        aria-label={question.Label__c}
-                                        message-when-value-missing={question.Assistive_Text__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
-                                        field-level-help={question.Help_Text__c}
+                                        name={q.Id}
+                                        label={q.Label__c}
+                                        options={q.Picklist_Values__c}
+                                        aria-label={q.Label__c}
+                                        message-when-value-missing={q.Assistive_Text__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
+                                        field-level-help={q.Help_Text__c}
                                         onchange={onChange}>
                                 </lightning-combobox>
                             </div>
                         </template>
 
                         <!-- MULTIPICKLIST -->
-                        <template if:true={question.MultiPicklist}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.MultiPicklist}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-dual-listbox
-                                        name={question.Id}
-                                        label={question.Label__c}
-                                        options={question.Picklist_Values__c}
-                                        field-level-help={question.Help_Text__c}
-                                        message-when-value-missing={question.Assistive_Text__c}
-                                        required={question.Required__c}
+                                        name={q.Id}
+                                        label={q.Label__c}
+                                        options={q.Picklist_Values__c}
+                                        field-level-help={q.Help_Text__c}
+                                        message-when-value-missing={q.Assistive_Text__c}
+                                        required={q.Required__c}
                                         onchange={onChange} selected-label="" source-label="">
                                 </lightning-dual-listbox>
                             </div>
                         </template>
 
                         <!-- RADIO -->
-                        <template if:true={question.Radio}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Radio}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-radio-group
-                                        name={question.Id}
-                                        label={question.Label__c}
-                                        required={question.Required__c}
-                                        options={question.Picklist_Values__c}
+                                        name={q.Id}
+                                        label={q.Label__c}
+                                        required={q.Required__c}
+                                        options={q.Picklist_Values__c}
                                         onchange={onChange}>
                                 </lightning-radio-group>
                             </div>
                         </template>
 
                         <!-- REFERENCE -->
-                        <template if:true={question.Reference}>
-                            <div class="slds-col" key={question.id}>
-                                <template if:true={question.Display_as_Picklist__c}>
+                        <template if:true={q.Reference}>
+                            <div class="slds-col" key={q.id}>
+                                <template if:true={q.Display_as_Picklist__c}>
                                     <lightning-combobox
-                                            name={question.Id}
-                                            label={question.Label__c}
-                                            options={question.Picklist_Values__c}
-                                            aria-label={question.Label__c}
-                                            message-when-value-missing={question.Assistive_Text__c}
-                                            placeholder={question.Placeholder__c}
-                                            required={question.Required__c}
-                                            field-level-help={question.Help_Text__c}
+                                            name={q.Id}
+                                            label={q.Label__c}
+                                            options={q.Picklist_Values__c}
+                                            aria-label={q.Label__c}
+                                            message-when-value-missing={q.Assistive_Text__c}
+                                            placeholder={q.Placeholder__c}
+                                            required={q.Required__c}
+                                            field-level-help={q.Help_Text__c}
                                             onchange={onChange}>
                                     </lightning-combobox>
                                 </template>
-                                <template if:false={question.Display_as_Picklist__c}>
+                                <template if:false={q.Display_as_Picklist__c}>
                                     <lightning-input
-                                            name={question.Id}
-                                            data-item={question}
-                                            data-id={question.Id}
+                                            name={q.Id}
+                                            data-item={q}
+                                            data-id={q.Id}
                                             type="search"
-                                            label={question.Label__c}
-                                            aria-label={question.Label__c}
-                                            field-level-help={question.Help_Text__c}
-                                            placeholder={question.Placeholder__c}
-                                            required={question.Required__c}
-                                            max-length={question.Length__c}
+                                            label={q.Label__c}
+                                            aria-label={q.Label__c}
+                                            field-level-help={q.Help_Text__c}
+                                            placeholder={q.Placeholder__c}
+                                            required={q.Required__c}
+                                            max-length={q.Length__c}
                                             onchange={handleSearch}>
                                     </lightning-input>
                                     <span class="slds-scrollable_y" style="max-height:120px">
                                         <lightning-datatable
                                                 hide-table-header
-                                                data={question.Picklist_Values__c}
+                                                data={q.Picklist_Values__c}
                                                 max-column-width="4000"
                                                 columns={reference_question_search_columns}
                                                 key-field="id"
-                                                data-id={question.Id}
+                                                data-id={q.Id}
                                                 max-row-selection="1"
                                                 onrowselection={onChange}
-                                                name={question.Id}>
+                                                name={q.Id}>
                                         </lightning-datatable>
                                     </span>
                                 </template>
@@ -266,87 +266,87 @@
                         </template>
 
                         <!-- STATIC -->
-                        <template if:true={question.Static}>
-                            <div class="slds-col slds-p-top_medium" key={question.id}>
+                        <template if:true={q.Static}>
+                            <div class="slds-col slds-p-top_medium" key={q.id}>
                                 <lightning-formatted-rich-text
-                                        name={question.Id}
-                                        value={question.Static_Text__c}>
+                                        name={q.Id}
+                                        value={q.Static_Text__c}>
                                 </lightning-formatted-rich-text>
                             </div>
                         </template>
 
                         <!-- TEXT -->
-                        <template if:true={question.Text}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.Text}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="text"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
-                                        max-length={question.Length__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
+                                        max-length={q.Length__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- TEXT ENCRYPTED -->
-                        <template if:true={question.TextEncrypted}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.TextEncrypted}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="password"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
-                                        max-length={question.Length__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
+                                        max-length={q.Length__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>
                         </template>
 
                         <!-- TEXT AREA -->
-                        <template if:true={question.TextArea}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.TextArea}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-textarea
-                                        name={question.Id}
-                                        max-length={question.Length__c}
-                                        required={question.Required__c}
-                                        label={question.Label__c}
+                                        name={q.Id}
+                                        max-length={q.Length__c}
+                                        required={q.Required__c}
+                                        label={q.Label__c}
                                         onchange={onChange}>
                                 </lightning-textarea>
                             </div>
                         </template>
 
                         <!-- LONG TEXT AREA -->
-                        <template if:true={question.LongTextArea}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.LongTextArea}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-textarea
-                                        name={question.Id}
-                                        max-length={question.Length__c}
-                                        required={question.Required__c}
-                                        label={question.Label__c}
+                                        name={q.Id}
+                                        max-length={q.Length__c}
+                                        required={q.Required__c}
+                                        label={q.Label__c}
                                         onchange={onChange}>
                                 </lightning-textarea>
                             </div>
                         </template>
 
                         <!-- URL -->
-                        <template if:true={question.URL}>
-                            <div class="slds-col" key={question.id}>
+                        <template if:true={q.URL}>
+                            <div class="slds-col" key={q.id}>
                                 <lightning-input
-                                        name={question.Id}
+                                        name={q.Id}
                                         type="url"
-                                        label={question.Label__c}
-                                        aria-label={question.Label__c}
-                                        field-level-help={question.Help_Text__c}
-                                        placeholder={question.Placeholder__c}
-                                        required={question.Required__c}
-                                        max-length={question.Length__c}
+                                        label={q.Label__c}
+                                        aria-label={q.Label__c}
+                                        field-level-help={q.Help_Text__c}
+                                        placeholder={q.Placeholder__c}
+                                        required={q.Required__c}
+                                        max-length={q.Length__c}
                                         onchange={onChange}>
                                 </lightning-input>
                             </div>

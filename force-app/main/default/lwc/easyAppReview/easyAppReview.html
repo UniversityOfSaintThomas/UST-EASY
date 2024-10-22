@@ -5,7 +5,7 @@
 <!-- App Review Application View -->
 <template>
     <lightning-card title="Application" icon-name="custom:custom14">
-        <div class="slds-grid slds-wrap slds-gutters">
+        <div class="slds-grid slds-wrap slds-gutters easyAppReview">
             <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
                 <c-easy-app-review-nav app={applicationControl.data} onnewrequirement={handleNewRequirement}></c-easy-app-review-nav>
             </div>
@@ -17,123 +17,198 @@
                     <template for:each={requirements.requirementItems} for:item="reqItems">
                         <div key={reqItems.requirementItem.Id}>
 
-                            <div class="slds-text-heading_medium slds-m-bottom_x-small slds-m-top_x-small">
-                                <h3>{reqItems.requirementItem.Label__c}</h3>
+                            <div class="slds-m-bottom_xxx-small slds-m-top_small">
+                                <h3 class="slds-text-heading_medium">{reqItems.requirementItem.Label__c}</h3>
                             </div>
 
-                            <!--                            <template lwc:if={reqItem.is_related_object}>-->
-                            <!--                                <template for:each={reqItem.requirementResponse} for:item="item">-->
-                            <!--                                </template>-->
-                            <!--                            </template>-->
+                            <template lwc:if={reqItems.Instruction__c}>
+                                <div class="slds-m-bottom_medium slds-m-top_x-small">
+                                    <lightning-formatted-rich-text value={reqItems.Instruction__c}></lightning-formatted-rich-text>
+                                </div>
+                            </template>
 
+                            <!-- Related Object Records and answers -->
                             <template lwc:if={reqItems.is_related_object}>
-                                <template for:each={reqItems.relatedObjectAnswer} for:item="related">
-                                    <div key={related.key} class="slds-text-body_regular slds-m-bottom_xx-small">
-                                        {related.fieldLabel} : {related.fieldValue}
+                                <template for:each={reqItems.relatedObjectAnswers} for:item="related">
+                                    <div key={related.id} class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                        <template for:each={related} for:item="r">
+                                            <div key={r.key} class="slds-border_bottom">
+                                                <div class="slds-p-top_x-small slds-p-left_x-small slds-p-right_x=small">
+                                                    {r.answerLabel}
+                                                </div>
+                                                <div class="slds-p-around_x-small">
+                                                    <template lwc:if={r.answerLink}>
+                                                        <lightning-formatted-url value={r.answerLink} tooltip={r.answerLabel} target="_blank" label={r.answerValue}></lightning-formatted-url>
+                                                    </template>
+                                                    <template lwc:else>
+                                                        {r.answerValue}
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </template>
                                     </div>
                                 </template>
                             </template>
 
-                            <template for:each={reqItems.questions} for:item="question">
-                                <template lwc:if={question.show_question}>
-                                    <div key={question.question.Id}>
-                                        <div class="slds-text-heading_small slds-m-bottom_small">
-                                            <p>{question.question.Label__c}</p>
+                            <!--Document Links-->
+                            <template lwc:if={reqItems.answerLink}>
+                                <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                    <div class="slds-p-around_small">
+                                        <lightning-tile label={reqItems.answerLabel} type="media" href={reqItems.answerLink} target="_blank">
+                                            <lightning-icon slot="media" icon-name="standard:document" class="slds-float_left slds-m-right_x-small"></lightning-icon>
+                                            <p title={reqItems.answerValue}>Original filename: {reqItems.answerValue}</p>
+                                        </lightning-tile>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Get Essay answers from requirement responses -->
+                            <template for:each={reqItems.requirementResponse} for:item="rr">
+                                <template lwc:if={rr.ValueTextEntry__c}>
+                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small" key={rr.Id}>
+                                        <div class="slds-p-around_small richText-p">
+                                            <lightning-formatted-rich-text value={rr.ValueTextEntry__c}></lightning-formatted-rich-text>
                                         </div>
-                                        <template lwc:if={question.question.Static_Text__c}>
-                                            <div class="slds-text-body_regular slds-m-bottom_xx-small">
-                                                <p>
-                                                    <lightning-formatted-rich-text value={question.question.Static_Text__c}></lightning-formatted-rich-text>
-                                                </p>
-                                            </div>
-                                        </template>
-                                        <template for:each={question.questionResponses} for:item="questionResponse">
-                                            <div key={questionResponse.Id}>
-                                                <!--   Possible field values: ValueText__c, ValueCheckbox__c,
-                                                   ValueCurrency__c, ValueDate__c, ValueDateTime__c, ValueEmail__c, ValueLongTextArea__c,
-                                                   ValueNumber__c, ValuePercent__c, ValuePhone__c, ValueTextArea__c, ValueTextEncrypted__c,
-                                                   ValueURL__c, Street__c, State__c
-                                                   -->
-                                                <template lwc:if={questionResponse.is_reference}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">{questionResponse.ValueTextArea__c}</p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValueText__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">{questionResponse.ValueText__c}</p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValueDate__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-date-time
-                                                                value={questionResponse.ValueDate__c}
-                                                                month="2-digit"
-                                                                day="numeric"
-                                                                year="numeric"
-                                                        ></lightning-formatted-date-time>
-                                                    </p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValueDateTime__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-date-time
-                                                                value={questionResponse.ValueDateTime__c}
-                                                                month="2-digit"
-                                                                day="numeric"
-                                                                year="numeric"
-                                                                hour="2-digit"
-                                                                minute="2-digit"
-                                                        ></lightning-formatted-date-time>
-                                                    </p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValueNumber__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-number value={questionResponse.ValueNumber__c}></lightning-formatted-number>
-                                                    </p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValuePercent__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-number value={questionResponse.ValuePercent__c} format-style="percent"></lightning-formatted-number>
-                                                    </p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValueCheckbox__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-text value={questionResponse.ValueCheckbox__c}></lightning-formatted-text>
-                                                    </p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValueCurrency__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-number value={questionResponse.ValueCurrency__c} format-style="currency" currency-code="USD"></lightning-formatted-number>
-                                                    </p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValueEmail__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-email value={questionResponse.ValueEmail__c}></lightning-formatted-email>
-                                                    </p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValueLongTextArea__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-rich-text value={questionResponse.ValueLongTextArea__c}></lightning-formatted-rich-text>
-                                                    </p>
-                                                </template>
-                                                <template lwc:elseif={questionResponse.ValuePhone__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-phone value={questionResponse.ValuePhone__c}></lightning-formatted-phone>
-                                                    </p>
-                                                </template>
-                                                <!--Format address with these fields: Street__c, State__c, City__c, PostalCode__c, Country__c-->
-                                                <template lwc:elseif={questionResponse.Street__c}>
-                                                    <p class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
-                                                        <lightning-formatted-address
-                                                                street={questionResponse.Street__c}
-                                                                city={questionResponse.City__c}
-                                                                province={questionResponse.State__c}
-                                                                postal-code={questionResponse.PostalCode__c}
-                                                                country={questionResponse.Country__c}
-                                                        ></lightning-formatted-address>
-                                                    </p>
-                                                </template>
-                                            </div>
-                                        </template>
                                     </div>
                                 </template>
                             </template>
+
+                            <template for:each={reqItems.questions} for:item="q">
+                                <template lwc:if={q.show_question}>
+                                    <div key={q.question.Id}>
+                                        <template lwc:if={q.question.Label__c}>
+                                            <div class="slds-m-bottom_xx-small">
+                                                <p class="slds-text-heading_x-small">{q.question.Label__c}</p>
+                                            </div>
+                                        </template>
+                                        <template lwc:if={q.question.Static_Text__c}>
+                                            <div class="slds-m-bottom_medium slds-m-top_x-small">
+                                                <lightning-formatted-rich-text value={q.question.Static_Text__c}></lightning-formatted-rich-text>
+                                            </div>
+                                        </template>
+                                        <template lwc:if={q.answered}>
+                                            <template lwc:if={q.questionResponse}>
+
+                                                <template lwc:if={q.answerLabel}>
+                                                    <div class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
+                                                        <lightning-formatted-url value={q.answerLink} tooltip={q.answerLabel} target="_blank" label={q.answerLabel}></lightning-formatted-url>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValueDate__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-date-time
+                                                                    value={q.questionResponse.ValueDate__c}
+                                                                    month="2-digit"
+                                                                    day="numeric"
+                                                                    year="numeric"
+                                                            ></lightning-formatted-date-time>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValueDateTime__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-date-time
+                                                                    value={q.questionResponse.ValueDateTime__c}
+                                                                    month="2-digit"
+                                                                    day="numeric"
+                                                                    year="numeric"
+                                                                    hour="2-digit"
+                                                                    minute="2-digit"
+                                                            ></lightning-formatted-date-time>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValueNumber__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-number value={q.questionResponse.ValueNumber__c}></lightning-formatted-number>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValuePercent__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-number value={q.questionResponse.ValuePercent__c} format-style="percent"></lightning-formatted-number>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValueCurrency__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-number value={q.questionResponse.ValueCurrency__c} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValueEmail__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-email value={q.questionResponse.ValueEmail__c}></lightning-formatted-email>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValueLongTextArea__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-rich-text value={q.questionResponse.ValueLongTextArea__c}></lightning-formatted-rich-text>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValuePhone__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-phone value={q.questionResponse.ValuePhone__c}></lightning-formatted-phone>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.Street__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-address
+                                                                    street={q.questionResponse.Street__c}
+                                                                    city={q.questionResponse.City__c}
+                                                                    province={q.questionResponse.State__c}
+                                                                    postal-code={q.questionResponse.PostalCode__c}
+                                                                    country={q.questionResponse.Country__c}
+                                                            ></lightning-formatted-address>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValueCheckbox__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-phone value={q.questionResponse.ValuePhone__c}></lightning-formatted-phone>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValueText__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">{q.questionResponse.ValueText__c}</p>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                        </template>
+
+                                    </div>
+                                </template>
+                            </template>
+
+                            <template lwc:if={reqItems.no_answers}>
+                                <p class="slds-text-body_regular"><strong><em>This requirement has no applicant entered data.</em></strong></p>
+                            </template>
+
                         </div>
                     </template>
                 </template>

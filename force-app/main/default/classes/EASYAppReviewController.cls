@@ -330,10 +330,12 @@ public with sharing class EASYAppReviewController {
                     applicationFieldsToQuery.add('degree_type__c');
 
                     // Add recommendation fields to query set
-                    if (String.isNotBlank(q.Related_Object_Field__c) && q.Related_Object__c.equalsIgnoreCase('Recommendation__c')) {
-                        Map<String, SObjectField> sObjectField = sObjectFieldMap.get('recommendation__c');
-                        if (sObjectField.containsKey(q.Related_Object_Field__c)) {
-                            recommendationFieldsToQuery.add(q.Related_Object_Field__c.toLowerCase());
+                    if (String.isNotBlank(q.Related_Object_Field__c) && q.Related_Object__c != null) {
+                        if (q.Related_Object__c.equalsIgnoreCase('Recommendation__c')) {
+                            Map<String, SObjectField> sObjectField = sObjectFieldMap.get('recommendation__c');
+                            if (sObjectField.containsKey(q.Related_Object_Field__c)) {
+                                recommendationFieldsToQuery.add(q.Related_Object_Field__c.toLowerCase());
+                            }
                         }
                     }
                 }
@@ -367,8 +369,18 @@ public with sharing class EASYAppReviewController {
                             if (String.isNotBlank(qr.Question__r.Lookup_Object__c)) {
                                 String refKey = qr.Question__r.Lookup_Object__c.toLowerCase();
                                 if (referenceQuestionFieldData.containsKey(refKey)) {
+                                    System.debug('qr.ValueText__c: ' + qr.ValueText__c + ', refKey: ' + refKey + ', qr.Question__r.Lookup_Object__c: ' + qr.Question__r.Lookup_Object__c + ', qr.Id: ' + qr.Id);
+
                                     if (String.isNotBlank(qr.ValueText__c)) {
-                                        referenceQuestionFieldData.get(refKey).whereIds.add(qr.ValueText__c);
+                                        Id refId;
+                                        try {
+                                            refId = Id.valueOf(qr.ValueText__c);
+                                        } catch (Exception e) {
+                                            System.debug('Error: ' + e.getMessage());
+                                        }
+                                        if (refId != null) {
+                                            referenceQuestionFieldData.get(refKey).whereIds.add(qr.ValueText__c);
+                                        }
                                     }
                                 }
                             }
@@ -591,9 +603,19 @@ public with sharing class EASYAppReviewController {
                                                             rodItem.answerLink = Url.getOrgDomainUrl().toExternalForm() + '/' + answerValueId;
                                                         }
                                                     }
+                                                } else if (q.recordType.DeveloperName.equalsIgnoreCase('MultiPicklist')) {
+                                                    String answerString = String.valueOf(obj.get(field));
+                                                    rodItem.answerMultiValue = answerString.split(';');
+                                                    if (answerString.contains(';')) {
+                                                        List<String> answerList = answerString.split(';');
+                                                        rodItem.answerValue = String.join(answerList, ', ');
+                                                    } else {
+                                                        rodItem.answerValue = String.valueOf(obj.get(field));
+                                                    }
                                                 } else {
                                                     rodItem.answerValue = String.valueOf(obj.get(field));
                                                 }
+
                                                 relatedObjectAnswer.add(rodItem);
                                             }
                                         }
@@ -635,8 +657,14 @@ public with sharing class EASYAppReviewController {
                                 }
                             }
                             qrWrapper.questionResponse.put(valueField, contactRecord.get(q.Contact_Field__c));
+                            if(q.RecordType.DeveloperName.equalsIgnoreCase('multiPicklist')){
+                                qrWrapper.answerMultiValue = contactRecord.get(q.Contact_Field__c).toString().split(';');
+                            }
                         }
                         if (String.isNotBlank(q.Application_Field__c) && applicationRecord.get(q.Application_Field__c) != null) {
+                            if(q.RecordType.DeveloperName.equalsIgnoreCase('multiPicklist')){
+                                qrWrapper.answerMultiValue = applicationRecord.get(q.Application_Field__c).toString().split(';');
+                            }
                             qrWrapper.questionResponse.put(valueField, applicationRecord.get(q.Application_Field__c));
                         }
                     }
@@ -651,9 +679,17 @@ public with sharing class EASYAppReviewController {
 
                 qrWrapper.show_question = false;
                 if (q.RecordType.DeveloperName.equalsIgnoreCase('Reference')) {
-                    if (String.isNotBlank(qrWrapper.questionResponse.ValueText__c) && referenceAnswers.containsKey(qrWrapper.questionResponse.ValueText__c)) {
-                        qrWrapper.answerLabel = referenceAnswers.get(qrWrapper.questionResponse.ValueText__c).get(q.Name_Field_API_Name__c).toString();
-                        qrWrapper.answerLink = Url.getOrgDomainUrl().toExternalForm() + '/' + qrWrapper.questionResponse.ValueText__c;
+                    if (String.isNotBlank(qrWrapper.questionResponse.ValueText__c)) {
+                        if (referenceAnswers.containsKey(qrWrapper.questionResponse.ValueText__c)) {
+                            qrWrapper.answerLabel = referenceAnswers.get(qrWrapper.questionResponse.ValueText__c).get(q.Name_Field_API_Name__c).toString();
+                            qrWrapper.answerLink = Url.getOrgDomainUrl().toExternalForm() + '/' + qrWrapper.questionResponse.ValueText__c;
+                        }
+                    }
+                }
+                if (q.RecordType.DeveloperName.equalsIgnoreCase('MultiPicklist')) {
+                    System.debug('MultiPicklist: ' + qrWrapper.questionResponse.ValueText__c);
+                    if(String.isNotBlank(qrWrapper.questionResponse.ValueText__c)){
+                        qrWrapper.answerMultiValue = qrWrapper.questionResponse.ValueText__c.split(';');
                     }
                 }
 
@@ -669,10 +705,13 @@ public with sharing class EASYAppReviewController {
                         if (Boolean.valueOf(qd.ValueCheckbox__c) != questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueCheckbox__c) {
                             qrWrapper.dependencies_met = false;
                         }
-                    } else if (qd.RecordType.Name == 'Multi-select picklist') {
-//                        if (!questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueText__c.contains(qd.Value__c)) {
-//                            qrWrapper.dependenciesMet = false;
-//                        }
+                    } else if (qd.RecordType.Name == 'MultiPicklist') {
+                        if (questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueText__c != null) {
+                            List<String> controllingValues = questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueText__c.split(';');
+                            if (!controllingValues.contains(qd.Value__c)) {
+                                qrWrapper.dependencies_met = false;
+                            }
+                        }
                     } else if (qd.RecordType.Name == 'Radio') {
                         if (qd.Value__c != questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueText__c) {
                             qrWrapper.dependencies_met = false;

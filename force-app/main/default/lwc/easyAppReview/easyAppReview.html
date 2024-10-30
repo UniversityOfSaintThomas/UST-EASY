@@ -18,7 +18,7 @@
                         <div key={reqItems.requirementItem.Id}>
 
                             <div class="slds-m-bottom_xxx-small slds-m-top_small">
-                                <h3 class="slds-text-heading_medium">{reqItems.requirementItem.Label__c}</h3>
+                                <h3 class="slds-text-heading_medium slds-m-bottom_x-small">{reqItems.requirementItem.Label__c}</h3>
                             </div>
 
                             <template lwc:if={reqItems.Instruction__c}>
@@ -30,22 +30,30 @@
                             <!-- Related Object Records and answers -->
                             <template lwc:if={reqItems.is_related_object}>
                                 <template for:each={reqItems.relatedObjectAnswers} for:item="related">
-                                    <div key={related.id} class="slds-box_border slds-m-bottom_small slds-m-right_small">
-                                        <template for:each={related} for:item="r">
-                                            <div key={r.key} class="slds-border_bottom">
-                                                <div class="slds-p-top_x-small slds-p-left_x-small slds-p-right_x=small">
-                                                    {r.answerLabel}
+                                    <div key={related.id} class="slds-box_border slds-m-bottom_small slds-m-right_small slds-m-top_xx-small">
+                                        <lightning-tile type="media" class="slds-p-around_x-small">
+                                            <lightning-icon slot="media" icon-name="standard:record" size="medium"></lightning-icon>
+                                            <template for:each={related} for:item="r">
+                                                <div key={r.key} class="slds-border_bottom slds-m-bottom_x-small">
+                                                    <label>
+                                                        {r.answerLabel}
+                                                    </label>
+                                                    <div class="slds-p-around_x-small">
+                                                        <template lwc:if={r.answerLink}>
+                                                            <lightning-formatted-url value={r.answerLink} tooltip={r.answerLabel} target="_blank" label={r.answerValue}></lightning-formatted-url>
+                                                        </template>
+                                                        <template lwc:elseif={r.answerMultiValue}>
+                                                            <template for:each={r.answerMultiValue} for:item="multi">
+                                                                <lightning-badge label={multi} icon-name="utility:check" key={r.key}></lightning-badge>
+                                                            </template>
+                                                        </template>
+                                                        <template lwc:else>
+                                                            {r.answerValue}
+                                                        </template>
+                                                    </div>
                                                 </div>
-                                                <div class="slds-p-around_x-small">
-                                                    <template lwc:if={r.answerLink}>
-                                                        <lightning-formatted-url value={r.answerLink} tooltip={r.answerLabel} target="_blank" label={r.answerValue}></lightning-formatted-url>
-                                                    </template>
-                                                    <template lwc:else>
-                                                        {r.answerValue}
-                                                    </template>
-                                                </div>
-                                            </div>
-                                        </template>
+                                            </template>
+                                        </lightning-tile>
                                     </div>
                                 </template>
                             </template>
@@ -188,7 +196,17 @@
                                                 <template lwc:elseif={q.questionResponse.ValueCheckbox__c}>
                                                     <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
                                                         <p class="slds-text-body_regular slds-p-around_x-small">
-                                                            <lightning-formatted-phone value={q.questionResponse.ValuePhone__c}></lightning-formatted-phone>
+                                                            <lightning-formatted-phone value={q.questionResponse.ValueCheckbox__c}></lightning-formatted-phone>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.answerMultiValue}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <template for:each={q.answerMultiValue} for:item="multi">
+                                                                <lightning-badge label={multi} icon-name="utility:check" key={q.questionResponse.Id}></lightning-badge>
+                                                            </template>
                                                         </p>
                                                     </div>
                                                 </template>
@@ -212,10 +230,10 @@
                         </div>
                     </template>
                 </template>
-                <br/><br/>
+<!--                <br/><br/>
                 <pre>
                     {appControlStr}
-                </pre>
+                </pre>-->
             </div>
         </div>
     </lightning-card>

@@ -1,6 +1,10 @@
 /**
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/16/2023.
  */
-.easyAppReview .richText-p p {
+lightning-formatted-rich-text p {
     margin-bottom: 1em;
+}
+
+lightning-icon {
+    background-color: #510C76;
 }

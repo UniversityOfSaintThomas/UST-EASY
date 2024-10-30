@@ -358,31 +358,49 @@ public with sharing class ApplicationBodyController {
                         }
 
                         /* Generic filter 1 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter1Map, genericFilter1, widgetUrlParam);
+                        if (!skipWidget) {
+                            skipWidget = filterWidget(skipWidget, atGenericFilter1Map, genericFilter1, widgetUrlParam);
+                        }
 
                         /* Generic filter 2 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter2Map, genericFilter2, widgetUrlParam);
+                        if (!skipWidget) {
+                            skipWidget = filterWidget(skipWidget, atGenericFilter2Map, genericFilter2, widgetUrlParam);
+                        }
 
                         /* Generic filter 3 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter3Map, genericFilter3, widgetUrlParam);
+                        if (!skipWidget) {
+                            skipWidget = filterWidget(skipWidget, atGenericFilter3Map, genericFilter3, widgetUrlParam);
+                        }
 
                         /* Generic filter 4 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter4Map, genericFilter4, widgetUrlParam);
+                        if (!skipWidget) {
+                            skipWidget = filterWidget(skipWidget, atGenericFilter4Map, genericFilter4, widgetUrlParam);
+                        }
 
                         /* Generic filter 5 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter5Map, genericFilter5, widgetUrlParam);
+                        if (!skipWidget) {
+                            skipWidget = filterWidget(skipWidget, atGenericFilter5Map, genericFilter5, widgetUrlParam);
+                        }
 
                         /* Generic filter 6 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter6Map, genericFilter6, widgetUrlParam);
+                        if (!skipWidget) {
+                            skipWidget = filterWidget(skipWidget, atGenericFilter6Map, genericFilter6, widgetUrlParam);
+                        }
 
                         /* Generic filter 7 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter7Map, genericFilter7, widgetUrlParam);
+                        if (!skipWidget) {
+                            skipWidget = filterWidget(skipWidget, atGenericFilter7Map, genericFilter7, widgetUrlParam);
+                        }
 
                         /* Generic filter 8 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter8Map, genericFilter8, widgetUrlParam);
+                        if (!skipWidget) {
+                            skipWidget = filterWidget(skipWidget, atGenericFilter8Map, genericFilter8, widgetUrlParam);
+                        }
 
                         /* Applicant Type filter */
-                        skipWidget = filterWidget(skipWidget, atApplicationTypeMap, widgetApplicantType, widgetUrlParam);
+                        if (!skipWidget) {
+                            skipWidget = filterWidget(skipWidget, atApplicationTypeMap, widgetApplicantType, widgetUrlParam);
+                        }
 
                     }
                 }
@@ -467,7 +485,6 @@ public with sharing class ApplicationBodyController {
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
         for (String l : list1) {
             if (list2.contains(l)) {
-
                 return true;
             }
         }

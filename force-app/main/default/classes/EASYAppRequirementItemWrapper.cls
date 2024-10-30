@@ -14,4 +14,5 @@ public class EASYAppRequirementItemWrapper {
     @AuraEnabled public String answerLabel { get; set; }
     @AuraEnabled public String answerLink { get; set; }
     @AuraEnabled public String answerValue { get; set; }
+    @AuraEnabled public List<String> answerMultiValue { get; set; }
 }

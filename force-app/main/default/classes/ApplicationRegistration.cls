@@ -350,7 +350,6 @@ public class ApplicationRegistration {
                         interaction.Academic_Program__c = commonApplication[0].Intended_Program__c;
                         interaction.Intended_Start_Term__c = commonApplication[0].Intended_Term_of_Entry__c;
                         interaction.Admissions_Application__c = commonApplication[0].Id;
-                        interaction.First_Name__c = commonApplication[0].Contact__r.FirstName;
                         commonAppFound = true;
                     }
                 }

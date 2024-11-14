@@ -25,11 +25,14 @@
                         <div class="slds-media__body">
                             <div class="slds-grid slds-grid_align-spread">
                                 <h3 class="slds-tile__title slds-text-heading_medium slds-p-bottom_small" title="{!app.Intended_Program_Name_on_Application__c}">
-                                    <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();">
+                                    <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();" rendered={!!app.Prior_Term_Application__c}>
                                         <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
                                         <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
                                         {!app.Intended_Program_Name_on_Application__c}
                                     </apex:commandLink>
+                                    <apex:outputPanel rendered="{!app.Prior_Term_Application__c}">
+                                        {!app.Intended_Program_Name_on_Application__c}
+                                    </apex:outputPanel>
                                 </h3>
                             </div>
                             <div class="slds-tile__detail">
@@ -64,13 +67,13 @@
                                     <apex:outputPanel layout="none" rendered="{!!ISBLANK(app.Applicant_Type__c) && app.Applicant_Type__c = 'Common App'}">
                                         <dt class="slds-item_label slds-text-color_weak" title="Degree">Type:</dt>
                                         <dd class="slds-item_detail" title="Degree type for which this application is applying">
-                                           {!app.Applicant_Type__c}
+                                            {!app.Applicant_Type__c}
                                         </dd>
                                     </apex:outputPanel>
 
                                 </dl>
                             </div>
-                            <apex:outputPanel layout="none" rendered="{!IF(currentPage='applicationportal',true,false)}">
+                            <apex:outputPanel layout="none" rendered="{!IF(currentPage='applicationportal' && !app.Prior_Term_Application__c,true,false)}">
                                 <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();" styleClass="slds-button slds-p-right_medium slds-button_brand slds-button-smaller slds-m-top_small">
                                     <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
                                     <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>

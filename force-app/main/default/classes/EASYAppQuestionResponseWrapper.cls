@@ -5,9 +5,14 @@
 
 public with sharing class EASYAppQuestionResponseWrapper {
     @AuraEnabled public Question__c question { get; set; }
-    @AuraEnabled public List<Question_Response__c> questionResponses { get; set; }
-    @AuraEnabled public Object referenceAnswer { get; set; }
+    @AuraEnabled public Question_Response__c questionResponse { get; set; }
+    @AuraEnabled public String answerLabel { get; set; }
+    @AuraEnabled public String answerLink { get; set; }
+    @AuraEnabled public List<String> answerMultiValue { get; set; }
+    @AuraEnabled public String answerValue { get; set; }
     @AuraEnabled public Boolean dependencies_met { get; set; }
     @AuraEnabled public Boolean answered { get; set; }
     @AuraEnabled public Boolean show_question { get; set; }
+    @AuraEnabled public String valueType { get; set; }
+    @AuraEnabled public UUID key { get; set; }
 }

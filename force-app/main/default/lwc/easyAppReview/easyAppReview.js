@@ -45,7 +45,6 @@ export default class AppReviewApplicationView extends LightningElement {
         let result = null;
         if (this.applicationControl && this.applicationControl.data) {
             result = this.applicationControl.data.requirements.find(item => item.requirement.Id === this.requirementId);
-            console.log(result);
         }
         return result;
     }

@@ -453,12 +453,15 @@ public with sharing class ApplicationBodyController {
 
     public Map<String, Set<String>> createFilterMap(String filterValue, Map<String, Set<String>> filterMap, String atURL) {
         if (String.isNotBlank(filterValue)) {
+            List<String> filterMapList = filterValue.split(';');
+            //Change filterMapList to a set
+            Set<String> filterMapSet = new Set<String>(filterMapList);
             if (filterMap.containsKey(atURL)) {
-                filterMap.get(atURL).add(filterValue);
+                filterMap.get(atURL).addAll(filterMapSet);
             } else {
-                filterMap.put(atURL, new Set<String>{
-                        filterValue
-                });
+                filterMap.put(atURL,
+                        filterMapSet
+                );
             }
         }
         return filterMap;
@@ -467,7 +470,11 @@ public with sharing class ApplicationBodyController {
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
         for (String l : list1) {
             if (list2.contains(l)) {
-
+                return true;
+            }
+        }
+        for (String l : list2) {
+            if (list1.contains(l)) {
                 return true;
             }
         }

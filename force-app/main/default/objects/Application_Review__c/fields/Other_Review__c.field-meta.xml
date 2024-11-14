@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Other_Review__c</fullName>
     <defaultValue>&quot;Comment on any other aspects of the application that you feel would be important to consider. This could include information from a letter of recommendation, interactions with the student, etc.&quot;</defaultValue>
+    <externalId>false</externalId>
     <label>Other Review</label>
     <length>32768</length>
     <trackHistory>false</trackHistory>

@@ -6,10 +6,10 @@
 <template>
     <lightning-card title="Application Review" icon-name="custom:custom14">
         <template lwc:if={applicantInfo.data}>
-            <button class="slds-button slds-m-right_xx-small slds-p-left_x-small slds-p-right_x-small slotButtons"
+            <button class="slds-button slds-m-right_xx-small slds-p-horizontal_x-small slotButtons"
                     slot="actions"
                     onclick={closeAll}>Close All</button>
-            <button class="slds-button slds-p-left_x-small slds-p-right_x-small slotButtons"
+            <button class="slds-button slds-p-horizontal_x-small slotButtons"
                     slot="actions"
                     onclick={expandAll}>Expand All</button>
 
@@ -27,19 +27,15 @@
 <!--                            <lightning-input value={appId} onchange={inputValueChange}></lightning-input>-->
 <!--            </div>-->
 
-            <div>
-                <div class="slds-m-left_small slds-m-top_large slds-m-bottom_xx-small">
-                    <button class="slds-button slds-p-left_x-small slds-p-right_x-small sectionButtons" name="STUDENT_INFORMATION" onclick={sectionButtonsClick}>Student Information</button>
-                    <button class="slds-button slds-p-left_x-small slds-p-right_x-small sectionButtons" name="APPLICATION_DETAILS" onclick={sectionButtonsClick}>Application Details</button>
-                    <button class="slds-button slds-p-left_x-small slds-p-right_x-small sectionButtons" name="ACADEMIC_INFORMATION" onclick={sectionButtonsClick}>Academic Information</button>
-                    <button class="slds-button slds-p-left_x-small slds-p-right_x-small sectionButtons" name="TEST_SCORES" onclick={sectionButtonsClick}>Test Scores</button>
-                </div>
-                <div class="slds-m-left_small">
-                    <button class="slds-button slds-p-left_x-small slds-p-right_x-small sectionButtons" name="TRANSCRIPT_REVIEW" onclick={sectionButtonsClick}>Transcript Review</button>
-                    <button class="slds-button slds-p-left_x-small slds-p-right_x-small sectionButtons" name="ESSAY_REVIEW" onclick={sectionButtonsClick}>Essay Review</button>
-                    <button class="slds-button slds-p-left_x-small slds-p-right_x-small sectionButtons" name="INVOLVEMENT" onclick={sectionButtonsClick}>Involvement</button>
-                    <button class="slds-button slds-p-left_x-small slds-p-right_x-small sectionButtons" name="REVIEW_RECOMMENDATION" onclick={sectionButtonsClick}>Review Recommendation</button>
-                </div>
+            <div class="slds-m-horizontal_small slds-m-vertical_large">
+                <button class="slds-button slds-p-horizontal_x-small slds-m-around_xx-small sectionButtons" name="STUDENT_INFORMATION" onclick={sectionButtonsClick}>Student Information</button>
+                <button class="slds-button slds-p-horizontal_x-small slds-m-around_xx-small sectionButtons" name="APPLICATION_DETAILS" onclick={sectionButtonsClick}>Application Details</button>
+                <button class="slds-button slds-p-horizontal_x-small slds-m-around_xx-small sectionButtons" name="ACADEMIC_INFORMATION" onclick={sectionButtonsClick}>Academic Information</button>
+                <button class="slds-button slds-p-horizontal_x-small slds-m-around_xx-small sectionButtons" name="TEST_SCORES" onclick={sectionButtonsClick}>Test Scores</button>
+                <button class="slds-button slds-p-horizontal_x-small slds-m-around_xx-small sectionButtons" name="TRANSCRIPT_REVIEW" onclick={sectionButtonsClick}>Transcript Review</button>
+                <button class="slds-button slds-p-horizontal_x-small slds-m-around_xx-small sectionButtons" name="ESSAY_REVIEW" onclick={sectionButtonsClick}>Essay Review</button>
+                <button class="slds-button slds-p-horizontal_x-small slds-m-around_xx-small sectionButtons" name="INVOLVEMENT" onclick={sectionButtonsClick}>Involvement</button>
+                <button class="slds-button slds-p-horizontal_x-small slds-m-around_xx-small sectionButtons" name="REVIEW_RECOMMENDATION" onclick={sectionButtonsClick}>Review Recommendation</button>
             </div>
             <div class="slds-m-top_large">
                 <lightning-progress-indicator current-step="step-1" type="base" variant="base">
@@ -198,7 +194,7 @@
                             <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not Saved</div>
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="12">
-                                    <lightning-input-field field-name={transcriptReivew}></lightning-input-field>
+                                    <lightning-output-field field-name={transcriptReivew} variant="label-hidden"></lightning-output-field>
                                 </lightning-layout-item>
                             </lightning-layout>
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
@@ -253,7 +249,7 @@
                             <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not Saved</div>
                             <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
                                 <lightning-layout-item size="12">
-                                    <lightning-input-field field-name={essayReview}></lightning-input-field>
+                                    <lightning-output-field field-name={essayReview} variant="label-hidden"></lightning-output-field>
                                 </lightning-layout-item>
                             </lightning-layout>
                             <lightning-layout class="slds-m-left_medium" multiple-rows>

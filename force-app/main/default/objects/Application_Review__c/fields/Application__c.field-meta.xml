@@ -3,6 +3,7 @@
     <fullName>Application__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
+    <externalId>false</externalId>
     <label>Application</label>
     <referenceTo>Application__c</referenceTo>
     <relationshipLabel>Application Reviews</relationshipLabel>

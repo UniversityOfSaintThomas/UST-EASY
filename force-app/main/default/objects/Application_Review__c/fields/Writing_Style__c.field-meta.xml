@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Writing_Style__c</fullName>
     <description>STYLE: Facility with language. Mastery of vocabulary. Rhetorical flair. Sentence length and complexity. Grasp of grammar, punctuation, and spelling</description>
+    <externalId>false</externalId>
     <inlineHelpText>Exceeds Expectations - Solid flow, consistently strong, often elegant, error free
             Meets Expectations - Communicates ideas fairly clearly, 1 or 2 grammar mistakes
             Does Not Meet Expectations - Many grammar mistakes, poor organization, difficult to follow</inlineHelpText>

@@ -3,6 +3,7 @@
     <fullName>Is_First_Gen__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Looks up to Question Response</description>
+    <externalId>false</externalId>
     <inlineHelpText>Looks up to Question Response</inlineHelpText>
     <label>Is First Gen?</label>
     <trackHistory>false</trackHistory>

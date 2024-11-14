@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Grade_Trend__c</fullName>
     <description>What does the transcript appear to have in academic grade trends</description>
+    <externalId>false</externalId>
     <inlineHelpText>Trending Up - Transcript shows a strong finish in their Jr./Sr. year
             Steady - Grades are consistently in a specific range
             Trending Down - Transcript shows a decrease in academic performance junior/senior year

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Test_Optional</fullName>
-    <active>true</active>
-    <description>For applicants applying Test Optional</description>
-    <label>Test Optional</label>
-</RecordType>

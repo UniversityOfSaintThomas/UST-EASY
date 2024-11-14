@@ -171,7 +171,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         this.lmsSubscription();
 
         getAppInfoDetails({appId: this.appId}).then((returnValue)=>{
-
             this.appReviewId = returnValue.Id;
             this.appReviewRecordId = returnValue.RecordTypeId;
         })
@@ -242,12 +241,10 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
                             accordionSection = field.closest(".accordionSection");
 
                             if (accordionSection) {
-
                                 sectionWarning = accordionSection.querySelector(".sectionSaveWarning");
                             }
 
                             if (sectionWarning) {
-
                                 sectionWarning.style.display = "block";
                             }
 
@@ -255,7 +252,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
                             this.isDisabled = false;
                             window.addEventListener("beforeunload", this.beforeUnloadHandler);
                         } else {
-
                             window.removeEventListener("beforeunload", this.beforeUnloadHandler);
                         }
                     });
@@ -265,13 +261,11 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     }
 
     onloadHandler(evt){
-
         this.onLoadRecord = evt.detail.records;
         this.onLoadFields = this.onLoadRecord[this.appReviewId].fields;
     }
 
     beforeUnloadHandler = (evt) => {
-
         evt.preventDefault();
         evt.returnValue = true;
     };
@@ -280,7 +274,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         let inputFields = this.template.querySelectorAll('lightning-input-field');
 
         if (inputFields) {
-
             inputFields.forEach(field => {
 
                 field.reset();
@@ -310,7 +303,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         let fieldWarningBorder = this.template.querySelectorAll(".fieldBorderWarning");
 
         if (sectionWarningText) {
-
             sectionWarningText.forEach(field => {
 
                 field.style.display = "none";
@@ -318,7 +310,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         }
 
         if (fieldWarningBorder) {
-
             fieldWarningBorder.forEach(field => {
 
                 field.classList.remove("fieldBorderWarning")
@@ -334,15 +325,12 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
         if (this.openSections) {
 
             if (sectionButton) {
-
                 sectionButton.forEach(button => {
 
                     if (this.openSections.includes(button.name)) {
-
                         button.classList.remove("sectionButtons");
                         button.classList.add("sectionButtonsSelect");
                     } else {
-
                         button.classList.remove("sectionButtonsSelect");
                         button.classList.add("sectionButtons");
                     }
@@ -350,7 +338,6 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
             }
         } else {
             sectionButton.forEach(button => {
-
                 button.classList.remove("sectionButtonsSelect");
                 button.classList.add("sectionButtons");
             });
@@ -374,15 +361,12 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
             let idx = this.openSections.indexOf(section);
 
             if (idx === -1) {
-
                 this.openSections.push(section);
                 this.activeSections = this.openSections;
             } else {
-
                 this.activeSections = this.openSections.toSpliced(idx, 1);
             }
         } else {
-
             this.activeSections = [section];
             this.activeAllSections = false;
         }

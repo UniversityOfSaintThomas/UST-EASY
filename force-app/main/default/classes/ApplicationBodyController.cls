@@ -358,49 +358,31 @@ public with sharing class ApplicationBodyController {
                         }
 
                         /* Generic filter 1 */
-                        if (!skipWidget) {
-                            skipWidget = filterWidget(skipWidget, atGenericFilter1Map, genericFilter1, widgetUrlParam);
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter1Map, genericFilter1, widgetUrlParam);
 
                         /* Generic filter 2 */
-                        if (!skipWidget) {
-                            skipWidget = filterWidget(skipWidget, atGenericFilter2Map, genericFilter2, widgetUrlParam);
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter2Map, genericFilter2, widgetUrlParam);
 
                         /* Generic filter 3 */
-                        if (!skipWidget) {
-                            skipWidget = filterWidget(skipWidget, atGenericFilter3Map, genericFilter3, widgetUrlParam);
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter3Map, genericFilter3, widgetUrlParam);
 
                         /* Generic filter 4 */
-                        if (!skipWidget) {
-                            skipWidget = filterWidget(skipWidget, atGenericFilter4Map, genericFilter4, widgetUrlParam);
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter4Map, genericFilter4, widgetUrlParam);
 
                         /* Generic filter 5 */
-                        if (!skipWidget) {
-                            skipWidget = filterWidget(skipWidget, atGenericFilter5Map, genericFilter5, widgetUrlParam);
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter5Map, genericFilter5, widgetUrlParam);
 
                         /* Generic filter 6 */
-                        if (!skipWidget) {
-                            skipWidget = filterWidget(skipWidget, atGenericFilter6Map, genericFilter6, widgetUrlParam);
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter6Map, genericFilter6, widgetUrlParam);
 
                         /* Generic filter 7 */
-                        if (!skipWidget) {
-                            skipWidget = filterWidget(skipWidget, atGenericFilter7Map, genericFilter7, widgetUrlParam);
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter7Map, genericFilter7, widgetUrlParam);
 
                         /* Generic filter 8 */
-                        if (!skipWidget) {
-                            skipWidget = filterWidget(skipWidget, atGenericFilter8Map, genericFilter8, widgetUrlParam);
-                        }
+                        skipWidget = filterWidget(skipWidget, atGenericFilter8Map, genericFilter8, widgetUrlParam);
 
                         /* Applicant Type filter */
-                        if (!skipWidget) {
-                            skipWidget = filterWidget(skipWidget, atApplicationTypeMap, widgetApplicantType, widgetUrlParam);
-                        }
+                        skipWidget = filterWidget(skipWidget, atApplicationTypeMap, widgetApplicantType, widgetUrlParam);
 
                     }
                 }
@@ -471,12 +453,15 @@ public with sharing class ApplicationBodyController {
 
     public Map<String, Set<String>> createFilterMap(String filterValue, Map<String, Set<String>> filterMap, String atURL) {
         if (String.isNotBlank(filterValue)) {
+            List<String> filterMapList = filterValue.split(';');
+            //Change filterMapList to a set
+            Set<String> filterMapSet = new Set<String>(filterMapList);
             if (filterMap.containsKey(atURL)) {
-                filterMap.get(atURL).add(filterValue);
+                filterMap.get(atURL).addAll(filterMapSet);
             } else {
-                filterMap.put(atURL, new Set<String>{
-                        filterValue
-                });
+                filterMap.put(atURL,
+                        filterMapSet
+                );
             }
         }
         return filterMap;
@@ -485,6 +470,11 @@ public with sharing class ApplicationBodyController {
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
         for (String l : list1) {
             if (list2.contains(l)) {
+                return true;
+            }
+        }
+        for (String l : list2) {
+            if (list1.contains(l)) {
                 return true;
             }
         }

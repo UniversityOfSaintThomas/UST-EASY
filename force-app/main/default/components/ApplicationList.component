@@ -25,14 +25,30 @@
                         <div class="slds-media__body">
                             <div class="slds-grid slds-grid_align-spread">
                                 <h3 class="slds-tile__title slds-text-heading_medium slds-p-bottom_small" title="{!app.Intended_Program_Name_on_Application__c}">
-                                    <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();" rendered={!!app.Prior_Term_Application__c}>
-                                        <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
-                                        <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
-                                        {!app.Intended_Program_Name_on_Application__c}
-                                    </apex:commandLink>
-                                    <apex:outputPanel rendered="{!app.Prior_Term_Application__c}">
-                                        {!app.Intended_Program_Name_on_Application__c}
+
+                                    <!-- Undergraduate Title with link no showing if past term -->
+                                    <apex:outputPanel rendered="{!app.Intended_Program__r.Academic_Level__c = 'U' || app.Intended_Program__r.Academic_Level__c = 'Undergraduate'}">
+                                        <apex:outputPanel rendered="{!!app.Prior_Term_Application__c}">
+                                            <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();">
+                                                <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
+                                                <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
+                                                {!app.Intended_Program_Name_on_Application__c}
+                                            </apex:commandLink>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!app.Prior_Term_Application__c}">
+                                            {!app.Intended_Program_Name_on_Application__c}
+                                        </apex:outputPanel>
                                     </apex:outputPanel>
+
+                                    <!-- Graduate -->
+                                    <apex:outputPanel rendered="{!app.Intended_Program__r.Academic_Level__c != 'U' && app.Intended_Program__r.Academic_Level__c != 'Undergraduate'}">
+                                        <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();">
+                                            <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
+                                            <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
+                                            {!app.Intended_Program_Name_on_Application__c}
+                                        </apex:commandLink>
+                                    </apex:outputPanel>
+
                                 </h3>
                             </div>
                             <div class="slds-tile__detail">
@@ -73,13 +89,30 @@
 
                                 </dl>
                             </div>
-                            <apex:outputPanel layout="none" rendered="{!IF(currentPage='applicationportal' && !app.Prior_Term_Application__c,true,false)}">
+
+                            <!-- Undergraduate Application button does not show if prior term -->
+                            <apex:outputPanel rendered="{!app.Intended_Program__r.Academic_Level__c = 'U' || app.Intended_Program__r.Academic_Level__c = 'Undergraduate'}">
+                                <apex:outputPanel layout="none" rendered="{!!app.Prior_Term_Application__c}">
+                                    <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();" styleClass="slds-button slds-p-right_medium slds-button_brand slds-button-smaller slds-m-top_small">
+                                        <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
+                                        <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
+                                        Select
+                                    </apex:commandLink>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="none" rendered="{!app.Prior_Term_Application__c}">
+                                    <em>Application from previous term</em>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+
+                            <!-- Graduate -->
+                            <apex:outputPanel rendered="{!app.Intended_Program__r.Academic_Level__c != 'U' && app.Intended_Program__r.Academic_Level__c != 'Undergraduate'}">
                                 <apex:commandLink action="{!goToHome}" onClick="appShowLoadingSpinner();" styleClass="slds-button slds-p-right_medium slds-button_brand slds-button-smaller slds-m-top_small">
                                     <apex:param name="nextAt" value="{!app.Application_Control__r.URL_Parameter__c}" assignTo="{!nextAt}"/>
                                     <apex:param name="nextAppId" value="{!app.Id}" assignTo="{!nextAppId}"/>
                                     Select
                                 </apex:commandLink>
                             </apex:outputPanel>
+
                         </div>
                     </article>
                 </li>

@@ -441,10 +441,16 @@ public with sharing class ApplicationBodyController {
     }
 
     public Boolean filterWidget(Boolean skipWidget, Map<String, Set<String>> filterMap, String filterString, String widgetUrlParam) {
-        if (!skipWidget && String.isNotBlank(filterString)) {
-            if (filterMap.containsKey(widgetUrlParam)) {
-                if (!doesListContainItem(filterString.split(';'), new List<String>(filterMap.get(widgetUrlParam)))) {
+
+        if (!skipWidget) {
+            if (String.isNotBlank(filterString)) {
+                if (filterMap.isEmpty()) {
                     return true;
+                }
+                if (filterMap.containsKey(widgetUrlParam)) {
+                    if (!doesListContainItem(filterString.split(';'), new List<String>(filterMap.get(widgetUrlParam)))) {
+                        return true;
+                    }
                 }
             }
         }
@@ -469,13 +475,10 @@ public with sharing class ApplicationBodyController {
 
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
         for (String l : list1) {
-            if (list2.contains(l)) {
-                return true;
-            }
-        }
-        for (String l : list2) {
-            if (list1.contains(l)) {
-                return true;
+            if (String.isNotBlank(l)) {
+                if (list2.contains(l)) {
+                    return true;
+                }
             }
         }
         return false;

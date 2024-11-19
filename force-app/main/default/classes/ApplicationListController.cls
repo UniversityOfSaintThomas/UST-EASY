@@ -20,7 +20,7 @@ public with sharing class ApplicationListController {
                         Intended_Program_College_of_Interest__c, Intended_Program_Applicant_Type__c, Intended_Program_Application_Control__c,
                         Application_Control__r.URL_Parameter__c, Contact__c, Intended_Term_of_Entry__r.Term_10th_Day__c, Degree_Type__c, CreatedDate,
                         Application_Control__r.School_College__c, Intended_Program_Name_on_Application__c, Applicant_Type__c, Intended_Program__r.Degree__c,
-                        Intended_Program__r.Degree_Type__c, Prior_Term_Application__c
+                        Intended_Program__r.Degree_Type__c, Prior_Term_Application__c, Intended_Program__r.Academic_Level__c
                 FROM Application__c
                 WHERE Contact__c = :appInfoParam.contactId
                 AND Application_Control__r.Active__c = TRUE

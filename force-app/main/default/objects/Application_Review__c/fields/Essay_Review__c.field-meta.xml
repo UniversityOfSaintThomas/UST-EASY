@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Essay_Review__c</fullName>
     <defaultValue>&quot;Consider/comment on the following: quality of writing (language, word choice, grammar, etc.), circumstances that could have impacted performance in high school (learning differences, personal hardship, financial constraints, etc.).&quot;</defaultValue>
+    <externalId>false</externalId>
     <label>Essay Review</label>
     <length>32768</length>
     <trackHistory>false</trackHistory>

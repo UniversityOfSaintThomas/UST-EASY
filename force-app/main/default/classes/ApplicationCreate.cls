@@ -191,7 +191,8 @@ public class ApplicationCreate {
                         formattedName = ' (Start Date: ' + startTermDateTime.format('MMM dd, yyyy') + ')';
                     }
 
-                    aTerm.Name = (String) ar.get('Name') + formattedName;
+//                    aTerm.Name = (String) ar.get('Name') + formattedName;
+                    aTerm.Name = (String) ar.get('Name');
 
                     aTermList.add(aTerm);
 

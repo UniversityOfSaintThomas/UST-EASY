@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PSEO_Courses__c</fullName>
     <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
     <label>PSEO Courses</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

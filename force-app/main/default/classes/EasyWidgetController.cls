@@ -5,6 +5,7 @@
 public with sharing class EasyWidgetController {
 
     public EASY_Widget__c widgetDetails { get; set; }
+    public EASYPersonalDataTags dataTagsDetails { get; set; }
 
     public class widgetButton {
 
@@ -28,30 +29,46 @@ public with sharing class EasyWidgetController {
 
         List<widgetButton> returnButtonList = new List<widgetButton>();
 
-        if (String.isNotBlank(widgetDetails.Button_Code__c)) {
+        if(dataTagsDetails == null){
+            dataTagsDetails = new EASYPersonalDataTags();
+        }
 
+        if (String.isNotBlank(widgetDetails.Button_Code__c)) {
             returnButtonList = (List<widgetButton>) JSON.deserialize(widgetDetails.Button_Code__c, List<widgetButton>.class);
         }
 
         for (widgetButton b : returnButtonList) {
 
+            b.buttonLabel = ApplicationUtilities.replaceDataTags(b.buttonLabel, dataTagsDetails);
+
             switch on b.buttonType {
-
                 when 'Requirement' {
+                    Id buttonRequirementIdTo18;
 
-                    if (b.buttonRequirementId.length() == 15) {
-
-                        String keyPrefix = Requirement__c.SObjectType.getDescribe().getKeyPrefix();
-
-                        b.buttonLink = 'applicationlink?requirementId=' + keyPrefix + b.buttonRequirementId;
-                    } else {
-
-                        b.buttonLink = 'applicationlink?requirementId=' + b.buttonRequirementId;
+                    try {
+                        buttonRequirementIdTo18 = b.buttonRequirementId;
+                    } catch (Exception e) {
+                        System.debug('Requirement ID Error: ' + e.getMessage());
                     }
+
+                    if (buttonRequirementIdTo18 != null) {
+                        b.buttonLink = 'applicationlink?requirementId=' + buttonRequirementIdTo18.toString();
+                    }
+
+//                    if (b.buttonRequirementId.length() == 15) {
+//
+//                        String keyPrefix = Requirement__c.SObjectType.getDescribe().getKeyPrefix();
+//
+//                        b.buttonLink = 'applicationlink?requirementId=' + keyPrefix + b.buttonRequirementId;
+//                    } else {
+//
+//                        b.buttonLink = 'applicationlink?requirementId=' + b.buttonRequirementId;
+//                    }
                 }
                 when 'URL' {
 
-                    b.buttonLink = b.buttonUrl;
+                    b.buttonLink = ApplicationUtilities.replaceDataTags(b.buttonUrl, dataTagsDetails);
+//                    b.buttonLink = b.buttonUrl;
                 }
             }
         }

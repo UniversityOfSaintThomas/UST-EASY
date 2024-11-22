@@ -9,6 +9,7 @@ public with sharing class ApplicationBodyController {
     public Map<String, EASYApplicationInfo> mapAtAppInfo { get; set; }
     public String currentPageName { get; set; }
     public Boolean noApplication { get; set; }
+    public Map<String, EASYPersonalDataTags> dataTagsMap{ get; set; }
 
     public ApplicationBodyController() {
     }
@@ -66,7 +67,8 @@ public with sharing class ApplicationBodyController {
         foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
         Map<Id, Application__c> apps = new Map<Id, Application__c>();
-        Map<String, EASYPersonalDataTags> dataTagsMap = new Map<String, EASYPersonalDataTags>();
+//        Map<String, EASYPersonalDataTags> dataTagsMap = new Map<String, EASYPersonalDataTags>();
+        dataTagsMap = new Map<String, EASYPersonalDataTags>();
 
         if (appInfoParam != null) {
             if (currentPageName.equalsIgnoreCase('applicationregistration')) {
@@ -441,10 +443,16 @@ public with sharing class ApplicationBodyController {
     }
 
     public Boolean filterWidget(Boolean skipWidget, Map<String, Set<String>> filterMap, String filterString, String widgetUrlParam) {
-        if (!skipWidget && String.isNotBlank(filterString)) {
-            if (filterMap.containsKey(widgetUrlParam)) {
-                if (!doesListContainItem(filterString.split(';'), new List<String>(filterMap.get(widgetUrlParam)))) {
+
+        if (!skipWidget) {
+            if (String.isNotBlank(filterString)) {
+                if (filterMap.isEmpty()) {
                     return true;
+                }
+                if (filterMap.containsKey(widgetUrlParam)) {
+                    if (!doesListContainItem(filterString.split(';'), new List<String>(filterMap.get(widgetUrlParam)))) {
+                        return true;
+                    }
                 }
             }
         }
@@ -453,12 +461,15 @@ public with sharing class ApplicationBodyController {
 
     public Map<String, Set<String>> createFilterMap(String filterValue, Map<String, Set<String>> filterMap, String atURL) {
         if (String.isNotBlank(filterValue)) {
+            List<String> filterMapList = filterValue.split(';');
+            //Change filterMapList to a set
+            Set<String> filterMapSet = new Set<String>(filterMapList);
             if (filterMap.containsKey(atURL)) {
-                filterMap.get(atURL).add(filterValue);
+                filterMap.get(atURL).addAll(filterMapSet);
             } else {
-                filterMap.put(atURL, new Set<String>{
-                        filterValue
-                });
+                filterMap.put(atURL,
+                        filterMapSet
+                );
             }
         }
         return filterMap;
@@ -466,9 +477,10 @@ public with sharing class ApplicationBodyController {
 
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
         for (String l : list1) {
-            if (list2.contains(l)) {
-
-                return true;
+            if (String.isNotBlank(l)) {
+                if (list2.contains(l)) {
+                    return true;
+                }
             }
         }
         return false;

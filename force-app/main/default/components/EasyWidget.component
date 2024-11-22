@@ -7,6 +7,7 @@
     <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String" required="false"/>
     <apex:attribute name="appInfo" description="Wrapper with Application control and app information" required="false" type="EASYApplicationInfo"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
+    <apex:attribute name="dataTags" type="EASYPersonalDataTags" description="Data Tags brings in dynamic content to merge within app." required="false" assignTo="{!dataTagsDetails}"/>
 
     <article class="slds-card slds-m-bottom_medium">
         <apex:outputPanel layout="none" rendered="{!If(NOT(ISBLANK(widget.Display_Heading__c)), true, false)}">

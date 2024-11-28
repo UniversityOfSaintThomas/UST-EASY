@@ -48,27 +48,18 @@ public with sharing class EasyWidgetController {
                     try {
                         buttonRequirementIdTo18 = b.buttonRequirementId;
                     } catch (Exception e) {
+                        b.buttonLabel = b.buttonLabel + ' **INVALID REQUIREMENT ID**';
                         System.debug('Requirement ID Error: ' + e.getMessage());
                     }
 
                     if (buttonRequirementIdTo18 != null) {
                         b.buttonLink = 'applicationlink?requirementId=' + buttonRequirementIdTo18.toString();
                     }
-
-//                    if (b.buttonRequirementId.length() == 15) {
-//
-//                        String keyPrefix = Requirement__c.SObjectType.getDescribe().getKeyPrefix();
-//
-//                        b.buttonLink = 'applicationlink?requirementId=' + keyPrefix + b.buttonRequirementId;
-//                    } else {
-//
-//                        b.buttonLink = 'applicationlink?requirementId=' + b.buttonRequirementId;
-//                    }
                 }
                 when 'URL' {
-
-                    b.buttonLink = ApplicationUtilities.replaceDataTags(b.buttonUrl, dataTagsDetails);
-//                    b.buttonLink = b.buttonUrl;
+                    if (b.buttonUrl != null) {
+                        b.buttonLink = ApplicationUtilities.replaceDataTags(b.buttonUrl, dataTagsDetails);
+                    }
                 }
             }
         }

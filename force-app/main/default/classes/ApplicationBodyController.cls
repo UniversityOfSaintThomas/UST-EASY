@@ -67,7 +67,6 @@ public with sharing class ApplicationBodyController {
         foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
         Map<Id, Application__c> apps = new Map<Id, Application__c>();
-//        Map<String, EASYPersonalDataTags> dataTagsMap = new Map<String, EASYPersonalDataTags>();
         dataTagsMap = new Map<String, EASYPersonalDataTags>();
 
         if (appInfoParam != null) {

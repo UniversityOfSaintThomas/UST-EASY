@@ -51,7 +51,7 @@
                                target="_blank"
                                style="font-size:16px">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true"
-                                     display="{!if(ISBLANK(TRIM(button.buttonIcon)),'none','')}">
+                                     style="display:{!if(ISBLANK(TRIM(button.buttonIcon)),'none','')}">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
                                          xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#'+button.buttonIcon)}"></use>
                                 </svg>

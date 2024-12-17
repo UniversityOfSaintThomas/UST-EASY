@@ -72,6 +72,7 @@ public with sharing class ApplicationBodyController {
         if (appInfoParam != null) {
             if (currentPageName.equalsIgnoreCase('applicationregistration')) {
                 mapAtAppInfo.put(appInfoParam.at, appInfoParam);
+                dataTagsMap.put(appInfoParam.at, new EASYPersonalDataTags());
             } else {
                 String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c, OwnerId,';
                 appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c, Id,';
@@ -186,6 +187,7 @@ public with sharing class ApplicationBodyController {
                     noApplication = false;
                 } else {
                     mapAtAppInfo.put('noapp', appInfoParam);
+                    dataTagsMap.put('noapp', new EASYPersonalDataTags());
                     noApplication = true;
                 }
             }

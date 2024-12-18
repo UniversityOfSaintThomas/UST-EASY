@@ -116,6 +116,7 @@ export default class RequestForInformationForm extends LightningElement {
     utm_marketing_topic;
     utm_source_platform;
     gclid;
+    sfcid;
 
     //connectedCallback() is a lifecycle hook that fires when the component is inserted into the DOM so we can gather URL parameters at this point
     connectedCallback() {
@@ -129,6 +130,10 @@ export default class RequestForInformationForm extends LightningElement {
         this.utm_marketing_topic = this.getUrlParamValue(window.location.href, 'utm_marketing_topic');
         this.utm_source_platform = this.getUrlParamValue(window.location.href, 'utm_source_platform');
         this.gclid = this.getUrlParamValue(window.location.href, 'gclid');
+        this.sfcid = this.getUrlParamValue(window.location.href, 'sfcid');
+        if(!this.sfcid) {
+            this.sfcid = this.getUrlParamValue(window.location.href, 'c__sfcid');
+        }
     }
 
     //Gets url parameters to populate utm fields
@@ -840,6 +845,7 @@ export default class RequestForInformationForm extends LightningElement {
             this.record_input.fields.utm_creative_format__c = this.utm_creative_format;
             this.record_input.fields.utm_marketing_topic__c = this.utm_marketing_topic;
             this.record_input.fields.utm_source_platform__c = this.utm_source_platform;
+            this.record_input.fields.nominator_contact__c = this.sfcid;
             this.record_input.fields.gclid__c = this.gclid;
             this.record_input.fields.Lead_Website__c = window.location.href;
             this.record_input.fields.Lead_Website_Referrer__c = document.referrer;

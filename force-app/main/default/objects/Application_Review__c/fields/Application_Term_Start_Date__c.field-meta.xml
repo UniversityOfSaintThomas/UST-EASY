@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Application_Term_Start_Date__c</fullName>
-    <externalId>false</externalId>
     <formula>Application__r.Intended_Term_of_Entry__r.Term_Start_Date__c</formula>
     <label>Application Term Start Date</label>
     <required>false</required>

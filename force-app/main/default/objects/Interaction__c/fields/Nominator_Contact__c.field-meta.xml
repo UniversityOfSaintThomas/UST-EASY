@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nominator_Contact__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Contact of Nominator/Referrer</description>
+    <inlineHelpText>Contact of Nominator/Referrer</inlineHelpText>
+    <label>Nominator Contact</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Interactions (Nominator Contact)</relationshipLabel>
+    <relationshipName>Interactions1</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

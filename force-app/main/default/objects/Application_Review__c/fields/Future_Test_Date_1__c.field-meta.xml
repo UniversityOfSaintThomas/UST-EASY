@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Future_Test_Date_1__c</fullName>
-    <externalId>false</externalId>
     <formula>Application__r.Future_Test_Date__c</formula>
     <label>Future Test Date 1</label>
     <required>false</required>

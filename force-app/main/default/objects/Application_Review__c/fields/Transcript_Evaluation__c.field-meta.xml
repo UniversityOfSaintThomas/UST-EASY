@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Transcript_Evaluation__c</fullName>
-    <externalId>false</externalId>
     <inlineHelpText>Exceeds Expectations - 3.75 – 4.00+ GPA, with 3+ advanced coursework (AP, IB, PSEO, etc)
             Meets Expectations - 3.2 -3.7 GPA with 1-2 advance course work
             Does Not Meet Expectations - 3.2 GPA or lower and/or developmental course in Jr/Sr Year</inlineHelpText>

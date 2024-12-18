@@ -1,6 +1,6 @@
 /**
- * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 9/29/2022.
- */
+* Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 9/29/2022.
+*/
 
 @RestResource(urlMapping='/applicaitonpaymentreceive/*')
 global with sharing class ApplicationPaymentRest {

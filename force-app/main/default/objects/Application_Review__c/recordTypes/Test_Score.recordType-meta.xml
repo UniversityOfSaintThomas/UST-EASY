@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Test_Score</fullName>
+    <active>true</active>
+    <description>For applicants applying with Test Scores</description>
+    <label>Test Score</label>
+    <picklistValues>
+        <picklist>Committee_Decision__c</picklist>
+        <values>
+            <fullName>Admit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deny</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deny - Recommend to DFC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall Grades</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall Grades %26 Test Scores</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Test Scores</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Counselor_Recommendation__c</picklist>
+        <values>
+            <fullName>Admit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Admit - No Committee Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deny</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deny - No Committee Review</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deny - Recommend to DFC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall Grades</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fall Grades %26 Test Scores</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Test Scores</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Decision_Recommendation__c</picklist>
+        <values>
+            <fullName>Incomplete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MSW Accelerated</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>English_Progression__c</picklist>
+        <values>
+            <fullName>Does Not Meet Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exceeds Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meets Expectations</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Grade_Trend__c</picklist>
+        <values>
+            <fullName>No Trend</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Steady</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trending Down</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trending Up</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Highest_Level_Math_Complete_Testing__c</picklist>
+        <values>
+            <fullName>AP Calculus AB %26 %28IB%29 Mathematics SL or Mathematical Studies SL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AP Calculus BC %26 %28IB%29 Mathematics HL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Algebra 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Algebra 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calculus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Geometry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other Advanced Math %28Algebra 3%2C Statistics%2C Trigonometry or other%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-Calculus</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Math_Progression__c</picklist>
+        <values>
+            <fullName>Does Not Meet Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exceeds Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meets Expectations</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>School_Evaluation__c</picklist>
+        <values>
+            <fullName>Does Not Meet Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exceeds Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meets Expectations</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Transcript_Evaluation__c</picklist>
+        <values>
+            <fullName>Does Not Meet Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exceeds Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meets Expectations</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Writing_Story__c</picklist>
+        <values>
+            <fullName>Does Not Meet Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exceeds Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meets Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Applicable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Writing_Style__c</picklist>
+        <values>
+            <fullName>Does Not Meet Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exceeds Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meets Expectations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Applicable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

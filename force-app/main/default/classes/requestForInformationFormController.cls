@@ -32,12 +32,18 @@ public without sharing class requestForInformationFormController {
                             sobj.put(field, Date.valueOf((String) objMap.get(field)));
                         } when 'datetime' {
                             sobj.put(field, Datetime.valueOf(((String) objMap.get(field)).replace('T', ' ').replace('Z', '')));
+                        } when 'reference' {
+                            try {
+                                sobj.put(field, (Id) objMap.get(field).toString().escapeHtml4());
+                            } catch (Exception e) {
+                                //value wasn't an id and did not convert
+                            }
                         } when else {
                             Integer fieldLength = sObjField.getDescribe().getLength();
                             if (field.startsWith('utm_') || field.startsWith('gclid')) {
                                 sobj.put(field, objMap.get(field).toString().escapeHtml4());
                             }
-                            if(fieldLength > 0 && fieldType == 'string' || fieldType == 'url') {
+                            if (fieldLength > 0 && fieldType == 'string' || fieldType == 'url') {
                                 sobj.put(field, objMap.get(field).toString().abbreviate(fieldLength));
                             } else {
                                 sobj.put(field, objMap.get(field));
@@ -47,7 +53,6 @@ public without sharing class requestForInformationFormController {
                     }
                 }
             }
-
             Database.DMLOptions dml = new Database.DMLOptions();
             dml.duplicateRuleHeader.allowSave = false;
             //System.debug('Lead object for insert: ');

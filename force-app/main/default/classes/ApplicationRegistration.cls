@@ -342,6 +342,7 @@ public class ApplicationRegistration {
                         AND Contact__r.LastName = :interaction.Last_Name__c
                         AND Contact__r.Email = :interaction.Email__c
                         AND External_Application_ID__c LIKE :('%' + interaction.External_Application_ID__c.trim() + '%')
+                        ORDER BY CreatedDate DESC
                 ];
 
                 if (commonApplication.size() > 0 && String.isNotBlank(commonApplication[0].External_Application_ID__c)) {

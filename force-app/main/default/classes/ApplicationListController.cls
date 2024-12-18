@@ -27,6 +27,7 @@ public with sharing class ApplicationListController {
                 AND (Intended_Term_of_Entry__r.Term_10th_Day__c >= TODAY OR Intended_Term_of_Entry__r.Term_10th_Day__c = NULL)
                 AND Application_Status__c != 'Wrong App'
                 AND Application_Status__c != 'Withdrawn'
+                ORDER BY Term_Start_Date__c DESC, CreatedDate DESC
         ];
 
         if (currentPageParam.equalsIgnoreCase('applicationhome')) {

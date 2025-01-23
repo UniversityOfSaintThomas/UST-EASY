@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generic_Filter_2_Question__c</fullName>
+    <defaultValue>&quot;I am...&quot;</defaultValue>
+    <description>Question label that appears on RFI if Generic Filter 2 display values are selected.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Question label that appears on Generic Filter 2 display values are selected.</inlineHelpText>
+    <label>Generic Filter 2 Question</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

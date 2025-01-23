@@ -8,14 +8,14 @@
 
 <template>
     <lightning-card>
-        <div class="slds-grid slds-wrap slds-gutters_medium slds-m-around_xx-small">
-            <template if:true={show_spinner}>
+        <div class="slds-grid slds-wrap slds-gutters_medium slds-m-around_xx-small" style="min-height:100px;">
+            <template if:true={show_fields.show_spinner}>
                 <lightning-spinner
                         alternative-text="Loading"
                         size="medium">
                 </lightning-spinner>
             </template>
-
+            <template if:true={show_fields.data_loaded}>
                 <template if:false={hide_form_title}>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium slds-m-bottom_medium">
                         <div class="slds-text-heading_medium">{academic_level} Request for Information {school_college_title}</div>
@@ -548,6 +548,7 @@
 
             <template if:true={form_submitted_successfully}>
                 <div class="slds-text-heading_large slds-align_absolute-center thank-you-message">Thank you! You will receive information shortly.</div>
+                </template>
             </template>
         </div>
     </lightning-card>

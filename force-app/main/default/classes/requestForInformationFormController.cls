@@ -32,12 +32,18 @@ public without sharing class requestForInformationFormController {
                             sobj.put(field, Date.valueOf((String) objMap.get(field)));
                         } when 'datetime' {
                             sobj.put(field, Datetime.valueOf(((String) objMap.get(field)).replace('T', ' ').replace('Z', '')));
+                        } when 'reference' {
+                            try {
+                                sobj.put(field, (Id) objMap.get(field).toString().escapeHtml4());
+                            } catch (Exception e) {
+                                //value wasn't an id and did not convert
+                            }
                         } when else {
                             Integer fieldLength = sObjField.getDescribe().getLength();
                             if (field.startsWith('utm_') || field.startsWith('gclid')) {
                                 sobj.put(field, objMap.get(field).toString().escapeHtml4());
                             }
-                            if(fieldLength > 0 && fieldType == 'string' || fieldType == 'url') {
+                            if (fieldLength > 0 && fieldType == 'string' || fieldType == 'url') {
                                 sobj.put(field, objMap.get(field).toString().abbreviate(fieldLength));
                             } else {
                                 sobj.put(field, objMap.get(field));
@@ -132,6 +138,8 @@ public without sharing class requestForInformationFormController {
                             'Program_Name_on_Application__c, ' +
                             'Student_Type__c, ' +
                             'Degree__c, ' +
+                            'Degree_Type__c, ' +
+                            'Delivery_Type__c, ' +
                             'Program_Major_Concentration__c ' +
                             'FROM Program__c ' +
                             'WHERE RecordType.DeveloperName = \'Recruitment_Program\' ' +
@@ -177,7 +185,7 @@ public without sharing class requestForInformationFormController {
             Date today = System.today();
             Date today_plus_four_years = today.addYears(4);
             // Academic Term -> intended start term
-            // limit by 4 years, show Fall and Spring 
+            // limit by 4 years, show Fall and Spring
             Map<Id, Academic_Term__c> terms = new Map<Id, Academic_Term__c>([
                     SELECT
                             Id,

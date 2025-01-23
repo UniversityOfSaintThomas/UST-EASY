@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Citizenship_Type__c</fullName>
+    <fullName>Generic_Filter_7_To_Display__c</fullName>
     <externalId>false</externalId>
-    <inlineHelpText>For categorizing RFI Controllers - no impact on functionality. Leave blank if not applicable</inlineHelpText>
-    <label>Citizenship Type</label>
+    <label>Generic Filter 7 To Display</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
+    <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Citizenship_Types</valueSetName>
+        <valueSetName>Generic_Filter_7</valueSetName>
     </valueSet>
+    <visibleLines>4</visibleLines>
 </CustomField>

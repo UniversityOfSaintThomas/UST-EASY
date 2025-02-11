@@ -3,7 +3,6 @@
     <fullName>Ethnicity__c</fullName>
     <deprecated>false</deprecated>
     <description>Values are based on the HEDA Ethnicity field, which matches IPEDS standards.</description>
-    <externalId>false</externalId>
     <label>Ethnicity</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

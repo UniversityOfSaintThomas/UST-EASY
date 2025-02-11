@@ -6,16 +6,16 @@
     <externalId>false</externalId>
     <formula>CASESAFEID(Contact__r.Id)+ TEXT(TIMENOW()) +
 
-            IF(Academic_Program__c + Recruitment_Program__c = &quot;&quot;,&quot;&quot;,
+IF(Academic_Program__c + Recruitment_Program__c = &quot;&quot;,&quot;&quot;,
 
 
-            IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Undergraduate&quot;), AND(ISBLANK(Academic_Program__c), ISPICKVAL(Recruitment_Program__r.Career__c, &quot;Undergraduate&quot;))), &quot;.Undergraduate&quot; + Term__r.Id,
+IF(OR(ISPICKVAL(Academic_Program__r.Career__c, &quot;Undergraduate&quot;), AND(ISBLANK(Academic_Program__c), ISPICKVAL(Recruitment_Program__r.Career__c, &quot;Undergraduate&quot;))), &quot;.Undergraduate&quot; + Term__r.Id,
 
 
-            &quot;.Graduate.&quot; + Term__r.Id +
+&quot;.Graduate.&quot; + Term__r.Id +
 
 
-            IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academic_Program__r.Recruitment_Program__c), Academic_Program__r.Id, Academic_Program__r.Recruitment_Program__r.Id))))</formula>
+IF(ISBLANK(Academic_Program__r.Id), Recruitment_Program__r.Id, IF(ISBLANK(Academic_Program__r.Recruitment_Program__c), Academic_Program__r.Id, Academic_Program__r.Recruitment_Program__r.Id))))</formula>
     <label>Opportunity Key</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

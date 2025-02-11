@@ -4,14 +4,13 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The academic term a prospect is interested in. Used to build the Opportunity Key for the Interaction Processor to determine whether to create a new Opportunity or update an existing Opportunity.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Required to create or update an Opportunity.</inlineHelpText>
     <label>Term</label>
     <referenceTo>hed__Term__c</referenceTo>
     <relationshipLabel>Interactions</relationshipLabel>
     <relationshipName>Interactions</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

@@ -3,7 +3,6 @@
     <fullName>Campaign_Member_Status__c</fullName>
     <deprecated>false</deprecated>
     <description>The status that should be set on the Campaign Member created for the Campaign. It must match an available status from the Campaign, and it cannot be blank.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select the member status that should be set for the Campaign. It must match an available status from the Campaign.</inlineHelpText>
     <label>Campaign Member Status</label>
     <required>false</required>

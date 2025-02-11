@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The organizational account (Ex: business, high school, college, etc.) a student is affiliated with. This field along with the Affiliation Role, Affiliation Status, and Primary Affiliation fields creates an Affiliation to the Contact. Filtered to exclude the Administrative Account Record Type.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select the organizational account (Ex: business, high school, college, etc.) the individual is affiliated with.</inlineHelpText>
     <label>Affiliated Account</label>
     <lookupFilter>

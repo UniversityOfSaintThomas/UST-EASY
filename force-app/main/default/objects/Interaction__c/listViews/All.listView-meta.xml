@@ -5,6 +5,7 @@
     <columns>Contact__c</columns>
     <columns>Lead_Source__c</columns>
     <columns>Opportunity__c</columns>
+    <columns>St_Thomas_College_School__c</columns>
     <columns>Opportunity_Key__c</columns>
     <columns>Admissions_Application__c</columns>
     <columns>College_of_Interest__c</columns>
@@ -13,6 +14,8 @@
     <columns>Recruitment_Program__c</columns>
     <columns>OwnerId__c</columns>
     <columns>CREATED_DATE</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>UPDATEDBY_USER</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

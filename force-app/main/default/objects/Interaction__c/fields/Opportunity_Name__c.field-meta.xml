@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <formula>IF( NOT(ISBLANK(Academic_Program__c)),
 
-            (IF(NOT(ISBLANK(Contact__r.LastName)),Contact__r.LastName,Last_Name__c) &amp;&quot;|&quot;&amp; (
+(IF(NOT(ISBLANK(Contact__r.LastName)),Contact__r.LastName,Last_Name__c) &amp;&quot;|&quot;&amp; (
 IF(
 NOT(ISBLANK(Term__c)),Term__r.Name,
 IF(

@@ -3,7 +3,6 @@
     <fullName>Race__c</fullName>
     <deprecated>false</deprecated>
     <description>Values are based on the HEDA Race field, which matches IPEDS standards.</description>
-    <externalId>false</externalId>
     <label>Race</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

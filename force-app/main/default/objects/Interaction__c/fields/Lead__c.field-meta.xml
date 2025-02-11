@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The Lead created or updated by this Interaction, set by the Interaction Processor.</description>
-    <externalId>false</externalId>
     <label>Lead</label>
     <referenceTo>Lead</referenceTo>
     <relationshipLabel>Interactions</relationshipLabel>

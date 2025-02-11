@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The main campaign (event, marketing effort, etc.) connected to this Interaction. When the Campaign Member Status field is also set, a Campaign Member will be created for the individual.</description>
-    <externalId>false</externalId>
     <inlineHelpText>The main campaign (event, marketing effort, etc.) connected to this Interaction. When the Campaign Member Status field is also set, a Campaign Member will be created for the individual.</inlineHelpText>
     <label>Campaign</label>
     <referenceTo>Campaign</referenceTo>

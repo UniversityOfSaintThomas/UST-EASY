@@ -3,7 +3,6 @@
     <fullName>Admissions_Application__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
-    <externalId>false</externalId>
     <label>Admissions Application</label>
     <referenceTo>Application__c</referenceTo>
     <relationshipLabel>Interactions</relationshipLabel>

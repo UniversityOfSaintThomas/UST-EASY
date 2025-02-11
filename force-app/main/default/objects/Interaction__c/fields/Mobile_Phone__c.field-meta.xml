@@ -4,7 +4,6 @@
     <businessStatus>Active</businessStatus>
     <deprecated>false</deprecated>
     <description>Individual Cell Phone. Full Definition: https://stthomas.datacookbook.com/institution/terms/292836/versions/349759</description>
-    <externalId>false</externalId>
     <inlineHelpText>Individual Cell Phone provided from Interaction</inlineHelpText>
     <label>Mobile Phone</label>
     <required>false</required>

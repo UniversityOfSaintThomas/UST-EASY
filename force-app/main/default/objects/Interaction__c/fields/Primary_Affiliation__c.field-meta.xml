@@ -4,7 +4,6 @@
     <defaultValue>false</defaultValue>
     <deprecated>false</deprecated>
     <description>Indicates the Affiliation created from Affiliated Account should be set to Primary.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Check this box to indicate the Affiliated Account is the Contact&apos;s main affiliation for that Account type.</inlineHelpText>
     <label>Primary Affiliation</label>
     <trackHistory>false</trackHistory>

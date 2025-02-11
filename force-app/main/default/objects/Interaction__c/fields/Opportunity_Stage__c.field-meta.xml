@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Opportunity_Stage__c</fullName>
     <deprecated>false</deprecated>
-    <externalId>false</externalId>
     <inlineHelpText>Required to create or update an Opportunity.</inlineHelpText>
     <label>Opportunity Stage</label>
     <required>false</required>
@@ -13,24 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Suspect</fullName>
+                <fullName>Enrollment Prospect</fullName>
                 <default>true</default>
-                <label>Suspect</label>
-            </value>
-            <value>
-                <fullName>Moderately Suspect</fullName>
-                <default>false</default>
-                <label>Moderately Suspect</label>
-            </value>
-            <value>
-                <fullName>Inquiry</fullName>
-                <default>false</default>
-                <label>Inquiry</label>
-            </value>
-            <value>
-                <fullName>Engaged</fullName>
-                <default>false</default>
-                <label>Engaged</label>
+                <label>Enrollment Prospect</label>
             </value>
             <value>
                 <fullName>No Longer Interested</fullName>
@@ -86,6 +70,11 @@
                 <fullName>Enrolled</fullName>
                 <default>false</default>
                 <label>Enrolled</label>
+            </value>
+            <value>
+                <fullName>Inquiry</fullName>
+                <default>false</default>
+                <label>Inquiry</label>
             </value>
         </valueSetDefinition>
     </valueSet>

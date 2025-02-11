@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Veteran_Benefit_Eligible__c</fullName>
     <description>Are you eligible for Veteran&apos;s benefits?</description>
-    <externalId>false</externalId>
     <inlineHelpText>Are you eligible for Veteran&apos;s benefits?</inlineHelpText>
     <label>Veteran Benefit Eligible?</label>
     <required>false</required>

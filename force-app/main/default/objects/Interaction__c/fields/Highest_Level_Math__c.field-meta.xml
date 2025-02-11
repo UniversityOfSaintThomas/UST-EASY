@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Highest_Level_Math__c</fullName>
     <description>Highest Level of Math Completed</description>
-    <externalId>false</externalId>
     <label>Highest Level Math</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

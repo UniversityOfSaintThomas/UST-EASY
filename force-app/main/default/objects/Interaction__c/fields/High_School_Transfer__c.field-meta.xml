@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>High School lookup for Transfer Students as it will get captured, but not as pertinent to College on the High School or College field.</description>
-    <externalId>false</externalId>
     <inlineHelpText>For use by Transfer Only.</inlineHelpText>
     <label>High School (Transfer)</label>
     <referenceTo>Account</referenceTo>

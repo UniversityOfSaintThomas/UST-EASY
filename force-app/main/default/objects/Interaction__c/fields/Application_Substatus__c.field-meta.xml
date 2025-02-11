@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Application_Substatus__c</fullName>
     <description>Used in conjunction with Application Status and Decision Team</description>
-    <externalId>false</externalId>
     <inlineHelpText>Used in conjunction with Application Status and Decision Team</inlineHelpText>
     <label>Application Substatus</label>
     <required>false</required>

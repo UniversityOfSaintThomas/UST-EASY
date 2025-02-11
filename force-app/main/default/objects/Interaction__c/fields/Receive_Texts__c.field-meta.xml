@@ -3,7 +3,6 @@
     <fullName>Receive_Texts__c</fullName>
     <deprecated>false</deprecated>
     <description>Capturing whether the individual indicated that they are willing to receive SMS</description>
-    <externalId>false</externalId>
     <inlineHelpText>Check if the individual is willing to receive SMS.</inlineHelpText>
     <label>Receive Texts?</label>
     <required>false</required>

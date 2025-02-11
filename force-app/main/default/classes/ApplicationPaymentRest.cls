@@ -17,9 +17,9 @@ global with sharing class ApplicationPaymentRest {
             parameters = (Map<String, String>) JSON.deserialize(contentBody, Map<String, String>.class);
 
             //Debug all passed values
-            for (String key : parameters.keySet()) {
+            /*for (String key : parameters.keySet()) {
                 System.debug(key + ' : ' + parameters.get(key));
-            }
+            }*/
 
             if (parameters.containsKey('pmt_status')) {
                 if (String.isNotBlank(parameters.get('pmt_status'))) {

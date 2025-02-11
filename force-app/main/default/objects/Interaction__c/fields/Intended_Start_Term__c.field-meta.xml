@@ -3,7 +3,6 @@
     <fullName>Intended_Start_Term__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
-    <externalId>false</externalId>
     <label>Intended Start Term</label>
     <referenceTo>Academic_Term__c</referenceTo>
     <relationshipLabel>Interactions</relationshipLabel>

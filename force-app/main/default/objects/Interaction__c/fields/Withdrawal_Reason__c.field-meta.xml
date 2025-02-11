@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Withdrawal_Reason__c</fullName>
     <description>Used to capture reasons for Withdrawal from the Recruitment funnel</description>
-    <externalId>false</externalId>
     <inlineHelpText>Used to capture reasons for Withdrawal from the Recruitment funnel</inlineHelpText>
     <label>Withdrawal Reason</label>
     <required>false</required>

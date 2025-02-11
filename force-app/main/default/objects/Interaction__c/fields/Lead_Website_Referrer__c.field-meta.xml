@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Lead_Website_Referrer__c</fullName>
     <description>The page the user was at just before landing on the RFI form page.</description>
-    <externalId>false</externalId>
     <inlineHelpText>The page the user was at just before landing on the RFI form page.</inlineHelpText>
     <label>Lead Website Referrer</label>
     <required>false</required>

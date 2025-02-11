@@ -5,7 +5,7 @@
     <description>If there is an Affiliated Account specified, this formula returns the value: &quot;.Affiliation_Account__r.Id&quot; and the Interaction Processor prepends Contact.Id to match on the Upsert Key field on Affiliation.</description>
     <externalId>false</externalId>
     <formula>IF(ISBLANK(Affiliated_Account__c), &quot;&quot;,
-            &quot;.&quot;+CASESAFEID(Affiliated_Account__r.Id))</formula>
+&quot;.&quot;+CASESAFEID(Affiliated_Account__r.Id))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Affiliation Key</label>
     <required>false</required>

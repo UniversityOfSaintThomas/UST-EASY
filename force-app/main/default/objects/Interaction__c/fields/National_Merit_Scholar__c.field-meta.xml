@@ -3,7 +3,6 @@
     <fullName>National_Merit_Scholar__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Denote if the prospect is a National Merit Scholar.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Denote if the prospect is a National Merit Scholar.</inlineHelpText>
     <label>National Merit Scholar</label>
     <trackHistory>false</trackHistory>

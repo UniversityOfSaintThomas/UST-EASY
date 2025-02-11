@@ -3,7 +3,6 @@
     <fullName>Interaction_Status__c</fullName>
     <deprecated>false</deprecated>
     <description>When set to &quot;New,&quot; the Interaction Processor runs, then updates the Status based on the result to &quot;Imported&quot; or &quot;Audit Needed.&quot;</description>
-    <externalId>false</externalId>
     <inlineHelpText>Set the Status to &quot;New&quot; and save to kick off the Interaction process.</inlineHelpText>
     <label>Interaction Status</label>
     <required>false</required>

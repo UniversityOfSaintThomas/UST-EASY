@@ -3,7 +3,6 @@
     <fullName>Has_Question__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Checkbox indicator from the RFI.  Actual question lands in the Description field.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Checkbox indicator from the RFI.  Actual question lands in the Description field.</inlineHelpText>
     <label>Has Question</label>
     <trackHistory>false</trackHistory>

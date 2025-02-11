@@ -3,7 +3,6 @@
     <fullName>Major_Program_2__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
-    <externalId>false</externalId>
     <label>Major/Program 2</label>
     <referenceTo>Program__c</referenceTo>
     <relationshipLabel>Interactions (Major/Program 2)</relationshipLabel>

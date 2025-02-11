@@ -184,7 +184,6 @@ export default class RequestForInformationForm extends LightningElement {
     //front-end display
 
     @track hide_form_title = true;
-    @track show_spinner = true;
     @track manually_enter_high_school = false;
     @track high_school_data = false;
     @track form_submitted_successfully = false;
@@ -198,6 +197,8 @@ export default class RequestForInformationForm extends LightningElement {
 
     //RFI controller determined booleans
     @track show_fields = {
+        'data_loaded': false,
+        'show_spinner': true,
         'I_will_apply_to_St_Thomas_as_a': false,
         'Citizenship': false,
         'Academic_Interest': false,
@@ -336,8 +337,8 @@ export default class RequestForInformationForm extends LightningElement {
      */
 
     // Use the Apex class getRFIController to get the RFI controller information
-    @wire(getRFIController, {rfi_controller_name: '$rfi_controller'})
-    rfi(result) {
+    @wire(getRFIController, {rfi_controller_name: '$rfi_controller'}) async rfi(result) {
+        this.show_fields.show_spinner = true;
         if (result.data) {
             if (Boolean(result.data)) {
                 //Assign values from RFI controller to local variables
@@ -395,14 +396,14 @@ export default class RequestForInformationForm extends LightningElement {
                 this.handleFieldsToDisplay();
                 this.handleRequiredFields();
                 //gets value/label of picklist by api name to use in form title
-                getAcademicLevelValue({api_name: result.data.Academic_Level__c})
+                await getAcademicLevelValue({api_name: result.data.Academic_Level__c})
                     .then((level) => {
                         this.academic_level = level;
                     })
                     .catch(error => {
                         console.log(error);
                     });
-                getTerms({account_name: this.school_college})
+                await getTerms({account_name: this.school_college})
                     .then(terms => {
                         if (Boolean(terms)) {
                             this.term_id_to_name_map = terms;
@@ -418,7 +419,7 @@ export default class RequestForInformationForm extends LightningElement {
                     .catch(error => {
                         console.log(error);
                     })
-                getCountries().then(countries => {
+                await getCountries().then(countries => {
                     let values = [];
                     for (let key in countries) {
                         values.push(
@@ -440,7 +441,7 @@ export default class RequestForInformationForm extends LightningElement {
 
                 if (Boolean(this.academic_level_api)) {
                     // gets programs based on academic level
-                    getPrograms({
+                    await getPrograms({
                         academic_level: this.academic_level_api,
                         school_college: this.school_college,
                         academic_interest_codes: this.academic_interest_codes,
@@ -478,30 +479,30 @@ export default class RequestForInformationForm extends LightningElement {
                                     }
                                     if (!this.single_selected_program) {
                                         if (last_group === '' || last_group !== programs[program].Degree__c) {
-                                        last_group = programs[program].Degree__c
+                                            last_group = programs[program].Degree__c
                                             if (label_value && programs[program].Degree__c) {
-                                        values.push(
-                                            {
-                                                label: programs[program].Degree__c,
-                                                value: programs[program].Degree__c,
-                                                description: programs[program].Degree__c,
-                                                is_group: true
+                                                values.push(
+                                                    {
+                                                        label: programs[program].Degree__c,
+                                                        value: programs[program].Degree__c,
+                                                        description: programs[program].Degree__c,
+                                                        is_group: true
+                                                    }
+                                                );
                                             }
-                                        );
-                                    }
                                         }
                                     }
                                     if (label_value && programs[program].Id) {
-                                    values.push(
-                                        {
-                                            label: label_value,
-                                            value: programs[program].Id,
-                                            description: programs[program].Degree__c,
-                                            is_group: false
-                                        }
-                                    );
+                                        values.push(
+                                            {
+                                                label: label_value,
+                                                value: programs[program].Id,
+                                                description: programs[program].Degree__c,
+                                                is_group: false
+                                            }
+                                        );
+                                    }
                                 }
-                            }
                             }
 
                             this.academic_interest_picklist_values = values;
@@ -524,13 +525,14 @@ export default class RequestForInformationForm extends LightningElement {
                         });
                 }
                 this.text_message_requested = this.require_fields.Mobile_Phone
-                this.show_spinner = false;
+                this.show_fields.data_loaded = true;
+                this.show_fields.show_spinner = false;
             }
         } else {
             if (result.error) {
                 console.log(result.error);
             }
-            this.show_spinner = false;
+            this.show_fields.show_spinner = false;
         }
     }
 
@@ -831,7 +833,7 @@ export default class RequestForInformationForm extends LightningElement {
     handleSubmit() {
 
         if (this.validateInput()) {
-            this.show_spinner = true;
+            this.show_fields.show_spinner = true;
             this.record_input.fields.OwnerId = this.lead_owner;
             this.record_input.fields.LeadSource = this.lead_source;
 
@@ -942,12 +944,12 @@ export default class RequestForInformationForm extends LightningElement {
                 if (this.redirect_after_submit) {
                     window.open(this.redirect_url, '_self');
                 }
-                this.show_spinner = false;
+                this.show_fields.show_spinner = false;
                 this.form_submitted_successfully = true;
             })
             .catch(error => {
                 console.log(error);
-                this.show_spinner = false;
+                this.show_fields.show_spinner = false;
             });
     }
 
@@ -969,8 +971,7 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     validateInput() {
-        let valid_fields = this.validateFields();
-        return valid_fields;
+        return this.validateFields();
     }
 
     validateFields() {
@@ -1023,7 +1024,7 @@ export default class RequestForInformationForm extends LightningElement {
 
     // Openstreetmap API to get city, state, and country from zipcode
     populateUSCityStateAndCountry(zipcode) {
-        this.show_spinner = true;
+        this.show_fields.show_spinner = true;
         let url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&postalcode=' + String(zipcode) + '&countrycodes=US';
         fetch(url)
             .then((response) => response.json())
@@ -1057,11 +1058,11 @@ export default class RequestForInformationForm extends LightningElement {
                     this.template.querySelector('lightning-combobox[data-id="country"]').value = 'United States of America';
                     this.record_input.fields.Country = 'United States of America';
                 }
-                this.show_spinner = false;
+                this.show_fields.show_spinner = false;
             })
             .catch((error) => {
                 console.log(error);
-                this.show_spinner = false;
+                this.show_fields.show_spinner = false;
             })
     }
 

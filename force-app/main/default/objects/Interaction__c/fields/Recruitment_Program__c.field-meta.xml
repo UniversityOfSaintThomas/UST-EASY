@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The general plan or program the individual is interested in for marketing. A lookup to Program with a filter criteria of Record Type = Recruitment Program.</description>
-    <externalId>false</externalId>
     <inlineHelpText>The general plan or program the individual is interested in for marketing.</inlineHelpText>
     <label>Recruitment Program</label>
     <referenceTo>Program__c</referenceTo>

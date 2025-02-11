@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recruitment_Program_Associated_Schools__c</fullName>
     <description>Populated by Flow when the Interaction is created from RFI&apos;s.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Populated by Flow when the Interaction is created from RFI&apos;s.</inlineHelpText>
     <label>Recruitment Program Associated Schools</label>
     <required>false</required>

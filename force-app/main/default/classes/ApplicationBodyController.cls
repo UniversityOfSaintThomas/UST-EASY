@@ -9,6 +9,7 @@ public with sharing class ApplicationBodyController {
     public Map<String, EASYApplicationInfo> mapAtAppInfo { get; set; }
     public String currentPageName { get; set; }
     public Boolean noApplication { get; set; }
+    public Map<String, EASYPersonalDataTags> dataTagsMap{ get; set; }
 
     public ApplicationBodyController() {
     }
@@ -66,11 +67,12 @@ public with sharing class ApplicationBodyController {
         foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
         Map<Id, Application__c> apps = new Map<Id, Application__c>();
-        Map<String, EASYPersonalDataTags> dataTagsMap = new Map<String, EASYPersonalDataTags>();
+        dataTagsMap = new Map<String, EASYPersonalDataTags>();
 
         if (appInfoParam != null) {
             if (currentPageName.equalsIgnoreCase('applicationregistration')) {
                 mapAtAppInfo.put(appInfoParam.at, appInfoParam);
+                dataTagsMap.put(appInfoParam.at, new EASYPersonalDataTags());
             } else {
                 String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c, OwnerId,';
                 appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c, Id,';
@@ -185,6 +187,7 @@ public with sharing class ApplicationBodyController {
                     noApplication = false;
                 } else {
                     mapAtAppInfo.put('noapp', appInfoParam);
+                    dataTagsMap.put('noapp', new EASYPersonalDataTags());
                     noApplication = true;
                 }
             }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>UST_employed_parent_guardian_spouse__c</fullName>
+    <fullName>Generic_Question_3__c</fullName>
+    <description>Field added with Question Creation RFI feature in early 2024.</description>
     <externalId>false</externalId>
-    <formula>TEXT(Application__r.UST_employed_parent_guardian_spouse__c)</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>UST employed parent/guardian/spouse</label>
+    <label>Generic Question 3</label>
+    <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

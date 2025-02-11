@@ -34,12 +34,12 @@ public with sharing class applicationHelper {
                 AND Requirement__r.Active__c = TRUE
                 AND Active__c = TRUE
                 //If not standard user
-                AND (
-                        (Internal_Only__c = :isStandardUser AND Requirement__r.Internal_Only__c = :isStandardUser)
-                        OR (
-                                Internal_Only_Show_on_Checklist__c = :!isStandardUser AND Requirement__r.Internal_Only_Show_on_Checklist__c = :!isStandardUser
-                        )
-                )
+//                AND (
+//                        (Internal_Only__c = :isStandardUser AND Requirement__r.Internal_Only__c = :isStandardUser)
+//                        OR (
+//                                Internal_Only_Show_on_Checklist__c = :!isStandardUser AND Requirement__r.Internal_Only_Show_on_Checklist__c = :!isStandardUser
+//                        )
+//                )
 
                 //TODO: Figure out how to get this into the plain query rather than have to build a string query
                 /*

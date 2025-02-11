@@ -3,7 +3,6 @@
     <fullName>Mailed_Program_Information_Requested__c</fullName>
     <defaultValue>false</defaultValue>
     <description>From the RFI</description>
-    <externalId>false</externalId>
     <inlineHelpText>From the RFI</inlineHelpText>
     <label>Mailed Program Information Requested</label>
     <trackHistory>false</trackHistory>

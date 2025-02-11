@@ -3,7 +3,6 @@
     <fullName>Affiliation_Role__c</fullName>
     <deprecated>false</deprecated>
     <description>The Contact&apos;s position for the Affiliated Account. If this field is left blank, the default Role for the Account Record Type will be used, if one is indicated in HEDA Settings, otherwise the Role will be blank.</description>
-    <externalId>false</externalId>
     <inlineHelpText>The Contact&apos;s relationship to the Affiliated Account.</inlineHelpText>
     <label>Affiliation Role</label>
     <required>false</required>

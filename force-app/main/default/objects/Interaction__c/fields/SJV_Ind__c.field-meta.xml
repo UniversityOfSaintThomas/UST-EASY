@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SJV_Ind__c</fullName>
     <description>Are you applying to the St. John Vianney Seminary?</description>
-    <externalId>false</externalId>
     <inlineHelpText>Are you applying to the St. John Vianney Seminary?</inlineHelpText>
     <label>SJV Ind</label>
     <required>false</required>

@@ -3,7 +3,6 @@
     <fullName>St_Thomas_College_School__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
-    <externalId>false</externalId>
     <label>St. Thomas College/School</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Interactions (St. Thomas College/School)</relationshipLabel>

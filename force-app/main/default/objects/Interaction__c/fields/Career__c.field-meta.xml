@@ -5,8 +5,8 @@
     <description>Returns the Career from the Academic Interest if there is one, otherwise it returns the Career from the Recruitment Interest if there is one.</description>
     <externalId>false</externalId>
     <formula>IF(ISBLANK(TEXT( Academic_Interest__r.Career__c )),
-            IF(ISBLANK(TEXT(Recruitment_Interest__r.Career__c)), &quot;&quot;, TEXT(Recruitment_Interest__r.Career__c)),
-            TEXT(Academic_Interest__r.Career__c))</formula>
+IF(ISBLANK(TEXT(Recruitment_Interest__r.Career__c)), &quot;&quot;, TEXT(Recruitment_Interest__r.Career__c)),  
+TEXT(Academic_Interest__r.Career__c))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Career</label>
     <required>false</required>

@@ -4,7 +4,6 @@
     <defaultValue>false</defaultValue>
     <deprecated>false</deprecated>
     <description>Indicates this record should only result in a Lead. If checked, the process will not attempt to match on Contact.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Indicates this record should only result in a Lead.</inlineHelpText>
     <label>Lead Only</label>
     <trackHistory>false</trackHistory>

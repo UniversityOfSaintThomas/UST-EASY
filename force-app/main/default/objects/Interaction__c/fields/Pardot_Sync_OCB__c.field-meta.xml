@@ -3,7 +3,6 @@
     <fullName>Pardot_Sync_OCB__c</fullName>
     <defaultValue>false</defaultValue>
     <description>This Checkbox is a parameter Pardot uses to select what data to Sync OCB inquiries and applications.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Is OCB college interaction?</inlineHelpText>
     <label>Pardot Sync OCB</label>
     <trackHistory>false</trackHistory>

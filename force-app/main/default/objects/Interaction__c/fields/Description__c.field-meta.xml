@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Description__c</fullName>
     <description>Populates with lead description standard field.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Populates with lead description standard field.</inlineHelpText>
     <label>Description</label>
     <length>32768</length>

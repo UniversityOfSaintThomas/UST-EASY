@@ -172,7 +172,6 @@ public class ApplicationRequirement {
         if (con == null) {
             if (appInfo.contactId != null) {
                 String query = applicationHelper.getApplicationContactFields(items);
-                System.debug('query: ' + query);
                 query = 'SELECT ' + query + ' FROM Contact WHERE Id = \'' + appInfo.contactId + '\'';
                 con = ((List<Contact>) Database.query(query)).get(0);
             }

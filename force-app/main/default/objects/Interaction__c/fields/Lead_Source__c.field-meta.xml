@@ -3,7 +3,6 @@
     <fullName>Lead_Source__c</fullName>
     <deprecated>false</deprecated>
     <description>The way in which the Lead or Contact&apos;s information was first received.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Indicate the initial source of this data.</inlineHelpText>
     <label>Lead Source</label>
     <required>false</required>
@@ -75,6 +74,11 @@
                 <label>Catholic Studies CLT</label>
             </value>
             <value>
+                <fullName>Chatbot</fullName>
+                <default>false</default>
+                <label>Chatbot</label>
+            </value>
+            <value>
                 <fullName>Coach List</fullName>
                 <default>false</default>
                 <label>Coach List</label>
@@ -128,6 +132,11 @@
                 <fullName>Dreamer</fullName>
                 <default>false</default>
                 <label>Dreamer</label>
+            </value>
+            <value>
+                <fullName>EAB Grad Purchase</fullName>
+                <default>false</default>
+                <label>EAB Grad Purchase</label>
             </value>
             <value>
                 <fullName>EducationUSA Fair</fullName>
@@ -325,6 +334,11 @@
                 <label>OHE Direct Admit</label>
             </value>
             <value>
+                <fullName>Old OCB Leads for MADL</fullName>
+                <default>false</default>
+                <label>Old OCB Leads for MADL</label>
+            </value>
+            <value>
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
@@ -378,6 +392,11 @@
                 <fullName>Referral</fullName>
                 <default>false</default>
                 <label>Referral</label>
+            </value>
+            <value>
+                <fullName>RNL Christian Connector</fullName>
+                <default>false</default>
+                <label>RNL Christian Connector</label>
             </value>
             <value>
                 <fullName>RNL Responder</fullName>

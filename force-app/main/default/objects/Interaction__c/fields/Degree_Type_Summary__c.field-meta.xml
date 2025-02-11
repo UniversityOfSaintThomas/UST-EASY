@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Degree_Type_Summary__c</fullName>
     <description>Initially built for the OCB migration project. The field is used to describe the person&apos;s degree earned into specific values of Business, STEM and Liberal Arts.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Initially built for the OCB migration project. The field is used to describe the person&apos;s degree earned into specific values of Business, STEM and Liberal Arts.</inlineHelpText>
     <label>Degree Type (Summary)</label>
     <required>false</required>

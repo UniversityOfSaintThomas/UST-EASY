@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The general interest the individual is inquiring about for marketing. A lookup to Plan with a filter criteria of Record Type = Recruitment.</description>
-    <externalId>false</externalId>
     <inlineHelpText>The general interest the individual is inquiring about for marketing.</inlineHelpText>
     <label>Recruitment Interest</label>
     <referenceTo>Plan__c</referenceTo>

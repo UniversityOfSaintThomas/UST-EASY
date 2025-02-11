@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Athlete_Type_1__c</fullName>
     <description>It indicates the type of athlete classification by a recruiter.</description>
-    <externalId>false</externalId>
     <inlineHelpText>It indicates the type of athlete classification by a recruiter.</inlineHelpText>
     <label>Athlete Type 1</label>
     <required>false</required>

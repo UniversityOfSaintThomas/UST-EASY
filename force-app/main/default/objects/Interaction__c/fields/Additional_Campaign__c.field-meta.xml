@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The secondary campaign (event, marketing effort, etc.) connected to this Interaction. When the Additional Campaign Member Status field is also set, a Campaign Member will be created for the individual.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Set the secondary campaign (event, marketing effort, etc.) connected to this Interaction to create another Campaign Member.</inlineHelpText>
     <label>Additional Campaign</label>
     <referenceTo>Campaign</referenceTo>

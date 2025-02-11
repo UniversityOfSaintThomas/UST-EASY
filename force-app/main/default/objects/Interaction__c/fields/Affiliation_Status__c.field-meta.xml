@@ -3,7 +3,6 @@
     <fullName>Affiliation_Status__c</fullName>
     <deprecated>false</deprecated>
     <description>The status of the Contact&apos;s affiliation to the Affiliated Account. Defaulted to &quot;Current.&quot;</description>
-    <externalId>false</externalId>
     <inlineHelpText>The status of the Contact&apos;s affiliation to the Affiliated Account.</inlineHelpText>
     <label>Affiliation Status</label>
     <required>false</required>

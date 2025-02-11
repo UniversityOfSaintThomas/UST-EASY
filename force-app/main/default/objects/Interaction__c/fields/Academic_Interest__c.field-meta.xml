@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>The official interest the individual applies for. A lookup to Plan with a filter criteria of Record Type = Academic.</description>
-    <externalId>false</externalId>
     <inlineHelpText>The official interest the individual applies for.</inlineHelpText>
     <label>Academic Interest</label>
     <referenceTo>Plan__c</referenceTo>

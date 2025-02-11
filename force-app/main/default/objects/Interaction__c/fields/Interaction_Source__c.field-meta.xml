@@ -3,10 +3,9 @@
     <fullName>Interaction_Source__c</fullName>
     <deprecated>false</deprecated>
     <description>The method by which the data is being added as an Interaction. Set to &quot;Manual Entry&quot; for hand entry, otherwise it represents the integration source (Webform, Purchase List, etc.) Also used in the Skip Mapping functionality on Interaction Mappings.</description>
-    <externalId>false</externalId>
     <label>Interaction Source</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

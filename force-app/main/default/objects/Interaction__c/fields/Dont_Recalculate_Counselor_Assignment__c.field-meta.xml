@@ -3,7 +3,6 @@
     <fullName>Dont_Recalculate_Counselor_Assignment__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Used to load data and keep from updating with current logic</description>
-    <externalId>false</externalId>
     <inlineHelpText>Used to load data and keep from updating with current logic</inlineHelpText>
     <label>Don&apos;t Recalculate Counselor Assignment</label>
     <trackHistory>false</trackHistory>

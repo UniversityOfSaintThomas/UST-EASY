@@ -62,7 +62,7 @@ Insert EASY_Widget__c:
     - Widget_Screen_Location__c
     - Widget_Time_Zone__c
     - Widget_Type__c
-  soql_filter: "Activation_State__c = 'Active' AND Application_Control_Active__c = TRUE"
+  soql_filter: "Activation_State__c = 'Active'"
   lookups:
     Application_Control__c:
       table: Application_Control__c
@@ -389,7 +389,7 @@ Insert Question_Dependency__c:
     - RecordTypeId
     - ValueCheckbox__c
     - Value__c
-  soql_filter: "Question_Active__c = TRUE AND Controlling_Question_Active__c = TRUE AND Application_Control_Active__c = TRUE"
+  soql_filter: "Question_Active__c = TRUE AND Controlling_Question_Active__c = TRUE"
   lookups:
     Controlling_Question__c:
       table: Question__c

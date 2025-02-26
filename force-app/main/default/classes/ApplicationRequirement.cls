@@ -102,6 +102,8 @@ public class ApplicationRequirement {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
 
+        PageReference portalPage = Page.ApplicationPortal;
+
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get('UPAY_SITE_ID'))) {
             PageReference pr = Page.ApplicationRequirement;
             if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
@@ -114,8 +116,9 @@ public class ApplicationRequirement {
             return pr;
         }
 
-        if (String.isBlank(appInfo.appControlId)) {
-            PageReference portalPage = Page.ApplicationPortal;
+        //Get the current visualforce page name
+        String currenPageName = ApexPages.currentPage().getUrl().substringBetween('apex/', '?');
+        if ((String.isBlank(appInfo.appControlId) || String.isBlank(appInfo.requirementId)) && !currenPageName.equalsIgnoreCase('applicationhome')) {
             return portalPage;
         }
 
@@ -278,7 +281,7 @@ public class ApplicationRequirement {
                     i.Instructions__c = ApplicationUtilities.replaceDataTags(i.Instructions__c, personalDataTags);
                 }
 
-                for(Question__c q : i.Questions__r) {
+                for (Question__c q : i.Questions__r) {
                     if (String.isNotBlank(q.Static_Text__c)) {
                         q.Static_Text__c = ApplicationUtilities.replaceDataTags(q.Static_Text__c, personalDataTags);
                     }
@@ -696,8 +699,8 @@ public class ApplicationRequirement {
             ];
 
             update new Requirement_Response__c(Id = reqResponseId,
-                                            Original_Uploaded_Document_File_Name__c = '',
-                                            Saved_Uploaded_Document_File_Name__c = '');
+                    Original_Uploaded_Document_File_Name__c = '',
+                    Saved_Uploaded_Document_File_Name__c = '');
 
             delete [
                     SELECT Id

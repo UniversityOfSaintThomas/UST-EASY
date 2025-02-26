@@ -643,12 +643,13 @@ public with sharing class EASYAppReviewController {
                 qrWrapper.answered = false;
                 qrWrapper.question = q;
                 String valueField = fieldRecTypeFieldName.get(q.RecordType.DeveloperName);
-
+                System.debug('q.RecordType.DeveloperName: ' + q.RecordType.DeveloperName);
+                System.debug('valueField: ' + valueField);
 
                 if (questionResponsesByQuestionId.containsKey(q.Id)) {
                     qrWrapper.questionResponse = questionResponsesByQuestionId.get(q.Id);
                     //Check if the question has a Contact_Field__c or Application_Field__c and apply the value to the question response
-                    if (!valueField.equalsIgnoreCase('Address')) {
+                    if (String.isNotBlank(valueField) && !valueField.equalsIgnoreCase('Address')) {
                         if (String.isNotBlank(q.Contact_Field__c) && contactRecord.get(q.Contact_Field__c) != null) {
                             //Clear other values
                             for (String valField : fieldRecTypeFieldName.values()) {

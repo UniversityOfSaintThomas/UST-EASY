@@ -40,24 +40,36 @@
                 <apex:form styleClass="slds-grid slds-wrap ScholarshipAppForm">
 
                     <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" layout="block">
-                        <h2 class="slds-text-heading_medium">
-                            {!scholarship.Name}
+                        <h2 class="slds-text-heading_large">
+                            <strong>{!scholarship.Name}</strong>
                         </h2>
                     </apex:outputPanel>
 
-                    <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!NOT(ISNULL(scholarship.Description__c))}">
-                        <div class="slds-text-body_regular">
-                            <p><strong>Scholarship description</strong></p>
-                            <apex:outputText escape="false" value="{!scholarship.Description__c}"/>
-                        </div>
+<!--                    <apex:outputPanel styleClass="slds-col slds-size_1-of-1" layout="block">-->
+<!--                        <div class="slds-text-body_regular">-->
+<!--                            <p><strong>Application Questions</strong></p>-->
+<!--                        </div>-->
+<!--                    </apex:outputPanel>-->
+
+                    <apex:outputPanel styleClass="slds-col slds-p-top_x-small slds-size_1-of-1" layout="block">
+                        <h2 class="slds-text-heading_medium">
+                            Application Questions
+                        </h2>
                     </apex:outputPanel>
 
+<!--                    <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!NOT(ISNULL(scholarship.Description__c))}">-->
+<!--                        <div class="slds-text-body_regular">-->
+<!--                            <p><strong>Scholarship description</strong></p>-->
+<!--                            <apex:outputText escape="false" value="{!scholarship.Description__c}"/>-->
+<!--                        </div>-->
+<!--                    </apex:outputPanel>-->
+
                     <apex:repeat value="{!["1"="1","2"="2", "3"="3", "4"="4"]}" var="q">
-                        <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!NOT(ISNULL(scholarship['Question_' + q + '_Text__c']))}">
+                        <apex:outputPanel layout="block" styleClass="slds-col slds-p-bottom_x-small slds-size_1-of-1" rendered="{!NOT(ISNULL(scholarship['Question_' + q + '_Text__c']))}">
                             <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
-                                <apex:outputLabel styleClass="slds-form-element__label" for="questionInput">
-                                    <apex:outputText escape="false" value="{!scholarship['Question_' + q + '_Text__c']}"/>
-                                </apex:outputLabel>
+<!--                                <apex:outputLabel styleClass="slds-form-element__label" for="questionInput"/>-->
+                                <apex:outputText escape="false" value="{!scholarship['Question_' + q + '_Text__c']}"></apex:outputText>
+<!--                                </apex:outputLabel>-->
                                 <!--Text input -->
                                 <apex:outputPanel layout="block" styleClass="slds-form-element__control">
                                     <apex:inputField value="{!applicant['Question_' + q + '_Answer__c']}" styleClass="slds-textarea" id="questionInput"/>
@@ -68,17 +80,17 @@
                     </apex:repeat>
 
                     <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(scholarship.Essay_2_Text__c)) || NOT(ISNULL(scholarship.Essay_1_Text__c))}">
-                        <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" layout="block">
-                            <h2 class="slds-text-heading_medium">Additional Information</h2>
-                        </apex:outputPanel>
+<!--                        <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" layout="block">-->
+<!--                            <h2 class="slds-text-heading_medium">Additional Information</h2>-->
+<!--                        </apex:outputPanel>-->
 
                         <apex:repeat value="{!["1"="1","2"="2"]}" var="e">
-                            <apex:outputPanel styleClass="essayInputWrapper" layout="block" rendered="{!NOT(ISNULL(scholarship['Essay_' + e + '_Text__c']))}" html-data-essayno="{!e}">
+                            <apex:outputPanel styleClass="essayInputWrapper slds-p-top_x-small" layout="block" rendered="{!NOT(ISNULL(scholarship['Essay_' + e + '_Text__c']))}" html-data-essayno="{!e}">
                                 <!-- Essay Description -->
-                                <apex:outputText escape="false" value="{!scholarship['Essay_' + e + '_Text__c']}"/>
+                                <apex:outputText escape="false" value="{!scholarship['Essay_' + e + '_Text__c']}"></apex:outputText>
                                 <apex:outputPanel rendered="{!scholarship['Essay_' + e + '_Allow_Upload__c']}" layout="none">
 
-                                    <apex:outputPanel styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" layout="block">
+                                    <apex:outputPanel styleClass="slds-col slds-p-bottom_x-small slds-size_1-of-1" layout="block">
                                         <apex:outputPanel styleClass="slds-form-element" layout="block">
                                             <apex:outputLabel for="Essaydelivery" styleClass="slds-form-element__label">
                                                 I will enter my answer by:
@@ -147,58 +159,62 @@
 
                     </apex:outputPanel>
 
-                    <apex:variable var="multipleRecs" value="{!IF(scholarship.Recommender2__c && scholarship.Recommender__c, true,false)}"/>
+<!--                    <apex:variable var="multipleRecs" value="{!IF(scholarship.Recommender2__c && scholarship.Recommender__c, true,false)}"/>-->
 
-                    <apex:outputPanel id="recommenderArea" layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!scholarship.Recommender2__c || scholarship.Recommender__c}">
-                        <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1">
-                            <h2 class="slds-text-heading_medium">
-                                Recommendation
-                            </h2>
-                        </apex:outputPanel>
-                        <apex:repeat value="{!["1"="1","2"="2"]}" var="r">
-                            <apex:variable var="blankOrNumber" value="{!If(r=="1","",r)}"/>
-                            <apex:variable var="showRecommender" value="{!scholarship['Recommender' + blankOrNumber + '__c']}"/>
-                            <apex:outputPanel layout="none" rendered="{!showRecommender}">
+                    <apex:outputPanel id="recommenderArea" layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!BEGINS(scholarship.Recommender_Option__c, 'Recommender') || BEGINS(scholarship.Recommender2_Option__c, 'Recommender2')}">
+<!--                    <apex:outputPanel id="recommenderArea" layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!scholarship.Recommender2__c || scholarship.Recommender__c}">-->
+<!--                        <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1">-->
+<!--                            <h2 class="slds-text-heading_medium">-->
+<!--                                Recommendation-->
+<!--                            </h2>-->
+<!--                        </apex:outputPanel>-->
+                        <apex:repeat var="r" value="{!recommenderCheck}">
+                            <apex:variable var="isRequiredClass" value="{!IF(scholarship['Recommender' + r + '_Option__c']=='Recommender'+ r + ' Required', 'slds-is-required', '')}"/>
+<!--                            <apex:variable var="blankOrNumber" value="{!If(r=="1","",r)}"/>-->
+<!--                            <apex:variable var="showRecommender" value="{!scholarship['Recommender' + blankOrNumber + '__c']}"/>-->
+<!--                            <apex:outputPanel layout="none" rendered="{!scholarship['Recommender' + r + '__c']}">-->
+                            <apex:outputPanel layout="none" rendered="{!(!BEGINS(scholarship['Recommender' + r + '_Option__c'],'No')) && scholarship['Recommender' + r + '_Option__c'] != NULL}">
                                 <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1 recommender" html-data-recnumber="{!r}">
                                     <h3 class="slds-text-heading_medium">
-                                        Recommendation {!IF(multipleRecs,r,'')}
+                                        Recommendation {!r} {!IF(scholarship['Recommender' + r + '_Option__c']=='Recommender'+ r + ' Optional', '(Optional)', '')}
+<!--                                        {!IF(multipleRecs,r,'')}-->
                                     </h3>
                                     <p class="slds-text-body_regular">
-                                        <apex:outputText escape="false" value="{!scholarship['Recommender' + blankOrNumber + '_Description__c']}"/>
+                                        <apex:outputText escape="false" value="{!scholarship['Recommender' + r + '_Description__c']}"/>
                                     </p>
-                                    <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
+                                    <apex:outputPanel styleClass="slds-form-element {!isRequiredClass}" layout="block">
                                         <apex:outputLabel for="RecName{!r}" styleClass="slds-form-element__label">Name</apex:outputLabel>
-                                        <div class="slds-form-element__control">
-                                            <apex:outputPanel rendered="{!r == '1'}" layout="none">
-                                                <apex:inputText value="{!applicant.Recommender_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
+                                        <apex:outputPanel layout="block" styleclass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!r == ''}" layout="none">
+                                                <apex:inputText value="{!applicant.Recommender_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate1))}"></apex:inputText>
                                             </apex:outputPanel>
                                             <apex:outputPanel rendered="{!r == '2'}" layout="none">
-                                                <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
+                                                <apex:inputText value="{!applicant.Recommender2_Name__c}" styleClass="slds-input recName" disabled="{!NOT(ISNULL(recommendRequestDate2))}"></apex:inputText>
                                             </apex:outputPanel>
-                                        </div>
+                                        </apex:outputPanel>
                                         <div class="slds-form-element__help">This field is required.</div>
                                     </apex:outputPanel>
 
-                                    <apex:outputPanel styleClass="slds-form-element slds-is-required" layout="block">
+                                    <apex:outputPanel styleClass="slds-form-element {!isRequiredClass}" layout="block">
                                         <apex:outputLabel for="RecEmail{!r}" styleClass="slds-form-element__label">Email</apex:outputLabel>
-                                        <div styleClass="slds-form-element__control" layout="block">
-                                            <apex:outputPanel rendered="{!r == '1'}" layout="none">
-                                                <apex:inputText value="{!applicant.Recommender_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate1))}"/>
+                                        <apex:outputPanel layout="block" styleclass="slds-form-element__control">
+                                            <apex:outputPanel rendered="{!r == ''}" layout="none">
+                                                <apex:inputText value="{!applicant.Recommender_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate1))}"></apex:inputText>
                                             </apex:outputPanel>
                                             <apex:outputPanel rendered="{!r == '2'}" layout="none">
-                                                <apex:inputText value="{!applicant.Recommender2_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate2))}"/>
+                                                <apex:inputText value="{!applicant.Recommender2_Email__c}" styleClass="slds-input recEmail" disabled="{!NOT(ISNULL(recommendRequestDate2))}"></apex:inputText>
                                             </apex:outputPanel>
-                                        </div>
+                                        </apex:outputPanel>
                                         <div class="slds-form-element__help">Please enter a valid email address.</div>
                                     </apex:outputPanel>
 
                                     <p class="recError" style="display:none">Please enter a name and a valid email.</p>
                                     <apex:outputPanel styleClass="slds-p-vertical_small" layout="block">
-                                        <apex:outputPanel layout="none" rendered="{!(r == '1' && ISNULL(recommendRequestDate1)) || (r == '2' && ISNULL(recommendRequestDate2))}">
+                                        <apex:outputPanel layout="none" rendered="{!(r == '' && ISNULL(recommendRequestDate1)) || (r == '2' && ISNULL(recommendRequestDate2))}">
                                             <apex:commandLink styleClass="slds-button slds-button_neutral slds-p-vertical_xx-small validateRecommender" action="{!SendRecommenderEmail}" value="Request Now">
                                             </apex:commandLink>
                                         </apex:outputPanel>
-                                        <apex:outputPanel rendered="{!r == '1'}" layout="none">
+                                        <apex:outputPanel rendered="{!r == ''}" layout="none">
                                             <apex:outputText value="Recommendation request sent on {0, date, MMMM d',' yyyy hh:mm aaa}." rendered="{!NOT(ISNULL(recommendRequestDate1))}">
                                                 <apex:param value="{!recommendRequestDate1}"/>
                                             </apex:outputText>
@@ -214,10 +230,11 @@
                         </apex:repeat>
                     </apex:outputPanel>
 
-                    <apex:outputPanel id="CompletionStatement" styleClass="" layout="block" rendered="{!NOT(ISNULL(scholarship.Completion_Statement__c))}">
+                    <apex:outputPanel id="CompletionStatement" styleClass="slds-p-top_medium" layout="block" rendered="{!NOT(ISNULL(scholarship.Completion_Statement__c))}">
                         <apex:outputPanel styleClass="slds-col slds-p-top_x-small slds-size_1-of-1" layout="block">
                             <h2 class="slds-text-heading_medium">
-                                {!scholarship.Name}
+                                Digital Consent &amp; Submit
+<!--                                {!scholarship.Name}-->
                             </h2>
                             <p class="slds-text-body_regular">
                                 <apex:outputText escape="false" value="{!scholarship.Completion_Statement__c}"/>
@@ -239,13 +256,13 @@
                     </apex:outputPanel>
 
                     <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
-                        <apex:commandLink action="{!SaveComplete}" Value="Save & Submit" onClick="return validateApplication();" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
-                    </apex:outputPanel>
-                    <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
-                        <apex:commandLink action="{!SaveFinishLater}" id="saveFinishLater" Value="Save & Finish Later" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
-                    </apex:outputPanel>
-                    <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
                         <apex:commandLink action="{!GoCriteria}" Value="Previous Page" styleClass="slds-button slds-button_neutral slds-p-vertical_x-small"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
+                        <apex:commandLink action="{!SaveFinishLater}" id="saveFinishLater" Value="Save & Finish Later" styleClass="slds-button slds-button_brand slds-p-vertical_x-small" style="text-transform: none;"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel styleClass="slds-col slds-size_1-of-1 slds-large-size_4-of-12 slds-p-top_medium" layout="block">
+                        <apex:commandLink action="{!SaveComplete}" Value="Save & Submit" onClick="return validateApplication();" styleClass="slds-button slds-button_brand slds-p-vertical_x-small" style="text-transform: none;"/>
                     </apex:outputPanel>
                 </apex:form>
             </div>

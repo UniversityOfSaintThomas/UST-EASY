@@ -84,7 +84,8 @@ public with sharing class ScholarshipSharedUtilities {
                             Question_4_Answer__c, Recommendation2__c, Recommendation__c, Recommender2_Email__c, Recommender2_Name__c,
                             Recommender_Email__c, Recommender_Name__c, Scholarship_Complete__c, Scholarship__c, Signature__c, Scholarship_Status__c,
                             Essay_1_Uploaded_Orig_Filename__c, Essay_2_Uploaded_Orig_Filename__c, Scholarship_Date_Started__c, Scholarship_Date_Submitted__c,
-                            Recommendation2_Request_Date__c, Recommendation_Request_Date__c, Contact__c, Recommendation_Link__c, Recommendation_Link_2__c
+                            Recommendation2_Request_Date__c, Recommendation_Request_Date__c, Contact__c, Recommendation_Link__c, Recommendation_Link_2__c,
+                            Contact__r.Name
                     FROM Scholarship_Applicant__c
                     WHERE Contact__c = :contactId
                     AND Scholarship__c = :scholarshipId
@@ -236,5 +237,35 @@ public with sharing class ScholarshipSharedUtilities {
             return encodedCipherText.getValue();
         }
         return '';
+    }
+
+    //Create Task Activity for Emails Sent
+    public static Task createTaskActivity(Id whatId, Id contactId, String subject, String description, String name, String email, Boolean resendBool, Integer recommenderNum) {
+        String subjectText = '';
+        String resendStatus = '';
+
+        if (resendBool) {
+            resendStatus = '[RESENT] ';
+        }
+
+        if (recommenderNum == 0) {
+            subjectText = 'Email sent to Applicant';
+        } else {
+            subjectText = resendStatus + 'Email sent to Recommender ' + recommenderNum + ': ' + name + ' ' + email;
+        }
+
+        Task taskActivity = new Task();
+        taskActivity.WhatId = whatId;
+        taskActivity.WhoId = contactId;
+        taskActivity.Type = 'Email';
+        taskActivity.ActivityDate = Date.today();
+        taskActivity.Subject = subjectText;
+        taskActivity.Status = 'Completed';
+        taskActivity.Priority = 'Low';
+        taskActivity.Description = 'Subject: ' + subject + '\n\n';
+        taskActivity.Description += description.replaceAll('</p>', '\n');
+        taskActivity.Description = taskActivity.Description.replaceAll('<(.*?)>', '');
+
+        return taskActivity;
     }
 }

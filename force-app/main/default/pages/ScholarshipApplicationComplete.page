@@ -34,7 +34,8 @@
                         Your application for the {!scholarship.Name} has been received and is being reviewed.
                     </p>
                     <apex:outputPanel rendered="{!(!ISBLANK(scholarshipApplicant.Recommendation_Request_Date__c)) || (!ISBLANK(scholarshipApplicant.Recommendation2_Request_Date__c))}">
-                        <b>Recommendation request(s) sent to:</b><br/>
+                        <apex:variable var="s" value="{!IF((!ISBLANK(scholarshipApplicant.Recommendation_Request_Date__c)) && (!ISBLANK(scholarshipApplicant.Recommendation2_Request_Date__c)), 's', '')}"/>
+                        <b>Recommendation request{!s} sent to:</b><br/>
                         <apex:outputPanel layout="block" rendered="{!!ISBLANK(scholarshipApplicant.Recommendation_Request_Date__c)}">
                             {!scholarshipApplicant.Recommender_Name__c} ({!scholarshipApplicant.Recommender_Email__c})
                             <apex:outputText value=" on {0,date,MM/dd/yyyy}">

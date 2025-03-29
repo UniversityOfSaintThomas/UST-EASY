@@ -32,7 +32,7 @@ export default class ScholarshipRecommenderResendLwc extends LightningElement {
     recommendersSelected = [];
 
     get options() {
-        var recommenders = [];
+        let recommenders = [];
 
         if(this.recommender1 != null) {
             recommenders.push({ label: this.recommender1, value: "recommender1" });

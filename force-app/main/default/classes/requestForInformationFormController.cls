@@ -11,44 +11,44 @@ public without sharing class requestForInformationFormController {
     @AuraEnabled
     public static void createLead(String record, String objectApiName, String rfiController) {
         try {
-            SObject sobj;
-            Map<String, SObjectField> fieldMap;
             Map<String, Object> objMap = (Map<String, Object>) JSON.deserializeUntyped(record);
-            sobj = (SObject) Schema.describeSObjects(new List<String>{
-                    objectApiName
-            })[0].getSObjectType().newSObject();
-            fieldMap = sobj.getSObjectType().getDescribe().fields.getMap();
+            SObject sObj = Schema.getGlobalDescribe().get(objectApiName).newSObject();
+            Map<String, SObjectField> fieldMap = sObj.getSObjectType().getDescribe().fields.getMap();
+
             for (String field : objMap.keySet()) {
                 Schema.SObjectField sObjField = fieldMap.get(field);
-                if (sObjField == null) {
+                if (sObjField == null) continue;
+
+                Object fieldValue = objMap.get(field);
+                if (fieldValue == null) {
+                    sObj.put(field, null);
                     continue;
                 }
-                if (objMap.get(field) == null) {
-                    sobj.put(field, null);
-                } else {
-                    String fieldType = sObjField.getDescribe().getType().name().toLowerCase();
-                    switch on fieldType {
-                        when 'date' {
-                            sobj.put(field, Date.valueOf((String) objMap.get(field)));
-                        } when 'datetime' {
-                            sobj.put(field, Datetime.valueOf(((String) objMap.get(field)).replace('T', ' ').replace('Z', '')));
-                        } when 'reference' {
-                            try {
-                                sobj.put(field, (Id) objMap.get(field).toString().escapeHtml4());
-                            } catch (Exception e) {
-                                //value wasn't an id and did not convert
-                            }
-                        } when else {
-                            Integer fieldLength = sObjField.getDescribe().getLength();
-                            if (field.startsWith('utm_') || field.startsWith('gclid')) {
-                                sobj.put(field, objMap.get(field).toString().escapeHtml4());
-                            }
-                            if (fieldLength > 0 && fieldType == 'string' || fieldType == 'url') {
-                                sobj.put(field, objMap.get(field).toString().abbreviate(fieldLength));
-                            } else {
-                                sobj.put(field, objMap.get(field));
-                            }
 
+                String fieldType = sObjField.getDescribe().getType().name().toLowerCase();
+                switch on fieldType {
+                    when 'date' {
+                        sObj.put(field, Date.valueOf((String) fieldValue));
+                    }
+                    when 'datetime' {
+                        sObj.put(field, Datetime.valueOf(((String) fieldValue).replace('T', ' ').replace('Z', '')));
+                    }
+                    when 'reference' {
+                        try {
+                            sObj.put(field, (Id) fieldValue.toString().escapeHtml4());
+                        } catch (Exception e) {
+                            // value wasn't an id and did not convert
+                        }
+                    }
+                    when else {
+                        Integer fieldLength = sObjField.getDescribe().getLength();
+                        String fieldValueStr = fieldValue.toString().escapeHtml4();
+                        if (field.startsWith('utm_') || field.startsWith('gclid')) {
+                            sObj.put(field, fieldValueStr);
+                        } else if (fieldLength > 0 && (fieldType == 'string' || fieldType == 'url')) {
+                            sObj.put(field, fieldValueStr.abbreviate(fieldLength));
+                        } else {
+                            sObj.put(field, fieldValue);
                         }
                     }
                 }
@@ -56,16 +56,13 @@ public without sharing class requestForInformationFormController {
 
             Database.DMLOptions dml = new Database.DMLOptions();
             dml.duplicateRuleHeader.allowSave = false;
-            //System.debug('Lead object for insert: ');
-            //System.debug(JSON.serializePretty(sobj));
-            Database.SaveResult result = Database.insert(sobj, dml);
-            if (result.isSuccess() == false) {
-                String context = 'Creation of lead failed on insert. \n Error: ' + result.getErrors();
-                insertErrorRecord(rfiController, record, context);
+            Database.SaveResult result = Database.insert(sObj, dml);
+
+            if (!result.isSuccess()) {
+                insertErrorRecord(rfiController, record, 'Creation of lead failed on insert. \n Error: ' + result.getErrors());
             }
         } catch (Exception e) {
-            String context = 'Creation of lead failed because of caught exception in requestForInformationFormController.createLead(). \n Error: ' + e.getMessage();
-            insertErrorRecord(rfiController, record, context);
+            insertErrorRecord(rfiController, record, 'Creation of lead failed because of caught exception in requestForInformationFormController.createLead(). \n Error: ' + e.getMessage());
             throw new AuraHandledException('Error creating lead: ' + e.getMessage());
         }
     }
@@ -80,7 +77,13 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static RFI_Controller__c getRFIController(String rfi_controller_name) {
+    public static RFI_Controller__c getRFIController(String rfi_controller_name, String recordId) {
+        Id recordIdConverted = null;
+        try {
+            recordIdConverted = recordId;
+        } catch (Exception e) {
+            //could not convert to Id
+        }
         try {
             return [
                     SELECT
@@ -98,9 +101,34 @@ public without sharing class requestForInformationFormController {
                             Multi_Select_Display_Type__c,
                             Additional_Questions__c,
                             Academic_Interest_Max_Selection__c,
-                            Disable_fields_to_display__c
+                            Disable_fields_to_display__c,
+                            School_College_To_Display__c,
+                            School_College_Question__c,
+                            Citizen_Type_Question__c,
+                            Citizen_Types_To_Display__c,
+                            Degree_Type_Question__c,
+                            Degree_Type_To_Display__c,
+                            Student_Type_Question__c,
+                            Student_Type_To_Display__c,
+                            Delivery_Type_Question__c,
+                            Delivery_Type_To_Display__c,
+                            Program_Type_Question__c,
+                            Program_Type_To_Display__c,
+                            Generic_Filter_2_Question__c,
+                            Generic_Filter_2_To_Display__c,
+                            Generic_Filter_3_Question__c,
+                            Generic_Filter_3_To_Display__c,
+                            Generic_Filter_4_Question__c,
+                            Generic_Filter_4_To_Display__c,
+                            Generic_Filter_6_Question__c,
+                            Generic_Filter_6_To_Display__c,
+                            Generic_Filter_7_Question__c,
+                            Generic_Filter_7_To_Display__c,
+                            Generic_Filter_8_Question__c,
+                            Generic_Filter_8_To_Display__c
                     FROM RFI_Controller__c
-                    WHERE Name = :rfi_controller_name
+                    WHERE Id = :recordIdConverted
+                    OR (Name = :rfi_controller_name AND Name != 'RFI Controller 000' AND Id = NULL)
                     LIMIT 1
             ];
         } catch (Exception e) {
@@ -223,10 +251,10 @@ public without sharing class requestForInformationFormController {
     @AuraEnabled(Cacheable=true)
     public static Map<String, String> getCountries() {
         Map<String, String> mapCountryCodeString = new Map<String, String>();
-        Schema.sObjectType objType = Contact.getSObjectType();
+        Schema.SObjectType objType = Contact.getSObjectType();
         Schema.DescribeSObjectResult objDescribe = objType.getDescribe();
         Map<String, Schema.SObjectField> fieldMap = objDescribe.fields.getMap();
-        List<Schema.PicklistEntry> values = fieldMap.get('MailingCountryCode').getDescribe().getPickListValues();
+        List<Schema.PicklistEntry> values = fieldMap.get('MailingCountryCode').getDescribe().getPicklistValues();
         for (Schema.PicklistEntry a : values) {
             mapCountryCodeString.put(a.getLabel(), a.getValue());
         }

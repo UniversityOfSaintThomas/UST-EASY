@@ -137,7 +137,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>School_Type_Question__c</field>
+                <field>Student_Type_Question__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

@@ -195,21 +195,19 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
         String recName1 = applicant.Recommender_Name__c;
         String recEmail1 = applicant.Recommender_Email__c;
-//        String recLink1 = applicant.Recommendation_Link__c;
 
         String recName2 = applicant.Recommender2_Name__c;
         String recEmail2 = applicant.Recommender2_Email__c;
-//        String recLink2 = applicant.Recommendation_Link_2__c;
 
         if (String.isNotBlank(recName1) && String.isNotBlank(recEmail1) && ((applicant.Recommendation_Request_Date__c == null && recommendRequestNow1) || resendRecommendation1)) {
             if (!String.isEmpty(recEmail1)) {
-                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Recommender_From_Email_Id__c, applicant.Id, applicant.Contact__c, applicant.Recommender_Email__c));
+                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Recommender_Org_From_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
                 applicant.Recommendation_Request_Date__c = Datetime.now();
             }
         }
         if (String.isNotBlank(recName2) && String.isNotBlank(recEmail2) && ((applicant.Recommendation2_Request_Date__c == null && recommendRequestNow2) || resendRecommendation2)) {
             if (!String.isEmpty(recEmail2)) {
-                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Recommender_From_Email_Id__c, applicant.Id, applicant.Contact__c, applicant.Recommender2_Email__c));
+                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Recommender_Org_From_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
                 applicant.Recommendation2_Request_Date__c = Datetime.now();
             }
         }

@@ -61,7 +61,7 @@ public with sharing class ScholarshipSharedUtilities {
                             Recommender2_Auto_Send__c, Recommender2_Description__c, Recommender2_Question__c, Recommender2__c, Recommender_Auto_Send__c,
                             Recommender_Description__c, Recommender_Question__c, Recommender__c, Scholarship_ID__c, Short_Description__c,
                             Review_Award_Process_Description__c, Self_Report_ACT_GPA_Criteria__c, Essay_1_Allow_Upload__c, Essay_2_Allow_Upload__c,
-                            Recommender_Option__c, Recommender2_Option__c
+                            Recommender_Option__c, Recommender2_Option__c, Recommender_Email_Template_Id__c, Recommender_From_Email_Id__c
                     FROM Scholarship__c
                     WHERE Scholarship_ID__c = :scholarshipId
             ];
@@ -109,6 +109,23 @@ public with sharing class ScholarshipSharedUtilities {
         Boolean isScratchOrg = org.IsSandbox && org.TrialExpirationDate != null;
         Boolean isTrialOrg = !org.IsSandbox && org.TrialExpirationDate != null;
         return isScratchOrg || isTrialOrg;
+    }
+
+    //Create Lightning Email Message
+    public static Messaging.SingleEmailMessage sendLightningEmail(String emailTemplateId, String emailFromId, String scholarshipApplication, String applicantContactId, String recommenderEmail) {
+
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+
+        message = Messaging.renderStoredEmailTemplate(emailTemplateId, applicantContactId, scholarshipApplication);
+        message.setTreatTargetObjectAsRecipient(false);
+        message.setToAddresses(new String[]{recommenderEmail});
+        message.setUseSignature(false);
+        message.setOrgWideEmailAddressId(emailFromId);
+        message.optOutPolicy = 'FILTER';
+        message.setUseSignature(false);
+        message.setBccSender(false);
+
+        return message;
     }
 
     public static Messaging.SingleEmailMessage sendEmail(String rName, String EmailAddress, String Subject, String HTMLBodyText, String PlainBodyText, String sName) {

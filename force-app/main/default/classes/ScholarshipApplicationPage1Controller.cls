@@ -23,6 +23,11 @@ public class ScholarshipApplicationPage1Controller {
         scholarshipApplicant.Scholarship__c = scholarship.Id;
         scholarshipApplicant.Scholarship_Status__c = 'Started App';
 
+        //For Lightning Email Template merge
+        scholarshipApplicant.Scholarship_Description_Long__c = scholarship.Description__c;
+        scholarshipApplicant.Scholarship_Recommender_Question__c = scholarship.Recommender_Question__c;
+        scholarshipApplicant.Scholarship_Recommender2_Question__c = scholarship.Recommender2_Question__c;
+
         if (scholarshipApplicant.Scholarship_Date_Started__c == null) {
             scholarshipApplicant.Scholarship_Date_Started__c = Datetime.now();
         }

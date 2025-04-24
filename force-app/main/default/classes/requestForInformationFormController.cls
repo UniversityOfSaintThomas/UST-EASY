@@ -50,11 +50,12 @@ public without sharing class requestForInformationFormController {
 
             Database.DMLOptions dml = new Database.DMLOptions();
             dml.duplicateRuleHeader.allowSave = false;
-            //System.debug('Lead object for insert: ');
-            //System.debug(JSON.serializePretty(sobj));
+            System.debug('Lead object for insert: ');
+            System.debug(JSON.serializePretty(sobj));
             Database.SaveResult result = Database.insert(sobj, dml);
             if (result.isSuccess() == false) {
                 String context = 'Creation of lead failed on insert. \n Error: ' + result.getErrors();
+                System.debug('Error: ' + result.getErrors());
                 insertErrorRecord(rfiController, record, context);
             }
         } catch (Exception e) {
@@ -287,6 +288,9 @@ public without sharing class requestForInformationFormController {
                 program_name = 'Undergraduate First-Year';
             }
         }
+        System.debug('PROGRAM NAME: ' + program_name);
+        System.debug('PROGRAM CODE: ' + program_code);
+
         List<Program__c> academicPrograms = new List<Program__c>();
         if (String.isNotBlank(program_name) && String.isNotBlank(program_code)) {
             academicPrograms = [

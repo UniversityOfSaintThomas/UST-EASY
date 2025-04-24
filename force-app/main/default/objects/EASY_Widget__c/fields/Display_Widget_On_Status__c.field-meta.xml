@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Display_Widget_On_Status__c</fullName>
+    <deprecated>false</deprecated>
     <description>Select which application status on which this widget should be displayed.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select which application status on which this widget should be displayed.</inlineHelpText>
     <label>Display Widget On Status</label>
     <required>false</required>

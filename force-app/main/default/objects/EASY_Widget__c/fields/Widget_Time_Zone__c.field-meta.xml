@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Widget_Time_Zone__c</fullName>
     <defaultValue>&apos;Central Daylight Time (America/Chicago)&apos;</defaultValue>
+    <deprecated>false</deprecated>
     <description>Time zone that your event will be held in.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Time zone that your event will be held in.</inlineHelpText>
     <label>Widget Time Zone</label>
     <required>false</required>

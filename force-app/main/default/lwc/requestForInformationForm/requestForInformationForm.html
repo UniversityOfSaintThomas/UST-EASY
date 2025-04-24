@@ -393,6 +393,20 @@
                                 </lightning-input>
                             </div>
                         </template>
+                        <template if:true={show_fields.Country}>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-country">
+                                <lightning-combobox
+                                        required={require_fields.Country}
+                                        label={field_labels.country_label}
+                                        options={country_picklist_values}
+                                        aria-label="Country"
+                                        placeholder="Select a country..."
+                                        onchange={onChange}
+                                        data-id="country"
+                                >
+                                </lightning-combobox>
+                            </div>
+                        </template>
                         <template if:true={show_fields.Zipcode}>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-zip">
                                 <lightning-input
@@ -417,7 +431,7 @@
                             </div>
                         </template>
                         <template if:true={show_fields.State}>
-                            <template if:true={international_citizen_type}>
+ <!--                           <template if:true={international_citizen_type}>
                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-state">
                                     <lightning-input
                                             required={require_fields.State}
@@ -428,7 +442,7 @@
                                             onchange={onChange}>
                                     </lightning-input>
                                 </div>
-                            </template>
+                            </template>-->
                             <template if:false={international_citizen_type}>
                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-state">
                                     <lightning-combobox
@@ -443,20 +457,6 @@
                                     </lightning-combobox>
                                 </div>
                             </template>
-                        </template>
-                        <template if:true={show_fields.Country}>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-country">
-                                <lightning-combobox
-                                        required={require_fields.Country}
-                                        label={field_labels.country_label}
-                                        options={country_picklist_values}
-                                        aria-label="Country"
-                                        placeholder="Select a country..."
-                                        onchange={onChange}
-                                        data-id="country"
-                                >
-                                </lightning-combobox>
-                            </div>
                         </template>
                         <template if:true={show_fields.Scholarship_of_Interest}>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-m-bottom_medium field-scholarship">

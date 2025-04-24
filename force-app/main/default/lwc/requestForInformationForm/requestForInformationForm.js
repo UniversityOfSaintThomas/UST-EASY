@@ -669,7 +669,7 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields.State = event.target.value;
                 break;
             case this.field_labels.region_label:
-                this.record_input.fields.State = event.target.value;
+                this.record_input.fields.State = ''; //event.target.value;
                 break;
             case this.field_labels.zipcode_label:
                 this.record_input.fields.PostalCode = event.target.value;

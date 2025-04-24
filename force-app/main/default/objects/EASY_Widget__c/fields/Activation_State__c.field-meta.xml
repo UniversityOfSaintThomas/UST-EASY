@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Activation_State__c</fullName>
-    <externalId>false</externalId>
+    <deprecated>false</deprecated>
     <label>Activation State</label>
     <required>true</required>
     <trackTrending>false</trackTrending>
@@ -24,6 +24,12 @@
                 <fullName>Inactive</fullName>
                 <default>false</default>
                 <label>Inactive</label>
+            </value>
+            <value>
+                <fullName>To Be Deleted</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>To Be Deleted</label>
             </value>
         </valueSetDefinition>
     </valueSet>

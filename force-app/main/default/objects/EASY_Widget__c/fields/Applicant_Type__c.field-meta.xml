@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Applicant_Type__c</fullName>
     <description>Select which applicant type on which this widget should display.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select which applicant type on which this widget should display.</inlineHelpText>
     <label>Applicant Types</label>
     <required>false</required>

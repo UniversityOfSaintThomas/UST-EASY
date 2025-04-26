@@ -1,0 +1,28 @@
+<!--
+ - Created by nguy0092 on 4/25/2025.
+ -->
+
+<!-- Scholarship Recommender Email Template Lwc -->
+<template>
+        <lightning-combobox
+                name="progress"
+                label="Email Template"
+                value={recommenderTemplateId1}
+                placeholder="Select Email Template"
+                options={EmailTemplateOptions}
+                onchange={handleChange} ></lightning-combobox>
+
+        <p>Selected value is: {selectValue}</p>
+        <p>Record Id: {recordId}</p>
+        <p>Record Email Template 1: {recommenderTemplateId1}</p>
+
+        <lightning-button label="Save"
+                          onclick={handleClick}
+                          disabled={saveDisabled1}>
+        </lightning-button>
+
+        <p>
+                <lightning-formatted-rich-text value={htmlValue}></lightning-formatted-rich-text>
+        </p>
+
+</template>

@@ -674,7 +674,7 @@ export default class RequestForInformationForm extends LightningElement {
                 }
                 break;
             case this.field_labels.country_label:
-                this.record_input.fields.Country = event.target.options.find(opt => opt.value === event.detail.value).label;
+                this.record_input.fields.Country = event.target.EmailTemplateOptions.find(opt => opt.value === event.detail.value).label;
                 this.record_input.fields.CountryCode = event.target.value;
                     this.international_citizen_type = !this.record_input.fields.Country.toLowerCase().startsWith('united states') && this.record_input.fields.Country.toLowerCase() !== 'us';
                 break;

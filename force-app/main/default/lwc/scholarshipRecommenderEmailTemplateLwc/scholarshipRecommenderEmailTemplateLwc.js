@@ -5,54 +5,36 @@
 import {LightningElement, api, track, wire} from 'lwc';
 import {gql, graphql} from "lightning/uiGraphQLApi";
 import {getFieldValue, getRecord, updateRecord} from "lightning/uiRecordApi";
+import orgWideEmailsApex from "@salesforce/apex/ScholarshipRecommenderEmailTemplate.orgWideEmailsOptions";
+import emailTemplatesApex from "@salesforce/apex/ScholarshipRecommenderEmailTemplate.emailTemplatesOptions";
 import ID_FIELD from "@salesforce/schema/Scholarship__c.Id";
-import RECOMMENDER_TEMPLATE1_ID from "@salesforce/schema/Scholarship__c.Recommender_Email_Template_Id__c";
-import RECOMMENDER_TEMPLATE2_ID from "@salesforce/schema/Scholarship__c.Recommender2_Email_Template_Id__c";
+import ORG_WIDE_EMAIL_ID1 from "@salesforce/schema/Scholarship__c.Recommender_Org_From_Email_Id__c";
+import ORG_WIDE_EMAIL_ID2 from "@salesforce/schema/Scholarship__c.Recommender2_Org_From_Email_Id__c";
+import RECOMMENDER_TEMPLATE_ID1 from "@salesforce/schema/Scholarship__c.Recommender_Email_Template_Id__c";
+import RECOMMENDER_TEMPLATE_ID2 from "@salesforce/schema/Scholarship__c.Recommender2_Email_Template_Id__c";
 
 const FIELDS = [ID_FIELD,
-    RECOMMENDER_TEMPLATE1_ID,
-    RECOMMENDER_TEMPLATE2_ID,
+    ORG_WIDE_EMAIL_ID1,
+    ORG_WIDE_EMAIL_ID2,
+    RECOMMENDER_TEMPLATE_ID1,
+    RECOMMENDER_TEMPLATE_ID2,
 ];
 
 export default class ScholarshipRecommenderEmailTemplateLwc extends LightningElement {
 
     @api recordId;
-    @track EmailTemplateOptions;
+    @api recommenderNumber = 0;
 
+    orgWideEmailOptions;
+    emailTemplateOptions;
+
+    orgWideEmailIdUpdate;
     emailTemplateIdUpdate1;
     emailTemplateIdUpdate2;
 
-    selectValue;
-    htmlValue;
-    saveDisabled1 = true;
-
-
-    handleChange(event) {
-        this.selectValue = event.detail.value;
-
-        if (this.selectValue !== this.emailTemplateIdUpdate1) {
-            this.emailTemplateIdUpdate1 = event.detail.value;
-            this.saveDisabled1 = false;
-        } else {
-            this.saveDisabled1 = true;
-        }
-    }
-
-    handleClick() {
-        const fields = {};
-
-        fields[ID_FIELD.fieldApiName] = this.recordId;
-        fields[RECOMMENDER_TEMPLATE1_ID.fieldApiName] = this.emailTemplateIdUpdate1;
-
-        const recordUpdate = {
-            fields: fields
-        }
-
-        updateRecord(recordUpdate).then((record) => {
-            this.saveDisabled1 = true;
-            console.log(record);
-        });
-    }
+    templateHtmlValue;
+    previewCheck = false;
+    saveDisabled = true;
 
     @wire(getRecord, { recordId: "$recordId", fields: FIELDS })
     scholarshipRecord;
@@ -61,56 +43,148 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
         return getFieldValue(this.scholarshipRecord.data, ID_FIELD);
     }
 
+    get recommenderOrgWideEmailId1() {
+        return getFieldValue(this.scholarshipRecord.data, ORG_WIDE_EMAIL_ID1);
+    }
+
+    get recommenderOrgWideEmailId2() {
+        return getFieldValue(this.scholarshipRecord.data, ORG_WIDE_EMAIL_ID2);
+    }
+
     get recommenderTemplateId1() {
-        return getFieldValue(this.scholarshipRecord.data, RECOMMENDER_TEMPLATE1_ID);
+        return getFieldValue(this.scholarshipRecord.data, RECOMMENDER_TEMPLATE_ID1);
     }
 
     get recommenderTemplateId2() {
-        return getFieldValue(this.scholarshipRecord.data, RECOMMENDER_TEMPLATE2_ID);
+        return getFieldValue(this.scholarshipRecord.data, RECOMMENDER_TEMPLATE_ID2);
     }
 
-    // get options() {
-    //     return [
-    //         { label: 'New', value: 'new' },
-    //         { label: 'In Progress', value: 'inProgress' },
-    //         { label: 'Finished', value: 'finished' },
-    //     ];
-    // }
+    get orgWideEmailSelectionLabel() {
+        return "Recommender "+this.recommenderNumber+" Sent From Email";
+    }
 
-    @wire(graphql, {
-        query: gql`
-      query EmailTemplatetWithName {
-        uiapi {
-          query {
-            EmailTemplate( where: { UiType: { eq: "SFX" }
-                                    FolderName: { eq: "" } },
-                           orderBy: { Name: { order: ASC } } ) {
-              edges {
-                node {
-                  Id
-                  Name { value }
-                  FolderName { value }
-                  UiType { value }
-                  HtmlValue { value }
-                }
-              }
-            }
-          }
+    get OrgWideEmailIdValue() {
+        if (this.recommenderNumber === 1) {
+            return this.recommenderOrgWideEmailId1;
+        } else if (this.recommenderNumber === 2) {
+            return this.recommenderOrgWideEmailId2;
+        } else {
+            return null;
         }
-      }
-    `,
-    })
-    graphqlQueryResult({data, errors}) {
+    }
+
+    get emailTemplateSelectionLabel() {
+        return "Recommender "+this.recommenderNumber+" Email Template";
+    }
+
+    get recommenderTemplateIdValue() {
+        if (this.recommenderNumber === 1) {
+            return this.recommenderTemplateId1;
+        } else if (this.recommenderNumber === 2) {
+            return this.recommenderTemplateId2;
+        } else {
+            return null;
+        }
+    }
+
+    @wire(orgWideEmailsApex)
+    orgWideEmailWire({error, data}) {
         if (data) {
-            // this.results = data.uiapi.query.EmailTemplate.edges.map((edge) => edge.node);
-            this.EmailTemplateOptions = data.uiapi.query.EmailTemplate.edges.map((edge) => ({
-                    value: edge.node.Id,
-                    label: edge.node.Name.value,
-                    HtmlValue: edge.node.HtmlValue.value,
-                })
-            );
-            this.errors = errors;
+            this.orgWideEmailOptions = JSON.parse(JSON.stringify(data));
         }
+
+        if (error) {
+            console.log("orgWideEmailWire error: " + error)
+        }
+    }
+
+    @wire(emailTemplatesApex)
+    emailTemplateWire({error, data}) {
+        if (data) {
+            this.emailTemplateOptions = JSON.parse(JSON.stringify(data));
+
+            if (!!this.emailTemplateOptions && !!this.recommenderTemplateIdValue) {
+                this.templateHtmlValue = this.findTemplate(this.recommenderTemplateIdValue).htmlValue;
+            } else {
+                this.templateHtmlValue = "";
+            }
+        }
+
+        if (error) {
+            console.log("emailTemplateWire error: " + error);
+        }
+    }
+
+    orgWideEmailSelectValue //USE FOR TESTING
+    orgWideEmailHandleChange(event) {
+        this.orgWideEmailSelectValue = event.detail.value; //USE FOR TESTING
+        this.saveButtonBool();
+    }
+
+    emailTemplateSelectValue; //USE FOR TESTING
+    emailTemplateHandleChange(event) {
+        this.emailTemplateSelectValue = event.detail.value; //USE FOR TESTING
+        this.templateHtmlValue = this.findTemplate(event.detail.value).htmlValue;
+        this.saveButtonBool();
+
+        // if (this.recommenderNumber === 1) {
+        //     if (emailTemplateSelectValue !== this.recommenderTemplateIdValue) {
+        //         this.emailTemplateIdUpdate1 = emailTemplateSelectValue;
+        //     }
+        // } else if (this.recommenderNumber === 2) {
+        //     if (emailTemplateSelectValue !== this.recommenderTemplateIdValue) {
+        //         this.emailTemplateIdUpdate2 = emailTemplateSelectValue;
+        //     }
+        // }
+    }
+
+    saveButtonBool() {
+        let emailTemplateSelectCurrent = this.template.querySelector("[data-selecttype='emailTemplate']").value;
+        let orgWideEmailSelectCurrent = this.template.querySelector("[data-selecttype='orgWideEmail']").value;
+
+        console.log("template Select Value: "+emailTemplateSelectCurrent);
+        console.log("template Id Value: "+this.recommenderTemplateIdValue);
+        console.log("org email Select Value: "+orgWideEmailSelectCurrent);
+        console.log("org email Id Value: "+this.OrgWideEmailIdValue);
+
+        if (emailTemplateSelectCurrent !== this.recommenderTemplateIdValue || orgWideEmailSelectCurrent !== this.OrgWideEmailIdValue) {
+            this.saveDisabled = false;
+        } else {
+            this.saveDisabled = true;
+        }
+    }
+
+    handleClick() {
+        let emailTemplateSelectCurrent = this.template.querySelector("[data-selecttype='emailTemplate']").value;
+        let orgWideEmailSelectCurrent = this.template.querySelector("[data-selecttype='orgWideEmail']").value;
+
+        const fields = {};
+
+        fields[ID_FIELD.fieldApiName] = this.recordId;
+
+        if (this.recommenderNumber === 1) {
+            fields[ORG_WIDE_EMAIL_ID1.fieldApiName] = orgWideEmailSelectCurrent;
+            fields[RECOMMENDER_TEMPLATE_ID1.fieldApiName] = emailTemplateSelectCurrent;
+        } else if (this.recommenderNumber === 2) {
+            fields[ORG_WIDE_EMAIL_ID2.fieldApiName] = orgWideEmailSelectCurrent;
+            fields[RECOMMENDER_TEMPLATE_ID2.fieldApiName] = emailTemplateSelectCurrent;
+        }
+
+        const recordUpdate = {
+            fields: fields
+        }
+
+        updateRecord(recordUpdate).then((record) => {
+            this.saveDisabled = true;
+        });
+    }
+
+    previewClick() {
+        this.previewCheck = !this.previewCheck;
+    }
+
+    findTemplate(templateId) {
+        return this.emailTemplateOptions.find(template => template.value === templateId);
     }
 
 }

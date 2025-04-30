@@ -4,25 +4,50 @@
 
 <!-- Scholarship Recommender Email Template Lwc -->
 <template>
-        <lightning-combobox
-                name="progress"
-                label="Email Template"
-                value={recommenderTemplateId1}
-                placeholder="Select Email Template"
-                options={EmailTemplateOptions}
-                onchange={handleChange} ></lightning-combobox>
+    <lightning-card>
+        <div class="slds-p-around_small">
+            <lightning-combobox
+                    name="orgWideEmailSelection"
+                    label={orgWideEmailSelectionLabel}
+                    value={OrgWideEmailIdValue}
+                    placeholder="Select From Email"
+                    options={orgWideEmailOptions}
+                    data-selecttype="orgWideEmail"
+                    onchange={orgWideEmailHandleChange}></lightning-combobox>
 
-        <p>Selected value is: {selectValue}</p>
-        <p>Record Id: {recordId}</p>
-        <p>Record Email Template 1: {recommenderTemplateId1}</p>
+            <p>Selected Org Wide Email value: {orgWideEmailSelectValue}</p>
+            <p>Current Recommender {recommenderNumber} Org Email Id: {OrgWideEmailIdValue}</p>
+        </div>
+        <div class="slds-p-around_small">
+            <lightning-combobox
+                    name="emailTemplateSelection"
+                    label={emailTemplateSelectionLabel}
+                    value={recommenderTemplateIdValue}
+                    placeholder="Select Email Template"
+                    options={emailTemplateOptions}
+                    data-selecttype="emailTemplate"
+                    onchange={emailTemplateHandleChange}></lightning-combobox>
 
-        <lightning-button label="Save"
-                          onclick={handleClick}
-                          disabled={saveDisabled1}>
-        </lightning-button>
+            <lightning-input type="checkbox"
+                             label="Preview Email Template"
+                             name="preview"
+                             onchange={previewClick}>
+            </lightning-input>
 
-        <p>
-                <lightning-formatted-rich-text value={htmlValue}></lightning-formatted-rich-text>
-        </p>
+            <p>Selected Email Template value: {emailTemplateSelectValue}</p>
+            <p>Current Recommender {recommenderNumber} Email Template Id: {recommenderTemplateIdValue}</p>
+        </div>
+        <div class="slds-p-around_small">
+            <lightning-button label="Save"
+                              onclick={handleClick}
+                              disabled={saveDisabled}>
+            </lightning-button>
+        </div>
+        <template lwc:if={previewCheck}>
+            <p>
+                <lightning-formatted-rich-text value={templateHtmlValue}></lightning-formatted-rich-text>
+            </p>
+        </template>
+    </lightning-card>
 
 </template>

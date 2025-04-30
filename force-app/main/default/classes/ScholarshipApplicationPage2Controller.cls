@@ -207,7 +207,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
         }
         if (String.isNotBlank(recName2) && String.isNotBlank(recEmail2) && ((applicant.Recommendation2_Request_Date__c == null && recommendRequestNow2) || resendRecommendation2)) {
             if (!String.isEmpty(recEmail2)) {
-                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Recommender_Org_From_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
+                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Recommender2_Org_From_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
                 applicant.Recommendation2_Request_Date__c = Datetime.now();
             }
         }

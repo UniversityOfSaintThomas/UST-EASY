@@ -8,12 +8,16 @@ import {getFieldValue, getRecord, updateRecord} from "lightning/uiRecordApi";
 import orgWideEmailsApex from "@salesforce/apex/ScholarshipRecommenderEmailTemplate.orgWideEmailsOptions";
 import emailTemplatesApex from "@salesforce/apex/ScholarshipRecommenderEmailTemplate.emailTemplatesOptions";
 import ID_FIELD from "@salesforce/schema/Scholarship__c.Id";
+import RECOMMENDER_OPTION1 from "@salesforce/schema/Scholarship__c.Recommender_Option__c"
+import RECOMMENDER_OPTION2 from "@salesforce/schema/Scholarship__c.Recommender2_Option__c"
 import ORG_WIDE_EMAIL_ID1 from "@salesforce/schema/Scholarship__c.Recommender_Org_From_Email_Id__c";
 import ORG_WIDE_EMAIL_ID2 from "@salesforce/schema/Scholarship__c.Recommender2_Org_From_Email_Id__c";
 import RECOMMENDER_TEMPLATE_ID1 from "@salesforce/schema/Scholarship__c.Recommender_Email_Template_Id__c";
 import RECOMMENDER_TEMPLATE_ID2 from "@salesforce/schema/Scholarship__c.Recommender2_Email_Template_Id__c";
 
 const FIELDS = [ID_FIELD,
+    RECOMMENDER_OPTION1,
+    RECOMMENDER_OPTION2,
     ORG_WIDE_EMAIL_ID1,
     ORG_WIDE_EMAIL_ID2,
     RECOMMENDER_TEMPLATE_ID1,
@@ -41,6 +45,14 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
 
     get idField() {
         return getFieldValue(this.scholarshipRecord.data, ID_FIELD);
+    }
+
+    get recommenderOption1() {
+        return getFieldValue(this.scholarshipRecord.data, RECOMMENDER_OPTION1);
+    }
+
+    get recommenderOption2() {
+        return getFieldValue(this.scholarshipRecord.data, RECOMMENDER_OPTION2);
     }
 
     get recommenderOrgWideEmailId1() {

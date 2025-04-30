@@ -14,6 +14,7 @@ import ORG_WIDE_EMAIL_ID1 from "@salesforce/schema/Scholarship__c.Recommender_Or
 import ORG_WIDE_EMAIL_ID2 from "@salesforce/schema/Scholarship__c.Recommender2_Org_From_Email_Id__c";
 import RECOMMENDER_TEMPLATE_ID1 from "@salesforce/schema/Scholarship__c.Recommender_Email_Template_Id__c";
 import RECOMMENDER_TEMPLATE_ID2 from "@salesforce/schema/Scholarship__c.Recommender2_Email_Template_Id__c";
+import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 const FIELDS = [ID_FIELD,
     RECOMMENDER_OPTION1,
@@ -103,6 +104,7 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
     orgWideEmailWire({error, data}) {
         if (data) {
             this.orgWideEmailOptions = JSON.parse(JSON.stringify(data));
+            this.orgWideEmailOptions.unshift({label: "--none--", value: ""});
         }
 
         if (error) {
@@ -114,6 +116,7 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
     emailTemplateWire({error, data}) {
         if (data) {
             this.emailTemplateOptions = JSON.parse(JSON.stringify(data));
+            this.emailTemplateOptions.unshift({label: "--none--", value: ""});
 
             if (!!this.emailTemplateOptions && !!this.recommenderTemplateIdValue) {
                 this.templateHtmlValue = this.findTemplate(this.recommenderTemplateIdValue).htmlValue;
@@ -151,8 +154,8 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
     }
 
     saveButtonBool() {
-        let emailTemplateSelectCurrent = this.template.querySelector("[data-selecttype='emailTemplate']").value;
         let orgWideEmailSelectCurrent = this.template.querySelector("[data-selecttype='orgWideEmail']").value;
+        let emailTemplateSelectCurrent = this.template.querySelector("[data-selecttype='emailTemplate']").value;
 
         console.log("template Select Value: "+emailTemplateSelectCurrent);
         console.log("template Id Value: "+this.recommenderTemplateIdValue);
@@ -167,19 +170,19 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
     }
 
     handleClick() {
-        let emailTemplateSelectCurrent = this.template.querySelector("[data-selecttype='emailTemplate']").value;
-        let orgWideEmailSelectCurrent = this.template.querySelector("[data-selecttype='orgWideEmail']").value;
+        let orgWideEmailSelectCurrent = this.template.querySelector("[data-selecttype='orgWideEmail']");
+        let emailTemplateSelectCurrent = this.template.querySelector("[data-selecttype='emailTemplate']");
 
         const fields = {};
 
         fields[ID_FIELD.fieldApiName] = this.recordId;
 
         if (this.recommenderNumber === 1) {
-            fields[ORG_WIDE_EMAIL_ID1.fieldApiName] = orgWideEmailSelectCurrent;
-            fields[RECOMMENDER_TEMPLATE_ID1.fieldApiName] = emailTemplateSelectCurrent;
+            fields[ORG_WIDE_EMAIL_ID1.fieldApiName] = orgWideEmailSelectCurrent.value;
+            fields[RECOMMENDER_TEMPLATE_ID1.fieldApiName] = emailTemplateSelectCurrent.value;
         } else if (this.recommenderNumber === 2) {
-            fields[ORG_WIDE_EMAIL_ID2.fieldApiName] = orgWideEmailSelectCurrent;
-            fields[RECOMMENDER_TEMPLATE_ID2.fieldApiName] = emailTemplateSelectCurrent;
+            fields[ORG_WIDE_EMAIL_ID2.fieldApiName] = orgWideEmailSelectCurrent.value;
+            fields[RECOMMENDER_TEMPLATE_ID2.fieldApiName] = emailTemplateSelectCurrent.value;
         }
 
         const recordUpdate = {
@@ -187,8 +190,28 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
         }
 
         updateRecord(recordUpdate).then((record) => {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: "Success",
+                    message: "Recommender " + this.recommenderNumber + " Details Updated",
+                    variant: "success",
+                }),
+            );
+            this.saveDisabled = true;
+        })
+        .catch((error) => {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: "Error",
+                    message: error.body.message,
+                    variant: "error",
+                }),
+            );
+            orgWideEmailSelectCurrent.value = this.OrgWideEmailIdValue;
+            emailTemplateSelectCurrent.value = this.recommenderTemplateIdValue;
             this.saveDisabled = true;
         });
+
     }
 
     previewClick() {

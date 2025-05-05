@@ -36,11 +36,17 @@
 
             <p>Selected Email Template value: {emailTemplateSelectValue}</p>
             <p>Current Recommender {recommenderNumber} Email Template Id: {recommenderTemplateIdValue}</p>
+
         </div>
         <div class="slds-p-around_small">
             <lightning-button label="Save"
-                              onclick={handleClick}
-                              disabled={saveDisabled}>
+                              onclick={saveClick}
+                              disabled={saveDisabled}
+                              class="slds-p-right_x-small">
+            </lightning-button>
+            <lightning-button label="Cancel"
+                              onclick={cancelClick}
+                              disabled={cancelDisabled}>
             </lightning-button>
         </div>
         <template lwc:if={previewCheck}>

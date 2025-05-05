@@ -40,6 +40,7 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
     templateHtmlValue;
     previewCheck = false;
     saveDisabled = true;
+    cancelDisabled = true;
 
     @wire(getRecord, { recordId: "$recordId", fields: FIELDS })
     scholarshipRecord;
@@ -104,7 +105,7 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
     orgWideEmailWire({error, data}) {
         if (data) {
             this.orgWideEmailOptions = JSON.parse(JSON.stringify(data));
-            this.orgWideEmailOptions.unshift({label: "--none--", value: ""});
+            this.orgWideEmailOptions.unshift({label: "--None--", value: ""});
         }
 
         if (error) {
@@ -116,7 +117,7 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
     emailTemplateWire({error, data}) {
         if (data) {
             this.emailTemplateOptions = JSON.parse(JSON.stringify(data));
-            this.emailTemplateOptions.unshift({label: "--none--", value: ""});
+            this.emailTemplateOptions.unshift({label: "--None--", value: ""});
 
             if (!!this.emailTemplateOptions && !!this.recommenderTemplateIdValue) {
                 this.templateHtmlValue = this.findTemplate(this.recommenderTemplateIdValue).htmlValue;
@@ -141,16 +142,6 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
         this.emailTemplateSelectValue = event.detail.value; //USE FOR TESTING
         this.templateHtmlValue = this.findTemplate(event.detail.value).htmlValue;
         this.saveButtonBool();
-
-        // if (this.recommenderNumber === 1) {
-        //     if (emailTemplateSelectValue !== this.recommenderTemplateIdValue) {
-        //         this.emailTemplateIdUpdate1 = emailTemplateSelectValue;
-        //     }
-        // } else if (this.recommenderNumber === 2) {
-        //     if (emailTemplateSelectValue !== this.recommenderTemplateIdValue) {
-        //         this.emailTemplateIdUpdate2 = emailTemplateSelectValue;
-        //     }
-        // }
     }
 
     saveButtonBool() {
@@ -169,7 +160,7 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
         }
     }
 
-    handleClick() {
+    saveClick() {
         let orgWideEmailSelectCurrent = this.template.querySelector("[data-selecttype='orgWideEmail']");
         let emailTemplateSelectCurrent = this.template.querySelector("[data-selecttype='emailTemplate']");
 
@@ -214,8 +205,8 @@ export default class ScholarshipRecommenderEmailTemplateLwc extends LightningEle
 
     }
 
-    previewClick() {
-        this.previewCheck = !this.previewCheck;
+    previewClick(event) {
+        this.previewCheck = !!event.target.checked;
     }
 
     findTemplate(templateId) {

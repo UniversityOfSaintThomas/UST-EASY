@@ -286,4 +286,42 @@ public with sharing class ScholarshipSharedUtilities {
 
         return taskActivity;
     }
+
+    public without sharing class RecommenderEmailStatus {
+
+        public String emailStatus(String scholarshipAppId, String toAddress) {
+            String emailOpenStatus = 'Unopened';
+
+            List<Task> taskList = [
+                    SELECT Id
+                    FROM Task
+                    WHERE WhatId = :scholarshipAppId
+            ];
+
+            Set<Id> taskIds = new Set<Id>();
+
+            for (Task t : taskList) {
+                taskIds.add(t.Id);
+            }
+
+            List<EmailMessage> emails = [
+                    SELECT Id, FromAddress, ToAddress, IsBounced, IsOpened, IsTracked
+                    FROM EmailMessage
+                    WHERE ActivityId IN :taskIds
+                    AND ToAddress = :toAddress
+                    ORDER BY CreatedDate DESC,
+                            LastModifiedDate DESC
+                    LIMIT 1
+            ];
+
+            if (emails.size() > 0) {
+                if (emails[0].IsOpened) {
+                    emailOpenStatus = 'Opened';
+                }
+            }
+
+            return emailOpenStatus;
+        }
+
+    }
 }

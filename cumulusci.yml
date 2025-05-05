@@ -1,6 +1,6 @@
 minimum_cumulusci_version: '3.32.1'
 project:
-  name: UST-EASY-2
+  name: UST-EASY
   package:
     name: UST-EASY-Package
     namespace: null

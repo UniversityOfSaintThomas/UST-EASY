@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Button_Code__c</fullName>
     <description>Code to create customize buttons for widget.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Code to create customize buttons for widget.</inlineHelpText>
     <label>Button Code</label>
     <length>32768</length>

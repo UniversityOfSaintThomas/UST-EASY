@@ -50,11 +50,10 @@ public without sharing class requestForInformationFormController {
 
             Database.DMLOptions dml = new Database.DMLOptions();
             dml.duplicateRuleHeader.allowSave = false;
-            //System.debug('Lead object for insert: ');
-            //System.debug(JSON.serializePretty(sobj));
             Database.SaveResult result = Database.insert(sobj, dml);
             if (result.isSuccess() == false) {
                 String context = 'Creation of lead failed on insert. \n Error: ' + result.getErrors();
+                System.debug('Error: ' + result.getErrors());
                 insertErrorRecord(rfiController, record, context);
             }
         } catch (Exception e) {
@@ -161,10 +160,7 @@ public without sharing class requestForInformationFormController {
                 query_string += ' ORDER BY Degree__c, Program_Name_on_Application__c ';
             }
 
-            //System.debug('PROGRAM QUERY: ');
-            //System.debug(query_string);
             List<Program__c> programs = Database.query(query_string);
-            //System.debug(JSON.serializePretty(programs));
             return new Map<Id, Program__c>(programs);
         } catch (Exception e) {
             throw new AuraHandledException('Error retrieving programs: ' + e.getMessage());
@@ -269,10 +265,6 @@ public without sharing class requestForInformationFormController {
     public static Id getRecruitmentProgram(String academic_level, String citizenship_type, String admit_type, String major_id, String school_name) {
         String program_name = '';
         String program_code = 'AS_UN_BA';
-        //.debug('SCHOOL_NAME: ' + school_name);
-        //System.debug('ACADEMIC_LEVEL: ' + academic_level);
-        //System.debug('MAJOR ID: ' + major_id);
-        //System.debug('CITIZENSHIP TYPE: ' + citizenship_type);
         if (academic_level == 'U' || academic_level == 'Undergraduate') {
             if (admit_type == 'Transfer') {
                 if (citizenship_type == 'International') {
@@ -287,6 +279,7 @@ public without sharing class requestForInformationFormController {
                 program_name = 'Undergraduate First-Year';
             }
         }
+
         List<Program__c> academicPrograms = new List<Program__c>();
         if (String.isNotBlank(program_name) && String.isNotBlank(program_code)) {
             academicPrograms = [

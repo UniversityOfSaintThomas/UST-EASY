@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Display_Widget_On_Sub_Status__c</fullName>
+    <deprecated>false</deprecated>
     <description>Sub Status for which you want this widget to display.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Sub Status for which you want this widget to display.</inlineHelpText>
     <label>Display Widget On Sub Status</label>
     <required>false</required>

@@ -32,3 +32,14 @@ out
 
 # CumulusCI
 /test_results.*
+
+# Added by Illuminated Cloud
+.sfdx/
+.localdev/
+/IlluminatedCloud/
+/out/
+target/
+node_modules/
+/.illuminatedCloud/
+**/tsconfig*.json
+**/*.tsbuildinfo

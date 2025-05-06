@@ -25,13 +25,34 @@
                     </ul>
                 </nav>
                 <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
-                    <h2 class="slds-text-heading_medium">
-                        {!scholarship.Name}
+                    <h2 class="slds-text-heading_large">
+                        <strong>{!scholarship.Name}</strong>
                     </h2>
+                </div>
+                <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
                     <p class="slds-text-body_regular">
                         Your application for the {!scholarship.Name} has been received and is being reviewed.
                     </p>
-                    <apex:outputText escape="false" value="<h4>What happens next?</h4>{!scholarship.Review_Award_Process_Description__c}" rendered="{!IF(NOT(ISNULL(scholarship.Review_Award_Process_Description__c)), true, false)}"/>
+                    <apex:outputPanel rendered="{!(!ISBLANK(scholarshipApplicant.Recommendation_Request_Date__c)) || (!ISBLANK(scholarshipApplicant.Recommendation2_Request_Date__c))}">
+                        <apex:variable var="s" value="{!IF((!ISBLANK(scholarshipApplicant.Recommendation_Request_Date__c)) && (!ISBLANK(scholarshipApplicant.Recommendation2_Request_Date__c)), 's', '')}"/>
+                        <b>Recommendation request{!s} sent to:</b><br/>
+                        <apex:outputPanel layout="block" rendered="{!!ISBLANK(scholarshipApplicant.Recommendation_Request_Date__c)}">
+                            {!scholarshipApplicant.Recommender_Name__c} ({!scholarshipApplicant.Recommender_Email__c})
+                            <apex:outputText value=" on {0,date,MM/dd/yyyy}">
+                                <apex:param value="{!scholarshipApplicant.Recommendation_Request_Date__c}"/>
+                            </apex:outputText>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block" rendered="{!!ISBLANK(scholarshipApplicant.Recommendation2_Request_Date__c)}">
+                            {!scholarshipApplicant.Recommender2_Name__c} ({!scholarshipApplicant.Recommender2_Email__c})
+                            <apex:outputText value=" on {0,date,MM/dd/yyyy}">
+                                <apex:param value="{!scholarshipApplicant.Recommendation2_Request_Date__c}"/>
+                            </apex:outputText>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <h2 class="slds-text-heading_medium slds-p-vertical_small">
+                        What happens next?
+                    </h2>
+                    <apex:outputText escape="false" value="{!scholarship.Review_Award_Process_Description__c}" rendered="{!IF(NOT(ISNULL(scholarship.Review_Award_Process_Description__c)), true, false)}"/>
                 </div>
             </div>
         </apex:define>

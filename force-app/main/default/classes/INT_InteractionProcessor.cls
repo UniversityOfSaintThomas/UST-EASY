@@ -254,7 +254,7 @@ public class INT_InteractionProcessor {
                 Contact newCont = contactMappedFields.get(interaction.Contact__c);
                 Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping query
                 List<String> compareFields = new List<String>{
-                        'FirstName', 'MiddleName', 'LastName'
+                        'FirstName', 'MiddleName', 'LastName', 'LeadSource'
                 }; //List of existing to new Contact fields to compare. Make sure fields are active on Interaction Mappings
 
                 if (newCont != null) {
@@ -426,17 +426,21 @@ public class INT_InteractionProcessor {
             List<Datacloud.FindDuplicatesResult> results = Datacloud.FindDuplicates.findDuplicates(cons);
 
             for (Integer i = 0; i < cons.size(); i++) {
-                if (interactions[interactionsIndex].Lead_Only__c == false) {
-                    for (Datacloud.DuplicateResult result : results[i].getDuplicateResults()) {
-                        for (Datacloud.MatchResult matchResult : result.getMatchResults()) {
-                            if (matchResult.getEntityType() == 'Contact' && !matchResult.getMatchRecords().isEmpty()) {
-                                interactions[interactionsIndex].Contact__c = matchResult.getMatchRecords()[0].getRecord().Id;
+
+                if (String.isBlank(interactions[interactionsIndex].Contact__c)) {
+
+                    if (interactions[interactionsIndex].Lead_Only__c == false) {
+                        for (Datacloud.DuplicateResult result : results[i].getDuplicateResults()) {
+                            for (Datacloud.MatchResult matchResult : result.getMatchResults()) {
+                                if (matchResult.getEntityType() == 'Contact' && !matchResult.getMatchRecords().isEmpty()) {
+                                    interactions[interactionsIndex].Contact__c = matchResult.getMatchRecords()[0].getRecord().Id;
+                                    break;
+                                }
+                            }
+
+                            if (interactions[interactionsIndex].Contact__c != null) {
                                 break;
                             }
-                        }
-
-                        if (interactions[interactionsIndex].Contact__c != null) {
-                            break;
                         }
                     }
                 }

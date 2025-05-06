@@ -191,7 +191,8 @@ public class ApplicationCreate {
                         formattedName = ' (Start Date: ' + startTermDateTime.format('MMM dd, yyyy') + ')';
                     }
 
-                    aTerm.Name = (String) ar.get('Name') + formattedName;
+//                    aTerm.Name = (String) ar.get('Name') + formattedName;
+                    aTerm.Name = (String) ar.get('Name');
 
                     aTermList.add(aTerm);
 
@@ -607,6 +608,7 @@ public class ApplicationCreate {
             if (!relatedPlan.isEmpty()) {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
             }
+            interaction.Contact__c = currentApplication.Contact__c;
         }
 
         interaction.Opportunity_Stage__c = 'Started App';

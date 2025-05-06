@@ -24,17 +24,17 @@
                     </ul>
                 </nav>
 
-                <apex:pageMessages/>
+                <apex:pageMessages />
 
                 <apex:form styleClass="criteriaForm slds-grid slds-wrap" id="criteriaForm">
                     <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!IF(ISNULL(scholarship.Name) , false , true)}">
-                        <h1 class="slds-text-heading_large">
-                            {!scholarship.Name}
-                        </h1>
+                        <h2 class="slds-text-heading_large">
+                            <strong>{!scholarship.Name}</strong>
+                        </h2>
                     </apex:outputPanel>
 
                     <apex:outputPanel layout="block" styleClass="slds-col slds-p-vertical_x-small slds-size_1-of-1" rendered="{!IF(ISNULL(scholarship.Description__c) , false , true)}">
-                        <h2 class="slds-text-heading_medium">Scholarship description</h2>
+                        <h2 class="slds-text-heading_medium">Description</h2>
                         <apex:outputText escape="false" value="{!scholarship.Description__c}"></apex:outputText>
                     </apex:outputPanel>
 
@@ -68,7 +68,6 @@
                         </div>
                     </apex:outputPanel>
 
-
                     <div class="slds-col slds-p-top_x-small slds-p-bottom_medium slds-size_1-of-1">
                         <div class="slds-form-element">
                             <div class="slds-form-element__control">
@@ -85,7 +84,7 @@
                     </div>
 
                     <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
-                        <apex:commandLink action="{!SaveCriteria}" onClick="return validateCriteria();" Value="Confirm and Continue" styleClass="slds-button slds-button_brand slds-p-vertical_x-small"/>
+                        <apex:commandLink action="{!SaveCriteria}" onClick="return validateCriteria();" Value="Confirm and Continue" styleClass="slds-button slds-button_brand slds-p-vertical_x-small" style="text-transform: none;"/>
                     </div>
 
                 </apex:form>

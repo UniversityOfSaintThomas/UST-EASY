@@ -69,6 +69,8 @@ public class ScholarshipController_TEST {
                 Recommender_Name__c = 'Contact',
                 Recommender_Email__c = 'sf1@valleyhill.net',
                 Recommender2_Email__c = 'sf2@valleyhill.net',
+                Recommendation_Request_Date__c = Datetime.now(),
+                Recommendation2_Request_Date__c = Datetime.now(),
                 Essay_1_Uploaded__c = false,
                 Essay_2_Uploaded__c = false
         );
@@ -291,6 +293,20 @@ public class ScholarshipController_TEST {
         );
 
         return u2;
+    }
+
+    @IsTest
+    static void testResendRecommendation() {
+        Scholarship_Applicant__c applicant = [
+                SELECT Id,
+                        Scholarship__r.Scholarship_ID__c,
+                        Contact__c
+                FROM Scholarship_Applicant__c
+                LIMIT 1
+        ];
+        Test.startTest();
+        ScholarshipRecommenderResendController.resendRecommendation(applicant.Scholarship__r.Scholarship_ID__c, applicant.Contact__c, true, false);
+        Test.stopTest();
     }
 
 }

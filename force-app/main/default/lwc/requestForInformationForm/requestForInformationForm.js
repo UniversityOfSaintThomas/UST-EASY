@@ -11,13 +11,12 @@
 import {LightningElement, api, track, wire} from 'lwc';
 import {getObjectInfo} from 'lightning/uiObjectInfoApi';
 import {getPicklistValuesByRecordType} from 'lightning/uiObjectInfoApi';
-import {generateRecordInputForCreate, getFieldValue, getRecord, getRecordCreateDefaults} from 'lightning/uiRecordApi';
+import {generateRecordInputForCreate, getRecordCreateDefaults} from 'lightning/uiRecordApi';
+
 
 // lead object and fields
 import LEAD_OBJECT from '@salesforce/schema/Lead';
 import RFI_OBJECT from '@salesforce/schema/RFI_Controller__c'; //using to get Country global picklist value set
-import RFI_CONTROLLER_NAME from '@salesforce/schema/RFI_Controller__c.Name';
-import RFI_CONTROLLER_ID from '@salesforce/schema/RFI_Controller__c.Id';
 import LEAD_FIRST_NAME from '@salesforce/schema/Lead.FirstName';
 import LEAD_TITLE from '@salesforce/schema/Lead.Title';
 import LEAD_ADMIT_TYPE from '@salesforce/schema/Lead.Admit_Type__c';
@@ -52,6 +51,7 @@ import LEAD_HEARD_ABOUT_US from '@salesforce/schema/Lead.Heard_About_Us__c';
 import LEAD_SCHOLARSHIP_OF_INTEREST from '@salesforce/schema/Lead.Scholarship_of_Interest__c';
 
 //controller
+import getRFIData from '@salesforce/apex/requestForInformationFormController.getRFIData';
 import getRFIController from '@salesforce/apex/requestForInformationFormController.getRFIController';
 import getCountries from '@salesforce/apex/requestForInformationFormController.getCountries';
 import getPrograms from '@salesforce/apex/requestForInformationFormController.getPrograms';
@@ -62,11 +62,6 @@ import getPresetValues from '@salesforce/apex/requestForInformationFormControlle
 import getSchoolCollegeAccount from '@salesforce/apex/requestForInformationFormController.getSchoolCollegeAccount';
 import getRecruitmentProgram from '@salesforce/apex/requestForInformationFormController.getRecruitmentProgram';
 import getProgramIds from '@salesforce/apex/requestForInformationFormController.getProgramIds';
-
-const RFI_CONTROLLER_FIELDS = [
-    RFI_CONTROLLER_NAME,
-    RFI_CONTROLLER_ID
-];
 
 const ADDITIONAL_FIELDS = [
     LEAD_FIRST_NAME,
@@ -131,7 +126,7 @@ export default class RequestForInformationForm extends LightningElement {
         this.utm_source_platform = this.getUrlParamValue(window.location.href, 'utm_source_platform');
         this.gclid = this.getUrlParamValue(window.location.href, 'gclid');
         this.sfcid = this.getUrlParamValue(window.location.href, 'sfcid');
-        if(!this.sfcid) {
+        if (!this.sfcid) {
             this.sfcid = this.getUrlParamValue(window.location.href, 'c__sfcid');
         }
     }
@@ -142,19 +137,8 @@ export default class RequestForInformationForm extends LightningElement {
     }
 
     // RFI controller info
-    @api rfi_controller = 'RFI Controller 0000';
-
+    @api rfi_controller;
     @api recordId;
-
-    //If a recordId is found we can assume we are on a record page and we can get the RFI controller name from the record
-    @wire(getRecord, {recordId: "$recordId", fields: RFI_CONTROLLER_FIELDS})
-    rfiController({error, data}) {
-        if (error) {
-            console.log(error);
-        } else if (data) {
-            this.rfi_controller = getFieldValue(data, RFI_CONTROLLER_NAME);
-        }
-    }
 
     academic_level;
     academic_level_api;
@@ -226,7 +210,8 @@ export default class RequestForInformationForm extends LightningElement {
         'How_did_you_hear_about_us': false,
         'Tell_us_about_yourself': false,
         'St_Thomas_Colleges': false,
-        'Scholarship_of_Interest': false
+        'Scholarship_of_Interest': false,
+        'program_filter_school': false
     }
 
     @track require_fields = {
@@ -256,6 +241,8 @@ export default class RequestForInformationForm extends LightningElement {
         'Tell_us_about_yourself': false,
         'St_Thomas_Colleges': false,
         'Scholarship_of_Interest': false,
+        'program_filter_active': false,
+        'program_filter_school': false
     }
 
     record_input; // stores user entered form information
@@ -297,7 +284,8 @@ export default class RequestForInformationForm extends LightningElement {
         'tell_us_about_yourself': 'Tell us about yourself and why you are interested in this program. (150 words or less)',
         'st_thomas_colleges': 'College\\School',
         'scholarship_of_interest': 'Scholarship of Interest',
-        'how_did_you_hear_about_us': 'How did you hear about us?'
+        'how_did_you_hear_about_us': 'How did you hear about us?',
+        'program_filter_school': 'What college are you interested in?',
     }
 
     //picklist values
@@ -330,14 +318,34 @@ export default class RequestForInformationForm extends LightningElement {
     disable_standard_fields;
     additional_questions;
 
+    @track rfi_data;
+    @track rfi_fields;
+
     /**
      ******************************************
      * Begin WIRES
      ******************************************
      */
 
+    @wire(getRFIData, {rfi_controller_name: '$rfi_controller', recordId: '$recordId'})
+    async rfiData({error, data}) {
+        if (data) {
+            this.rfi_data = data;
+            this.rfi_fields = this.rfi_data.fields;
+            //Get the fields to display from the RFI data
+            this.fields_to_display = this.rfi_data.fields_to_display;
+
+            console.log('RFI DATA:', JSON.stringify(this.rfi_data, null, 2));
+        } else if (error) {
+            console.log('Error fetching RFI data:', error);
+        } else {
+            console.log('No data or error returned from getRFIData');
+        }
+    }
+
+
     // Use the Apex class getRFIController to get the RFI controller information
-    @wire(getRFIController, {rfi_controller_name: '$rfi_controller'}) async rfi(result) {
+    @wire(getRFIController, {rfi_controller_name: '$rfi_controller', recordId: '$recordId'}) async rfi(result) {
         this.show_fields.show_spinner = true;
         if (result.data) {
             if (Boolean(result.data)) {
@@ -351,6 +359,8 @@ export default class RequestForInformationForm extends LightningElement {
                     && result.data.School_College__c !== 'Undergraduate') {
                     this.school_college_title = 'from the ' + result.data.School_College__c;
                 }
+                this.program_filter_school = result.data.School_College_To_Display__c;
+
                 this.school_college = result.data.School_College__c;
                 this.citizenship_type = result.data.Citizenship_Type__c;
                 this.fields_to_display = result.data.Fields_to_Display__c;
@@ -369,7 +379,7 @@ export default class RequestForInformationForm extends LightningElement {
                 }
                 if (result.data.Academic_Interest_Max_Selection__c) {
                     this.academic_max_select = result.data.Academic_Interest_Max_Selection__c;
-                    if (this.academic_max_select == "1") {
+                    if (this.academic_max_select === "1") {
                         this.multi_select_single = true;
                         this.field_labels.academic_interest_label = 'Academic Interest';
                     } else {
@@ -403,6 +413,7 @@ export default class RequestForInformationForm extends LightningElement {
                     .catch(error => {
                         console.log(error);
                     });
+                //TODO: move this to a method to dynamically return values for picklists
                 await getTerms({account_name: this.school_college})
                     .then(terms => {
                         if (Boolean(terms)) {
@@ -441,88 +452,7 @@ export default class RequestForInformationForm extends LightningElement {
 
                 if (Boolean(this.academic_level_api)) {
                     // gets programs based on academic level
-                    await getPrograms({
-                        academic_level: this.academic_level_api,
-                        school_college: this.school_college,
-                        academic_interest_codes: this.academic_interest_codes,
-                        multi_select_standard: this.multi_select_standard
-                    })
-                        .then((programs) => {
-                            this.program_id_to_name_map = programs;
-                            const values = [];
-                            let last_group = '';
-
-                            if (this.academic_level === 'U' || this.academic_level === 'Undergraduate') {
-                                for (const program in programs) {
-                                    values.push(
-                                        {
-                                            label: programs[program].Program_Name_on_Application__c,
-                                            value: programs[program].Id
-                                        }
-                                    );
-                                }
-                            } else {
-                                //Check for any programs that have Program_Name_on_Application__c = 'Undecided'
-                                for (const program in programs) {
-                                    if (programs[program].Program_Name_on_Application__c.toLowerCase().includes('undecided') || this.academic_max_select === "1") {
-                                        this.academic_max_select = "1";
-                                        this.multi_select_single = true;
-                                        this.field_labels.academic_interest_label = 'Academic Interest';
-                                        this.academic_max_select_help = "Only one program of interest can be selected.";
-                                    }
-                                }
-
-                                for (const program in programs) {
-                                    let label_value = programs[program].Program_Name_on_Application__c;
-                                    if (label_value.toLowerCase().includes('undecided')) {
-                                        this.multi_select_standard = false;
-                                    }
-                                    if (!this.single_selected_program) {
-                                        if (last_group === '' || last_group !== programs[program].Degree__c) {
-                                            last_group = programs[program].Degree__c
-                                            if (label_value && programs[program].Degree__c) {
-                                                values.push(
-                                                    {
-                                                        label: programs[program].Degree__c,
-                                                        value: programs[program].Degree__c,
-                                                        description: programs[program].Degree__c,
-                                                        is_group: true
-                                                    }
-                                                );
-                                            }
-                                        }
-                                    }
-                                    if (label_value && programs[program].Id) {
-                                        values.push(
-                                            {
-                                                label: label_value,
-                                                value: programs[program].Id,
-                                                description: programs[program].Degree__c,
-                                                is_group: false
-                                            }
-                                        );
-                                    }
-                                }
-                            }
-
-                            this.academic_interest_picklist_values = values;
-
-                            //if multi_select_standard is true remove items with is_group true
-                            if (this.multi_select_standard) {
-                                this.academic_interest_picklist_values = this.academic_interest_picklist_values.filter(function (el) {
-                                    return !el.is_group;
-                                });
-                            }
-
-                            //remove undecided value from academic_interest_picklist_values and apply to academic_interest_picklist_values_no_undecided
-                            this.academic_interest_picklist_values_no_undecided = this.academic_interest_picklist_values.filter(function (el) {
-                                return !el.label.toLowerCase().includes('undecided');
-                            });
-
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
+                    this.academic_interest_picklist_values = await this.retrievePrograms()
                 }
                 this.text_message_requested = this.require_fields.Mobile_Phone
                 this.show_fields.data_loaded = true;
@@ -534,6 +464,94 @@ export default class RequestForInformationForm extends LightningElement {
             }
             this.show_fields.show_spinner = false;
         }
+    }
+
+    retrievePrograms() {
+        getPrograms({
+            academic_level: this.academic_level_api,
+            school_college: this.school_college,
+            academic_interest_codes: this.academic_interest_codes,
+            multi_select_standard: this.multi_select_standard
+        })
+            .then((programs) => {
+                this.program_id_to_name_map = programs;
+                const values = [];
+                let last_group = '';
+
+                if (this.academic_level === 'U' || this.academic_level === 'Undergraduate') {
+                    for (const program in programs) {
+                        values.push(
+                            {
+                                label: programs[program].Program_Name_on_Application__c,
+                                value: programs[program].Id
+                            }
+                        );
+                    }
+                } else {
+                    //Check for any programs that have Program_Name_on_Application__c = 'Undecided'
+                    for (const program in programs) {
+                        if (programs[program].Program_Name_on_Application__c.toLowerCase().includes('undecided') || this.academic_max_select === "1") {
+                            this.academic_max_select = "1";
+                            this.multi_select_single = true;
+                            this.field_labels.academic_interest_label = 'Academic Interest';
+                            this.academic_max_select_help = "Only one program of interest can be selected.";
+                        }
+                    }
+
+                    for (const program in programs) {
+                        let label_value = programs[program].Program_Name_on_Application__c;
+                        if (label_value.toLowerCase().includes('undecided')) {
+                            this.multi_select_standard = false;
+                        }
+                        if (!this.single_selected_program) {
+                            if (last_group === '' || last_group !== programs[program].Degree__c) {
+                                last_group = programs[program].Degree__c
+                                if (label_value && programs[program].Degree__c) {
+                                    values.push(
+                                        {
+                                            label: programs[program].Degree__c,
+                                            value: programs[program].Degree__c,
+                                            description: programs[program].Degree__c,
+                                            is_group: true
+                                        }
+                                    );
+                                }
+                            }
+                        }
+                        if (label_value && programs[program].Id) {
+                            values.push(
+                                {
+                                    label: label_value,
+                                    value: programs[program].Id,
+                                    description: programs[program].Degree__c,
+                                    is_group: false
+                                }
+                            );
+                        }
+                    }
+                }
+
+                this.academic_interest_picklist_values = values;
+
+                //if multi_select_standard is true remove items with is_group true
+                if (this.multi_select_standard) {
+                    this.values = values.filter(function (el) {
+                        return !el.is_group;
+                    });
+                }
+
+                //remove undecided value from academic_interest_picklist_values and apply to academic_interest_picklist_values_no_undecided
+                this.academic_interest_picklist_values_no_undecided = this.values.filter(function (el) {
+                    return !el.label.toLowerCase().includes('undecided');
+                });
+                return values;
+            })
+            .catch(error => {
+                console.log(error);
+
+            });
+
+        return null
     }
 
     @wire(getObjectInfo, {objectApiName: LEAD_OBJECT})
@@ -558,6 +576,7 @@ export default class RequestForInformationForm extends LightningElement {
     picklist_values(result) {
         if (result.data) {
             this.citizenship_picklist_values = result.data.picklistFieldValues.Citizenship_Type__c.values;
+            console.log(this.citizenship_picklist_values);
             this.admit_type_picklist_values = result.data.picklistFieldValues.Admit_Type__c.values;
             this.timeline_picklist_values = result.data.picklistFieldValues.Timeline__c.values;
             this.scholarship_picklist = result.data.picklistFieldValues.Scholarship_of_Interest__c.values;
@@ -634,78 +653,78 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields[fieldToApplyTo] = event.detail.value;
             }
         } else {
-        switch (event.target.label) {
-            case this.field_labels.first_name_label:
-                this.record_input.fields.FirstName = event.target.value;
-                break;
-            case this.field_labels.last_name_label:
-                this.record_input.fields.LastName = event.target.value;
-                break;
-            case this.field_labels.email_label:
-                this.record_input.fields.Email = event.target.value;
-                break;
-            case this.field_labels.home_phone_label:
-                this.record_input.fields.Phone = event.target.value;
-                break;
-            case this.field_labels.mobile_phone_label:
-                this.record_input.fields.MobilePhone = event.target.value;
-                break;
-            case this.field_labels.phone_label:
-                this.record_input.fields.MobilePhone = event.target.value;
-                break;
-            case this.field_labels.address1_label:
-                this.address1 = event.target.value;
-                break;
-            case this.field_labels.address2_label:
-                this.address2 = event.target.value;
-                break;
-            case this.field_labels.address3_label:
-                this.address3 = event.target.value;
-                break;
-            case this.field_labels.city_label:
-                this.record_input.fields.City = event.target.value;
-                break;
-            case this.field_labels.state_label:
-                this.record_input.fields.State = event.target.value;
-                break;
-            case this.field_labels.region_label:
-                this.record_input.fields.State = event.target.value;
-                break;
-            case this.field_labels.zipcode_label:
-                this.record_input.fields.PostalCode = event.target.value;
-                if (String(event.target.value).length === 5
-                    && String(event.target.value).match(/^[0-9]+$/) != null
-                    && !this.international_citizen_type
-                ) {
-                    this.populateUSCityStateAndCountry(event.target.value);
-                }
-                break;
-            case this.field_labels.country_label:
-                this.record_input.fields.Country = event.target.options.find(opt => opt.value === event.detail.value).label;
-                this.record_input.fields.CountryCode = event.target.value;
+            switch (event.target.label) {
+                case this.field_labels.first_name_label:
+                    this.record_input.fields.FirstName = event.target.value;
+                    break;
+                case this.field_labels.last_name_label:
+                    this.record_input.fields.LastName = event.target.value;
+                    break;
+                case this.field_labels.email_label:
+                    this.record_input.fields.Email = event.target.value;
+                    break;
+                case this.field_labels.home_phone_label:
+                    this.record_input.fields.Phone = event.target.value;
+                    break;
+                case this.field_labels.mobile_phone_label:
+                    this.record_input.fields.MobilePhone = event.target.value;
+                    break;
+                case this.field_labels.phone_label:
+                    this.record_input.fields.MobilePhone = event.target.value;
+                    break;
+                case this.field_labels.address1_label:
+                    this.address1 = event.target.value;
+                    break;
+                case this.field_labels.address2_label:
+                    this.address2 = event.target.value;
+                    break;
+                case this.field_labels.address3_label:
+                    this.address3 = event.target.value;
+                    break;
+                case this.field_labels.city_label:
+                    this.record_input.fields.City = event.target.value;
+                    break;
+                case this.field_labels.state_label:
+                    this.record_input.fields.State = event.target.value;
+                    break;
+                case this.field_labels.region_label:
+                    this.record_input.fields.State = event.target.value;
+                    break;
+                case this.field_labels.zipcode_label:
+                    this.record_input.fields.PostalCode = event.target.value;
+                    if (String(event.target.value).length === 5
+                        && String(event.target.value).match(/^[0-9]+$/) != null
+                        && !this.international_citizen_type
+                    ) {
+                        this.populateUSCityStateAndCountry(event.target.value);
+                    }
+                    break;
+                case this.field_labels.country_label:
+                    this.record_input.fields.Country = event.target.options.find(opt => opt.value === event.detail.value).label;
+                    this.record_input.fields.CountryCode = event.target.value;
                     this.international_citizen_type = !this.record_input.fields.Country.toLowerCase().startsWith('united states') && this.record_input.fields.Country.toLowerCase() !== 'us';
-                break;
-            case this.field_labels.text_messages_label:
-                if (event.target.checked) {
-                    this.record_input.fields.Receive_Texts__c = 'Yes';
-                    this.text_message_requested = true;
-                } else {
-                    this.record_input.fields.Receive_Texts__c = 'No';
-                    this.text_message_requested = this.require_fields.Mobile_Phone;
-                }
-                break;
-            case this.field_labels.birthdate_label:
-                this.record_input.fields.Birthdate__c = event.target.value;
-                break;
-            case this.field_labels.citizenship_label:
-                this.record_input.fields.Citizenship_Type__c = event.target.value;
+                    break;
+                case this.field_labels.text_messages_label:
+                    if (event.target.checked) {
+                        this.record_input.fields.Receive_Texts__c = 'Yes';
+                        this.text_message_requested = true;
+                    } else {
+                        this.record_input.fields.Receive_Texts__c = 'No';
+                        this.text_message_requested = this.require_fields.Mobile_Phone;
+                    }
+                    break;
+                case this.field_labels.birthdate_label:
+                    this.record_input.fields.Birthdate__c = event.target.value;
+                    break;
+                case this.field_labels.citizenship_label:
+                    this.record_input.fields.Citizenship_Type__c = event.target.value;
                     this.international_citizen_type = event.target.value === 'International';
-                break;
-            case this.field_labels.admit_type_label:
-                this.record_input.fields.Admit_Type__c = event.target.value;
+                    break;
+                case this.field_labels.admit_type_label:
+                    this.record_input.fields.Admit_Type__c = event.target.value;
                     this.is_transfer = this.record_input.fields.Admit_Type__c === 'Transfer';
-                break;
-            case this.field_labels.academic_interest_label:
+                    break;
+                case this.field_labels.academic_interest_label:
                     let academic_value = event.detail.value.toString();
                     //if the multi select pills groupable finds undecided it will append it to the front of the id
                     if (academic_value.toLowerCase().includes("undecided|")) {
@@ -721,89 +740,93 @@ export default class RequestForInformationForm extends LightningElement {
                     if (!Array.isArray(event.detail.value) && academic_value) {
                         this.single_selected_program = academic_value;
                     } else {
-                this.academic_interest_id_list = event.detail.value;
+                        this.academic_interest_id_list = event.detail.value;
                     }
-                break;
+                    break;
                 case "What programs are you considering (max 3)?":
                     //Hard coded label for undecided academic interest. First value blank=
                     this.academic_interest_id_list = event.detail.value;
                     break
-            case this.field_labels.academic_term_label:
-                this.record_input.fields.Intended_Start_Term__c = event.target.value;
-                this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].Term_Start_Date__c;
-                break;
-            case this.field_labels.high_school_not_found_label:
-                this.manually_enter_high_school = event.target.checked;
-                if (event.target.checked) {
-                    this.record_input.fields.High_School_or_College__c = '';
-                    this.high_school_search_results = null;
-                    this.high_school_data = false;
-                }
-                break;
-            case this.field_labels.college_not_found_label:
-                this.manually_enter_high_school = event.target.checked;
-                if (event.target.checked) {
-                    this.record_input.fields.High_School_or_College__c = '';
-                    this.high_school_search_results = null;
-                    this.high_school_data = false;
-                }
-                break;
-            case this.field_labels.high_school_search_label:
-                if (this.manually_enter_high_school) {
-                    this.record_input.fields.hed__Most_Recent_School__c = event.detail.value;
-                } else {
-                    this.record_input.fields.High_School_or_College__c = event.detail.id;
-                    this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
-                }
-                break;
-            case this.field_labels.college_search_label:
-                this.record_input.fields.High_School_or_College__c = event.detail.id;
-                this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
-                break;
-            case this.field_labels.employer_label:
-                this.record_input.fields.Company = event.target.value;
-                break;
-            case this.field_labels.title_label:
-                this.record_input.fields.Title = event.target.value;
-                break;
-            case this.field_labels.high_school_graduation_year_label:
-                this.record_input.fields.Expected_Graduate_Date__c = event.target.value;
-                break;
-            case this.field_labels.timeline_label:
-                this.record_input.fields.Timeline__c = event.target.value;
-                break;
-            case this.field_labels.has_question_label:
-                this.record_input.fields.Has_Question__c = event.target.checked;
-                this.show_fields.Description = event.target.checked;
-                break;
-            case this.field_labels.description_label:
-                this.have_a_question = event.target.value;
-                break;
-            case this.field_labels.how_did_you_hear_about_us:
-                this.record_input.fields.Heard_About_Us__c = event.target.value;
+                case this.field_labels.academic_term_label:
+                    this.record_input.fields.Intended_Start_Term__c = event.target.value;
+                    this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].Term_Start_Date__c;
                     break;
-            case this.field_labels.mail_info_label:
-                this.record_input.fields.Mail_Information_Requested__c = event.target.checked;
-                break;
-            case this.field_labels.st_thomas_colleges:
-                this.school_college = event.target.value;
-                break;
-            case this.field_labels.scholarship_of_interest:
-                this.record_input.fields.Scholarship_of_Interest__c = event.target.value;
-                break;
-            case this.field_labels.tell_us_about_yourself:
-                this.tell_us_about = event.target.value;
-                break;
-            default:
-                break;
-        }
+                case this.field_labels.high_school_not_found_label:
+                    this.manually_enter_high_school = event.target.checked;
+                    if (event.target.checked) {
+                        this.record_input.fields.High_School_or_College__c = '';
+                        this.high_school_search_results = null;
+                        this.high_school_data = false;
+                    }
+                    break;
+                case this.field_labels.college_not_found_label:
+                    this.manually_enter_high_school = event.target.checked;
+                    if (event.target.checked) {g
+                        this.record_input.fields.High_School_or_College__c = '';
+                        this.high_school_search_results = null;
+                        this.high_school_data = false;
+                    }
+                    break;
+                case this.field_labels.high_school_search_label:
+                    if (this.manually_enter_high_school) {
+                        this.record_input.fields.hed__Most_Recent_School__c = event.detail.value;
+                    } else {
+                        this.record_input.fields.High_School_or_College__c = event.detail.id;
+                        this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
+                    }
+                    break;
+                case this.field_labels.college_search_label:
+                    if(this.manually_enter_high_school) {
+                        this.record_input.fields.hed__Most_Recent_School__c = event.detail.value;
+                    } else {
+                        this.record_input.fields.High_School_or_College__c = event.detail.id;
+                        this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
+                    }
+                    break;
+                case this.field_labels.employer_label:
+                    this.record_input.fields.Company = event.target.value;
+                    break;
+                case this.field_labels.title_label:
+                    this.record_input.fields.Title = event.target.value;
+                    break;
+                case this.field_labels.high_school_graduation_year_label:
+                    this.record_input.fields.Expected_Graduate_Date__c = event.target.value;
+                    break;
+                case this.field_labels.timeline_label:
+                    this.record_input.fields.Timeline__c = event.target.value;
+                    break;
+                case this.field_labels.has_question_label:
+                    this.record_input.fields.Has_Question__c = event.target.checked;
+                    this.show_fields.Description = event.target.checked;
+                    break;
+                case this.field_labels.description_label:
+                    this.have_a_question = event.target.value;
+                    break;
+                case this.field_labels.how_did_you_hear_about_us:
+                    this.record_input.fields.Heard_About_Us__c = event.target.value;
+                    break;
+                case this.field_labels.mail_info_label:
+                    this.record_input.fields.Mail_Information_Requested__c = event.target.checked;
+                    break;
+                case this.field_labels.st_thomas_colleges:
+                    this.school_college = event.target.value;
+                    break;
+                case this.field_labels.scholarship_of_interest:
+                    this.record_input.fields.Scholarship_of_Interest__c = event.target.value;
+                    break;
+                case this.field_labels.tell_us_about_yourself:
+                    this.tell_us_about = event.target.value;
+                    break;
+                default:
+                    break;
+            }
 
-        if (event.target.name === this.field_labels.high_school_datatable_name) {
-            let selected_row = this.template.querySelector('lightning-datatable').getSelectedRows();
-            this.record_input.fields.High_School_or_College__c = selected_row[0].account_id;
-            this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
+            if (event.target.name === this.field_labels.high_school_datatable_name) {
+                let selected_row = this.template.querySelector('lightning-datatable').getSelectedRows();
+                this.record_input.fields.High_School_or_College__c = selected_row[0].account_id;
+                this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
+            }
         }
-    }
     }
 
     errors = [];
@@ -933,7 +956,7 @@ export default class RequestForInformationForm extends LightningElement {
             });
     }
 
-    // Create the lead record
+// Create the lead record
     createLead() {
         createLead({
             record: JSON.stringify(this.record_input.fields),
@@ -953,7 +976,7 @@ export default class RequestForInformationForm extends LightningElement {
             });
     }
 
-    // used Fields_to_Display__c field on RFI_Controller__c to determine which fields to display on form
+// used Fields_to_Display__c field on RFI_Controller__c to determine which fields to display on form
     handleFieldsToDisplay() {
         let fields = this.fields_to_display.split(';');
         for (const field of fields) {
@@ -1022,7 +1045,7 @@ export default class RequestForInformationForm extends LightningElement {
         const selectedValue = detail.value;
     }
 
-    // Openstreetmap API to get city, state, and country from zipcode
+// Openstreetmap API to get city, state, and country from zipcode
     populateUSCityStateAndCountry(zipcode) {
         this.show_fields.show_spinner = true;
         let url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&postalcode=' + String(zipcode) + '&countrycodes=US';
@@ -1066,7 +1089,7 @@ export default class RequestForInformationForm extends LightningElement {
             })
     }
 
-    // Map of US states to abbreviations to match Openstreetmap API
+// Map of US states to abbreviations to match Openstreetmap API
     getStateMap() {
         let state_map = new Map();
         state_map.set('Alabama', 'AL');

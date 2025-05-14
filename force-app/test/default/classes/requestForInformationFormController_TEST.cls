@@ -121,7 +121,7 @@ public class requestForInformationFormController_TEST {
         System.assertEquals(0, new_lead.size());
     }
 
-    @IsTest
+/*    @IsTest
     public static void testGetRFIController() {
         RFI_Controller__c rfic = [SELECT Name FROM RFI_Controller__c];
         Test.startTest();
@@ -140,7 +140,7 @@ public class requestForInformationFormController_TEST {
         System.assertEquals('Script-thrown exception', capturedException.getMessage(), 'Specific error message is expected');
 
         Test.stopTest();
-    }
+    }*/
 
     @IsTest
     public static void testGetPrograms() {

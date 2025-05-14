@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>External_App_Found_Statement__c</fullName>
+    <defaultValue>&quot;You need to claim your Common App application.&quot;</defaultValue>
+    <description>The statement that appears when an external app of the type in this application control is found already existing while the user is attempting to make a new application. This statement is followed by a link to a to claim the external app.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The statement that appears when an external app of the type in this application control is found already existing while the user is attempting to make a new application. This statement is followed by a link to a to claim the external app.</inlineHelpText>
+    <label>External App Found Statement</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

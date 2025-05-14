@@ -3,7 +3,6 @@
     <fullName>Essay_2_Uploaded__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Indicates that essay 2 was uploaded. Check your attachments for the essay.</description>
-    <externalId>false</externalId>
     <label>Essay 2 Uploaded</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

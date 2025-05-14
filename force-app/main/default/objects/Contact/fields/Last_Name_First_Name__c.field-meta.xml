@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Last_Name_First_Name__c</fullName>
+    <description>Last Name, Mailing First Name</description>
+    <externalId>false</externalId>
+    <formula>LastName &amp; &quot;, &quot; &amp; Mailing_First_Name__c</formula>
+    <inlineHelpText>Field that provides Last Name followed by Mailing First Name. This field helps facilitate sorting on Last Name and First.</inlineHelpText>
+    <label>Last Name, First Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

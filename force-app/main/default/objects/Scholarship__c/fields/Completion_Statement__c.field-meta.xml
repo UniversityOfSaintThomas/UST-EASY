@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Completion_Statement__c</fullName>
-    <description>This is the statement a student agrees to upon completion of the scholarship application.</description>
-    <externalId>false</externalId>
+    <description>This statement functions as a &quot;digital consent&quot; for the scholarship; applicant initials required in agreement with the statement prior to submitting application.</description>
+    <inlineHelpText>This statement functions as a &quot;digital consent&quot; for the scholarship; applicant initials required in agreement with the statement prior to submitting application.</inlineHelpText>
     <label>Completion Statement</label>
     <length>100000</length>
     <trackHistory>false</trackHistory>

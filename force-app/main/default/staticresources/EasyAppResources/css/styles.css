@@ -77,7 +77,8 @@
 .slds-scope .slds-text-body_regular, .slds-scope label, .slds-scope p,
 .slds-scope button, .slds-scope input, .slds-scope optgroup, .slds-scope select,
 .slds-scope textarea, .slds-scope ul, .slds-scope ol,
-.slds-scope .slds-checkbox .slds-checkbox__label .slds-form-element__label {
+.slds-scope .slds-checkbox .slds-checkbox__label .slds-form-element__label,
+.flowruntime-input-label .lightning-formatted-rich-text {
     font-size: 1.02rem;
     line-height: 1.5rem;
     font-weight: 400;
@@ -163,7 +164,7 @@
     color: rgb(3, 45, 96);
 }
 
-.slds-scope .slds-card__header-title {
+.slds-scope .slds-card__header-title, .slds-scope .screenFlowWrapper .slds-text-heading_small {
     font-size: 1.2rem;
     font-weight: 600;
 }
@@ -192,7 +193,7 @@
     display: block;
 }
 
-.slds-scope .slds-has-error .slds-radio_button-group {
+.slds-scope .slds-has-error .slds-radio_button-group, .slds-scope .slds-has-error table.validateMultiPicklist {
     border: solid 2px red;
 }
 
@@ -233,13 +234,25 @@ div.slds-progress {
     max-width: 99%;
 }
 
+.slds-scope div.message[role="alert"] {
+    border: 2px solid #ff6c00;
+    padding: 10px 10px 0px 10px;
+}
+
 .slds-scope .messageTable {
-    margin: 1rem 0 !important;
-    border: solid 1px red;
+    margin: 0 !important;
+}
+
+.slds-scope .messageTable img {
+    display: none;
 }
 
 .slds-scope .messageTable td {
-    padding: .2rem;
+    padding: 0;
+}
+
+.slds-scope .messageTable tbody {
+    border: none;
 }
 
 .slds-scope .messageCell h4 {
@@ -339,12 +352,33 @@ div.slds-progress {
     font-style: italic;
 }
 
-span.dateFormat{
+span.dateFormat {
     display: none;
 }
 
 .deletePreviousFileIcon:hover,
-.clearSelectFileIcon:hover{
+.clearSelectFileIcon:hover {
     cursor: pointer;
     color: red;
 }
+
+.screenFlowWrapper .slds-card__header h2 {
+    font-weight: bold;
+    color: rgb(109, 54, 150);
+    font-size: 1.2rem;
+}
+
+.screenFlowWrapper .flowruntimeBody.flowruntimeBody__lwc.slds-card__body.slds-p-horizontal_small, .screenFlowWrapper .slds-card__header, .screenFlowWrapper .slds-card__footer.navigationBar {
+    padding: 0;
+    height: auto;
+    margin: .5rem 0 0 0;
+}
+
+[ kx-type="ripple" ],
+[ kx-type="ripple" ]::before,
+[ kx-type="ripple" ]::after {
+    animation: none !important;
+    transition: none !important;
+    background-image: none !important; /* If the ripple uses a background image */
+}
+

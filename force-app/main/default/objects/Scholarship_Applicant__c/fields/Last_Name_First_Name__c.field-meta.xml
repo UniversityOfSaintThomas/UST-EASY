@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Last_Name_First_Name__c</fullName>
+    <description>Applicant Contact Last Name, First Name</description>
+    <externalId>false</externalId>
+    <formula>Contact__r.Last_Name_First_Name__c</formula>
+    <inlineHelpText>Applicant Contact Last Name, First Name to assist with List View sorting.</inlineHelpText>
+    <label>Last Name, First Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

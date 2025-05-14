@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Essay_1_Text__c</fullName>
     <description>Essay number 1 Question or criteria describing what the essay should be about.</description>
-    <externalId>false</externalId>
     <label>Essay 1 Text</label>
     <length>100000</length>
     <trackHistory>false</trackHistory>

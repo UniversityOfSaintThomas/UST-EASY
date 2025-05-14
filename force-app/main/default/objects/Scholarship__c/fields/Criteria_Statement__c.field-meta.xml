@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Criteria_Statement__c</fullName>
-    <description>This is the scholarship criteria which the applicant self-identifies as agreeing to have met at the beginning of the application.</description>
-    <externalId>false</externalId>
-    <label>Criteria Statement</label>
+    <description>This is the scholarship criteria/eligibility which the applicant self-identifies as agreeing to have met at the beginning of the application.</description>
+    <inlineHelpText>This is the scholarship criteria/eligibility which the applicant self-identifies as agreeing to have met at the beginning of the application.</inlineHelpText>
+    <label>Eligibility</label>
     <length>100000</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

@@ -4,4 +4,6 @@
 
 <aura:application description="YenTestAura1" access="GLOBAL" extends="ltng:outApp" implements="ltng:allowGuestAccess">
     <aura:dependency resource="c:summitEventsListView"/>
+    <aura:dependency resource="lightning:flow"/>
+    <aura:dependency resource="lightning:fileUpload"/>
 </aura:application>

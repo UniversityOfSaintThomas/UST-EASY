@@ -3,7 +3,6 @@
     <fullName>Confirmed_Criteria__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Applicant has self-confirmed they meet the criteria of the scholarship.</description>
-    <externalId>false</externalId>
     <label>Confirmed Criteria</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

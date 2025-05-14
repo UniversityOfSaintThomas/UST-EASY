@@ -23,9 +23,11 @@ public class ApplicationCreate {
     ********************************************************************************/
 
     public ApplicationCreate() {
+        System.debug('ApplicationCreate constructor called. AppInfo: ' + appInfo);
         if (appInfo == null) {
             appInfo = ApplicationUtilities.createShellAppInfo();
         }
+        System.debug('ApplicationCreate constructor called. AppInfo: ' + appInfo);
     }
 
     public PageReference ApplicationCreateInit() {
@@ -138,6 +140,8 @@ public class ApplicationCreate {
             // Add term and program questions if not hidden
             if (!appInfo.hideTermProgram) {
 
+                System.debug('Application Control ID: ' + appControlId);
+
                 // Get map of intended programs with id as key, and only for a specific Application Control
                 List<Program__c> programs = [
                         SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Degree__c,
@@ -145,12 +149,14 @@ public class ApplicationCreate {
                                 Hide_Student_Type__c, Number_of_Applications_Limit__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c,
                                 Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c, Application_Control__c
                         FROM Program__c
-                        WHERE Hide_from_Application__c = :false
-                        AND Active__c = :true
+                        WHERE Hide_from_Application__c = FALSE
+                        AND Active__c = TRUE
                         AND Application_Control__c = :appControlId
                         //AND Degree__c = :degreeType
                         ORDER BY Name ASC
                 ];
+
+                System.debug('Programs: ' + programs);
 
                 intendedPrograms = new Map<Id, Program__c>(programs);
 
@@ -200,6 +206,7 @@ public class ApplicationCreate {
                     termNames.add(aTerm.Name);
 
                 }
+                System.debug('termNames: ' + termNames);
 
                 // Create new term question and add to list
                 ApplicationQuestion termQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Term_of_Entry__c');
@@ -608,6 +615,7 @@ public class ApplicationCreate {
             if (!relatedPlan.isEmpty()) {
                 interaction.Recruitment_Interest__c = relatedPlan[0].Id;
             }
+            interaction.Contact__c = currentApplication.Contact__c;
         }
 
         interaction.Opportunity_Stage__c = 'Started App';

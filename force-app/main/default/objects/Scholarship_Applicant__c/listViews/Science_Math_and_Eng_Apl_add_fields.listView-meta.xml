@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Science_Math_and_Eng_Apl_add_fields</fullName>
+    <columns>NAME</columns>
+    <columns>Scholarship_ID__c</columns>
+    <columns>Scholarship__c</columns>
+    <columns>Scholarship_Award_Year__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Last_Name_First_Name__c</columns>
+    <columns>Scholarship_Status__c</columns>
+    <columns>Scholarship_Date_Submitted__c</columns>
+    <columns>Scholarship_Date_Started__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Scholarship_Applicant__c.Scholarship</value>
+    </filters>
+    <filters>
+        <field>Scholarship__c</field>
+        <operation>equals</operation>
+        <value>&quot;Science, Mathematics and Engineering Scholarship&quot;</value>
+    </filters>
+    <filters>
+        <field>Scholarship_Date_Submitted__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>9/15/2024 12:00 AM</value>
+    </filters>
+    <label>Science, Math and Eng Apl add fields</label>
+</ListView>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>External_App_Claim_Id_Question__c</fullName>
+    <defaultValue>&quot;Please enter your Common App Id&quot;</defaultValue>
+    <description>The text that appears when the applicant is asked to enter an external application id.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The text that appears when the applicant is asked to enter an external application id.</inlineHelpText>
+    <label>External App Claim Id Question</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

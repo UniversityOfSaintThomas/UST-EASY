@@ -3,7 +3,6 @@
     <fullName>Contact__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
     <description>Contact record of this applicant.</description>
-    <externalId>false</externalId>
     <label>Contact</label>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Scholarship Applicants</relationshipLabel>

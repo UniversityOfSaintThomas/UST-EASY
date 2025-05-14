@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Citizen_Types_To_Display__c</fullName>
+    <description>Select the types of citizenship you want to show on the rfi for selection.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select the types of citizenship you want to show on the rfi for selection.</inlineHelpText>
+    <label>Citizen Types To Display</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Citizenship_Types</valueSetName>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

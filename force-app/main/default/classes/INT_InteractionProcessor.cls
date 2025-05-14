@@ -254,7 +254,7 @@ public class INT_InteractionProcessor {
                 Contact newCont = contactMappedFields.get(interaction.Contact__c);
                 Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping query
                 List<String> compareFields = new List<String>{
-                        'FirstName', 'MiddleName', 'LastName'
+                        'FirstName', 'MiddleName', 'LastName', 'LeadSource'
                 }; //List of existing to new Contact fields to compare. Make sure fields are active on Interaction Mappings
 
                 if (newCont != null) {

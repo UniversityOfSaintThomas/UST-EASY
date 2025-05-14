@@ -3,7 +3,6 @@
     <fullName>Recommender2_Auto_Send__c</fullName>
     <defaultValue>false</defaultValue>
     <description>When recommender name and email is collected auto send a request for a recommendation with a link to the recommender form.</description>
-    <externalId>false</externalId>
     <label>Recommender2 Auto Send</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

@@ -560,20 +560,8 @@ function vfCountryPicklist() {
 
 function navigateRequirementGroup(redirectTo) {
     appShowLoadingSpinner();
-    if (document.querySelector('.save-record-button') !== null) {
-        activateModal(
-            'Unsaved records',
-            '<p>It appears you have unsaved records. If this is intended click "Continue Anyway". Otherwise, hit "Cancel" then either click "Save Record" or "Cancel" your record.</p>',
-            'Continue Anyway',
-            function () {
-                redirectAfterSave(redirectTo);
-            }
-        );
-        appHideLoadingSpinner();
-        return false;
-    } else {
-        redirectAfterSave(redirectTo);
-    }
+    let nextMove = () => redirectAfterSave(redirectTo);
+    recordCheckAndAdvance(nextMove);
 
     function redirectAfterSave(redirectTo) {
         if (redirectTo === 'forwards') {
@@ -605,6 +593,11 @@ function disableCarousel() {
 
     let items = document.getElementsByClassName("carousel__item");
     for (let i = 0; i < items.length; i++) {
+        if (items[i].classList.contains('active')) {
+            items[i].classList.remove('carousel__active');
+        } else {
+            items[i].classList.remove('active');
+        }
         items[i].classList.add('carousel__disable');
     }
 
@@ -649,6 +642,10 @@ function enableCarousel() {
 
     let items = document.getElementsByClassName("carousel__item");
     for (let i = 0; i < items.length; i++) {
+        if (!items[i].classList.contains('carousel__active')) {
+            items[i].classList.remove('active');
+        }
+        items[i].classList.remove('carousel__active');
         items[i].classList.remove('carousel__disable');
     }
 
@@ -699,7 +696,7 @@ function enableCarousel() {
 /* Carousel Script */
 function activateCarousel(slideMoveTo) {
     // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
-    let items = document.getElementsByClassName("carousel__item"),
+    let items = document.querySelectorAll(".carousel-wrapper .carousel__item"),
         totalItems = items.length,
         slide = 0,
         moving = true,
@@ -818,7 +815,8 @@ function activateCarousel(slideMoveTo) {
                 } else {
                     slide++;
                 }
-                unsavedRecords(slide);
+                let nextMove = () => moveCarouselTo(slide);
+                recordCheckAndAdvance(nextMove);
             }
         }
 
@@ -829,40 +827,14 @@ function activateCarousel(slideMoveTo) {
                 } else {
                     slide--;
                 }
-                unsavedRecords(slide);
+                let nextMove = () => moveCarouselTo(slide);
+                recordCheckAndAdvance(nextMove);
             }
         }
 
-        function unsavedRecords(nextSlide) {
-
-            let closeOpenRecord = function () {
-                document.querySelectorAll('.cancel-records-button').forEach(cancelBtn => {
-                    cancelBtn.click();
-                });
-                moveCarouselTo(nextSlide);
-            }
-
-            if (document.querySelector('.save-record-button') !== null) {
-                activateModal(
-                    'Unsaved records',
-                    '<p>It appears you have unsaved records. If this is intended click "Continue Anyway". Otherwise, hit "Cancel" then either click "Save Record" or "Cancel" your record.</p>',
-                    'Continue Anyway',
-                    closeOpenRecord
-                );
-                return false;
-            } else {
-                moveCarouselTo(nextSlide);
-            }
-
-        }
-
-        function initCarousel() {
-            setEventListeners();
-            moving = false;
-            carouselOn = true;
-        }
-
-        initCarousel();
+        setEventListeners();
+        moving = false;
+        carouselOn = true;
 
         if (slideMoveTo) {
             if (!moving) {
@@ -877,8 +849,53 @@ function activateCarousel(slideMoveTo) {
     }
 }
 
+function recordCheckAndAdvance(callback) {
+    let activeItem = document.querySelector('.carousel__item.active .related-records');
+    let validationPopup = false;
+
+    if (activeItem) {
+        let card = activeItem.closest('.slds-card');
+        let maxRecords = card.dataset.maxrecords;
+        let minRecords = card.dataset.minrecords;
+        let recordCount = activeItem.querySelectorAll('.related-record').length;
+
+        if (maxRecords && recordCount > maxRecords) {
+            showValidationModal('Related Record Limit Reached',
+                `You have reached the maximum of ${maxRecords} records.`, callback);
+            validationPopup = true;
+        }
+
+        if (minRecords && recordCount < minRecords) {
+            let plural = minRecords == 1 ? '' : 's';
+            showValidationModal('Related Record Limit Reached',
+                `You need at least ${minRecords} record${plural} to proceed.`, callback);
+            validationPopup = true;
+        }
+    }
+
+    if (document.querySelector('.save-record-button')) {
+        showValidationModal('Unsaved Records',
+            'You have unsaved records. Save or cancel them before proceeding.',
+            () => {
+                document.querySelectorAll('.cancel-records-button').forEach(btn => btn.click());
+                callback();
+            });
+        validationPopup = true;
+    }
+
+    if (!validationPopup) {
+        callback();
+    } else {
+        appHideLoadingSpinner();
+    }
+}
+
+function showValidationModal(title, message, callback) {
+    activateModal(title, `<p>${message}</p>`, 'Continue Anyway', callback);
+}
+
 /* Spinners on/off */
-var spinnerFocusElement = null;
+let spinnerFocusElement = null;
 
 function appHideLoadingSpinner(restoreFocus = true) {
     if (document.getElementById('loadSpinner')) {
@@ -908,8 +925,8 @@ function hideFormSpinner(restoreFocus = true, focusOnFirstInput = false) {
             if (inputElements.length > 0) {
                 spinnerFocusElement = inputElements[0];
             }
+            spinnerFocusElement.focus();
         }
-        spinnerFocusElement.focus();
     }
 }
 
@@ -1031,13 +1048,18 @@ function textValidations(checkFormValidate, documentStart) {
     if (checkFormValidate) {
         allRequiredInputs.forEach(item => {
             if (item) {
-                if (item.classList.contains('slds-checkbox')) {
-                    let checkBoxChecked = item.querySelector('input');
-                    if (!checkBoxChecked.checked) {
+                if (item.classList.contains('slds-checkbox') || item.classList.contains('field-MultiPicklist')) {
+                    let checkBoxChecked = item.querySelectorAll('input');
+                    let checkBoxCheckedCount = 0;
+                    checkBoxChecked.forEach(checkBox => {
+                        if (checkBox.checked) {
+                            checkBoxCheckedCount++;
+                        }
+                    });
+                    if (checkBoxCheckedCount < 1) {
                         activateErrorState(checkBoxChecked, 'change')
                     }
                 } else if (!item.value) {
-                    console.log('error logged');
                     activateErrorState(item, 'change')
                 }
             }
@@ -1073,14 +1095,17 @@ function textValidations(checkFormValidate, documentStart) {
             phone.value = phone.value.replace(re_phoneIllegals, '');
         })
 
-        phone.addEventListener('change', function () {
-            let cleaned = String(phone.value).replace(/\D/g, "");
+        phone.addEventListener('blur', handlePhoneChange);
+        phone.addEventListener('change', handlePhoneChange)
+
+        function handlePhoneChange() {
+            let cleaned = String(phone.value).replace(re_phoneIllegals, '');
             let match = cleaned.match(re_phoneFormat);
             if (match) {
                 let intlCode = match[1] ? "+1 " : "";
                 phone.value = [intlCode, "(", match[2], ") ", match[3], "-", match[4]].join("");
             }
-        });
+        }
 
         //Check if the final phone number matches correctly before submit
         if (checkFormValidate && phone.value) {
@@ -1110,23 +1135,19 @@ function textValidations(checkFormValidate, documentStart) {
             ssn.value = ssn.value.replace(re_ssnIllegals, '');
         })
 
-        ssn.addEventListener('change', function () {
+        ssn.addEventListener('blur', handleSSNChange);
+        ssn.addEventListener('change', handleSSNChange);
+
+        function handleSSNChange() {
             let cleaned = String(ssn.value).replace(/\D/g, "");
             if (cleaned.length === 9) {
                 let match = cleaned.match(re_snnFormat);
                 if (match) {
                     ssn.value = [match[1], "-", match[2], "-", match[3]].join("");
                 }
-            // } else {
-            //     activateErrorState(ssn, 'change');
             }
-        });
+        }
 
-        // if (checkFormValidate && ssn.value) {
-        //     if (!ssn.value.match(re_snn)) {
-        //         activateErrorState(ssn, 'change');
-        //     }
-        // }
     });
 
     //Email Validation
@@ -1154,18 +1175,26 @@ function textValidations(checkFormValidate, documentStart) {
     })
 
     function activateErrorState(errorInput, eventType) {
-        let errorWrap = errorInput.closest('.slds-form-element');
+        let errorWrap;
+        //if error input is not an array of inputs add it to an array of inputs
+        if (!(errorInput instanceof NodeList || errorInput instanceof HTMLCollection)) {
+            errorInput = [errorInput];
+        }
+        //If error input is an array
+        errorWrap = errorInput[0].closest('.slds-form-element');
         errorWrap.classList.add("slds-has-error");
         errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
             errorHelp.style.display = "block"
         });
-        errorInput.addEventListener(eventType, () => {
-            errorWrap.classList.remove("slds-has-error");
-            errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-                errorHelp.style.display = "none";
+        //add event listner to all the inputs
+        errorInput.forEach(input => {
+            input.addEventListener(eventType, () => {
+                errorWrap.classList.remove("slds-has-error");
+                errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+                    errorHelp.style.display = "none";
+                });
             });
         });
-
         errors++;
     }
 
@@ -1185,7 +1214,6 @@ function validateFileType(obj) {
             }
             fileTypeMessage = fileTypeMessage.slice(0, fileTypeMessage.length - 2) + '.';
             document.getElementById('error-108' + String(obj.name)).innerHTML = fileTypeMessage;
-            console.log(document.getElementById('error-108' + String(obj.name)));
             return false;
         } else {
             document.getElementById('error-108' + String(obj.name)).innerHTML = '';

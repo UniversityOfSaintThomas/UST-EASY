@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recommendation2_Request_Date__c</fullName>
     <description>The date the recommendation was requested (and email sent)</description>
-    <externalId>false</externalId>
     <inlineHelpText>The date the recommendation was requested (and email sent)</inlineHelpText>
     <label>Recommendation2 Request Date</label>
     <required>false</required>

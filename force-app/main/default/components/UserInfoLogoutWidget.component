@@ -8,10 +8,11 @@
     <apex:attribute name="applicationName" description="Greeting name of the applicant" type="Boolean" required="false"/>
     <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String" required="false"/>
     <apex:attribute name="checklistItems" type="RequirementWrapper[]" description="Requirement Wrapper to built checklists. Use checklistHelper in code." required="false"/>
+    <apex:attribute name="dataTags" type="EASYPersonalDataTags" description="Data Tags brings in dynamic content to merge within app." required="false"/>
     <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
         <apex:outputPanel layout="none" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">
-            <p class="slds-text-body_regular">Hi, {!$User.FirstName}.</p>
+            <p class="slds-text-body_regular">Hi, {!dataTags.First_Name}.</p>
             <p class="slds-text-body_regular">You are currently logged in.</p>
 
             <apex:outputPanel layout="none" rendered="{!currentPage != 'applicationportal'}">

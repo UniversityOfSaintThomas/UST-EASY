@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recommender_Question__c</fullName>
     <description>The question or instructions that will be presented to the recommender.</description>
-    <externalId>false</externalId>
     <label>Recommender Question</label>
     <length>100000</length>
     <trackHistory>false</trackHistory>

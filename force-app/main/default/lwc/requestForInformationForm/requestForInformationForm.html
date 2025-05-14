@@ -149,24 +149,24 @@
                             <div class="slds-col slds-size_0-of-1 slds-medium-size_1-of-2">
                             </div>
                         </template>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium filed-first-name">
-                                <lightning-input
-                                        required="true"
-                                        type="text"
-                                        label={field_labels.first_name_label}
-                                        aria-label="First Name"
-                                        onchange={onChange}>
-                                </lightning-input>
-                            </div>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium filed-last-name">
-                                <lightning-input
-                                        required="true"
-                                        type="text"
-                                        label={field_labels.last_name_label}
-                                        aria-label="Last Name"
-                                        onchange={onChange}>
-                                </lightning-input>
-                            </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium filed-first-name">
+                            <lightning-input
+                                    required="true"
+                                    type="text"
+                                    label={field_labels.first_name_label}
+                                    aria-label="First Name"
+                                    onchange={onChange}>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium filed-last-name">
+                            <lightning-input
+                                    required="true"
+                                    type="text"
+                                    label={field_labels.last_name_label}
+                                    aria-label="Last Name"
+                                    onchange={onChange}>
+                            </lightning-input>
+                        </div>
                         <template if:true={show_fields.Email}>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium field-email">
                                 <lightning-input
@@ -279,7 +279,7 @@
                                                 object-label=""
                                                 object-api-name="Account"
                                                 field-api-name="Name"
-                                                other-field-api-name="BillingCity,BillingState"
+                                                other-field-api-name="BillingCity,BillingState,billingPostalCode"
                                                 onvalueselected={onChange}
                                                 required={require_fields.High_School_Attended}
                                                 record-type-name='Educational Institution'
@@ -546,10 +546,29 @@
                     </div>
                 </template>
 
-            <template if:true={form_submitted_successfully}>
-                <div class="slds-text-heading_large slds-align_absolute-center thank-you-message">Thank you! You will receive information shortly.</div>
+                <template if:true={form_submitted_successfully}>
+                    <div class="slds-text-heading_large slds-align_absolute-center thank-you-message">Thank you! You will receive information shortly.</div>
                 </template>
+
+                <!-- for each through rfi_data -->
+                <template if:true={rfi_data}>
+
+
+                </template>
+                <!--<template if:true={rfi_fields}>
+                    <template for:each={rfi_fields} for:item="fieldMap">
+                        <div key={fieldMap.key}>
+                            <p>Field Label: {fieldMap.field_label}</p>
+                            <p>ID: {fieldMap.id}</p>
+                            <p>Type: {fieldMap.type}</p>
+                            <p>Required: {fieldMap.required}</p>
+                            <p>Show: {fieldMap.show}</p>
+                            <p>Picklist Values: {fieldMap.picklistValues}</p>
+                        </div>
+                    </template>
+                </template>-->
             </template>
+
         </div>
     </lightning-card>
 </template>

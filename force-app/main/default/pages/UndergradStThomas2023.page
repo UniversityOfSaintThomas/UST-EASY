@@ -14,19 +14,37 @@
         </title>
         <link rel="stylesheet" href="https://s3.amazonaws.com/capricorn-static-files/css/app.css"/>
         <link rel="stylesheet" href="https://s3.amazonaws.com/static.aws.stthomas.edu/summit-events-styles/capricorn/style.css"/>
+        <style>
+            .capricorn-main .slds-scope .slds-input-has-icon input[type=search] {
+                padding: .4rem .4rem .4rem 2rem;
+            }
+            .capricorn-main .slds-scope .slds-form-element__label {
+                font-size: 1rem;
+            }
+        </style>
         <!-- Google Tag Manager -->
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-5BKTTT2');</script>
+        <script>(function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5BKTTT2');</script>
         <!-- End Google Tag Manager -->
         <apex:insert name="scriptsHead"/>
     </head>
     <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BKTTT2"
-                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5BKTTT2"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
     <!-- End Google Tag Manager (noscript) -->
     <header class="capricorn-header">
         <div class="header capricorn header_dark">

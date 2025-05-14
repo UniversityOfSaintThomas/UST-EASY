@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Description__c</fullName>
-    <description>A general description of the scholarship.</description>
-    <externalId>false</externalId>
-    <label>Description</label>
+    <description>This displays on the first page of the scholarship under the heading Scholarship description.</description>
+    <inlineHelpText>This displays on the first page of the scholarship under the heading Scholarship description.</inlineHelpText>
+    <label>Scholarship Description</label>
     <length>100000</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

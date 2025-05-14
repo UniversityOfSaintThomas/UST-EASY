@@ -1195,6 +1195,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EASY_Widget__c.Code_Included__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EASY_Widget__c.Display_Heading__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1255,7 +1260,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EASY_Widget__c.Generic_Filter_5__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Generic_Filter_6__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Generic_Filter_7__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Generic_Filter_8__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EASY_Widget__c.Only_One_Widget_Key__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EASY_Widget__c.Screenflow__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

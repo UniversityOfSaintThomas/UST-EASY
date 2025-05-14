@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Scholarship_Date_Declined__c</fullName>
     <description>Declined Status for applicants that were awarded but declined.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Declined Status for applicants that were awarded but declined.</inlineHelpText>
     <label>Scholarship Date Declined</label>
     <required>false</required>

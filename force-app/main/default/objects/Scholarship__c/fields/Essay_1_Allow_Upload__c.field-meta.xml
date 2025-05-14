@@ -3,7 +3,6 @@
     <fullName>Essay_1_Allow_Upload__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Allow scholarship applicants to upload their essay 1 essays to Salesforce. Warning reporting off uploaded documents can be problematic.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Allow scholarship applicants to upload their essay 1 essays to Salesforce. Warning reporting off uploaded documents can be problematic.</inlineHelpText>
     <label>Essay 1 Allow Upload</label>
     <trackHistory>false</trackHistory>

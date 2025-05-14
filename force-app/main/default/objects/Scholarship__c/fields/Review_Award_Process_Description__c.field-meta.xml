@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Review_Award_Process_Description__c</fullName>
     <description>The description of how and when the review process for the scholarship award will take place.</description>
-    <externalId>false</externalId>
     <label>Review Award Process Description</label>
     <length>100000</length>
     <trackHistory>false</trackHistory>

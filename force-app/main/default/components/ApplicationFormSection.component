@@ -99,7 +99,7 @@
         </apex:outputPanel>
 
         <!-- CREATE REFERENCE/RELATED RECORD -->
-        <apex:outputPanel rendered="{!group.relatedObject && !group.isInternal}" layout="block" styleClass="slds-card">
+        <apex:outputPanel rendered="{!group.relatedObject && !group.isInternal}" layout="block" styleClass="slds-card" html-data-minrecords="{!group.item.Required_Number_of_Children__c}" html-data-maxrecords="{!group.item.Maximum_Number_of_Children__c}">
             <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
             <apex:outputPanel styleClass="slds-card__header slds-grid" layout="block">
                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -115,13 +115,20 @@
                         <h1 class="slds-card__header-title slds-truncate" tabindex="0">
                             {!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}
                         </h1>
+
                     </div>
                 </header>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!group.item.Required_Number_of_Children__c != null && group.item.Required_Number_of_Children__c > 0}">
+                <p class="slds-text-body_regular slds-m-left_medium">You are required to enter at least {!group.item.Required_Number_of_Children__c} record{!If(group.item.Required_Number_of_Children__c > 1,'s','')}.</p>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!group.item.Maximum_Number_of_Children__c != null && group.item.Maximum_Number_of_Children__c > 0}">
+                <p class="slds-text-body_regular slds-m-left_medium">You can enter a maximum of {!group.item.Maximum_Number_of_Children__c} records.</p>
             </apex:outputPanel>
 
 
             <!-- CREATE REFERENCE RECORD -->
-            <apex:outputPanel id="theTable" rendered="{!group.creatingNewRelatedRecord == false}">
+            <apex:outputPanel id="theTable" layout="block" rendered="{!group.creatingNewRelatedRecord == false}" styleClass="related-records">
 
                 <apex:pageMessages />
 
@@ -135,10 +142,10 @@
                     </apex:outputPanel>
                 </apex:outputPanel>
 
-                <apex:outputPanel rendered="{!group.relatedObjects.size > 0}">
+                <apex:outputPanel rendered="{!group.relatedObjects.size > 0}" layout="none">
 
                     <apex:repeat value="{!group.relatedObjects}" var="rr">
-                        <apex:outputPanel html-data-recid="{!rr.idx}" layout="block" styleClass=" record-id slds-card__body slds-card__body_inner">
+                        <apex:outputPanel html-data-recid="{!rr.idx}" layout="block" styleClass="record-id related-record slds-card__body slds-card__body_inner">
 
                             <apex:repeat value="{!group.questions}" var="question">
                                 <apex:variable value="{!itemNumber+1}" var="itemNumber"/>

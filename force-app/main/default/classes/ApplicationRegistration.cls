@@ -14,7 +14,13 @@ public class ApplicationRegistration {
     public Boolean cookieKeyPresent { get; set; }
     public String userType { get; set; }
     public Boolean noApplication { get; set; }
-    public Boolean commonAppApplication { get; set; }
+    public Boolean externalApplication { get; set; }
+    public String applicationType { get; set; }
+    public Map<String, Application_Control__c> externalAppControlMap { get; set; }
+    public Map<String, List<String>> externalAssociateAppControlMap { get; set; }
+    public String externalApplicationType { get; set; }
+    public String pageTitle { get; set; }
+    public String ExternalQuestionLabel { get; set; }
 
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
@@ -24,18 +30,44 @@ public class ApplicationRegistration {
         userType = UserInfo.getUserType();
         appInfo = ApplicationUtilities.createShellAppInfo();
         cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
-        String applicationType = '';
+        applicationType = '';
         noApplication = false;
-        commonAppApplication = false;
+        externalApplication = false;
+        pageTitle = 'New Application: ' + appInfo.academicLevel;
+        //Query all application controls with External Application Type that is not blank and get the URL parameter for each and put it in a list
+        List<Application_Control__c> externalAppControls = [
+                SELECT Id, URL_Parameter__c, External_Application_Type__c, External_App_Found_Statement__c, External_App_Claim_Id_Question__c,
+                        External_App_Associated_App_Control__r.URL_Parameter__c
+                FROM Application_Control__c
+                WHERE External_Application_Type__c != NULL
+        ];
+        //Map url parameter to
+        externalAppControlMap = new Map<String, Application_Control__c>();
+        externalAssociateAppControlMap = new Map<String, List<String>>();
+        for (Application_Control__c appControl : externalAppControls) {
+            externalAppControlMap.put(appControl.URL_Parameter__c, appControl);
+            if (externalAssociateAppControlMap.containsKey(appControl.External_App_Associated_App_Control__r.URL_Parameter__c)) {
+                externalAssociateAppControlMap.get(appControl.External_App_Associated_App_Control__r.URL_Parameter__c).add(appControl.URL_Parameter__c);
+            } else {
+                externalAssociateAppControlMap.put(appControl.External_App_Associated_App_Control__r.URL_Parameter__c, new List<String>{
+                        appControl.URL_Parameter__c
+                });
+            }
+        }
 
+        externalApplicationType = '';
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
             applicationType = ApexPages.currentPage().getParameters().get('at');
-            if (applicationType.equalsIgnoreCase('noapp') || applicationType.equalsIgnoreCase('commonapp')) {
+            if (applicationType.equalsIgnoreCase('noapp') || externalAppControlMap.keySet().contains(applicationType)) {
                 noApplication = true;
             }
-            if (applicationType.equalsIgnoreCase('commonapp')) {
-                commonAppApplication = true;
+            if (externalAppControlMap.keySet().contains(applicationType)) {
+                externalApplicationType = externalAppControlMap.get(applicationType).External_Application_Type__c;
+                pageTitle = externalApplicationType + ': Claim your St. Thomas Admissions Portal';
+                externalApplication = true;
             }
+            //Query for application control based on the URL parameter
+            System.debug('Application Type: ' + applicationType);
         }
 
         if (cookieKeyPresent) {
@@ -72,11 +104,17 @@ public class ApplicationRegistration {
 
             ApplicationQuestionGroup firstGroup;
 
-            if (commonAppApplication) {
-                ApplicationQuestion commonApp = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'External_Application_ID__c');
-                commonApp.addQuestionObject(new Question__c(Label__c = 'Please enter your Common App Id', Required__c = 'yep', Active__c = true, Length__c = 40));
+            if (externalApplication) {
+                Application_Control__c appControl = externalAppControlMap.get(applicationType);
+                ApplicationQuestion externalApp = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'External_Application_ID__c');
+                //Get the External App Found Statement and set it to the label
+                ExternalQuestionLabel = 'Please enter your Common App Id';
+                if (String.isNotBlank(appControl.External_App_Claim_Id_Question__c)) {
+                    ExternalQuestionLabel = appControl.External_App_Claim_Id_Question__c;
+                }
+                externalApp.addQuestionObject(new Question__c(Label__c = ExternalQuestionLabel, Required__c = 'yep', Active__c = true, Length__c = 40));
                 firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
-                        firstName, middleName, lastName, email, commonApp
+                        firstName, middleName, lastName, email, externalApp
                 });
             } else {
                 firstGroup = new ApplicationQuestionGroup(new List<ApplicationQuestion>{
@@ -178,7 +216,7 @@ public class ApplicationRegistration {
 
             // Exit and roll-back if User with Email or Contact already exists
             if (![SELECT Id FROM User WHERE Username = :con.Email OR ContactId = :con.Id LIMIT 1].isEmpty()) {
-                throw new ApplicationUtilities.ApplicationException(' An account with this email or birthdate already exists. Please sign in with the button to the right for existing users.', true, true);
+                throw new ApplicationUtilities.ApplicationException('<p class="slds-p-top_xx-small">An account with this email or birthdate already exists. Please sign in with the button to the right for existing users.</p>', true, true);
             }
 
             if (String.isNotBlank(interaction.Academic_Program__c)) {
@@ -190,13 +228,13 @@ public class ApplicationRegistration {
                                 Intended_Term_of_Entry__c,
                                 Application_Status__c,
                                 Application_Substatus__c,
-                                Applicant_Type__c
+                                Application_Control__r.URL_Parameter__c
                         FROM Application__c
                         WHERE Contact__r.Email = :con.Email
                         AND Application_Status__c != 'Wrong Application'
                         AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
                         AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
-                        AND Applicant_Type__c = 'Common App'
+                        AND Application_Control__r.URL_Parameter__c IN :externalAppControlMap.keySet()
                         AND Intended_Program__c = :interaction.Academic_Program__c
                         AND Intended_Program__r.Number_of_Applications_Limit__c LIKE 'One Application%'
                         AND Intended_Term_of_Entry__c = :interaction.Intended_Start_Term__c
@@ -207,13 +245,21 @@ public class ApplicationRegistration {
                 if (!currentUrl.endsWith('/')) {
                     currentUrl += '/';
                 }
-                currentUrl += 'ApplicationRegistration?at=commonapp';
+                currentUrl += 'ApplicationRegistration';
                 if (!currentUrl.startsWith('http')) {
                     currentUrl = 'https://' + currentUrl;
                 }
 
-                if (a.size() > 0 && !commonAppApplication) {
-                    throw new ApplicationUtilities.ApplicationException('You need to claim your Common App application. <a href="' + currentUrl + '">Please follow this link for more information and to claim your account</a>.', true, true);
+                String externalThrownErrorText = '';
+                if (a.size() > 0 && !externalApplication && externalAssociateAppControlMap.keySet().contains(applicationType)) {
+                    List<String> externalAppControlList = externalAssociateAppControlMap.get(applicationType);
+                    for (Application__c app : a) {
+                        if (externalAppControlList.contains(app.Application_Control__r.URL_Parameter__c)) {
+                            externalThrownErrorText += '<p class="slds-p-top_xx-small">' + externalAppControlMap.get(app.Application_Control__r.URL_Parameter__c).External_App_Found_Statement__c + ' <a href="' + currentUrl + '?at=' + externalAppControlMap.get(app.Application_Control__r.URL_Parameter__c).URL_Parameter__c + '">Please follow this link for more information and to claim your account</a>.</p>';
+                        }
+
+                    }
+                    throw new ApplicationUtilities.ApplicationException(externalThrownErrorText, true, true);
                 }
             }
 
@@ -252,7 +298,7 @@ public class ApplicationRegistration {
             if (!Test.isRunningTest() && pass.equals(passConfirm)) {
                 uId = Site.createExternalUser(u, con.AccountId, pass, false);
                 if (uId == null) {
-                    throw new ApplicationUtilities.ApplicationException('Error occurred when creating user.', true, true);
+                    throw new ApplicationUtilities.ApplicationException('<p class="slds-p-top_xx-small">Error occurred when creating user.</p>', true, true);
                 }
 
                 loginUser = new User(Id = uId, Username = u.Username);
@@ -294,7 +340,7 @@ public class ApplicationRegistration {
         interaction.Opportunity_Record_Type__c = application_opp_RT_ID;
         interaction.Citizenship__c = appCreate.app.Citizenship__c;
         interaction.Interaction_Source__c = 'Application';
-        interaction.Date_Started_App__c = System.Today();
+        interaction.Date_Started_App__c = System.today();
         interaction.Lead_Source__c = 'Application';
         interaction.Interaction_Status__c = 'New';
 
@@ -307,7 +353,7 @@ public class ApplicationRegistration {
                     if (question.label == 'What program are you applying to?') {
                         interaction.Academic_Program__c = Id.valueOf(String.valueOf(question.resp));
                     }
-                    if (question.label.equalsIgnoreCase('Please enter your Common App Id')) {
+                    if (question.label.equalsIgnoreCase(ExternalQuestionLabel)) {
                         interaction.External_Application_ID__c = String.valueOf(question.resp).trim();
                     }
                     if (question.label.equalsIgnoreCase('Email')) {
@@ -320,17 +366,17 @@ public class ApplicationRegistration {
                         interaction.Last_Name__c = String.valueOf(question.resp).trim();
                     }
                     if (question.label.equalsIgnoreCase('What is your date of birth? (MM/DD/YYYY)')) {
-                        interaction.Birthdate__c = (Date)question.resp;
+                        interaction.Birthdate__c = (Date) question.resp;
                     }
                 }
             }
         }
 
         //Check for common app Id External_Application_ID__c
-        if (commonAppApplication) {
-            Boolean commonAppFound = false;
+        if (externalApplication) {
+            Boolean externalAppFound = false;
             if (String.isNotBlank(interaction.External_Application_ID__c)) {
-                List<Application__c> commonApplication = [
+                List<Application__c> externalApplications = [
                         SELECT External_Application_ID__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email,
                                 Contact__r.Mailing_First_Name__c, Intended_Program__c, Intended_Term_of_Entry__c, Applicant_Type__c
                         FROM Application__c
@@ -345,20 +391,20 @@ public class ApplicationRegistration {
                         ORDER BY CreatedDate DESC
                 ];
 
-                if (commonApplication.size() > 0 && String.isNotBlank(commonApplication[0].External_Application_ID__c)) {
-                    String foundCommonAppId = commonApplication[0].External_Application_ID__c;
-                    if (foundCommonAppId.containsIgnoreCase(interaction.External_Application_ID__c)) {
-                        interaction.Academic_Program__c = commonApplication[0].Intended_Program__c;
-                        interaction.Intended_Start_Term__c = commonApplication[0].Intended_Term_of_Entry__c;
-                        interaction.Admissions_Application__c = commonApplication[0].Id;
-                        interaction.First_Name__c = commonApplication[0].Contact__r.FirstName;
-                        commonAppFound = true;
+                if (externalApplications.size() > 0 && String.isNotBlank(externalApplications[0].External_Application_ID__c)) {
+                    String foundExternalAppId = externalApplications[0].External_Application_ID__c;
+                    if (foundExternalAppId.containsIgnoreCase(interaction.External_Application_ID__c)) {
+                        interaction.Academic_Program__c = externalApplications[0].Intended_Program__c;
+                        interaction.Intended_Start_Term__c = externalApplications[0].Intended_Term_of_Entry__c;
+                        interaction.Admissions_Application__c = externalApplications[0].Id;
+                        interaction.First_Name__c = externalApplications[0].Contact__r.FirstName;
+                        externalAppFound = true;
                     }
                 }
             }
 
-            if (!commonAppFound) {
-                errorMessage = ' We can\'t match your common app information with the information provided.';
+            if (!externalAppFound) {
+                errorMessage = '<p style="slds-p-top_xx-small">We can\'t match your ' + externalApplicationType + ' information with the information provided.</p>';
             }
 
         }

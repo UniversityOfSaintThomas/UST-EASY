@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Scholarship_Date_Not_Interested__c</fullName>
     <description>Admissions Status changes to &quot;Withdrawn,&quot; scholarship status should move to &quot;Not Interested&quot;. Any student who is moved to &quot;Not Interested&quot; should be reported to the scholarship program manager.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Admissions Status changes to &quot;Withdrawn,&quot; scholarship status should move to &quot;Not Interested&quot;. Any student who is moved to &quot;Not Interested&quot; should be reported to the scholarship program manager.</inlineHelpText>
     <label>Scholarship Date Not Interested</label>
     <required>false</required>

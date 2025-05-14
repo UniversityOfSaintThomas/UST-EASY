@@ -117,8 +117,8 @@ public class ApplicationRequirement {
         }
 
         //Get the current visualforce page name
-        String currenPageName = ApexPages.currentPage().getUrl().substringBetween('apex/', '?');
-        if ((String.isBlank(appInfo.appControlId) || String.isBlank(appInfo.requirementId)) && !currenPageName.equalsIgnoreCase('applicationhome')) {
+        String currenPageName = ApexPages.currentPage().getUrl();
+        if ((String.isBlank(appInfo.appControlId) || String.isBlank(appInfo.requirementId)) && !currenPageName.containsIgnoreCase('applicationhome')) {
             return portalPage;
         }
 
@@ -462,7 +462,7 @@ public class ApplicationRequirement {
         for (ApplicationQuestionGroup g : section.groups) {
             if (g.questionGroup == true && g.questions != null && g.isEditable) {
                 for (ApplicationQuestion q : g.questions) {
-                    if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null) {
+                    if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null && String.isBlank(q.question.Contact_Field__c) && String.isBlank(q.question.Application_Field__c)) {
 
                         Question_Response__c qResp = q.response;
                         qResp.Application__c = app.Id;

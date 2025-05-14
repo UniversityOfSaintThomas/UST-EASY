@@ -1,0 +1,60 @@
+<!--
+ - Created by Thad-PC-2019 on 4/28/2025.
+ -->
+
+<apex:component id="EASYWidgetScreenFlow">
+    <div class="screenFlowWrapper">
+        <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true"/>
+        <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
+
+        <article id="lwcScreenFlow{!widget.Id}Loader" class="slds-card slds-m-bottom_medium" style="min-height: 75px;">
+            <div class="slds-card__body slds-card__body_inner">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </article>
+
+        <div id="lwcScreenFlow{!widget.Id}"></div>
+
+        <script>
+            let statusChange = function (event) {
+                if (event.getParam("status") === "FINISHED") {
+                    // Control what happens when the interview finishes
+                    let outputVariables = event.getParam("outputVariables");
+                    let key;
+                    for (key in outputVariables) {
+                        if (outputVariables[key].name === "myOutput") {
+                            // Do something with an output variable
+                        }
+                    }
+                }
+            };
+            $Lightning.use("c:summitEventsListApp", function () {
+                // Create the flow component and set the onstatuschange attribute
+                $Lightning.createComponent("lightning:flow",
+                    {
+                        "onstatuschange": statusChange
+                    },
+                    "lwcScreenFlow{!widget.Id}",
+                    function (component) {
+                        // Set the input variables
+                        document.getElementById("lwcScreenFlow{!widget.Id}Loader").remove();
+                        let inputVariables = [
+                            {
+                                name: "appId",
+                                type: "String",
+                                value: "{!appInfo.appId}"
+                            }
+                        ];
+                        // Start an interview in the flowContainer div and
+                        // initialize the input variables
+                        component.startFlow("{!widget.Screenflow__c}", inputVariables);
+                    }
+                );
+            });
+        </script>
+    </div>
+</apex:component>

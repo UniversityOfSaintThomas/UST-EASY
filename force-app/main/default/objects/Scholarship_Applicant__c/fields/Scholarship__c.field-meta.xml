@@ -3,7 +3,6 @@
     <fullName>Scholarship__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
     <description>The related scholarship to this application.</description>
-    <externalId>false</externalId>
     <label>Scholarship</label>
     <referenceTo>Scholarship__c</referenceTo>
     <relationshipLabel>Scholarship Applicants</relationshipLabel>

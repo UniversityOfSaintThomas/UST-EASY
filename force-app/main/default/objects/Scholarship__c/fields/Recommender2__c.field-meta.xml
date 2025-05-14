@@ -3,7 +3,6 @@
     <fullName>Recommender2__c</fullName>
     <defaultValue>false</defaultValue>
     <description>The gathering of a second recommender name and email is required.</description>
-    <externalId>false</externalId>
     <label>Recommender2</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

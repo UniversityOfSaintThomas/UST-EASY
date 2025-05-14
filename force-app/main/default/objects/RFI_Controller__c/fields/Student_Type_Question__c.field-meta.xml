@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Student_Type_Question__c</fullName>
+    <defaultValue>&quot;What kind of studies are you interested in?&quot;</defaultValue>
+    <description>Question label that appears on RFI if School Type Display values are selected.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Question label that appears on RFI if School Type Display values are selected.</inlineHelpText>
+    <label>Student Type Question</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

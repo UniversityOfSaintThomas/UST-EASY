@@ -3,7 +3,6 @@
     <fullName>Self_Report_ACT_GPA_Criteria__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Applicant will be asked to self report their GPA and ACT/SAT information.</description>
-    <externalId>false</externalId>
     <label>Self Report ACT GPA Criteria</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

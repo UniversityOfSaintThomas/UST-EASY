@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recommendation__c</fullName>
     <description>The recommendation received about the applicant by recommender 1.</description>
-    <externalId>false</externalId>
     <label>Recommendation</label>
     <length>32768</length>
     <trackHistory>false</trackHistory>

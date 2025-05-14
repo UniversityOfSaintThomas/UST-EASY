@@ -377,4 +377,5 @@ orgs:
     build:
       config_file: orgs/build.json
     dev:
+      config_file: orgs/dev.json
       days: 14

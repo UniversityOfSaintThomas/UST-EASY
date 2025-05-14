@@ -129,6 +129,10 @@ public class ApplicationRequirement_TEST {
 
     @isTest
     public static void testGetNextReqId() {
+
+        PageReference pageRef = Page.ApplicationRequirement;
+        Test.setCurrentPage(pageRef);
+
         Application__c app = [SELECT Id FROM Application__c LIMIT 1];
         Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
         Contact student = [SELECT Id FROM Contact LIMIT 1];
@@ -157,6 +161,10 @@ public class ApplicationRequirement_TEST {
 
     @isTest
     public static void testGetPrevReqId() {
+
+        PageReference pageRef = Page.ApplicationRequirement;
+        Test.setCurrentPage(pageRef);
+
         Application__c app = [SELECT Id FROM Application__c LIMIT 1];
         Application_Control__c appControl = [SELECT Id FROM Application_Control__c LIMIT 1];
         Contact student = [SELECT Id FROM Contact LIMIT 1];
@@ -250,6 +258,9 @@ public class ApplicationRequirement_TEST {
         appReq.items = [SELECT Id FROM Requirement_Item__c];
         appReq.appInfo = appInfo;
         ApplicationRequirement appReq2 = new ApplicationRequirement();
+
+        PageReference pageRef = Page.ApplicationRequirement;
+        Test.setCurrentPage(pageRef);
 
         Test.startTest();
         appReq.applicationRequirementInit();
@@ -366,6 +377,9 @@ public class ApplicationRequirement_TEST {
         ApplicationRequirement appReq = new ApplicationRequirement();
         appReq.items = [SELECT Id FROM Requirement_Item__c];
         appReq.appInfo = appInfo;
+
+        PageReference pageRef = Page.ApplicationRequirement;
+        Test.setCurrentPage(pageRef);
 
         Test.startTest();
         appReq.applicationRequirementInit();

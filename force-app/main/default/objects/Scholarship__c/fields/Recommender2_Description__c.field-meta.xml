@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Recommender2_Description__c</fullName>
     <description>The description to the scholarship applicant of why and how the recommender name email will be used and when it will be used.</description>
-    <externalId>false</externalId>
     <label>Recommender2 Description</label>
     <length>100000</length>
     <trackHistory>false</trackHistory>

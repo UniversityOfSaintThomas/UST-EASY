@@ -26,15 +26,15 @@ public with sharing class ApplicationLinkController {
 
         if (String.isNotBlank(urlRequirementId)) {
 
-            System.debug(urlRequirementId);
-
             Application_Control__c applicationControl = [
                     SELECT Id, Allow_Submit_From__c, Allow_Withdraw_From__c,
                             Hide_Term_Program__c, Submit_Status__c, Allow_Confirm_From__c, Confirm_Status__c,
                             Withdraw_Status__c, Academic_Level__c, School_College__c, Template__c, URL_Parameter__c,
                             Application_Start_Status__c, Allow_Cancel_From__c
                     FROM Application_Control__c
-                    WHERE Id IN (SELECT Application_Control__c FROM Requirement__c WHERE Id = :urlRequirementId)
+                    WHERE Id IN (SELECT Application_Control__c
+                    FROM Requirement__c
+                    WHERE Id = :urlRequirementId)
             ];
 
             if (applicationControl.URL_Parameter__c != appInfo.at) {
@@ -47,7 +47,7 @@ public with sharing class ApplicationLinkController {
                         AND Application_Status__c != 'Wrong Application'
                         AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
                         AND (NOT(Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
-                        ORDER BY LastModifiedDate
+                        ORDER BY Name DESC
                 ];
                 if(app.size() > 0 && applicationControl != null) {
                     newAppInfo = ApplicationUtilities.setApplicationInfo(applicationControl, app[0]);

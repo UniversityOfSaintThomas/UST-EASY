@@ -8,6 +8,303 @@
 
 public without sharing class requestForInformationFormController {
 
+    public class fieldItem {
+        //Generate auto generate a unique id for each field
+        @AuraEnabled
+        public String id {
+            get {
+                if (id == null) {
+                    id = String.valueOf(UUID.randomUUID());
+                }
+                return id;
+            }
+            set;
+        }
+        @AuraEnabled
+        public String field_label { get; set; }
+        @AuraEnabled
+        public Boolean required { get; set; }
+        @AuraEnabled
+        public Boolean show { get; set; }
+        @AuraEnabled
+        public String type { get; set; }
+        @AuraEnabled
+        public List<SelectOption> picklistValues { get; set; }
+    }
+
+    public class rfiWrapper {
+        @AuraEnabled
+        public RFI_Controller__c rfi_controller { get; set; }
+        @AuraEnabled
+        public Map<Id, Program__c> programs { get; set; }
+        @AuraEnabled
+        public Map<Id, Academic_Term__c> terms { get; set; }
+        @AuraEnabled
+        public String academic_level_value { get; set; }
+        @AuraEnabled
+        public Map<String, String> countries { get; set; }
+        @AuraEnabled
+        public Map<String, fieldItem> field_definitions { get; set; }
+    }
+
+    //Wrapper class for rfi controller, program, term, academic level, countries
+    @AuraEnabled(cacheable=true)
+    public static rfiWrapper getRFIData(String rfi_controller_name, String recordId) {
+        rfiWrapper rfi_data = new rfiWrapper();
+        rfi_data.rfi_controller = getRFIController(rfi_controller_name, recordId);
+        if(rfi_data.rfi_controller != null) {
+            rfi_data.programs = new Map<Id, Program__c>();
+            rfi_data.terms = new Map<Id, Academic_Term__c>();
+            rfi_data.field_definitions = getFieldItemDefinitions(rfi_data.rfi_controller);
+            List<Program__c> programs = new List<Program__c>();
+            Map<Id, Program__c> program_map = new Map<Id, Program__c>();
+            program_map = getPrograms(rfi_data.rfi_controller.Academic_Level__c, rfi_data.rfi_controller.School_College__c, rfi_data.rfi_controller.Academic_Interests_To_Display__c, false);
+            rfi_data.terms = getTerms(null);
+            rfi_data.programs = program_map;
+            rfi_data.academic_level_value = getAcademicLevelValue(rfi_data.rfi_controller.Academic_Level__c);
+            rfi_data.countries = getCountries();
+        }
+        System.debug('rfi_data: ' + JSON.serializePretty(rfi_data));
+        return rfi_data;
+    }
+
+    @AuraEnabled(Cacheable=true)
+    public static Map<string, fieldItem> getFieldItemDefinitions(RFI_Controller__c rfi_controller) {
+        Map<string, fieldItem> fieldItemMap = new Map<string, fieldItem>();
+        fieldItem fi = new fieldItem();
+
+        fi.field_label = 'I will apply to St. Thomas as a';
+        fi.required = rfi_controller.Required_Fields__c.contains('I will apply to St. Thomas as a') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('I will apply to St. Thomas as a') ? true : false;
+        fi.type = 'radio';
+        fi.picklistValues = createExistingPicklist('Lead', 'Admit_Type__c');
+        fieldItemMap.put('I_will_apply_to_St_Thomas_as_a', fi);
+
+        fi.field_label = 'College\\School';
+        fi.required = rfi_controller.Required_Fields__c.contains('St Thomas Colleges') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('St Thomas Colleges') ? true : false;
+        fi.type = 'select';
+        fi.picklistValues = createExistingPicklist('RFI_Controller__c', 'School_College__c');
+        fieldItemMap.put('St_Thomas_Colleges', fi);
+
+        fi.field_label = 'Citizenship';
+        fi.required = rfi_controller.Required_Fields__c.contains('Citizenship') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Citizenship') ? true : false;
+        fi.type = 'radio';
+        fi.picklistValues = createExistingPicklist('Lead', 'Citizenship_Type__c');
+        fieldItemMap.put('Citizenship', fi);
+
+        fi.field_label = 'Academic Interest (Max 4)';
+        fi.required = rfi_controller.Required_Fields__c.contains('Academic Interest') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Academic Interest') ? true : false;
+        fi.picklistValues = createExistingPicklist('Program__c', 'Program_Major_Concentration__c');
+        fi.type = 'multi-select';
+        fieldItemMap.put('Academic_Interest', fi);
+
+        fi.field_label = 'Title';
+        fi.required = rfi_controller.Required_Fields__c.contains('Title') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Title') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'text';
+        fieldItemMap.put('Title', fi);
+
+        fi.field_label = 'First Name';
+        fi.required = true;
+        fi.show = true;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'text';
+        fieldItemMap.put('FirstName', fi);
+
+        fi.field_label = 'Last Name';
+        fi.required = true;
+        fi.show = true;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'text';
+        fieldItemMap.put('LastName', fi);
+
+        fi.field_label = 'Email';
+        fi.required = rfi_controller.Required_Fields__c.contains('Email') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Email') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'email';
+        fieldItemMap.put('Email', fi);
+
+        fi.field_label = 'Home Phone';
+        fi.required = rfi_controller.Required_Fields__c.contains('Home Phone') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Home and Mobile Phone') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'phone';
+        fieldItemMap.put('Home_Phone', fi);
+
+        fi.field_label = 'Mobile Phone';
+        fi.required = rfi_controller.Required_Fields__c.contains('Mobile Phone') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Home and Mobile Phone') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'phone';
+        fieldItemMap.put('Mobile_Phone', fi);
+
+        fi.field_label = 'Phone';
+        fi.required = rfi_controller.Required_Fields__c.contains('Phone') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Phone') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'phone';
+        fieldItemMap.put('Phone', fi);
+
+        fi.field_label = 'I would like to receive text messages';
+        fi.required = rfi_controller.Required_Fields__c.contains('I would like to receive text messages') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('I would like to receive text messages') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'checkbox';
+        fieldItemMap.put('I_would_like_to_receive_text_messages', fi);
+
+        fi.field_label = 'Birthdate';
+        fi.required = rfi_controller.Required_Fields__c.contains('Birthdate') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Birthdate') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'date';
+        fieldItemMap.put('Birthdate', fi);
+
+        fi.field_label = 'Employer';
+        fi.required = rfi_controller.Required_Fields__c.contains('Employer') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Employer') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'text';
+        fieldItemMap.put('Employer', fi);
+
+        //TODO: picklist relies on school account selected and will probably always have to be dynamic
+        fi.field_label = 'Expected Start Term at St. Thomas';
+        fi.required = rfi_controller.Required_Fields__c.contains('Expected Start Term at St. Thomas') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Expected Start Term at St. Thomas') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'select';
+        fieldItemMap.put('Expected_Start_Term_at_St_Thomas', fi);
+
+        fi.field_label = 'Timeline to Enrollment';
+        fi.required = rfi_controller.Required_Fields__c.contains('Timeline to Enrollment') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Timeline to Enrollment') ? true : false;
+        fi.picklistValues = createExistingPicklist('Lead', 'Timeline__c');
+        fi.type = 'select';
+        fieldItemMap.put('Timeline_to_Enrollment', fi);
+
+        fi.field_label = 'High School Attended';
+        fi.required = rfi_controller.Required_Fields__c.contains('High School Attended') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('High School Attended') ? true : false;
+        fi.picklistValues = new List<SelectOption>();
+        fi.type = 'lookup';
+        fieldItemMap.put('High_School_Attended', fi);
+
+        fi.field_label = 'Address 1';
+        fi.required = rfi_controller.Required_Fields__c.contains('Address 1') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Address 1') ? true : false;
+        fi.type = 'text';
+        fieldItemMap.put('Address_1', fi);
+
+        fi.field_label = 'Address 2';
+        fi.required = rfi_controller.Required_Fields__c.contains('Address 2') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Address 2') ? true : false;
+        fi.type = 'text';
+        fieldItemMap.put('Address_2', fi);
+
+        fi.field_label = 'Address 3';
+        fi.required = rfi_controller.Required_Fields__c.contains('Address 3') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Address 3') ? true : false;
+        fi.type = 'text';
+        fieldItemMap.put('Address_3', fi);
+
+        fi.field_label = 'City';
+        fi.required = rfi_controller.Required_Fields__c.contains('City') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('City') ? true : false;
+        fi.type = 'text';
+        fieldItemMap.put('City', fi);
+
+        fi.field_label = 'State';
+        fi.required = rfi_controller.Required_Fields__c.contains('State') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('State') ? true : false;
+        fi.type = 'text';
+        fieldItemMap.put('State', fi);
+
+        fi.field_label = 'Zipcode';
+        fi.required = rfi_controller.Required_Fields__c.contains('Zipcode') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Zipcode') ? true : false;
+        fi.type = 'text';
+        fieldItemMap.put('Zipcode', fi);
+
+        fi.field_label = 'Country';
+        fi.required = rfi_controller.Required_Fields__c.contains('Country') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Country') ? true : false;
+        fi.type = 'select';
+        fieldItemMap.put('Country', fi);
+
+        fi.field_label = 'High School Graduation Year';
+        fi.required = rfi_controller.Required_Fields__c.contains('High School Graduation Year') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('High School Graduation Year') ? true : false;
+        fi.type = 'text';
+        fieldItemMap.put('High_School_Graduation_Year', fi);
+
+        fi.field_label = 'I have a question';
+        fi.required = rfi_controller.Required_Fields__c.contains('I have a question') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('I have a question') ? true : false;
+        fi.type = 'checkbox';
+        fieldItemMap.put('I_have_a_question', fi);
+
+        fi.field_label = 'Description';
+        fi.required = rfi_controller.Required_Fields__c.contains('Description') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Description') ? true : false;
+        fi.type = 'textarea';
+        fieldItemMap.put('Description', fi);
+
+        fi.field_label = 'I would like program information to be mailed to me';
+        fi.required = rfi_controller.Required_Fields__c.contains('I would like program information to be mailed to me') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('I would like program information to be mailed to me') ? true : false;
+        fi.type = 'checkbox';
+        fieldItemMap.put('I_would_like_program_information_to_be_mailed_to_me', fi);
+
+        fi.field_label = 'Phone';
+        fi.required = rfi_controller.Required_Fields__c.contains('Phone') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Phone') ? true : false;
+        fi.type = 'phone';
+        fieldItemMap.put('Phone', fi);
+
+        fi.field_label = 'How did you hear about us';
+        fi.required = rfi_controller.Required_Fields__c.contains('How did you hear about us') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('How did you hear about us') ? true : false;
+        fi.type = 'select';
+        fieldItemMap.put('How_did_you_hear_about_us', fi);
+
+        fi.field_label = 'Tell us about yourself';
+        fi.required = rfi_controller.Required_Fields__c.contains('Tell us about yourself') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Tell us about yourself') ? true : false;
+        fi.type = 'textarea';
+        fieldItemMap.put('Tell_us_about_yourself', fi);
+
+        fi.field_label = 'Scholarship of Interest';
+        fi.required = rfi_controller.Required_Fields__c.contains('Scholarship of Interest') ? true : false;
+        fi.show = rfi_controller.Fields_to_Display__c.contains('Scholarship of Interest') ? true : false;
+        fi.type = 'select';
+        fieldItemMap.put('Scholarship_of_Interest', fi);
+
+        fi.field_label = String.isNotBlank(rfi_controller.School_College_Question__c) ? rfi_controller.School_College_Question__c : 'What college are you interested in?';
+        fi.required = String.isNotBlank(rfi_controller.School_College_To_Display__c) ? true : false;
+        fi.show = String.isNotBlank(rfi_controller.School_College_To_Display__c) ? true : false;
+        fi.type = 'select';
+        fieldItemMap.put('program_filter_school', fi);
+
+        return fieldItemMap;
+    }
+
+    public static List<SelectOption> createExistingPicklist(String objectString, String existingPicklist) {
+        List<SelectOption> picklists = new List<SelectOption>();
+        Type registrationType = Type.forName(objectString);
+        SObject registrationObj = (SObject) registrationType.newInstance();
+        DescribeSObjectResult registrationDescribe = registrationObj.getSObjectType().getDescribe();
+        List<Schema.PicklistEntry> PicklistValues = registrationDescribe.fields.getMap().get(existingPicklist).getDescribe().getPicklistValues();
+        picklists.add(new SelectOption('', 'Select...'));
+        for (Schema.PicklistEntry PicklistValue : PicklistValues) {
+            picklists.add(new SelectOption(PicklistValue.getValue(), PicklistValue.getLabel()));
+        }
+        return picklists;
+    }
+
     @AuraEnabled
     public static void createLead(String record, String objectApiName, String rfiController) {
         try {
@@ -53,6 +350,7 @@ public without sharing class requestForInformationFormController {
                     }
                 }
             }
+
             Database.DMLOptions dml = new Database.DMLOptions();
             dml.duplicateRuleHeader.allowSave = false;
             //System.debug('Lead object for insert: ');
@@ -79,7 +377,13 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static RFI_Controller__c getRFIController(String rfi_controller_name) {
+    public static RFI_Controller__c getRFIController(String rfi_controller_name, String recordId) {
+        Id recordIdConverted = null;
+        try {
+            recordIdConverted = recordId;
+        } catch (Exception e) {
+            //could not convert to Id
+        }
         try {
             return [
                     SELECT
@@ -97,9 +401,35 @@ public without sharing class requestForInformationFormController {
                             Multi_Select_Display_Type__c,
                             Additional_Questions__c,
                             Academic_Interest_Max_Selection__c,
-                            Disable_fields_to_display__c
+                            Disable_fields_to_display__c,
+                            Citizen_Types_To_Display__c,
+                            Citizen_Type_Question__c,
+                            Country__c,
+                            Degree_Type_Question__c,
+                            Degree_Type_To_Display__c,
+                            Delivery_Type_Question__c,
+                            Delivery_Type_To_Display__c,
+                            Generic_Filter_2_Question__c,
+                            Generic_Filter_2_To_Display__c,
+                            Generic_Filter_3_Question__c,
+                            Generic_Filter_3_To_Display__c,
+                            Generic_Filter_4_Question__c,
+                            Generic_Filter_4_To_Display__c,
+                            Generic_Filter_6_Question__c,
+                            Generic_Filter_6_To_Display__c,
+                            Generic_Filter_7_Question__c,
+                            Generic_Filter_7_To_Display__c,
+                            Generic_Filter_8_Question__c,
+                            Generic_Filter_8_To_Display__c,
+                            Program_Type_Question__c,
+                            Program_Type_To_Display__c,
+                            School_College_Question__c,
+                            School_College_To_Display__c,
+                            Student_Type_Question__c,
+                            Student_Type_To_Display__c
                     FROM RFI_Controller__c
-                    WHERE Name = :rfi_controller_name
+                    WHERE Id = :recordIdConverted
+                    OR (Name = :rfi_controller_name AND Name != 'RFI Controller 000' AND Id = NULL)
                     LIMIT 1
             ];
         } catch (Exception e) {
@@ -182,7 +512,7 @@ public without sharing class requestForInformationFormController {
             Date today = System.today();
             Date today_plus_four_years = today.addYears(4);
             // Academic Term -> intended start term
-            // limit by 4 years, show Fall and Spring 
+            // limit by 4 years, show Fall and Spring
             Map<Id, Academic_Term__c> terms = new Map<Id, Academic_Term__c>([
                     SELECT
                             Id,

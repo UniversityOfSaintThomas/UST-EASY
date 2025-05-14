@@ -34,7 +34,7 @@ public with sharing class ApplicationPaymentComponentController {
                     currentUrl = 'https://' + currentUrl;
                 }
 
-                //Get application for dtails to add to ticket
+                //Get application for details to add to ticket
                 Application__c app = [
                         SELECT Id, Name, Contact__r.FirstName, Contact__r.LastName,
                                 Contact__r.Email,
@@ -100,7 +100,7 @@ public with sharing class ApplicationPaymentComponentController {
                             // EXT_TRANS_ID passed from payment form and can be used to track in our business office
                             valCode += exTransId;//ac.appInfo.appId;
 
-                            // Amount passed from VF payment form to set amout requested.
+                            // Amount passed from VF payment form to set amount requested.
                             valCode += paymentAmount;
 
                             //All the above in one string, MD5 hashed, converted to base64 string. Checked at gateway for access to the uPay site

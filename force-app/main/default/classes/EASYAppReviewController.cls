@@ -643,7 +643,6 @@ public with sharing class EASYAppReviewController {
                 qrWrapper.answered = false;
                 qrWrapper.question = q;
                 String valueField = fieldRecTypeFieldName.get(q.RecordType.DeveloperName);
-                System.debug('q.RecordType.DeveloperName: ' + q.RecordType.DeveloperName);
                 System.debug('valueField: ' + valueField);
 
                 if (questionResponsesByQuestionId.containsKey(q.Id)) {

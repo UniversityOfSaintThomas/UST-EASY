@@ -121,6 +121,16 @@ export default class ReusableLookup extends LightningElement {
     handleCommit() {
         this.selectedRecordId = "";
         this.selectedRecordName = "";
+        let clearSelectedRecord = {
+            selectedRecordId: "",
+            selectedRecordName: "",
+            id: ""
+        };
+        const selectedEvent = new CustomEvent('valueselected', {
+            detail: clearSelectedRecord
+        });
+        //dispatching the custom event
+        this.dispatchEvent(selectedEvent);
     }
 
     //handler for selection of records from lookup result list

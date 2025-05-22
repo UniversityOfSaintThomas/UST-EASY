@@ -32,7 +32,7 @@
                     }
                 }
             };
-            $Lightning.use("c:summitEventsListApp", function () {
+            $Lightning.use("c:easyAuraApp", function () {
                 // Create the flow component and set the onstatuschange attribute
                 $Lightning.createComponent("lightning:flow",
                     {

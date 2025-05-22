@@ -223,7 +223,6 @@ public class ApplicationUtilities {
         Application_Control__c appControl;
         Application_Control__c defaultControl;
 
-        System.debug('ApplicationUtilities.getApplicationControls: ' + param);
         if (String.isBlank(param)) {
             param = '';
         }

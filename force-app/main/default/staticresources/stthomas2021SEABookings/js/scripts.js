@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
     //Change the value in the link from Register to Submit
     submitOptions.forEach((element) => {
         element.innerHTML = "Submit";
-        element.style.
     });
 
     copyrightYear();

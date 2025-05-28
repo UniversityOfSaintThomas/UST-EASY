@@ -1,0 +1,12 @@
+/**
+ * Created by nguy0092 on 1/9/2024.
+ */
+
+.assign-icon{
+
+    --slds-c-icon-color-background: purple;
+}
+.statefulButton {
+    --sds-c-button-text-color: black;
+    --slds-c-button-shadow-focus: none;
+}

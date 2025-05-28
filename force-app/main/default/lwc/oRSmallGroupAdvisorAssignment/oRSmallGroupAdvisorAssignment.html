@@ -1,0 +1,108 @@
+<!--
+ - Created by nguy0092 on 1/9/2024.
+ -->
+
+<!-- O R Small Group Assignment Button -->
+<template>
+
+    <lightning-card variant="narrow" title="O&R Small Group Assignment" icon-name="standard:marketing_actions">
+        <lightning-button onclick={buttonClickGroups}
+                          label="Assign"
+                          name="Assign"
+                          disabled={assignedDate}
+                          slot="actions">
+        </lightning-button>
+        <div>
+            <p class="slds-p-horizontal_small" lwc:if={assignedDate}>Assigned:&nbsp;
+                <lightning-formatted-date-time value={assignedDate}></lightning-formatted-date-time>
+            </p>
+        </div>
+        <div>
+            <p class="slds-p-horizontal_small" lwc:if={appointmentsDataToggle}></p>
+            <p class="slds-p-horizontal_small" lwc:else>
+                No Small Groups assigned.
+            </p>
+        </div>
+        <div>
+            <p class="slds-p-horizontal_small" lwc:if={assignedDate}></p>
+            <p class="slds-p-horizontal_small" lwc:elseif={appointmentsDataToggle}>
+                Appointments exists for this Instance.<br>
+                Review before re-assigning Small Groups.<br>
+                If Small Groups are correct update Instance field<br>
+                O & R - SGA - Assignment Date to disable Assign button.<br>
+            </p>
+        </div>
+    </lightning-card>
+
+    <!--START HOST CARD HERE -->
+    <div class="slds-p-top_small" lwc:if={assignedDate}>
+        <lightning-card class="assign-icon" variant="narrow" title="O&R Registration Advisor Assignment"
+                        icon-name="standard:marketing_actions">
+            <lightning-button onclick={buttonClickAdvisors}
+                              label="Assign"
+                              name="Assign"
+                              disabled={hostAssignedDate}
+                              slot="actions">
+            </lightning-button>
+            <div>
+                <p class="slds-p-horizontal_small" lwc:if={hostAssignedDate}>Assigned:&nbsp;
+                    <lightning-formatted-date-time value={hostAssignedDate}></lightning-formatted-date-time>
+                </p>
+                <p class="slds-p-horizontal_small" lwc:if={hostAssignCheck}></p>
+                <p class="slds-p-horizontal_small" lwc:else>
+                    No Advisors assigned.
+                </p>
+            </div>
+            <div>
+                <p class="slds-p-horizontal_small" lwc:if={hostAssignedDate}></p>
+                <p class="slds-p-horizontal_small" lwc:elseif={hostAssignCheck}>
+                    Advisors exists for Appointments.<br>
+                    Review before re-assigning Advisors.<br>
+                    If Advisors are correct update Instance field<br>
+                    O & R - Advisor - Assignment Date to disable Assign button.<br>
+                </p>
+            </div>
+        </lightning-card>
+    </div>
+    <!--END HOST CARD HERE -->
+
+    <div class="slds-p-top_small"></div>
+    <lightning-card variant="narrow" title="O&R Small Group Details" icon-name="standard:employee_job">
+        <lightning-button-stateful
+                label-when-off=""
+                label-when-on=""
+                icon-name-when-off="utility:expand_all"
+                icon-name-when-on="utility:collapse_all"
+                selected={appointmentsGridIsSelected}
+                variant="text"
+                onclick={expandCollapse}
+                slot="actions"
+                class="statefulButton">
+        </lightning-button-stateful>
+        <lightning-button-icon onclick={refreshList}
+                               icon-name="utility:sync"
+                               size="medium"
+                               variant="bare"
+                               alternative-text="Refresh Details"
+                               slot="actions"
+                               class="statefulButton">
+        </lightning-button-icon>
+        <div>
+            <lightning-tree-grid lwc:if={appointmentsDataToggle}
+                                 data={appointmentsData}
+                                 columns={appointmentsDataColumns}
+                                 key-field="Appointment_Id"
+                                 hide-checkbox-column="true">>
+            </lightning-tree-grid>
+        </div>
+    </lightning-card>
+
+    <template lwc:if={appointmentsIsAssigning}>
+        <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+    </template>
+
+    <template lwc:if={hostIsAssigning}>
+        <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+    </template>
+
+</template>

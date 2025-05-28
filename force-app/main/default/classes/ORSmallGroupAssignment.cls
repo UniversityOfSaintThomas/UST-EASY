@@ -5,7 +5,7 @@
  * Registrants for small groups are selected from Event Instances from the main O&R Event.
  *
  * Process flow is triggered by Lightning Web Component Assign Button on the Event Instance record:
- * 1.Queries registrants Contact/Opportunity/Admissions Application records to get base criteria information (Student of Color, Athlete, etc)
+ * 1.Queries registrants Contact/Opportunity/Admissions Application records to get base criteria information (First Gen students, Athlete, etc)
  * to update data fields on their registration record. [method eventRegistrationCriteria(String eventInstance)]
  * 2. Based on these data fields registrants are then put into criteria lists to be assigned Appointments [method assignAppointmentTypes(String eventInstance)]
  * 3. Assignment is done with method appointmentAssignment(List<summit__Summit_Events_Registration__c> registrantList, String assignmentType) passing in assignmentType as:
@@ -39,8 +39,10 @@ public with sharing class ORSmallGroupAssignment {
         public String Contact_Id { get; set; }
         @AuraEnabled
         public String Contact_Name { get; set; }
+//        @AuraEnabled
+//        public Boolean Student_of_Color { get; set; }
         @AuraEnabled
-        public Boolean Student_of_Color { get; set; }
+        public Boolean First_Gen_Student { get; set; }
         @AuraEnabled
         public Boolean Athlete { get; set; }
         @AuraEnabled
@@ -147,7 +149,6 @@ public with sharing class ORSmallGroupAssignment {
 
         List<summit__Summit_Events_Registration__c> registrantListUpdate = new List<summit__Summit_Events_Registration__c>();
         Map<Id, Map<String, String>> registrantInfo = new Map<Id, Map<String, String>>();
-        Set<Id> contactId = new Set<Id>();
 
         List<summit__Summit_Events_Registration__c> registrations = [
                 SELECT Id,
@@ -162,7 +163,6 @@ public with sharing class ORSmallGroupAssignment {
         ];
 
         for (summit__Summit_Events_Registration__c r : registrations) {
-
             if (registrantInfo.containsKey(r.summit__Contact__c)) {
                 registrantInfo.get(r.summit__Contact__c).put('RegistrationID', r.Id);
                 registrantInfo.get(r.summit__Contact__c).put('RegistrationInstance', r.summit__Event_Instance__c);
@@ -171,9 +171,9 @@ public with sharing class ORSmallGroupAssignment {
                 registrantInfo.get(r.summit__Contact__c).put('RegistrationID', r.Id);
                 registrantInfo.get(r.summit__Contact__c).put('RegistrationInstance', r.summit__Event_Instance__c);
             }
-
-            contactId.add(r.summit__Contact__c);
         }
+
+        Set<Id> contactId = registrantInfo.keySet();
 
         List<Opportunity> opportunityContactApplication = [
                 SELECT Contact__r.Id,
@@ -182,7 +182,8 @@ public with sharing class ORSmallGroupAssignment {
                         Contact__r.hed__Gender__c,
                         Contact__r.MailingState,
                         Admissions_Application__r.Id,
-                        Admissions_Application__r.Applicant_Student_of_Color__c,
+//                        Admissions_Application__r.Applicant_Student_of_Color__c,
+                        Admissions_Application__r.First_Generation__c,
                         Admissions_Application__r.Application_Status__c,
                         Athlete_Sport_1__c,
                         Athlete_Sport_2__c,
@@ -199,15 +200,28 @@ public with sharing class ORSmallGroupAssignment {
         ];
 
         for (Opportunity o : opportunityContactApplication) {
-            List<String> sports = new List<String>{o.Athlete_Sport_1__c, o.Athlete_Sport_2__c, o.Athlete_Sport_3__c};
+            List<String> sportsList = new List<String>();
+
+            if (String.isNotBlank(o.Athlete_Sport_1__c) ) {
+                sportsList.add(o.Athlete_Sport_1__c);
+            }
+            if (String.isNotBlank(o.Athlete_Sport_2__c) ) {
+                sportsList.add(o.Athlete_Sport_2__c);
+            }
+            if (String.isNotBlank(o.Athlete_Sport_3__c) ) {
+                sportsList.add(o.Athlete_Sport_3__c);
+            }
+
+            String sportsJoin = sportsList.size() > 0 ? String.join(sportsList, ';') : '';
 
             registrantInfo.get(o.Contact__r.Id).put('ApplicationId', o.Admissions_Application__r.Id);
             registrantInfo.get(o.Contact__r.Id).put('FirstName', o.Contact__r.FirstName);
             registrantInfo.get(o.Contact__r.Id).put('LastName', o.Contact__r.LastName);
             registrantInfo.get(o.Contact__r.Id).put('Gender', o.Contact__r.hed__Gender__c);
-            registrantInfo.get(o.Contact__r.Id).put('SOC', o.Admissions_Application__r.Applicant_Student_of_Color__c ? 'true' : 'false');
-            registrantInfo.get(o.Contact__r.Id).put('Athlete', String.isBlank(String.join(sports, '')) ? 'false' : 'true');
-            registrantInfo.get(o.Contact__r.Id).put('Sports', String.join(sports, ' ').trim());
+//            registrantInfo.get(o.Contact__r.Id).put('SOC', o.Admissions_Application__r.Applicant_Student_of_Color__c ? 'true' : 'false');
+            registrantInfo.get(o.Contact__r.Id).put('FirstGen', o.Admissions_Application__r.First_Generation__c == 'Yes, I am' ? 'true' : 'false');
+            registrantInfo.get(o.Contact__r.Id).put('Athlete', String.isBlank(sportsJoin) ? 'false' : 'true');
+            registrantInfo.get(o.Contact__r.Id).put('Sports', sportsJoin);
             registrantInfo.get(o.Contact__r.Id).put('HighSchool', o.Admissions_Application__r.Primary_High_School_Account__c);
             registrantInfo.get(o.Contact__r.Id).put('HighSchoolName', o.Admissions_Application__r.Primary_High_School_Account__r.Name);
             registrantInfo.get(o.Contact__r.Id).put('Housing', o.Housing_Requirement_Exception_Request__c == 'Approved' ? 'true' : 'false');
@@ -221,7 +235,8 @@ public with sharing class ORSmallGroupAssignment {
             updateRegistrant.Id = registrantInfo.get(k).get('RegistrationID');
             updateRegistrant.O_R_SGA_Application__c = registrantInfo.get(k).get('ApplicationId');
             updateRegistrant.O_R_SGA_Gender__c = registrantInfo.get(k).get('Gender');
-            updateRegistrant.O_R_SAG_Student_of_Color__c = registrantInfo.get(k).get('SOC') != null ? Boolean.valueOf(registrantInfo.get(k).get('SOC')) : false;
+//            updateRegistrant.O_R_SAG_Student_of_Color__c = registrantInfo.get(k).get('SOC') != null ? Boolean.valueOf(registrantInfo.get(k).get('SOC')) : false;
+            updateRegistrant.O_R_SGA_First_Generation__c = registrantInfo.get(k).get('FirstGen') != null ? Boolean.valueOf(registrantInfo.get(k).get('FirstGen')) : false;
             updateRegistrant.O_R_SGA_Athlete__c = registrantInfo.get(k).get('Athlete') != null ? Boolean.valueOf(registrantInfo.get(k).get('Athlete')) : false;
             updateRegistrant.O_R_SGA_Athlete_Sport__c = registrantInfo.get(k).get('Sports');
             updateRegistrant.O_R_SGA_High_School__c = registrantInfo.get(k).get('HighSchool');
@@ -256,7 +271,8 @@ public with sharing class ORSmallGroupAssignment {
                 SELECT Id,
                         summit__Event_Instance__c,
                         O_R_SGA_Eligible__c,
-                        O_R_SAG_Student_of_Color__c,
+//                        O_R_SAG_Student_of_Color__c,
+                        O_R_SGA_First_Generation__c,
                         O_R_SGA_Athlete__c,
                         O_R_SGA_Athlete_Sport__c,
                         O_R_SGA_Commuter_Housing_Exception__c,
@@ -271,18 +287,42 @@ public with sharing class ORSmallGroupAssignment {
                 AND summit__Event_Instance__c = :eventInstance
         ];
 
-        List<summit__Summit_Events_Registration__c> studentOfColorList = new List<summit__Summit_Events_Registration__c>();
-        List<summit__Summit_Events_Registration__c> athleteList = new List<summit__Summit_Events_Registration__c>();
+//        List<summit__Summit_Events_Registration__c> studentOfColorList = new List<summit__Summit_Events_Registration__c>();
+        List<summit__Summit_Events_Registration__c> firstGenList = new List<summit__Summit_Events_Registration__c>();
+        Map<String, List<summit__Summit_Events_Registration__c>> athleteSportsMen = new Map<String, List<summit__Summit_Events_Registration__c>>();
+        Map<String, List<summit__Summit_Events_Registration__c>> athleteSportsWomen = new Map<String, List<summit__Summit_Events_Registration__c>>();
         List<summit__Summit_Events_Registration__c> housingExemptionList = new List<summit__Summit_Events_Registration__c>();
         List<summit__Summit_Events_Registration__c> outOfStateList = new List<summit__Summit_Events_Registration__c>();
         List<summit__Summit_Events_Registration__c> otherList = new List<summit__Summit_Events_Registration__c>();
 
         for (summit__Summit_Events_Registration__c r : registrants) {
-
-            if (r.O_R_SAG_Student_of_Color__c) {
-                studentOfColorList.add(r);
+//            if (r.O_R_SAG_Student_of_Color__c) {
+//                studentOfColorList.add(r);
+            if (r.O_R_SGA_First_Generation__c) {
+                firstGenList.add(r);
             } else if (r.O_R_SGA_Athlete__c) {
-                athleteList.add(r);
+                String sport = String.isNotBlank(r.O_R_SGA_Athlete_Sport__c) ? r.O_R_SGA_Athlete_Sport__c.split(';')[0] : '';
+
+                if (sport.startsWithIgnoreCase('Men')) {
+                    if (athleteSportsMen.containsKey(sport)) {
+                        athleteSportsMen.get(sport).add(r);
+                    } else {
+                        athleteSportsMen.put(sport, new List<summit__Summit_Events_Registration__c>{r});
+                    }
+                } else if (sport.startsWithIgnoreCase('Women')){
+                    if (athleteSportsWomen.containsKey(sport)) {
+                        athleteSportsWomen.get(sport).add(r);
+                    } else {
+                        athleteSportsWomen.put(sport, new List<summit__Summit_Events_Registration__c>{r});
+                    }
+                } else {
+                    if (athleteSportsWomen.containsKey('No Sport')) {
+                        athleteSportsWomen.get(sport).add(r);
+                    } else {
+                        athleteSportsWomen.put(sport, new List<summit__Summit_Events_Registration__c>{r});
+                    }
+                }
+
             } else if (r.O_R_SGA_Commuter_Housing_Exception__c) {
                 housingExemptionList.add(r);
             } else if (r.O_R_SGA_Outside_of_Minnesota__c) {
@@ -290,22 +330,29 @@ public with sharing class ORSmallGroupAssignment {
             } else {
                 otherList.add(r);
             }
-
         }
 
         otherList?.sort(new SummitRegistrationSort('O_R_SGA_Gender__c', 'Male', 'O_R_SGA_High_School_Name__c', 'zzzzzz'));
-        studentOfColorList?.sort(new SummitRegistrationSort('O_R_SGA_Gender__c', 'Male', 'O_R_SGA_High_School_Name__c', 'zzzzzz'));
+//        studentOfColorList?.sort(new SummitRegistrationSort('O_R_SGA_Gender__c', 'Male', 'O_R_SGA_High_School_Name__c', 'zzzzzz'));
+        firstGenList?.sort(new SummitRegistrationSort('O_R_SGA_Gender__c', 'Male', 'O_R_SGA_High_School_Name__c', 'zzzzzz'));
 
         Map<String, List<summit__Summit_Events_Registration__c>> athleteSportsMap = new Map<String, List<summit__Summit_Events_Registration__c>>();
-        for (summit__Summit_Events_Registration__c a : athleteList) {
+        List<String> athleteSportsMenKeys = new List<String>(athleteSportsMen.keySet());
+        List<String> athleteSportsWomenKeys = new List<String>(athleteSportsWomen.keySet());
+        Integer sportsIndex = athleteSportsMenKeys.size() >= athleteSportsWomenKeys.size() ? athleteSportsMenKeys.size() : athleteSportsWomenKeys.size();
 
-            if (athleteSportsMap.containsKey(a.O_R_SGA_Athlete_Sport__c)) {
-                athleteSportsMap.get(a.O_R_SGA_Athlete_Sport__c).add(a);
-            } else {
-                athleteSportsMap.put(a.O_R_SGA_Athlete_Sport__c, new List<summit__Summit_Events_Registration__c>{a});
+        athleteSportsMenKeys.sort();
+        athleteSportsWomenKeys.sort();
+
+        for (Integer i = 0; i < sportsIndex; i++) {
+            if (i < athleteSportsMenKeys.size()) {
+                athleteSportsMap.put(athleteSportsMenKeys[i], athleteSportsMen.get(athleteSportsMenKeys[i]));
             }
-
+            if (i < athleteSportsWomenKeys.size()) {
+                athleteSportsMap.put(athleteSportsWomenKeys[i], athleteSportsWomen.get(athleteSportsWomenKeys[i]));
+            }
         }
+
         for (String k : athleteSportsMap.keySet()) {
             athleteSportsMap.get(k).sort(new SummitRegistrationSort('O_R_SGA_High_School_Name__c', 'zzzzzz', '', ''));
         }
@@ -313,16 +360,18 @@ public with sharing class ORSmallGroupAssignment {
         housingExemptionList?.sort(new SummitRegistrationSort('O_R_SGA_Gender__c', 'Male', 'O_R_SGA_High_School_Name__c', 'zzzzzz'));
         outOfStateList?.sort(new SummitRegistrationSort('O_R_SGA_Gender__c', 'Male', 'O_R_SGA_High_School_Name__c', 'zzzzzz'));
 
-//        System.debug('otherList '+otherList.size());
+        System.debug('otherList '+otherList.size());
 //        System.debug('studentOfColorList '+studentOfColorList.size());
-//        for (String k : athleteSportsMap.keySet()) {
-//            System.debug('Athlete Sport: '+ k +' '+athleteSportsMap.get(k).size());
-//        }
-//        System.debug('housingExemptionList '+housingExemptionList.size());
-//        System.debug('outOfStateList '+outOfStateList.size());
+        System.debug('firstGenList '+firstGenList.size());
+        for (String k : athleteSportsMap.keySet()) {
+            System.debug('Athlete Sport: '+ k +' '+athleteSportsMap.get(k).size());
+        }
+        System.debug('housingExemptionList '+housingExemptionList.size());
+        System.debug('outOfStateList '+outOfStateList.size());
 
         appointmentAssignment(otherList, 'single');
-        appointmentAssignment(studentOfColorList, 'pair');
+//        appointmentAssignment(studentOfColorList, 'pair');
+        appointmentAssignment(firstGenList, 'pair');
 
         for (String k : athleteSportsMap.keySet()) {
             appointmentAssignment(athleteSportsMap.get(k), 'single');
@@ -372,7 +421,7 @@ public with sharing class ORSmallGroupAssignment {
     public static void appointmentAssignment(List<summit__Summit_Events_Registration__c> registrantList, String assignmentType) {
         appointmentTypeMapList.sort();
 
-        Integer appointmentTypeSize = appointmentTypeMapList.size(); //appointmentTypesList.size();
+        Integer appointmentTypeSize = appointmentTypeMapList.size();
         Integer appointmentTypeLimit;
         Integer appointmentTypeIdx = 0;
 
@@ -418,7 +467,8 @@ public with sharing class ORSmallGroupAssignment {
                         summit__Event_Registration__r.summit__Contact__r.Id,
                         summit__Event_Registration__r.summit__Contact__r.Name,
                         summit__Event_Registration__r.summit__Contact__r.LastName,
-                        summit__Event_Registration__r.O_R_SAG_Student_of_Color__c,
+//                        summit__Event_Registration__r.O_R_SAG_Student_of_Color__c,
+                        summit__Event_Registration__r.O_R_SGA_First_Generation__c,
                         summit__Event_Registration__r.O_R_SGA_Athlete__c,
                         summit__Event_Registration__r.O_R_SGA_Commuter_Housing_Exception__c,
                         summit__Event_Registration__r.O_R_SGA_Outside_of_Minnesota__c,
@@ -441,7 +491,8 @@ public with sharing class ORSmallGroupAssignment {
             appointmentWrap.Registration_Name = a.summit__Event_Registration__r.Name;
             appointmentWrap.Contact_Id = a.summit__Event_Registration__r.summit__Contact__r.Id;
             appointmentWrap.Contact_Name = a.summit__Event_Registration__r.summit__Contact__r.Name;
-            appointmentWrap.Student_of_Color = a.summit__Event_Registration__r.O_R_SAG_Student_of_Color__c;
+//            appointmentWrap.Student_of_Color = a.summit__Event_Registration__r.O_R_SAG_Student_of_Color__c;
+            appointmentWrap.First_Gen_Student = a.summit__Event_Registration__r.O_R_SGA_First_Generation__c;
             appointmentWrap.Athlete = a.summit__Event_Registration__r.O_R_SGA_Athlete__c;
             appointmentWrap.Housing_Exception = a.summit__Event_Registration__r.O_R_SGA_Commuter_Housing_Exception__c;
             appointmentWrap.Outside_of_Minnesota = a.summit__Event_Registration__r.O_R_SGA_Outside_of_Minnesota__c;
@@ -451,7 +502,6 @@ public with sharing class ORSmallGroupAssignment {
         }
 
         for (AppointmentWrapper a : appointmentWrapList) {
-
             if (!appointmentWrapMap.containsKey(a.Appointment_Type_Name)) {
                 appointmentWrapMap.put(a.Appointment_Type_Name, new List<AppointmentWrapper>());
             }

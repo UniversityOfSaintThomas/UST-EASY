@@ -16,10 +16,14 @@ import instancehostassigncheck from "@salesforce/apex/ORRegistrationAdvisorAssig
 
 import ID_FIELD from "@salesforce/schema/summit__Summit_Events_Instance__c.Id";
 import REGISTRATION_TERM from "@salesforce/schema/summit__Summit_Events_Instance__c.summit__Event__r.O_R_SGA_Term__c";
+import SCHOLARSHIP_ID from "@salesforce/schema/summit__Summit_Events_Instance__c.summit__Event__r.O_R_SGA_Scholarship__c";
 import ASSIGNED_DATE from "@salesforce/schema/summit__Summit_Events_Instance__c.O_R_SGA_Assignment_Date__c";
 import HOST_ASSIGNED_DATE from "@salesforce/schema/summit__Summit_Events_Instance__c.O_R_Advisor_Assignment_Date__c";
 
-const APPOINTMENTSFIELDS = [REGISTRATION_TERM, ASSIGNED_DATE, HOST_ASSIGNED_DATE];
+const APPOINTMENTSFIELDS = [REGISTRATION_TERM,
+                                                            SCHOLARSHIP_ID,
+                                                            ASSIGNED_DATE,
+                                                            HOST_ASSIGNED_DATE];
 
 const APPOINTMENTSDATACOLUMNS = [
     {label: 'Group', fieldName: 'Appointment_Id', initialWidth: 110},
@@ -50,6 +54,7 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
     wiredRecordData;
     assignedDate;
     registrationTerm;
+    scholarshipId;
     hostAssignedDate
     currentDate = new Date().toISOString().slice(0, 10);
 
@@ -64,6 +69,7 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
             this.wiredRecordData = result.data;
 
             this.registrationTerm = getFieldValue(this.wiredRecordData, REGISTRATION_TERM);
+            this.scholarshipId = getFieldValue(this.wiredRecordData, SCHOLARSHIP_ID);
             this.assignedDate = getFieldValue(this.wiredRecordData, ASSIGNED_DATE);
             this.hostAssignedDate = getFieldValue(this.wiredRecordData, HOST_ASSIGNED_DATE);
         }
@@ -118,7 +124,7 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
 
         try {
             this.appointmentsIsAssigning = true;
-            await eventRegistrationCriteria({eventInstance: this.recordId, registrationTerm: this.registrationTerm});
+            await eventRegistrationCriteria({eventInstance: this.recordId, registrationTerm: this.registrationTerm, scholarshipId: this.scholarshipId});
             await assignAppointmentTypes({eventInstance: this.recordId});
             await recordAppointmentAssignment({eventInstance: this.recordId}).then(result => {
                 console.log("This result: "+result.length);

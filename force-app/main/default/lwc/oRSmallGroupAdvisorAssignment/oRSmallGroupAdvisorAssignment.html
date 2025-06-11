@@ -9,7 +9,7 @@
         <lightning-button onclick={buttonClickGroups}
                           label="Assign"
                           name="Assign"
-                          disabled={assignedDate}
+                          disabled={buttonClickGroupsDisabled}
                           slot="actions">
         </lightning-button>
         <p class="slds-p-horizontal_small" lwc:if={registrationTerm}></p>
@@ -39,7 +39,7 @@
     </lightning-card>
 
     <!--START HOST CARD HERE -->
-    <div class="slds-p-top_small" lwc:if={assignedDate}>
+    <div class="slds-p-top_small" lwc:if={buttonClickGroups}>
         <lightning-card class="assign-icon" variant="narrow" title="O&R Registration Advisor Assignment"
                         icon-name="standard:marketing_actions">
             <lightning-button onclick={buttonClickAdvisors}

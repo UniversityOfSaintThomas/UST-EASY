@@ -44,23 +44,18 @@ public with sharing class ORRegistrationAdvisorAssignment {
                 if (h.O_R_Advisor_Core_Major__c != null && h.O_R_Advisor_Core_Major__c.toUpperCase().contains('ATHLE')) {
                     hostAthletes.add(h);
                 }
-
                 if (h.O_R_Advisor_Core_Major__c != null && h.O_R_Advisor_Core_Major__c.toUpperCase().contains('SCHOLAR')) {
                     hostScholarship.add(h);
                 }
-
                 if (h.O_R_Advisor_Core_Major__c != null && h.O_R_Advisor_Core_Major__c.toUpperCase().contains('OVER')) {
                     hostOverflow.add(h);
                 }
-
                 if (h.O_R_Advisor_Additional_Majors__c != null && h.O_R_Advisor_Additional_Majors__c.toUpperCase().contains('ALL')) {
                     hostAdditionalMajor.add(h);
                 }
-
                 if (h.O_R_Advisor_Core_Major__c != null && !h.O_R_Advisor_Core_Major__c.toUpperCase().contains('ATHLE') && !h.O_R_Advisor_Core_Major__c.toUpperCase().contains('SCHOLAR') && !h.O_R_Advisor_Core_Major__c.toUpperCase().contains('OVER')) {
                     hostCoreMajor.add(h);
                 }
-
                 if (h.O_R_Advisor_Secondary_Major__c != null) {
                     hostSecondaryMajor.add(h);
                 }
@@ -97,7 +92,7 @@ public with sharing class ORRegistrationAdvisorAssignment {
     }
 
     @AuraEnabled(Cacheable=false)
-    public static void assignAppointmentHost(String eventInstance) {
+    public static Integer assignAppointmentHost(String eventInstance) {
 
         List<summit__Summit_Events_Appointments__c> appointmentHostList = new List<summit__Summit_Events_Appointments__c>();
         List<summit__Summit_Events_Registration__c> registrationHostList = new List<summit__Summit_Events_Registration__c>();
@@ -133,24 +128,24 @@ public with sharing class ORRegistrationAdvisorAssignment {
             mapAppointments.get(appt.summit__Event_Appointment_Type__c).add(appt);
         }
 
-        List<summit__Summit_Events_Host__c> hosts = [
+        Map<Id, summit__Summit_Events_Host__c> eventHostsMap = new Map<Id, summit__Summit_Events_Host__c>([
                 SELECT Id,
-                        summit__Course_Name__c,
-                        summit__Preferred_Title__c,
                         O_R_Advisor_Core_Major__c,
                         O_R_Advisor_Secondary_Major__c,
                         O_R_Advisor_Additional_Majors__c,
-                        summit__Assigned__c,
-                        summit__Event_Instance__c
+                        summit__Assigned__c
                 FROM summit__Summit_Events_Host__c
                 WHERE summit__Event_Instance__c <> NULL
                 AND summit__Event_Instance__c = :eventInstance
                 ORDER BY summit__Course_Name__c
-        ];
+        ]);
+
+        for (Id i : eventHostsMap.keySet()) {
+            eventHostsMap.get(i).summit__Assigned__c = 0;
+        }
 
         for (String appointmentTypeId : mapAppointments.keySet()) {
-            EventHostGroupsClass eventHostGroups = new EventHostGroupsClass(hosts);
-//            String appointmentType = key;
+            EventHostGroupsClass eventHostGroups = new EventHostGroupsClass(eventHostsMap.values());
 
             for (summit__Summit_Events_Appointments__c appointment : mapAppointments.get(appointmentTypeId)) {
                 Boolean skipHost = false;
@@ -173,6 +168,7 @@ public with sharing class ORRegistrationAdvisorAssignment {
                         if (String.isNotBlank(appointment.summit__Event_Registration__r.O_R_SGA_Aquinas_Scholars__c)) {
                             recordHostUpdate(appointment, host, major, preProfMajor, appointmentHostList, registrationHostList);
                             host.summit__Assigned__c++;
+                            hostRemoval(host, eventHostGroups.hostScholarship, eventHostGroups.hostCoreMajor, eventHostGroups.hostSecondaryMajor, eventHostGroups.hostAdditionalMajor);
                             skipHost = !skipHost;
                             break;
                         }
@@ -183,13 +179,15 @@ public with sharing class ORRegistrationAdvisorAssignment {
                     eventHostGroups.hostCoreMajor.sort(new EventsHostSort());
                     for (summit__Summit_Events_Host__c host : eventHostGroups.hostCoreMajor) {
                         List<String> coreMajor = host.O_R_Advisor_Core_Major__c?.split(';');
-                        for (String cm : coreMajor) {
-                            if (major == cm.trim()) {
-                                recordHostUpdate(appointment, host, major, preProfMajor, appointmentHostList, registrationHostList);
-                                host.summit__Assigned__c++;
-                                hostRemoval(host, eventHostGroups.hostCoreMajor, eventHostGroups.hostSecondaryMajor, eventHostGroups.hostAdditionalMajor);
-                                skipHost = !skipHost;
-                                break;
+                        if (coreMajor != null) {
+                            for (String cm : coreMajor) {
+                                if (major == cm.trim()) {
+                                    recordHostUpdate(appointment, host, major, preProfMajor, appointmentHostList, registrationHostList);
+                                    host.summit__Assigned__c++;
+                                    hostRemoval(host, eventHostGroups.hostScholarship, eventHostGroups.hostCoreMajor, eventHostGroups.hostSecondaryMajor, eventHostGroups.hostAdditionalMajor);
+                                    skipHost = !skipHost;
+                                    break;
+                                }
                             }
                         }
                         if (skipHost) {
@@ -202,13 +200,15 @@ public with sharing class ORRegistrationAdvisorAssignment {
                     eventHostGroups.hostSecondaryMajor.sort(new EventsHostSort());
                     for (summit__Summit_Events_Host__c host : eventHostGroups.hostSecondaryMajor) {
                         List<String> secondaryMajor = host.O_R_Advisor_Secondary_Major__c?.split(';');
-                        for (String sm : secondaryMajor) {
-                            if (major == sm.trim()) {
-                                recordHostUpdate(appointment, host, major, preProfMajor, appointmentHostList, registrationHostList);
-                                host.summit__Assigned__c++;
-                                hostRemoval(host, eventHostGroups.hostCoreMajor, eventHostGroups.hostSecondaryMajor, eventHostGroups.hostAdditionalMajor);
-                                skipHost = !skipHost;
-                                break;
+                        if (secondaryMajor != null) {
+                            for (String sm : secondaryMajor) {
+                                if (major == sm.trim()) {
+                                    recordHostUpdate(appointment, host, major, preProfMajor, appointmentHostList, registrationHostList);
+                                    host.summit__Assigned__c++;
+                                    hostRemoval(host, eventHostGroups.hostScholarship, eventHostGroups.hostCoreMajor, eventHostGroups.hostSecondaryMajor, eventHostGroups.hostAdditionalMajor);
+                                    skipHost = !skipHost;
+                                    break;
+                                }
                             }
                         }
                         if (skipHost) {
@@ -221,13 +221,15 @@ public with sharing class ORRegistrationAdvisorAssignment {
                     eventHostGroups.hostAdditionalMajor.sort(new EventsHostSort());
                     for (summit__Summit_Events_Host__c host : eventHostGroups.hostAdditionalMajor) {
                         List<String> additionalMajor = host.O_R_Advisor_Additional_Majors__c?.split(';');
-                        for (String am : additionalMajor) {
-                            if (am == 'ALL') {
-                                recordHostUpdate(appointment, host, major, preProfMajor, appointmentHostList, registrationHostList);
-                                host.summit__Assigned__c++;
-                                hostRemoval(host, eventHostGroups.hostCoreMajor, eventHostGroups.hostSecondaryMajor, eventHostGroups.hostAdditionalMajor);
-                                skipHost = !skipHost;
-                                break;
+                        if (additionalMajor != null) {
+                            for (String am : additionalMajor) {
+                                if (am == 'ALL') {
+                                    recordHostUpdate(appointment, host, major, preProfMajor, appointmentHostList, registrationHostList);
+                                    host.summit__Assigned__c++;
+                                    hostRemoval(host, eventHostGroups.hostScholarship, eventHostGroups.hostCoreMajor, eventHostGroups.hostSecondaryMajor, eventHostGroups.hostAdditionalMajor);
+                                    skipHost = !skipHost;
+                                    break;
+                                }
                             }
                         }
                         if (skipHost) {
@@ -246,206 +248,21 @@ public with sharing class ORRegistrationAdvisorAssignment {
                 }
             }
 
-//            Map<String, List<String>> hostAthlete = new Map<String, List<String>>();
-//            Map<String, List<String>> hostScholarship = new Map<String, List<String>>();
-//            Map<String, List<String>> hostOverflow = new Map<String, List<String>>();
-//            Map<String, List<String>> hostCoreMajor = new Map<String, List<String>>();
-//            Map<String, Decimal> hostCoreMajorSort = new Map<String, Decimal>();
-//            Map<String, List<String>> hostSecondaryMajor = new Map<String, List<String>>();
-//            Map<String, Decimal> hostSecondaryMajorSort = new Map<String, Decimal>();
-//            Map<String, List<String>> hostAdditionalMajor = new Map<String, List<String>>();
-//            Map<String, Decimal> hostAdditionalMajorSort = new Map<String, Decimal>();
-//
-//            for (summit__Summit_Events_Host__c h : hosts) {
-//
-//                List<String> coreMajor = h.O_R_Advisor_Core_Major__c?.split(';');
-//                List<String> secondaryMajor = h.O_R_Advisor_Secondary_Major__c?.split(';');
-//                List<String> additionalMajor = h.O_R_Advisor_Additional_Majors__c?.split(';');
-//
-//                if (h.O_R_Advisor_Core_Major__c != null && h.O_R_Advisor_Core_Major__c.toUpperCase().contains('ATHLE')) {
-//
-//                    hostAthlete.put(h.Id, coreMajor);
-//                }
-//
-//                if (h.O_R_Advisor_Core_Major__c != null && h.O_R_Advisor_Core_Major__c.toUpperCase().contains('SCHOLAR')) {
-//
-//                    hostScholarship.put(h.Id, coreMajor);
-//                }
-//
-//                if (h.O_R_Advisor_Core_Major__c != null && h.O_R_Advisor_Core_Major__c.toUpperCase().contains('OVER')) {
-//
-//                    hostOverflow.put(h.Id, coreMajor);
-//                }
-//
-//                if (h.O_R_Advisor_Additional_Majors__c != null && h.O_R_Advisor_Additional_Majors__c.toUpperCase().contains('ALL')) {
-//
-//                    hostAdditionalMajor.put(h.Id, additionalMajor);
-//                    hostAdditionalMajorSort.put(h.Id, h.summit__Assigned__c);
-//                }
-//
-//                if (h.O_R_Advisor_Core_Major__c != null && !h.O_R_Advisor_Core_Major__c.toUpperCase().contains('ATHLE') && !h.O_R_Advisor_Core_Major__c.toUpperCase().contains('OVER')) {
-//
-//                    hostCoreMajor.put(h.Id, coreMajor);
-//                    hostCoreMajorSort.put(h.Id, h.summit__Assigned__c);
-//                }
-//
-//                if (h.O_R_Advisor_Secondary_Major__c != null) {
-//
-//                    hostSecondaryMajor.put(h.Id, secondaryMajor);
-//                    hostSecondaryMajorSort.put(h.Id, h.summit__Assigned__c);
-//                }
-//            }
-
-//            for (summit__Summit_Events_Appointments__c a : mapAppointments.get(key)) {
-//
-//                Boolean skipHost = false;
-//
-//                String major = a.summit__Event_Registration__r.O_R_SGA_Application__r.CPF_Major__r.Major_Code__c != null ? a.summit__Event_Registration__r.O_R_SGA_Application__r.CPF_Major__r.Major_Code__c : a.summit__Event_Registration__r.O_R_SGA_Application__r.Major_1__r.Major_Code__c;
-//                String preProfMajor = a.summit__Event_Registration__r.O_R_SGA_Application__r.CPF_Pre_Professional_Program__r.Name != null ? a.summit__Event_Registration__r.O_R_SGA_Application__r.CPF_Pre_Professional_Program__r.Name : a.summit__Event_Registration__r.O_R_SGA_Application__r.Pre_Professional_Program__r.Name;
-//
-//                if (!skipHost) {
-//
-//                    for (String k : hostAthlete.keySet()) {
-//
-//                        if (a.summit__Event_Registration__r.O_R_SGA_Athlete__c) {
-//
-//                            recordHostUpdate(a, k, 'ATHLETE', preProfMajor, appointmentHostList, registrationHostList);
-//                            hostAssignCount(k, hosts);
-//                            skipHost = !skipHost;
-//
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                if (!skipHost) {
-//
-//                    for (String k : sortHostMapKey(hostCoreMajorSort)) {
-//
-//                        for (String s : hostCoreMajor.get(k)) {
-//
-//                            if (major == s.trim()) {
-//
-//                                recordHostUpdate(a, k, major, preProfMajor, appointmentHostList, registrationHostList);
-//                                hostAssignCount(k, hosts);
-//                                hostMapSortRemove(k, hostCoreMajorSort, hostSecondaryMajorSort, hostAdditionalMajorSort);
-//                                skipHost = !skipHost;
-//
-//                                break;
-//                            }
-//                        }
-//
-//                        if (skipHost) {
-//
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                if (!skipHost) {
-//
-//                    for (String k : sortHostMapKey(hostSecondaryMajorSort)) {
-//
-//                        for (String s : hostSecondaryMajor.get(k)) {
-//
-//                            if (major == s.trim()) {
-//
-//                                recordHostUpdate(a, k, major, preProfMajor, appointmentHostList, registrationHostList);
-//                                hostAssignCount(k, hosts);
-//                                hostMapSortRemove(k, hostCoreMajorSort, hostSecondaryMajorSort, hostAdditionalMajorSort);
-//                                skipHost = !skipHost;
-//
-//                                break;
-//                            }
-//                        }
-//
-//                        if (skipHost) {
-//
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                if (!skipHost) {
-//
-//                    for (String k : sortHostMapKey(hostAdditionalMajorSort)) {
-//
-//                        for (String s : hostAdditionalMajor.get(k)) {
-//
-//                            if (s == 'ALL') {
-//
-//                                recordHostUpdate(a, k, major, preProfMajor, appointmentHostList, registrationHostList);
-//                                hostAssignCount(k, hosts);
-//                                hostMapSortRemove(k, hostCoreMajorSort, hostSecondaryMajorSort, hostAdditionalMajorSort);
-//                                skipHost = !skipHost;
-//
-//                                break;
-//                            }
-//                        }
-//
-//                        if (skipHost) {
-//
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                if (!skipHost) {
-//
-//                    for (String k : hostOverflow.keySet()) {
-//
-//                        for (String s : hostOverflow.get(k)) {
-//
-//                            recordHostUpdate(a, k, major, preProfMajor, appointmentHostList, registrationHostList);
-//                            hostAssignCount(k, hosts);
-//                            skipHost = !skipHost;
-//
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-
             updateAppointmentTypes.add(new summit__Summit_Events_Appointment_Type__c(Id = appointmentTypeId,
                                                                                     O_R_Advisor_Assignment_Date__c = Date.today()));
         }
 
-        update appointmentHostList;
-        update registrationHostList;
-        update hosts;
-        update updateAppointmentTypes;
-        update new summit__Summit_Events_Instance__c(Id = eventInstance,
-                                                    O_R_Advisor_Assignment_Date__c = Date.today());
-    }
+        try {
+            update appointmentHostList;
+            update registrationHostList;
+            update eventHostsMap.values();
+            update updateAppointmentTypes;
+        } catch (DmlException e) {
+            appointmentHostList.clear();
+        }
 
-//    public static List<String> sortHostMapKey(Map<String, Decimal> hostMap) {
-//
-//        Map<String, Decimal> hostMapClone = hostMap.clone();
-//
-//        List<Decimal> keySort = new List<Decimal>();
-//        List<String> hostMapKeySort = new List<String>();
-//
-//        for (String key : hostMapClone.keySet()) {
-//
-//            keySort.add(hostMapClone.get(key));
-//        }
-//
-//        keySort.sort();
-//
-//        for (Decimal d : keySort) {
-//
-//            for (String key : hostMapClone.keySet()) {
-//
-//                if (hostMapClone.get(key) == d) {
-//
-//                    hostMapKeySort.add(key);
-//                    hostMapClone.remove(key);
-//                }
-//            }
-//        }
-//
-//        return hostMapKeySort;
-//    }
+        return appointmentHostList.size();
+    }
 
     public static void recordHostUpdate(summit__Summit_Events_Appointments__c appointment,
                                         summit__Summit_Events_Host__c host,
@@ -459,47 +276,21 @@ public with sharing class ORRegistrationAdvisorAssignment {
                                                                             O_R_Major_Assignment__c = major,
                                                                             O_R_Preprofessional_Program__c = preProfMajor));
     }
-//    public static void recordHostUpdate(summit__Summit_Events_Appointments__c appointment,
-//                                        String Id,
-//                                        String major,
-//                                        String preProfMajor,
-//                                        List<summit__Summit_Events_Appointments__c> appointmentHostList,
-//                                        List<summit__Summit_Events_Registration__c> registrationHostList) {
-//
-//        summit__Summit_Events_Appointments__c updateAppointment = new summit__Summit_Events_Appointments__c();
-//        summit__Summit_Events_Registration__c updateRegistration = new summit__Summit_Events_Registration__c();
-//
-//        updateAppointment.Id = appointment.Id;
-//        updateAppointment.summit__Event_Host__c = Id;
-//
-//        appointmentHostList.add(updateAppointment);
-//
-//        updateRegistration.Id = appointment.summit__Event_Registration__c;
-//        updateRegistration.O_R_Major_Assignment__c = major;
-//        updateRegistration.O_R_Preprofessional_Program__c = preProfMajor;
-//        registrationHostList.add(updateRegistration);
-//    }
-
-//    public static void hostAssignCount(String Id, List<summit__Summit_Events_Host__c> hostList) {
-//
-//        for (summit__Summit_Events_Host__c h : hostList) {
-//
-//            if (h.Id == Id) {
-//
-//                h.summit__Assigned__c++;
-//            }
-//        }
-//    }
 
     public static void hostRemoval(summit__Summit_Events_Host__c host,
+                                    List<summit__Summit_Events_Host__c> hostScholarshipRemove,
                                     List<summit__Summit_Events_Host__c> hostCoreMajorRemove,
                                     List<summit__Summit_Events_Host__c> hostSecondaryMajorRemove,
                                     List<summit__Summit_Events_Host__c> hostAdditionalMajorRemove) {
 
+        Integer hostScholarshipIndex = hostScholarshipRemove.indexOf(host);
         Integer hostCoreMajorIndex = hostCoreMajorRemove.indexOf(host);
         Integer hostSecondaryMajorIndex = hostSecondaryMajorRemove.indexOf(host);
         Integer hostAdditionalMajorIndex = hostAdditionalMajorRemove.indexOf(host);
 
+        if (hostScholarshipIndex <> -1) {
+            hostScholarshipRemove.remove(hostScholarshipIndex);
+        }
         if (hostCoreMajorIndex <> -1) {
             hostCoreMajorRemove.remove(hostCoreMajorIndex);
         }
@@ -510,16 +301,6 @@ public with sharing class ORRegistrationAdvisorAssignment {
             hostAdditionalMajorRemove.remove(hostAdditionalMajorIndex);
         }
     }
-
-//    public static void hostMapSortRemove(String key,
-//                                        Map<String, Decimal> hostCoreMajorSort,
-//                                        Map<String, Decimal> hostSecondaryMajorSort,
-//                                        Map<String, Decimal> hostAdditionalMajorSort) {
-//
-//        hostCoreMajorSort.remove(key);
-//        hostSecondaryMajorSort.remove(key);
-//        hostAdditionalMajorSort.remove(key);
-//    }
 
     @AuraEnabled(Cacheable=true)
     public static List<summit__Summit_Events_Appointments__c> instanceHostAssignCheck(String eventInstance) {

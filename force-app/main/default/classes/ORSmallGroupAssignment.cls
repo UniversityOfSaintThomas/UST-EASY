@@ -20,7 +20,7 @@
 public with sharing class ORSmallGroupAssignment {
 
     public static List<summit__Summit_Events_Appointments__c> appointmentsListInsert = new List<summit__Summit_Events_Appointments__c>();
-    public static List<AppointmentTypeSort> appointmentTypeMapList = new List<AppointmentTypeSort>();
+    public static List<AppointmentTypeSort> appointmentTypeSortList = new List<AppointmentTypeSort>();
 
     public with sharing class AppointmentWrapper {
         @AuraEnabled
@@ -147,7 +147,6 @@ public with sharing class ORSmallGroupAssignment {
     @AuraEnabled(Cacheable=false)
     public static void eventRegistrationCriteria(String eventInstance, String scholarshipId, String registrationTerm) {
         Map<Id, summit__Summit_Events_Registration__c> registrantInfo = new Map<Id, summit__Summit_Events_Registration__c>();
-        List<summit__Summit_Events_Registration__c> registrantListUpdate = new List<summit__Summit_Events_Registration__c>();
         Set<Id> contactId = new Set<Id>();
 
         List<summit__Summit_Events_Registration__c> registrations = [
@@ -161,8 +160,6 @@ public with sharing class ORSmallGroupAssignment {
                 AND summit__Event_Instance__c <> NULL
                 AND summit__Event_Instance__c = :eventInstance
         ];
-
-        System.debug('registrations: '+registrations);
 
         for (summit__Summit_Events_Registration__c r : registrations) {
             contactId.add(r.summit__Contact__c);
@@ -179,8 +176,6 @@ public with sharing class ORSmallGroupAssignment {
                 AND Contact__c = :contactId
                 AND Scholarship_Status__c = 'Accepted'
         ];
-
-        System.debug('scholarshipApplicants: '+scholarshipApplicants);
 
         List<Opportunity> opportunityContactApplication = [
                 SELECT Contact__c,
@@ -206,8 +201,6 @@ public with sharing class ORSmallGroupAssignment {
                 AND Contact__c IN :contactId
         ];
 
-        System.debug('Opportunities: '+opportunityContactApplication);
-
         for (Opportunity o : opportunityContactApplication) {
             List<String> sportsList = new List<String>();
 
@@ -219,32 +212,27 @@ public with sharing class ORSmallGroupAssignment {
             String sportsJoin = sportsList.size() > 0 ? String.join(sportsList, ';') : '';
 
             if (registrantInfo.containsKey(o.Contact__c)) {
-                summit__Summit_Events_Registration__c registrant = registrantInfo.get(o.Contact__r.Id);
 
-                registrant.O_R_SGA_Application__c = o.Admissions_Application__r.Id;
-                registrant.O_R_SGA_Gender__c = o.Contact__r.hed__Gender__c;
-//                registrant.O_R_SAG_Student_of_Color__c = o.Admissions_Application__r.Applicant_Student_of_Color__c;
-                registrant.O_R_SGA_First_Generation__c = o.Admissions_Application__r.First_Generation__c == 'Yes, I am' ? true : false;
-                registrant.O_R_SGA_Athlete__c = String.isNotBlank(sportsJoin) ? true : false;
-                registrant.O_R_SGA_Athlete_Sport__c = sportsJoin;
-                registrant.O_R_SGA_High_School__c = o.Admissions_Application__r.Primary_High_School_Account__c;
-                registrant.O_R_SGA_High_School_Name__c = o.Admissions_Application__r.Primary_High_School_Account__r.Name;
-                registrant.O_R_SGA_Commuter_Housing_Exception__c = o.Housing_Requirement_Exception_Request__c == 'Approved' ? true : false;
-                registrant.O_R_SGA_Outside_of_Minnesota__c = o.Contact__r.MailingState <> 'MN' ? true : false;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_Application__c = o.Admissions_Application__r.Id;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_Gender__c = o.Contact__r.hed__Gender__c;
+//                registrantInfo.get(o.Contact__r.Id).O_R_SAG_Student_of_Color__c = o.Admissions_Application__r.Applicant_Student_of_Color__c;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_First_Generation__c = o.Admissions_Application__r.First_Generation__c == 'Yes, I am' ? true : false;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_Athlete__c = String.isNotBlank(sportsJoin) ? true : false;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_Athlete_Sport__c = sportsJoin;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_High_School__c = o.Admissions_Application__r.Primary_High_School_Account__c;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_High_School_Name__c = o.Admissions_Application__r.Primary_High_School_Account__r.Name;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_Commuter_Housing_Exception__c = o.Housing_Requirement_Exception_Request__c == 'Approved' ? true : false;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_Outside_of_Minnesota__c = o.Contact__r.MailingState <> 'MN' ? true : false;
 
                 for (Scholarship_Applicant__c s : scholarshipApplicants) {
-                    if (s.Contact__c == o.Contact__c) {
-                        registrant.O_R_SGA_Aquinas_Scholars__c = s.Scholarship__r.Scholarship_ID__c;
+                    if (registrantInfo.containsKey(s.Contact__c)) {
+                        registrantInfo.get(s.Contact__c).O_R_SGA_Aquinas_Scholars__c = s.Scholarship__r.Scholarship_ID__c;
                     }
                 }
-
-                System.debug('Registrant1 Update: '+registrant);
-                registrantListUpdate.add(registrant);
             }
         }
 
-        System.debug('Registrant List Update: '+registrantListUpdate);
-        update registrantListUpdate;
+        update registrantInfo.values();
     }
 
     @AuraEnabled(Cacheable=false)
@@ -261,7 +249,7 @@ public with sharing class ORSmallGroupAssignment {
         ];
 
         for (summit__Summit_Events_Appointment_Type__c a : appointmentTypes) {
-            appointmentTypeMapList.add(new AppointmentTypeSort(a.Id, 0));
+            appointmentTypeSortList.add(new AppointmentTypeSort(a.Id, 0));
         }
 
         List<summit__Summit_Events_Registration__c> registrants = [
@@ -379,7 +367,7 @@ public with sharing class ORSmallGroupAssignment {
     }
 
     @AuraEnabled(Cacheable=false)
-    public static List<summit__Summit_Events_Registration__c> recordAppointmentAssignment(String eventInstance) {
+    public static Integer recordAppointmentAssignment(String eventInstance) {
         Date assignDate = Date.today();
         List<summit__Summit_Events_Registration__c> registrationList = new List<summit__Summit_Events_Registration__c>();
 
@@ -405,18 +393,17 @@ public with sharing class ORSmallGroupAssignment {
 
         try {
             update registrationList;
-            return registrationList;
         } catch(DmlException e) {
             registrationList.clear();
-            return registrationList;
         }
 
+        return registrationList.size();
     }
 
     public static void appointmentAssignment(List<summit__Summit_Events_Registration__c> registrantList, String assignmentType) {
-        appointmentTypeMapList.sort();
+        appointmentTypeSortList.sort();
 
-        Integer appointmentTypeSize = appointmentTypeMapList.size();
+        Integer appointmentTypeSize = appointmentTypeSortList.size();
         Integer appointmentTypeLimit;
         Integer appointmentTypeIdx = 0;
 
@@ -427,19 +414,16 @@ public with sharing class ORSmallGroupAssignment {
         }
 
         for (summit__Summit_Events_Registration__c r : registrantList) {
-            summit__Summit_Events_Appointments__c appointment = new summit__Summit_Events_Appointments__c();
-
-            appointment.summit__Event_Appointment_Type__c = appointmentTypeMapList[appointmentTypeIdx].appointmentTypeId;
-            appointment.summit__Event_Registration__c = r.Id;
-            appointment.summit__Appointment_Status__c = 'Requested';
+            summit__Summit_Events_Appointments__c appointment = new summit__Summit_Events_Appointments__c(summit__Event_Appointment_Type__c = appointmentTypeSortList[appointmentTypeIdx].appointmentTypeId,
+                                                                                                            summit__Event_Registration__c = r.Id,
+                                                                                                            summit__Appointment_Status__c = 'Requested');
 
             appointmentsListInsert.add(appointment);
-            appointmentTypeMapList[appointmentTypeIdx].appointmentTypeCount++;
+            appointmentTypeSortList[appointmentTypeIdx].appointmentTypeCount++;
 
             appointmentTypeIdx++;
 
             if (appointmentTypeIdx > appointmentTypeLimit) {
-
                 appointmentTypeIdx = 0;
             }
         }

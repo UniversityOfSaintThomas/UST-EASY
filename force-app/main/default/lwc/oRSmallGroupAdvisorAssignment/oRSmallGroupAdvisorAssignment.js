@@ -11,8 +11,8 @@ import assignAppointmentTypes from "@salesforce/apex/ORSmallGroupAssignment.assi
 import recordAppointmentAssignment from "@salesforce/apex/ORSmallGroupAssignment.recordAppointmentAssignment";
 import appointmentDataDisplay from "@salesforce/apex/ORSmallGroupAssignment.appointmentDataDisplay";
 
-import assignappointmenthost from "@salesforce/apex/ORRegistrationAdvisorAssignment.assignAppointmentHost";
-import instancehostassigncheck from "@salesforce/apex/ORRegistrationAdvisorAssignment.instanceHostAssignCheck";
+import assignAppointmentHost from "@salesforce/apex/ORRegistrationAdvisorAssignment.assignAppointmentHost";
+import instanceHostAssignCheck from "@salesforce/apex/ORRegistrationAdvisorAssignment.instanceHostAssignCheck";
 
 import ID_FIELD from "@salesforce/schema/summit__Summit_Events_Instance__c.Id";
 import REGISTRATION_TERM from "@salesforce/schema/summit__Summit_Events_Instance__c.summit__Event__r.O_R_SGA_Term__c";
@@ -47,7 +47,7 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
 
     hostIsAssigning = false;
     hostAssignCheck = false;
-    hostAssignDate;
+    hostAssignData;
     hostAssignDateRefresh;
     hostAssignDateError;
 
@@ -58,6 +58,12 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
     hostAssignedDate
     currentDate = new Date().toISOString().slice(0, 10);
 
+    get buttonClickGroupsDisabled() {
+        if (this.assignedDate != null || this.registrationTerm === null) {
+            return true;
+        }
+    }
+
     @api recordId;
 
     @wire(getRecord, {recordId: '$recordId', fields: APPOINTMENTSFIELDS})
@@ -65,7 +71,6 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
         refreshApex(this.appointmentsDataRefresh);
 
         if (result.data) {
-
             this.wiredRecordData = result.data;
 
             this.registrationTerm = getFieldValue(this.wiredRecordData, REGISTRATION_TERM);
@@ -80,7 +85,6 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
         this.appointmentsDataRefresh = result;
 
         if (result.data) {
-
             this.appointmentsData = JSON.parse(JSON.stringify(result.data))
 
             for (let i = 0; i < this.appointmentsData.length; i++) {
@@ -89,28 +93,22 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
             }
 
             this.appointmentsDataToggle = this.appointmentsData.length;
-
         } else if (result.error) {
-
             this.appointmentsDataError = result.error;
             this.appointmentsData = undefined;
         }
     }
 
-    @wire(instancehostassigncheck, {eventInstance: '$recordId'})
+    @wire(instanceHostAssignCheck, {eventInstance: '$recordId'})
     hostCheck(result) {
         this.hostAssignDateRefresh = result;
 
         if (result.data) {
-
-            this.hostAssignDate = JSON.parse(JSON.stringify(result.data))
-
-            this.hostAssignCheck = this.hostAssignDate.length;
-
+            this.hostAssignData = JSON.parse(JSON.stringify(result.data))
+            this.hostAssignCheck = this.hostAssignData.length;
         } else if (result.error) {
-
             this.hostAssignDateError = result.error;
-            this.hostAssignDate = undefined;
+            this.hostAssignData = undefined;
         }
     }
 
@@ -127,23 +125,20 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
             await eventRegistrationCriteria({eventInstance: this.recordId, registrationTerm: this.registrationTerm, scholarshipId: this.scholarshipId});
             await assignAppointmentTypes({eventInstance: this.recordId});
             await recordAppointmentAssignment({eventInstance: this.recordId}).then(result => {
-                console.log("This result: "+result.length);
                 let toastTitle;
                 let toastMessage;
                 let toastVariant;
 
-                if (result.length > 0) {
+                if (result > 0) {
                     toastTitle = 'Success';
                     toastMessage = 'Small Groups assigned!';
                     toastVariant = 'success'
-
                     updateRecord(recordUpdate);
                 } else {
                     toastTitle = 'Warning';
                     toastMessage = 'No Small Groups assigned.';
                     toastVariant = 'warning'
                 }
-
                 this.appointmentsIsAssigning = false;
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -153,7 +148,6 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
                     })
                 );
             });
-
         } catch (error) {
             this.appointmentsIsAssigning = false;
             this.dispatchEvent(
@@ -164,25 +158,43 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
                 })
             );
         }
-
         await refreshApex(this.appointmentsDataRefresh);
     }
 
     async buttonClickAdvisors(event) {
+        const updateFields = {};
+        updateFields[ID_FIELD.fieldApiName] = this.recordId;
+        updateFields[HOST_ASSIGNED_DATE.fieldApiName] = this.currentDate;
+        const recordUpdate = {
+            fields: updateFields
+        }
 
         try {
             this.hostIsAssigning = true;
-            await assignappointmenthost({eventInstance: this.recordId});
-            await notifyRecordUpdateAvailable([{recordId: this.recordId}]);
-            await refreshApex(this.hostAssignDateRefresh);
-            this.hostIsAssigning = false;
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Registration Advisors assigned!',
-                    variant: 'success'
-                })
-            );
+            await assignAppointmentHost({eventInstance: this.recordId}).then(result => {
+                let toastTitle;
+                let toastMessage;
+                let toastVariant;
+
+                if (result > 0) {
+                    toastTitle = 'Success';
+                    toastMessage = 'Registration Advisors assigned!';
+                    toastVariant = 'success'
+                    updateRecord(recordUpdate);
+                } else {
+                    toastTitle = 'Warning';
+                    toastMessage = 'No Registration Advisors assigned.';
+                    toastVariant = 'warning'
+                }
+                this.hostIsAssigning = false;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: toastTitle,
+                        message: toastMessage,
+                        variant: toastVariant
+                    })
+                );
+            });
         } catch (error) {
             this.hostIsAssigning = false;
             this.dispatchEvent(
@@ -193,6 +205,7 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
                 })
             );
         }
+        await refreshApex(this.hostAssignDateRefresh);
     }
 
     refreshList(event) {
@@ -203,20 +216,16 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
         const grid = this.template.querySelector('lightning-tree-grid');
 
         if (this.appointmentsGridIsSelected) {
-
             try {
                 grid.collapseAll();
             } catch (error) {
             }
-
         } else {
-
             try {
                 grid.expandAll();
             } catch (error) {
             }
         }
-
         this.appointmentsGridIsSelected = !this.appointmentsGridIsSelected;
     }
 

@@ -48,7 +48,7 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
     hostIsAssigning = false;
     hostAssignCheck = false;
     hostAssignData;
-    hostAssignDateRefresh;
+    hostAssignDataRefresh;
     hostAssignDateError;
 
     wiredRecordData;
@@ -69,6 +69,7 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
     @wire(getRecord, {recordId: '$recordId', fields: APPOINTMENTSFIELDS})
     wiredRecord(result) {
         refreshApex(this.appointmentsDataRefresh);
+        refreshApex(this.hostAssignDataRefresh);
 
         if (result.data) {
             this.wiredRecordData = result.data;
@@ -88,7 +89,6 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
             this.appointmentsData = JSON.parse(JSON.stringify(result.data))
 
             for (let i = 0; i < this.appointmentsData.length; i++) {
-
                 this.appointmentsData[i]._children = this.appointmentsData[i]["Appointment_Information"];
             }
 
@@ -101,7 +101,7 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
 
     @wire(instanceHostAssignCheck, {eventInstance: '$recordId'})
     hostCheck(result) {
-        this.hostAssignDateRefresh = result;
+        this.hostAssignDataRefresh = result;
 
         if (result.data) {
             this.hostAssignData = JSON.parse(JSON.stringify(result.data))
@@ -158,7 +158,6 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
                 })
             );
         }
-        await refreshApex(this.appointmentsDataRefresh);
     }
 
     async buttonClickAdvisors(event) {
@@ -205,11 +204,11 @@ export default class oRSmallGroupAdvisorAssignment extends LightningElement {
                 })
             );
         }
-        await refreshApex(this.hostAssignDateRefresh);
     }
 
     refreshList(event) {
         refreshApex(this.appointmentsDataRefresh);
+        refreshApex(this.hostAssignDataRefresh);
     }
 
     expandCollapse(event) {

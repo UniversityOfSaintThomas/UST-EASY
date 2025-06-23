@@ -17,6 +17,12 @@ public with sharing class ORSmallGroupAssignment_TEST {
         Program__c testProgram = new Program__c(Name = 'Undergraduate First-Year', Admit_Type__c = 'First-Year');
         insert testProgram;
 
+        Program__c testMajor = new Program__c(Name = 'Biology', Major_Code__c = 'BIOL');
+        insert testMajor;
+
+        Program__c testCpfMajor = new Program__c(Name = 'Nursing', Major_Code__c = 'NRSG');
+        insert testCpfMajor;
+
         RecordType scholarshipRecordType = [
                 SELECT Id
                 FROM RecordType
@@ -68,19 +74,80 @@ public with sharing class ORSmallGroupAssignment_TEST {
         }
         insert appointmentTypeList;
 
+        List<String> hostCourseName = new List<String>{
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'
+        };
+
+        List<summit__Summit_Events_Host__c> listHost = new List<summit__Summit_Events_Host__c>();
+
+        for (String h : hostCourseName) {
+
+            summit__Summit_Events_Host__c templateHost = new summit__Summit_Events_Host__c();
+            templateHost.summit__Course_Name__c = h;
+            templateHost.summit__Preferred_Title__c = h;
+            templateHost.summit__Assigned__c = 0;
+            templateHost.summit__Event_Instance__c = eventInstance.Id;
+
+            switch on h {
+                when 'A' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'ATHLETE';
+                }
+                when 'B', 'C', 'E', 'F', 'H', 'I' {
+                    templateHost.O_R_Advisor_Additional_Majors__c = 'ALL';
+                }
+                when 'D' {
+                    templateHost.O_R_Advisor_Secondary_Major__c = 'NRSG';
+                    templateHost.O_R_Advisor_Additional_Majors__c = 'ALL';
+                }
+                when 'G' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'MUSC;MUBA;MUPE;MEIN;MEVO';
+                    templateHost.O_R_Advisor_Additional_Majors__c = 'ALL';
+                }
+                when 'J' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'XCHR;XDEN;XMED;XOCT;XOPT;XPHA;XPPT;XPPA;XVET;PUBH';
+                    templateHost.O_R_Advisor_Secondary_Major__c = 'BCH1;BIOL;BOGH;CHEM;ESCI;EXSC;GEOL;PEH1;NSCI;ENVR';
+                }
+                when 'K' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'CENG;COEN;EEE1;EGM1';
+                    templateHost.O_R_Advisor_Secondary_Major__c = 'ACSC;CSBS;BSDA;MATH;PHYS;STAT;DSCI';
+                }
+                when 'L' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'NSCI;PSYC';
+                    templateHost.O_R_Advisor_Secondary_Major__c = 'BCH1;BIOL;BOGH;CHEM;ESCI;EXSC;GEOL;PEH1;ENVR;XCHR;XDEN;XMED;XOCT;XOPT;XPHA;XPPT;XPPA;XVET;PUBH';
+                }
+                when 'M' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'NRSG';
+                    templateHost.O_R_Advisor_Secondary_Major__c = 'XCHR;XDEN;XMED;XOCT;XOPT;XPHA;XPPT;XPPA;XVET;PUBH';
+                }
+                when 'N', 'O' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'BUGB;BURE;ECON;BSAC;BSBC;BSEN;BSFI;BSHR;BSIB;BSLC;BSLM;BSMK;BSOM';
+                }
+                when 'P', 'Q' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'ARTH;CATH;CLAC;CLAL;COMM;SOCJ;DMAT;ENGL;ENPW;ENWR;FAST;FILM;FREN;GGIS;GEOG;GERM;HIST;INTS;JOUR;JPST;PHIL;POLS;XLAW;PSYC;SOWK;SOCI;SPAN;STCM;THEO;UNDC;WGSS;ELEM;ESME;MSED';
+                }
+                when 'R' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'SCHOLARSHIP';
+                    templateHost.O_R_Advisor_Additional_Majors__c = 'ALL';
+                }
+                when 'S' {
+                    templateHost.O_R_Advisor_Core_Major__c = 'OVERFLOW';
+                    templateHost.O_R_Advisor_Additional_Majors__c = 'ALL';
+                }
+            }
+            listHost.add(templateHost);
+        }
+        insert listHost;
+
         List<Contact> listContact = new List<Contact>();
 
         for (Integer i = 1; i <= 20; i++) {
-
             Contact newContact1 = new Contact(FirstName = 'Hello' + i + 'A', LastName = 'TestWorld', hed__Gender__c = 'Female');
             Contact newContact2 = new Contact(FirstName = 'Hello' + i + 'B', LastName = 'TestWorld', hed__Gender__c = 'Male');
 
             if (Math.mod(i, 2) == 0) {
-
                 newContact1.MailingState = 'MN';
                 newContact2.MailingState = 'MN';
             } else {
-
                 newContact1.MailingState = 'WI';
                 newContact2.MailingState = 'WI';
             }
@@ -100,6 +167,7 @@ public with sharing class ORSmallGroupAssignment_TEST {
         List<Application__c> listApplication = new List<Application__c>();
         List<Scholarship_Applicant__c> listScholarshipApplicants = new List<Scholarship_Applicant__c>();
         Integer toggleApplicationEthnicity = 1;
+        Integer ToggleApplicationMajors = 1;
         Integer toggleFirstGeneration = 1;
         Integer toggleScholarshipApplicant = 1;
 
@@ -126,6 +194,11 @@ public with sharing class ORSmallGroupAssignment_TEST {
 
                 newApplication.First_Generation__c = 'Yes, I am';
                 toggleFirstGeneration++;
+            }
+            if (ToggleApplicationMajors > 25 && ToggleApplicationMajors <= 40) {
+
+                newApplication.Major_1__c = testMajor.Id;
+                newApplication.CPF_Major__c = testCpfMajor.Id;
             }
             listApplication.add(newApplication);
 
@@ -192,6 +265,17 @@ public with sharing class ORSmallGroupAssignment_TEST {
         ORSmallGroupAssignment.assignAppointmentTypes(eventInstanceId);
         ORSmallGroupAssignment.recordAppointmentAssignment(eventInstanceId);
         ORSmallGroupAssignment.appointmentDataDisplay(eventInstanceId);
+        ORRegistrationAdvisorAssignment.assignAppointmentHost(eventInstanceId);
+
+        summit__Summit_Events_Appointment_Type__c appointmentType = [
+                SELECT Id
+                FROM summit__Summit_Events_Appointment_Type__c
+                WHERE summit__Restrict_To_Instance_Title__c = :eventInstanceId
+                LIMIT 1
+        ];
+
+        String appointmentTypeId = appointmentType.Id;
+        ORRegistrationAdvisorAssignment.hostAssignDataDisplay(appointmentTypeId);
 
         List<summit__Summit_Events_Registration__c> registrations = [
                 SELECT Id

@@ -1,6 +1,7 @@
 /**
  * Created by nguy0092 on 2/26/2024.
  */
+@SuppressWarnings('InconsistentSalesforceApiVersion')
 @IsTest
 public with sharing class ORSmallGroupAssignment_TEST {
 
@@ -8,22 +9,29 @@ public with sharing class ORSmallGroupAssignment_TEST {
     static void dataSetup() {
 
         Account testAccount = new Account (Name = 'Test Account');
-
         insert testAccount;
 
         hed__Term__c testTerm = new hed__Term__c(Name = 'Fall 2023', hed__Account__c = testAccount.Id);
-
         insert testTerm;
 
         Program__c testProgram = new Program__c(Name = 'Undergraduate First-Year', Admit_Type__c = 'First-Year');
-
         insert testProgram;
+
+        RecordType scholarshipRecordType = [
+                SELECT Id
+                FROM RecordType
+                WHERE SobjectType = 'Scholarship__c'
+                AND DeveloperName = 'Scholarship'
+        ];
+
+        Scholarship__c scholarship = new Scholarship__c(RecordTypeId = scholarshipRecordType.Id, Name = 'Test Scholarship');
+        insert scholarship;
 
         summit__Summit_Events__c event = new summit__Summit_Events__c(Name = '2099 First Year Orientation',
                 summit__Event_Name__c = '2099 First Year Orientation',
                 summit__Template__c = 'GeneralSLDS',
-                O_R_SGA_Term__c = testTerm.Id);
-
+                O_R_SGA_Term__c = testTerm.Id,
+                O_R_SGA_Scholarship__c = scholarship.Id);
         insert event;
 
         Date instanceDate = Date.parse('01/01/2099');
@@ -42,7 +50,6 @@ public with sharing class ORSmallGroupAssignment_TEST {
                 summit__Capacity__c = 155,
                 summit__Active_Status__c = 'Active'
         );
-
         insert eventInstance;
 
         List<summit__Summit_Events_Appointment_Type__c> appointmentTypeList = new List<summit__Summit_Events_Appointment_Type__c>();
@@ -59,7 +66,6 @@ public with sharing class ORSmallGroupAssignment_TEST {
 
             appointmentTypeList.add(appointmentType);
         }
-
         insert appointmentTypeList;
 
         List<Contact> listContact = new List<Contact>();
@@ -82,7 +88,6 @@ public with sharing class ORSmallGroupAssignment_TEST {
             listContact.add(newContact1);
             listContact.add(newContact2);
         }
-
         insert listContact;
 
         List<Contact> contacts = [
@@ -92,45 +97,47 @@ public with sharing class ORSmallGroupAssignment_TEST {
         ];
 
         List<summit__Summit_Events_Registration__c> listRegistration = new List<summit__Summit_Events_Registration__c>();
+        List<Application__c> listApplication = new List<Application__c>();
+        List<Scholarship_Applicant__c> listScholarshipApplicants = new List<Scholarship_Applicant__c>();
+        Integer toggleApplicationEthnicity = 1;
+        Integer toggleFirstGeneration = 1;
+        Integer toggleScholarshipApplicant = 1;
 
         for (Contact c : contacts) {
 
             summit__Summit_Events_Registration__c newRegistration = new summit__Summit_Events_Registration__c();
-
             newRegistration.summit__Contact__c = c.Id;
             newRegistration.summit__Event__c = event.Id;
             newRegistration.summit__Event_Instance__c = eventInstance.Id;
             newRegistration.summit__Status__c = 'Confirmed';
             newRegistration.summit__Guest_Host_Status__c = '';
-
             listRegistration.add(newRegistration);
-        }
-
-        insert listRegistration;
-
-        List<Application__c> listApplication = new List<Application__c>();
-
-        Integer toggleApplication = 1;
-
-        for (Contact c : contacts) {
 
             Application__c newApplication = new Application__c();
-
             newApplication.Contact__c = c.Id;
             newApplication.Application_Status__c = 'Confirmed';
             newApplication.Primary_High_School_Account__c = testAccount.Id;
-
-            if (toggleApplication > 0 && toggleApplication <= 5) {
+            if (toggleApplicationEthnicity > 0 && toggleApplicationEthnicity <= 5) {
 
                 newApplication.Ethnicity__c = 'Asian';
+                toggleApplicationEthnicity++;
             }
+            if (toggleApplicationEthnicity > 5 && toggleApplicationEthnicity <= 10) {
 
+                newApplication.First_Generation__c = 'Yes, I am';
+                toggleFirstGeneration++;
+            }
             listApplication.add(newApplication);
 
-            toggleApplication++;
+            if (toggleScholarshipApplicant > 10 && toggleScholarshipApplicant <= 15) {
+                Scholarship_Applicant__c applicant = new Scholarship_Applicant__c(Contact__c = c.Id, Scholarship__c = scholarship.Id, Scholarship_Status__c = 'Accepted');
+                listScholarshipApplicants.add(applicant);
+                toggleScholarshipApplicant++;
+            }
         }
-
+        insert listRegistration;
         insert listApplication;
+        insert listScholarshipApplicants;
 
         List<Application__c> applications = [
                 SELECT Id,
@@ -146,7 +153,6 @@ public with sharing class ORSmallGroupAssignment_TEST {
         for (Application__c a : applications) {
 
             Opportunity newOpportunity = new Opportunity();
-
             newOpportunity.Contact__c = a.Contact__c;
             newOpportunity.Name = 'TEST|TEST|TEST';
             newOpportunity.StageName = 'Confirmed';
@@ -154,22 +160,15 @@ public with sharing class ORSmallGroupAssignment_TEST {
             newOpportunity.Admissions_Application__c = a.Id;
             newOpportunity.Term__c = testTerm.Id;
             newOpportunity.Academic_Program__c = testProgram.Id;
-
             if (toggleOpportunity > 10 && toggleOpportunity <= 15) {
-
                 newOpportunity.Athlete_Sport_1__c = 'Women\'s Varsity Basketball';
             }
-
             if (toggleOpportunity > 20 && toggleOpportunity <= 25) {
-
                 newOpportunity.Housing_Requirement_Exception_Request__c = 'Approved';
             }
-
             listOpportunity.add(newOpportunity);
-
             toggleOpportunity++;
         }
-
         insert listOpportunity;
     }
 
@@ -178,7 +177,8 @@ public with sharing class ORSmallGroupAssignment_TEST {
 
         summit__Summit_Events_Instance__c eventInstance = [
                 SELECT Id,
-                        summit__Event__r.O_R_SGA_Term__c
+                        summit__Event__r.O_R_SGA_Term__c,
+                        summit__Event__r.O_R_SGA_Scholarship__c
                 FROM summit__Summit_Events_Instance__c
                 WHERE summit__Event__r.summit__Event_Name__c = '2099 First Year Orientation'
                 LIMIT 1
@@ -186,8 +186,9 @@ public with sharing class ORSmallGroupAssignment_TEST {
 
         String eventInstanceId = eventInstance.Id;
         String registrationTerm = eventInstance.summit__Event__r.O_R_SGA_Term__c;
+        String scholarshipId = eventInstance.summit__Event__r.O_R_SGA_Scholarship__c;
 
-        ORSmallGroupAssignment.eventRegistrationCriteria(eventInstanceId, registrationTerm);
+        ORSmallGroupAssignment.eventRegistrationCriteria(eventInstanceId, scholarshipId, registrationTerm);
         ORSmallGroupAssignment.assignAppointmentTypes(eventInstanceId);
         ORSmallGroupAssignment.recordAppointmentAssignment(eventInstanceId);
         ORSmallGroupAssignment.appointmentDataDisplay(eventInstanceId);
@@ -199,9 +200,7 @@ public with sharing class ORSmallGroupAssignment_TEST {
         ];
 
         List<String> registrationIds = new List<Id>();
-
         for (summit__Summit_Events_Registration__c r : registrations) {
-
             registrationIds.add(r.Id);
         }
 

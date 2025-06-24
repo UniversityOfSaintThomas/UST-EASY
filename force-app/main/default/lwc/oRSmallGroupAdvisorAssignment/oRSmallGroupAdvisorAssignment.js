@@ -10,10 +10,8 @@ import eventRegistrationCriteria from "@salesforce/apex/ORSmallGroupAssignment.e
 import assignAppointmentTypes from "@salesforce/apex/ORSmallGroupAssignment.assignAppointmentTypes";
 import recordAppointmentAssignment from "@salesforce/apex/ORSmallGroupAssignment.recordAppointmentAssignment";
 import appointmentDataDisplay from "@salesforce/apex/ORSmallGroupAssignment.appointmentDataDisplay";
-
 import assignAppointmentHost from "@salesforce/apex/ORRegistrationAdvisorAssignment.assignAppointmentHost";
 import instanceHostAssignCheck from "@salesforce/apex/ORRegistrationAdvisorAssignment.instanceHostAssignCheck";
-
 import ID_FIELD from "@salesforce/schema/summit__Summit_Events_Instance__c.Id";
 import REGISTRATION_TERM from "@salesforce/schema/summit__Summit_Events_Instance__c.summit__Event__r.O_R_SGA_Term__c";
 import SCHOLARSHIP_ID from "@salesforce/schema/summit__Summit_Events_Instance__c.summit__Event__r.O_R_SGA_Scholarship__c";

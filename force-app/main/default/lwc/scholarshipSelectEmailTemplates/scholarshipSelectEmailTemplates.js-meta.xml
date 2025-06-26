@@ -4,4 +4,10 @@
     <description>Scholarship Select Email Templates</description>
     <isExposed>true</isExposed>
     <masterLabel>Scholarship Select Email Templates</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
 </LightningComponentBundle>

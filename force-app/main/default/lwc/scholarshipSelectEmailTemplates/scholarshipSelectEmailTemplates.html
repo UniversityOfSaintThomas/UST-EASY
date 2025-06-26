@@ -2,6 +2,118 @@
  - Created by nguy0092 on 6/13/2025.
  -->
 
-<!-- Scholarship Select Email Templates -->
+<!-- Scholarship Selects Email Templates -->
 <template>
+    <lightning-card>
+        <div class="slds-p-around_small">
+            <lightning-combobox
+                    name="orgWideEmailSelection"
+                    label="Emails Sent From Address"
+                    value={}
+                    placeholder="Select From Email Address"
+                    options={orgWideEmailValueOptions}
+                    data-selecttype="orgWideEmail"
+                    onchange={saveButtonDisableCheck}></lightning-combobox>
+            <p>Selected Org Wide Email Id value: {orgWideEmailSelectValue}</p>
+            <p>Current Org Wide Email Id value: {orgWideEmailId}</p>
+        </div>
+
+        <div class="slds-p-around_small">
+            <lightning-combobox
+                    name="submitEmailTemplate"
+                    label="Scholarship Submitted Email Template"
+                    value={}
+                    placeholder="Select Submitted Email Template"
+                    options={emailTemplateValueOptions}
+                    data-selecttype="submitTemplate"
+                    onchange={saveButtonDisableCheck}></lightning-combobox>
+            <lightning-input type="checkbox"
+                             label="Preview Email Template"
+                             name="submitPreview"
+                             data-checktype="submitPreview"
+                             onchange={previewClick}>
+            </lightning-input>
+            <p>Selected Submit Email Template value: {submitTemplateSelectValue}</p>
+            <p>Current Submit Email Template Id: {submitEmailTemplateId}</p>
+            <template lwc:if={submitPreviewCheck}>
+                <p>
+                    <lightning-formatted-rich-text value={templateHtmlValue}></lightning-formatted-rich-text>
+                </p>
+            </template>
+        </div>
+
+        <div class="slds-p-around_small" lwc:if={startSelectVisible}>
+            <lightning-combobox
+                    name="startEmailTemplate"
+                    label="Scholarship Started Email Template"
+                    value={}
+                    placeholder="Select Started Email Template"
+                    options={emailTemplateValueOptions}
+                    data-selecttype="startTemplate"
+                    onchange={saveButtonDisableCheck}></lightning-combobox>
+            <lightning-input type="checkbox"
+                             label="Preview Email Template"
+                             name="startPreview"
+                             onchange={previewClick}>
+            </lightning-input>
+            <p>Selected Start Email Template value: {startTemplateSelectValue}</p>
+            <p>Current Start Email Template Id: {startEmailTemplateId}</p>
+        </div>
+
+        <div class="slds-p-around_small" lwc:if={recommender1SelectVisible}>
+            <lightning-combobox
+                    name="recommender1EmailTemplate"
+                    label="Recommender 1 Email Template"
+                    value={}
+                    placeholder="Select Recommender 1 Email Template"
+                    options={emailTemplateValueOptions}
+                    data-selecttype="recommender1Template"
+                    onchange={saveButtonDisableCheck}></lightning-combobox>
+
+            <lightning-input type="checkbox"
+                             label="Preview Email Template"
+                             name="preview"
+                             onchange={previewClick}>
+            </lightning-input>
+
+            <p>Selected Recommender 1 Template value: {recommender1TemplateSelectValue}</p>
+            <p>Current Recommender 1 Email Template Id: {recommender1EmailTemplateId}</p>
+        </div>
+
+        <div class="slds-p-around_small" lwc:if={recommender2SelectVisible}>
+            <lightning-combobox
+                    name="recommender2EmailTemplate"
+                    label="Recommender 2 Email Template"
+                    value={}
+                    placeholder="Select Recommender 2 Email Template"
+                    options={emailTemplateValueOptions}
+                    data-selecttype="recommender2Template"
+                    onchange={saveButtonDisableCheck}></lightning-combobox>
+
+            <lightning-input type="checkbox"
+                             label="Preview Email Template"
+                             name="preview"
+                             onchange={previewClick}>
+            </lightning-input>
+
+            <p>Selected Recommender 2 Template value: {recommender2TemplateSelectValue}</p>
+            <p>Current Recommender 2 Email Template Id: {recommender2EmailTemplateId}</p>
+        </div>
+        <div class="slds-p-around_small">
+            <lightning-button label="Save"
+                              onclick={saveClick}
+                              disabled={saveDisabled}
+                              class="slds-p-right_x-small">
+            </lightning-button>
+            <lightning-button label="Cancel"
+                              onclick={resetValues}
+                              disabled={cancelDisabled}>
+            </lightning-button>
+        </div>
+        <template lwc:if={previewCheck}>
+            <p>
+                <lightning-formatted-rich-text value={templateHtmlValue}></lightning-formatted-rich-text>
+            </p>
+        </template>
+    </lightning-card>
 </template>

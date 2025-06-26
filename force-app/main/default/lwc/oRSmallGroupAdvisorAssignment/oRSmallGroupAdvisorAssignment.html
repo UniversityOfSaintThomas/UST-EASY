@@ -13,9 +13,9 @@
                           slot="actions">
         </lightning-button>
         <p class="slds-p-horizontal_small" lwc:if={registrationTerm}></p>
-        <p class="slds-p-horizontal_small" lwc:else style="color: red"><i>Registration term not found on Summit Events Record!</i></p>
+        <p class="slds-p-horizontal_small" lwc:else><i>O & R Events Only: O & R - SGA Term not set</i></p>
         <p class="slds-p-horizontal_small" lwc:if={scholarshipId}></p>
-        <p class="slds-p-horizontal_small" lwc:else style="color: red"><i>Scholarship Id not found on Summit Events Record!</i></p>
+        <p class="slds-p-horizontal_small" lwc:else><i>O & R Events Only: O & R - SGA Scholarship not set</i></p>
         <div>
             <p class="slds-p-horizontal_small" lwc:if={assignedDate}>Assigned:&nbsp;
                 <lightning-formatted-date-time value={assignedDate}></lightning-formatted-date-time>

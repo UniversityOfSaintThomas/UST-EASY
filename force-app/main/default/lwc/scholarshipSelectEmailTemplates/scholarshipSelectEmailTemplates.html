@@ -9,20 +9,20 @@
             <lightning-combobox
                     name="orgWideEmailSelection"
                     label="Emails Sent From Address"
-                    value={}
+                    value={orgWideEmailIdValue}
                     placeholder="Select From Email Address"
                     options={orgWideEmailValueOptions}
                     data-selecttype="orgWideEmail"
                     onchange={saveButtonDisableCheck}></lightning-combobox>
             <p>Selected Org Wide Email Id value: {orgWideEmailSelectValue}</p>
-            <p>Current Org Wide Email Id value: {orgWideEmailId}</p>
+            <p>Current Org Wide Email Id value: {orgWideEmailIdValue}</p>
         </div>
 
         <div class="slds-p-around_small">
             <lightning-combobox
                     name="submitEmailTemplate"
                     label="Scholarship Submitted Email Template"
-                    value={}
+                    value={submitTemplateIdValue}
                     placeholder="Select Submitted Email Template"
                     options={emailTemplateValueOptions}
                     data-selecttype="submitTemplate"
@@ -34,7 +34,7 @@
                              onchange={previewClick}>
             </lightning-input>
             <p>Selected Submit Email Template value: {submitTemplateSelectValue}</p>
-            <p>Current Submit Email Template Id: {submitEmailTemplateId}</p>
+            <p>Current Submit Email Template Id: {submitTemplateIdValue}</p>
             <template lwc:if={submitPreviewCheck}>
                 <p>
                     <lightning-formatted-rich-text value={templateHtmlValue}></lightning-formatted-rich-text>
@@ -46,7 +46,7 @@
             <lightning-combobox
                     name="startEmailTemplate"
                     label="Scholarship Started Email Template"
-                    value={}
+                    value={startTemplateIdValue}
                     placeholder="Select Started Email Template"
                     options={emailTemplateValueOptions}
                     data-selecttype="startTemplate"
@@ -57,14 +57,14 @@
                              onchange={previewClick}>
             </lightning-input>
             <p>Selected Start Email Template value: {startTemplateSelectValue}</p>
-            <p>Current Start Email Template Id: {startEmailTemplateId}</p>
+            <p>Current Start Email Template Id: {startTemplateIdValue}</p>
         </div>
 
         <div class="slds-p-around_small" lwc:if={recommender1SelectVisible}>
             <lightning-combobox
                     name="recommender1EmailTemplate"
                     label="Recommender 1 Email Template"
-                    value={}
+                    value={recommender1TemplateIdValue}
                     placeholder="Select Recommender 1 Email Template"
                     options={emailTemplateValueOptions}
                     data-selecttype="recommender1Template"
@@ -77,14 +77,14 @@
             </lightning-input>
 
             <p>Selected Recommender 1 Template value: {recommender1TemplateSelectValue}</p>
-            <p>Current Recommender 1 Email Template Id: {recommender1EmailTemplateId}</p>
+            <p>Current Recommender 1 Email Template Id: {recommender1TemplateIdValue}</p>
         </div>
 
         <div class="slds-p-around_small" lwc:if={recommender2SelectVisible}>
             <lightning-combobox
                     name="recommender2EmailTemplate"
                     label="Recommender 2 Email Template"
-                    value={}
+                    value={recommender2TemplateIdValue}
                     placeholder="Select Recommender 2 Email Template"
                     options={emailTemplateValueOptions}
                     data-selecttype="recommender2Template"
@@ -97,7 +97,7 @@
             </lightning-input>
 
             <p>Selected Recommender 2 Template value: {recommender2TemplateSelectValue}</p>
-            <p>Current Recommender 2 Email Template Id: {recommender2EmailTemplateId}</p>
+            <p>Current Recommender 2 Email Template Id: {recommender2TemplateIdValue}</p>
         </div>
         <div class="slds-p-around_small">
             <lightning-button label="Save"
@@ -106,7 +106,7 @@
                               class="slds-p-right_x-small">
             </lightning-button>
             <lightning-button label="Cancel"
-                              onclick={resetValues}
+                              onclick={setInitialValues}
                               disabled={cancelDisabled}>
             </lightning-button>
         </div>

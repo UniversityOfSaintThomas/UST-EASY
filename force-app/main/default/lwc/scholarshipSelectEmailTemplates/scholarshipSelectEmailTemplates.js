@@ -17,6 +17,7 @@ import RECOMMENDER_OPTION1 from "@salesforce/schema/Scholarship__c.Recommender_O
 import RECOMMENDER_OPTION2 from "@salesforce/schema/Scholarship__c.Recommender2_Option__c"
 import RECOMMENDER1_EMAIL_TEMPLATE_ID from "@salesforce/schema/Scholarship__c.Recommender_Email_Template_Id__c";
 import RECOMMENDER2_EMAIL_TEMPLATE_ID from "@salesforce/schema/Scholarship__c.Recommender2_Email_Template_Id__c";
+import {refreshApex} from "@salesforce/apex";
 
 const FIELDS = [
     // ID_FIELD,
@@ -45,15 +46,6 @@ export default class ScholarshipSelectEmailTemplates extends LightningElement {
     submitPreviewCheck = false;
     saveDisabled = true;
     cancelDisabled = false;
-
-    orgWideEmailSelectCurrent;
-    startTemplateSelectCurrent;
-    submitTemplateSelectCurrent;
-    recommender1TemplateSelectCurrent;
-    recommender2TemplateSelectCurrent;
-
-    unsavedChanges = true;
-
     orgWideEmailId;
     submitEmailTemplateId;
     sendStartEmailCheck;
@@ -62,6 +54,19 @@ export default class ScholarshipSelectEmailTemplates extends LightningElement {
     recommenderOption2;
     recommender1EmailTemplateId;
     recommender2EmailTemplateId;
+    orgWideEmailIdValue;
+    submitTemplateIdValue;
+    startTemplateIdValue;
+    recommender1TemplateIdValue;
+    recommender2TemplateIdValue;
+
+    orgWideEmailSelectCurrent;
+    startTemplateSelectCurrent;
+    submitTemplateSelectCurrent;
+    recommender1TemplateSelectCurrent;
+    recommender2TemplateSelectCurrent;
+
+    unsavedChanges = true;
 
     renderedCallback() {
         this.orgWideEmailSelectCurrent = this.template.querySelector("[data-selecttype='orgWideEmail']");
@@ -103,13 +108,13 @@ export default class ScholarshipSelectEmailTemplates extends LightningElement {
                 let displayMissingDefaults = missingDefaults.join(" and ");
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: "Complete Scholarship Email Templates Setup!",
-                        message: "Save selections for " + displayMissingDefaults + ".",
+                        title: "Complete Scholarship Email Templates Setup",
+                        message: "Select and save values for " + displayMissingDefaults + ".",
                         variant: "warning",
                     }),
                 );
             }
-            this.resetValues();
+            this.setInitialValues();
             console.log("Full Results: "+JSON.stringify(this.scholarshipFields));
             console.log("orgWideEmailId: "+this.orgWideEmailId);
             console.log("submitEmailTemplateId: "+this.submitEmailTemplateId);
@@ -119,6 +124,7 @@ export default class ScholarshipSelectEmailTemplates extends LightningElement {
             console.log("recommender1EmailTemplateId: "+this.recommender1EmailTemplateId);
             console.log("recommender2EmailTemplateId: "+this.recommender2EmailTemplateId);
         }
+
     }
 
     get startSelectVisible() {
@@ -130,21 +136,8 @@ export default class ScholarshipSelectEmailTemplates extends LightningElement {
     get recommender2SelectVisible() {
         return this.recommenderOption2 === "Recommender2 Required" || this.recommenderOption2 === "Recommender2 Optional";
     }
-    // get orgWideEmailIdValue() {
-    //     return this.orgWideEmailId;
-    // }
-    // get submitTemplateIdValue() {
-    //     return this.submitEmailTemplateId;
-    // }
-    // get startTemplateIdValue() {
-    //     return this.startEmailTemplateId;
-    // }
-    // get recommender1TemplateIdValue() {
-    //     return this.recommender1EmailTemplateId;
-    // }
-    // get recommender2TemplateIdValue() {
-    //     return this.recommender2EmailTemplateId;
-    // }
+
+
 
     @wire(orgWideEmailsApex)
     orgWideEmailWire({error, data}) {
@@ -176,6 +169,15 @@ export default class ScholarshipSelectEmailTemplates extends LightningElement {
         }
     }
 
+    setInitialValues() {
+        this.orgWideEmailIdValue = this.orgWideEmailId;
+        this.submitTemplateIdValue = this.submitEmailTemplateId;
+        this.startTemplateIdValue = this.startEmailTemplateId;
+        this.recommender1TemplateIdValue = this.recommender1EmailTemplateId;
+        this.recommender2TemplateIdValue = this.recommender2EmailTemplateId;
+        this.saveDisabled = true;
+    }
+
     orgWideEmailSelectValue //USE FOR TESTING
     submitTemplateSelectValue; //USE FOR TESTING
     startTemplateSelectValue; //USE FOR TESTING
@@ -187,22 +189,27 @@ export default class ScholarshipSelectEmailTemplates extends LightningElement {
         switch (evnt.currentTarget.dataset.selecttype) {
             case "orgWideEmail":
                 this.orgWideEmailSelectValue = evnt.detail.value; //USE FOR TESTING
+                this.orgWideEmailIdValue = evnt.detail.value;
                 this.saveButtonDisabledBool.orgWideEmail = evntValue === this.orgWideEmailId ? "true" : "false";
                 break;
             case "submitTemplate":
                 this.submitTemplateSelectValue = evnt.detail.value; //USE FOR TESTING
+                this.submitTemplateIdValue = evnt.detail.value;
                 this.saveButtonDisabledBool.submitTemplate = evntValue === this.submitEmailTemplateId ? "true" : "false";
                 break;
             case "startTemplate":
                 this.startTemplateSelectValue = evnt.detail.value; //USE FOR TESTING
+                this.startTemplateIdValue = evnt.detail.value;
                 this.saveButtonDisabledBool.startTemplate = evntValue === this.startEmailTemplateId ? "true" : "false";
                 break;
             case "recommender1Template":
                 this.recommender1TemplateSelectValue = evnt.detail.value; //USE FOR TESTING
+                this.recommender1TemplateIdValue = evnt.detail.value;
                 this.saveButtonDisabledBool.recommender1Template = evntValue === this.recommender1EmailTemplateId ? "true" : "false";
                 break;
             case "recommender2Template":
                 this.recommender2TemplateSelectValue = evnt.detail.value; //USE FOR TESTING
+                this.recommender2TemplateIdValue = evnt.detail.value;
                 this.saveButtonDisabledBool.recommender2Template = evntValue === this.recommender2EmailTemplateId ? "true" : "false";
                 break;
         }
@@ -274,23 +281,6 @@ export default class ScholarshipSelectEmailTemplates extends LightningElement {
         return this.emailTemplateValueOptions.find(template => template.value === templateId);
     }
 
-    resetValues() {
-        if (this.orgWideEmailSelectCurrent) {
-            this.orgWideEmailSelectCurrent.value = this.orgWideEmailId;
-        }
-        if (this.submitTemplateSelectCurrent) {
-            this.submitTemplateSelectCurrent.value = this.submitEmailTemplateId;
-        }
-        if (this.startTemplateSelectCurrent) {
-            this.startTemplateSelectCurrent.value = this.startEmailTemplateId;
-        }
-        if (this.recommender1TemplateSelectCurrent) {
-            this.recommender1TemplateSelectCurrent.value = this.recommender1EmailTemplateId;
-        }
-        if (this.recommender2TemplateSelectCurrent) {
-            this.recommender2TemplateSelectCurrent.value = this.recommender2EmailTemplateId;
-        }
-        this.saveDisabled = true;
-    }
+
 
 }

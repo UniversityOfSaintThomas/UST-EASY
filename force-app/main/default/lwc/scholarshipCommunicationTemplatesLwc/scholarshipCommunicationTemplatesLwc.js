@@ -1,12 +1,12 @@
 /**
- * Created by nguy0092 on 6/13/2025.
+ * Created by nguy0092 on 6/26/2025.
  */
 
 import {LightningElement, api, track, wire} from 'lwc';
 import {getFieldValue, getRecord, updateRecord} from "lightning/uiRecordApi";
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
-import orgWideEmailsApex from "@salesforce/apex/ScholarshipEmailTemplatesController.orgWideEmailsOptions";
-import emailTemplatesApex from "@salesforce/apex/ScholarshipEmailTemplatesController.emailTemplatesOptions";
+import orgWideEmailsApex from "@salesforce/apex/ScholarshipCommunicationTemplates.orgWideEmailsOptions";
+import emailTemplatesApex from "@salesforce/apex/ScholarshipCommunicationTemplates.emailTemplatesOptions";
 import ID_FIELD from "@salesforce/schema/Scholarship__c.Id";
 import ORG_WIDE_EMAIL_ID from "@salesforce/schema/Scholarship__c.Org_Wide_Email_Id__c";
 import SUBMIT_EMAIL_TEMPLATE_ID from "@salesforce/schema/Scholarship__c.Submit_Scholarship_Email_Template_Id__c";
@@ -28,7 +28,7 @@ const FIELDS = [
     RECOMMENDER2_EMAIL_TEMPLATE_ID
 ];
 
-export default class ScholarshipSelectEmailTemplates extends LightningElement {
+export default class ScholarshipCommunicationTemplatesLwc extends LightningElement {
     @api recordId;
 
     scholarshipFields;

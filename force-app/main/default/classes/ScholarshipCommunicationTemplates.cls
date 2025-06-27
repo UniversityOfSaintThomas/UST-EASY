@@ -1,8 +1,8 @@
 /**
- * Created by nguy0092 on 6/13/2025.
+ * Created by nguy0092 on 6/26/2025.
  */
 
-public with sharing class ScholarshipEmailTemplatesController {
+public with sharing class ScholarshipCommunicationTemplates {
     public class orgWideEmailWrapper {
         @AuraEnabled public String label;
         @AuraEnabled public String value;
@@ -14,30 +14,9 @@ public with sharing class ScholarshipEmailTemplatesController {
         @AuraEnabled public String htmlValue;
     }
 
-//    @AuraEnabled(Cacheable=true)
-//    public static List<Scholarship__c> initialDefaults(String recordId) {
-//
-//        List<Scholarship__c> scholarship = [
-//                SELECT Org_Wide_Email_Id__c,
-//                        Submit_Scholarship_Email_Template_Id__c,
-//                        Send_Started_Scholarship_Email__c,
-//                        Start_Scholarship_Email_Template_Id__c,
-//                        Recommender_Option__c,
-//                        Recommender_Email_Template_Id__c,
-//                        Recommender2_Option__c,
-//                        Recommender2_Email_Template_Id__c
-//                FROM Scholarship__c
-//                WHERE Id = :recordId
-//        ];
-//
-//        return scholarship;
-//    }
-
     @AuraEnabled(Cacheable=true)
     public static List<orgWideEmailWrapper> orgWideEmailsOptions() {
-
         List<orgWideEmailWrapper> orgWideEmailsOptionsList = new List<orgWideEmailWrapper>();
-
         Set<Id> permissionSetIds = new Set<Id>();
         List<PermissionSet> permissionSets = [
                 SELECT Id,
@@ -66,7 +45,6 @@ public with sharing class ScholarshipEmailTemplatesController {
             ];
 
             if (orgWideEmailsList.size() > 0) {
-
                 for (OrgWideEmailAddress oe : orgWideEmailsList) {
                     orgWideEmailWrapper emails = new orgWideEmailWrapper();
                     emails.label = oe.Address + ' (' + oe.DisplayName + ')';
@@ -81,9 +59,7 @@ public with sharing class ScholarshipEmailTemplatesController {
 
     @AuraEnabled(Cacheable=true)
     public static List<emailTemplateWrapper> emailTemplatesOptions() {
-
         List<emailTemplateWrapper> emailTemplatesOptionsList = new List<emailTemplateWrapper>();
-
         List<EmailTemplate> emailTemplatesList = [
                 SELECT Id,
                         Name,
@@ -103,7 +79,6 @@ public with sharing class ScholarshipEmailTemplatesController {
                 emailTemplatesOptionsList.add(emailTemplate);
             }
         }
-
         return emailTemplatesOptionsList;
     }
 }

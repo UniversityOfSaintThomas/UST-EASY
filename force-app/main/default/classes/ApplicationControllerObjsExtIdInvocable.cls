@@ -57,5 +57,40 @@ public with sharing class ApplicationControllerObjsExtIdInvocable {
             System.debug('What is requirementItem size 2: '+requirementItem.size());
             update requirementItem;
         }
+
+        List<Question__c> question = [
+                SELECT Id,
+                        Question_Integration_External_Id__c
+                FROM Question__c
+                WHERE NOT Question_Integration_External_Id__c LIKE 'QuestionUuid-%'
+        ];
+        System.debug('What is question size 1: '+question.size());
+
+        for(Question__c q : question) {
+            q.Question_Integration_External_Id__c = 'QuestionUuid-'+UUID.randomUUID();
+        }
+
+        if(!question.isEmpty()) {
+            System.debug('What is question size 2: '+question.size());
+            update question;
+        }
+
+        List<Question_Dependency__c> questDep = [
+                SELECT Id,
+                        Question_Dependency_Integration_Ext_Id__c
+                FROM Question_Dependency__c
+                WHERE NOT Question_Dependency_Integration_Ext_Id__c LIKE 'QuestDepUuid-%'
+        ];
+        System.debug('What is questDep size 1: '+questDep.size());
+
+        for(Question_Dependency__c qd : questDep) {
+            qd.Question_Dependency_Integration_Ext_Id__c = 'QuestDepUuid-'+UUID.randomUUID();
+        }
+
+        if(!questDep.isEmpty()) {
+            System.debug('What is questDep size 2: '+questDep.size());
+            update questDep;
+        }
+
     }
 }

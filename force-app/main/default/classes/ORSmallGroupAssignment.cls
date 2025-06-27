@@ -191,8 +191,10 @@ public with sharing class ORSmallGroupAssignment {
                         Athlete_Sport_2__c,
                         Athlete_Sport_3__c,
                         Housing_Requirement_Exception_Request__c,
-                        Admissions_Application__r.Primary_High_School_Account__c,
-                        Admissions_Application__r.Primary_High_School_Account__r.Name
+                        Admissions_Application__r.High_School_or_College__c,
+                        Admissions_Application__r.High_School_or_College__r.Name
+//                        Admissions_Application__r.Primary_High_School_Account__c,
+//                        Admissions_Application__r.Primary_High_School_Account__r.Name
                 FROM Opportunity
                 WHERE Term__c = :registrationTerm
                 AND Academic_Program_Admit_Type__c = 'First-Year'
@@ -219,8 +221,10 @@ public with sharing class ORSmallGroupAssignment {
                 registrantInfo.get(o.Contact__r.Id).O_R_SGA_First_Generation__c = o.Admissions_Application__r.First_Generation__c == 'Yes, I am' ? true : false;
                 registrantInfo.get(o.Contact__r.Id).O_R_SGA_Athlete__c = String.isNotBlank(sportsJoin) ? true : false;
                 registrantInfo.get(o.Contact__r.Id).O_R_SGA_Athlete_Sport__c = sportsJoin;
-                registrantInfo.get(o.Contact__r.Id).O_R_SGA_High_School__c = o.Admissions_Application__r.Primary_High_School_Account__c;
-                registrantInfo.get(o.Contact__r.Id).O_R_SGA_High_School_Name__c = o.Admissions_Application__r.Primary_High_School_Account__r.Name;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_High_School__c = o.Admissions_Application__r.High_School_or_College__c;
+                registrantInfo.get(o.Contact__r.Id).O_R_SGA_High_School_Name__c = o.Admissions_Application__r.High_School_or_College__r.Name;
+//                registrantInfo.get(o.Contact__r.Id).O_R_SGA_High_School__c = o.Admissions_Application__r.Primary_High_School_Account__c;
+//                registrantInfo.get(o.Contact__r.Id).O_R_SGA_High_School_Name__c = o.Admissions_Application__r.Primary_High_School_Account__r.Name;
                 registrantInfo.get(o.Contact__r.Id).O_R_SGA_Commuter_Housing_Exception__c = o.Housing_Requirement_Exception_Request__c == 'Approved' ? true : false;
                 registrantInfo.get(o.Contact__r.Id).O_R_SGA_Outside_of_Minnesota__c = o.Contact__r.MailingState <> 'MN' ? true : false;
 

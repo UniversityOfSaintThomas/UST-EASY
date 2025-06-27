@@ -7,97 +7,124 @@
     <lightning-card>
         <div class="slds-p-around_small">
             <lightning-combobox
-                    name="orgWideEmailSelection"
-                    label="Emails Sent From Address"
-                    value={orgWideEmailIdValue}
+                    name="orgWideEmailSelect"
+                    label="Sent From Email Address"
+                    value={orgWideEmailSelectId}
                     placeholder="Select From Email Address"
                     options={orgWideEmailValueOptions}
+                    data-templatetype="orgWideEmail"
                     data-selecttype="orgWideEmail"
-                    onchange={saveButtonDisableCheck}></lightning-combobox>
-            <p>Selected Org Wide Email Id value: {orgWideEmailSelectValue}</p>
-            <p>Current Org Wide Email Id value: {orgWideEmailIdValue}</p>
+                    onchange={templateEventHandler}></lightning-combobox>
+            <p>Selected Org Wide Email Id value: {orgWideEmailSelectId}</p>
+            <p>Initial Org Wide Email Id value: {orgWideEmailInitialId}</p>
         </div>
 
         <div class="slds-p-around_small">
             <lightning-combobox
-                    name="submitEmailTemplate"
-                    label="Scholarship Submitted Email Template"
-                    value={submitTemplateIdValue}
+                    name="submitTemplateSelect"
+                    label="Submitted Scholarship Email Template"
+                    value={submitSelectTemplateId}
                     placeholder="Select Submitted Email Template"
                     options={emailTemplateValueOptions}
+                    data-templatetype="submitTemplate"
                     data-selecttype="submitTemplate"
-                    onchange={saveButtonDisableCheck}></lightning-combobox>
+                    onchange={templateEventHandler}></lightning-combobox>
             <lightning-input type="checkbox"
                              label="Preview Email Template"
-                             name="submitPreview"
-                             data-checktype="submitPreview"
-                             onchange={previewClick}>
+                             name="submitTemplatePreview"
+                             data-templatetype="submitTemplate"
+                             data-checktype="submitTemplate"
+                             disabled={submitPreviewDisabled}
+                             onchange={templateEventHandler}>
             </lightning-input>
-            <p>Selected Submit Email Template value: {submitTemplateSelectValue}</p>
-            <p>Current Submit Email Template Id: {submitTemplateIdValue}</p>
-            <template lwc:if={submitPreviewCheck}>
+            <p>Selected Submit Email Template value: {submitSelectTemplateId}</p>
+            <p>Initial Submit Email Template Id: {submitInitialTemplateId}</p>
+            <template lwc:if={submitPreviewChecked}>
                 <p>
-                    <lightning-formatted-rich-text value={templateHtmlValue}></lightning-formatted-rich-text>
+                    <lightning-formatted-rich-text value={submitTemplateHtmlValue}></lightning-formatted-rich-text>
                 </p>
             </template>
         </div>
 
         <div class="slds-p-around_small" lwc:if={startSelectVisible}>
             <lightning-combobox
-                    name="startEmailTemplate"
-                    label="Scholarship Started Email Template"
-                    value={startTemplateIdValue}
+                    name="startTemplateSelect"
+                    label="Started Scholarship Email Template"
+                    value={startSelectTemplateId}
                     placeholder="Select Started Email Template"
                     options={emailTemplateValueOptions}
+                    data-templatetype="startTemplate"
                     data-selecttype="startTemplate"
-                    onchange={saveButtonDisableCheck}></lightning-combobox>
+                    onchange={templateEventHandler}></lightning-combobox>
             <lightning-input type="checkbox"
                              label="Preview Email Template"
-                             name="startPreview"
-                             onchange={previewClick}>
+                             name="startTemplatePreview"
+                             data-templatetype="startTemplate"
+                             data-checktype="startTemplate"
+                             disabled={startPreviewDisabled}
+                             onchange={templateEventHandler}>
             </lightning-input>
-            <p>Selected Start Email Template value: {startTemplateSelectValue}</p>
-            <p>Current Start Email Template Id: {startTemplateIdValue}</p>
+            <p>Selected Start Email Template value: {startSelectTemplateId}</p>
+            <p>Initial Start Email Template Id: {startInitialTemplateId}</p>
+            <template lwc:if={startPreviewChecked}>
+                <p>
+                    <lightning-formatted-rich-text value={startTemplateHtmlValue}></lightning-formatted-rich-text>
+                </p>
+            </template>
         </div>
 
         <div class="slds-p-around_small" lwc:if={recommender1SelectVisible}>
             <lightning-combobox
-                    name="recommender1EmailTemplate"
+                    name="recommender1TemplateSelect"
                     label="Recommender 1 Email Template"
-                    value={recommender1TemplateIdValue}
+                    value={recommender1SelectTemplateId}
                     placeholder="Select Recommender 1 Email Template"
                     options={emailTemplateValueOptions}
+                    data-templatetype="recommender1Template"
                     data-selecttype="recommender1Template"
-                    onchange={saveButtonDisableCheck}></lightning-combobox>
-
+                    onchange={templateEventHandler}></lightning-combobox>
             <lightning-input type="checkbox"
                              label="Preview Email Template"
-                             name="preview"
-                             onchange={previewClick}>
+                             name="recommender1TemplatePreview"
+                             data-templatetype="recommender1Template"
+                             data-checktype="recommender1Template"
+                             disabled={recommender1PreviewDisabled}
+                             onchange={templateEventHandler}>
             </lightning-input>
-
-            <p>Selected Recommender 1 Template value: {recommender1TemplateSelectValue}</p>
-            <p>Current Recommender 1 Email Template Id: {recommender1TemplateIdValue}</p>
+            <p>Selected Recommender 1 Template value: {recommender1SelectTemplateId}</p>
+            <p>Initial Recommender 1 Email Template Id: {recommender1InitialTemplateId}</p>
+            <template lwc:if={recommender1PreviewChecked}>
+                <p>
+                    <lightning-formatted-rich-text value={recommender1TemplateHtmlValue}></lightning-formatted-rich-text>
+                </p>
+            </template>
         </div>
 
         <div class="slds-p-around_small" lwc:if={recommender2SelectVisible}>
             <lightning-combobox
-                    name="recommender2EmailTemplate"
+                    name="recommender2TemplateSelect"
                     label="Recommender 2 Email Template"
-                    value={recommender2TemplateIdValue}
+                    value={recommender2SelectTemplateId}
                     placeholder="Select Recommender 2 Email Template"
                     options={emailTemplateValueOptions}
+                    data-templatetype="recommender2Template"
                     data-selecttype="recommender2Template"
-                    onchange={saveButtonDisableCheck}></lightning-combobox>
-
+                    onchange={templateEventHandler}></lightning-combobox>
             <lightning-input type="checkbox"
                              label="Preview Email Template"
-                             name="preview"
-                             onchange={previewClick}>
+                             name="recommender2TemplatePreview"
+                             data-templatetype="recommender2Template"
+                             data-checktype="recommender2Template"
+                             disabled={recommender2PreviewDisabled}
+                             onchange={templateEventHandler}>
             </lightning-input>
-
-            <p>Selected Recommender 2 Template value: {recommender2TemplateSelectValue}</p>
-            <p>Current Recommender 2 Email Template Id: {recommender2TemplateIdValue}</p>
+            <p>Selected Recommender 2 Template value: {recommender2SelectTemplateId}</p>
+            <p>Initial Recommender 2 Email Template Id: {recommender2InitialTemplateId}</p>
+            <template lwc:if={recommender2PreviewChecked}>
+                <p>
+                    <lightning-formatted-rich-text value={recommender2TemplateHtmlValue}></lightning-formatted-rich-text>
+                </p>
+            </template>
         </div>
         <div class="slds-p-around_small">
             <lightning-button label="Save"
@@ -110,7 +137,7 @@
                               disabled={cancelDisabled}>
             </lightning-button>
         </div>
-        <template lwc:if={previewCheck}>
+        <template lwc:if={previewChecked}>
             <p>
                 <lightning-formatted-rich-text value={templateHtmlValue}></lightning-formatted-rich-text>
             </p>

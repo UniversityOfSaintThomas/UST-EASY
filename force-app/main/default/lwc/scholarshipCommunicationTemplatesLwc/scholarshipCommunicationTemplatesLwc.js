@@ -41,8 +41,8 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
 
     @track templateDetails = {
         "orgWideEmail": {initial:"", select:"", field: ORG_WIDE_EMAIL_ID},
-        "submitTemplate": {initial:"", select:"", field: SUBMIT_EMAIL_TEMPLATE_ID},
         "startTemplate": {initial:"", select:"", field: START_EMAIL_TEMPLATE_ID},
+        "submitTemplate": {initial:"", select:"", field: SUBMIT_EMAIL_TEMPLATE_ID},
         "recommender1Template": {initial:"", select:"", field: RECOMMENDER1_EMAIL_TEMPLATE_ID},
         "recommender2Template": {initial:"", select:"", field: RECOMMENDER2_EMAIL_TEMPLATE_ID},
     };
@@ -51,18 +51,15 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     recommenderOption1;
     recommenderOption2;
 
-    submitPreviewCheckbox;
-    startPreviewCheckbox;
-    recommender1PreviewCheckbox;
-    recommender2PreviewCheckbox;
+    @track previewCheckbox = {
+        "start": {selector:"", clicked:false},
+        "submit": {selector:"", clicked:false},
+        "recommender1": {selector:"", clicked:false},
+        "recommender2": {selector:"", clicked:false},
+    }
 
-    submitPreviewChecked = false;
-    startPreviewChecked = false;
-    recommender1PreviewChecked = false;
-    recommender2PreviewChecked = false;
-
-    submitTemplateHtmlValue;
     startTemplateHtmlValue;
+    submitTemplateHtmlValue;
     recommender1TemplateHtmlValue;
     recommender2TemplateHtmlValue;
 
@@ -75,11 +72,11 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     get recommender2SelectVisible() {
         return this.recommenderOption2 === "Recommender2 Required" || this.recommenderOption2 === "Recommender2 Optional";
     }
-    get submitPreviewDisabled() {
-        return !!!this.templateDetails.submitTemplate.select;
-    };
     get startPreviewDisabled() {
         return !!!this.templateDetails.startTemplate.select;
+    };
+    get submitPreviewDisabled() {
+        return !!!this.templateDetails.submitTemplate.select;
     };
     get recommender1PreviewDisabled() {
         return !!!this.templateDetails.recommender1Template.select;
@@ -89,10 +86,10 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     };
 
     renderedCallback() {
-        this.submitPreviewCheckbox = this.template.querySelector("[data-checktype='submitTemplate']");
-        this.startPreviewCheckbox = this.template.querySelector("[data-checktype='startTemplate']");
-        this.recommender1PreviewCheckbox = this.template.querySelector("[data-checktype='recommender1Template']");
-        this.recommender2PreviewCheckbox = this.template.querySelector("[data-checktype='recommender2Template']");
+        this.previewCheckbox.start.selector = this.template.querySelector("[data-checktype='startTemplate']");
+        this.previewCheckbox.submit.selector = this.template.querySelector("[data-checktype='submitTemplate']");
+        this.previewCheckbox.recommender1.selector = this.template.querySelector("[data-checktype='recommender1Template']");
+        this.previewCheckbox.recommender2.selector = this.template.querySelector("[data-checktype='recommender2Template']");
     }
 
     @wire(getRecord, { recordId: "$recordId", fields: FIELDS })
@@ -101,8 +98,8 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
         if (results.data) {
             this.scholarshipFields = results.data;
             this.templateDetails.orgWideEmail.initial = getFieldValue(this.scholarshipFields, ORG_WIDE_EMAIL_ID);
-            this.templateDetails.submitTemplate.initial = getFieldValue(this.scholarshipFields, SUBMIT_EMAIL_TEMPLATE_ID);
             this.templateDetails.startTemplate.initial = getFieldValue(this.scholarshipFields, START_EMAIL_TEMPLATE_ID);
+            this.templateDetails.submitTemplate.initial = getFieldValue(this.scholarshipFields, SUBMIT_EMAIL_TEMPLATE_ID);
             this.templateDetails.recommender1Template.initial = getFieldValue(this.scholarshipFields, RECOMMENDER1_EMAIL_TEMPLATE_ID);
             this.templateDetails.recommender2Template.initial = getFieldValue(this.scholarshipFields, RECOMMENDER2_EMAIL_TEMPLATE_ID);
             this.sendStartEmailCheck = getFieldValue(this.scholarshipFields, SEND_START_EMAIL);
@@ -112,11 +109,11 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
             if (!!!this.templateDetails.orgWideEmail.initial) {
                 missingDefaults.push("'Sent From Email Address'");
             }
-            if (!!!this.templateDetails.submitTemplate.initial) {
-                missingDefaults.push("'Submitted Scholarship Email Template'");
-            }
             if (this.sendStartEmailCheck && !!!this.templateDetails.startTemplate.initial) {
                 missingDefaults.push("'Started Scholarship Email Template'");
+            }
+            if (!!!this.templateDetails.submitTemplate.initial) {
+                missingDefaults.push("'Submitted Scholarship Email Template'");
             }
             if ((this.recommenderOption1 === "Recommender Required" || this.recommenderOption1 === "Recommender Optional") && !!!this.templateDetails.recommender1Template.initial) {
                 missingDefaults.push("'Recommender 1 Email Template'");
@@ -129,7 +126,7 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: "Complete Scholarship Communication Templates Setup",
-                        message: "Select and save values for " + displayMissingDefaults + ".",
+                        message: "Select and Save values for " + displayMissingDefaults + ".",
                         variant: "warning",
                     }),
                 );
@@ -162,10 +159,16 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
 
     setInitialValues() {
         this.templateDetails.orgWideEmail.select = this.templateDetails.orgWideEmail.initial;
-        this.templateDetails.submitTemplate.select = this.templateDetails.submitTemplate.initial;
         this.templateDetails.startTemplate.select = this.templateDetails.startTemplate.initial;
+        this.templateDetails.submitTemplate.select = this.templateDetails.submitTemplate.initial;
         this.templateDetails.recommender1Template.select = this.templateDetails.recommender1Template.initial;
         this.templateDetails.recommender2Template.select = this.templateDetails.recommender2Template.initial;
+        for (const key in this.previewCheckbox) {
+            if (this.previewCheckbox[key].selector) {
+                this.previewCheckbox[key].selector.checked = false;
+            }
+            this.previewCheckbox[key].clicked = false;
+        }
         this.saveDisabled = true;
     }
 
@@ -181,57 +184,57 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
                 this.templateDetails.orgWideEmail.select = eventValue;
                 this.saveButtonDisabledBool.orgWideEmail = eventValue === this.templateDetails.orgWideEmail.initial ? "true" : "false";
                 break;
-            case "submitTemplate":
-                if (!!datasetSelectType) {
-                    this.templateDetails.submitTemplate.select = eventValue;
-                    this.saveButtonDisabledBool.submitTemplate = eventValue === this.templateDetails.submitTemplate.initial ? "true" : "false";
-                    this.submitPreviewCheckbox.checked = false;
-                    this.submitPreviewChecked = false;
-                }
-                else if (!!datasetCheckType) {
-                    if (!!eventChecked) {
-                        this.submitTemplateHtmlValue = this.findTemplate(this.templateDetails.submitTemplate.select).htmlValue;
-                    }
-                    this.submitPreviewChecked = eventChecked;
-                }
-                break;
             case "startTemplate":
                 if (!!datasetSelectType) {
                     this.templateDetails.startTemplate.select = eventValue;
                     this.saveButtonDisabledBool.startTemplate = eventValue === this.templateDetails.startTemplate.initial ? "true" : "false";
-                    this.startPreviewCheckbox.checked = false;
-                    this.startPreviewChecked = false;
+                    this.previewCheckbox.start.selector.checked = false;
+                    this.previewCheckbox.start.clicked = false;
                 } else if (!!datasetCheckType) {
-                    if (!!eventChecked) {
+                    if (eventChecked) {
                         this.startTemplateHtmlValue = this.findTemplate(this.templateDetails.startTemplate.select).htmlValue;
                     }
-                    this.startPreviewChecked = eventChecked;
+                    this.previewCheckbox.start.clicked = eventChecked;
+                }
+                break;
+            case "submitTemplate":
+                if (!!datasetSelectType) {
+                    this.templateDetails.submitTemplate.select = eventValue;
+                    this.saveButtonDisabledBool.submitTemplate = eventValue === this.templateDetails.submitTemplate.initial ? "true" : "false";
+                    this.previewCheckbox.submit.selector.checked = false;
+                    this.previewCheckbox.submit.clicked = false;
+                }
+                else if (!!datasetCheckType) {
+                    if (eventChecked) {
+                        this.submitTemplateHtmlValue = this.findTemplate(this.templateDetails.submitTemplate.select).htmlValue;
+                    }
+                    this.previewCheckbox.submit.clicked = eventChecked;
                 }
                 break;
             case "recommender1Template":
                 if (!!datasetSelectType) {
                     this.templateDetails.recommender1Template.select = eventValue;
                     this.saveButtonDisabledBool.recommender1Template = eventValue === this.templateDetails.recommender1Template.initial ? "true" : "false";
-                    this.recommender1PreviewCheckbox.checked = false;
-                    this.recommender1PreviewChecked = false;
+                    this.previewCheckbox.recommender1.selector.checked = false;
+                    this.previewCheckbox.recommender1.clicked = false;
                 } else if (!!datasetCheckType) {
-                    if (!!eventChecked) {
+                    if (eventChecked) {
                         this.recommender1TemplateHtmlValue = this.findTemplate(this.templateDetails.recommender1Template.select).htmlValue;
                     }
-                    this.recommender1PreviewChecked = eventChecked;
+                    this.previewCheckbox.recommender1.clicked = eventChecked;
                 }
                 break;
             case "recommender2Template":
                 if (!!datasetSelectType) {
                     this.templateDetails.recommender2Template.select = eventValue;
                     this.saveButtonDisabledBool.recommender2Template = eventValue === this.templateDetails.recommender2Template.initial ? "true" : "false";
-                    this.recommender2PreviewCheckbox.checked = false;
-                    this.recommender2PreviewChecked = false;
+                    this.previewCheckbox.recommender2.selector.checked = false;
+                    this.previewCheckbox.recommender2.clicked = false;
                 } else if (!!datasetCheckType) {
-                    if (!!eventChecked) {
+                    if (eventChecked) {
                         this.recommender2TemplateHtmlValue = this.findTemplate(this.templateDetails.recommender2Template.select).htmlValue;
                     }
-                    this.recommender2PreviewChecked = eventChecked;
+                    this.previewCheckbox.recommender2.clicked = eventChecked;
                 }
                 break;
         }
@@ -277,5 +280,4 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
         this.saveButtonDisabledBool = {};
         this.saveDisabled = true;
     }
-
 }

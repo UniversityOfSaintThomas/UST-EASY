@@ -201,13 +201,13 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
         if (String.isNotBlank(recName1) && String.isNotBlank(recEmail1) && ((applicant.Recommendation_Request_Date__c == null && recommendRequestNow1) || resendRecommendation1)) {
             if (!String.isEmpty(recEmail1)) {
-                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Recommender_Org_From_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
+                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
                 applicant.Recommendation_Request_Date__c = Datetime.now();
             }
         }
         if (String.isNotBlank(recName2) && String.isNotBlank(recEmail2) && ((applicant.Recommendation2_Request_Date__c == null && recommendRequestNow2) || resendRecommendation2)) {
             if (!String.isEmpty(recEmail2)) {
-                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Recommender2_Org_From_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
+                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
                 applicant.Recommendation2_Request_Date__c = Datetime.now();
             }
         }
@@ -347,42 +347,45 @@ public with sharing class ScholarshipApplicationPage2Controller {
         recommendRequestNow2 = true;
         PageReference recommendRedirect = SendRecommenderEmail();
 
-        String styledP = '<p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: rgb(85, 85, 85);font-family: Palatino Linotype, Georgia, serif;font-size: 16px;line-height: 150%;text-align: left;">';
-        String cMessage = '<h2>Your scholarship application has been received!</h2>';
-        String firstName = 'FirstName';
-        String lastName = 'LastName';
-        String email = 'EmailAddress@InsertEmailDomain.Unknown';
         List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
-        //Create Task Activity
-        List<Task> taskActivityList = new List<Task>();
+        emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Submit_Scholarship_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, applicant.Contact__r.Email));
 
-        List<Contact> contactMatches = [
-                SELECT Id, Name, FirstName, LastName, Email
-                FROM Contact
-                WHERE Id = :applicant.Contact__c
-        ];
-        for (Contact contact : contactMatches) {
-            firstName = contact.FirstName;
-            lastName = contact.LastName;
-            email = contact.Email;
-        }
-
-        cMessage += styledP + firstName + ' ' + lastName + ',</p>';
-        cMessage += styledP + 'Your application to the ' + scholarship.Name + ' has been received.</p>';
-        if (scholarship.Description__c != null) {
-            cMessage += styledP + '<strong>Scholarship Description</strong><br/>' + scholarship.Description__c + '</p>';
-        }
-        if (scholarship.Review_Award_Process_Description__c != null) {
-            cMessage += styledP + '<strong>What happens next?</strong><br/>' + scholarship.Review_Award_Process_Description__c + '</p>';
-        }
-        emailsToSend.add(ScholarshipSharedUtilities.sendEmail(firstName + ' ' + lastName, email, 'University of St. Thomas Scholarship', cMessage, cMessage, scholarship.Name));
-        taskActivityList.add(ScholarshipSharedUtilities.createTaskActivity(applicant.Id, applicant.Contact__c, 'University of St. Thomas Scholarship', cMessage, '', '', resendRecommendationRequestBool, 0));
+//        String styledP = '<p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: rgb(85, 85, 85);font-family: Palatino Linotype, Georgia, serif;font-size: 16px;line-height: 150%;text-align: left;">';
+//        String cMessage = '<h2>Your scholarship application has been received!</h2>';
+//        String firstName = 'FirstName';
+//        String lastName = 'LastName';
+//        String email = 'EmailAddress@InsertEmailDomain.Unknown';
+//        List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
+//        //Create Task Activity
+//        List<Task> taskActivityList = new List<Task>();
+//
+//        List<Contact> contactMatches = [
+//                SELECT Id, Name, FirstName, LastName, Email
+//                FROM Contact
+//                WHERE Id = :applicant.Contact__c
+//        ];
+//        for (Contact contact : contactMatches) {
+//            firstName = contact.FirstName;
+//            lastName = contact.LastName;
+//            email = contact.Email;
+//        }
+//
+//        cMessage += styledP + firstName + ' ' + lastName + ',</p>';
+//        cMessage += styledP + 'Your application to the ' + scholarship.Name + ' has been received.</p>';
+//        if (scholarship.Description__c != null) {
+//            cMessage += styledP + '<strong>Scholarship Description</strong><br/>' + scholarship.Description__c + '</p>';
+//        }
+//        if (scholarship.Review_Award_Process_Description__c != null) {
+//            cMessage += styledP + '<strong>What happens next?</strong><br/>' + scholarship.Review_Award_Process_Description__c + '</p>';
+//        }
+//        emailsToSend.add(ScholarshipSharedUtilities.sendEmail(firstName + ' ' + lastName, email, 'University of St. Thomas Scholarship', cMessage, cMessage, scholarship.Name));
+//        taskActivityList.add(ScholarshipSharedUtilities.createTaskActivity(applicant.Id, applicant.Contact__c, 'University of St. Thomas Scholarship', cMessage, '', '', resendRecommendationRequestBool, 0));
 
         if (emailsToSend.size() > 0) {
             try {
                 upsert applicant;
                 Messaging.sendEmail(emailsToSend);
-                insert taskActivityList;
+//                insert taskActivityList;
             } catch (Exception ex) {
                 //If the email fails, we want to add the error message to the activity task description
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Scholarship not saved: ' + ex.getMessage()));

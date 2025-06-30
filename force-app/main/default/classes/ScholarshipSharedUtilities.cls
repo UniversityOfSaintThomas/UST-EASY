@@ -61,8 +61,9 @@ public with sharing class ScholarshipSharedUtilities {
                             Recommender2_Auto_Send__c, Recommender2_Description__c, Recommender2_Question__c, Recommender2__c, Recommender_Auto_Send__c,
                             Recommender_Description__c, Recommender_Question__c, Recommender__c, Scholarship_ID__c, Short_Description__c,
                             Review_Award_Process_Description__c, Self_Report_ACT_GPA_Criteria__c, Essay_1_Allow_Upload__c, Essay_2_Allow_Upload__c,
-                            Recommender_Option__c, Recommender2_Option__c, Recommender_Email_Template_Id__c, Recommender2_Email_Template_Id__c,
-                            Recommender_Org_From_Email_Id__c, Recommender2_Org_From_Email_Id__c
+                            Communicated_Close_Date__c, Org_Wide_Email_Id__c, Submit_Scholarship_Email_Template_Id__c,
+                            Send_Started_Scholarship_Email__c, Start_Scholarship_Email_Template_Id__c,
+                            Recommender_Option__c, Recommender2_Option__c, Recommender_Email_Template_Id__c, Recommender2_Email_Template_Id__c
                     FROM Scholarship__c
                     WHERE Scholarship_ID__c = :scholarshipId
             ];
@@ -86,7 +87,7 @@ public with sharing class ScholarshipSharedUtilities {
                             Recommender_Email__c, Recommender_Name__c, Scholarship_Complete__c, Scholarship__c, Signature__c, Scholarship_Status__c,
                             Essay_1_Uploaded_Orig_Filename__c, Essay_2_Uploaded_Orig_Filename__c, Scholarship_Date_Started__c, Scholarship_Date_Submitted__c,
                             Recommendation2_Request_Date__c, Recommendation_Request_Date__c, Contact__c, Recommendation_Link__c, Recommendation_Link_2__c,
-                            Contact__r.Name
+                            Contact__r.Name, Contact__r.Email
                     FROM Scholarship_Applicant__c
                     WHERE Contact__c = :contactId
                     AND Scholarship__c = :scholarshipId
@@ -113,13 +114,12 @@ public with sharing class ScholarshipSharedUtilities {
     }
 
     //Create Lightning Email Message
-    public static Messaging.SingleEmailMessage sendLightningEmail(String emailTemplateId, String emailFromId, String scholarshipApplication, String applicantContactId, String recommenderEmail) {
-
+    public static Messaging.SingleEmailMessage sendLightningEmail(String emailTemplateId, String emailFromId, String scholarshipApplicationId, String applicantContactId, String EmailToAddress) {
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
 
-        message = Messaging.renderStoredEmailTemplate(emailTemplateId, applicantContactId, scholarshipApplication);
+        message = Messaging.renderStoredEmailTemplate(emailTemplateId, applicantContactId, scholarshipApplicationId);
         message.setTreatTargetObjectAsRecipient(false);
-        message.setToAddresses(new String[]{recommenderEmail});
+        message.setToAddresses(new String[]{EmailToAddress});
         message.setUseSignature(false);
         message.setOrgWideEmailAddressId(emailFromId);
         message.optOutPolicy = 'FILTER';
@@ -258,34 +258,34 @@ public with sharing class ScholarshipSharedUtilities {
     }
 
     //Create Task Activity for Emails Sent
-    public static Task createTaskActivity(Id whatId, Id contactId, String subject, String description, String name, String email, Boolean resendBool, Integer recommenderNum) {
-        String subjectText = '';
-        String resendStatus = '';
-
-        if (resendBool) {
-            resendStatus = '[RESENT] ';
-        }
-
-        if (recommenderNum == 0) {
-            subjectText = 'Email sent to Applicant';
-        } else {
-            subjectText = resendStatus + 'Email sent to Recommender ' + recommenderNum + ': ' + name + ' ' + email;
-        }
-
-        Task taskActivity = new Task();
-        taskActivity.WhatId = whatId;
-        taskActivity.WhoId = contactId;
-        taskActivity.Type = 'Email';
-        taskActivity.ActivityDate = Date.today();
-        taskActivity.Subject = subjectText;
-        taskActivity.Status = 'Completed';
-        taskActivity.Priority = 'Low';
-        taskActivity.Description = 'Subject: ' + subject + '\n\n';
-        taskActivity.Description += description.replaceAll('</p>', '\n');
-        taskActivity.Description = taskActivity.Description.replaceAll('<(.*?)>', '');
-
-        return taskActivity;
-    }
+//    public static Task createTaskActivity(Id whatId, Id contactId, String subject, String description, String name, String email, Boolean resendBool, Integer recommenderNum) {
+//        String subjectText = '';
+//        String resendStatus = '';
+//
+//        if (resendBool) {
+//            resendStatus = '[RESENT] ';
+//        }
+//
+//        if (recommenderNum == 0) {
+//            subjectText = 'Email sent to Applicant';
+//        } else {
+//            subjectText = resendStatus + 'Email sent to Recommender ' + recommenderNum + ': ' + name + ' ' + email;
+//        }
+//
+//        Task taskActivity = new Task();
+//        taskActivity.WhatId = whatId;
+//        taskActivity.WhoId = contactId;
+//        taskActivity.Type = 'Email';
+//        taskActivity.ActivityDate = Date.today();
+//        taskActivity.Subject = subjectText;
+//        taskActivity.Status = 'Completed';
+//        taskActivity.Priority = 'Low';
+//        taskActivity.Description = 'Subject: ' + subject + '\n\n';
+//        taskActivity.Description += description.replaceAll('</p>', '\n');
+//        taskActivity.Description = taskActivity.Description.replaceAll('<(.*?)>', '');
+//
+//        return taskActivity;
+//    }
 
     public without sharing class RecommenderEmailStatus {
 

@@ -16,6 +16,10 @@ public with sharing class ScholarshipApplicationCompleteController {
         ScholarshipSharedUtilities.RecommenderEmailStatus recommenderStatus = new ScholarshipSharedUtilities.RecommenderEmailStatus();
         recommender1EmailStatus = recommenderStatus.emailStatus(scholarshipApplicant.Id, scholarshipApplicant.Recommender_Email__c);
         recommender2EmailStatus = recommenderStatus.emailStatus(scholarshipApplicant.Id, scholarshipApplicant.Recommender2_Email__c);
-    }
 
+        List<String> pageMessage = ScholarshipSharedUtilities.PageMessage();
+        if (pageMessage.size() == 2) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.valueOf(pageMessage[0]), pageMessage[1]));
+        }
+    }
 }

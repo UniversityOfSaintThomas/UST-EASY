@@ -4,7 +4,7 @@
 
 <!-- Scholarship Communication Templates Lwc -->
 <template>
-    <lightning-card>
+    <lightning-card lwc:if={scholarshipEligibleCheck}>
         <h3 slot="title">
             <lightning-icon icon-name="utility:email" size="small" class="slds-p-right_x-small"></lightning-icon>
             Scholarship Communication Templates
@@ -19,8 +19,7 @@
                     options={orgWideEmailValueOptions}
                     data-templatetype="orgWideEmail"
                     data-selecttype="orgWideEmail"
-                    onchange={templateEventHandler}
-                    required="true">
+                    onchange={templateEventHandler}>
             </lightning-combobox>
             <!--            <p>Selected Org Wide Email Id value: {templateDetails.orgWideEmail.select}</p>-->
             <!--            <p>Initial Org Wide Email Id value: {templateDetails.orgWideEmail.initial}</p>-->
@@ -62,8 +61,7 @@
                     options={emailTemplateValueOptions}
                     data-templatetype="submitTemplate"
                     data-selecttype="submitTemplate"
-                    onchange={templateEventHandler}
-                    required="true"></lightning-combobox>
+                    onchange={templateEventHandler}></lightning-combobox>
             <lightning-input class="slds-p-vertical_xx-small"
                              type="checkbox"
                              label="Preview Template"

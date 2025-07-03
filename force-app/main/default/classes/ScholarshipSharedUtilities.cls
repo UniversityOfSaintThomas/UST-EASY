@@ -40,12 +40,35 @@ public with sharing class ScholarshipSharedUtilities {
     }
 
     public static PageReference setSid(PageReference pageRef, Boolean redir, String scholarshipId) {
-        if (!String.isEmpty(scholarshipId)) {
+        if (String.isNotEmpty(scholarshipId)) {
             createCookie(scholarshipId);
             pageRef.getParameters().put('sid', scholarshipId);
         }
         pageRef.setRedirect(redir);
         return pageRef;
+    }
+
+    public static List<String> PageMessage() {
+        List<String> severityMessage = new List<String>();
+        Map<String, String> params = ApexPages.currentPage().getParameters();
+        if (params.containsKey('pageMsg')) {
+            String message = params.get('pageMsg');
+            switch on message {
+                when '1w' {
+                    return severityMessage = new String[]{'WARNING', 'Application Started and Saved. No confirmation sent to applicant'};
+                }
+                when '2w' {
+                    return severityMessage = new String[]{'WARNING', 'Application Saved and Submitted. No confirmation sent to applicant.'};
+                }
+                when '1test' {
+                    return severityMessage = new String[]{'WARNING', 'TEST Application Started and Saved. No confirmation sent to applicant'};
+                }
+                when '2test' {
+                    return severityMessage = new String[]{'WARNING', 'TEST Application Saved and Submitted. No confirmation sent to applicant.'};
+                }
+            }
+        }
+        return severityMessage;
     }
 
     public static Scholarship__c getScholarshipInfo() {
@@ -61,9 +84,9 @@ public with sharing class ScholarshipSharedUtilities {
                             Recommender2_Auto_Send__c, Recommender2_Description__c, Recommender2_Question__c, Recommender2__c, Recommender_Auto_Send__c,
                             Recommender_Description__c, Recommender_Question__c, Recommender__c, Scholarship_ID__c, Short_Description__c,
                             Review_Award_Process_Description__c, Self_Report_ACT_GPA_Criteria__c, Essay_1_Allow_Upload__c, Essay_2_Allow_Upload__c,
-                            Communicated_Close_Date__c, Org_Wide_Email_Id__c, Submit_Scholarship_Email_Template_Id__c,
-                            Send_Started_Scholarship_Email__c, Start_Scholarship_Email_Template_Id__c,
-                            Recommender_Option__c, Recommender2_Option__c, Recommender_Email_Template_Id__c, Recommender2_Email_Template_Id__c
+                            Communicated_Close_Date__c, Org_Wide_Email_Id__c, Submit_Scholarship_Email_Template_Id__c, Send_Started_Scholarship_Email__c,
+                            Start_Scholarship_Email_Template_Id__c, Recommender_Option__c, Recommender2_Option__c, Recommender_Email_Template_Id__c,
+                            Recommender2_Email_Template_Id__c, RecordTypeId
                     FROM Scholarship__c
                     WHERE Scholarship_ID__c = :scholarshipId
             ];

@@ -16,6 +16,7 @@ import RECOMMENDER_OPTION1 from "@salesforce/schema/Scholarship__c.Recommender_O
 import RECOMMENDER_OPTION2 from "@salesforce/schema/Scholarship__c.Recommender2_Option__c"
 import RECOMMENDER1_EMAIL_TEMPLATE_ID from "@salesforce/schema/Scholarship__c.Recommender_Email_Template_Id__c";
 import RECOMMENDER2_EMAIL_TEMPLATE_ID from "@salesforce/schema/Scholarship__c.Recommender2_Email_Template_Id__c";
+import RECORD_TYPE_DEVELOPER_NAME from "@salesforce/schema/Scholarship__c.RecordType.DeveloperName";
 
 const FIELDS = [
     ORG_WIDE_EMAIL_ID,
@@ -25,11 +26,15 @@ const FIELDS = [
     RECOMMENDER_OPTION1,
     RECOMMENDER_OPTION2,
     RECOMMENDER1_EMAIL_TEMPLATE_ID,
-    RECOMMENDER2_EMAIL_TEMPLATE_ID
+    RECOMMENDER2_EMAIL_TEMPLATE_ID,
+    RECORD_TYPE_DEVELOPER_NAME
 ];
 
 export default class ScholarshipCommunicationTemplatesLwc extends LightningElement {
     @api recordId;
+
+    scholarshipEligibleCheck = false;
+    missingDefaults = [];
 
     scholarshipFields;
     orgWideEmailValueOptions;
@@ -50,6 +55,7 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     sendStartEmailCheck;
     recommenderOption1;
     recommenderOption2;
+    recordTypeDeveloperName;
 
     @track previewCheckbox = {
         "start": {selector:"", clicked:false},
@@ -94,7 +100,7 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
 
     @wire(getRecord, { recordId: "$recordId", fields: FIELDS })
     scholarshipRecord(results) {
-        let missingDefaults = [];
+        this.missingDefaults = [];
         if (results.data) {
             this.scholarshipFields = results.data;
             this.templateDetails.orgWideEmail.initial = getFieldValue(this.scholarshipFields, ORG_WIDE_EMAIL_ID);
@@ -105,32 +111,26 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
             this.sendStartEmailCheck = getFieldValue(this.scholarshipFields, SEND_START_EMAIL);
             this.recommenderOption1 = getFieldValue(this.scholarshipFields, RECOMMENDER_OPTION1);
             this.recommenderOption2 = getFieldValue(this.scholarshipFields, RECOMMENDER_OPTION2);
+            this.recordTypeDeveloperName = getFieldValue(this.scholarshipFields, RECORD_TYPE_DEVELOPER_NAME);
+
+            this.scholarshipEligibleCheck = this.recordTypeDeveloperName === "Graduate_Scholarship" || this.recordTypeDeveloperName === "Scholarship";
 
             if (!!!this.templateDetails.orgWideEmail.initial) {
-                missingDefaults.push("'Sent From Email Address'");
+                this.missingDefaults.push("'Sent From Email Address'");
             }
             if (this.sendStartEmailCheck && !!!this.templateDetails.startTemplate.initial) {
-                missingDefaults.push("'Started Scholarship Email Template'");
+                this.missingDefaults.push("'Started Scholarship Email Template'");
             }
             if (!!!this.templateDetails.submitTemplate.initial) {
-                missingDefaults.push("'Submitted Scholarship Email Template'");
+                this.missingDefaults.push("'Submitted Scholarship Email Template'");
             }
             if ((this.recommenderOption1 === "Recommender Required" || this.recommenderOption1 === "Recommender Optional") && !!!this.templateDetails.recommender1Template.initial) {
-                missingDefaults.push("'Recommender 1 Email Template'");
+                this.missingDefaults.push("'Recommender 1 Email Template'");
             }
             if ((this.recommenderOption2 === "Recommender2 Required" || this.recommenderOption2 === "Recommender2 Optional") && !!!this.templateDetails.recommender2Template.initial) {
-                missingDefaults.push("'Recommender 2 Email Template'");
+                this.missingDefaults.push("'Recommender 2 Email Template'");
             }
-            if (missingDefaults.length > 0) {
-                let displayMissingDefaults = missingDefaults.join(" and ");
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: "Complete Scholarship Communication Templates Setup",
-                        message: "Select and Save values for " + displayMissingDefaults + ".",
-                        variant: "warning",
-                    }),
-                );
-            }
+
             this.setInitialValues();
         }
     }
@@ -168,6 +168,16 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
                 this.previewCheckbox[key].selector.checked = false;
             }
             this.previewCheckbox[key].clicked = false;
+        }
+        if (this.scholarshipEligibleCheck && this.missingDefaults.length > 0) {
+            let displayMissingDefaults = this.missingDefaults.join(" and ");
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: "Complete Scholarship Communication Templates Setup",
+                    message: "Select and Save values for " + displayMissingDefaults + ".",
+                    variant: "warning",
+                }),
+            );
         }
         this.saveDisabled = true;
     }

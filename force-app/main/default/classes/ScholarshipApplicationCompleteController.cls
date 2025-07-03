@@ -13,7 +13,7 @@ public with sharing class ScholarshipApplicationCompleteController {
         scholarship = ScholarshipSharedUtilities.getScholarshipInfo();
         scholarshipApplicant = ScholarshipSharedUtilities.getApplicantInfo(scholarship.Id, contactId);
 
-        ScholarshipSharedUtilities.RecommenderEmailStatus recommenderStatus = new ScholarshipSharedUtilities.RecommenderEmailStatus();
+        ScholarshipSharedUtilities.emailUtilities recommenderStatus = new ScholarshipSharedUtilities.emailUtilities();
         recommender1EmailStatus = recommenderStatus.emailStatus(scholarshipApplicant.Id, scholarshipApplicant.Recommender_Email__c);
         recommender2EmailStatus = recommenderStatus.emailStatus(scholarshipApplicant.Id, scholarshipApplicant.Recommender2_Email__c);
 

@@ -13,7 +13,7 @@
             <lightning-combobox
                     name="orgWideEmailSelect"
                     label="Sent From Email Address"
-                    field-level-help="From Email Address for all email communications."
+                    field-level-help="Sender of all communications to applicant."
                     value={templateDetails.orgWideEmail.select}
                     placeholder="Select..."
                     options={orgWideEmailValueOptions}
@@ -28,10 +28,10 @@
             <lightning-combobox
                     name="startTemplateSelect"
                     label="Started Scholarship Email Template"
-                    field-level-help="Email template to applicant will receive when they start an application."
+                    field-level-help="Started application confirmation email to applicant."
                     value={templateDetails.startTemplate.select}
                     placeholder="Select..."
-                    options={emailTemplateValueOptions}
+                    options={startTemplateOptions}
                     data-templatetype="startTemplate"
                     data-selecttype="startTemplate"
                     onchange={templateEventHandler}></lightning-combobox>
@@ -56,9 +56,10 @@
             <lightning-combobox
                     name="submitTemplateSelect"
                     label="Submitted Scholarship Email Template"
+                    field-level-help="Submitted confirmation email to applicant."
                     value={templateDetails.submitTemplate.select}
                     placeholder="Select..."
-                    options={emailTemplateValueOptions}
+                    options={submitTemplateOptions}
                     data-templatetype="submitTemplate"
                     data-selecttype="submitTemplate"
                     onchange={templateEventHandler}></lightning-combobox>
@@ -83,9 +84,10 @@
             <lightning-combobox
                     name="recommender1TemplateSelect"
                     label="Recommender 1 Email Template"
+                    field-level-help="Request email to Recommender 1"
                     value={templateDetails.recommender1Template.select}
                     placeholder="Select..."
-                    options={emailTemplateValueOptions}
+                    options={recommender1TemplateOptions}
                     data-templatetype="recommender1Template"
                     data-selecttype="recommender1Template"
                     onchange={templateEventHandler}></lightning-combobox>
@@ -110,9 +112,10 @@
             <lightning-combobox
                     name="recommender2TemplateSelect"
                     label="Recommender 2 Email Template"
+                    field-level-help="Request email to Recommender 2"
                     value={templateDetails.recommender2Template.select}
                     placeholder="Select..."
-                    options={emailTemplateValueOptions}
+                    options={recommender2TemplateOptions}
                     data-templatetype="recommender2Template"
                     data-selecttype="recommender2Template"
                     onchange={templateEventHandler}></lightning-combobox>

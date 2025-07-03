@@ -12,6 +12,7 @@ public with sharing class ScholarshipCommunicationTemplates {
         @AuraEnabled public String label;
         @AuraEnabled public String value;
         @AuraEnabled public String htmlValue;
+        @AuraEnabled public String folderName;
     }
 
     @AuraEnabled(Cacheable=true)
@@ -63,10 +64,15 @@ public with sharing class ScholarshipCommunicationTemplates {
         List<EmailTemplate> emailTemplatesList = [
                 SELECT Id,
                         Name,
-                        HtmlValue
+                        HtmlValue,
+                        FolderName
                 FROM EmailTemplate
                 WHERE UiType = 'SFX'
-                AND FolderName = NULL
+                AND Folder.Name IN ('Started Application Templates',
+                        'Submitted Application Templates',
+                        'Recommender 1 Templates',
+                        'Recommender 2 Templates')
+//                AND Folder.Name = NULL
                 ORDER BY Name
         ];
 
@@ -76,6 +82,7 @@ public with sharing class ScholarshipCommunicationTemplates {
                 emailTemplate.label = et.Name;
                 emailTemplate.value = et.Id;
                 emailTemplate.htmlValue = et.HtmlValue;
+                emailTemplate.folderName = et.FolderName;
                 emailTemplatesOptionsList.add(emailTemplate);
             }
         }

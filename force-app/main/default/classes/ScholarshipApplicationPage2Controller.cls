@@ -81,8 +81,10 @@ public with sharing class ScholarshipApplicationPage2Controller {
         }
         set;
     }
+    private ScholarshipSharedUtilities.emailUtilities emailBuilder { get; set; }
 
     public ScholarshipApplicationPage2Controller() {
+        emailBuilder = new ScholarshipSharedUtilities.emailUtilities();
         scholarship = ScholarshipSharedUtilities.getScholarshipInfo();
         if (scholarship != null) {
             applicant = ScholarshipSharedUtilities.getApplicantInfo(scholarship.Id, ScholarshipSharedUtilities.getActiveContactId());
@@ -104,6 +106,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
     //Constructor for use with Recommendation Request Resend LWC
     public ScholarshipApplicationPage2Controller(String scholarshipId, String ContactId) {
+        emailBuilder = new ScholarshipSharedUtilities.emailUtilities();
     }
 
     public PageReference initialize() {
@@ -205,7 +208,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
         if (String.isNotBlank(recName1) && String.isNotBlank(recEmail1) && ((applicant.Recommendation_Request_Date__c == null && recommendRequestNow1) || resendRecommendation1)) {
             if (!String.isEmpty(recEmail1)) {
                 try {
-                    emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
+//                    emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
+                      emailsToSend.add(emailBuilder.createEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
                     applicant.Recommendation_Request_Date__c = Datetime.now();
                 } catch (Exception ex) {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommender 1 Email Template: ' + ex.getMessage()));
@@ -217,7 +221,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
         if (String.isNotBlank(recName2) && String.isNotBlank(recEmail2) && ((applicant.Recommendation2_Request_Date__c == null && recommendRequestNow2) || resendRecommendation2)) {
             if (!String.isEmpty(recEmail2)) {
                 try {
-                    emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
+//                    emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
+                    emailsToSend.add(emailBuilder.createEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
                     applicant.Recommendation2_Request_Date__c = Datetime.now();
                 } catch (Exception ex) {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommender 2 Email Template: ' + ex.getMessage()));
@@ -236,7 +241,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
             }
 
             try {
-                Messaging.sendEmail(emailsToSend);
+//                Messaging.sendEmail(emailsToSend);
+                emailBuilder.sendCreatedEmails(emailsToSend);
             } catch (Exception ex) {
                 if (recommendRequestNow1 || recommendRequestNow2) {
                     //If the email fails, we want to add the error message to the activity task description
@@ -271,7 +277,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
         if (String.isNotEmpty(scholarship.Org_Wide_Email_Id__c) && String.isNotEmpty(scholarship.Submit_Scholarship_Email_Template_Id__c)) {
             try {
-                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Submit_Scholarship_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, applicant.Contact__r.Email));
+//                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Submit_Scholarship_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, applicant.Contact__r.Email));
+                emailsToSend.add(emailBuilder.createEmail(scholarship.Submit_Scholarship_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, applicant.Contact__r.Email));
             } catch (Exception ex) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Email Template: ' + ex.getMessage()));
                 System.debug('Submit Email Template exception: ' + ex.getMessage());
@@ -296,7 +303,8 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
         if (emailsToSend.size() > 0) {
             try {
-                Messaging.sendEmail(emailsToSend);
+//                Messaging.sendEmail(emailsToSend);
+                emailBuilder.sendCreatedEmails(emailsToSend);
                 pageRef.getParameters().put('pageMsg', '2test');
             } catch (Exception ex) {
                 //Add Submit confirmation email did not send ApexMessage on redirect Complete page

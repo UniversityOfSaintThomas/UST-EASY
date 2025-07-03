@@ -34,16 +34,19 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     @api recordId;
 
     scholarshipEligibleCheck = false;
-    missingDefaults = [];
-
+    @track missingDefaults = [];
     scholarshipFields;
     orgWideEmailValueOptions;
     emailTemplateValueOptions;
 
+    startTemplateOptions = [];
+    submitTemplateOptions = [];
+    recommender1TemplateOptions = [];
+    recommender2TemplateOptions = [];
+
     saveDisabled = true;
     cancelDisabled = false;
     saveButtonDisabledBool = {};
-
     @track templateDetails = {
         "orgWideEmail": {initial:"", select:"", field: ORG_WIDE_EMAIL_ID},
         "startTemplate": {initial:"", select:"", field: START_EMAIL_TEMPLATE_ID},
@@ -51,19 +54,16 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
         "recommender1Template": {initial:"", select:"", field: RECOMMENDER1_EMAIL_TEMPLATE_ID},
         "recommender2Template": {initial:"", select:"", field: RECOMMENDER2_EMAIL_TEMPLATE_ID},
     };
-
     sendStartEmailCheck;
     recommenderOption1;
     recommenderOption2;
     recordTypeDeveloperName;
-
     @track previewCheckbox = {
         "start": {selector:"", clicked:false},
         "submit": {selector:"", clicked:false},
         "recommender1": {selector:"", clicked:false},
         "recommender2": {selector:"", clicked:false},
     }
-
     startTemplateHtmlValue;
     submitTemplateHtmlValue;
     recommender1TemplateHtmlValue;
@@ -112,9 +112,7 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
             this.recommenderOption1 = getFieldValue(this.scholarshipFields, RECOMMENDER_OPTION1);
             this.recommenderOption2 = getFieldValue(this.scholarshipFields, RECOMMENDER_OPTION2);
             this.recordTypeDeveloperName = getFieldValue(this.scholarshipFields, RECORD_TYPE_DEVELOPER_NAME);
-
-            this.scholarshipEligibleCheck = this.recordTypeDeveloperName === "Graduate_Scholarship" || this.recordTypeDeveloperName === "Scholarship";
-
+            this.scholarshipEligibleCheck = this.recordTypeDeveloperName === "Graduate_Scholarship" || this.recordTypeDeveloperName === "Scholarship" || this.recordTypeDeveloperName === "Signature_Programs";
             if (!!!this.templateDetails.orgWideEmail.initial) {
                 this.missingDefaults.push("'Sent From Email Address'");
             }
@@ -130,7 +128,6 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
             if ((this.recommenderOption2 === "Recommender2 Required" || this.recommenderOption2 === "Recommender2 Optional") && !!!this.templateDetails.recommender2Template.initial) {
                 this.missingDefaults.push("'Recommender 2 Email Template'");
             }
-
             this.setInitialValues();
         }
     }
@@ -150,7 +147,25 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     emailTemplateWire({error, data}) {
         if (data) {
             this.emailTemplateValueOptions = JSON.parse(JSON.stringify(data));
-            this.emailTemplateValueOptions.unshift({label: "--None--", value: ""});
+            // this.emailTemplateValueOptions.unshift({label: "--None--", value: ""});
+            this.emailTemplateValueOptions.forEach((template) => {
+                if (template.folderName.startsWith('Started')) {
+                    this.startTemplateOptions.push(template);
+                }
+                if (template.folderName.startsWith('Submitted')) {
+                    this.submitTemplateOptions.push(template);
+                }
+                if (template.folderName.startsWith('Recommender 1')) {
+                    this.recommender1TemplateOptions.push(template);
+                }
+                if (template.folderName.startsWith('Recommender 2')) {
+                    this.recommender2TemplateOptions.push(template);
+                }
+            })
+            this.startTemplateOptions.unshift({label: "--None--", value: ""});
+            this.submitTemplateOptions.unshift({label: "--None--", value: ""});
+            this.recommender1TemplateOptions.unshift({label: "--None--", value: ""});
+            this.recommender2TemplateOptions.unshift({label: "--None--", value: ""});
         }
         if (error) {
             console.log("emailTemplateWire error: " + error);
@@ -158,6 +173,16 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     }
 
     setInitialValues() {
+        if (this.scholarshipEligibleCheck && this.missingDefaults.length > 0) {
+            let displayMissingDefaults = this.missingDefaults.join(" and ");
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: "Complete Scholarship Communication Templates Setup",
+                    message: "Select and Save values for " + displayMissingDefaults + ".",
+                    variant: "warning",
+                }),
+            );
+        }
         this.templateDetails.orgWideEmail.select = this.templateDetails.orgWideEmail.initial;
         this.templateDetails.startTemplate.select = this.templateDetails.startTemplate.initial;
         this.templateDetails.submitTemplate.select = this.templateDetails.submitTemplate.initial;
@@ -169,16 +194,6 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
             }
             this.previewCheckbox[key].clicked = false;
         }
-        if (this.scholarshipEligibleCheck && this.missingDefaults.length > 0) {
-            let displayMissingDefaults = this.missingDefaults.join(" and ");
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: "Complete Scholarship Communication Templates Setup",
-                    message: "Select and Save values for " + displayMissingDefaults + ".",
-                    variant: "warning",
-                }),
-            );
-        }
         this.saveDisabled = true;
     }
 
@@ -188,7 +203,6 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
         let datasetTemplateType = event.currentTarget.dataset.templatetype;
         let datasetSelectType = event.currentTarget.dataset.selecttype;
         let datasetCheckType = event.currentTarget.dataset.checktype;
-
         switch (datasetTemplateType) {
             case "orgWideEmail":
                 this.templateDetails.orgWideEmail.select = eventValue;

@@ -310,7 +310,25 @@ public with sharing class ScholarshipSharedUtilities {
 //        return taskActivity;
 //    }
 
-    public without sharing class RecommenderEmailStatus {
+    public without sharing class emailUtilities {
+
+        public Messaging.SingleEmailMessage createEmail(String emailTemplateId, String emailFromId, String scholarshipApplicationId, String applicantContactId, String EmailToAddress) {
+            Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+            message = Messaging.renderStoredEmailTemplate(emailTemplateId, applicantContactId, scholarshipApplicationId);
+            message.setTreatTargetObjectAsRecipient(false);
+            message.setToAddresses(new String[]{EmailToAddress});
+            message.setUseSignature(false);
+            message.setOrgWideEmailAddressId(emailFromId);
+            message.optOutPolicy = 'FILTER';
+            message.setUseSignature(false);
+            message.setBccSender(false);
+
+            return message;
+        }
+
+        public void sendCreatedEmails(List<Messaging.SingleEmailMessage> emailsToSend) {
+            Messaging.sendEmail(emailsToSend);
+        }
 
         public String emailStatus(String scholarshipAppId, String toAddress) {
             String emailOpenStatus = 'Unopened';
@@ -347,4 +365,26 @@ public with sharing class ScholarshipSharedUtilities {
         }
 
     }
+
+//    public without sharing class SendEmailPublic {
+//
+//        public Messaging.SingleEmailMessage sendLightningEmail(String emailTemplateId, String emailFromId, String scholarshipApplicationId, String applicantContactId, String EmailToAddress) {
+//            Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+//            message = Messaging.renderStoredEmailTemplate(emailTemplateId, applicantContactId, scholarshipApplicationId);
+//            message.setTreatTargetObjectAsRecipient(false);
+//            message.setToAddresses(new String[]{EmailToAddress});
+//            message.setUseSignature(false);
+//            message.setOrgWideEmailAddressId(emailFromId);
+//            message.optOutPolicy = 'FILTER';
+//            message.setUseSignature(false);
+//            message.setBccSender(false);
+//
+//            return message;
+//        }
+//
+//        public void sendEmailsNow(List<Messaging.SingleEmailMessage> emailsToSend ) {
+//            Messaging.sendEmail(emailsToSend);
+//        }
+//
+//    }
 }

@@ -2,7 +2,7 @@
  * Created by jjheaney on 5/2/2022.
  */
 
-public class ScholarshipApplicationPage1Controller {
+public with sharing class ScholarshipApplicationPage1Controller {
 //    public String pageURL { get; set; }
     public Scholarship__c scholarship { get; set; }
     public Scholarship_Applicant__c scholarshipApplicant { get; set; }

@@ -68,10 +68,10 @@ public with sharing class ScholarshipCommunicationTemplates {
                         FolderName
                 FROM EmailTemplate
                 WHERE UiType = 'SFX'
-                AND Folder.Name IN ('Started Application Templates',
-                        'Submitted Application Templates',
-                        'Recommender 1 Templates',
-                        'Recommender 2 Templates')
+                AND Folder.Name IN ('Started Scholarship Templates',
+                        'Submitted Scholarship Templates',
+                        'Recommender 1 Scholarship Templates',
+                        'Recommender 2 Scholarship Templates')
 //                AND Folder.Name = NULL
                 ORDER BY Name
         ];

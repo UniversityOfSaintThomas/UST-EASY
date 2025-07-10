@@ -60,12 +60,6 @@ public with sharing class ScholarshipSharedUtilities {
                 when '2w' {
                     return severityMessage = new String[]{'WARNING', 'Application Saved and Submitted. No confirmation sent to applicant.'};
                 }
-                when '1test' {
-                    return severityMessage = new String[]{'WARNING', 'TEST Application Started and Saved. No confirmation sent to applicant'};
-                }
-                when '2test' {
-                    return severityMessage = new String[]{'WARNING', 'TEST Application Saved and Submitted. No confirmation sent to applicant.'};
-                }
             }
         }
         return severityMessage;
@@ -135,22 +129,6 @@ public with sharing class ScholarshipSharedUtilities {
         Boolean isTrialOrg = !org.IsSandbox && org.TrialExpirationDate != null;
         return isScratchOrg || isTrialOrg;
     }
-
-    //Create Lightning Email Message
-//    public static Messaging.SingleEmailMessage sendLightningEmail(String emailTemplateId, String emailFromId, String scholarshipApplicationId, String applicantContactId, String EmailToAddress) {
-//        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-//
-//        message = Messaging.renderStoredEmailTemplate(emailTemplateId, applicantContactId, scholarshipApplicationId);
-//        message.setTreatTargetObjectAsRecipient(false);
-//        message.setToAddresses(new String[]{EmailToAddress});
-//        message.setUseSignature(false);
-//        message.setOrgWideEmailAddressId(emailFromId);
-//        message.optOutPolicy = 'FILTER';
-//        message.setUseSignature(false);
-//        message.setBccSender(false);
-//
-//        return message;
-//    }
 
     public static Messaging.SingleEmailMessage sendEmail(String rName, String EmailAddress, String Subject, String HTMLBodyText, String PlainBodyText, String sName) {
 
@@ -365,26 +343,4 @@ public with sharing class ScholarshipSharedUtilities {
         }
 
     }
-
-//    public without sharing class SendEmailPublic {
-//
-//        public Messaging.SingleEmailMessage sendLightningEmail(String emailTemplateId, String emailFromId, String scholarshipApplicationId, String applicantContactId, String EmailToAddress) {
-//            Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-//            message = Messaging.renderStoredEmailTemplate(emailTemplateId, applicantContactId, scholarshipApplicationId);
-//            message.setTreatTargetObjectAsRecipient(false);
-//            message.setToAddresses(new String[]{EmailToAddress});
-//            message.setUseSignature(false);
-//            message.setOrgWideEmailAddressId(emailFromId);
-//            message.optOutPolicy = 'FILTER';
-//            message.setUseSignature(false);
-//            message.setBccSender(false);
-//
-//            return message;
-//        }
-//
-//        public void sendEmailsNow(List<Messaging.SingleEmailMessage> emailsToSend ) {
-//            Messaging.sendEmail(emailsToSend);
-//        }
-//
-//    }
 }

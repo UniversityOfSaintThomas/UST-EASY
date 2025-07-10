@@ -50,12 +50,12 @@ public with sharing class ScholarshipApplicationPage1Controller {
         PageReference pageRef = ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationPage2, false, scholarship.Scholarship_ID__c);
         scholarshipApplicant.Scholarship__c = scholarship.Id;
         scholarshipApplicant.Scholarship_Status__c = 'Started App';
-
         //For Lightning Email Template merge
         scholarshipApplicant.Review_Award_Process_Description__c = scholarship.Review_Award_Process_Description__c;
         scholarshipApplicant.Scholarship_Communicated_Close_Date__c = scholarship.Communicated_Close_Date__c;
         scholarshipApplicant.Recommender_Question__c = scholarship.Recommender_Question__c;
         scholarshipApplicant.Recommender2_Question__c = scholarship.Recommender2_Question__c;
+
         if (scholarshipApplicant.Scholarship_Date_Started__c == null) {
             if (scholarship.Send_Started_Scholarship_Email__c) {
                 sendStartedEmail = true;
@@ -78,11 +78,8 @@ public with sharing class ScholarshipApplicationPage1Controller {
         if (sendStartedEmail) {
             List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
             try {
-//                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Start_Scholarship_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, scholarshipApplicant.Id, scholarshipApplicant.Contact__c, scholarshipApplicant.Contact__r.Email));
-//                Messaging.sendEmail(emailsToSend);
                 emailsToSend.add(emailBuilder.createEmail(scholarship.Start_Scholarship_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, scholarshipApplicant.Id, scholarshipApplicant.Contact__c, scholarshipApplicant.Contact__r.Email));
                 emailBuilder.sendCreatedEmails(emailsToSend);
-                pageRef.getParameters().put('pageMsg', '1test');
             } catch (Exception ex) {
                 //Add Started confirmation email did not send ApexMessage on redirect Page 2 page
                 pageRef.getParameters().put('pageMsg', '1w');

@@ -21,8 +21,6 @@
                     data-selecttype="orgWideEmail"
                     onchange={templateEventHandler}>
             </lightning-combobox>
-            <!--            <p>Selected Org Wide Email Id value: {templateDetails.orgWideEmail.select}</p>-->
-            <!--            <p>Initial Org Wide Email Id value: {templateDetails.orgWideEmail.initial}</p>-->
         </div>
         <div class="slds-p-vertical_x-small slds-p-horizontal_medium" lwc:if={startSelectVisible}>
             <lightning-combobox
@@ -44,8 +42,6 @@
                              disabled={startPreviewDisabled}
                              onchange={templateEventHandler}>
             </lightning-input>
-            <!--            <p>Selected Start Email Template value: {templateDetails.startTemplate.select}</p>-->
-            <!--            <p>Initial Start Email Template Id: {templateDetails.startTemplate.initial}</p>-->
             <template lwc:if={previewCheckbox.start.clicked}>
                 <p>
                     <lightning-formatted-rich-text value={startTemplateHtmlValue}></lightning-formatted-rich-text>
@@ -72,8 +68,6 @@
                              disabled={submitPreviewDisabled}
                              onchange={templateEventHandler}>
             </lightning-input>
-            <!--            <p>Selected Submit Email Template value: {templateDetails.submitTemplate.select}</p>-->
-            <!--            <p>Initial Submit Email Template Id: {templateDetails.submitTemplate.initial}</p>-->
             <template lwc:if={previewCheckbox.submit.clicked}>
                 <p>
                     <lightning-formatted-rich-text value={submitTemplateHtmlValue}></lightning-formatted-rich-text>
@@ -100,8 +94,6 @@
                              disabled={recommender1PreviewDisabled}
                              onchange={templateEventHandler}>
             </lightning-input>
-            <!--            <p>Selected Recommender 1 Template value: {templateDetails.recommender1Template.select}</p>-->
-            <!--            <p>Initial Recommender 1 Email Template Id: {templateDetails.recommender1Template.initial}</p>-->
             <template lwc:if={previewCheckbox.recommender1.clicked}>
                 <p>
                     <lightning-formatted-rich-text value={recommender1TemplateHtmlValue}></lightning-formatted-rich-text>
@@ -128,8 +120,6 @@
                              disabled={recommender2PreviewDisabled}
                              onchange={templateEventHandler}>
             </lightning-input>
-            <!--            <p>Selected Recommender 2 Template value: {templateDetails.recommender2Template.select}</p>-->
-            <!--            <p>Initial Recommender 2 Email Template Id: {templateDetails.recommender2Template.initial}</p>-->
             <template lwc:if={previewCheckbox.recommender2.clicked}>
                 <p>
                     <lightning-formatted-rich-text value={recommender2TemplateHtmlValue}></lightning-formatted-rich-text>

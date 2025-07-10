@@ -208,8 +208,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
         if (String.isNotBlank(recName1) && String.isNotBlank(recEmail1) && ((applicant.Recommendation_Request_Date__c == null && recommendRequestNow1) || resendRecommendation1)) {
             if (!String.isEmpty(recEmail1)) {
                 try {
-//                    emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
-                      emailsToSend.add(emailBuilder.createEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
+                    emailsToSend.add(emailBuilder.createEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
                     applicant.Recommendation_Request_Date__c = Datetime.now();
                 } catch (Exception ex) {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommender 1 Email Template: ' + ex.getMessage()));
@@ -221,7 +220,6 @@ public with sharing class ScholarshipApplicationPage2Controller {
         if (String.isNotBlank(recName2) && String.isNotBlank(recEmail2) && ((applicant.Recommendation2_Request_Date__c == null && recommendRequestNow2) || resendRecommendation2)) {
             if (!String.isEmpty(recEmail2)) {
                 try {
-//                    emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
                     emailsToSend.add(emailBuilder.createEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
                     applicant.Recommendation2_Request_Date__c = Datetime.now();
                 } catch (Exception ex) {
@@ -241,7 +239,6 @@ public with sharing class ScholarshipApplicationPage2Controller {
             }
 
             try {
-//                Messaging.sendEmail(emailsToSend);
                 emailBuilder.sendCreatedEmails(emailsToSend);
             } catch (Exception ex) {
                 if (recommendRequestNow1 || recommendRequestNow2) {
@@ -303,9 +300,7 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
         if (emailsToSend.size() > 0) {
             try {
-//                Messaging.sendEmail(emailsToSend);
                 emailBuilder.sendCreatedEmails(emailsToSend);
-                pageRef.getParameters().put('pageMsg', '2test');
             } catch (Exception ex) {
                 //Add Submit confirmation email did not send ApexMessage on redirect Complete page
                 pageRef.getParameters().put('pageMsg', '2w');

@@ -36,17 +36,11 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     scholarshipEligibleCheck = false;
     @track missingDefaults = [];
     scholarshipFields;
-    orgWideEmailValueOptions;
-    emailTemplateValueOptions;
-
-    startTemplateOptions = [];
-    submitTemplateOptions = [];
-    recommender1TemplateOptions = [];
-    recommender2TemplateOptions = [];
-
+    @track orgWideEmailValueOptions = [];
+    @track emailTemplateValueOptions = [];
     saveDisabled = true;
     cancelDisabled = false;
-    saveButtonDisabledBool = {};
+    @track saveButtonDisabledBool = {};
     @track templateDetails = {
         "orgWideEmail": {initial:"", select:"", field: ORG_WIDE_EMAIL_ID},
         "startTemplate": {initial:"", select:"", field: START_EMAIL_TEMPLATE_ID},
@@ -68,7 +62,18 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     submitTemplateHtmlValue;
     recommender1TemplateHtmlValue;
     recommender2TemplateHtmlValue;
-
+    get startTemplateOptions() {
+        return this.templateOptionFolders('Started');
+    }
+    get submitTemplateOptions() {
+        return this.templateOptionFolders('Submitted');
+    }
+    get recommender1TemplateOptions() {
+        return this.templateOptionFolders('Recommender 1');
+    }
+    get recommender2TemplateOptions() {
+        return this.templateOptionFolders('Recommender 2');
+    }
     get startSelectVisible() {
         return this.sendStartEmailCheck
     }
@@ -147,25 +152,6 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     emailTemplateWire({error, data}) {
         if (data) {
             this.emailTemplateValueOptions = JSON.parse(JSON.stringify(data));
-            // this.emailTemplateValueOptions.unshift({label: "--None--", value: ""});
-            this.emailTemplateValueOptions.forEach((template) => {
-                if (template.folderName.startsWith('Started')) {
-                    this.startTemplateOptions.push(template);
-                }
-                if (template.folderName.startsWith('Submitted')) {
-                    this.submitTemplateOptions.push(template);
-                }
-                if (template.folderName.startsWith('Recommender 1')) {
-                    this.recommender1TemplateOptions.push(template);
-                }
-                if (template.folderName.startsWith('Recommender 2')) {
-                    this.recommender2TemplateOptions.push(template);
-                }
-            })
-            this.startTemplateOptions.unshift({label: "--None--", value: ""});
-            this.submitTemplateOptions.unshift({label: "--None--", value: ""});
-            this.recommender1TemplateOptions.unshift({label: "--None--", value: ""});
-            this.recommender2TemplateOptions.unshift({label: "--None--", value: ""});
         }
         if (error) {
             console.log("emailTemplateWire error: " + error);
@@ -195,6 +181,17 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
             this.previewCheckbox[key].clicked = false;
         }
         this.saveDisabled = true;
+    }
+
+    templateOptionFolders(folderString) {
+        let templates = [];
+        this.emailTemplateValueOptions.forEach((t) => {
+            if (t.folderName.startsWith(folderString)) {
+                templates.push(t);
+            }
+        })
+        templates.unshift({label: "--None--", value: ""});
+        return templates;
     }
 
     templateEventHandler(event) {

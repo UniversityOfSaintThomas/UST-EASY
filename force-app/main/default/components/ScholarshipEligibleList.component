@@ -8,7 +8,7 @@
     <apex:attribute name="currentPage" description="Visualforce page this component is on" type="String" required="false"/>
 
 
-    <div id="lightningvf{!widget.Id}"/>
+    <div id="lightningvf{!widget.Id}{!widget.Application_Control__r.URL_Parameter__c}"/>
 
     <script>
         $Lightning.use("c:easyAuraApp", function () {
@@ -18,7 +18,7 @@
                     appId: "{!appInfo.appId}",
                     currentPage: "{!currentPage}",
                 },
-                "lightningvf{!widget.Id}",
+                "lightningvf{!widget.Id}{!widget.Application_Control__r.URL_Parameter__c}",
                 function (cmp) {
                     console.log("LWC ScholarshipEligibleListView Loaded")
                 }

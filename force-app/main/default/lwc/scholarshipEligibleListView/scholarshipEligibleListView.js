@@ -8,9 +8,9 @@ import eligibleScholarships from "@salesforce/apex/scholarshipEligibleListViewCo
 
 export default class ScholarshipEligibleListView extends LightningElement {
 
-    @api contactId = "003Ru00000VkdOuIAJ";
-    @api appId = "a0qRu000006zuuhIAA";
-    @api currentPage = "applicationhome";
+    @api contactId;
+    @api appId;
+    @api currentPage;
 
     @track scholarshipLists = [];
     scholarshipListsLength = false;
@@ -20,7 +20,9 @@ export default class ScholarshipEligibleListView extends LightningElement {
         if (results.data) {
             this.scholarshipLists = results.data;
         }
-        this.scholarshipListsLength = !!this.scholarshipLists;
+        this.scholarshipListsLength = this.scholarshipLists.length > 0;
+        console.log("this.scholarshipListsLength:  "+this.scholarshipListsLength);
+        console.log("this.scholarshipLists.length:  "+this.scholarshipLists.length);
     }
 
 }

@@ -43,7 +43,10 @@ public with sharing class scholarshipEligibleListViewController {
         }
 
         System.debug('What is apps size: '+apps.size());
-        System.debug('What is apps: '+apps);
+        for (Application__c a : apps) {
+            System.debug('What is apps: '+a);
+        }
+
 
         List<Scholarship__c> availableScholarships = [
                 SELECT Name,
@@ -59,20 +62,25 @@ public with sharing class scholarshipEligibleListViewController {
                 ORDER BY Name ASC NULLS FIRST
         ];
 
+        System.debug('What is availableScholarships size: '+availableScholarships.size());
+        System.debug('What is availableScholarships: '+availableScholarships);
+
         for (Application__c app : apps) {
-            List<Boolean> eligibleScholarshipCheck = new List<Boolean>();
             for (Scholarship__c scholarship : availableScholarships) {
+                List<Boolean> eligibleScholarshipCheck = new List<Boolean>();
+                List<String> scholarshipDegreeTypeList = scholarship.Degree_Type__c?.split(';');
+                List<String> scholarshipProgramList = scholarship.Programs__c?.split(';');
                 if (app.Citizenship__c == scholarship.Citizenship__c || String.isBlank(scholarship.Citizenship__c)) {
                     eligibleScholarshipCheck.add(true);
                 } else {
                     eligibleScholarshipCheck.add(false);
                 }
-                if ((String.isNotBlank(scholarship.Degree_Type__c) && scholarship.Degree_Type__c.contains('Bachelor\'s'))|| String.isBlank(scholarship.Degree_Type__c)) {
+                if ((String.isNotBlank(scholarship.Degree_Type__c) && (String.isNotBlank(app.Degree_Type__c) ? scholarshipDegreeTypeList.contains(app.Degree_Type__c) : false))) {
                     eligibleScholarshipCheck.add(true);
                 } else {
                     eligibleScholarshipCheck.add(false);
                 }
-                if ((String.isNotBlank(scholarship.Programs__c) && scholarship.Programs__c.contains('AS_UN_BA|BIOL')) || String.isBlank(scholarship.Programs__c)) {
+                if ((String.isNotBlank(scholarship.Programs__c) && (String.isNotBlank(app.Generic_Filter_1__c) ? scholarshipProgramList.contains(app.Generic_Filter_1__c) : false))) {
                     eligibleScholarshipCheck.add(true);
                 } else {
                     eligibleScholarshipCheck.add(false);

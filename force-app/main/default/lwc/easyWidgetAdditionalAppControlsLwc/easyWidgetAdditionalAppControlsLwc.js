@@ -37,7 +37,7 @@ export default class EasyWidgetAdditionalAppControlsLwc extends LightningElement
                 }
             })
         })
-        return "Selected ("+ controlsValueFound + ")";
+        return "Chosen ("+ controlsValueFound + ")";
     }
 
     @wire(getRecord, { recordId: "$recordId", fields: FIELDS })

@@ -4,4 +4,10 @@
     <description>Scholarship Eligible List View</description>
     <isExposed>true</isExposed>
     <masterLabel>Scholarship Eligible List View</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
 </LightningComponentBundle>

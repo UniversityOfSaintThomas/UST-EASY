@@ -4,4 +4,10 @@
     <description>Easy Widget Additional App Controls Lwc</description>
     <isExposed>true</isExposed>
     <masterLabel>Easy Widget Additional App Controls Lwc</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
 </LightningComponentBundle>

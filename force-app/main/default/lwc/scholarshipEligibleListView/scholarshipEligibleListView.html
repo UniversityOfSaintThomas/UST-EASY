@@ -4,4 +4,21 @@
 
 <!-- Scholarship Eligible List View -->
 <template>
+    <template lwc:if={scholarshipListsLength}>
+        <ul class="slds-p-bottom_x-small">
+            <template for:each={scholarshipLists} for:item="scholarship">
+                <li key={scholarship.Id} class="slds-p-bottom_x-small">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-p-left_x-small">
+                            <a href={scholarship.Direct_URL__c} target=_blank>{scholarship.Name}</a>
+                            <p>{scholarship.Short_Description__c}</p>
+                        </div>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </template>
+    <template lwc:else>
+        <div class="slds-p-bottom_x-small">You do not have any eligible scholarships.</div>
+    </template>
 </template>

@@ -12,6 +12,9 @@ public class ApplicationPortal {
     public String userType { get; set; }
 
     public ApplicationPortal() {
+
+        System.debug('What is appinfo1: '+appInfo);
+
         userType = UserInfo.getUserType();
         noApplication = false;
         if (appInfo == null) {
@@ -23,6 +26,9 @@ public class ApplicationPortal {
         }
         Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
         template = AppSettings.Default_Template__c;
+
+        System.debug('What is appinfo2: '+appInfo);
+
     }
 
     public PageReference applicationPortalInit() {

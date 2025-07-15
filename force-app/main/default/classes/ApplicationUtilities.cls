@@ -92,9 +92,14 @@ public class ApplicationUtilities {
 
         // Get and decrypt cookie if it exist
         String testDecrypt = getDecryptCookie();
+
+        System.debug('What is testDecrypt: '+testDecrypt);
+
         if (String.isNotBlank(testDecrypt)) {
             try {
                 appInfo = (EASYApplicationInfo) JSON.deserialize(testDecrypt, EASYApplicationInfo.class);
+
+                System.debug('What is appInfo1 in gatherApplicationInfo: '+appInfo);
             } catch (Exception e) {
                 appInfo = new EASYApplicationInfo();
             }
@@ -129,6 +134,7 @@ public class ApplicationUtilities {
 
         if (String.isBlank(appInfo.appId) && String.isBlank(appInfo.at) && String.isNotBlank(appInfo.contactId)) {
             //If we've arrived with no cookie or parameters; Get last updated application
+            System.debug('Being called here: '+appInfo.appId+' '+appInfo.at+' '+appInfo.contactId);
             List<Application__c> lastApps = [
                     SELECT Id, Application_Control__r.URL_Parameter__c, LastModifiedDate, Contact__c,
                             Application_Control__r.Id, Application_Status__c, Application_Substatus__c, Citizenship__c,
@@ -146,6 +152,8 @@ public class ApplicationUtilities {
                 Application__c app = lastApps[0];
                 appInfo = setApplicationInfo(appControl, app);
             }
+
+            System.debug('What is appInfo2 in lastApps: '+appInfo);
         }
 
         //Contact did not find app so now we need to set the appControl to 'noapp' application control

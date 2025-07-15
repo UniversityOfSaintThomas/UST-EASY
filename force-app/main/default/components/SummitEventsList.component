@@ -10,7 +10,7 @@
     <div id="lightningvf{!widget.Id}"/>
 
     <script>
-        $Lightning.use("c:summitEventsListApp", function () {
+        $Lightning.use("c:easyAuraApp", function () {
             $Lightning.createComponent("c:summitEventsListView",
                 {
                     contactId: "{!appInfo.contactId}"

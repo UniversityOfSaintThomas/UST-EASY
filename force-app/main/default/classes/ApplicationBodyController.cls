@@ -9,6 +9,7 @@ public with sharing class ApplicationBodyController {
     public Map<String, EASYApplicationInfo> mapAtAppInfo { get; set; }
     public String currentPageName { get; set; }
     public Boolean noApplication { get; set; }
+    public Map<String, EASYPersonalDataTags> dataTagsMap{ get; set; }
 
     public ApplicationBodyController() {
     }
@@ -64,13 +65,15 @@ public with sharing class ApplicationBodyController {
         foundWidgets.leftWidgets = new List<EASY_Widget__c>();
         foundWidgets.contentTopWidgets = new List<EASY_Widget__c>();
         foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
+        List<EASY_Widget__c> allWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
         Map<Id, Application__c> apps = new Map<Id, Application__c>();
-        Map<String, EASYPersonalDataTags> dataTagsMap = new Map<String, EASYPersonalDataTags>();
+        dataTagsMap = new Map<String, EASYPersonalDataTags>();
 
         if (appInfoParam != null) {
             if (currentPageName.equalsIgnoreCase('applicationregistration')) {
                 mapAtAppInfo.put(appInfoParam.at, appInfoParam);
+                dataTagsMap.put(appInfoParam.at, new EASYPersonalDataTags());
             } else {
                 String appsQuery = ' SELECT Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c, OwnerId,';
                 appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c, Id,';
@@ -185,26 +188,58 @@ public with sharing class ApplicationBodyController {
                     noApplication = false;
                 } else {
                     mapAtAppInfo.put('noapp', appInfoParam);
+                    dataTagsMap.put('noapp', new EASYPersonalDataTags());
                     noApplication = true;
                 }
             }
 
             /* Gather up all the widgets */
             try {
-                allPositionWidgets = [
-                        SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
-                                Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
-                                Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
-                                Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
-                                Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
-                                Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
-                                Applicant_Type__c, Button_Code__c
-                        FROM EASY_Widget__c
-                        WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
-                        AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
-                        AND Activation_State__c != 'Inactive'
-                        ORDER BY Sort_Order__c
-                ];
+                allWidgets = [SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
+                        Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
+                        Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Additional_Application_Controls__c,
+                        Activation_State__c, Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c,
+                        Display_Widget_On_Citizenship__c, Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c,
+                        Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c,
+                        Generic_Filter_8__c, Applicant_Type__c, Button_Code__c, Screenflow__c
+                FROM EASY_Widget__c
+                WHERE Display_Widget_On_Pages__c INCLUDES (:currentPageName)
+                AND Activation_State__c != 'Inactive'
+                AND Activation_State__c != 'To Be Deleted'
+                ORDER BY Sort_Order__c];
+
+                for (EASY_Widget__c widget : allWidgets) {
+                    List<String> additionalControls = widget.Additional_Application_Controls__c?.split(',');
+                    Set<String> allControls = new Set<String>{widget.Application_Control__r.URL_Parameter__c};
+                    if (additionalControls?.size() > 0) {
+                        allControls.addAll(additionalControls);
+                    }
+                    for (String controller : allControls) {
+                        for (String key : mapAtAppInfo.keySet()) {
+                            if (controller == key) {
+                                EASY_Widget__c newWidget = widget.clone(true, true, false, false);
+                                newWidget.Application_Control__r.URL_Parameter__c = controller;
+                                allPositionWidgets.add(newWidget);
+                            }
+                        }
+                    }
+                }
+
+//                allPositionWidgets = [
+//                        SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
+//                                Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
+//                                Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,
+//                                Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
+//                                Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
+//                                Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
+//                                Applicant_Type__c, Button_Code__c, Screenflow__c
+//                        FROM EASY_Widget__c
+//                        WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
+//                        AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
+//                        AND Activation_State__c != 'Inactive'
+//                        AND Activation_State__c != 'To Be Deleted'
+//                        ORDER BY Sort_Order__c
+//                ];
             } catch (DmlException e) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getDmlMessage(0)));
             } catch (Exception e) {
@@ -441,10 +476,16 @@ public with sharing class ApplicationBodyController {
     }
 
     public Boolean filterWidget(Boolean skipWidget, Map<String, Set<String>> filterMap, String filterString, String widgetUrlParam) {
-        if (!skipWidget && String.isNotBlank(filterString)) {
-            if (filterMap.containsKey(widgetUrlParam)) {
-                if (!doesListContainItem(filterString.split(';'), new List<String>(filterMap.get(widgetUrlParam)))) {
+
+        if (!skipWidget) {
+            if (String.isNotBlank(filterString)) {
+                if (filterMap.isEmpty()) {
                     return true;
+                }
+                if (filterMap.containsKey(widgetUrlParam)) {
+                    if (!doesListContainItem(filterString.split(';'), new List<String>(filterMap.get(widgetUrlParam)))) {
+                        return true;
+                    }
                 }
             }
         }
@@ -453,12 +494,15 @@ public with sharing class ApplicationBodyController {
 
     public Map<String, Set<String>> createFilterMap(String filterValue, Map<String, Set<String>> filterMap, String atURL) {
         if (String.isNotBlank(filterValue)) {
+            List<String> filterMapList = filterValue.split(';');
+            //Change filterMapList to a set
+            Set<String> filterMapSet = new Set<String>(filterMapList);
             if (filterMap.containsKey(atURL)) {
-                filterMap.get(atURL).add(filterValue);
+                filterMap.get(atURL).addAll(filterMapSet);
             } else {
-                filterMap.put(atURL, new Set<String>{
-                        filterValue
-                });
+                filterMap.put(atURL,
+                        filterMapSet
+                );
             }
         }
         return filterMap;
@@ -466,9 +510,10 @@ public with sharing class ApplicationBodyController {
 
     public Boolean doesListContainItem(List<String> list1, List<String> list2) {
         for (String l : list1) {
-            if (list2.contains(l)) {
-
-                return true;
+            if (String.isNotBlank(l)) {
+                if (list2.contains(l)) {
+                    return true;
+                }
             }
         }
         return false;

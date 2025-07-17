@@ -65,7 +65,7 @@ public with sharing class ApplicationBodyController {
         foundWidgets.leftWidgets = new List<EASY_Widget__c>();
         foundWidgets.contentTopWidgets = new List<EASY_Widget__c>();
         foundWidgets.contentBottomWidgets = new List<EASY_Widget__c>();
-        List<EASY_Widget__c> allWidgets = new List<EASY_Widget__c>();
+//        List<EASY_Widget__c> allWidgets = new List<EASY_Widget__c>();
         List<EASY_Widget__c> allPositionWidgets = new List<EASY_Widget__c>();
         Map<Id, Application__c> apps = new Map<Id, Application__c>();
         dataTagsMap = new Map<String, EASYPersonalDataTags>();
@@ -195,36 +195,52 @@ public with sharing class ApplicationBodyController {
 
             /* Gather up all the widgets */
             try {
-                allWidgets = [SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
-                        Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
-                        Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Additional_Application_Controls__c,
-                        Activation_State__c, Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c,
-                        Display_Widget_On_Citizenship__c, Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c,
-                        Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c,
-                        Generic_Filter_8__c, Applicant_Type__c, Button_Code__c, Screenflow__c
-                FROM EASY_Widget__c
-                WHERE Display_Widget_On_Pages__c INCLUDES (:currentPageName)
-                AND Activation_State__c != 'Inactive'
-                AND Activation_State__c != 'To Be Deleted'
-                ORDER BY Sort_Order__c];
+//                allWidgets = [SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
+//                        Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
+//                        Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Additional_Application_Controls__c,
+//                        Activation_State__c, Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c,
+//                        Display_Widget_On_Citizenship__c, Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c,
+//                        Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c,
+//                        Generic_Filter_8__c, Applicant_Type__c, Button_Code__c, Screenflow__c
+//                FROM EASY_Widget__c
+//                WHERE Display_Widget_On_Pages__c INCLUDES (:currentPageName)
+//                AND Activation_State__c != 'Inactive'
+//                AND Activation_State__c != 'To Be Deleted'
+//                ORDER BY Sort_Order__c];
+//
+//                for (EASY_Widget__c widget : allWidgets) {
+//                    List<String> additionalControls = widget.Additional_Application_Controls__c?.split(',');
+//                    Set<String> allControls = new Set<String>{widget.Application_Control__r.URL_Parameter__c};
+//                    if (additionalControls?.size() > 0) {
+//                        allControls.addAll(additionalControls);
+//                    }
+//                    for (String controller : allControls) {
+//                        for (String key : mapAtAppInfo.keySet()) {
+//                            if (controller == key) {
+//                                EASY_Widget__c newWidget = widget.clone(true, true, false, false);
+//                                newWidget.Application_Control__r.URL_Parameter__c = controller;
+//                                allPositionWidgets.add(newWidget);
+//                            }
+//                        }
+//                    }
+//                }
+                String mapAtAppInfokeySet = '(\'' + String.join(mapAtAppInfo.keySet(), '\',\'') + '\')';
+                String widgetQuery = 'SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,\n' +
+                        'Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,\n' +
+                        'Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,Additional_Application_Controls__c,\n' +
+                        'Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,\n' +
+                        'Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,\n' +
+                        'Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,\n' +
+                        'Applicant_Type__c, Button_Code__c, Screenflow__c, Lightning_Web_Component__c\n' +
+                        'FROM EASY_Widget__c\n' +
+                        'WHERE (Application_Control__r.URL_Parameter__c IN ' + mapAtAppInfokeySet + '\n' +
+                        'OR  Additional_Application_Controls__c INCLUDES ' + mapAtAppInfokeySet + ')\n' +
+                        'AND Display_Widget_On_Pages__c INCLUDES (\'' + currentPageName + '\')\n' +
+                        'AND Activation_State__c != \'Inactive\'\n' +
+                        'AND Activation_State__c != \'To Be Deleted\'\n' +
+                        'ORDER BY Sort_Order__c';
 
-                for (EASY_Widget__c widget : allWidgets) {
-                    List<String> additionalControls = widget.Additional_Application_Controls__c?.split(',');
-                    Set<String> allControls = new Set<String>{widget.Application_Control__r.URL_Parameter__c};
-                    if (additionalControls?.size() > 0) {
-                        allControls.addAll(additionalControls);
-                    }
-                    for (String controller : allControls) {
-                        for (String key : mapAtAppInfo.keySet()) {
-                            if (controller == key) {
-                                EASY_Widget__c newWidget = widget.clone(true, true, false, false);
-                                newWidget.Application_Control__r.URL_Parameter__c = controller;
-                                allPositionWidgets.add(newWidget);
-                            }
-                        }
-                    }
-                }
-
+                allPositionWidgets = Database.query(widgetQuery);
 //                allPositionWidgets = [
 //                        SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
 //                                Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
@@ -285,8 +301,7 @@ public with sharing class ApplicationBodyController {
             }
 
             /* Start/End date filter if defined */
-            for (EASY_Widget__c widget : allPositionWidgets) {
-
+            for (EASY_Widget__c widget : allPositionWidgets) { //first grouping
                 String skipReason = '';
                 Boolean skipWidget = false;
 
@@ -310,166 +325,180 @@ public with sharing class ApplicationBodyController {
                     }
                 }
 
-                if (!skipWidget) {
-                    /* Only show one widget of type hard coded above. Admission App finder should only show once on a portal even if defined for several apps */
+                //Finding and looping through all primary and additional Application Controls to clone widget if not skipped
+                String initialUrlParameter = widget.Application_Control__r.URL_Parameter__c;
+                Set<String> urlAllSet = new Set<String>{widget.Application_Control__r.URL_Parameter__c};
+                if (String.isNotBlank(widget.Additional_Application_Controls__c)) {
+                    urlAllSet.addAll(widget.Additional_Application_Controls__c.split(';'));
+                }
 
-                    if (!skipWidget && onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
-                        if (onlyOneWidgetPerPage.get(widget.Widget_Type__c) > 0) {
-                            skipWidget = true;
-                            skipReason += 'One widget hardcoded, ';
-                        } else {
-                            onlyOneWidgetPerPage.put(widget.Widget_Type__c, onlyOneWidgetPerPage.get(widget.Widget_Type__c) + 1);
-                        }
-                    }
+                for (String url : urlAllSet) { //second grouping
+                    if (mapAtAppInfo.containsKey(url)) {
+                        widget.Application_Control__r.URL_Parameter__c = url;
 
-                    if (!skipWidget && String.isNotBlank(widget.Only_One_Widget_Key__c)) {
-                        if (onlyOneWidgetPerPage.containsKey(widget.Only_One_Widget_Key__c)) {
-                            skipWidget = true;
-                            skipReason += 'One widget key, ';
-                        } else {
-                            onlyOneWidgetPerPage.put(widget.Only_One_Widget_Key__c, 1);
-                        }
-                    }
+                        if (!skipWidget) {
+                            /* Only show one widget of type hard coded above. Admission App finder should only show once on a portal even if defined for several apps */
 
-                    if (!skipWidget && String.isNotBlank(widget.Application_Control__r.URL_Parameter__c)) {
+                            if (!skipWidget && onlyOneWidgetPerPage.containsKey(widget.Widget_Type__c)) {
+                                if (onlyOneWidgetPerPage.get(widget.Widget_Type__c) > 0) {
+                                    skipWidget = true;
+                                    skipReason += 'One widget hardcoded, ';
+                                } else {
+                                    onlyOneWidgetPerPage.put(widget.Widget_Type__c, onlyOneWidgetPerPage.get(widget.Widget_Type__c) + 1);
+                                }
+                            }
 
-                        String widgetUrlParam = widget.Application_Control__r.URL_Parameter__c;
-                        String widgetStatus = String.isNotBlank(widget.Display_Widget_On_Status__c) ? widget.Display_Widget_On_Status__c : '';
-                        String widgetSubStatus = String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) ? widget.Display_Widget_On_Sub_Status__c : '';
-                        String widgetCitizen = String.isNotBlank(widget.Display_Widget_On_Citizenship__c) ? widget.Display_Widget_On_Citizenship__c : '';
-                        String genericFilter1 = String.isNotBlank(widget.Generic_Filter_1__c) ? widget.Generic_Filter_1__c : '';
-                        String genericFilter2 = String.isNotBlank(widget.Generic_Filter_2__c) ? widget.Generic_Filter_2__c : '';
-                        String genericFilter3 = String.isNotBlank(widget.Generic_Filter_3__c) ? widget.Generic_Filter_3__c : '';
-                        String genericFilter4 = String.isNotBlank(widget.Generic_Filter_4__c) ? widget.Generic_Filter_4__c : '';
-                        String genericFilter5 = String.isNotBlank(widget.Generic_Filter_5__c) ? widget.Generic_Filter_5__c : '';
-                        String genericFilter6 = String.isNotBlank(widget.Generic_Filter_6__c) ? widget.Generic_Filter_6__c : '';
-                        String genericFilter7 = String.isNotBlank(widget.Generic_Filter_7__c) ? widget.Generic_Filter_7__c : '';
-                        String genericFilter8 = String.isNotBlank(widget.Generic_Filter_8__c) ? widget.Generic_Filter_8__c : '';
-                        String widgetApplicantType = String.isNotBlank(widget.Applicant_Type__c) ? widget.Applicant_Type__c : '';
+                            if (!skipWidget && String.isNotBlank(widget.Only_One_Widget_Key__c)) {
+                                if (onlyOneWidgetPerPage.containsKey(widget.Only_One_Widget_Key__c)) {
+                                    skipWidget = true;
+                                    skipReason += 'One widget key, ';
+                                } else {
+                                    onlyOneWidgetPerPage.put(widget.Only_One_Widget_Key__c, 1);
+                                }
+                            }
 
-                        EASYApplicationInfo widgetAppInfo = mapAtAppInfo.get(widgetUrlParam);
+                            if (!skipWidget && String.isNotBlank(widget.Application_Control__r.URL_Parameter__c)) {
+                                String widgetUrlParam = widget.Application_Control__r.URL_Parameter__c;
+                                String widgetStatus = String.isNotBlank(widget.Display_Widget_On_Status__c) ? widget.Display_Widget_On_Status__c : '';
+                                String widgetSubStatus = String.isNotBlank(widget.Display_Widget_On_Sub_Status__c) ? widget.Display_Widget_On_Sub_Status__c : '';
+                                String widgetCitizen = String.isNotBlank(widget.Display_Widget_On_Citizenship__c) ? widget.Display_Widget_On_Citizenship__c : '';
+                                String genericFilter1 = String.isNotBlank(widget.Generic_Filter_1__c) ? widget.Generic_Filter_1__c : '';
+                                String genericFilter2 = String.isNotBlank(widget.Generic_Filter_2__c) ? widget.Generic_Filter_2__c : '';
+                                String genericFilter3 = String.isNotBlank(widget.Generic_Filter_3__c) ? widget.Generic_Filter_3__c : '';
+                                String genericFilter4 = String.isNotBlank(widget.Generic_Filter_4__c) ? widget.Generic_Filter_4__c : '';
+                                String genericFilter5 = String.isNotBlank(widget.Generic_Filter_5__c) ? widget.Generic_Filter_5__c : '';
+                                String genericFilter6 = String.isNotBlank(widget.Generic_Filter_6__c) ? widget.Generic_Filter_6__c : '';
+                                String genericFilter7 = String.isNotBlank(widget.Generic_Filter_7__c) ? widget.Generic_Filter_7__c : '';
+                                String genericFilter8 = String.isNotBlank(widget.Generic_Filter_8__c) ? widget.Generic_Filter_8__c : '';
+                                String widgetApplicantType = String.isNotBlank(widget.Applicant_Type__c) ? widget.Applicant_Type__c : '';
 
-                        /* Display on pages filter */
-                        if (!skipWidget && String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
-                            if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
-                                skipWidget = true;
-                                //skipReason += 'Wrong Page, ';
+                                EASYApplicationInfo widgetAppInfo = mapAtAppInfo.get(widgetUrlParam);
+
+                                /* Display on pages filter */
+                                if (!skipWidget && String.isNotBlank(widget.Display_Widget_On_Pages__c)) {
+                                    if (!widget.Display_Widget_On_Pages__c.containsIgnoreCase(currentPageName) && !String.isBlank(widget.Display_Widget_On_Pages__c)) {
+                                        skipWidget = true;
+                                        //skipReason += 'Wrong Page, ';
+                                    }
+                                }
+
+                                if (!skipWidget && String.isNotBlank(widgetStatus) && String.isBlank(widgetSubStatus)) {
+                                    if (String.isBlank(widgetAppInfo.appStatus)) {
+                                        skipWidget = true;
+                                        skipReason += 'App Status on app is blank, but widget has one, ';
+                                    } else {
+                                        if (!doesListContainItem(widgetStatus.split(';'), widgetAppInfo.appStatus.split(';'))) {
+                                            skipWidget = true;
+                                            //skipReason += 'status not met, ';
+                                        }
+                                    }
+                                }
+
+                                /* Sub Status filter */
+                                if (!skipWidget && String.isNotBlank(widgetStatus) && String.isNotBlank(widgetSubStatus)) {
+                                    if (String.isBlank(widgetAppInfo.appSubStatus)) {
+                                        skipWidget = true;
+                                        skipReason += 'App substatus on app is blank but widget has one, ';
+                                    } else {
+                                        if (!doesListContainItem(widgetSubStatus.split(';'), widgetAppInfo.appSubStatus.split(';'))) {
+                                            skipWidget = true;
+                                            //skipReason += 'substatus not met, ';
+                                        }
+                                    }
+                                }
+
+                                /* Citizenship filter */
+                                if (!skipWidget && String.isNotBlank(widgetCitizen)) {
+                                    if (String.isNotBlank(widgetAppInfo.citizenship)) {
+                                        if (!doesListContainItem(widgetCitizen.split(';'), widgetAppInfo.citizenship.split(';'))) {
+                                            skipWidget = true;
+                                            //skipReason += 'citizenship status not met, ';
+                                        }
+                                    }
+                                }
+
+                                /* Generic filter 1 */
+                                skipWidget = filterWidget(skipWidget, atGenericFilter1Map, genericFilter1, widgetUrlParam);
+
+                                /* Generic filter 2 */
+                                skipWidget = filterWidget(skipWidget, atGenericFilter2Map, genericFilter2, widgetUrlParam);
+
+                                /* Generic filter 3 */
+                                skipWidget = filterWidget(skipWidget, atGenericFilter3Map, genericFilter3, widgetUrlParam);
+
+                                /* Generic filter 4 */
+                                skipWidget = filterWidget(skipWidget, atGenericFilter4Map, genericFilter4, widgetUrlParam);
+
+                                /* Generic filter 5 */
+                                skipWidget = filterWidget(skipWidget, atGenericFilter5Map, genericFilter5, widgetUrlParam);
+
+                                /* Generic filter 6 */
+                                skipWidget = filterWidget(skipWidget, atGenericFilter6Map, genericFilter6, widgetUrlParam);
+
+                                /* Generic filter 7 */
+                                skipWidget = filterWidget(skipWidget, atGenericFilter7Map, genericFilter7, widgetUrlParam);
+
+                                /* Generic filter 8 */
+                                skipWidget = filterWidget(skipWidget, atGenericFilter8Map, genericFilter8, widgetUrlParam);
+
+                                /* Applicant Type filter */
+                                skipWidget = filterWidget(skipWidget, atApplicationTypeMap, widgetApplicantType, widgetUrlParam);
                             }
                         }
 
-                        if (!skipWidget && String.isNotBlank(widgetStatus) && String.isBlank(widgetSubStatus)) {
-                            if (String.isBlank(widgetAppInfo.appStatus)) {
-                                skipWidget = true;
-                                skipReason += 'App Status on app is blank, but widget has one, ';
-                            } else {
-                                if (!doesListContainItem(widgetStatus.split(';'), widgetAppInfo.appStatus.split(';'))) {
-                                    skipWidget = true;
-                                    //skipReason += 'status not met, ';
+                        if (!skipWidget) {
+                            //Process data tags here
+                            if (dataTagsMap.containsKey(widget.Application_Control__r.URL_Parameter__c)) {
+                                if (String.isNotBlank(widget.Display_Text__c)) {
+                                    widget.Display_Text__c = ApplicationUtilities.replaceDataTags(widget.Display_Text__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                                }
+                                if (String.isNotBlank(widget.Display_Heading__c)) {
+                                    widget.Display_Heading__c = ApplicationUtilities.replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
+                                }
+                                if (String.isNotBlank(widget.Scripts__c)) {
+                                    widget.Scripts__c = ApplicationUtilities.replaceDataTags(widget.Scripts__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
                                 }
                             }
                         }
 
-                        /* Sub Status filter */
-                        if (!skipWidget && String.isNotBlank(widgetStatus) && String.isNotBlank(widgetSubStatus)) {
-                            if (String.isBlank(widgetAppInfo.appSubStatus)) {
+                        //If it is a custom widget and there is nothing in the widget don't show it
+                        if (!skipWidget && widget.Widget_Type__c.equalsIgnoreCase('custom')) {
+                            if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
                                 skipWidget = true;
-                                skipReason += 'App substatus on app is blank but widget has one, ';
-                            } else {
-                                if (!doesListContainItem(widgetSubStatus.split(';'), widgetAppInfo.appSubStatus.split(';'))) {
-                                    skipWidget = true;
-                                    //skipReason += 'substatus not met, ';
-                                }
+                                //skipReason += 'Blank content on custom, ';
                             }
                         }
 
-                        /* Citizenship filter */
-                        if (!skipWidget && String.isNotBlank(widgetCitizen)) {
-                            if (String.isNotBlank(widgetAppInfo.citizenship)) {
-                                if (!doesListContainItem(widgetCitizen.split(';'), widgetAppInfo.citizenship.split(';'))) {
-                                    skipWidget = true;
-                                    //skipReason += 'citizenship status not met, ';
+                        if (!skipWidget) {
+                            EASY_Widget__c newWidget = new EASY_Widget__c();
+                            if (widget.Application_Control__r.URL_Parameter__c != initialUrlParameter) {
+                                newWidget = widget.clone(true, true, false, false);
+                            }
+
+                            switch on widget.Widget_Screen_Location__c.toLowerCase() {
+                                when 'left' {
+                                    foundWidgets.leftWidgets.add(String.isNotBlank(newWidget?.Name) ? newWidget : widget);
+                                }
+                                when 'right' {
+                                    foundWidgets.rightWidgets.add(String.isNotBlank(newWidget?.Name) ? newWidget : widget);
+                                }
+                                when 'top' {
+                                    foundWidgets.topWidgets.add(String.isNotBlank(newWidget?.Name) ? newWidget : widget);
+                                }
+                                when 'bottom' {
+                                    foundWidgets.bottomWidgets.add(String.isNotBlank(newWidget?.Name) ? newWidget : widget);
+                                }
+                                when 'content top' {
+                                    foundWidgets.contentTopWidgets.add(String.isNotBlank(newWidget?.Name) ? newWidget : widget);
+                                }
+                                when 'content bottom' {
+                                    foundWidgets.contentBottomWidgets.add(String.isNotBlank(newWidget?.Name) ? newWidget : widget);
                                 }
                             }
                         }
-
-                        /* Generic filter 1 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter1Map, genericFilter1, widgetUrlParam);
-
-                        /* Generic filter 2 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter2Map, genericFilter2, widgetUrlParam);
-
-                        /* Generic filter 3 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter3Map, genericFilter3, widgetUrlParam);
-
-                        /* Generic filter 4 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter4Map, genericFilter4, widgetUrlParam);
-
-                        /* Generic filter 5 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter5Map, genericFilter5, widgetUrlParam);
-
-                        /* Generic filter 6 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter6Map, genericFilter6, widgetUrlParam);
-
-                        /* Generic filter 7 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter7Map, genericFilter7, widgetUrlParam);
-
-                        /* Generic filter 8 */
-                        skipWidget = filterWidget(skipWidget, atGenericFilter8Map, genericFilter8, widgetUrlParam);
-
-                        /* Applicant Type filter */
-                        skipWidget = filterWidget(skipWidget, atApplicationTypeMap, widgetApplicantType, widgetUrlParam);
-
                     }
-                }
-
-
-                if (!skipWidget) {
-
-                    //Process data tags here
-                    if (dataTagsMap.containsKey(widget.Application_Control__r.URL_Parameter__c)) {
-                        if (String.isNotBlank(widget.Display_Text__c)) {
-                            widget.Display_Text__c = ApplicationUtilities.replaceDataTags(widget.Display_Text__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
-                        }
-                        if (String.isNotBlank(widget.Display_Heading__c)) {
-                            widget.Display_Heading__c = ApplicationUtilities.replaceDataTags(widget.Display_Heading__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
-                        }
-                        if (String.isNotBlank(widget.Scripts__c)) {
-                            widget.Scripts__c = ApplicationUtilities.replaceDataTags(widget.Scripts__c, dataTagsMap.get(widget.Application_Control__r.URL_Parameter__c));
-                        }
-                    }
-                }
-
-                //If it is a custom widget and there is nothing in the widget don't show it
-                if (!skipWidget && widget.Widget_Type__c.equalsIgnoreCase('custom')) {
-                    if (String.isBlank(removeHTML(widget.Display_Heading__c)) && String.isBlank(removeHTML(widget.Display_Text__c)) && String.isBlank(widget.Scripts__c)) {
-                        skipWidget = true;
-                        //skipReason += 'Blank content on custom, ';
-                    }
-                }
-
-                if (!skipWidget) {
-                    switch on widget.Widget_Screen_Location__c.toLowerCase() {
-                        when 'left' {
-                            foundWidgets.leftWidgets.add(widget);
-                        }
-                        when 'right' {
-                            foundWidgets.rightWidgets.add(widget);
-                        }
-                        when 'top' {
-                            foundWidgets.topWidgets.add(widget);
-                        }
-                        when 'bottom' {
-                            foundWidgets.bottomWidgets.add(widget);
-                        }
-                        when 'content top' {
-                            foundWidgets.contentTopWidgets.add(widget);
-                        }
-                        when 'content bottom' {
-                            foundWidgets.contentBottomWidgets.add(widget);
-                        }
-                    }
-                }
-            }
+                }//second grouping
+            }//first grouping
         }
 
         return foundWidgets;

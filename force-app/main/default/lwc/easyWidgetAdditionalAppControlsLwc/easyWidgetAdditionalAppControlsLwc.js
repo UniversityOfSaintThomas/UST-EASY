@@ -6,10 +6,12 @@ import {LightningElement, api, track, wire} from 'lwc';
 import {getFieldValue, getRecord, updateRecord} from "lightning/uiRecordApi";
 import {gql, graphql} from "lightning/uiGraphQLApi";
 import ID_FIELD from "@salesforce/schema/EASY_Widget__c.Id";
+import APPLICATION_CONTROL from "@salesforce/schema/EASY_Widget__c.Application_Control__r.URL_Parameter__c";
 import ADDITIONAL_APPLICATION_CONTROLS from "@salesforce/schema/EASY_Widget__c.Additional_Application_Controls__c";
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 const FIELDS = [
+    APPLICATION_CONTROL,
     ADDITIONAL_APPLICATION_CONTROLS,
 ];
 
@@ -21,6 +23,7 @@ export default class EasyWidgetAdditionalAppControlsLwc extends LightningElement
     saveDisabled = true;
     cancelDisabled = false;
     widgetData;
+    applicationControl;
     additionalApplicationControlsInitial;
     @track additionalApplicationControlValues = []
     @track applicationControlOptions = [];
@@ -44,8 +47,9 @@ export default class EasyWidgetAdditionalAppControlsLwc extends LightningElement
     widgetRecord(results) {
         if (results.data) {
             this.widgetData = results.data;
+            this.applicationControl = getFieldValue(this.widgetData, APPLICATION_CONTROL);
             this.additionalApplicationControlsInitial = getFieldValue(this.widgetData, ADDITIONAL_APPLICATION_CONTROLS);
-            this.additionalApplicationControlValues = this.additionalApplicationControlsInitial?.split(",");
+            this.additionalApplicationControlValues = this.additionalApplicationControlsInitial?.split(";");
         }
         if (results.error) {
             console.log("widgetRecord error: "+results.error);
@@ -54,11 +58,12 @@ export default class EasyWidgetAdditionalAppControlsLwc extends LightningElement
 
     @wire(graphql, {
         query: gql`
-          query ApplicationControls {
+          query ApplicationControls ($currentApplicationControl: String) {
             uiapi {
               query 
               {
                 Application_Control__c ( where: { Active__c: { eq: true }
+                                                  URL_Parameter__c: { ne: $currentApplicationControl }
                                                 },
                                          orderBy: { Name: { order: ASC }
                                                   }
@@ -77,6 +82,7 @@ export default class EasyWidgetAdditionalAppControlsLwc extends LightningElement
             }
           }
         `,
+        variables: "$variables",
     })
     graphqlQueryResult({data, errors}) {
         if (data) {
@@ -88,6 +94,12 @@ export default class EasyWidgetAdditionalAppControlsLwc extends LightningElement
         this.errors = errors;
     }
 
+    get variables() {
+        return {
+            currentApplicationControl: this.applicationControl,
+        }
+    }
+
     handleSelect(event) {
         this.additionalApplicationControlValues = event.detail.value;
         this.selectedText = event.detail.value;
@@ -95,14 +107,14 @@ export default class EasyWidgetAdditionalAppControlsLwc extends LightningElement
     }
 
     resetInitialValues() {
-        this.additionalApplicationControlValues = this.additionalApplicationControlsInitial?.split(",");
+        this.additionalApplicationControlValues = this.additionalApplicationControlsInitial?.split(";");
         this.saveDisabled = true;
     }
 
     saveClick() {
         const updateFields = {};
         updateFields[ID_FIELD.fieldApiName] = this.recordId;
-        updateFields[ADDITIONAL_APPLICATION_CONTROLS.fieldApiName] = this.additionalApplicationControlValues.toString();
+        updateFields[ADDITIONAL_APPLICATION_CONTROLS.fieldApiName] = this.additionalApplicationControlValues.join(";");
 
         const recordUpdate = {
             fields: updateFields

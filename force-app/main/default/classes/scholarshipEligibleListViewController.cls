@@ -42,12 +42,6 @@ public with sharing class scholarshipEligibleListViewController {
             System.debug(e.getMessage());
         }
 
-        System.debug('What is apps size: '+apps.size());
-        for (Application__c a : apps) {
-            System.debug('What is apps: '+a);
-        }
-
-
         List<Scholarship__c> availableScholarships = [
                 SELECT Name,
                         Id,
@@ -62,29 +56,17 @@ public with sharing class scholarshipEligibleListViewController {
                 ORDER BY Name ASC NULLS FIRST
         ];
 
-        System.debug('What is availableScholarships size: '+availableScholarships.size());
-        System.debug('What is availableScholarships: '+availableScholarships);
-
         for (Application__c app : apps) {
+
             for (Scholarship__c scholarship : availableScholarships) {
                 List<Boolean> eligibleScholarshipCheck = new List<Boolean>();
+                List<String> scholarshipCitizenshipList = scholarship.Citizenship__c?.split(';');
                 List<String> scholarshipDegreeTypeList = scholarship.Degree_Type__c?.split(';');
                 List<String> scholarshipProgramList = scholarship.Programs__c?.split(';');
-                if (app.Citizenship__c == scholarship.Citizenship__c || String.isBlank(scholarship.Citizenship__c)) {
-                    eligibleScholarshipCheck.add(true);
-                } else {
-                    eligibleScholarshipCheck.add(false);
-                }
-                if ((String.isNotBlank(scholarship.Degree_Type__c) && (String.isNotBlank(app.Degree_Type__c) ? scholarshipDegreeTypeList.contains(app.Degree_Type__c) : false))) {
-                    eligibleScholarshipCheck.add(true);
-                } else {
-                    eligibleScholarshipCheck.add(false);
-                }
-                if ((String.isNotBlank(scholarship.Programs__c) && (String.isNotBlank(app.Generic_Filter_1__c) ? scholarshipProgramList.contains(app.Generic_Filter_1__c) : false))) {
-                    eligibleScholarshipCheck.add(true);
-                } else {
-                    eligibleScholarshipCheck.add(false);
-                }
+
+                eligibleScholarshipCheck.add(criteriaCompare(scholarshipCitizenshipList, app.Citizenship__c));
+                eligibleScholarshipCheck.add(criteriaCompare(scholarshipDegreeTypeList, app.Degree_Type__c));
+                eligibleScholarshipCheck.add(criteriaCompare(scholarshipProgramList, app.Generic_Filter_1__c));
 
                 if (!eligibleScholarshipCheck.contains(false)) {
                     scholarshipsEligible.add(scholarship);
@@ -93,5 +75,21 @@ public with sharing class scholarshipEligibleListViewController {
         }
 
         return scholarshipsEligible;
+    }
+
+    public static Boolean criteriaCompare(List<String> scholarshipList, String appValue) {
+        Boolean matched = false;
+        if (scholarshipList?.size() > 0) {
+            if (String.isNotBlank(appValue)) {
+                if (scholarshipList.contains(appValue)) {
+                    matched = true;
+                } else {
+                    matched = false;
+                }
+            } else {
+                matched = false;
+            }
+        }
+        return matched;
     }
 }

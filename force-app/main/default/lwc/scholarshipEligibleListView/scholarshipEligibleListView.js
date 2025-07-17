@@ -5,7 +5,6 @@
 import {api, LightningElement, track, wire} from 'lwc';
 import eligibleScholarships from "@salesforce/apex/scholarshipEligibleListViewController.eligibleScholarships";
 
-
 export default class ScholarshipEligibleListView extends LightningElement {
 
     @api contactId;
@@ -13,16 +12,25 @@ export default class ScholarshipEligibleListView extends LightningElement {
     @api currentPage;
 
     @track scholarshipLists = [];
-    scholarshipListsLength = false;
 
-    @wire(eligibleScholarships, {contactId: "$contactId", appId: "$appId", currentPage: "$currentPage"})
-    scholarships(results) {
-        if (results.data) {
-            this.scholarshipLists = results.data;
+    showScholarshipList = true;
+
+    get noEligibleText() {
+        if (this.currentPage === "applicationportal") {
+            return "You do not have any eligible scholarships.";
+        } else {
+            return "You do not have any eligible scholarships for selected application.";
         }
-        this.scholarshipListsLength = this.scholarshipLists.length > 0;
-        console.log("this.scholarshipListsLength:  "+this.scholarshipListsLength);
-        console.log("this.scholarshipLists.length:  "+this.scholarshipLists.length);
     }
 
+    connectedCallback() {
+        eligibleScholarships({contactId: this.contactId, appId: this.appId, currentPage: this.currentPage}).then((results) => {
+            if (results && results.length > 0) {
+                this.scholarshipLists = results;
+                this.showScholarshipList = true;
+            } else {
+                this.showScholarshipList = false;
+            }
+        });
+    }
 }

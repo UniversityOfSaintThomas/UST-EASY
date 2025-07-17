@@ -98,10 +98,12 @@
                 <c:EASYWidgetScreenFlow appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
 
+<!--            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Scholarship Eligible List' }">-->
+<!--                <c:ScholarshipEligibleList appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>-->
+<!--            </apex:outputPanel>-->
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Scholarship Eligible List' }">
-                <c:ScholarshipEligibleList appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
+                <c:EasyLwc appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
             </apex:outputPanel>
-
         </div>
     </article>
 </apex:component>

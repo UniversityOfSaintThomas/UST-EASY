@@ -7,7 +7,8 @@ public with sharing class scholarshipEligibleListViewController {
     @AuraEnabled(Cacheable=true)
     public static List<Scholarship__c> eligibleScholarships(String contactId, String appId, String currentPage) {
         List<Application__c> apps = new List<Application__c>();
-        List<Scholarship__c> scholarshipsEligible = new List<Scholarship__c>();
+        Set<Scholarship__c> scholarshipsEligibleSet = new Set<Scholarship__c>();
+        List<Scholarship__c> scholarshipsEligibleList = new List<Scholarship__c>();
 
         List<String> pagesWithMultipleAppInfo = new List<String>{
                 'applicationportal'
@@ -69,16 +70,16 @@ public with sharing class scholarshipEligibleListViewController {
                 eligibleScholarshipCheck.add(criteriaCompare(scholarshipProgramList, app.Generic_Filter_1__c));
 
                 if (!eligibleScholarshipCheck.contains(false)) {
-                    scholarshipsEligible.add(scholarship);
+                    scholarshipsEligibleSet.add(scholarship);
                 }
             }
         }
 
-        return scholarshipsEligible;
+        return scholarshipsEligibleList = new List<Scholarship__c>(scholarshipsEligibleSet);
     }
 
     public static Boolean criteriaCompare(List<String> scholarshipList, String appValue) {
-        Boolean matched = false;
+        Boolean matched = true;
         if (scholarshipList?.size() > 0) {
             if (String.isNotBlank(appValue)) {
                 if (scholarshipList.contains(appValue)) {

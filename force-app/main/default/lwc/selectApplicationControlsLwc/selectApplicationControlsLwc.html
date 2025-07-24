@@ -1,0 +1,37 @@
+<!--
+ - Created by nguy0092 on 7/23/2025.
+ -->
+
+<!-- Select Application Controls Lwc -->
+<template>
+    <lightning-card>
+        <h3 slot="title">
+            <lightning-icon icon-name="utility:relate" size="small" class="slds-p-right_x-small"></lightning-icon>
+            {LwcTitle}
+        </h3>
+        <div class="slds-p-vertical_x-small slds-p-horizontal_medium">
+            <lightning-dual-listbox name="languages"
+                                    label="Select Controls"
+                                    source-label={availableLabel}
+                                    selected-label={selectedLabel}
+                                    field-level-help="Select Application Controls"
+                                    options={applicationControlOptions}
+                                    value={additionalApplicationControlValues}
+                                    onchange={handleSelect}></lightning-dual-listbox>
+        </div>
+        <div class="slds-p-vertical_x-small slds-p-horizontal_medium">
+            <p>Control URL Parameters: {additionalApplicationControlValues}</p>
+        </div>
+        <div class="slds-p-around_small">
+            <lightning-button label="Save"
+                              onclick={saveClick}
+                              disabled={saveDisabled}
+                              class="slds-p-right_x-small">
+            </lightning-button>
+            <lightning-button label="Cancel"
+                              onclick={resetInitialValues}
+                              disabled={cancelDisabled}>
+            </lightning-button>
+        </div>
+    </lightning-card>
+</template>

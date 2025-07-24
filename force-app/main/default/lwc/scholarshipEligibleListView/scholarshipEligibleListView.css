@@ -1,3 +1,13 @@
 /**
  * Created by nguy0092 on 7/14/2025.
  */
+
+a {
+    font-size: 1rem !important;
+}
+
+.widget_size {
+    max-height: 400px;
+    overflow: auto;
+    scrollbar-width: thin;
+}

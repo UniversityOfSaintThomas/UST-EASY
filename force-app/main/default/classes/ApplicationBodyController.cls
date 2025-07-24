@@ -195,36 +195,12 @@ public with sharing class ApplicationBodyController {
 
             /* Gather up all the widgets */
             try {
-//                allWidgets = [SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,
-//                        Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,
-//                        Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Additional_Application_Controls__c,
-//                        Activation_State__c, Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c,
-//                        Display_Widget_On_Citizenship__c, Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c,
-//                        Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c,
-//                        Generic_Filter_8__c, Applicant_Type__c, Button_Code__c, Screenflow__c
-//                FROM EASY_Widget__c
-//                WHERE Display_Widget_On_Pages__c INCLUDES (:currentPageName)
-//                AND Activation_State__c != 'Inactive'
-//                AND Activation_State__c != 'To Be Deleted'
-//                ORDER BY Sort_Order__c];
-//
-//                for (EASY_Widget__c widget : allWidgets) {
-//                    List<String> additionalControls = widget.Additional_Application_Controls__c?.split(',');
-//                    Set<String> allControls = new Set<String>{widget.Application_Control__r.URL_Parameter__c};
-//                    if (additionalControls?.size() > 0) {
-//                        allControls.addAll(additionalControls);
-//                    }
-//                    for (String controller : allControls) {
-//                        for (String key : mapAtAppInfo.keySet()) {
-//                            if (controller == key) {
-//                                EASY_Widget__c newWidget = widget.clone(true, true, false, false);
-//                                newWidget.Application_Control__r.URL_Parameter__c = controller;
-//                                allPositionWidgets.add(newWidget);
-//                            }
-//                        }
-//                    }
-//                }
-                String mapAtAppInfokeySet = '(\'' + String.join(mapAtAppInfo.keySet(), '\',\'') + '\')';
+                Set<String> mapAtAppInfoKeySet = new Set<String>();
+                for (String key : mapAtAppInfo.keySet()) {
+                    mapAtAppInfoKeySet.add(String.escapeSingleQuotes(key));
+                }
+                String mapAtAppInfoKeyCriteria = '(\'' + String.join(mapAtAppInfoKeySet, '\',\'') + '\')';
+
                 String widgetQuery = 'SELECT Id, Name, Display_Text__c, Scripts__c, Widget_Screen_Location__c, Display_Heading__c,\n' +
                         'Widget_Type__c, Sort_Order__c, Display_Widget_On_Pages__c, Display_Widget_On_Status__c,\n' +
                         'Display_Widget_On_Sub_Status__c, Application_Control__r.URL_Parameter__c, Activation_State__c,Additional_Application_Controls__c,\n' +
@@ -233,8 +209,8 @@ public with sharing class ApplicationBodyController {
                         'Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,\n' +
                         'Applicant_Type__c, Button_Code__c, Screenflow__c, Lightning_Web_Component__c\n' +
                         'FROM EASY_Widget__c\n' +
-                        'WHERE (Application_Control__r.URL_Parameter__c IN ' + mapAtAppInfokeySet + '\n' +
-                        'OR  Additional_Application_Controls__c INCLUDES ' + mapAtAppInfokeySet + ')\n' +
+                        'WHERE (Application_Control__r.URL_Parameter__c IN ' + mapAtAppInfoKeyCriteria + '\n' +
+                        'OR  Additional_Application_Controls__c INCLUDES ' + mapAtAppInfoKeyCriteria + ')\n' +
                         'AND Display_Widget_On_Pages__c INCLUDES (\'' + currentPageName + '\')\n' +
                         'AND Activation_State__c != \'Inactive\'\n' +
                         'AND Activation_State__c != \'To Be Deleted\'\n' +

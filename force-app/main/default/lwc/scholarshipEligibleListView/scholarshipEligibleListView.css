@@ -6,8 +6,17 @@ a {
     font-size: 1rem !important;
 }
 
-.widget_size {
+.widget-height {
     max-height: 400px;
     overflow: auto;
     scrollbar-width: thin;
+}
+
+li {
+    margin-bottom: 0 !important;
+}
+
+.list-no-style{
+    margin-left: 0;
+    list-style: none;
 }

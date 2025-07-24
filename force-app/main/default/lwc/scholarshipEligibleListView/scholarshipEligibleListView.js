@@ -16,10 +16,12 @@ export default class ScholarshipEligibleListView extends LightningElement {
 
     showScholarshipList = true;
 
-    get currentSize() {
-        return this.widgetSize === "yes" ? "widget_size" : "";
+    get heightSize() {
+        return this.widgetSize === "yes" ? "widget-height" : "";
     }
-
+    get listViewStyle() {
+        return this.widgetSize === "yes" ? "slds-p-bottom_x-small" : "slds-p-bottom_x-small list-no-style";
+    }
     get noEligibleText() {
         if (this.currentPage === "applicationportal") {
             return "You do not have any eligible scholarships.";

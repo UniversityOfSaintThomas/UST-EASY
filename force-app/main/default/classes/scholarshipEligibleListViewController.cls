@@ -29,7 +29,6 @@ public with sharing class scholarshipEligibleListViewController {
         appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
         appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
         appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
-//        appsQuery += ' AND Contact__c IN (SELECT ContactId FROM User WHERE Id = \'' + UserInfo.getUserId() + '\') ';
 
         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
             appsQuery += ' AND Contact__c = \'' + contactId + '\'';
@@ -49,11 +48,12 @@ public with sharing class scholarshipEligibleListViewController {
                         Scholarship_ID__c,
                         Short_Description__c,
                         Direct_URL__c,
+                        Application_Controls__c,
                         Citizenship__c,
                         Degree_Type__c,
                         Programs__c
                 FROM Scholarship__c
-                WHERE Open_Date__c <= TODAY AND Close_Date__c >= TODAY AND RecordType.DeveloperName = 'Scholarship'
+                WHERE Open_Date__c <= TODAY AND Close_Date__c >= TODAY AND RecordType.DeveloperName IN ('Scholarship', 'Graduate Scholarship', 'Signature Programs')
                 ORDER BY Name ASC NULLS FIRST
         ];
 
@@ -61,10 +61,12 @@ public with sharing class scholarshipEligibleListViewController {
 
             for (Scholarship__c scholarship : availableScholarships) {
                 List<Boolean> eligibleScholarshipCheck = new List<Boolean>();
+                List<String> scholarshipApplicationControlList = scholarship.Application_Controls__c?.split(';');
                 List<String> scholarshipCitizenshipList = scholarship.Citizenship__c?.split(';');
                 List<String> scholarshipDegreeTypeList = scholarship.Degree_Type__c?.split(';');
                 List<String> scholarshipProgramList = scholarship.Programs__c?.split(';');
 
+                eligibleScholarshipCheck.add(criteriaCompare(scholarshipApplicationControlList, app.Application_Control__r.URL_Parameter__c));
                 eligibleScholarshipCheck.add(criteriaCompare(scholarshipCitizenshipList, app.Citizenship__c));
                 eligibleScholarshipCheck.add(criteriaCompare(scholarshipDegreeTypeList, app.Degree_Type__c));
                 eligibleScholarshipCheck.add(criteriaCompare(scholarshipProgramList, app.Generic_Filter_1__c));

@@ -4,17 +4,13 @@
 
 <!-- Scholarship Eligible List View -->
 <template>
-    <div class={currentSize}>
+    <div class={heightSize}>
         <template lwc:if={showScholarshipList}>
-            <ul class="slds-p-bottom_x-small">
+            <ul class={listViewStyle}>
                 <template for:each={scholarshipLists} for:item="scholarship">
                     <li key={scholarship.Id} class="slds-p-bottom_x-small">
-<!--                        <div class="slds-grid slds-wrap">-->
-<!--                            <div class="slds-p-left_x-small">-->
-                                <a href={scholarship.Direct_URL__c} target=_blank>{scholarship.Name}</a>
-                                <p>{scholarship.Short_Description__c}</p>
-<!--                            </div>-->
-<!--                        </div>-->
+                        <a href={scholarship.Direct_URL__c} target=_blank>{scholarship.Name}</a>
+                        <p>{scholarship.Short_Description__c}</p>
                     </li>
                 </template>
             </ul>

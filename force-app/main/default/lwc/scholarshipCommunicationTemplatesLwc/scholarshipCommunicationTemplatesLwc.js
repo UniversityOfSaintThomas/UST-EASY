@@ -206,12 +206,12 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
                 this.saveButtonDisabledBool.orgWideEmail = eventValue === this.templateDetails.orgWideEmail.initial ? "true" : "false";
                 break;
             case "startTemplate":
-                if (!!datasetSelectType) {
+                if (datasetSelectType) {
                     this.templateDetails.startTemplate.select = eventValue;
                     this.saveButtonDisabledBool.startTemplate = eventValue === this.templateDetails.startTemplate.initial ? "true" : "false";
                     this.previewCheckbox.start.selector.checked = false;
                     this.previewCheckbox.start.clicked = false;
-                } else if (!!datasetCheckType) {
+                } else if (datasetCheckType) {
                     if (eventChecked) {
                         this.startTemplateHtmlValue = this.findTemplate(this.templateDetails.startTemplate.select).htmlValue;
                     }
@@ -219,13 +219,13 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
                 }
                 break;
             case "submitTemplate":
-                if (!!datasetSelectType) {
+                if (datasetSelectType) {
                     this.templateDetails.submitTemplate.select = eventValue;
                     this.saveButtonDisabledBool.submitTemplate = eventValue === this.templateDetails.submitTemplate.initial ? "true" : "false";
                     this.previewCheckbox.submit.selector.checked = false;
                     this.previewCheckbox.submit.clicked = false;
                 }
-                else if (!!datasetCheckType) {
+                else if (datasetCheckType) {
                     if (eventChecked) {
                         this.submitTemplateHtmlValue = this.findTemplate(this.templateDetails.submitTemplate.select).htmlValue;
                     }
@@ -233,12 +233,12 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
                 }
                 break;
             case "recommender1Template":
-                if (!!datasetSelectType) {
+                if (datasetSelectType) {
                     this.templateDetails.recommender1Template.select = eventValue;
                     this.saveButtonDisabledBool.recommender1Template = eventValue === this.templateDetails.recommender1Template.initial ? "true" : "false";
                     this.previewCheckbox.recommender1.selector.checked = false;
                     this.previewCheckbox.recommender1.clicked = false;
-                } else if (!!datasetCheckType) {
+                } else if (datasetCheckType) {
                     if (eventChecked) {
                         this.recommender1TemplateHtmlValue = this.findTemplate(this.templateDetails.recommender1Template.select).htmlValue;
                     }
@@ -246,12 +246,12 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
                 }
                 break;
             case "recommender2Template":
-                if (!!datasetSelectType) {
+                if (datasetSelectType) {
                     this.templateDetails.recommender2Template.select = eventValue;
                     this.saveButtonDisabledBool.recommender2Template = eventValue === this.templateDetails.recommender2Template.initial ? "true" : "false";
                     this.previewCheckbox.recommender2.selector.checked = false;
                     this.previewCheckbox.recommender2.clicked = false;
-                } else if (!!datasetCheckType) {
+                } else if (datasetCheckType) {
                     if (eventChecked) {
                         this.recommender2TemplateHtmlValue = this.findTemplate(this.templateDetails.recommender2Template.select).htmlValue;
                     }

@@ -194,59 +194,67 @@ public with sharing class ScholarshipApplicationPage2Controller {
 
     public PageReference SendRecommenderEmail() {
         List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
-
         PageReference redirectPage = Page.ScholarshipApplicationPage2;
         redirectPage.setRedirect(true);
         redirectPage.getParameters().put('sid', sId);
 
-        String recName1 = applicant.Recommender_Name__c;
-        String recEmail1 = applicant.Recommender_Email__c;
+        try {
+            upsert applicant;
 
-        String recName2 = applicant.Recommender2_Name__c;
-        String recEmail2 = applicant.Recommender2_Email__c;
+            String recName1 = applicant.Recommender_Name__c;
+            String recEmail1 = applicant.Recommender_Email__c;
 
-        if (String.isNotBlank(recName1) && String.isNotBlank(recEmail1) && ((applicant.Recommendation_Request_Date__c == null && recommendRequestNow1) || resendRecommendation1)) {
-            if (!String.isEmpty(recEmail1)) {
+            String recName2 = applicant.Recommender2_Name__c;
+            String recEmail2 = applicant.Recommender2_Email__c;
+
+            if (String.isNotBlank(recName1) && String.isNotBlank(recEmail1) && ((applicant.Recommendation_Request_Date__c == null && recommendRequestNow1) || resendRecommendation1)) {
                 try {
                     emailsToSend.add(emailBuilder.createEmail(scholarship.Recommender_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail1));
                     applicant.Recommendation_Request_Date__c = Datetime.now();
                 } catch (Exception ex) {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommender 1 Email Template: ' + ex.getMessage()));
+                    recommendRequestNow1 = false;
+                    resendRecommendation1 = false;
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommender 1 Email Template exception: ' + ex.getMessage()));
                     System.debug('Recommender 1 Email Template exception: ' + ex.getMessage());
                     return null;
                 }
             }
-        }
-        if (String.isNotBlank(recName2) && String.isNotBlank(recEmail2) && ((applicant.Recommendation2_Request_Date__c == null && recommendRequestNow2) || resendRecommendation2)) {
-            if (!String.isEmpty(recEmail2)) {
+
+            if (String.isNotBlank(recName2) && String.isNotBlank(recEmail2) && ((applicant.Recommendation2_Request_Date__c == null && recommendRequestNow2) || resendRecommendation2)) {
                 try {
                     emailsToSend.add(emailBuilder.createEmail(scholarship.Recommender2_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, recEmail2));
                     applicant.Recommendation2_Request_Date__c = Datetime.now();
                 } catch (Exception ex) {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommender 2 Email Template: ' + ex.getMessage()));
+                    recommendRequestNow2 = false;
+                    resendRecommendation2 = false;
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommender 2 Email Template exception: ' + ex.getMessage()));
                     System.debug('Recommender 2 Email Template exception: ' + ex.getMessage());
                     return null;
                 }
             }
+        } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommender information not saved. No Request Sent'));
+            System.debug('Recommender information not saved. No Request Sent: ' + ex.getMessage());
+            return null;
         }
 
         if (emailsToSend.size() > 0) {
-            try {
-                upsert applicant;
-            } catch (Exception ex) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommendation not saved. No Request Sent'));
-                return null;
-            }
-
             try {
                 emailBuilder.sendCreatedEmails(emailsToSend);
             } catch (Exception ex) {
                 if (recommendRequestNow1 || recommendRequestNow2) {
                     //If the email fails, we want to add the error message to the activity task description
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommendation saved. No request email sent.'));
-                    System.debug(ex.getMessage());
+                    System.debug('Recommendation saved. No request email sent: '+ex.getMessage());
                     return null;
                 }
+            }
+            try {
+                upsert applicant;
+            } catch (Exception ex) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Request email sent but recommendation request date not saved'));
+                System.debug('Request email sent but recommendation request date not saved: '+ex.getMessage());
+                return null;
             }
         }
 
@@ -272,40 +280,46 @@ public with sharing class ScholarshipApplicationPage2Controller {
         PageReference pageRef = ScholarshipSharedUtilities.setSid(Page.ScholarshipApplicationComplete, false, scholarship.Scholarship_ID__c);
         List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 
-        if (String.isNotEmpty(scholarship.Org_Wide_Email_Id__c) && String.isNotEmpty(scholarship.Submit_Scholarship_Email_Template_Id__c)) {
-            try {
-//                emailsToSend.add(ScholarshipSharedUtilities.sendLightningEmail(scholarship.Submit_Scholarship_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, applicant.Contact__r.Email));
-                emailsToSend.add(emailBuilder.createEmail(scholarship.Submit_Scholarship_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, applicant.Contact__r.Email));
-            } catch (Exception ex) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Email Template: ' + ex.getMessage()));
-                System.debug('Submit Email Template exception: ' + ex.getMessage());
-                return null;
-            }
-        }
-
         recommendRequestNow1 = true;
         recommendRequestNow2 = true;
         PageReference recommendRedirect = SendRecommenderEmail();
 
-        try {
-            applicant.Scholarship_Complete__c = true;
-            applicant.Scholarship_Status__c = 'Submitted App';
-            applicant.Scholarship_Date_Submitted__c = Datetime.now();
-            upsert applicant;
-        } catch (DmlException ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Scholarship not saved: ' + ex.getMessage()));
-            System.debug('Upsert Applicant exception: ' + ex.getMessage());
+        if (recommendRedirect != null) {
+            try {
+                applicant.Scholarship_Complete__c = true;
+                applicant.Scholarship_Status__c = 'Submitted App';
+                applicant.Scholarship_Date_Submitted__c = Datetime.now();
+                upsert applicant;
+            } catch (DmlException ex) {
+                pageRef = Page.ScholarshipApplicationPage2;
+                pageRef.setRedirect(true);
+                pageRef.getParameters().put('pageMsg', '3w');
+                System.debug('Upsert Applicant exception: ' + ex.getMessage());
+                return pageRef;
+            }
+        } else {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Recommendation request error. Scholarship not saved.'));
             return null;
         }
 
-        if (emailsToSend.size() > 0) {
+        if (String.isNotEmpty(scholarship.Org_Wide_Email_Id__c) && String.isNotEmpty(scholarship.Submit_Scholarship_Email_Template_Id__c)) {
             try {
-                emailBuilder.sendCreatedEmails(emailsToSend);
+                emailsToSend.add(emailBuilder.createEmail(scholarship.Submit_Scholarship_Email_Template_Id__c, scholarship.Org_Wide_Email_Id__c, applicant.Id, applicant.Contact__c, applicant.Contact__r.Email));
+                if (emailsToSend.size() > 0) {
+                    try {
+                        emailBuilder.sendCreatedEmails(emailsToSend);
+                    } catch (Exception ex) {
+                        pageRef.getParameters().put('pageMsg', '2w');
+                        System.debug('Send Submit Email exception: ' + ex.getMessage());
+                    }
+                }
             } catch (Exception ex) {
-                //Add Submit confirmation email did not send ApexMessage on redirect Complete page
                 pageRef.getParameters().put('pageMsg', '2w');
-                System.debug('Send Submit Email exception: ' + ex.getMessage());
+                System.debug('Submit Email Template exception: ' + ex.getMessage());
             }
+        } else {
+            pageRef.getParameters().put('pageMsg', '2w');
+            System.debug('Send Submit Email exception: no Org_Wide_Email_Id__c or Submit_Scholarship_Email_Template_Id__c');
         }
 
         return pageRef;

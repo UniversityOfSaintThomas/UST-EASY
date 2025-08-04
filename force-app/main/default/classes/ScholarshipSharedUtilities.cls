@@ -60,6 +60,9 @@ public with sharing class ScholarshipSharedUtilities {
                 when '2w' {
                     return severityMessage = new String[]{'WARNING', 'Application Saved and Submitted. No confirmation sent to applicant.'};
                 }
+                when '3w' {
+                    return severityMessage = new String[]{'ERROR', 'Error saving scholarship.'};
+                }
             }
         }
         return severityMessage;
@@ -257,36 +260,6 @@ public with sharing class ScholarshipSharedUtilities {
         }
         return '';
     }
-
-    //Create Task Activity for Emails Sent
-//    public static Task createTaskActivity(Id whatId, Id contactId, String subject, String description, String name, String email, Boolean resendBool, Integer recommenderNum) {
-//        String subjectText = '';
-//        String resendStatus = '';
-//
-//        if (resendBool) {
-//            resendStatus = '[RESENT] ';
-//        }
-//
-//        if (recommenderNum == 0) {
-//            subjectText = 'Email sent to Applicant';
-//        } else {
-//            subjectText = resendStatus + 'Email sent to Recommender ' + recommenderNum + ': ' + name + ' ' + email;
-//        }
-//
-//        Task taskActivity = new Task();
-//        taskActivity.WhatId = whatId;
-//        taskActivity.WhoId = contactId;
-//        taskActivity.Type = 'Email';
-//        taskActivity.ActivityDate = Date.today();
-//        taskActivity.Subject = subjectText;
-//        taskActivity.Status = 'Completed';
-//        taskActivity.Priority = 'Low';
-//        taskActivity.Description = 'Subject: ' + subject + '\n\n';
-//        taskActivity.Description += description.replaceAll('</p>', '\n');
-//        taskActivity.Description = taskActivity.Description.replaceAll('<(.*?)>', '');
-//
-//        return taskActivity;
-//    }
 
     public without sharing class emailUtilities {
 

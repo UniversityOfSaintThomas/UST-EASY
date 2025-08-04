@@ -49,7 +49,7 @@ public with sharing class scholarshipEligibleListViewController {
                         Short_Description__c,
                         Direct_URL__c,
                         Application_Controls__c,
-                        Citizenship__c,
+                        Citizenship_s__c,
                         Degree_Type__c,
                         Programs__c
                 FROM Scholarship__c
@@ -62,7 +62,7 @@ public with sharing class scholarshipEligibleListViewController {
             for (Scholarship__c scholarship : availableScholarships) {
                 List<Boolean> eligibleScholarshipCheck = new List<Boolean>();
                 List<String> scholarshipApplicationControlList = scholarship.Application_Controls__c?.split(';');
-                List<String> scholarshipCitizenshipList = scholarship.Citizenship__c?.split(';');
+                List<String> scholarshipCitizenshipList = scholarship.Citizenship_s__c?.split(';');
                 List<String> scholarshipDegreeTypeList = scholarship.Degree_Type__c?.split(';');
                 List<String> scholarshipProgramList = scholarship.Programs__c?.split(';');
 

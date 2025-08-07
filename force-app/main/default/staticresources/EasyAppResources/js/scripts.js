@@ -14,6 +14,13 @@ docReady(function () {
     activateCarousel();
 });
 
+const minMaxMap = {
+    validateACT: {min: 0, max: 36},
+    validateSATComposite: {min: 0, max: 1600},
+    validateSATSubject: {min: 0, max: 800},
+    validateAge: {min: 0, max: 120}
+};
+
 function pageLoadReRendered(isRelatedRecordReRender = false) {
 
     //Disable fields that are set to not be editable
@@ -32,24 +39,40 @@ function pageLoadReRendered(isRelatedRecordReRender = false) {
         item.required = true;
     });
 
+
     sldsScope.querySelectorAll(".validateDecimal, .validateInteger, .validateNumber, .validateCurrency, .validatePercent, .validateACT, .validateSATComposite, .validateSATSubject, .validateAge").forEach(item => {
         item.type = "number";
-        if (item.classList.contains('validateACT')) {
-            item.setAttribute('min', '0');
-            item.setAttribute('max', '36');
+        if (item.value === '' || item.value === null) {
+            item.value = null;
         }
-        if (item.classList.contains('validateSATComposite')) {
-            item.setAttribute('min', '0');
-            item.setAttribute('max', '1600');
+        item.classList.add('slds-number');
+
+        for (const cls in minMaxMap) {
+            if (item.classList.contains(cls)) {
+                item.setAttribute('min', minMaxMap[cls].min);
+                item.setAttribute('max', minMaxMap[cls].max);
+            }
         }
-        if (item.classList.contains('validateSATSubject')) {
-            item.setAttribute('min', '0');
-            item.setAttribute('max', '800');
+
+        item.addEventListener('blur', () => checkMinMax(item));
+        item.addEventListener('change', () => checkMinMax(item));
+
+        function checkMinMax(item) {
+            const min = parseFloat(item.getAttribute('min'));
+            const max = parseFloat(item.getAttribute('max'));
+            const value = parseFloat(item.value);
+
+            // Limit input length to max digits
+            if (item.value.length > String(max).length) {
+                item.value = item.value.substring(0, String(max).length);
+            }
+
+            if (value < min || value >= max) {
+                activateErrorStateWrap(item, 'change');
+                item.value = null;
+            }
         }
-        if (item.classList.contains('validateAge')) {
-            item.setAttribute('min', '0');
-            item.setAttribute('max', '120');
-        }
+
     });
 
     sldsScope.querySelectorAll(".validatePhone").forEach(item => {
@@ -1015,6 +1038,15 @@ function checkForm() {
     return true;
 }
 
+function checkForACTSATValidation(item) {
+    for (let key in minMaxMap) {
+        if (item.classList.contains(key)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 //Input validations
 function textValidations(checkFormValidate, documentStart) {
     let doc;
@@ -1059,7 +1091,18 @@ function textValidations(checkFormValidate, documentStart) {
                     if (checkBoxCheckedCount < 1) {
                         activateErrorState(checkBoxChecked, 'change')
                     }
-                } else if (!item.value) {
+                } else if (checkForACTSATValidation(item)) {
+                    console.log('number input string: ' + item.value.toString());
+                    console.log('regex: ' + item);
+                    //check if item value is a number
+                    console.log('number input: ' + item.value);
+                    console.log('number parseInt: ' +  parseInt(item.value));
+
+                    if (!item.value.match(re_number)) {
+                        item.value = null;
+                        activateErrorState(item, 'change');
+                    }
+                } else if (!item.value.trim()) {
                     activateErrorState(item, 'change')
                 }
             }
@@ -1175,30 +1218,34 @@ function textValidations(checkFormValidate, documentStart) {
     })
 
     function activateErrorState(errorInput, eventType) {
-        let errorWrap;
-        //if error input is not an array of inputs add it to an array of inputs
-        if (!(errorInput instanceof NodeList || errorInput instanceof HTMLCollection)) {
-            errorInput = [errorInput];
-        }
-        //If error input is an array
-        errorWrap = errorInput[0].closest('.slds-form-element');
-        errorWrap.classList.add("slds-has-error");
-        errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-            errorHelp.style.display = "block"
-        });
-        //add event listner to all the inputs
-        errorInput.forEach(input => {
-            input.addEventListener(eventType, () => {
-                errorWrap.classList.remove("slds-has-error");
-                errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
-                    errorHelp.style.display = "none";
-                });
-            });
-        });
+        activateErrorStateWrap(errorInput, eventType);
         errors++;
     }
 
     return errors;
+}
+
+function activateErrorStateWrap(errorInput, eventType) {
+    let errorWrap;
+    //if error input is not an array of inputs add it to an array of inputs
+    if (!(errorInput instanceof NodeList || errorInput instanceof HTMLCollection)) {
+        errorInput = [errorInput];
+    }
+    //If error input is an array
+    errorWrap = errorInput[0].closest('.slds-form-element');
+    errorWrap.classList.add("slds-has-error");
+    errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+        errorHelp.style.display = "block"
+    });
+    //add event listner to all the inputs
+    errorInput.forEach(input => {
+        input.addEventListener(eventType, () => {
+            errorWrap.classList.remove("slds-has-error");
+            errorWrap.querySelectorAll(".slds-form-element__help").forEach(errorHelp => {
+                errorHelp.style.display = "none";
+            });
+        });
+    });
 }
 
 function validateFileType(obj) {

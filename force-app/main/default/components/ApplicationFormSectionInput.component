@@ -205,6 +205,7 @@
     <!-- Reference Question as Picklist -->
     <apex:outputPanel layout="none" rendered="{!(questionWrapper['question']['Display_As_Picklist__c'] || LOWER($CurrentPage.Name) == 'applicationregistration' || LOWER($CurrentPage.Name) == 'applicationcreate')  && inputType == 'Reference'}">
         <div class="slds-select_container">
+
             <apex:selectList id="referenceField" value="{!responseObject[fieldAPI]}" size="1" styleClass="slds-select" onChange="reRenderAllGroups('{!rerenderGroup}')">
                 <apex:selectOptions value="{!inputOptions}"/>
             </apex:selectList>

@@ -462,7 +462,13 @@ public class ApplicationRequirement {
         for (ApplicationQuestionGroup g : section.groups) {
             if (g.questionGroup == true && g.questions != null && g.isEditable) {
                 for (ApplicationQuestion q : g.questions) {
-                    if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null && String.isBlank(q.question.Contact_Field__c) && String.isBlank(q.question.Application_Field__c)) {
+                    if ((q.isEditable || UserInfo.getUserType() == 'Standard')
+                            && q.response != null
+                            && (
+                            String.isBlank(q.question.Contact_Field__c) && String.isBlank(q.question.Application_Field__c)
+                                    || (String.isNotBlank(q.question.Contact_Field__c) && q.question.Display_As_Picklist__c == true)
+                                    || (String.isNotBlank(q.question.Application_Field__c) && q.question.Display_As_Picklist__c == true)
+                    )) {
 
                         Question_Response__c qResp = q.response;
                         qResp.Application__c = app.Id;

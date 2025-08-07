@@ -11,9 +11,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
         <!-- Google Tag Manager -->
-        <script src="https://s3.amazonaws.com/static.aws.stthomas.edu/gtm-consent/main.js" type="module"></script>
-        <link href="https://s3.amazonaws.com/capricorn-static-files/css/app.css" rel="stylesheet"/>
-        <link href="https://s3.amazonaws.com/static.aws.stthomas.edu/gtm-consent/main.css" rel="stylesheet"/>
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-5BKTTT2');</script>
         <!-- End Google Tag Manager -->
 
         <link href="https://www.stthomas.edu/_files/images/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
@@ -139,15 +141,13 @@
                 </a>
                 <p class="block__copy">© <span id="date"></span>&nbsp;<a href="https://www.stthomas.edu">University of St. Thomas, Minnesota</a></p>
                 <address class="block__copy">2115 Summit Avenue<br/>St. Paul, Minnesota 55105 USA</address>
-                <p class="block__copy"><a href="https://www.stthomas.edu/about/land-acknowledgment/" target="_blank" class="footer__phone">Land Acknowledgment</a></p>
             </div>
             <nav class="block__footer__links">
                 <ul>
                     <li><a id="report-problem" href="https://stthomas.az1.qualtrics.com/jfe/form/SV_5Ab5cqQpmwfxRpr" target="_blank">Report a Website Problem</a></li>
-                    <li><a href="https://www.stthomas.edu/policies/" target="_blank">Policies</a></li>
-                    <li><a href="https://www.stthomas.edu/media/officeofgeneralcounsel/policies/Equal-Opportunity-Statement-and-Notice-of-Nondiscrimination.pdf" target="_blank">EO Statement</a></li>
-                    <li><a href="https://www.stthomas.edu/media/officeofgeneralcounsel/policies/OnlinePrivacyPolicy.pdf" target="_blank">Privacy Policy</a></li>
-                    <li><a href="https://www.stthomas.edu/ustcares/" target="_blank">Emergency</a></li>
+                    <li><a href="https://www.stthomas.edu/policies/equal-opportunity/" target="_blank">EO Statement</a></li>
+                    <li><a href="https://www.stthomas.edu/policies/online-privacy/" target="_blank">Privacy Policy</a></li>
+                    <li><a href="https://www.stthomas.edu/emergency/" target="_blank">Emergency</a></li>
                     <li><a href="https://www.stthomas.edu/accessibility-statement/" target="_blank">Accessibility</a></li>
                 </ul>
             </nav>

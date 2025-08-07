@@ -15,7 +15,7 @@ public class ApplicationRegistration {
     public String userType { get; set; }
     public Boolean noApplication { get; set; }
     public Boolean externalApplication { get; set; }
-    public String applicationType { get; set; }
+    public String appTypeUrlParameter { get; set; }
     public Map<String, Application_Control__c> externalAppControlMap { get; set; }
     public Map<String, List<String>> externalAssociateAppControlMap { get; set; }
     public String externalApplicationType { get; set; }
@@ -30,7 +30,7 @@ public class ApplicationRegistration {
         userType = UserInfo.getUserType();
         appInfo = ApplicationUtilities.createShellAppInfo();
         cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
-        applicationType = '';
+        appTypeUrlParameter = '';
         noApplication = false;
         externalApplication = false;
         pageTitle = 'New Application: ' + appInfo.academicLevel;
@@ -57,17 +57,16 @@ public class ApplicationRegistration {
 
         externalApplicationType = '';
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
-            applicationType = ApexPages.currentPage().getParameters().get('at');
-            if (applicationType.equalsIgnoreCase('noapp') || externalAppControlMap.keySet().contains(applicationType)) {
+            appTypeUrlParameter = ApexPages.currentPage().getParameters().get('at');
+            if (appTypeUrlParameter.equalsIgnoreCase('noapp') || externalAppControlMap.keySet().contains(appTypeUrlParameter)) {
                 noApplication = true;
             }
-            if (externalAppControlMap.keySet().contains(applicationType)) {
-                externalApplicationType = externalAppControlMap.get(applicationType).External_Application_Type__c;
+            if (externalAppControlMap.keySet().contains(appTypeUrlParameter)) {
+                externalApplicationType = externalAppControlMap.get(appTypeUrlParameter).External_Application_Type__c;
                 pageTitle = externalApplicationType + ': Claim your St. Thomas Admissions Portal';
                 externalApplication = true;
             }
             //Query for application control based on the URL parameter
-            System.debug('Application Type: ' + applicationType);
         }
 
         if (cookieKeyPresent) {
@@ -105,7 +104,7 @@ public class ApplicationRegistration {
             ApplicationQuestionGroup firstGroup;
 
             if (externalApplication) {
-                Application_Control__c appControl = externalAppControlMap.get(applicationType);
+                Application_Control__c appControl = externalAppControlMap.get(appTypeUrlParameter);
                 ApplicationQuestion externalApp = new ApplicationQuestion(appCreate.con, appCreate.app, '', interaction, 'External_Application_ID__c');
                 //Get the External App Found Statement and set it to the label
                 ExternalQuestionLabel = 'Please enter your Common App Id';
@@ -142,7 +141,7 @@ public class ApplicationRegistration {
         String applicationType = '';
 
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
-            applicationType = ApexPages.currentPage().getParameters().get('at');
+            applicationType = ApexPages.currentPage().getParameters().get('at').trim().escapeHtml4();
         }
 
         if (!userType.endsWithIgnoreCase('guest')) {
@@ -161,7 +160,7 @@ public class ApplicationRegistration {
 
     public PageReference testCookieKey() {
         ApplicationUtilities.getCookieKey();
-        PageReference pageRef = ApexPages.CurrentPage();
+        PageReference pageRef = ApexPages.currentPage();
         ApexPages.currentPage().getParameters().put('at', ApexPages.currentPage().getParameters().get('at'));
         pageRef.setRedirect(true);
         return pageRef;
@@ -185,6 +184,16 @@ public class ApplicationRegistration {
             appCreate.additionalDataString = '';
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, errorMessage));
             return null;
+        }
+
+        Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
+        String currentUrl = AppSettings.Community_URL__c;
+        if (!currentUrl.endsWith('/')) {
+            currentUrl += '/';
+        }
+        currentUrl += 'ApplicationRegistration';
+        if (!currentUrl.startsWith('http')) {
+            currentUrl = 'https://' + currentUrl;
         }
 
         System.Savepoint sp = Database.setSavepoint();
@@ -220,7 +229,8 @@ public class ApplicationRegistration {
             }
 
             if (String.isNotBlank(interaction.Academic_Program__c)) {
-                List<Application__c> a = [
+                //Get all apps that the contact has with the program, term, and application type
+                List<Application__c> currentApplications = [
                         SELECT
                                 Id,
                                 Intended_Program__c,
@@ -228,38 +238,50 @@ public class ApplicationRegistration {
                                 Intended_Term_of_Entry__c,
                                 Application_Status__c,
                                 Application_Substatus__c,
-                                Application_Control__r.URL_Parameter__c
+                                Application_Control__r.URL_Parameter__c,
+                                External_Application_ID__c,
+                                External_Application_Type__c
                         FROM Application__c
-                        WHERE Contact__r.Email = :con.Email
+                        WHERE Contact__c = :con.Id
                         AND Application_Status__c != 'Wrong Application'
                         AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
                         AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
-                        AND Application_Control__r.URL_Parameter__c IN :externalAppControlMap.keySet()
+                        //AND Application_Control__r.URL_Parameter__c IN :externalAssociateAppControlMap.keySet()
+                        AND Application_Control__r.URL_Parameter__c = :appTypeUrlParameter
                         AND Intended_Program__c = :interaction.Academic_Program__c
                         AND Intended_Program__r.Number_of_Applications_Limit__c LIKE 'One Application%'
                         AND Intended_Term_of_Entry__c = :interaction.Intended_Start_Term__c
                 ];
 
-                Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
-                String currentUrl = AppSettings.Community_URL__c;
-                if (!currentUrl.endsWith('/')) {
-                    currentUrl += '/';
-                }
-                currentUrl += 'ApplicationRegistration';
-                if (!currentUrl.startsWith('http')) {
-                    currentUrl = 'https://' + currentUrl;
-                }
-
                 String externalThrownErrorText = '';
-                if (a.size() > 0 && !externalApplication && externalAssociateAppControlMap.keySet().contains(applicationType)) {
-                    List<String> externalAppControlList = externalAssociateAppControlMap.get(applicationType);
-                    for (Application__c app : a) {
-                        if (externalAppControlList.contains(app.Application_Control__r.URL_Parameter__c)) {
-                            externalThrownErrorText += '<p class="slds-p-top_xx-small">' + externalAppControlMap.get(app.Application_Control__r.URL_Parameter__c).External_App_Found_Statement__c + ' <a href="' + currentUrl + '?at=' + externalAppControlMap.get(app.Application_Control__r.URL_Parameter__c).URL_Parameter__c + '">Please follow this link for more information and to claim your account</a>.</p>';
+
+                if (currentApplications.size() > 0) {
+                    for (Application__c currentApp : currentApplications) {
+                        if (String.isNotBlank(currentApp.External_Application_ID__c) && !externalApplication) {
+                            if (externalAssociateAppControlMap.containsKey(appTypeUrlParameter)) {
+                                List<String> externalAppControls = externalAssociateAppControlMap.get(appTypeUrlParameter);
+                                for (String externalAppControl : externalAppControls) {
+                                    Application_Control__c externalAppControlFound = externalAppControlMap.get(externalAppControl);
+                                    if (externalAppControlFound != null) {
+                                        if (String.isNotBlank(externalAppControlFound.External_App_Found_Statement__c)) {
+                                            externalThrownErrorText += externalAppControlFound.External_App_Found_Statement__c + ' <a href="' + currentUrl + '?at=' + externalAppControlFound.URL_Parameter__c + '">Please follow this link for more information and to claim your account</a>.';
+                                        } else {
+                                            externalThrownErrorText += 'You have already applied to this program.' + ' <a href="' + currentUrl + '?at=' + externalAppControlFound.URL_Parameter__c + '">Please follow this link for more information and to claim your account</a>.';
+                                        }
+                                    }
+                                }
+                            } else {
+                                externalThrownErrorText += 'This appears to be an unclaimed external application without a shell application control.';
+                            }
+                        } else {
+                            externalThrownErrorText += 'We already have a application on file for this term. If you are having trouble logging in and accessing your application please contact admissions for support.';
                         }
 
                     }
-                    throw new ApplicationUtilities.ApplicationException(externalThrownErrorText, true, true);
+                    if (String.isNotBlank(externalThrownErrorText)) {
+                        externalThrownErrorText = '<p class="slds-p-top_xx-small">' + externalThrownErrorText + '</p>';
+                        throw new ApplicationUtilities.ApplicationException(externalThrownErrorText, true, true);
+                    }
                 }
             }
 

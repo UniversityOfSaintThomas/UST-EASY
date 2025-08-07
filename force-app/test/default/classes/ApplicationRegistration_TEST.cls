@@ -15,62 +15,74 @@ private class ApplicationRegistration_TEST {
         }
         hed.TDTM_Global_API.setTdtmConfig(tokens);
 
-        Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl('test','st');
-        Application_Control__c appControl2 = ApplicationTESTUtilities.createApplicationControl('commonapp','commonapp');
+        Application_Control__c appControl = ApplicationTESTUtilities.createApplicationControl('test', 'st');
+        Application_Control__c appControl2 = ApplicationTESTUtilities.createApplicationControl('commonapp', 'commonapp');
 
         Application_Setting__c appSetting = new Application_Setting__c(
-            Community_Profile_Ids__c = 'Test',
-            Community_URL__c = 'Test',
-            Cookie_Encryption_Key__c = 'Test',
-            Default_Template__c = 'Test',
-            Permission_Set_Id__c = 'Test'
+                Community_Profile_Ids__c = 'Test',
+                Community_URL__c = 'Test',
+                Cookie_Encryption_Key__c = 'Test',
+                Default_Template__c = 'Test',
+                Permission_Set_Id__c = 'Test'
         );
         insert appSetting;
 
         Academic_Term__c at = new Academic_Term__c(
-            Name = 'test', 
-            Activate_Application_Date__c = Date.today().addDays(-2), 
-            End_Application_Date__c = Date.today().addDays(2), 
-            Academic_Term_Integration_External_ID__c = ApplicationUtilities.getUUID()
+                Name = 'test',
+                Activate_Application_Date__c = Date.today().addDays(-2),
+                End_Application_Date__c = Date.today().addDays(2),
+                Academic_Term_Integration_External_ID__c = ApplicationUtilities.getUUID()
         );
         insert at;
 
         //Thad - added hide from application, ext id, active true, and app control id
         insert new Program__c(
-            Name = 'test', 
-            Program_Integration_External_Id__c = ApplicationUtilities.getUUID(), 
-            Hide_from_Application__c = false, 
-            Active__c = true, 
-            Application_Control__c = appControl.Id
+                Name = 'test',
+                Program_Integration_External_Id__c = ApplicationUtilities.getUUID(),
+                Hide_from_Application__c = false,
+                Active__c = true,
+                Application_Control__c = appControl.Id,
+                Number_of_Applications_Limit__c = 'One Application Per Term'
         );
 
         Interaction_Mapping__c im1 = new Interaction_Mapping__c(
-            Target_Object_API_Name__c = 'Contact', 
-            Target_Field_API_Name__c = 'FirstName', 
-            Source_Object_API_Name__c = 'Interaction__c', 
-            Source_Field_API_Name__c = 'First_Name__c', 
-            Interaction_Source_Field_API_Name__c = 'First_Name__c', 
-            Active__c = true
+                Target_Object_API_Name__c = 'Contact',
+                Target_Field_API_Name__c = 'FirstName',
+                Source_Object_API_Name__c = 'Interaction__c',
+                Source_Field_API_Name__c = 'First_Name__c',
+                Interaction_Source_Field_API_Name__c = 'First_Name__c',
+                Active__c = true
         );
         Interaction_Mapping__c im2 = new Interaction_Mapping__c(
-            Target_Object_API_Name__c = 'Contact', 
-            Target_Field_API_Name__c = 'LastName', 
-            Source_Object_API_Name__c = 'Interaction__c', 
-            Source_Field_API_Name__c = 'Last_Name__c', 
-            Interaction_Source_Field_API_Name__c = 'Last_Name__c', 
-            Active__c = true
+                Target_Object_API_Name__c = 'Contact',
+                Target_Field_API_Name__c = 'LastName',
+                Source_Object_API_Name__c = 'Interaction__c',
+                Source_Field_API_Name__c = 'Last_Name__c',
+                Interaction_Source_Field_API_Name__c = 'Last_Name__c',
+                Active__c = true
         );
         Interaction_Mapping__c im3 = new Interaction_Mapping__c(
-            Target_Object_API_Name__c = 'Contact', 
-            Target_Field_API_Name__c = 'Email', 
-            Source_Object_API_Name__c = 'Interaction__c', 
-            Source_Field_API_Name__c = 'Email__c', 
-            Interaction_Source_Field_API_Name__c = 'Email__c', 
-            Active__c = true
+                Target_Object_API_Name__c = 'Contact',
+                Target_Field_API_Name__c = 'Email',
+                Source_Object_API_Name__c = 'Interaction__c',
+                Source_Field_API_Name__c = 'Email__c',
+                Interaction_Source_Field_API_Name__c = 'Email__c',
+                Active__c = true
         );
         insert new List<Interaction_Mapping__c>{
                 im1, im2, im3
         };
+
+        // Add a new Application__c record for testing
+        Application__c app = new Application__c(
+                Contact__c = student.Id,
+                Intended_Program__c = [SELECT Id FROM Program__c WHERE Name = 'test'].Id,
+                Intended_Term_of_Entry__c = at.Id,
+                External_Application_ID__c = '1234567890',
+                Application_Control__c = appControl.Id,
+                Application_Status__c = 'Submitted App'
+        );
+        insert app;
     }
 
     @IsTest
@@ -172,9 +184,18 @@ private class ApplicationRegistration_TEST {
         Id termId = [SELECT Id FROM Academic_Term__c WHERE Name = 'test'].Id;
 
         Application_Control__c appControl = [SELECT Id FROM Application_Control__c WHERE Name = 'test'];
+        Application_Control__c appControl2 = [SELECT Id FROM Application_Control__c WHERE Name = 'commonapp'];
+
         appControl.Default__c = false;
         appControl.URL_Parameter__c = appControl.Id;
         update appControl;
+
+        appControl2.Default__c = false;
+        appControl2.External_Application_Type__c = 'Common App';
+        appControl2.External_App_Associated_App_Control__r = appControl;
+        appControl2.External_App_Claim_Id_Question__c = 'External App Claim';
+        appControl2.External_App_Found_Statement__c = 'External App Found Statement';
+        update appControl2;
 
         PageReference pr = Page.ApplicationRegistration;
         pr.getParameters().put('at', 'commonapp');
@@ -206,7 +227,7 @@ private class ApplicationRegistration_TEST {
                 } else if (q.fieldName != null && q.fieldName.equals('Last_Name__c')) {
                     q.response.ValueText__c = 'testpass1';
                 } else if (q.fieldName != null && q.fieldName.equals('External_Application_ID__c')) {
-                    q.response.ValueText__c = '1111111111';
+                    q.response.ValueText__c = '1234567890';
                 }
             }
         }
@@ -235,15 +256,15 @@ private class ApplicationRegistration_TEST {
                 } else if (q.fieldName != null && q.fieldName.equals('Intended_Term_of_Entry__c')) {
                     q.response.ValueText__c = termId;
                 } else if (q.fieldName != null && q.fieldName.equals('First_Name__c') && q.label.equals('First Name')) {
-                    q.response.ValueText__c = 'test2';
+                    q.response.ValueText__c = 'Test';
                 } else if (q.fieldName != null && q.fieldName.equals('Last_Name__c') && q.label.equals('Last Name')) {
-                    q.response.ValueText__c = 'test2';
+                    q.response.ValueText__c = 'Student';
                 } else if (q.fieldName != null && q.fieldName.equals('Email__c')) {
-                    q.response.ValueText__c = 'ApplicationRegistrationTest2@test.com';
+                    q.response.ValueText__c = 'test@student.com';
                 } else if (q.fieldName != null && q.fieldName.equals('First_Name__c')) {
-                    q.response.ValueText__c = 'testpass1';
+                    q.response.ValueText__c = 'Test';
                 } else if (q.fieldName != null && q.fieldName.equals('Last_Name__c')) {
-                    q.response.ValueText__c = 'testpass1';
+                    q.response.ValueText__c = 'Student';
                 }
             }
         }

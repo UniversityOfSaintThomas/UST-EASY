@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>All</fullName>
+    <fullName>All_Graduate</fullName>
     <columns>NAME</columns>
     <columns>Descriptive_Name__c</columns>
     <columns>Academic_Level__c</columns>
     <columns>School_College__c</columns>
-    <columns>Hide_Form_Title__c</columns>
     <columns>Redirect_After_Form_Submission__c</columns>
-    <columns>UPDATEDBY_USER</columns>
     <columns>LAST_UPDATE</columns>
     <columns>Academic_Interests_To_Display__c</columns>
     <columns>Lead_Source__c</columns>
-    <columns>Fields_to_Display__c</columns>
     <filterScope>Everything</filterScope>
-    <label>All</label>
+    <filters>
+        <field>Academic_Level__c</field>
+        <operation>equals</operation>
+        <value>G</value>
+    </filters>
+    <filters>
+        <field>School_College__c</field>
+        <operation>equals</operation>
+        <value>Opus College of Business</value>
+    </filters>
+    <label>All Graduate</label>
 </ListView>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Additional_Field_Validation__c</fullName>
-    <deprecated>false</deprecated>
     <description>Additional validation for a text field to meet formatting standards of the data.</description>
     <externalId>false</externalId>
     <inlineHelpText>Additional validation for a text field to meet formatting standards of the data.</inlineHelpText>
@@ -22,6 +21,26 @@
                 <fullName>validateSSN</fullName>
                 <default>false</default>
                 <label>Social Security Number</label>
+            </value>
+            <value>
+                <fullName>validateACT</fullName>
+                <default>false</default>
+                <label>ACT Score (0-36)</label>
+            </value>
+            <value>
+                <fullName>validateSATComposite</fullName>
+                <default>false</default>
+                <label>SAT Composite Score (0-1600)</label>
+            </value>
+            <value>
+                <fullName>validateSATSubject</fullName>
+                <default>false</default>
+                <label>SAT Subject Score (0-800)</label>
+            </value>
+            <value>
+                <fullName>validateAge</fullName>
+                <default>false</default>
+                <label>Age (0-120)</label>
             </value>
         </valueSetDefinition>
     </valueSet>

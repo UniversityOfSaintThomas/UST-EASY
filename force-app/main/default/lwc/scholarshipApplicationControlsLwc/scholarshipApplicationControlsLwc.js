@@ -1,5 +1,6 @@
 /**
  * Created by nguy0092 on 7/23/2025.
+ * Use child component SelectApplicationControlsLwc to show Application Control selection.
  */
 
 import {api, LightningElement, wire} from 'lwc';
@@ -37,10 +38,6 @@ export default class ScholarshipApplicationControlsLwc extends LightningElement 
             this.initialApplicationControls = getFieldValue(scholarshipData, FILTER_APPLICATION_CONTROLS);
             this.initialApplicationControlsSplit = this.initialApplicationControls?.split(";");
 
-            // console.log("What is Id: "+JSON.stringify(ID_FIELD));
-            // console.log("What is initial thing: "+this.initialApplicationControls);
-            // console.log("What is split thing: "+this.initialApplicationControlsSplit);
-            // console.log("What is thing all: "+JSON.stringify(this.childProps));
         }
         if (results.error) {
             console.log("Scholarship Record error: "+results.error);

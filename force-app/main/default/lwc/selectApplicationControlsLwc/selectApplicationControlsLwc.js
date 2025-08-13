@@ -1,5 +1,6 @@
 /**
  * Created by nguy0092 on 7/23/2025.
+ * Used as a child component to add Application Control filtering.
  */
 
 import {LightningElement, api, track, wire} from 'lwc';
@@ -92,20 +93,12 @@ export default class SelectApplicationControlsLwc extends LightningElement {
     }
 
     resetInitialValues() {
-        // console.log("What is first additionalApplicationControlValues: "+this.additionalApplicationControlValues);
         this.additionalApplicationControlValues = this.additionalApplicationControlsInitial?.split(";");
         this.saveDisabled = true;
-        // console.log("What is Id: "+this.parentRecordId);
-        // console.log("What is IdField: "+this.idField.fieldApiName);
-        // console.log("What is applicationControlField: "+this.applicationControlField.fieldApiName);
     }
 
     saveClick() {
         const updateFields = {};
-        // console.log("What is IdField: "+this.idField.fieldApiName);
-        // console.log("What is applicationControlField: "+this.applicationControlField.fieldApiName);
-        // console.log("What is additionalApplicationControlValues: "+this.additionalApplicationControlValues.join(";"));
-        // console.log("What is parentId: "+this.parentRecordId);
         updateFields[this.idField.fieldApiName] = this.parentRecordId;
         updateFields[this.applicationControlField.fieldApiName] = this.additionalApplicationControlValues.join(";");
 

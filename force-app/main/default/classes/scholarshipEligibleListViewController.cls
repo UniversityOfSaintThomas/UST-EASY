@@ -26,9 +26,10 @@ public with sharing class scholarshipEligibleListViewController {
         appsQuery += ' Citizenship__c, Intended_Program_Codes__c, Intended_Program__r.Degree_Type__c, Degree_Type__c,';
         appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c, Applicant_Type__c';
         appsQuery += ' FROM Application__c';
-        appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
-        appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
-        appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
+        appsQuery += ' WHERE Application_Status__c NOT IN (\'Wrong Application\', \'Withdrawn\')';
+//        appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
+//        appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
+//        appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Multiple App\'))';
 
         if (pagesWithMultipleAppInfo.contains(currentPageName)) {
             appsQuery += ' AND Contact__c = \'' + contactId + '\'';

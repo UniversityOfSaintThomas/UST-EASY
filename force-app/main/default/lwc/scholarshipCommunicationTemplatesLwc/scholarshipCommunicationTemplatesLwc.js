@@ -4,6 +4,7 @@
 
 import {LightningElement, api, track, wire} from 'lwc';
 import {getFieldValue, getRecord, updateRecord} from "lightning/uiRecordApi";
+import {refreshApex} from '@salesforce/apex';
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
 import orgWideEmailsApex from "@salesforce/apex/ScholarshipCommunicationTemplates.orgWideEmailsOptions";
 import emailTemplatesApex from "@salesforce/apex/ScholarshipCommunicationTemplates.emailTemplatesOptions";
@@ -37,7 +38,6 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     @track missingDefaults = [];
     scholarshipFields;
     @track orgWideEmailValueOptions = [];
-    @track emailTemplateValueOptions = [];
     saveDisabled = true;
     cancelDisabled = false;
     @track saveButtonDisabledBool = {};
@@ -62,18 +62,12 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
     submitTemplateHtmlValue;
     recommender1TemplateHtmlValue;
     recommender2TemplateHtmlValue;
-    get startTemplateOptions() {
-        return this.templateOptionFolders('Started');
-    }
-    get submitTemplateOptions() {
-        return this.templateOptionFolders('Submitted');
-    }
-    get recommender1TemplateOptions() {
-        return this.templateOptionFolders('Recommender 1');
-    }
-    get recommender2TemplateOptions() {
-        return this.templateOptionFolders('Recommender 2');
-    }
+    @track emailTemplateWireResults = [];
+    @track emailTemplateValueOptions = [];
+    @track startTemplateOptions = [];
+    @track submitTemplateOptions = [];
+    @track recommender1TemplateOptions = [];
+    @track recommender2TemplateOptions = [];
     get startSelectVisible() {
         return this.sendStartEmailCheck
     }
@@ -135,6 +129,7 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
             }
             this.setInitialValues();
         }
+        refreshApex(this.emailTemplateWireResults);
     }
 
     @wire(orgWideEmailsApex)
@@ -148,13 +143,19 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
         }
     }
 
-    @wire(emailTemplatesApex)
-    emailTemplateWire({error, data}) {
-        if (data) {
-            this.emailTemplateValueOptions = JSON.parse(JSON.stringify(data));
+    @wire(emailTemplatesApex, {scholarshipRecordId: "$recordId"})
+    emailTemplateWire(results) {
+        this.emailTemplateWireResults = results;
+        if (results.data) {
+            this.emailTemplateValueOptions = JSON.parse(JSON.stringify(results.data));
+
+            this.startTemplateOptions = this.templateOptionFolders(this.emailTemplateValueOptions, "Started");
+            this.submitTemplateOptions = this.templateOptionFolders(this.emailTemplateValueOptions, "Submitted");
+            this.recommender1TemplateOptions = this.templateOptionFolders(this.emailTemplateValueOptions, "Recommender 1");
+            this.recommender2TemplateOptions = this.templateOptionFolders(this.emailTemplateValueOptions, "Recommender 2");
         }
-        if (error) {
-            console.log("emailTemplateWire error: " + error);
+        if (results.error) {
+            console.log("emailTemplateWire error: " + results.error);
         }
     }
 
@@ -183,10 +184,10 @@ export default class ScholarshipCommunicationTemplatesLwc extends LightningEleme
         this.saveDisabled = true;
     }
 
-    templateOptionFolders(folderString) {
+    templateOptionFolders(templateResults, folderString) {
         let templates = [];
-        this.emailTemplateValueOptions.forEach((t) => {
-            if (t.folderName.startsWith(folderString)) {
+        templateResults.forEach((t) => {
+            if (t.folderName.toLowerCase().startsWith(folderString.toLowerCase())) {
                 templates.push(t);
             }
         })

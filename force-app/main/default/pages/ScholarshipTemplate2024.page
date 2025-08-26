@@ -2,7 +2,7 @@
  - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 4/21/2023.
  -->
 <apex:page id="UndergradStThomas2023" sidebar="false" lightningStyleSheets="true" showHeader="false" standardStylesheets="false" cache="false" applyHtmlTag="false">
-    <apex:slds/>
+    <apex:slds />
     <html class="no-js" lang="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <head>
         <meta charset="UTF-8"/>
@@ -131,15 +131,13 @@
                         </a>
                         <p class="block__copy">© <span id="date"></span>&nbsp;<a href="https://www.stthomas.edu">University of St. Thomas, Minnesota</a></p>
                         <address class="block__copy">2115 Summit Avenue<br/>St. Paul, Minnesota 55105 USA</address>
-                        <p class="block__copy"><a href="https://www.stthomas.edu/about/land-acknowledgment/" target="_blank" class="footer__phone">Land Acknowledgment</a></p>
                     </div>
                     <nav class="block__footer__links">
                         <ul>
-                            <li><a id="report-problem" href="https://stthomasirt.co1.qualtrics.com/jfe/form/SV_9p44Ac9SFtUnGdv" target="_blank">Report a Website Problem</a></li>
-                            <li><a href="https://www.stthomas.edu/policies/" target="_blank">Policies</a></li>
-                            <li><a href="https://www.stthomas.edu/media/officeofgeneralcounsel/policies/Equal-Opportunity-Statement-and-Notice-of-Nondiscrimination.pdf" target="_blank">EO Statement</a></li>
-                            <li><a href="https://www.stthomas.edu/media/officeofgeneralcounsel/policies/OnlinePrivacyPolicy.pdf" target="_blank">Privacy Policy</a></li>
-                            <li><a href="https://www.stthomas.edu/ustcares/" target="_blank">Emergency</a></li>
+                            <li><a id="report-problem" href="https://stthomas.az1.qualtrics.com/jfe/form/SV_5Ab5cqQpmwfxRpr" target="_blank">Report a Website Problem</a></li>
+                            <li><a href="https://www.stthomas.edu/policies/equal-opportunity/" target="_blank">EO Statement</a></li>
+                            <li><a href="https://www.stthomas.edu/policies/online-privacy/" target="_blank">Privacy Policy</a></li>
+                            <li><a href="https://www.stthomas.edu/emergency/" target="_blank">Emergency</a></li>
                             <li><a href="https://www.stthomas.edu/accessibility-statement/" target="_blank">Accessibility</a></li>
                         </ul>
                     </nav>

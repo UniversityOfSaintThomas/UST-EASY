@@ -3,7 +3,6 @@
     <fullName>Redirect_URL__c</fullName>
     <deprecated>false</deprecated>
     <description>URL to redirect user to after form is submitted</description>
-    <externalId>false</externalId>
     <inlineHelpText>URL to redirect user to after form is submitted</inlineHelpText>
     <label>Redirect URL</label>
     <required>true</required>

@@ -28,7 +28,6 @@
             <value>
                 <fullName>To Be Deleted</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>To Be Deleted</label>
             </value>
         </valueSetDefinition>

@@ -102,6 +102,8 @@ public class ApplicationRequirement {
             appInfo = ApplicationUtilities.gatherApplicationInfo();
         }
 
+        PageReference portalPage = Page.ApplicationPortal;
+
         if (String.isNotBlank(ApexPages.currentPage().getParameters().get('UPAY_SITE_ID'))) {
             PageReference pr = Page.ApplicationRequirement;
             if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
@@ -114,8 +116,9 @@ public class ApplicationRequirement {
             return pr;
         }
 
-        if (String.isBlank(appInfo.appControlId)) {
-            PageReference portalPage = Page.ApplicationPortal;
+        //Get the current visualforce page name
+        String currenPageName = ApexPages.currentPage().getUrl();
+        if ((String.isBlank(appInfo.appControlId) || String.isBlank(appInfo.requirementId)) && !currenPageName.containsIgnoreCase('applicationhome')) {
             return portalPage;
         }
 
@@ -459,7 +462,13 @@ public class ApplicationRequirement {
         for (ApplicationQuestionGroup g : section.groups) {
             if (g.questionGroup == true && g.questions != null && g.isEditable) {
                 for (ApplicationQuestion q : g.questions) {
-                    if ((q.isEditable || UserInfo.getUserType() == 'Standard') && q.response != null) {
+                    if ((q.isEditable || UserInfo.getUserType() == 'Standard')
+                            && q.response != null
+                            && (
+                            String.isBlank(q.question.Contact_Field__c) && String.isBlank(q.question.Application_Field__c)
+                                    || (String.isNotBlank(q.question.Contact_Field__c) && q.question.Display_As_Picklist__c == true)
+                                    || (String.isNotBlank(q.question.Application_Field__c) && q.question.Display_As_Picklist__c == true)
+                    )) {
 
                         Question_Response__c qResp = q.response;
                         qResp.Application__c = app.Id;
@@ -491,18 +500,6 @@ public class ApplicationRequirement {
         } catch (Exception ex) {
             System.debug(ex.getMessage());
         }
-
-        String emergency = 'none';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
 
         try {
             update con;
@@ -559,17 +556,6 @@ public class ApplicationRequirement {
         PageReference pr = Page.ApplicationPortal;
         try {
             update new Application__c(Id = appInfo.appId, Application_Status__c = appInfo.submitStatus);
-        } catch (Exception ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-            return null;
-        }
-        return pr;
-    }
-
-    public PageReference confirmEnrollment() {
-        PageReference pr = Page.ApplicationPortal;
-        try {
-            update new Application__c(Id = appInfo.appId, Application_Status__c = appInfo.confirmStatus);
         } catch (Exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
             return null;
@@ -706,7 +692,6 @@ public class ApplicationRequirement {
                     AND Requirement_Response__c = :reqResponseId
             ];
         } catch (Exception e) {
-
             System.debug('An exception occurred for deletePreviousFile(): ' + e.getMessage());
         }
 

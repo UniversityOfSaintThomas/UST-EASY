@@ -3,7 +3,6 @@
     <fullName>Academic_Level__c</fullName>
     <deprecated>false</deprecated>
     <description>Used to filter programs shown for selection</description>
-    <externalId>false</externalId>
     <label>Academic Level</label>
     <required>true</required>
     <trackTrending>false</trackTrending>

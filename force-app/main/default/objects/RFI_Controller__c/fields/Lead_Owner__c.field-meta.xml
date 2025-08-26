@@ -4,7 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <deprecated>false</deprecated>
     <description>User to set as Owner on created leads</description>
-    <externalId>false</externalId>
     <inlineHelpText>OwnerId of Leads created from the RFI Form</inlineHelpText>
     <label>Lead Owner</label>
     <referenceTo>User</referenceTo>

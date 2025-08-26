@@ -14,5 +14,10 @@
     <columns>LAST_UPDATE</columns>
     <columns>UPDATEDBY_USER</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Application_Control__c</field>
+        <operation>equals</operation>
+        <value>Undergraduate First-Year (Common App)</value>
+    </filters>
     <label>All</label>
 </ListView>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Merit</fullName>
+    <columns>NAME</columns>
+    <columns>Award_Year__c</columns>
+    <columns>Academic_Term_s__c</columns>
+    <columns>Audience_s__c</columns>
+    <columns>Citizenship_s__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>RECORDTYPE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Scholarship__c.UG_Merit</value>
+    </filters>
+    <label>All - Merit</label>
+    <language>en_US</language>
+</ListView>

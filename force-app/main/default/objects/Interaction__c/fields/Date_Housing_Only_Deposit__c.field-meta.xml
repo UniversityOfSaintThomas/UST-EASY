@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Housing_Only_Deposit__c</fullName>
+    <description>Date that a housing only deposit was made.</description>
+    <inlineHelpText>Date that a housing only deposit was made.</inlineHelpText>
+    <label>Date - Housing Only Deposit</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

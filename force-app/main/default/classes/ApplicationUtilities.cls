@@ -226,23 +226,23 @@ public class ApplicationUtilities {
             param = '';
         }
         try {
-            Id acId = Id.valueOf(param);
+            Id applicationControlId = Id.valueOf(param);
             return [
                     SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
-                            Arrow_Color__c, Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c,
-                            Logo_Static_Resource_Path__c, Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c,
-                            School_College__c, Degree_Levels__c, Template__c, Confirm_Status__c, Allow_Confirm_From__c
+                            Cancel_Status__c, Submit_Status__c, Withdraw_Status__c, URL_Parameter__c, Default__c, Academic_Level__c,
+                            School_College__c, Degree_Levels__c, Template__c, Confirm_Status__c, Allow_Confirm_From__c, External_App_Claim_Id_Question__c,
+                            External_App_Found_Statement__c, External_Application_Type__c
                     FROM Application_Control__c
-                    WHERE Id = :acId
+                    WHERE Id = :applicationControlId
             ];
         } catch (Exception e) {
         }
 
         for (Application_Control__c ac : [
-                SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c, Arrow_Color__c,
-                        Button_Color__c, Button_Text_Color__c, Cancel_Status__c, Line_Color__c, Link_Color__c, Logo_Static_Resource__c, Logo_Static_Resource_Path__c,
-                        Submit_Status__c, Withdraw_Status__c, Text_Color__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c,
-                        Template__c, Confirm_Status__c, Allow_Confirm_From__c
+                SELECT Id, Hide_Term_Program__c, Application_Start_Status__c, Allow_Cancel_From__c, Allow_Submit_From__c, Allow_Withdraw_From__c,
+                        Cancel_Status__c, Submit_Status__c, Withdraw_Status__c, URL_Parameter__c, Default__c, Academic_Level__c, School_College__c, Degree_Levels__c,
+                        Template__c, Confirm_Status__c, Allow_Confirm_From__c, External_App_Claim_Id_Question__c,
+                        External_App_Found_Statement__c, External_Application_Type__c
                 FROM Application_Control__c
                 WHERE Active__c = TRUE
                 AND (URL_Parameter__c = :param OR Default__c = TRUE)
@@ -269,7 +269,8 @@ public class ApplicationUtilities {
 
     public static String createEncryptedCookie(String stringToEncrypt) {
         String encodedCipherText = createEncryptedString(stringToEncrypt);
-        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, -1, true, 'Strict');
+        Integer cookieLife = 60 * 60 * 4;//60 * 60 * 24 * 365; // 1 year
+        Cookie EASYCookie = new Cookie('EASY_INFO', encodedCipherText, null, cookieLife, true, 'Strict');
         ApexPages.currentPage().setCookies(new Cookie[]{
                 EASYCookie
         });

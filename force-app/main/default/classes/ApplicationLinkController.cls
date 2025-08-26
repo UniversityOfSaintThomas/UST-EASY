@@ -26,8 +26,6 @@ public with sharing class ApplicationLinkController {
 
         if (String.isNotBlank(urlRequirementId)) {
 
-            System.debug(urlRequirementId);
-
             Application_Control__c applicationControl = [
                     SELECT Id, Allow_Submit_From__c, Allow_Withdraw_From__c,
                             Hide_Term_Program__c, Submit_Status__c, Allow_Confirm_From__c, Confirm_Status__c,

@@ -23,7 +23,7 @@ public with sharing class scholarshipEligibleListViewController {
         }
 
         String appsQuery = ' SELECT Id, Application_Control__r.Id, Application_Control__r.URL_Parameter__c, Application_Status__c, Application_Substatus__c, OwnerId,';
-        appsQuery += ' Citizenship__c, Intended_Program_Codes__c, Intended_Program__r.Degree_Type__c, Degree_Type__c,';
+        appsQuery += ' Citizenship__c, Intended_Program_Codes__c, Intended_Term_of_Entry__r.Name, Intended_Program__r.Degree_Type__c, Degree_Type__c,';
         appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c, Applicant_Type__c';
         appsQuery += ' FROM Application__c';
         appsQuery += ' WHERE Application_Status__c NOT IN (\'Wrong Application\', \'Withdrawn\')';
@@ -52,9 +52,12 @@ public with sharing class scholarshipEligibleListViewController {
                         Application_Controls__c,
                         Citizenship_s__c,
                         Degree_Type__c,
-                        Programs__c
+                        Programs__c,
+                        Academic_Term_s__c,
+                        Admission_Application_Status__c
                 FROM Scholarship__c
-                WHERE Open_Date__c <= TODAY AND Close_Date__c >= TODAY AND RecordType.DeveloperName IN ('Scholarship', 'Graduate Scholarship', 'Signature Programs')
+                WHERE Open_Date__c <= TODAY AND Close_Date__c >= TODAY AND RecordType.DeveloperName IN ('Scholarship', 'Graduate_Scholarship', 'Signature_Programs')
+                AND Do_Not_Show_On_Scholarship_List__c = FALSE
                 ORDER BY Name ASC NULLS FIRST
         ];
 
@@ -66,11 +69,15 @@ public with sharing class scholarshipEligibleListViewController {
                 List<String> scholarshipCitizenshipList = scholarship.Citizenship_s__c?.split(';');
                 List<String> scholarshipDegreeTypeList = scholarship.Degree_Type__c?.split(';');
                 List<String> scholarshipProgramList = scholarship.Programs__c?.split(';');
+                List<String> scholarshipAcademicTermList = scholarship.Academic_Term_s__c?.split(';');
+                List<String> scholarshipAdmissionApplicationStatus = scholarship.Admission_Application_Status__c?.split(';');
 
                 eligibleScholarshipCheck.add(criteriaCompare(scholarshipApplicationControlList, app.Application_Control__r.URL_Parameter__c));
                 eligibleScholarshipCheck.add(criteriaCompare(scholarshipCitizenshipList, app.Citizenship__c));
                 eligibleScholarshipCheck.add(criteriaCompare(scholarshipDegreeTypeList, app.Degree_Type__c));
                 eligibleScholarshipCheck.add(criteriaCompare(scholarshipProgramList, app.Generic_Filter_1__c));
+                eligibleScholarshipCheck.add(criteriaCompare(scholarshipAcademicTermList, app.Intended_Term_of_Entry__r.Name));
+                eligibleScholarshipCheck.add(criteriaCompare(scholarshipAdmissionApplicationStatus, app.Application_Status__c));
 
                 if (!eligibleScholarshipCheck.contains(false)) {
                     scholarshipsEligibleSet.add(scholarship);

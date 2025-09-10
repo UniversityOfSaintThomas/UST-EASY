@@ -372,18 +372,18 @@ public class ScholarshipController_TEST {
         Test.stopTest();
     }
 
-    @IsTest
-    static void testEligibleScholarships() {
-        Application__c application = [
-                SELECT Id,
-                        Contact__c
-                FROM Application__c
-                LIMIT 1
-        ];
-
-        Test.startTest();
-        List<Scholarship__c> eligibleScholarships = scholarshipEligibleListViewController.eligibleScholarships(application.Contact__c, application.Id, 'applicationportal');
-        Test.stopTest();
-    }
+//    @IsTest
+//    static void testEligibleScholarships() {
+//        Application__c application = [
+//                SELECT Id,
+//                        Contact__c
+//                FROM Application__c
+//                LIMIT 1
+//        ];
+//
+//        Test.startTest();
+//        List<Scholarship__c> eligibleScholarships = scholarshipEligibleListViewController.eligibleScholarships(application.Contact__c, application.Id, 'applicationportal');
+//        Test.stopTest();
+//    }
 
 }

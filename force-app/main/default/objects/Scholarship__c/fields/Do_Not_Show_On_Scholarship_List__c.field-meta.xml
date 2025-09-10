@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_Not_Show_On_Scholarship_List__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Will not show on Scholarship Home Page</description>
+    <inlineHelpText>Select if you do not want this scholarship to appear on the Scholarship Home Page.</inlineHelpText>
+    <label>Do Not Show On Scholarship List</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -20,7 +20,7 @@ export default class SelectApplicationControlsLwc extends LightningElement {
     @api additionalApplicationControlValues = [];
     @api LwcTitle = "";
 
-    selectedText;
+    // selectedText;
 
     saveDisabled = true;
     cancelDisabled = false;
@@ -48,12 +48,11 @@ export default class SelectApplicationControlsLwc extends LightningElement {
             uiapi {
               query 
               {
-                Application_Control__c ( where: { Active__c: { eq: true }
+                Application_Control__c ( first:200, upperBound:5000 where: { Active__c: { eq: true }
                                                   URL_Parameter__c: { ne: $currentApplicationControl }
                                                 },
                                          orderBy: { Name: { order: ASC }
                                                   }
-                                         upperBound: 5000
                                        ) 
                 {
                   edges {
@@ -88,7 +87,7 @@ export default class SelectApplicationControlsLwc extends LightningElement {
 
     handleSelect(event) {
         this.additionalApplicationControlValues = event.detail.value;
-        this.selectedText = event.detail.value;
+        // this.selectedText = event.detail.value;
         this.saveDisabled = false;
     }
 

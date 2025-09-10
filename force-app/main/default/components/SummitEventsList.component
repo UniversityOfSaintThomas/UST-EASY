@@ -7,7 +7,7 @@
         <apex:attribute name="widget" description="details about the widget" type="EASY_Widget__c" required="false"/>
 
 
-    <div id="lightningvf{!widget.Id}"/>
+    <div id="lightningvf{!widget.Id}{!widget.Application_Control__r.URL_Parameter__c}"/>
 
     <script>
         $Lightning.use("c:easyAuraApp", function () {
@@ -15,7 +15,7 @@
                 {
                     contactId: "{!appInfo.contactId}"
                 },
-                "lightningvf{!widget.Id}",
+                "lightningvf{!widget.Id}{!widget.Application_Control__r.URL_Parameter__c}",
                 function (cmp) {
                     console.log("LWC summitEventsListView Loaded")
                 }

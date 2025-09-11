@@ -20,26 +20,32 @@ export default class SelectApplicationControlsLwc extends LightningElement {
     @api additionalApplicationControlValues = [];
     @api LwcTitle = "";
 
-    // selectedText;
-
     saveDisabled = true;
     cancelDisabled = false;
 
     @track applicationControlOptions = [];
 
     get availableLabel() {
-        return "Available ("+(!!this.applicationControlOptions?.length ? this.applicationControlOptions.length : 0) + ")";
+        let controlsSelected = this.applicationControlsSelected();
+        let controlsAvailable = !!this.applicationControlOptions?.length ? this.applicationControlOptions.length : 0;
+        return "Available ("+ (controlsAvailable - controlsSelected) + ")";
     }
+
     get selectedLabel() {
-        let controlsValueFound = 0;
+        let controlsSelected = this.applicationControlsSelected();
+        return "Chosen ("+ controlsSelected + ")";
+    }
+
+    applicationControlsSelected() {
+        let controls = 0;
         this.additionalApplicationControlValues?.forEach((controlValue) => {
             this.applicationControlOptions?.forEach((controlOption) => {
                 if (controlValue === controlOption.value) {
-                    controlsValueFound++;
+                    controls++;
                 }
             })
         })
-        return "Chosen ("+ controlsValueFound + ")";
+        return controls;
     }
 
     @wire(graphql, {
@@ -87,7 +93,6 @@ export default class SelectApplicationControlsLwc extends LightningElement {
 
     handleSelect(event) {
         this.additionalApplicationControlValues = event.detail.value;
-        // this.selectedText = event.detail.value;
         this.saveDisabled = false;
     }
 

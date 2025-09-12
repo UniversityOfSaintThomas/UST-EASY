@@ -2,7 +2,7 @@
  * Created by jjheaney on 3/14/2022.
  */
 
-public with sharing class ScholarshipSharedUtilities {
+public without sharing class ScholarshipSharedUtilities {
 
     public static Id getActiveUserId() {
         return UserInfo.getUserId();
@@ -15,6 +15,7 @@ public with sharing class ScholarshipSharedUtilities {
                     SELECT FirstName, LastName, Email
                     FROM Contact
                     WHERE Id = :contactId
+                    WITH SECURITY_ENFORCED
             ];
             if (resultIds.size() > 0) {
                 result = resultIds[0];

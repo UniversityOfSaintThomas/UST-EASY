@@ -85,7 +85,10 @@ public with sharing class scholarshipEligibleListViewController {
             }
         }
 
-        return scholarshipsEligibleList = new List<Scholarship__c>(scholarshipsEligibleSet);
+        scholarshipsEligibleList = new List<Scholarship__c>(scholarshipsEligibleSet);
+        scholarshipsEligibleList.sort();
+
+        return scholarshipsEligibleList;
     }
 
     public static Boolean criteriaCompare(List<String> scholarshipList, String appValue) {

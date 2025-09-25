@@ -27,7 +27,7 @@
         <apex:define name="scriptsHead">
             <script>
                 $Lightning.use("c:easyAuraApp", function () {
-                    $Lightning.createComponent("c:ScholarshipEligibleListView",
+                    $Lightning.createComponent("c:scholarshipEligibleListView",
                         {
                             contactId: "{!varContactId}",
                             appId: "",
@@ -36,7 +36,7 @@
                         },
                         "lightningvf",
                         function (cmp) {
-                            console.log("LWC ScholarshipEligibleListView Loaded")
+                            console.log("LWC scholarshipEligibleListView Loaded")
                         }
                     );
                 });

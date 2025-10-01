@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Academic_Interest_Max_Selection__c</fullName>
     <description>The maximum programs for which a user can select interest.</description>
+    <externalId>false</externalId>
     <inlineHelpText>The maximum programs for which a user can select interest.</inlineHelpText>
     <label>Academic Interest Max Selection</label>
     <required>false</required>

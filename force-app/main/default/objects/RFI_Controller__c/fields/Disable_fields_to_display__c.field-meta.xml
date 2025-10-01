@@ -3,6 +3,7 @@
     <fullName>Disable_fields_to_display__c</fullName>
     <defaultValue>false</defaultValue>
     <description>When checked this will prevent from appearing all the fields to display and required fields selected.Only manually entered additional questions will appear.</description>
+    <externalId>false</externalId>
     <inlineHelpText>When checked this will prevent from appearing all the fields to display and required fields selected.Only manually entered additional questions will appear.</inlineHelpText>
     <label>Disable standard fields to display</label>
     <trackTrending>false</trackTrending>

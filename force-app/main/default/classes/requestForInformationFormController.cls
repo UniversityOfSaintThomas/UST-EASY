@@ -55,8 +55,8 @@ public without sharing class requestForInformationFormController {
             }
             Database.DMLOptions dml = new Database.DMLOptions();
             dml.duplicateRuleHeader.allowSave = false;
-            //System.debug('Lead object for insert: ');
-            //System.debug(JSON.serializePretty(sobj));
+            System.debug('Lead object for insert: ');
+            System.debug(JSON.serializePretty(sobj));
             Database.SaveResult result = Database.insert(sobj, dml);
             if (result.isSuccess() == false) {
                 String context = 'Creation of lead failed on insert. \n Error: ' + result.getErrors();
@@ -64,6 +64,7 @@ public without sharing class requestForInformationFormController {
             }
         } catch (Exception e) {
             String context = 'Creation of lead failed because of caught exception in requestForInformationFormController.createLead(). \n Error: ' + e.getMessage();
+            System.debug(context);
             insertErrorRecord(rfiController, record, context);
             throw new AuraHandledException('Error creating lead: ' + e.getMessage());
         }
@@ -149,9 +150,9 @@ public without sharing class requestForInformationFormController {
                 query_string += ' AND (Academic_Level__c = \'Graduate\' OR Academic_Level__c = \'G\')  ';
                 if (!String.isBlank(school_college)) {
                     query_string += ' AND Associated_Schools__c INCLUDES (\'' + school_college + '\')';
-                }
-                if (school_college == 'School of Law') {
-                    query_string += ' AND Banner_Program_Code__c LIKE \'LW_%\'';
+                    if (school_college == 'School of Law') {
+                        query_string += ' AND Banner_Program_Code__c LIKE \'LW_%\'';
+                    }
                 }
             }
 
@@ -271,13 +272,29 @@ public without sharing class requestForInformationFormController {
     }
 
     @AuraEnabled(Cacheable=true)
+    public static String getSchoolNameByMajorProgram(String major_id) {
+        System.debug('MAJOR ID for school lookup: ' + major_id);
+        if (String.isNotEmpty(major_id)) {
+            Program__c programRecruitment = [
+                    SELECT
+                            Id, Name, Program_Major_Concentration__c, Associated_Schools__c, Primary_School_College_for_Assignment__c
+                    FROM Program__c
+                    WHERE Id = :major_id
+            ];
+            System.debug('PROGRAM RECRUITMENT: ' + programRecruitment.Primary_School_College_for_Assignment__c);
+            return programRecruitment.Primary_School_College_for_Assignment__c;
+        }
+        return '';
+    }
+
+    @AuraEnabled(Cacheable=true)
     public static Id getRecruitmentProgram(String academic_level, String citizenship_type, String admit_type, String major_id, String school_name) {
         String program_name = '';
         String program_code = 'AS_UN_BA';
-        //.debug('SCHOOL_NAME: ' + school_name);
-        //System.debug('ACADEMIC_LEVEL: ' + academic_level);
-        //System.debug('MAJOR ID: ' + major_id);
-        //System.debug('CITIZENSHIP TYPE: ' + citizenship_type);
+        System.debug('SCHOOL_NAME: ' + school_name);
+        System.debug('ACADEMIC_LEVEL: ' + academic_level);
+        System.debug('MAJOR ID: ' + major_id);
+        System.debug('CITIZENSHIP TYPE: ' + citizenship_type);
         if (academic_level == 'U' || academic_level == 'Undergraduate') {
             if (admit_type == 'Transfer') {
                 if (citizenship_type == 'International') {

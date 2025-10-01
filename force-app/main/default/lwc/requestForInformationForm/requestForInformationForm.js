@@ -61,6 +61,8 @@ import createLead from '@salesforce/apex/requestForInformationFormController.cre
 import getPresetValues from '@salesforce/apex/requestForInformationFormController.getPresetValues';
 import getSchoolCollegeAccount from '@salesforce/apex/requestForInformationFormController.getSchoolCollegeAccount';
 import getRecruitmentProgram from '@salesforce/apex/requestForInformationFormController.getRecruitmentProgram';
+import getSchoolNameByMajorProgram
+    from '@salesforce/apex/requestForInformationFormController.getSchoolNameByMajorProgram';
 import getProgramIds from '@salesforce/apex/requestForInformationFormController.getProgramIds';
 
 const RFI_CONTROLLER_FIELDS = [
@@ -131,7 +133,7 @@ export default class RequestForInformationForm extends LightningElement {
         this.utm_source_platform = this.getUrlParamValue(window.location.href, 'utm_source_platform');
         this.gclid = this.getUrlParamValue(window.location.href, 'gclid');
         this.sfcid = this.getUrlParamValue(window.location.href, 'sfcid');
-        if(!this.sfcid) {
+        if (!this.sfcid) {
             this.sfcid = this.getUrlParamValue(window.location.href, 'c__sfcid');
         }
     }
@@ -159,7 +161,6 @@ export default class RequestForInformationForm extends LightningElement {
     academic_level;
     academic_level_api;
     school_college_title;
-    school_college;
     citizenship_type;
     lead_owner;
     lead_source;
@@ -192,6 +193,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track text_message_requested = false;
     @track is_transfer = false;
     @track academic_undecided_selected = false;
+    @track school_college;
 
     //@track mobile_phone_value;
 
@@ -479,30 +481,30 @@ export default class RequestForInformationForm extends LightningElement {
                                     }
                                     if (!this.single_selected_program) {
                                         if (last_group === '' || last_group !== programs[program].Degree__c) {
-                                        last_group = programs[program].Degree__c
+                                            last_group = programs[program].Degree__c
                                             if (label_value && programs[program].Degree__c) {
-                                        values.push(
-                                            {
-                                                label: programs[program].Degree__c,
-                                                value: programs[program].Degree__c,
-                                                description: programs[program].Degree__c,
-                                                is_group: true
+                                                values.push(
+                                                    {
+                                                        label: programs[program].Degree__c,
+                                                        value: programs[program].Degree__c,
+                                                        description: programs[program].Degree__c,
+                                                        is_group: true
+                                                    }
+                                                );
                                             }
-                                        );
-                                    }
                                         }
                                     }
                                     if (label_value && programs[program].Id) {
-                                    values.push(
-                                        {
-                                            label: label_value,
-                                            value: programs[program].Id,
-                                            description: programs[program].Degree__c,
-                                            is_group: false
-                                        }
-                                    );
+                                        values.push(
+                                            {
+                                                label: label_value,
+                                                value: programs[program].Id,
+                                                description: programs[program].Degree__c,
+                                                is_group: false
+                                            }
+                                        );
+                                    }
                                 }
-                            }
                             }
 
                             this.academic_interest_picklist_values = values;
@@ -634,79 +636,80 @@ export default class RequestForInformationForm extends LightningElement {
                 this.record_input.fields[fieldToApplyTo] = event.detail.value;
             }
         } else {
-        switch (event.target.label) {
-            case this.field_labels.first_name_label:
-                this.record_input.fields.FirstName = event.target.value;
-                break;
-            case this.field_labels.last_name_label:
-                this.record_input.fields.LastName = event.target.value;
-                break;
-            case this.field_labels.email_label:
-                this.record_input.fields.Email = event.target.value;
-                break;
-            case this.field_labels.home_phone_label:
-                this.record_input.fields.Phone = event.target.value;
-                break;
-            case this.field_labels.mobile_phone_label:
-                this.record_input.fields.MobilePhone = event.target.value;
-                break;
-            case this.field_labels.phone_label:
-                this.record_input.fields.MobilePhone = event.target.value;
-                break;
-            case this.field_labels.address1_label:
-                this.address1 = event.target.value;
-                break;
-            case this.field_labels.address2_label:
-                this.address2 = event.target.value;
-                break;
-            case this.field_labels.address3_label:
-                this.address3 = event.target.value;
-                break;
-            case this.field_labels.city_label:
-                this.record_input.fields.City = event.target.value;
-                break;
-            case this.field_labels.state_label:
-                this.record_input.fields.State = event.target.value;
-                break;
-            case this.field_labels.region_label:
-                this.record_input.fields.State = ''; //event.target.value;
-                break;
-            case this.field_labels.zipcode_label:
-                this.record_input.fields.PostalCode = event.target.value;
-                if (String(event.target.value).length === 5
-                    && String(event.target.value).match(/^[0-9]+$/) != null
-                    && !this.international_citizen_type
-                ) {
-                    this.populateUSCityStateAndCountry(event.target.value);
-                }
-                break;
-            case this.field_labels.country_label:
-                this.record_input.fields.Country = event.target.options.find(opt => opt.value === event.detail.value).label;
-                this.record_input.fields.CountryCode = event.target.value;
+            switch (event.target.label) {
+                case this.field_labels.first_name_label:
+                    this.record_input.fields.FirstName = event.target.value;
+                    break;
+                case this.field_labels.last_name_label:
+                    this.record_input.fields.LastName = event.target.value;
+                    break;
+                case this.field_labels.email_label:
+                    this.record_input.fields.Email = event.target.value;
+                    break;
+                case this.field_labels.home_phone_label:
+                    this.record_input.fields.Phone = event.target.value;
+                    break;
+                case this.field_labels.mobile_phone_label:
+                    this.record_input.fields.MobilePhone = event.target.value;
+                    break;
+                case this.field_labels.phone_label:
+                    this.record_input.fields.MobilePhone = event.target.value;
+                    break;
+                case this.field_labels.address1_label:
+                    this.address1 = event.target.value;
+                    break;
+                case this.field_labels.address2_label:
+                    this.address2 = event.target.value;
+                    break;
+                case this.field_labels.address3_label:
+                    this.address3 = event.target.value;
+                    break;
+                case this.field_labels.city_label:
+                    this.record_input.fields.City = event.target.value;
+                    break;
+                case this.field_labels.state_label:
+                    this.record_input.fields.State = event.target.value;
+                    break;
+                case this.field_labels.region_label:
+                    this.record_input.fields.State = ''; //event.target.value;
+                    break;
+                case this.field_labels.zipcode_label:
+                    this.record_input.fields.PostalCode = event.target.value;
+                    if (String(event.target.value).length === 5
+                        && String(event.target.value).match(/^[0-9]+$/) != null
+                        && !this.international_citizen_type
+                    ) {
+                        this.populateUSCityStateAndCountry(event.target.value);
+                    }
+                    break;
+                case this.field_labels.country_label:
+                    this.record_input.fields.Country = event.target.options.find(opt => opt.value === event.detail.value).label;
+                    this.record_input.fields.CountryCode = event.target.value;
                     this.international_citizen_type = !this.record_input.fields.Country.toLowerCase().startsWith('united states') && this.record_input.fields.Country.toLowerCase() !== 'us';
-                break;
-            case this.field_labels.text_messages_label:
-                if (event.target.checked) {
-                    this.record_input.fields.Receive_Texts__c = 'Yes';
-                    this.text_message_requested = true;
-                } else {
-                    this.record_input.fields.Receive_Texts__c = 'No';
-                    this.text_message_requested = this.require_fields.Mobile_Phone;
-                }
-                break;
-            case this.field_labels.birthdate_label:
-                this.record_input.fields.Birthdate__c = event.target.value;
-                break;
-            case this.field_labels.citizenship_label:
-                this.record_input.fields.Citizenship_Type__c = event.target.value;
+                    break;
+                case this.field_labels.text_messages_label:
+                    if (event.target.checked) {
+                        this.record_input.fields.Receive_Texts__c = 'Yes';
+                        this.text_message_requested = true;
+                    } else {
+                        this.record_input.fields.Receive_Texts__c = 'No';
+                        this.text_message_requested = this.require_fields.Mobile_Phone;
+                    }
+                    break;
+                case this.field_labels.birthdate_label:
+                    this.record_input.fields.Birthdate__c = event.target.value;
+                    break;
+                case this.field_labels.citizenship_label:
+                    this.record_input.fields.Citizenship_Type__c = event.target.value;
                     this.international_citizen_type = event.target.value === 'International';
-                break;
-            case this.field_labels.admit_type_label:
-                this.record_input.fields.Admit_Type__c = event.target.value;
+                    break;
+                case this.field_labels.admit_type_label:
+                    this.record_input.fields.Admit_Type__c = event.target.value;
                     this.is_transfer = this.record_input.fields.Admit_Type__c === 'Transfer';
-                break;
-            case this.field_labels.academic_interest_label:
+                    break;
+                case this.field_labels.academic_interest_label:
                     let academic_value = event.detail.value.toString();
+                    console.log('Academic Value: ' + academic_value);
                     //if the multi select pills groupable finds undecided it will append it to the front of the id
                     if (academic_value.toLowerCase().includes("undecided|")) {
                         academic_value = academic_value.replace("undecided|", "");
@@ -721,93 +724,93 @@ export default class RequestForInformationForm extends LightningElement {
                     if (!Array.isArray(event.detail.value) && academic_value) {
                         this.single_selected_program = academic_value;
                     } else {
-                this.academic_interest_id_list = event.detail.value;
+                        this.academic_interest_id_list = event.detail.value;
                     }
-                break;
+                    break;
                 case "What programs are you considering (max 3)?":
                     //Hard coded label for undecided academic interest. First value blank=
                     this.academic_interest_id_list = event.detail.value;
                     break
-            case this.field_labels.academic_term_label:
-                this.record_input.fields.Intended_Start_Term__c = event.target.value;
-                this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].Term_Start_Date__c;
-                break;
-            case this.field_labels.high_school_not_found_label:
-                this.manually_enter_high_school = event.target.checked;
-                if (event.target.checked) {
-                    this.record_input.fields.High_School_or_College__c = '';
-                    this.high_school_search_results = null;
-                    this.high_school_data = false;
-                }
-                break;
-            case this.field_labels.college_not_found_label:
-                this.manually_enter_high_school = event.target.checked;
-                if (event.target.checked) {
-                    this.record_input.fields.High_School_or_College__c = '';
-                    this.high_school_search_results = null;
-                    this.high_school_data = false;
-                }
-                break;
-            case this.field_labels.high_school_search_label:
-                if (this.manually_enter_high_school) {
-                    this.record_input.fields.hed__Most_Recent_School__c = event.detail.value;
-                } else {
-                this.record_input.fields.High_School_or_College__c = event.detail.id;
-                    this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
-                }
-                break;
-            case this.field_labels.college_search_label:
-                if(this.manually_enter_high_school) {
-                    this.record_input.fields.hed__Most_Recent_School__c = event.detail.value;
-                } else {
-                    this.record_input.fields.High_School_or_College__c = event.detail.id;
-                    this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
-                }
-                break;
-            case this.field_labels.employer_label:
-                this.record_input.fields.Company = event.target.value;
-                break;
-            case this.field_labels.title_label:
-                this.record_input.fields.Title = event.target.value;
-                break;
-            case this.field_labels.high_school_graduation_year_label:
-                this.record_input.fields.Expected_Graduate_Date__c = event.target.value;
-                break;
-            case this.field_labels.timeline_label:
-                this.record_input.fields.Timeline__c = event.target.value;
-                break;
-            case this.field_labels.has_question_label:
-                this.record_input.fields.Has_Question__c = event.target.checked;
-                this.show_fields.Description = event.target.checked;
-                break;
-            case this.field_labels.description_label:
-                this.have_a_question = event.target.value;
-                break;
-            case this.field_labels.how_did_you_hear_about_us:
-                this.record_input.fields.Heard_About_Us__c = event.target.value;
+                case this.field_labels.academic_term_label:
+                    this.record_input.fields.Intended_Start_Term__c = event.target.value;
+                    this.record_input.fields.hed__Preferred_Enrollment_Date__c = this.term_id_to_name_map[event.target.value].Term_Start_Date__c;
                     break;
-            case this.field_labels.mail_info_label:
-                this.record_input.fields.Mail_Information_Requested__c = event.target.checked;
-                break;
-            case this.field_labels.st_thomas_colleges:
-                this.school_college = event.target.value;
-                break;
-            case this.field_labels.scholarship_of_interest:
-                this.record_input.fields.Scholarship_of_Interest__c = event.target.value;
-                break;
-            case this.field_labels.tell_us_about_yourself:
-                this.tell_us_about = event.target.value;
-                break;
-            default:
-                break;
-        }
+                case this.field_labels.high_school_not_found_label:
+                    this.manually_enter_high_school = event.target.checked;
+                    if (event.target.checked) {
+                        this.record_input.fields.High_School_or_College__c = '';
+                        this.high_school_search_results = null;
+                        this.high_school_data = false;
+                    }
+                    break;
+                case this.field_labels.college_not_found_label:
+                    this.manually_enter_high_school = event.target.checked;
+                    if (event.target.checked) {
+                        this.record_input.fields.High_School_or_College__c = '';
+                        this.high_school_search_results = null;
+                        this.high_school_data = false;
+                    }
+                    break;
+                case this.field_labels.high_school_search_label:
+                    if (this.manually_enter_high_school) {
+                        this.record_input.fields.hed__Most_Recent_School__c = event.detail.value;
+                    } else {
+                        this.record_input.fields.High_School_or_College__c = event.detail.id;
+                        this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
+                    }
+                    break;
+                case this.field_labels.college_search_label:
+                    if (this.manually_enter_high_school) {
+                        this.record_input.fields.hed__Most_Recent_School__c = event.detail.value;
+                    } else {
+                        this.record_input.fields.High_School_or_College__c = event.detail.id;
+                        this.record_input.fields.hed__Most_Recent_School__c = event.detail.mainField;
+                    }
+                    break;
+                case this.field_labels.employer_label:
+                    this.record_input.fields.Company = event.target.value;
+                    break;
+                case this.field_labels.title_label:
+                    this.record_input.fields.Title = event.target.value;
+                    break;
+                case this.field_labels.high_school_graduation_year_label:
+                    this.record_input.fields.Expected_Graduate_Date__c = event.target.value;
+                    break;
+                case this.field_labels.timeline_label:
+                    this.record_input.fields.Timeline__c = event.target.value;
+                    break;
+                case this.field_labels.has_question_label:
+                    this.record_input.fields.Has_Question__c = event.target.checked;
+                    this.show_fields.Description = event.target.checked;
+                    break;
+                case this.field_labels.description_label:
+                    this.have_a_question = event.target.value;
+                    break;
+                case this.field_labels.how_did_you_hear_about_us:
+                    this.record_input.fields.Heard_About_Us__c = event.target.value;
+                    break;
+                case this.field_labels.mail_info_label:
+                    this.record_input.fields.Mail_Information_Requested__c = event.target.checked;
+                    break;
+                case this.field_labels.st_thomas_colleges:
+                    this.school_college = event.target.value;
+                    break;
+                case this.field_labels.scholarship_of_interest:
+                    this.record_input.fields.Scholarship_of_Interest__c = event.target.value;
+                    break;
+                case this.field_labels.tell_us_about_yourself:
+                    this.tell_us_about = event.target.value;
+                    break;
+                default:
+                    break;
+            }
 
-        if (event.target.name === this.field_labels.high_school_datatable_name) {
-            let selected_row = this.template.querySelector('lightning-datatable').getSelectedRows();
-            this.record_input.fields.High_School_or_College__c = selected_row[0].account_id;
-            this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
+            if (event.target.name === this.field_labels.high_school_datatable_name) {
+                let selected_row = this.template.querySelector('lightning-datatable').getSelectedRows();
+                this.record_input.fields.High_School_or_College__c = selected_row[0].account_id;
+                this.template.querySelector('lightning-input[data-id="high_school"]').value = selected_row[0].name;
+            }
         }
-    }
     }
 
     errors = [];
@@ -871,16 +874,6 @@ export default class RequestForInformationForm extends LightningElement {
 
             this.record_input.fields.Inquiry_Date__c = this.getTodaysDate();
             this.handleStreetAddress();
-
-            getSchoolCollegeAccount({school_college_name: this.school_college})
-                .then(school_college_account_id => {
-                    if (Boolean(school_college_account_id)) {
-                        this.record_input.fields.St_Thomas_College_School__c = school_college_account_id;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                })
             this.handleRecruitmentProgram();
         }
     }
@@ -897,14 +890,18 @@ export default class RequestForInformationForm extends LightningElement {
      ******************************************
      */
 
-    handleRecruitmentProgram() {
+    async handleRecruitmentProgram() {
         //if (this.is_undergraduate) {
         let count = 0;
         //Apply the single record if undecided in play
+
         if (this.single_selected_program) {
             this.record_input.fields.Major_Program__c = this.single_selected_program;
             count = 1;
         }
+
+        console.log('Academic Interest ID List: ' + this.academic_interest_id_list);
+
         for (const program_id of this.academic_interest_id_list) {
             //If undecided is selected assign to recruitment program (Major_Program__c)
             if (count === 0) {
@@ -918,23 +915,45 @@ export default class RequestForInformationForm extends LightningElement {
             }
             count++;
         }
-        getRecruitmentProgram({
-            academic_level: this.academic_level_api,
-            citizenship_type: this.record_input.fields.Citizenship_Type__c,
-            admit_type: this.record_input.fields.Admit_Type__c,
-            major_id: this.record_input.fields.Major_Program__c,
-            school_name: this.school_college
-        })
-            .then(program => {
-                if (Boolean(program)) {
-                    this.record_input.fields.Recruitment_Program__c = String(program);
+
+        //If school_college is empty get one through Major_Program__c;
+        console.log('Major Program: ' + this.record_input.fields.Major_Program__c);
+        if (!this.school_college && this.record_input.fields.Major_Program__c) {
+            try {
+                this.school_college = await getSchoolNameByMajorProgram({major_id: this.record_input.fields.Major_Program__c});
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        console.log('School College: ' + this.school_college);
+
+        await getSchoolCollegeAccount({school_college_name: this.school_college})
+            .then(school_college_account_id => {
+                if (Boolean(school_college_account_id)) {
+                    this.record_input.fields.St_Thomas_College_School__c = school_college_account_id;
                 }
-                this.createLead();
             })
             .catch(error => {
                 console.log(error);
-                this.createLead();
+            })
+
+        try {
+            const program = await getRecruitmentProgram({
+                academic_level: this.academic_level_api,
+                citizenship_type: this.record_input.fields.Citizenship_Type__c,
+                admit_type: this.record_input.fields.Admit_Type__c,
+                major_id: this.record_input.fields.Major_Program__c,
+                school_name: this.school_college
             });
+            if (Boolean(program)) {
+                this.record_input.fields.Recruitment_Program__c = String(program);
+            }
+            this.createLead();
+        } catch (error) {
+            console.log(error);
+            this.createLead();
+        }
     }
 
     // Create the lead record

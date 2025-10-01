@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Lead_Source__c</fullName>
     <description>The way in which the Lead or Contact&apos;s information was first received.</description>
+    <externalId>false</externalId>
     <inlineHelpText>Indicate the initial source of this data.</inlineHelpText>
     <label>Lead Source</label>
     <required>false</required>

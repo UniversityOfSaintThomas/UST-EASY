@@ -51,6 +51,7 @@ public with sharing class ApplicationBodyController {
         Map<String, Set<String>> atGenericFilter8Map = new Map<String, Set<String>>();
 
         Map<String, Set<String>> atApplicationTypeMap = new Map<String, Set<String>>();
+        Map<String, Set<String>> atStudentTypeMap = new Map<String, Set<String>>();
 
         mapAtAppInfo = new Map<String, EASYApplicationInfo>();
         if (String.isNotBlank(currentPageName)) {
@@ -78,7 +79,8 @@ public with sharing class ApplicationBodyController {
                 appsQuery += ' Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Citizenship__c, Applicant_Banner_Id__c, Id,';
                 appsQuery += ' Aquinas_Scholars_Portal_Text__c, Contact__r.Id, Contact_Email__c, Account_Claimed_Portal_Text__c, Documents_Missing_Text__c,';
                 appsQuery += ' Contact_Mailing_First_Name__c, Contact__r.LastName, Contact__r.hed__UniversityEmail__c, Intended_Program__r.Program_Name_on_Application__c,';
-                appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c, Applicant_Type__c';
+                appsQuery += ' Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, ';
+                appsQuery += ' Generic_Filter_8__c, Applicant_Type__c, Student_Type__c ';
                 appsQuery += ' FROM Application__c';
                 appsQuery += ' WHERE Application_Status__c != \'Wrong Application\'';
                 appsQuery += ' AND (NOT(Application_Status__c = \'Withdrawn\' AND Application_Substatus__c = \'Wrong App\'))';
@@ -180,6 +182,7 @@ public with sharing class ApplicationBodyController {
                     atGenericFilter7Map = createFilterMap(app.Generic_Filter_7__c, atGenericFilter7Map, atURL);
                     atGenericFilter8Map = createFilterMap(app.Generic_Filter_8__c, atGenericFilter8Map, atURL);
                     atApplicationTypeMap = createFilterMap(app.Applicant_Type__c, atApplicationTypeMap, atURL);
+                    atStudentTypeMap = createFilterMap(app.Student_Type__c, atApplicationTypeMap, atURL);
 
                 }
 
@@ -201,7 +204,7 @@ public with sharing class ApplicationBodyController {
                                 Start_Date__c, End_Date__c, Start_Time__c, End_Time__c, Widget_Time_Zone__c, Display_Widget_On_Citizenship__c,
                                 Only_One_Widget_Key__c, Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c,
                                 Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
-                                Applicant_Type__c, Button_Code__c, Screenflow__c
+                                Applicant_Type__c, Button_Code__c, Screenflow__c, Student_Types__c
                         FROM EASY_Widget__c
                         WHERE Application_Control__r.URL_Parameter__c IN :mapAtAppInfo.keySet()
                         AND Display_Widget_On_Pages__c INCLUDES (:currentPageName)
@@ -315,6 +318,7 @@ public with sharing class ApplicationBodyController {
                         String genericFilter7 = String.isNotBlank(widget.Generic_Filter_7__c) ? widget.Generic_Filter_7__c : '';
                         String genericFilter8 = String.isNotBlank(widget.Generic_Filter_8__c) ? widget.Generic_Filter_8__c : '';
                         String widgetApplicantType = String.isNotBlank(widget.Applicant_Type__c) ? widget.Applicant_Type__c : '';
+                        String widgetStudentType = String.isNotBlank(widget.Student_Types__c) ? widget.Student_Types__c : '';
 
                         EASYApplicationInfo widgetAppInfo = mapAtAppInfo.get(widgetUrlParam);
 
@@ -387,6 +391,9 @@ public with sharing class ApplicationBodyController {
 
                         /* Applicant Type filter */
                         skipWidget = filterWidget(skipWidget, atApplicationTypeMap, widgetApplicantType, widgetUrlParam);
+
+                        /* Student Type filter */
+                        skipWidget = filterWidget(skipWidget, atStudentTypeMap, widgetStudentType, widgetUrlParam);
 
                     }
                 }

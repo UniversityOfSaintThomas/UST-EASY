@@ -25,12 +25,9 @@ export default class MultiSelectPillsGroupable extends LightningElement {
 
     rendered = false;
 
-    @api
-    checkValidity() {
+    @api checkValidity() {
         let isSelfValidated = false;
-        isSelfValidated = [
-            ...this.template.querySelectorAll("input")
-        ].reduce((validSoFar, inputField) => {
+        isSelfValidated = [...this.template.querySelectorAll("input")].reduce((validSoFar, inputField) => {
             inputField.reportValidity();
             let validCheck = validSoFar && inputField.checkValidity();
             if (!validCheck) {
@@ -42,8 +39,7 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         return isSelfValidated;
     }
 
-    @api
-    get options() {
+    @api get options() {
         return this.options_
     }
 
@@ -53,8 +49,7 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         this.parseValue(this.value_);
     }
 
-    @api
-    get value() {
+    @api get value() {
         let selectedValues = this.selectedValues();
         return selectedValues.length > 0 ? selectedValues.join(";") : "";
     }
@@ -203,12 +198,15 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         value = listData.value;
         selected = listData.selected;
 
+        // In handleSelectedClick, set selectedAt when selecting
         this.options_.forEach(function (option) {
             if (option.value === value) {
                 if (selected === true) {
                     option.selected = false;
+                    option.selectedAt = undefined;
                 } else if (!max_reached) {
                     option.selected = true;
+                    option.selectedAt = Date.now(); // or use a counter
                 }
             }
         });
@@ -241,14 +239,14 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         this.dispatchEvent(changeEvent);
     }
 
+    // In getPillArray, sort by selectedAt
     getPillArray() {
-        let pills = [];
-        this.options_.forEach(function (element) {
-            let iterator = 0;
-            if (element.selected) {
-                pills.push({label: element.label, name: element.value, key: iterator++});
-            }
-        });
+        let pills = this.options_
+            .filter(element => element.selected)
+            .sort((a, b) => a.selectedAt - b.selectedAt)
+            .map((element, iterator) => ({
+                label: element.label, name: element.value, key: iterator
+            }));
         return pills;
     }
 

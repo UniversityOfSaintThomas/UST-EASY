@@ -31,7 +31,7 @@
             </apex:outputPanel>
 
             <apex:outputPanel layout="none" rendered="{!cookieKeyPresent}">
-                <c:ApplicationBody title="{!IF(commonAppApplication,'Common App: Claim your St. Thomas Admissions Portal', 'New Application: '  + appInfo.academicLevel)}" appInfo="{!appInfo}" loadingText="Building Your Application..." vfPageName="ApplicationRegistration" noApp="{!noApplication}">
+                <c:ApplicationBody title="{!pageTitle}" appInfo="{!appInfo}" loadingText="Building Your Application..." vfPageName="ApplicationRegistration" noApp="{!noApplication}">
                     <c:ApplicationForm section="{!appCreate.section}" appInfo="{!appInfo}" title="New Application" vfPageName="ApplicationRegistration">
                         <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
                             <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>

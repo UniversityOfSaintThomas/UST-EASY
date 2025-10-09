@@ -1,0 +1,19 @@
+<!--
+ - Created by nguy0092 on 10/7/2025.
+ -->
+
+<apex:component id="ApplicationDocumentsList">
+    <div id="applicationDocumentsList"/>
+
+    <script>
+        $Lightning.use("c:easyAuraApp", function () {
+            $Lightning.createComponent("c:ApplicationDocumentsLwc",
+                {},
+                "applicationDocumentsList",
+                function (cmp) {
+                    console.log("LWC ApplicationDocumentsLwc Loaded")
+                }
+            );
+        });
+    </script>
+</apex:component>

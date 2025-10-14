@@ -5,47 +5,59 @@
 public without sharing class ApplicationDocumentsLwcController {
 
     @AuraEnabled(Cacheable=true)
-//    public static List<ContentVersion> getDocumentsRecordId(String recordId) {
     public static List<Map<String, String>> getDocumentsRecordId(String recordId) {
-        List<Id> linkDocumentFileId = new List<Id>();
-        List<Map<String, String>> documentFilesList = new List<Map<String, String>>();
+        DocumentContentLinks linkDocumentFiles = new DocumentContentLinks();
 
-        List<ContentDocumentLink> linkDocumentFiles = [
-                SELECT ContentDocumentId
-                FROM ContentDocumentLink
-                WHERE LinkedEntityId = :recordId
-        ];
+        return linkDocumentFiles.documentsRecordId(recordId);
+    }
 
-        for(ContentDocumentLink documentFiles : linkDocumentFiles) {
-            linkDocumentFileId.add(documentFiles.ContentDocumentId);
-        }
+    public without sharing class DocumentContentLinks {
 
-        List<ContentVersion> documentVersions = [
-                SELECT ContentDocumentId,
-                        FileExtension,
-                        Title,
-                        VersionData
-                FROM ContentVersion
-                WHERE ContentDocumentId IN :linkDocumentFileId
-        ];
+        public List<Map<String, String>> documentsRecordId(String recordId) {
 
-        for(ContentVersion version : documentVersions) {
-            Map<String, String> versionMap = new Map<String, String>{
-                'ContentDocumentId' => version.ContentDocumentId,
-                'FileExtension' => version.FileExtension,
-                'Title' => version.Title,
-                'VersionDataBlob' => ''
-            };
+            List<Id> linkDocumentFileId = new List<Id>();
+            List<Map<String, String>> documentFilesList = new List<Map<String, String>>();
 
-            if(version.VersionData != null) {
-                versionMap.put('VersionDataBlob', EncodingUtil.base64Encode(version.VersionData));
+            List<ContentDocumentLink> linkDocumentFiles = [
+                    SELECT ContentDocumentId
+                    FROM ContentDocumentLink
+                    WHERE LinkedEntityId = :recordId
+            ];
+
+            for (ContentDocumentLink documentFiles : linkDocumentFiles) {
+                linkDocumentFileId.add(documentFiles.ContentDocumentId);
             }
 
-            documentFilesList.add(versionMap);
+            List<ContentVersion> documentVersions = [
+                    SELECT ContentDocumentId,
+                            FileExtension,
+                            Title,
+                            VersionData
+                    FROM ContentVersion
+                    WHERE ContentDocumentId IN :linkDocumentFileId
+                    AND FileExtension IN ('pdf', 'txt')
+                    ORDER BY Title
+            ];
+
+            for (ContentVersion version : documentVersions) {
+                Map<String, String> versionMap = new Map<String, String>{
+                        'ContentDocumentId' => version.ContentDocumentId,
+                        'FileExtension' => version.FileExtension,
+                        'Title' => version.Title,
+                        'VersionDataEncode' => ''
+                };
+
+                if (version.VersionData != null) {
+                    versionMap.put('VersionDataEncode', EncodingUtil.base64Encode(version.VersionData));
+                }
+
+                documentFilesList.add(versionMap);
+            }
+
+            System.debug('documentFilesList: ' + documentFilesList);
+
+            return documentFilesList;
         }
-
-        System.debug('documentFilesList: '+documentFilesList);
-
-        return documentFilesList;
     }
+
 }

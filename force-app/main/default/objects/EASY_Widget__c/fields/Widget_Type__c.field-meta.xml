@@ -25,6 +25,11 @@
                 <label>Application Checklist Multiple</label>
             </value>
             <value>
+                <fullName>Application Documents LWC</fullName>
+                <default>false</default>
+                <label>Application Documents LWC</label>
+            </value>
+            <value>
                 <fullName>Application Finder</fullName>
                 <default>false</default>
                 <label>Application Finder</label>
@@ -48,6 +53,11 @@
                 <fullName>Progress Bar</fullName>
                 <default>false</default>
                 <label>Progress Bar</label>
+            </value>
+            <value>
+                <fullName>Summit Events List LWC</fullName>
+                <default>false</default>
+                <label>Summit Events List LWC</label>
             </value>
             <value>
                 <fullName>User Info Login/Logout</fullName>

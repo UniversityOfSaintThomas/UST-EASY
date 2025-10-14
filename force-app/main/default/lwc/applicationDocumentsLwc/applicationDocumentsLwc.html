@@ -5,31 +5,21 @@
 <!-- Application Documents Lwc -->
 <template>
     <lightning-card title="File Download">
-<!--        <lightning-button class="slds-m-left_small"-->
-<!--                          title="Open Modal Title"-->
-<!--                          label="Open Modal"-->
-<!--                          variant="brand"-->
-<!--                          onclick={handleClick}>-->
-<!--        </lightning-button>-->
-        <template for:each={documentFilesOptions} for:item="documentFile">
-            <div key={documentFile.value} class="slds-box">
+        <template for:each={documentFilesDisplay} for:item="document">
+            <div key={document.documentId} class="slds-box">
                 <div class="slds-grid slds-wrap">
-                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
-                        <p>{documentFile.label}</p>
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_2-of-4">
+                        <p>{document.title}</p>
                     </div>
-                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12">
-                        <a href="#" onclick={filePreview} data-versiondatablob={documentFile.VersionDataBlob}>View/Download</a>
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                        <a href="#" onclick={documentHandler}
+                           data-id={document.documentId}
+                           data-clicktype="view"
+                           class="slds-m-right_x-small">View</a>
+                        <a href="#" onclick={documentHandler}
+                           data-id={document.documentId}
+                           data-clicktype="download">Download</a>
                     </div>
-<!--                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12">-->
-<!--                        <a href={documentFile.url} download>Download</a>-->
-<!--                    </div>-->
-<!--                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">-->
-<!--                        <lightning-button label="Preview"-->
-<!--                                          variant="brand"-->
-<!--                                          data-id={documentFile.value}-->
-<!--                                          onclick={previewHandler}>-->
-<!--                        </lightning-button>-->
-<!--                    </div>-->
                 </div>
             </div>
         </template>

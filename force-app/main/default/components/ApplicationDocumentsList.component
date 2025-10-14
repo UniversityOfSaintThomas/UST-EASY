@@ -3,12 +3,16 @@
  -->
 
 <apex:component id="ApplicationDocumentsList">
+    <apex:attribute name="appInfo" description="App and Applicant information wrapper" type="EASYApplicationInfo" required="true"/>
+
     <div id="applicationDocumentsList"/>
 
     <script>
         $Lightning.use("c:easyAuraApp", function () {
-            $Lightning.createComponent("c:ApplicationDocumentsLwc",
-                {},
+            $Lightning.createComponent("c:applicationDocumentsLwc",
+                {
+                    appId: "{!appInfo.appId}",
+                },
                 "applicationDocumentsList",
                 function (cmp) {
                     console.log("LWC ApplicationDocumentsLwc Loaded")

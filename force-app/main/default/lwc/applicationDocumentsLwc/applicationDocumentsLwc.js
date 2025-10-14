@@ -3,12 +3,11 @@
  */
 
 import {LightningElement, api, track, wire} from 'lwc';
-import {NavigationMixin} from 'lightning/navigation';
-import { getRecord } from 'lightning/uiRecordApi';
+// import {NavigationMixin} from 'lightning/navigation';
+// import { getRecord } from 'lightning/uiRecordApi';
 import getDocumentsRecordId from '@salesforce/apex/ApplicationDocumentsLwcController.getDocumentsRecordId'
-import LightningModal from 'lightning/modal';
-import ModalPopup from 'c/applicationDocumentsModalLwc';
-import {gql, graphql} from 'lightning/uiGraphQLApi';
+// import LightningModal from 'lightning/modal';
+// import ModalPopup from 'c/applicationDocumentsModalLwc';
 
 export default class ApplicationDocumentsLwc extends LightningElement {
 

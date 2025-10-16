@@ -42,7 +42,7 @@ export default class ApplicationDocumentsLwc extends LightningElement {
             this.documentFiles = JSON.parse(JSON.stringify(data));
             // console.log("data file: " + JSON.stringify(this.documentFiles));
             this.documentFiles.forEach(file => {
-                let title = this.fileTitleSeq === 0 ? this.intendedTermOfEntry + " Admissions Letter" : this.intendedTermOfEntry + " Admissions Letter " + this.fileTitleSeq;
+                const title = this.fileTitleSeq === 0 ? this.intendedTermOfEntry + " Admissions Letter" : this.intendedTermOfEntry + " Admissions Letter " + this.fileTitleSeq;
                 const documentDisplay = {
                     title: title,
                     documentId: file.ContentDocumentId,

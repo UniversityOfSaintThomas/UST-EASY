@@ -2,7 +2,7 @@
  * Created by nguy0092 on 10/6/2025.
  */
 
-public without sharing class ApplicationDocumentsLwcController {
+public with sharing class ApplicationDocumentsLwcController {
 
     @AuraEnabled(Cacheable=true)
     public static List<Map<String, String>> getDocumentsRecordId(String recordId) {
@@ -36,6 +36,7 @@ public without sharing class ApplicationDocumentsLwcController {
                     FROM ContentVersion
                     WHERE ContentDocumentId IN :linkDocumentFileId
                     AND FileExtension IN ('pdf', 'txt')
+                    AND IsLatest = TRUE
                     ORDER BY Title
             ];
 

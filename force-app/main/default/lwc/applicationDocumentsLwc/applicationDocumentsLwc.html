@@ -4,24 +4,19 @@
 
 <!-- Application Documents Lwc -->
 <template>
-    <lightning-card title="File Download">
-        <template for:each={documentFilesDisplay} for:item="document">
-            <div key={document.documentId} class="slds-box">
-                <div class="slds-grid slds-wrap">
-                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_2-of-4">
-                        <p>{document.title}</p>
-                    </div>
-                    <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
-                        <a href="#" onclick={documentHandler}
-                           data-id={document.documentId}
-                           data-clicktype="view"
-                           class="slds-m-right_x-small">View</a>
-                        <a href="#" onclick={documentHandler}
-                           data-id={document.documentId}
-                           data-clicktype="download">Download</a>
-                    </div>
-                </div>
+    <template for:each={documentFilesDisplay} for:item="document">
+        <div key={document.documentId} class="slds-p-bottom_small">
+            <p>{document.title}</p>
+            <div class="slds-grid slds-wrap">
+                <a href="#" onclick={documentHandler}
+                   data-id={document.documentId}
+                   data-clicktype="view"
+                   class="slds-col slds-p-right_x-small">View</a>
+                <a href="#" onclick={documentHandler}
+                   data-id={document.documentId}
+                   data-clicktype="download"
+                   class="slds-col">Download</a>
             </div>
-        </template>
-    </lightning-card>
+        </div>
+    </template>
 </template>

@@ -3,11 +3,13 @@
  */
 
 import {LightningElement, api, track, wire} from 'lwc';
-// import {NavigationMixin} from 'lightning/navigation';
-// import { getRecord } from 'lightning/uiRecordApi';
+import {getFieldValue, getRecord} from "lightning/uiRecordApi";
+import INTENDED_TERM_OF_ENTRY from '@salesforce/schema/Application__c.Intended_Term_of_Entry__r.Name';
 import getDocumentsRecordId from '@salesforce/apex/ApplicationDocumentsLwcController.getDocumentsRecordId'
-// import LightningModal from 'lightning/modal';
-// import ModalPopup from 'c/applicationDocumentsModalLwc';
+
+const FIELDS = [
+    INTENDED_TERM_OF_ENTRY
+];
 
 export default class ApplicationDocumentsLwc extends LightningElement {
 
@@ -25,18 +27,29 @@ export default class ApplicationDocumentsLwc extends LightningElement {
         {extension: "txt", mimeType: "text/plain"}
     ];
 
+    fileTitleSeq = 0;
+
+    @wire(getRecord, {recordId: "$appRecordId", fields: FIELDS})
+    ApplicationRecord;
+
+    get intendedTermOfEntry() {
+        return getFieldValue(this.ApplicationRecord.data, INTENDED_TERM_OF_ENTRY);
+    }
+
     @wire(getDocumentsRecordId, {recordId: "$appRecordId"})
     getDocumentsRecordIdWire({error, data}) {
         if (data) {
             this.documentFiles = JSON.parse(JSON.stringify(data));
-            console.log("data file: " + JSON.stringify(this.documentFiles));
+            // console.log("data file: " + JSON.stringify(this.documentFiles));
             this.documentFiles.forEach(file => {
+                let title = this.fileTitleSeq === 0 ? this.intendedTermOfEntry + " Admissions Letter" : this.intendedTermOfEntry + " Admissions Letter " + this.fileTitleSeq;
                 const documentDisplay = {
-                    title: file.Title,
+                    title: title,
                     documentId: file.ContentDocumentId,
                 }
 
                 this.documentFilesDisplay.push(documentDisplay);
+                this.fileTitleSeq++;
             })
             console.log("data options: " + JSON.stringify(this.documentFilesDisplay));
         }
@@ -53,7 +66,7 @@ export default class ApplicationDocumentsLwc extends LightningElement {
         console.log("Event documentId: " + documentId);
         let documentBlobUrl = "";
         const documentFind = this.documentFiles.find(document => document.ContentDocumentId === documentId);
-        console.log("Event documentFind: " + JSON.stringify(documentFind));
+        // console.log("Event documentFind: " + JSON.stringify(documentFind));
 
         if (documentFind) {
             documentBlobUrl = this.createFileBlobUrl(documentFind);
@@ -61,11 +74,16 @@ export default class ApplicationDocumentsLwc extends LightningElement {
 
         if (documentBlobUrl) {
             if (clickType === "view") {
-                window.open(documentBlobUrl, '_blank');
-                URL.revokeObjectURL(documentBlobUrl);
+                const viewLink = document.createElement('a');
+                viewLink.href = documentBlobUrl;
+                viewLink.target = '_blank';
+                viewLink.rel = "noopener noreferrer";
+                document.body.appendChild(viewLink);
+                viewLink.click();
+                document.body.removeChild(viewLink);
                 setTimeout(() => {
                     URL.revokeObjectURL(documentBlobUrl);
-                }, 100);
+                }, 300000);
             }
 
             if (clickType === "download") {
@@ -76,10 +94,6 @@ export default class ApplicationDocumentsLwc extends LightningElement {
                 downLoadLink.click();
                 document.body.removeChild(downLoadLink);
                 URL.revokeObjectURL(documentBlobUrl);
-                // setTimeout(() => {
-                //     document.body.removeChild(downLoadLink);
-                //     URL.revokeObjectURL(documentBlobUrl);
-                // }, 100);
             }
         }
     }

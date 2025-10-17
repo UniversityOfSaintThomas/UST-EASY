@@ -1,0 +1,48 @@
+<!--
+ - Created by nguy0092 on 10/13/2025.
+ -->
+
+<!-- Merit Scholarship Awards Lwc -->
+<template>
+<!--    <template for:each={adjustmentComments} for:item="comment">-->
+<!--        <p key={comment.Reason}>-->
+<!--        <lightning-formatted-rich-text value={testCommentLink}></lightning-formatted-rich-text>-->
+<!--        </p>-->
+<!--    </template>-->
+<!--    <lightning-formatted-rich-text value={testCommentLink}></lightning-formatted-rich-text>-->
+    <p class="slds-text-heading_small">Congratulations! You have been awarded a scholarship!</p>
+    <ul class="slds-list_dotted slds-m-top_x-small">
+        <template for:each={meritScholarshipAwards.DomesticScholarshipsList} for:item="award">
+            <li key={award.scholarshipName} class="slds-m-bottom_xx-small">
+                <span class="slds-p-right_xx-small">{award.scholarshipName}:</span>
+                <lightning-formatted-number
+                        value={award.scholarshipAmount}
+                        format-style="currency"
+                        currency-code="USD"
+                        minimum-fraction-digits="0"
+                        maximum-fraction-digits="2">
+                </lightning-formatted-number>
+            </li>
+        </template>
+    </ul>
+    <p class="slds-m-top_small"><b><span class="slds-p-right_xx-small">Total Annual Scholarship Amount:</span>
+        <lightning-formatted-number
+                value={meritScholarshipAwards.AwardInfo.awardAmount}
+                format-style="currency"
+                currency-code="USD"
+                minimum-fraction-digits="2"
+                maximum-fraction-digits="2">
+        </lightning-formatted-number></b>
+    </p>
+    <template lwc:if={domesticApplicant}>
+        <p class="slds-text-heading_small slds-m-top_small slds-m-bottom_xx-small"><i>Financial Aid Information</i></p>
+        <p lwc:if={fafsaReceivedAward}>Your scholarship and financial aid package is now available in Murphy Online. <a href="https://murphy.stthomas.edu/" target="_blank">
+            Review your offer</a> and take the next steps toward becoming a Tommie!</p>
+        <p lwc:if={fafsaReceivedNoAward}>We’ve received your financial aid application, and our financial aid team is
+            currently reviewing your information. Your scholarship and financial aid package will be available soon.
+            Check back for updates!</p>
+        <p lwc:if={fafsaMnDreamNotReceived}> We have not yet received your financial aid application. To be considered
+            for need-based financial aid, including scholarships and grants, please visit our <a href="https://www.stthomas.edu/financial-aid/undergraduate/fafsa/" target="_blank">
+            financial aid page</a> to determine the right application type for you and submit it as soon as possible.</p>
+    </template>
+</template>

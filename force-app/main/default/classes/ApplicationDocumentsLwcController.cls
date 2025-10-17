@@ -11,7 +11,7 @@ public with sharing class ApplicationDocumentsLwcController {
         return linkDocumentFiles.documentsRecordId(recordId);
     }
 
-    public without sharing class DocumentContentLinks {
+    private without sharing class DocumentContentLinks {
 
         public List<Map<String, String>> documentsRecordId(String recordId) {
 

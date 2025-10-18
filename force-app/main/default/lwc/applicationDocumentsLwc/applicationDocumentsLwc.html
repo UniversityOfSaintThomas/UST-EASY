@@ -8,14 +8,15 @@
         <div key={document.documentId} class="slds-p-bottom_small">
             <p>{document.title}</p>
             <div class="slds-grid slds-wrap">
-                <a href="#" onclick={documentHandler}
+                <a href="#"
+                   onclick={documentHandler}
                    data-id={document.documentId}
                    data-clicktype="view"
-                   class="slds-col slds-p-right_x-small">View</a>
-                <a href="#" onclick={documentHandler}
+                   class="slds-p-right_x-small">View</a>
+                <a href="#"
+                   onclick={documentHandler}
                    data-id={document.documentId}
-                   data-clicktype="download"
-                   class="slds-col">Download</a>
+                   data-clicktype="download">Download</a>
             </div>
         </div>
     </template>

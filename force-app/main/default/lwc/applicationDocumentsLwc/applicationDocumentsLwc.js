@@ -4,11 +4,11 @@
 
 import {LightningElement, api, track, wire} from 'lwc';
 import {getFieldValue, getRecord} from "lightning/uiRecordApi";
-import INTENDED_TERM_OF_ENTRY from '@salesforce/schema/Application__c.Intended_Term_of_Entry__r.Name';
+import TERM_NAME from '@salesforce/schema/Application__c.Generic_Filter_4__c';
 import getDocumentsRecordId from '@salesforce/apex/ApplicationDocumentsLwcController.getDocumentsRecordId'
 
 const FIELDS = [
-    INTENDED_TERM_OF_ENTRY
+    TERM_NAME
 ];
 
 export default class ApplicationDocumentsLwc extends LightningElement {
@@ -27,29 +27,36 @@ export default class ApplicationDocumentsLwc extends LightningElement {
         {extension: "txt", mimeType: "text/plain"}
     ];
 
-    fileTitleSeq = 0;
-
     @wire(getRecord, {recordId: "$appRecordId", fields: FIELDS})
     ApplicationRecord;
 
     get intendedTermOfEntry() {
-        return getFieldValue(this.ApplicationRecord.data, INTENDED_TERM_OF_ENTRY);
+        return getFieldValue(this.ApplicationRecord.data, TERM_NAME);
     }
 
     @wire(getDocumentsRecordId, {recordId: "$appRecordId"})
     getDocumentsRecordIdWire({error, data}) {
+        let fileTitleSeq = 0;
         if (data) {
             this.documentFiles = JSON.parse(JSON.stringify(data));
             // console.log("data file: " + JSON.stringify(this.documentFiles));
             this.documentFiles.forEach(file => {
-                const title = this.fileTitleSeq === 0 ? this.intendedTermOfEntry + " Admissions Letter" : this.intendedTermOfEntry + " Admissions Letter " + this.fileTitleSeq;
+                let title = "";
+                const admissionLetterExp = /(_AdmissionLetter_)/i;
+
+                if(admissionLetterExp.test(file.Title)) {
+                    title = fileTitleSeq === 0 ? this.intendedTermOfEntry + " Admissions Letter" : this.intendedTermOfEntry + " Admissions Letter " + fileTitleSeq;
+                    fileTitleSeq++;
+                } else {
+                    title = file.Title;
+                }
+
                 const documentDisplay = {
                     title: title,
                     documentId: file.ContentDocumentId,
                 }
 
                 this.documentFilesDisplay.push(documentDisplay);
-                this.fileTitleSeq++;
             })
             console.log("data options: " + JSON.stringify(this.documentFilesDisplay));
         }

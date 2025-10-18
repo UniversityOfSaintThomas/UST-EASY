@@ -2,7 +2,7 @@
  * Created by nguy0092 on 10/13/2025.
  */
 
-public with sharing class MeritScholarshipAwardsController {
+public without sharing class MeritScholarshipAwardsController {
 //    String appId = 'a0rRL00000iXdxMYAS';
 
     public class MeritScholarshipWrapper {
@@ -77,6 +77,7 @@ public with sharing class MeritScholarshipAwardsController {
                 WHERE Admissions_Application_Id__c = :appId
                 AND Related_Scholarship_Name__c LIKE 'UG Merit Scholarship%'
                 AND Application_Term__c = :term
+                WITH SECURITY_ENFORCED
                 LIMIT 1
         ];
 
@@ -110,20 +111,21 @@ public with sharing class MeritScholarshipAwardsController {
         meritScholarshipWards.DomesticScholarshipsList = domesticScholarshipsList;
         meritScholarshipWards.InternationalScholarship = internationalScholarship;
 
-        OpportunityClass opportunityClass = new OpportunityClass();
-        List<Opportunity> opportunities = opportunityClass.opportunityFafsa(appId);
+//        OpportunityClass opportunityClass = new OpportunityClass();
+//        List<Opportunity> opportunities = opportunityClass.opportunityFafsa(appId);
 
-//        List<Opportunity> opportunities = [
-//                SELECT Id,
-//                        FAFSA_Filed__c,
-//                        MN_Dream_Act_Filed__c,
-//                        Notification_of_Award_Date__c
-//                FROM Opportunity
-//                WHERE Admissions_Application__c = :appId
-//                AND StageName IN ('Admit', 'Confirmed')
-//                ORDER BY LastModifiedDate DESC
-//                LIMIT 1
-//        ];
+        List<Opportunity> opportunities = [
+                SELECT Id,
+                        FAFSA_Filed__c,
+                        MN_Dream_Act_Filed__c,
+                        Notification_of_Award_Date__c
+                FROM Opportunity
+                WHERE Admissions_Application__c = :appId
+                AND StageName IN ('Admit', 'Confirmed')
+                WITH SECURITY_ENFORCED
+                ORDER BY LastModifiedDate DESC
+                LIMIT 1
+        ];
 
         if(opportunities.size() > 0) {
             opportunityFafsa.fafsaFiled = opportunities[0].FAFSA_Filed__c;
@@ -148,23 +150,23 @@ public with sharing class MeritScholarshipAwardsController {
         return domesticScholarships;
     }
 
-    private without sharing class OpportunityClass {
-
-        public List<Opportunity> opportunityFafsa(String appId) {
-
-            List<Opportunity> opportunities = [
-                    SELECT Id,
-                            FAFSA_Filed__c,
-                            MN_Dream_Act_Filed__c,
-                            Notification_of_Award_Date__c
-                    FROM Opportunity
-                    WHERE Admissions_Application__c = :appId
-                    AND StageName IN ('Admit', 'Confirmed')
-                    ORDER BY LastModifiedDate DESC
-                    LIMIT 1
-            ];
-
-            return opportunities;
-        }
-    }
+//    private without sharing class OpportunityClass {
+//
+//        public List<Opportunity> opportunityFafsa(String appId) {
+//
+//            List<Opportunity> opportunities = [
+//                    SELECT Id,
+//                            FAFSA_Filed__c,
+//                            MN_Dream_Act_Filed__c,
+//                            Notification_of_Award_Date__c
+//                    FROM Opportunity
+//                    WHERE Admissions_Application__c = :appId
+//                    AND StageName IN ('Admit', 'Confirmed')
+//                    ORDER BY LastModifiedDate DESC
+//                    LIMIT 1
+//            ];
+//
+//            return opportunities;
+//        }
+//    }
 }

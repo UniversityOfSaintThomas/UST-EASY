@@ -6,10 +6,12 @@ import {LightningElement, api, track, wire} from 'lwc';
 import getMeritAwards from '@salesforce/apex/MeritScholarshipAwardsController.getMeritAwards';
 import {getFieldValue, getRecord} from "lightning/uiRecordApi";
 import INTENDED_TERM_OF_ENTRY from '@salesforce/schema/Application__c.Intended_Term_of_Entry__r.Name';
+import TERM_NAME from '@salesforce/schema/Application__c.Generic_Filter_4__c';
 import CITIZENSHIP from '@salesforce/schema/Application__c.Citizenship__c';
 
 const FIELDS = [
     INTENDED_TERM_OF_ENTRY,
+    TERM_NAME,
     CITIZENSHIP
 ];
 
@@ -131,7 +133,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         },
         {
             Reason: "Sauer Cristo Rey Scholarship",
-            Comment: ""},
+            Comment: "No Comment"},
         {
             Reason: "Test Score Rescinded",
             Comment: "Your merit scholarship has been updated because of information received from a testing agency. See your "+this.financialAidLink+" for details."
@@ -175,12 +177,16 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         return getFieldValue(this.ApplicationRecord.data, INTENDED_TERM_OF_ENTRY);
     }
 
+    get termName() {
+        return getFieldValue(this.ApplicationRecord.data, TERM_NAME);
+    }
+
     get domesticApplicant() {
         const citizenship = getFieldValue(this.ApplicationRecord.data, CITIZENSHIP);
         return !(citizenship === 'International');
     }
 
-    @wire(getMeritAwards,{appId: "$appRecordId", term: "$intendedTermOfEntry"})
+    @wire(getMeritAwards,{appId: "$appRecordId", term: "$termName"})
     getMeritAwardsWire({error, data}) {
 
         if(data) {

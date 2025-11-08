@@ -604,10 +604,10 @@ public class ApplicationCreate {
             interaction.College_of_Interest__c = currentApplication.Intended_Program__r.Program_College_of_Interest__c;
             interaction.Admit_Type__c = currentApplication.Intended_Program__r.Program_Applicant_Type__c;
             interaction.Term__c = currentApplication.Intended_Term_of_Entry__r.Term__c;
-            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c = :currentApplication.Intended_Program__c LIMIT 1];
-            if (!relatedPlan.isEmpty()) {
-                interaction.Recruitment_Interest__c = relatedPlan[0].Id;
-            }
+//            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c = :currentApplication.Intended_Program__c LIMIT 1];
+//            if (!relatedPlan.isEmpty()) {
+//                interaction.Recruitment_Interest__c = relatedPlan[0].Id;
+//            }
             interaction.Contact__c = currentApplication.Contact__c;
         }
 

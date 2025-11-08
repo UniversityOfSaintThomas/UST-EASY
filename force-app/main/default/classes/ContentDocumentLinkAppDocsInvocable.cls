@@ -12,7 +12,7 @@ public with sharing class ContentDocumentLinkAppDocsInvocable {
                 SELECT MIN(Academic_Year_Code__c) Academic_Year
                 FROM Academic_Term__c
                 WHERE Current_Term__c = TRUE
-                OR Term_End_Date__c >= TODAY
+                OR Term_Start_Date__c >= TODAY
         ];
 
         String currentAcademicYear = '2099'; //Default if no terms found

@@ -3,7 +3,7 @@
  */
 
 public without sharing class MeritScholarshipAwardsController {
-//    String appId = 'a0rRL00000iXdxMYAS';
+//    String appId = 'a0qO400000EGXETIA5';
 
     public class MeritScholarshipWrapper {
         @AuraEnabled public AwardInfoWrapper AwardInfo;
@@ -17,6 +17,7 @@ public without sharing class MeritScholarshipAwardsController {
         @AuraEnabled public Decimal awardAmount;
         @AuraEnabled public Decimal awardAdjAmount;
         @AuraEnabled public String awardAdjReason;
+        @AuraEnabled public String scholarshipControllerName;
     }
 
     public class DomesticScholarshipsWrapper {
@@ -37,13 +38,55 @@ public without sharing class MeritScholarshipAwardsController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static MeritScholarshipWrapper getMeritAwards(String appId, String term) {
+    public static MeritScholarshipWrapper getMeritAwards(String appId, String term, String domesticApplicant) {
         MeritScholarshipWrapper meritScholarshipWards = new MeritScholarshipWrapper();
         AwardInfoWrapper awardInfo = new AwardInfoWrapper();
         List<DomesticScholarshipsWrapper> domesticScholarshipsList = new List<DomesticScholarshipsWrapper>();
         InternationalScholarshipWrapper internationalScholarship = new InternationalScholarshipWrapper();
         OpportunityWrapper opportunityFafsa = new OpportunityWrapper();
 
+//        String scholarshipName = 'UG Merit Scholarship%';
+//        //String scholarshipName = 'UG INTL Merit Scholarship%';
+////        String scholarshipName = 'UG TR Merit Scholarship%';
+//
+//        String awardQuery = 'SELECT Award_Status__c,\n' +
+//                'Award_Amount__c,\n' +
+//                'Adj_Award_Amount__c,\n' +
+//                'Scholarship_Award_Adjust_Reason__c,\n' +
+//                'Base_Merit_Amount__c,\n' +
+//                'Adj_Base_Merit_Amount__c,\n' +
+//                'Catholic_High_School_Scholarship__c,\n' +
+//                'Adj_Catholic_High_School_Scholar__c,\n' +
+//                'California_Pathway_Scholarship__c,\n' +
+//                'Adj_California_Pathway_Scholarship__c,\n' +
+//                'Colorado_Pathway_Scholarship__c,\n' +
+//                'Adj_Colorado_Pathway_Scholarship__c,\n' +
+//                'Cristo_Rey_Scholarship__c,\n' +
+//                'Adj_Cristo_Rey_Scholarship__c,\n' +
+//                'Illinois_Pathway_Scholarship__c,\n' +
+//                'Adj_Illinois_Pathway_Scholarship__c,\n' +
+//                'Kansas_Pathway_Scholarship__c,\n' +
+//                'Adj_Kansas_Pathway_Scholarship__c,\n' +
+//                'Milwaukee_Area_Pathway_Scholarship__c,\n' +
+//                'Adj_Milwaukee_Area_Pathway_Scholar__c,\n' +
+//                'Missouri_Pathway_Scholarship__c,\n' +
+//                'Adj_Missouri_Pathway_Scholarship__c,\n' +
+//                'Nebraska_Pathways_Scholarship__c,\n' +
+//                'Adj_Nebraska_Pathways_Scholarship__c,\n' +
+//                'Transfer_PTK_Scholarship__c,\n' +
+//                'Adj_Transfer_PTK_Scholarship__c,\n' +
+//                'INTL_Student_Scholarship_Percent__c,\n' +
+//                'ADJ_INTL_Student_Scholarship_Percent__c\n' +
+//                'FROM Award__c\n' +
+//                'WHERE Admissions_Application_Id__c = :appId\n' +
+//                'AND Application_Term__c = :term\n' +
+//                'AND Related_Scholarship_Name__c LIKE :scholarshipName\n' +
+//                'WITH SECURITY_ENFORCED\n' +
+//                'LIMIT 1';
+//
+//        List<Award__c> award = Database.query(awardQuery);
+
+        Set<String> scholarshipNames = new Set<String> { 'UG Merit Scholarship%', 'UG INTL Merit Scholarship%', 'UG TR Merit Scholarship%' };
         List<Award__c> award = [
                 SELECT Award_Status__c,
                         Award_Amount__c,
@@ -72,10 +115,11 @@ public without sharing class MeritScholarshipAwardsController {
                         Transfer_PTK_Scholarship__c,
                         Adj_Transfer_PTK_Scholarship__c,
                         INTL_Student_Scholarship_Percent__c,
-                        ADJ_INTL_Student_Scholarship_Percent__c
+                        ADJ_INTL_Student_Scholarship_Percent__c,
+                        Related_Scholarship_Name__c
                 FROM Award__c
                 WHERE Admissions_Application_Id__c = :appId
-                AND Related_Scholarship_Name__c LIKE 'UG Merit Scholarship%'
+                AND Related_Scholarship_Name__c LIKE :scholarshipNames
                 AND Application_Term__c = :term
                 WITH SECURITY_ENFORCED
                 LIMIT 1
@@ -86,6 +130,7 @@ public without sharing class MeritScholarshipAwardsController {
             awardInfo.awardAmount = a.Award_Amount__c != null ? a.Award_Amount__c : 0;
             awardInfo.awardAdjAmount = a.Adj_Award_Amount__c != null ? a.Adj_Award_Amount__c : 0;
             awardInfo.awardAdjReason = String.isNotBlank(a.Scholarship_Award_Adjust_Reason__c) ? a.Scholarship_Award_Adjust_Reason__c : '';
+            awardInfo.scholarshipControllerName = String.isNotBlank(a.Related_Scholarship_Name__c) ? a.Related_Scholarship_Name__c : '';
 
             domesticScholarshipsList.add(createDomesticScholarships('St. Thomas Scholarship', a.Base_Merit_Amount__c, a.Adj_Base_Merit_Amount__c));
             domesticScholarshipsList.add(createDomesticScholarships('Catholic High School Scholarship', a.Catholic_High_School_Scholarship__c, a.Adj_Catholic_High_School_Scholar__c));
@@ -142,7 +187,6 @@ public without sharing class MeritScholarshipAwardsController {
 
     public static DomesticScholarshipsWrapper createDomesticScholarships(String scholarshipName, Decimal scholarshipAmount, Decimal scholarshipAdjAmount) {
         DomesticScholarshipsWrapper domesticScholarships = new DomesticScholarshipsWrapper();
-
         domesticScholarships.scholarshipName = scholarshipName;
         domesticScholarships.scholarshipAmount = scholarshipAmount != null ? scholarshipAmount : 0;
         domesticScholarships.scholarshipAdjAmount = scholarshipAdjAmount != null ? scholarshipAdjAmount : 0;

@@ -4,36 +4,51 @@
 
 <!-- Merit Scholarship Awards Lwc -->
 <template>
-<!--    <template for:each={adjustmentComments} for:item="comment">-->
-<!--        <p key={comment.Reason}>-->
-<!--        <lightning-formatted-rich-text value={testCommentLink}></lightning-formatted-rich-text>-->
-<!--        </p>-->
-<!--    </template>-->
-<!--    <lightning-formatted-rich-text value={testCommentLink}></lightning-formatted-rich-text>-->
-    <p class="slds-text-heading_small">Congratulations! You have been awarded a scholarship!</p>
-    <ul class="slds-list_dotted slds-m-top_x-small">
-        <template for:each={meritScholarshipAwards.DomesticScholarshipsList} for:item="award">
-            <li key={award.scholarshipName} class="slds-m-bottom_xx-small">
-                <span class="slds-p-right_xx-small">{award.scholarshipName}:</span>
+    <template lwc:if={displayAward}>
+        <p class="slds-text-heading_small">
+            <lightning-formatted-rich-text
+                    value={awardToDisplay.Description}>
+            </lightning-formatted-rich-text>
+        </p>
+        <ul class="slds-list_dotted slds-m-top_x-small">
+            <template for:each={awardToDisplay.Scholarships} for:item="scholarships">
+                <li key={scholarships.scholarshipName} class="slds-m-bottom_xx-small">
+                    <template lwc:if={domesticApplicant}>
+                        <span class="slds-p-right_xx-small">{scholarships.scholarshipName}:</span>
+                        <lightning-formatted-number
+                                value={scholarships.scholarshipAmount}
+                                format-style="currency"
+                                currency-code="USD"
+                                minimum-fraction-digits="0"
+                                maximum-fraction-digits="2">
+                        </lightning-formatted-number>
+                    </template>
+                    <template lwc:else>
+                        <span class="slds-p-right_xx-small">St. Thomas Scholarship Amount: {scholarships.scholarshipName}% of tuition (equivalent to</span>
+                        <lightning-formatted-number
+                                value={scholarships.scholarshipAmount}
+                                format-style="currency"
+                                currency-code="USD"
+                                minimum-fraction-digits="0"
+                                maximum-fraction-digits="2">
+                        </lightning-formatted-number>
+                        <span>)</span>
+                    </template>
+                </li>
+            </template>
+        </ul>
+        <template lwc:if={awardToDisplay.TotalAwardDisplay}>
+            <p class="slds-m-top_small"><b><span class="slds-p-right_xx-small">Total Annual Scholarship Amount:</span>
                 <lightning-formatted-number
-                        value={award.scholarshipAmount}
+                        value={awardToDisplay.TotalAwardAmount}
                         format-style="currency"
                         currency-code="USD"
-                        minimum-fraction-digits="0"
+                        minimum-fraction-digits="2"
                         maximum-fraction-digits="2">
-                </lightning-formatted-number>
-            </li>
+                </lightning-formatted-number></b>
+            </p>
         </template>
-    </ul>
-    <p class="slds-m-top_small"><b><span class="slds-p-right_xx-small">Total Annual Scholarship Amount:</span>
-        <lightning-formatted-number
-                value={meritScholarshipAwards.AwardInfo.awardAmount}
-                format-style="currency"
-                currency-code="USD"
-                minimum-fraction-digits="2"
-                maximum-fraction-digits="2">
-        </lightning-formatted-number></b>
-    </p>
+    </template>
     <template lwc:if={domesticApplicant}>
         <p class="slds-text-heading_small slds-m-top_small slds-m-bottom_xx-small"><i>Financial Aid Information</i></p>
         <p lwc:if={fafsaReceivedAward}>Your scholarship and financial aid package is now available in Murphy Online. <a href="https://murphy.stthomas.edu/" target="_blank">

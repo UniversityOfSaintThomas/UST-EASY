@@ -30,8 +30,8 @@ export default class ApplicationDocumentsLwc extends LightningElement {
     @wire(getRecord, {recordId: "$appRecordId", fields: FIELDS})
     ApplicationRecord;
 
-    get intendedTermOfEntry() {
-        return getFieldValue(this.ApplicationRecord.data, TERM_NAME);
+    get termName() {
+        return getFieldValue(this.ApplicationRecord.data, TERM_NAME) ? getFieldValue(this.ApplicationRecord.data, TERM_NAME) : "";
     }
 
     @wire(getDocumentsRecordId, {recordId: "$appRecordId"})
@@ -42,10 +42,14 @@ export default class ApplicationDocumentsLwc extends LightningElement {
             // console.log("data file: " + JSON.stringify(this.documentFiles));
             this.documentFiles.forEach(file => {
                 let title = "";
-                const admissionLetterExp = /(_AdmissionLetter_)/i;
+                const admissionLetterExp = new RegExp(`_AdmissionLetter_`, "i");
+                const intendedTermEntryExp = new RegExp(`${this.termName}`, "i");
 
-                if(admissionLetterExp.test(file.Title)) {
-                    title = fileTitleSeq === 0 ? this.intendedTermOfEntry + " Admissions Letter" : this.intendedTermOfEntry + " Admissions Letter " + fileTitleSeq;
+                if (admissionLetterExp.test(file.Title) && intendedTermEntryExp.test(file.Title)) {
+                    title = fileTitleSeq === 0 ? this.termName + " Admissions Letter" : this.termName + " Admissions Letter " + fileTitleSeq;
+                    fileTitleSeq++;
+                } else if (admissionLetterExp.test(file.Title)) {
+                    title = fileTitleSeq === 0 ? "Admissions Letter" : "Admissions Letter " + fileTitleSeq;
                     fileTitleSeq++;
                 } else {
                     title = file.Title;

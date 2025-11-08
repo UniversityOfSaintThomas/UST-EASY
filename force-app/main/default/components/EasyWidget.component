@@ -90,9 +90,9 @@
                 <c:ApplicationList appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
             </apex:outputPanel>
 
-<!--            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Summit Events List' }">-->
-<!--                <c:SummitEventsList appInfo="{!appInfo}" widget="{!widget}"/>-->
-<!--            </apex:outputPanel>-->
+            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Summit Events List' }">
+                <c:SummitEventsList appInfo="{!appInfo}" widget="{!widget}"/>
+            </apex:outputPanel>
 
             <apex:outputPanel layout="none" rendered="{!NOT(ISBLANK(widget.Screenflow__c))}">
                 <c:EASYWidgetScreenFlow appInfo="{!appInfo}" widget="{!widget}"/>
@@ -103,6 +103,10 @@
             </apex:outputPanel>
 
             <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'Application Documents LWC' }">
+                <c:EasyLwc appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
+            </apex:outputPanel>
+
+            <apex:outputPanel layout="none" rendered="{!widget.Widget_Type__c == 'UG Merit Scholarships LWC' }">
                 <c:EasyLwc appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}"/>
             </apex:outputPanel>
         </div>

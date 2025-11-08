@@ -20,8 +20,17 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
     @api appId;
     @api recordId;
 
-    get appRecordId() {
-        return this.appId ? this.appId : this.recordId;
+    scholarshipType = "";
+
+    scholarshipControllerNames = [
+        {Name: "UG Merit Scholarship", Type: "Domestic"},
+        {Name: "UG TR Merit Scholarship", Type: "Transfer"},
+        {Name: "UG INTL Merit Scholarship", Type: "International"}
+    ]
+
+    @track foundAdjReason = {
+        Reason: "",
+        Comment: ""
     }
 
     @track meritScholarshipAwards = {
@@ -29,7 +38,8 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
             awardStatus: "",
             awardAmount: "0",
             awardAdjAmount: "0",
-            awardAdjReason: ""
+            awardAdjReason: "",
+            scholarshipControllerName: ""
         },
         InternationalScholarship: {
             scholarshipPercent: "0",
@@ -40,7 +50,6 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
             mnDreamActFiled: false,
             notificationOfAward: false
         }
-
     };
 
     financialAidLink = `<a href="https://murphy.stthomas.edu/" target="_blank">official financial aid offer</a>`;
@@ -61,11 +70,11 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         },
         {
             Reason: "Catholic HS Scholarship",
-            Comment: "No Comment"
+            Comment: ""//"No Comment"
         },
         {
             Reason: "Cristo Rey Scholarship",
-            Comment: "No Comment"
+            Comment: ""//"No Comment"
         },
         {
             Reason: "Financial Appeal",
@@ -117,7 +126,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         },
         {
             Reason: "Pathway Scholarship",
-            Comment: "No Comment"
+            Comment: ""//"No Comment"
         },
         {
             Reason: "Reinstate FTFY sch/awrd",
@@ -133,7 +142,8 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         },
         {
             Reason: "Sauer Cristo Rey Scholarship",
-            Comment: "No Comment"},
+            Comment: ""//"No Comment"
+        },
         {
             Reason: "Test Score Rescinded",
             Comment: "Your merit scholarship has been updated because of information received from a testing agency. See your "+this.financialAidLink+" for details."
@@ -156,7 +166,89 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         },
     ]
 
-    testCommentLink = this.adjustmentComments[6].Comment;
+    get appRecordId() {
+        return this.appId ? this.appId : this.recordId;
+    }
+
+    get displayAward() {
+        let noDisplay = false;
+
+        if (this.foundAdjReason) {
+            noDisplay = this.foundAdjReason.Comment === "No Display"
+        }
+        return !noDisplay;
+    }
+
+    get awardToDisplay() {
+        const display = {
+            Description: "",
+            TotalAwardAmount: 0,
+            TotalAwardDisplay: false,
+            Scholarships: [],
+        };
+
+        switch (this.scholarshipType) {
+            case "Domestic":
+            case "Transfer":
+                if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Calculated" && this.meritScholarshipAwards.AwardInfo.awardAmount > 0) {
+                    display.Description = "Congratulations! You have been awarded a scholarship!";
+                    display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
+                    this.meritScholarshipAwards.DomesticScholarshipsList.forEach(scholarship => {
+                        if (scholarship.scholarshipAmount > 0) {
+                            display.Scholarships.push({
+                                scholarshipName: scholarship.scholarshipName,
+                                scholarshipAmount: scholarship.scholarshipAmount
+                            });
+                        }
+                    })
+                }
+
+                if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Adjusted" && this.meritScholarshipAwards.AwardInfo.awardAdjReason) {
+                    if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount > 0) {
+                        display.Description = !!this.foundAdjReason ? this.foundAdjReason.Comment : "";
+                        display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAdjAmount;
+                        this.meritScholarshipAwards.DomesticScholarshipsList.forEach(scholarship => {
+                            if (scholarship.scholarshipAdjAmount > 0) {
+                                display.Scholarships.push({
+                                    scholarshipName: scholarship.scholarshipName,
+                                    scholarshipAmount: scholarship.scholarshipAdjAmount
+                                });
+                            }
+                        })
+                    } else if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount === 0 || this.meritScholarshipAwards.AwardInfo.awardAdjAmount == null) {
+                        display.Description = !!this.foundAdjReason ? this.foundAdjReason.Comment : "";
+                        display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
+                    }
+                }
+                break;
+            case "International":
+                if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Calculated" && this.meritScholarshipAwards.AwardInfo.awardAmount > 0) {
+                    display.Description = 'Congratulations! You have been awarded a scholarship!'
+                    display.Scholarships.push({
+                        scholarshipName: this.meritScholarshipAwards.InternationalScholarship.scholarshipPercent,
+                        scholarshipAmount: this.meritScholarshipAwards.AwardInfo.awardAmount
+                    });
+                    display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
+                }
+
+                if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Adjusted" && this.meritScholarshipAwards.AwardInfo.awardAdjReason) {
+                    if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount > 0) {
+                        display.Description = !!this.foundAdjReason ? this.foundAdjReason.Comment : "";
+                        display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAdjAmount;
+                        display.Scholarships.push({
+                            scholarshipName: this.meritScholarshipAwards.InternationalScholarship.scholarshipAdjPercent,
+                            scholarshipAmount: this.meritScholarshipAwards.AwardInfo.awardAdjAmount
+                        });
+                    } else if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount === 0 || this.meritScholarshipAwards.AwardInfo.awardAdjAmount == null) {
+                        display.Description = !!this.foundAdjReason ? this.foundAdjReason.Comment : "";
+                        display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
+                    }
+                }
+                break;
+        }
+        display.TotalAwardDisplay = this.meritScholarshipAwards.AwardInfo.awardAmount > 0 || this.meritScholarshipAwards.AwardInfo.awardAdjAmount > 0
+        return display;
+    }
 
     get fafsaMnDreamNotReceived() {
         return !this.meritScholarshipAwards.OpportunityFafsa.fafsaFiled && !this.meritScholarshipAwards.OpportunityFafsa.mnDreamActFiled && !this.meritScholarshipAwards.OpportunityFafsa.notificationOfAward;
@@ -170,32 +262,46 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         return ((this.meritScholarshipAwards.OpportunityFafsa.fafsaFiled || this.meritScholarshipAwards.OpportunityFafsa.mnDreamActFiled) && !this.meritScholarshipAwards.OpportunityFafsa.notificationOfAward);
     }
 
+    // get intendedTermOfEntry() {
+    //     return getFieldValue(this.ApplicationRecord.data, INTENDED_TERM_OF_ENTRY);
+    // }
+
+    get domesticApplicant() {
+        // const citizenship = getFieldValue(this.ApplicationRecord.data, CITIZENSHIP);
+        // return !(citizenship === 'International');
+        return this.scholarshipType === 'Domestic' || this.scholarshipType === "Transfer";
+    }
+
     @wire(getRecord, {recordId: "$appRecordId", fields: FIELDS})
     ApplicationRecord;
-
-    get intendedTermOfEntry() {
-        return getFieldValue(this.ApplicationRecord.data, INTENDED_TERM_OF_ENTRY);
-    }
 
     get termName() {
         return getFieldValue(this.ApplicationRecord.data, TERM_NAME);
     }
 
-    get domesticApplicant() {
-        const citizenship = getFieldValue(this.ApplicationRecord.data, CITIZENSHIP);
-        return !(citizenship === 'International');
-    }
-
-    @wire(getMeritAwards,{appId: "$appRecordId", term: "$termName"})
+    @wire(getMeritAwards, {appId: "$appRecordId", term: "$termName", domesticApplicant: "$domesticApplicant"})
     getMeritAwardsWire({error, data}) {
 
-        if(data) {
+        if (data) {
             this.meritScholarshipAwards = JSON.parse(JSON.stringify(data));
-            console.log("Data: "+JSON.stringify(data));
-            console.log("meritScholarshipAwards: "+JSON.stringify(this.meritScholarshipAwards));
+            console.log("Data: " + JSON.stringify(data));
+            console.log("meritScholarshipAwards: " + JSON.stringify(this.meritScholarshipAwards));
+
+            this.foundAdjReason = this.adjustmentComments.find(adj => adj.Reason === this.meritScholarshipAwards.AwardInfo.awardAdjReason);
+            console.log("What is Adj Reason: " + JSON.stringify(this.foundAdjReason));
+
+            console.log("Scholarship Controller: " + this.meritScholarshipAwards.AwardInfo.scholarshipControllerName);
+            const scholarshipTypeFind = this.scholarshipControllerNames.find(type => {
+                const namePattern = new RegExp(`${type.Name}`, 'i');
+                return this.meritScholarshipAwards.AwardInfo.scholarshipControllerName.search(namePattern) >= 0;
+            });
+            if (scholarshipTypeFind) {
+                this.scholarshipType = scholarshipTypeFind.Type;
+            }
+            console.log("Scholarship Type: " + this.scholarshipType);
         }
 
-        if(error) {
+        if (error) {
             console.log("getMeritAwardsWire error: " + error);
         }
     }

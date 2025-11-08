@@ -7,4 +7,5 @@
     <aura:dependency resource="c:scholarshipEligibleListView"/>
     <aura:dependency resource="lightning:flow"/>
     <aura:dependency resource="c:applicationDocumentsLwc"/>
+    <aura:dependency resource="c:meritScholarshipAwardsLwc"/>
 </aura:application>

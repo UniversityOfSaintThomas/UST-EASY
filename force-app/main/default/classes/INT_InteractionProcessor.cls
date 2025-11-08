@@ -566,13 +566,33 @@ public class INT_InteractionProcessor {
         Map<String, List<Opportunity>> contactOppMap = getContactsOpportunities(leadConvertResults);
         System.debug('&&& leadConvertResults: ' + leadConvertResults);
 
+        //YN START NEW GET CONTACT LAST NAMES
+        Set<Id> contactIds = new Set<Id>();
+        for (Database.LeadConvertResult lcr : leadConvertResults) {
+            contactIds.add(lcr.getContactId());
+        }
+//        List<Contact> contacts = [SELECT Id,FirstName,LastName FROM Contact WHERE Id = :contactIds];
+        Map<Id, Contact> contactInfoMap = new Map<Id, Contact>([SELECT Id,FirstName,LastName FROM Contact WHERE Id = :contactIds]);
+        //YN END NEW GET CONTACT LAST NAMES
+
         for (Database.LeadConvertResult lcr : leadConvertResults) {
             Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
 
             if (lcr.isSuccess()) {
                 // Add Contact Id to set to be updated from its Interaction record.
                 interaction.Contact__c = lcr.getContactId();
-                String contactLastName = interaction.Contact__r.lastName;
+
+                //YN START NEW GET CONTACT LAST NAMES
+                String contactLastName = '';
+                if (contactInfoMap.containsKey(interaction.Contact__c)) {
+                    contactLastName = contactInfoMap.get(interaction.Contact__c).LastName;
+                    System.debug('WHAT IS contactInfoMap.get(interaction.Contact__c): '+contactInfoMap.get(interaction.Contact__c));
+                }
+        System.debug('WHAT IS interaction.Contact__c: '+interaction.Contact__c + ' and lcr.getContactId(): '+lcr.getContactId());
+//                String contactLastName = interaction.Contact__r.LastName;
+        System.debug('WHAT IS contactLastName: '+contactLastName + ' and interaction.Contact__r.lastName: '+interaction.Contact__r.LastName);
+                //YN END NEW GET CONTACT LAST NAMES
+
                 String txtTermName = interaction.Start_Term_ERX__c;
                 String intendTermName = interaction.Intended_Start_Term__r.Name;
                 String hedTermName = interaction.Term__r.Name;
@@ -588,7 +608,8 @@ public class INT_InteractionProcessor {
                 System.debug('&&& interaction: ' + interaction);
                 System.debug(' && !String.isEmpty(interaction.Opportunity_Key__c): ' + !String.isEmpty(interaction.Opportunity_Key__c));
                 if (!String.isEmpty(interaction.Opportunity_Key__c)) {
-                    String lastName = interaction.Last_Name__c;
+//                    String lastName = interaction.Last_Name__c;
+                    String lastName = String.isNotBlank(contactLastName) ? contactLastName : interaction.Last_Name__c; //YN Using Contact Last Name first instead of interaction.Last_Name__c for Opportunity matching criteria
                     String lastNameCleaned = lastName.replaceAll('\'', '');
                     String termName = '';
                     String programName = '';

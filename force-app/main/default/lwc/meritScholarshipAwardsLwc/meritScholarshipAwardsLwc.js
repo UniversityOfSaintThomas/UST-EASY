@@ -205,7 +205,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
 
                 if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Adjusted" && this.meritScholarshipAwards.AwardInfo.awardAdjReason) {
                     if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount > 0) {
-                        display.Description = !!this.foundAdjReason ? this.foundAdjReason.Comment : "";
+                        display.Description = this.foundAdjReason ? this.foundAdjReason.Comment : "";
                         display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAdjAmount;
                         this.meritScholarshipAwards.DomesticScholarshipsList.forEach(scholarship => {
                             if (scholarship.scholarshipAdjAmount > 0) {
@@ -216,7 +216,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
                             }
                         })
                     } else if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount === 0 || this.meritScholarshipAwards.AwardInfo.awardAdjAmount == null) {
-                        display.Description = !!this.foundAdjReason ? this.foundAdjReason.Comment : "";
+                        display.Description = this.foundAdjReason ? this.foundAdjReason.Comment : "";
                         display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
                     }
                 }
@@ -233,14 +233,14 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
 
                 if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Adjusted" && this.meritScholarshipAwards.AwardInfo.awardAdjReason) {
                     if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount > 0) {
-                        display.Description = !!this.foundAdjReason ? this.foundAdjReason.Comment : "";
+                        display.Description = this.foundAdjReason ? this.foundAdjReason.Comment : "";
                         display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAdjAmount;
                         display.Scholarships.push({
                             scholarshipName: this.meritScholarshipAwards.InternationalScholarship.scholarshipAdjPercent,
                             scholarshipAmount: this.meritScholarshipAwards.AwardInfo.awardAdjAmount
                         });
                     } else if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount === 0 || this.meritScholarshipAwards.AwardInfo.awardAdjAmount == null) {
-                        display.Description = !!this.foundAdjReason ? this.foundAdjReason.Comment : "";
+                        display.Description = this.foundAdjReason ? this.foundAdjReason.Comment : "";
                         display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
                     }
                 }
@@ -262,13 +262,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         return ((this.meritScholarshipAwards.OpportunityFafsa.fafsaFiled || this.meritScholarshipAwards.OpportunityFafsa.mnDreamActFiled) && !this.meritScholarshipAwards.OpportunityFafsa.notificationOfAward);
     }
 
-    // get intendedTermOfEntry() {
-    //     return getFieldValue(this.ApplicationRecord.data, INTENDED_TERM_OF_ENTRY);
-    // }
-
     get domesticApplicant() {
-        // const citizenship = getFieldValue(this.ApplicationRecord.data, CITIZENSHIP);
-        // return !(citizenship === 'International');
         return this.scholarshipType === 'Domestic' || this.scholarshipType === "Transfer";
     }
 
@@ -295,6 +289,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
                 const namePattern = new RegExp(`${type.Name}`, 'i');
                 return this.meritScholarshipAwards.AwardInfo.scholarshipControllerName.search(namePattern) >= 0;
             });
+
             if (scholarshipTypeFind) {
                 this.scholarshipType = scholarshipTypeFind.Type;
             }

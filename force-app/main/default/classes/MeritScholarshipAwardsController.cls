@@ -3,7 +3,6 @@
  */
 
 public without sharing class MeritScholarshipAwardsController {
-//    String appId = 'a0qO400000EGXETIA5';
 
     public class MeritScholarshipWrapper {
         @AuraEnabled public AwardInfoWrapper AwardInfo;
@@ -35,6 +34,12 @@ public without sharing class MeritScholarshipAwardsController {
         @AuraEnabled public Boolean fafsaFiled;
         @AuraEnabled public Boolean mnDreamActFiled;
         @AuraEnabled public Boolean notificationOfAward;
+
+        public OpportunityWrapper(Boolean fafsaFiled, Boolean mnDreamActFiled, Boolean notificationOfAward) {
+            this.fafsaFiled = fafsaFiled;
+            this.mnDreamActFiled = mnDreamActFiled;
+            this.notificationOfAward = notificationOfAward;
+        }
     }
 
     @AuraEnabled(Cacheable=true)
@@ -43,48 +48,7 @@ public without sharing class MeritScholarshipAwardsController {
         AwardInfoWrapper awardInfo = new AwardInfoWrapper();
         List<DomesticScholarshipsWrapper> domesticScholarshipsList = new List<DomesticScholarshipsWrapper>();
         InternationalScholarshipWrapper internationalScholarship = new InternationalScholarshipWrapper();
-        OpportunityWrapper opportunityFafsa = new OpportunityWrapper();
-
-//        String scholarshipName = 'UG Merit Scholarship%';
-//        //String scholarshipName = 'UG INTL Merit Scholarship%';
-////        String scholarshipName = 'UG TR Merit Scholarship%';
-//
-//        String awardQuery = 'SELECT Award_Status__c,\n' +
-//                'Award_Amount__c,\n' +
-//                'Adj_Award_Amount__c,\n' +
-//                'Scholarship_Award_Adjust_Reason__c,\n' +
-//                'Base_Merit_Amount__c,\n' +
-//                'Adj_Base_Merit_Amount__c,\n' +
-//                'Catholic_High_School_Scholarship__c,\n' +
-//                'Adj_Catholic_High_School_Scholar__c,\n' +
-//                'California_Pathway_Scholarship__c,\n' +
-//                'Adj_California_Pathway_Scholarship__c,\n' +
-//                'Colorado_Pathway_Scholarship__c,\n' +
-//                'Adj_Colorado_Pathway_Scholarship__c,\n' +
-//                'Cristo_Rey_Scholarship__c,\n' +
-//                'Adj_Cristo_Rey_Scholarship__c,\n' +
-//                'Illinois_Pathway_Scholarship__c,\n' +
-//                'Adj_Illinois_Pathway_Scholarship__c,\n' +
-//                'Kansas_Pathway_Scholarship__c,\n' +
-//                'Adj_Kansas_Pathway_Scholarship__c,\n' +
-//                'Milwaukee_Area_Pathway_Scholarship__c,\n' +
-//                'Adj_Milwaukee_Area_Pathway_Scholar__c,\n' +
-//                'Missouri_Pathway_Scholarship__c,\n' +
-//                'Adj_Missouri_Pathway_Scholarship__c,\n' +
-//                'Nebraska_Pathways_Scholarship__c,\n' +
-//                'Adj_Nebraska_Pathways_Scholarship__c,\n' +
-//                'Transfer_PTK_Scholarship__c,\n' +
-//                'Adj_Transfer_PTK_Scholarship__c,\n' +
-//                'INTL_Student_Scholarship_Percent__c,\n' +
-//                'ADJ_INTL_Student_Scholarship_Percent__c\n' +
-//                'FROM Award__c\n' +
-//                'WHERE Admissions_Application_Id__c = :appId\n' +
-//                'AND Application_Term__c = :term\n' +
-//                'AND Related_Scholarship_Name__c LIKE :scholarshipName\n' +
-//                'WITH SECURITY_ENFORCED\n' +
-//                'LIMIT 1';
-//
-//        List<Award__c> award = Database.query(awardQuery);
+        OpportunityWrapper opportunityFafsa = new OpportunityWrapper(false, false, false);
 
         Set<String> scholarshipNames = new Set<String> { 'UG Merit Scholarship%', 'UG INTL Merit Scholarship%', 'UG TR Merit Scholarship%' };
         List<Award__c> award = [
@@ -116,12 +80,15 @@ public without sharing class MeritScholarshipAwardsController {
                         Adj_Transfer_PTK_Scholarship__c,
                         INTL_Student_Scholarship_Percent__c,
                         ADJ_INTL_Student_Scholarship_Percent__c,
-                        Related_Scholarship_Name__c
+                        Related_Scholarship_Name__c,
+                        Sauer_Cristo_Rey_Scholarship__c,
+                        Adj_Sauer_Cristo_Rey_Scholarship__c
                 FROM Award__c
                 WHERE Admissions_Application_Id__c = :appId
                 AND Related_Scholarship_Name__c LIKE :scholarshipNames
                 AND Application_Term__c = :term
                 WITH SECURITY_ENFORCED
+                ORDER BY CreatedDate ASC
                 LIMIT 1
         ];
 
@@ -156,9 +123,6 @@ public without sharing class MeritScholarshipAwardsController {
         meritScholarshipWards.DomesticScholarshipsList = domesticScholarshipsList;
         meritScholarshipWards.InternationalScholarship = internationalScholarship;
 
-//        OpportunityClass opportunityClass = new OpportunityClass();
-//        List<Opportunity> opportunities = opportunityClass.opportunityFafsa(appId);
-
         List<Opportunity> opportunities = [
                 SELECT Id,
                         FAFSA_Filed__c,
@@ -172,10 +136,10 @@ public without sharing class MeritScholarshipAwardsController {
                 LIMIT 1
         ];
 
-        if(opportunities.size() > 0) {
-            opportunityFafsa.fafsaFiled = opportunities[0].FAFSA_Filed__c;
-            opportunityFafsa.mnDreamActFiled = opportunities[0].MN_Dream_Act_Filed__c;
-            opportunityFafsa.notificationOfAward = opportunities[0].Notification_of_Award_Date__c != null ? true : false;
+        for (Opportunity o : opportunities) {
+            opportunityFafsa.fafsaFiled = o.FAFSA_Filed__c;
+            opportunityFafsa.mnDreamActFiled = o.MN_Dream_Act_Filed__c;
+            opportunityFafsa.notificationOfAward = o.Notification_of_Award_Date__c != null ? true : false;
         }
 
         meritScholarshipWards.OpportunityFafsa = opportunityFafsa;
@@ -194,23 +158,4 @@ public without sharing class MeritScholarshipAwardsController {
         return domesticScholarships;
     }
 
-//    private without sharing class OpportunityClass {
-//
-//        public List<Opportunity> opportunityFafsa(String appId) {
-//
-//            List<Opportunity> opportunities = [
-//                    SELECT Id,
-//                            FAFSA_Filed__c,
-//                            MN_Dream_Act_Filed__c,
-//                            Notification_of_Award_Date__c
-//                    FROM Opportunity
-//                    WHERE Admissions_Application__c = :appId
-//                    AND StageName IN ('Admit', 'Confirmed')
-//                    ORDER BY LastModifiedDate DESC
-//                    LIMIT 1
-//            ];
-//
-//            return opportunities;
-//        }
-//    }
 }

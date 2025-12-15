@@ -398,6 +398,9 @@ public class INT_InteractionProcessor {
                     MailingCountry = newLead.Country,
                     MailingPostalCode = newLead.PostalCode,
                     Email = newLead.Email,
+                    University_Vanity_Email__c = newLead.Email,
+                    hed__WorkEmail__c = newLead.Email,
+                    Personal_Email__c = newLead.Email,
                     Fax = newLead.Fax,
                     MobilePhone = newLead.MobilePhone,
                     Phone = newLead.Phone,
@@ -566,14 +569,12 @@ public class INT_InteractionProcessor {
         Map<String, List<Opportunity>> contactOppMap = getContactsOpportunities(leadConvertResults);
         System.debug('&&& leadConvertResults: ' + leadConvertResults);
 
-        //YN START NEW GET CONTACT LAST NAMES
         Set<Id> contactIds = new Set<Id>();
         for (Database.LeadConvertResult lcr : leadConvertResults) {
             contactIds.add(lcr.getContactId());
         }
-//        List<Contact> contacts = [SELECT Id,FirstName,LastName FROM Contact WHERE Id = :contactIds];
+
         Map<Id, Contact> contactInfoMap = new Map<Id, Contact>([SELECT Id,FirstName,LastName FROM Contact WHERE Id = :contactIds]);
-        //YN END NEW GET CONTACT LAST NAMES
 
         for (Database.LeadConvertResult lcr : leadConvertResults) {
             Interaction__c interaction = (leadIdToInteractionMap.containsKey(lcr.getLeadId())) ? leadIdToInteractionMap.get(lcr.getLeadId()) : null;
@@ -581,18 +582,11 @@ public class INT_InteractionProcessor {
             if (lcr.isSuccess()) {
                 // Add Contact Id to set to be updated from its Interaction record.
                 interaction.Contact__c = lcr.getContactId();
-
-                //YN START NEW GET CONTACT LAST NAMES
                 String contactLastName = '';
+                // String contactLastName = interaction.Contact__r.LastName;
                 if (contactInfoMap.containsKey(interaction.Contact__c)) {
                     contactLastName = contactInfoMap.get(interaction.Contact__c).LastName;
-                    System.debug('WHAT IS contactInfoMap.get(interaction.Contact__c): '+contactInfoMap.get(interaction.Contact__c));
                 }
-        System.debug('WHAT IS interaction.Contact__c: '+interaction.Contact__c + ' and lcr.getContactId(): '+lcr.getContactId());
-//                String contactLastName = interaction.Contact__r.LastName;
-        System.debug('WHAT IS contactLastName: '+contactLastName + ' and interaction.Contact__r.lastName: '+interaction.Contact__r.LastName);
-                //YN END NEW GET CONTACT LAST NAMES
-
                 String txtTermName = interaction.Start_Term_ERX__c;
                 String intendTermName = interaction.Intended_Start_Term__r.Name;
                 String hedTermName = interaction.Term__r.Name;
@@ -608,8 +602,9 @@ public class INT_InteractionProcessor {
                 System.debug('&&& interaction: ' + interaction);
                 System.debug(' && !String.isEmpty(interaction.Opportunity_Key__c): ' + !String.isEmpty(interaction.Opportunity_Key__c));
                 if (!String.isEmpty(interaction.Opportunity_Key__c)) {
-//                    String lastName = interaction.Last_Name__c;
-                    String lastName = String.isNotBlank(contactLastName) ? contactLastName : interaction.Last_Name__c; //YN Using Contact Last Name first instead of interaction.Last_Name__c for Opportunity matching criteria
+                    // String lastName = interaction.Last_Name__c;
+                    // Using Contact Last Name first instead of interaction.Last_Name__c for Opportunity matching criteria
+                    String lastName = String.isNotBlank(contactLastName) ? contactLastName : interaction.Last_Name__c;
                     String lastNameCleaned = lastName.replaceAll('\'', '');
                     String termName = '';
                     String programName = '';
@@ -692,7 +687,7 @@ public class INT_InteractionProcessor {
                             // matchingOpp.StageName = determineOpportunityStage(interaction.Opportunity_Stage__c, matchingOpp.StageName);
                             matchingOpp.StageName = oppStageName;
                             matchingOpp.AccountId = lcr.getAccountId();
-                            matchingOpp.Name = determineOpportunityName(oppName, lastName, termName, programName, contactLastName, txtTermName, intendTermName, hedTermName);
+                            // matchingOpp.Name = determineOpportunityName(oppName, lastName, termName, programName, contactLastName, txtTermName, intendTermName, hedTermName);
                             interaction.Opportunity_Stage__c = matchingOpp.StageName;
                             interaction.Opportunity__r = matchingOpp;
                             //interaction.Opportunity_Record_Type__c = matchingOpp.RecordTypeId;
@@ -704,6 +699,7 @@ public class INT_InteractionProcessor {
                             }
 
                             intMappingService.applyDataToSObject(interaction, matchingOpp);
+                            matchingOpp.Name = determineOpportunityName(oppName, lastName, termName, programName, contactLastName, txtTermName, intendTermName, hedTermName);
                             matchingOpp.LeadSource = matchingOppLeadSource; //Re-assigns initial Opportunity Lead Source.
                             opportunitiesToUpsert.add(matchingOpp);
                         }
@@ -814,7 +810,7 @@ public class INT_InteractionProcessor {
     }
 
     private String determineOpportunityName(String currentOppName, String lastName, String termName, String programName, String contactLastName, String txtTermName, String intendTermName, String hedTermName) {
-        // System.debug('current Opp Name: ' + currentOppName + ', last Name: ' + lastName + ', term Name: ' + termName + ', program Name: ' + programName + ', contact Last Name: ' + contactLastName);
+         System.debug('current Opp Name: ' + currentOppName + ', last Name: ' + lastName + ', term Name: ' + termName + ', program Name: ' + programName + ', contact Last Name: ' + contactLastName);
 
         if (currentOppName != null) {
             List<String> currentOppNameSplit = currentOppName.split('\\|');

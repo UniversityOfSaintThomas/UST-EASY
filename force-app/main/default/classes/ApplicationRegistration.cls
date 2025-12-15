@@ -30,7 +30,7 @@ public class ApplicationRegistration {
         userType = UserInfo.getUserType();
         appInfo = ApplicationUtilities.createShellAppInfo();
         cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
-        appTypeUrlParameter = '';
+        appTypeUrlParameter = appInfo.at;
         noApplication = false;
         externalApplication = false;
         pageTitle = 'New Application: ' + appInfo.academicLevel;
@@ -56,17 +56,14 @@ public class ApplicationRegistration {
         }
 
         externalApplicationType = '';
-        if (String.isNotBlank(ApexPages.currentPage().getParameters().get('at'))) {
-            appTypeUrlParameter = ApexPages.currentPage().getParameters().get('at');
-            if (appTypeUrlParameter.equalsIgnoreCase('noapp') || externalAppControlMap.keySet().contains(appTypeUrlParameter)) {
-                noApplication = true;
-            }
-            if (externalAppControlMap.keySet().contains(appTypeUrlParameter)) {
-                externalApplicationType = externalAppControlMap.get(appTypeUrlParameter).External_Application_Type__c;
-                pageTitle = externalApplicationType + ': Claim your St. Thomas Admissions Portal';
-                externalApplication = true;
-            }
-            //Query for application control based on the URL parameter
+
+        if (appTypeUrlParameter.equalsIgnoreCase('noapp') || externalAppControlMap.keySet().contains(appTypeUrlParameter)) {
+            noApplication = true;
+        }
+        if (externalAppControlMap.keySet().contains(appTypeUrlParameter)) {
+            externalApplicationType = externalAppControlMap.get(appTypeUrlParameter).External_Application_Type__c;
+            pageTitle = externalApplicationType + ': Claim your St. Thomas Admissions Portal';
+            externalApplication = true;
         }
 
         if (cookieKeyPresent) {
@@ -257,6 +254,7 @@ public class ApplicationRegistration {
 
                 if (currentApplications.size() > 0) {
                     for (Application__c currentApp : currentApplications) {
+                        //Check if each application has an external application id and if it matches the current interaction external application id
                         if (String.isNotBlank(currentApp.External_Application_ID__c) && !externalApplication) {
                             if (externalAssociateAppControlMap.containsKey(appTypeUrlParameter)) {
                                 List<String> externalAppControls = externalAssociateAppControlMap.get(appTypeUrlParameter);

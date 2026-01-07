@@ -42,6 +42,24 @@
                 }
             }
             document.getElementById('div{!question.question.id}').appendChild(payForm{!question.question.id});
+
+            localStorage.setItem('inactiveTimestamp', new Date().getTime());
+            document.addEventListener('visibilitychange', function () {
+                if (document.visibilityState === 'visible') {
+                    const inactiveTimestamp = localStorage.getItem('inactiveTimestamp');
+                    if (inactiveTimestamp) {
+                        const currentTime = new Date().getTime();
+                        const secondsDifference = (currentTime - inactiveTimestamp) / (1000 * 60);
+                        if (secondsDifference >= 60) {
+                            alert('You have been inactive for more than 60 minutes. Reloading the page.');
+                            location.reload();
+                        }
+                    } else {
+                        localStorage.setItem('inactiveTimestamp', new Date().getTime());
+                        location.reload();
+                    }
+                }
+            });
         </script>
 
         <P>Amount: ${!paymentAmount}</P>

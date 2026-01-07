@@ -6,78 +6,88 @@
         </apex:define>
         <apex:define name="body">
             <apex:form id="loginForm" forceSSL="true" styleClass="form-signin">
-                <div class="main-container slds-grid slds-grid_vertical">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_9-of-12 slds-medium-size_9-of-12">
+                        <div class=" slds-m-right_large">
+                            <div class="slds-text-heading_large">
+                                <h1>
+                                    Returning Applicant Login
+                                </h1>
+                            </div>
+                            <div class="slds-text-body_regular slds-p-bottom_medium">
+                                <p>
+                                    Welcome back to the University of St. Thomas Admissions Portal. Please sign in below using the
+                                    username and password you created during your initial application.
+                                </p>
+                            </div>
+                            <div class="slds-text-body_regular">
+                                <apex:pageMessages showDetail="false" id="error"/>
+                            </div>
+                            <div class="slds-form-element slds-is-required">
+                                <label class="slds-form-element__label slds-p-vertical_xxx-small slds-text-body_regular">
+                                    Username
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <apex:inputText styleClass="slds-input" html-placeholder="Username" value="{!username}" id="username"/>
+                                </div>
+                                <!-- Question Assistive Text -->
+                                <div class="slds-form-element__help">
+                                    You must enter a valid username.
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-is-required">
+                                <label class="slds-form-element__label slds-p-vertical_xxx-small slds-text-body_regular">
+                                    Password
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <apex:inputSecret styleClass="slds-input" html-placeholder="Password" value="{!password}" id="password"/>
+                                </div>
+                                <!-- Question Assistive Text -->
+                                <div class="slds-form-element__help">
+                                    You must enter a valid password.
+                                </div>
+                            </div>
 
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
 
-                        <div class="slds-text-heading_large">
-                            <h1>
-                                Returning Applicant Login
-                            </h1>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-m-top_small slds-p-top_xx-small">
+                                <apex:commandButton action="{!login}" onClick="return checkForm();" value="Returning Applicant Login" id="login-submit" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand"/>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
+                                <a href="{!$Site.Prefix}/ApplicationForgotPassword" class="forgot-password-text">Forgot your password?</a>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
+                                <a href="{!$Site.Prefix}/ApplicationRegistration" class="register-text">Create Account</a>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small slds-box">
+                                <p><strong>Applied through an external application system?</strong>
+                                    If you have not yet accessed the St. Thomas Admissions Portal, follow the
+                                    <strong><a href="/Admissions/ApplicationRegistration?at=commonapp">Common App</a></strong>
+                                    (undergraduate applicants only)
+                                    or
+                                    <strong><a href="/Admissions/ApplicationRegistration?at=engineeringcas">EngineeringCAS</a></strong>
+                                    (graduate applicants only)
+                                    instructions to log in.
+                                </p>
+                            </div>
                         </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-box slds-m-top_large">
                         <div class="slds-text-body_regular">
-                            <p class="slds-var-p-top_medium text-align-center">
-                                <span class="sub-heading">Please login below or click "Create Account" to sign up</span>
+                            <p>
+                                <span class="sub-heading"><b>Do you have a St. Thomas Account? </b> Current or incoming students with a St. Thomas Account can log in using the button below. </span>
                             </p>
-                            <apex:pageMessages showDetail="false" id="error"/>
+                            <p>
+                                <a href="/Admissions/s/login/?startURL=/Admissions/applicationportal" class="slds-text-link_reset slds-button slds-button_brand slds-m-top_small" style="color:#fff!important;">
+                                    St. Thomas Account Login
+                                </a>
+                            </p>
                         </div>
-
                     </div>
-
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-
-                        <div class="slds-form-element slds-is-required">
-                            <label class="slds-form-element__label slds-p-vertical_xxx-small slds-text-body_regular">
-                                User Name
-                                <abbr class="slds-required" title="required">* </abbr>
-                            </label>
-                            <div class="slds-form-element__control">
-                                <apex:inputText styleClass="slds-input" html-placeholder="Username" value="{!username}" id="username"/>
-                            </div>
-                            <!-- Question Assistive Text -->
-                            <div class="slds-form-element__help">
-                                You must enter a valid user name.
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-
-                        <div class="slds-form-element slds-is-required">
-                            <label class="slds-form-element__label slds-p-vertical_xxx-small slds-text-body_regular">
-                                Password
-                                <abbr class="slds-required" title="required">* </abbr>
-                            </label>
-                            <div class="slds-form-element__control">
-                                <apex:inputSecret styleClass="slds-input" html-placeholder="Password" value="{!password}" id="password"/>
-                            </div>
-                            <p class="slds-text-body_regular slds-p-top_xx-small"><em> Password must be at least 8 characters, and contain at least (1) uppercase letter, (1) lowercase letter and (1) number.</em></p>
-                            <!-- Question Assistive Text -->
-                            <div class="slds-form-element__help">
-                                You must enter a valid password.
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-                        <apex:commandButton action="{!login}" onClick="return checkForm();" value="Sign in" id="login-submit" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand"/>
-                    </div>
-
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-                        <a href="{!$Site.Prefix}/ApplicationForgotPassword" class="forgot-password-text">Forgot your password?</a>
-                    </div>
-
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-                        <a href="{!$Site.Prefix}/ApplicationRegistration" class="register-text">Create Account</a>
-                    </div>
-
-                    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-
-                      <p><b>If you applied with the Common App </b>and have not yet accessed the St. Thomas Admissions Portal, follow the instructions on the <a href="{!$Site.Prefix}/ApplicationRegistration?at=commonapp" >St. Thomas Admissions Portal</a> to log in.</p>
-                   </div>
-
                 </div>
                 <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-backdrop_open slds-backdrop" id="form-spinner">
                     <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
@@ -87,12 +97,6 @@
                     </div>
                 </section>
             </apex:form>
-            <div id="loadSpinner" class="popupBackground">
-                <div id="loading" class="PopupPanel">
-                    <div class="background"></div>
-                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">Please Wait..</span>
-                </div>
-            </div>
         </apex:define>
     </apex:composition>
 </apex:page>

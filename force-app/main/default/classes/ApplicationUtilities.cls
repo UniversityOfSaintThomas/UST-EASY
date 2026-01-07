@@ -65,6 +65,7 @@ public class ApplicationUtilities {
         appInfo.allowSubmit = false;
         appInfo.allowCancelFrom = '';
         appInfo.allowWithdrawFrom = '';
+        appInfo.at = appControl.URL_Parameter__c;
         if (String.isBlank(appControl.Template__c)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;
@@ -139,7 +140,7 @@ public class ApplicationUtilities {
                     AND Application_Status__c != 'Wrong Application'
                     AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Wrong App'))
                     AND (NOT (Application_Status__c = 'Withdrawn' AND Application_Substatus__c = 'Multiple App'))
-                    ORDER BY LastModifiedDate
+                    ORDER BY Name DESC
             ];
             if (lastApps.size() > 0) {
                 Application_Control__c appControl = getApplicationControls(lastApps[0].Application_Control__r.URL_Parameter__c);

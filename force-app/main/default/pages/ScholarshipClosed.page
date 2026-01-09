@@ -11,14 +11,16 @@
                     </h1>
                     <apex:outputText rendered="{!scholarshipAlreadyClosed}" escape="false">
                         <p class="slds-text-body_regular">
-                            We're sorry. The {!scholarship.Name} closed on {!scholarship.Close_Date__c}. Thank you for
+                            We're sorry. The {!scholarship.Name} closed on {!displayCloseDateTime}. Thank you for
+                            <!--We're sorry. The {!scholarship.Name} closed on {!scholarship.Close_Date__c}. Thank you for-->
                             your interest.
                         </p>
                     </apex:outputText>
                     <apex:outputText rendered="{!scholarshipNotYetOpen}" escape="false">
                         <p class="slds-text-body_regular">
                             We're sorry. The {!scholarship.Name} has not opened yet. It will open
-                            on {!scholarship.Open_Date__c}. Please return after the open date and fill out your application then.
+                            on {!displayOpenDateTime}. Please return after the open date and fill out your application then.
+                            <!--on {!scholarship.Open_Date__c}. Please return after the open date and fill out your application then.-->
                             Thank you for your interest!
                         </p>
                     </apex:outputText>

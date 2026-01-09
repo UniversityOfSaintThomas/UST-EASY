@@ -31,6 +31,7 @@ tasks:
     options:
       required_org_code_coverage_percent: 75
 
+  # Tasks to build experience cloud community
   create_community:
     description: Deploys configuration for Development.
     class_path: cumulusci.tasks.salesforce.CreateCommunity
@@ -40,6 +41,32 @@ tasks:
       template: Build Your Own
       url_path_prefix: Admissions
       skip_existing: True
+
+  create_community_network:
+    description: Creates the community network for Development.
+    class_path: cumulusci.tasks.salesforce.network_member_group.CreateNetworkMemberGroups
+    options:
+      network_name: EASY Applicant Portal
+      profile_names:
+        - Customer Community Login User
+      permission_set_names:
+        - UST Scholarship Applicant
+        - Application Community
+
+  create_community_publish:
+    description: Publishes the community for Development.
+    class_path: cumulusci.tasks.salesforce.PublishCommunity
+    options:
+      name: EASY Applicant Portal
+
+  create_community_experience_cloud_bundle:
+    description: Deploys Network config for community for Development.
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      namespace_inject: $project_config.project__package__namespace
+      path: unpackaged/config/experiences
+      unmanaged: True
+      timeout: 520
 
   permission_guest_user:
     description: 'Applies permission set to guest community guest user'
@@ -109,36 +136,6 @@ tasks:
       sql_path: datasets/dev5/latest.dataset.sql
       inject_namespaces: False
 
-  configure_community:
-    description: Deploys Network config for community for Development.
-    class_path: cumulusci.tasks.salesforce.Deploy
-    options:
-      namespace_inject: $project_config.project__package__namespace
-      path: unpackaged/config/network
-      unmanaged: True
-      timeout: 480
-
-  configure_community_settings:
-    description: Deploys Network config for community for Development.
-    class_path: cumulusci.tasks.salesforce.Deploy
-    options:
-      namespace_inject: $project_config.project__package__namespace
-      path: unpackaged/config/settings
-      unmanaged: True
-      timeout: 520
-
-  configure_network_setting:
-    description: Sets up the network for our community
-    class_path: cumulusci.tasks.salesforce.network_member_group.CreateNetworkMemberGroups
-    options:
-      network_name: EASY Applicant Portal
-      profile_names:
-        - Customer Community Login User
-      permission_set_names:
-        - UST Scholarship Applicant
-        - Application Community
-      timeout: 520
-
   deploy_site_config:
     description: Deploys configuration for Development.
     class_path: cumulusci.tasks.salesforce.Deploy
@@ -153,14 +150,6 @@ tasks:
     options:
       path: scripts/setup.cls
       apex: setUserRole();
-
-  activate_community:
-    description: 'Adds unpacked sharing rules for guest user access of EASY objects'
-    class_path: cumulusci.tasks.salesforce.Deploy
-    options:
-      namespace_inject: $project_config.project__package__namespace
-      path: unpackaged/config/communities
-      unmanaged: True
 
   install_sharing_rules:
     description: 'Adds unpacked sharing rules for guest user access of EASY objects'
@@ -202,6 +191,13 @@ tasks:
     class_path: cumulusci.tasks.bulkdata.snowfakery.Snowfakery
     options:
       recipe: datasets/snowfakery/fake_contacts.yml
+
+  deploy_sea_site_config:
+    description: Deploys configuration for Development.
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      namespace_inject: $project_config.project__package__namespace
+      path: unpackaged/config/summit_site
 
   update_admin_profile:
     options:
@@ -311,8 +307,6 @@ tasks:
 flows:
   config_dev:
     steps:
-      3:
-        task: create_community
       4:
         task: create_bulk_data_permission_set
       5:
@@ -326,42 +320,42 @@ flows:
       9:
         task: set_hierarchy_custom_settings
       10:
-        task: install_sharing_rules
-      11:
         task: set_review_custom_settings
+      11:
+        task: create_community
       12:
-        task: deploy_site_config
+        task: create_community_network
       13:
-        task: permission_guest_user
+        task: create_community_experience_cloud_bundle
       14:
-        task: permission_admin_user
+        task: deploy_site_config
       15:
-        task: set_holding_ids
+        task: create_community_publish
       16:
-        task: set_user_user_role
+        task: install_sharing_rules
       17:
-        task: set_easy_custom_settings
+        task: permission_guest_user
       18:
-        task: turn_on_duplicate_rules
+        task: permission_admin_user
       19:
-        task: sea:deploy_permission_set
+        task: set_holding_ids
       20:
-        task: sea:deploy_site_config
+        task: set_user_user_role
       21:
-        task: sea:deploy_site_settings
+        task: set_easy_custom_settings
       22:
-        task: sea:deploy_guest_permission_set
+        task: turn_on_duplicate_rules
       23:
-        task: sea:deploy_namespaced_guest_sharing_rules
+        task: sea:deploy_admin_permission_set
       24:
-        task: sea:load_sample_data
+        task: deploy_sea_site_config
       25:
-        task: configure_network_setting
+        task: sea:deploy_site_settings
       26:
-        task: configure_community_settings
-      27:
-        task: configure_community
+        task: sea:deploy_guest_permission_set
       28:
+        task: sea:load_sample_data
+      29:
         task: load_scholarship_test_data
 
   release_unlocked_beta:

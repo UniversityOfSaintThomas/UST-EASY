@@ -1,0 +1,22 @@
+<!--
+ - Created by nguy0092 on 7/14/2025.
+ -->
+
+<!-- Scholarship Eligible List View -->
+<template>
+    <div class={heightSize}>
+        <template lwc:if={showScholarshipList}>
+            <ul class={listViewStyle}>
+                <template for:each={scholarshipLists} for:item="scholarship">
+                    <li key={scholarship.Id} class="slds-p-bottom_x-small">
+                        <a href={scholarship.DirectUrl} target=_blank>{scholarship.Name}</a> <span class="slds-m-left_x-small"><i>{scholarship.AppStatus}</i></span>
+                        <p>{scholarship.ShortDescription}</p>
+                    </li>
+                </template>
+            </ul>
+        </template>
+        <template lwc:else>
+            <div class="slds-p-bottom_x-small">{noEligibleText}</div>
+        </template>
+    </div>
+</template>

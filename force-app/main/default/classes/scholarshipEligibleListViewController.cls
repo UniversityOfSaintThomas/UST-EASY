@@ -127,7 +127,7 @@ public with sharing class scholarshipEligibleListViewController {
 
             for (Scholarship_Applicant__c applicant : scholarshipApplicant) {
                 if (scholarship.Id == applicant.Scholarship__r.Id) {
-                    scholarshipEligibleAppStatus.AppStatus = applicant.Scholarship_Status__c;
+                    scholarshipEligibleAppStatus.AppStatus = String.isNotBlank(applicant.Scholarship_Status__c) ? '('+applicant.Scholarship_Status__c+')' : '';
                 }
             }
 

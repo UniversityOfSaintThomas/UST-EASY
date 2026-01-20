@@ -211,7 +211,6 @@ public without sharing class ScholarshipSharedUtilities {
 
     public static Boolean isScholarshipOpen(Scholarship__c scholarship) {
         Boolean scholarshipOpen = false;
-
         if (scholarship != null) {
             Map<String, Datetime> openCloseDatetime = scholarshipOpenCloseDatetime(scholarship);
 

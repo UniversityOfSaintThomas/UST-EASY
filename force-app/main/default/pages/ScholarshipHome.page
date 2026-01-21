@@ -32,7 +32,7 @@
                             contactId: "{!varContactId}",
                             appId: "",
                             currentPage: "applicationportal",
-                            widgetSize: "no",
+                            widgetDisplay: "false",
                         },
                         "lightningvf",
                         function (cmp) {

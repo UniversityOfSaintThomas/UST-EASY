@@ -10,35 +10,51 @@ export default class ScholarshipEligibleListView extends LightningElement {
     @api contactId;
     @api appId;
     @api currentPage;
-    @api widgetSize = "";
+    @api widgetDisplay = false;
 
     @track scholarshipLists = [];
-
     showScholarshipList = true;
 
-    get heightSize() {
-        return this.widgetSize === "" ? "widget-height" : "";
+    get widgetStyle() {
+        return this.widgetDisplay ? "scholarship-item" : "slds-p-bottom_medium";
     }
-    get listViewStyle() {
-        return this.widgetSize === "" ? "slds-p-bottom_x-small" : "slds-p-bottom_x-small list-no-style";
-    }
+
     get noEligibleText() {
         if (this.currentPage === "applicationportal") {
             return "You do not have any eligible scholarships.";
         } else {
-            return "You do not have eligible scholarships for selected application.";
+            return "You do not have eligible scholarships for the selected application.";
         }
     }
 
     connectedCallback() {
         eligibleScholarships({contactId: this.contactId, appId: this.appId, currentPage: this.currentPage}).then((results) => {
             if (results && results.length > 0) {
-                this.scholarshipLists = JSON.parse(JSON.stringify(results));
-                console.log("scholarshipLists: "+JSON.stringify(this.scholarshipLists));
+                this.scholarshipLists = results.map(scholarship => ({
+                    ...scholarship,
+                    showDetails: false,
+                    buttonLabel: '+ Show description'
+                }));
                 this.showScholarshipList = true;
             } else {
                 this.showScholarshipList = false;
             }
+        });
+    }
+
+    handleToggleDetails(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const scholarshipId = event.target.dataset.id;
+        this.scholarshipLists = this.scholarshipLists.map(scholarship => {
+            if (scholarship.Id === scholarshipId) {
+                return {
+                    ...scholarship,
+                    showDetails: !scholarship.showDetails,
+                    buttonLabel: scholarship.showDetails ? '+ Show description' : '- Hide description'
+                };
+            }
+            return scholarship;
         });
     }
 }

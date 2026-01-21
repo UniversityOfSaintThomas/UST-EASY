@@ -2,21 +2,34 @@
  * Created by nguy0092 on 7/14/2025.
  */
 
-a {
+.button_styling{
+    font-size: .75rem !important;
+    padding: 0;
+    text-decoration: none;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    color: #0176d3; /* SLDS link blue */
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.button_styling:hover {
+    color: #014486; /* Darker blue on hover */
+}
+
+:host {
     font-size: 1rem !important;
 }
 
-.widget-height {
-    max-height: 400px;
-    overflow: auto;
-    scrollbar-width: thin;
+.scholarship-item {
+    padding-bottom: 0.50rem;
 }
 
-li {
-    margin-bottom: 0 !important;
+.scholarship-item:not(:first-child) {
+    padding-top: 0.50rem;
 }
 
-.list-no-style{
-    margin-left: 0;
-    list-style: none;
+.scholarship-item:not(:last-child) {
+    border-bottom: 1px solid #dddbda;
 }

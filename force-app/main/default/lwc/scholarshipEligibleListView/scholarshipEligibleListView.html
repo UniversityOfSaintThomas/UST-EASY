@@ -4,19 +4,31 @@
 
 <!-- Scholarship Eligible List View -->
 <template>
-    <div class={heightSize}>
-        <template lwc:if={showScholarshipList}>
-            <ul class={listViewStyle}>
-                <template for:each={scholarshipLists} for:item="scholarship">
-                    <li key={scholarship.Id} class="slds-p-bottom_x-small">
-                        <a href={scholarship.DirectUrl} target=_blank>{scholarship.Name}</a> <span class="slds-m-left_x-small"><i>{scholarship.AppStatus}</i></span>
-                        <p>{scholarship.ShortDescription}</p>
-                    </li>
+    <template lwc:if={showScholarshipList}>
+        <template for:each={scholarshipLists} for:item="scholarship">
+            <div key={scholarship.Id} class={widgetStyle}>
+                <a href={scholarship.DirectUrl} target=_blank>{scholarship.Name}</a> <span class="slds-m-left_xx-small"><i>{scholarship.AppStatus}</i></span>
+                <template lwc:if={widgetDisplay}>
+                    <template lwc:if={scholarship.showDetails}>
+                        <div style="font-size: .90rem">
+                            {scholarship.ShortDescription}
+                        </div>
+                    </template>
+                    <div>
+                        <button type="button" class="button_styling" onclick={handleToggleDetails}
+                                data-id={scholarship.Id}>{scholarship.buttonLabel}
+                        </button>
+                    </div>
                 </template>
-            </ul>
+                <template lwc:else>
+                    <div>
+                        {scholarship.ShortDescription}
+                    </div>
+                </template>
+            </div>
         </template>
-        <template lwc:else>
-            <div class="slds-p-bottom_x-small">{noEligibleText}</div>
-        </template>
-    </div>
+    </template>
+    <template lwc:else>
+        <div class="slds-p-bottom_x-small">{noEligibleText}</div>
+    </template>
 </template>

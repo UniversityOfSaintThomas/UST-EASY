@@ -192,13 +192,6 @@ tasks:
     options:
       recipe: datasets/snowfakery/fake_contacts.yml
 
-  deploy_sea_site_config:
-    description: Deploys configuration for Development.
-    class_path: cumulusci.tasks.salesforce.Deploy
-    options:
-      namespace_inject: $project_config.project__package__namespace
-      path: unpackaged/config/summit_site
-
   update_admin_profile:
     options:
       record_types:
@@ -319,43 +312,46 @@ flows:
         task: load_latest_data
       9:
         task: set_hierarchy_custom_settings
-      10:
-        task: set_review_custom_settings
       11:
-        task: create_community
-      12:
-        task: create_community_network
+        task: set_review_custom_settings
       13:
+        task: create_community
+      13.1:
+        task: create_community_network
+      13.3:
         task: create_community_experience_cloud_bundle
-      14:
+      13.4:
         task: deploy_site_config
-      15:
+      13.5:
         task: create_community_publish
-      16:
+      13.6:
         task: install_sharing_rules
-      17:
+      13.7:
         task: permission_guest_user
-      18:
+      14:
         task: permission_admin_user
-      19:
+      15:
         task: set_holding_ids
-      20:
+      16:
         task: set_user_user_role
-      21:
+      17:
         task: set_easy_custom_settings
-      22:
+      18:
         task: turn_on_duplicate_rules
-      23:
+      19:
+#        task: sea:deploy_permission_set
         task: sea:deploy_admin_permission_set
-      24:
-        task: deploy_sea_site_config
-      25:
+      20:
+        task: sea:deploy_site_config
+      21:
         task: sea:deploy_site_settings
-      26:
+      22:
         task: sea:deploy_guest_permission_set
-      28:
+      23:
+        task: sea:deploy_namespaced_guest_sharing_rules
+      24:
         task: sea:load_sample_data
-      29:
+      28:
         task: load_scholarship_test_data
 
   release_unlocked_beta:

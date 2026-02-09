@@ -33,7 +33,8 @@ public with sharing class ContentDocumentLinkAppDocsInvocable {
                         Visibility,
                         LinkedEntityId
                 FROM ContentDocumentLink
-                WHERE ContentDocument.Title LIKE '%AdmissionLetter%'
+                WHERE (ContentDocument.Title LIKE '%AdmissionLetter%'
+                    OR ContentDocument.Title LIKE '%BSNDirectAdmit%')
                 AND Visibility = 'InternalUsers'
                 AND LinkedEntityId IN (
                         SELECT Id

@@ -2,7 +2,19 @@
  * Created by nguy0092 on 10/6/2025.
  */
 
-public with sharing class ApplicationDocumentsLwcController {
+public without sharing class ApplicationDocumentsLwcController {
+
+    @AuraEnabled(Cacheable=true)
+    public static Application__c applicationTermName(String recordId) {
+
+        return [
+                SELECT Id,
+                        Generic_Filter_4__c
+                FROM Application__c
+                WHERE Id = :recordId
+                LIMIT 1
+        ];
+    }
 
     @AuraEnabled(Cacheable=true)
     public static List<Map<String, String>> getDocumentsRecordId(String recordId) {
@@ -18,6 +30,8 @@ public with sharing class ApplicationDocumentsLwcController {
                 WHERE LinkedEntityId = :recordId
         ];
 
+        System.debug('linkDocumentFiles: ' + linkDocumentFiles);
+
         for (ContentDocumentLink documentFiles : linkDocumentFiles) {
             linkDocumentFileId.add(documentFiles.ContentDocumentId);
         }
@@ -28,11 +42,16 @@ public with sharing class ApplicationDocumentsLwcController {
                         Title,
                         VersionData
                 FROM ContentVersion
-                WHERE ContentDocumentId IN :linkDocumentFileId
+                WHERE (ContentDocument.Title LIKE '%AdmissionLetter%'
+                    OR ContentDocument.Title LIKE '%BSNDirectAdmit%')
+                AND ContentDocumentId IN :linkDocumentFileId
                 AND FileExtension IN ('pdf', 'txt')
                 AND IsLatest = TRUE
                 ORDER BY Title
         ];
+
+        System.debug('ContentVersion: ' + documentVersions);
+
 
         for (ContentVersion version : documentVersions) {
             Map<String, String> versionMap = new Map<String, String>{
@@ -49,7 +68,7 @@ public with sharing class ApplicationDocumentsLwcController {
             documentFilesList.add(versionMap);
         }
 
-//        System.debug('documentFilesList: ' + documentFilesList);
+        System.debug('documentFilesList: ' + documentFilesList);
 
         return documentFilesList;
     }

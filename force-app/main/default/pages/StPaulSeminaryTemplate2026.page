@@ -1,0 +1,60 @@
+<!--
+ - Created by Thad Dahlberg on 2/10/2026.
+ -->
+<apex:page id="StPaulSeminaryTemplate2026" sidebar="false" lightningStyleSheets="true" showHeader="false"
+           standardStylesheets="false" cache="false" applyHtmlTag="false" docType="html-5.0">
+    <apex:slds/>
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>
+            <apex:insert name="metaPageTitle"/>
+        </title>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&amp;display=fallback"/>
+        <link rel="stylesheet" href="{!URLFOR($Resource.StPaulSeminaryTemplate, '/css/styles.css')}"/>
+        <apex:insert name="scriptsHead"/>
+    </head>
+    <body>
+    <header id="masthead">
+        <div class="header-inner">
+            <a class="logo desktop" href="https://saintpaulseminary.org/"><img
+                        src="{!URLFOR($Resource.StPaulSeminaryTemplate, '/images/cropped-RGB_TSSP_SaintPaulSeminary_Rectangle_No_Tagline_White2x.png')}"
+                        alt="Saint Paul Seminary"/></a>
+            <a class="logo mobile" href="https://saintpaulseminary.org/"><img
+                        src="{!URLFOR($Resource.StPaulSeminaryTemplate, '/images/RGB_TSSP_Masterbrand_Shield_White2x.png')}"
+                        alt="Saint Paul Seminary"/></a>
+        </div>
+    </header>
+    <main id="content" role="main" style="min-height: 50vh">
+        <div class="slds-scope">
+            <div class="slds-grid slds-wrap slds-grid_align-center">
+                <div class="slds-col slds-size_1-of-1 slds-p-around_x-small"
+                     style="max-width:1170px; margin-bottom:20px">
+                    <apex:insert name="body"/>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-inner">
+            <p>© 2026 Saint Paul Seminary School of Divinity at the University ofSt.
+                Thomas • <a href="/report-a-website-problem/">Report a
+                    WebsiteProblem</a> • <a href="/privacy-policy/">Privacy
+                    Policy</a> •Site by <a href="https://saintpiomedia.com" rel="noopener" target="_blank">Saint Pio
+                    Media</a> • "Joyful
+                Catholic Leaders"is a registered trademark of The Saint Paul
+                Seminary</p>
+        </div>
+    </footer>
+    <div id="back-to-top" aria-hidden="true"><![CDATA[
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 15.5L12 8.5L5 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round"/>
+        </svg>
+        ]]>
+    </div>
+    </body>
+    </html>
+</apex:page>

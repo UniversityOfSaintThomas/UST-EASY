@@ -221,7 +221,6 @@ public without sharing class ScholarshipSharedUtilities {
                 scholarshipOpen = true;
             }
         }
-
 //        if (scholarship != null && scholarship.Open_Date__c <= adjustForCentralTime(Datetime.now()) && scholarship.Close_Date__c >= adjustForCentralTime(Datetime.now())) {
 //            scholarshipOpen = true;
 //        }
@@ -278,10 +277,6 @@ public without sharing class ScholarshipSharedUtilities {
 
         scholarshipOpenClose.put('Open', openDateTime);
         scholarshipOpenClose.put('Close', closeDateTime);
-
-        System.debug('openDateTime: '+openDateTime);
-        System.debug('closeDateTime: '+closeDateTime);
-        System.debug('scholarshipOpenClose: '+scholarshipOpenClose);
 
         return scholarshipOpenClose;
     }

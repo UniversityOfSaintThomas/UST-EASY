@@ -30,7 +30,6 @@ public class ScholarshipClosedController {
             } else if (closeDatetime <= ScholarshipSharedUtilities.adjustForCentralTime(Datetime.now())) {
                 this.scholarshipAlreadyClosed = true;
             }
-
 //            if (this.scholarship.Open_Date__c >= ScholarshipSharedUtilities.adjustForCentralTime(Datetime.now())) {
 //                this.scholarshipNotYetOpen = true;
 //            } else if (this.scholarship.Close_Date__c <= ScholarshipSharedUtilities.adjustForCentralTime(Datetime.now())) {

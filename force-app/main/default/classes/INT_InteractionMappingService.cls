@@ -37,7 +37,7 @@ public class INT_InteractionMappingService {
     public INT_InteractionMappingService() {
         for (Interaction_Mapping__c mapping : [
                 SELECT Skip_Mapping__c, Insert_Null__c, Target_Object_API_Name__c, Source_Field_API_Name__c,
-                        Target_Field_API_Name__c, Source_Object_API_Name__c
+                        Target_Field_API_Name__c, Source_Object_API_Name__c, Preserve_Existing_Value__c
                 FROM Interaction_Mapping__c
                 WHERE Active__c = TRUE
         ]) {
@@ -92,10 +92,17 @@ public class INT_InteractionMappingService {
                         && ((objectCheckboxesMap.containsKey(mapping.Target_Object_API_Name__c)
                         && !objectCheckboxesMap.get(mapping.Target_Object_API_Name__c).contains(mapping.Target_Field_API_Name__c.toLowerCase()))
                         || String.valueOf(interaction.get(mapping.Source_Field_API_Name__c)) != 'false'))
-                        ) {
-                    theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Source_Field_API_Name__c));
+                ) {
+                    // Check if we should preserve existing values
+                    if (mapping.Preserve_Existing_Value__c) {
+                        Object existingValue = theObject.get(mapping.Target_Field_API_Name__c);
+                        if (existingValue == null || existingValue == '') {
+                            theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Source_Field_API_Name__c));
+                        }
+                    } else {
+                        theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Source_Field_API_Name__c));
+                    }
                 }
-
             }
         }
 

@@ -252,24 +252,28 @@ public class INT_InteractionProcessor {
         for (Interaction__c interaction : interactionsToProcess) {
             if (!String.isEmpty(interaction.Contact__c)) {
                 Contact newCont = contactMappedFields.get(interaction.Contact__c);
-                Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping query
-                List<String> compareFields = new List<String>{
-                        'FirstName', 'MiddleName', 'LastName', 'LeadSource'
-                }; //List of existing to new Contact fields to compare. Make sure fields are active on Interaction Mappings
-
+//                Contact newContClone = newCont.clone(); //Cloning newCont to compare to after Interaction mapping query
+//                List<String> compareFields = new List<String>{
+//                        'FirstName', 'MiddleName', 'LastName', 'LeadSource'
+//                }; //List of existing to new Contact fields to compare. Make sure fields are active on Interaction Mappings
+//
+//                if (newCont != null) {
+//                    intMappingService.applyDataToSObject(interaction, newCont);
+//                    //Don't update existing Contact fields found in list compareFields
+//                    for (String field : compareFields) {
+//                        try {
+//                            if (String.isNotBlank(newContClone.get(field)?.toString()) && !newCont.get(field)?.toString().trim().equalsIgnoreCase(newContClone.get(field)?.toString().trim())) {
+//                                newCont.put(field, newContClone.get(field));
+//                            }
+//                        } catch (Exception e) {
+//                            System.debug('ERROR! Contact field compare: ' + e);
+//                        }
+//                    }
+//
+//                    contactsToUpdate.add(newCont);
+//                }
                 if (newCont != null) {
                     intMappingService.applyDataToSObject(interaction, newCont);
-                    //Don't update existing Contact fields found in list compareFields
-                    for (String field : compareFields) {
-                        try {
-                            if (String.isNotBlank(newContClone.get(field)?.toString()) && !newCont.get(field)?.toString().trim().equalsIgnoreCase(newContClone.get(field)?.toString().trim())) {
-                                newCont.put(field, newContClone.get(field));
-                            }
-                        } catch (Exception e) {
-                            System.debug('ERROR! Contact field compare: ' + e);
-                        }
-                    }
-
                     contactsToUpdate.add(newCont);
                 }
             }
@@ -810,7 +814,7 @@ public class INT_InteractionProcessor {
     }
 
     private String determineOpportunityName(String currentOppName, String lastName, String termName, String programName, String contactLastName, String txtTermName, String intendTermName, String hedTermName) {
-         System.debug('current Opp Name: ' + currentOppName + ', last Name: ' + lastName + ', term Name: ' + termName + ', program Name: ' + programName + ', contact Last Name: ' + contactLastName);
+        // System.debug('current Opp Name: ' + currentOppName + ', last Name: ' + lastName + ', term Name: ' + termName + ', program Name: ' + programName + ', contact Last Name: ' + contactLastName);
 
         if (currentOppName != null) {
             List<String> currentOppNameSplit = currentOppName.split('\\|');

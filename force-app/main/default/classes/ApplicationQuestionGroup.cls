@@ -826,7 +826,7 @@ public class ApplicationQuestionGroup {
                         sd.Saved_Uploaded_Document_File_Name__c = att.Title;
                         sd.Requirement_Response__c = response.Id;
                         sd.Admissions_Application__c = app.Id;
-                        sd.Document_Type__c = 'Application';
+                        sd.Document_Type__c = 'Transcript – High School';
                         sd.Source__c = 'Admissions Application';
                         sd.Document_Load_Date__c = Date.today();
                         String admissionDocumentRecordType = Schema.getGlobalDescribe().get('Supporting_Document__c').getDescribe().getRecordTypeInfosByDeveloperName().get('Admissions_Document').getRecordTypeId();

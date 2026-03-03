@@ -187,66 +187,73 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
             Scholarships: [],
         };
 
+        // Destructure once at the top
+        const { AwardInfo, DomesticScholarshipsList, InternationalScholarship } = this.meritScholarshipAwards;
+        const { awardStatus, awardAmount, awardAdjAmount, awardAdjReason } = AwardInfo;
+
+        const isCalculated = awardStatus === "Calculated" && awardAmount > 0;
+        const isAdjusted = awardStatus === "Adjusted" && awardAdjReason;
+
         switch (this.scholarshipType) {
             case "Domestic":
             case "Transfer":
-                if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Calculated" && this.meritScholarshipAwards.AwardInfo.awardAmount > 0) {
+                if (isCalculated) {
                     display.Description = "Congratulations! You have been awarded a scholarship!";
-                    display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
-                    this.meritScholarshipAwards.DomesticScholarshipsList.forEach(scholarship => {
-                        if (scholarship.scholarshipAmount > 0) {
-                            display.Scholarships.push({
-                                scholarshipName: scholarship.scholarshipName,
-                                scholarshipAmount: scholarship.scholarshipAmount
-                            });
-                        }
-                    })
+                    display.TotalAwardAmount = awardAmount;
+                    display.TotalAwardDisplay = true; // Already validated by isCalculated condition
+                    display.Scholarships = DomesticScholarshipsList
+                        .filter(s => s.scholarshipAmount > 0)
+                        .map(s => ({
+                            scholarshipName: s.scholarshipName,
+                            scholarshipAmount: s.scholarshipAmount
+                        }));
                 }
 
-                if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Adjusted" && this.meritScholarshipAwards.AwardInfo.awardAdjReason) {
-                    if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount > 0) {
-                        display.Description = this.foundAdjReason ? this.foundAdjReason.Comment : "";
-                        display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAdjAmount;
-                        this.meritScholarshipAwards.DomesticScholarshipsList.forEach(scholarship => {
-                            if (scholarship.scholarshipAdjAmount > 0) {
-                                display.Scholarships.push({
-                                    scholarshipName: scholarship.scholarshipName,
-                                    scholarshipAmount: scholarship.scholarshipAdjAmount
-                                });
-                            }
-                        })
-                    } else if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount === 0 || this.meritScholarshipAwards.AwardInfo.awardAdjAmount == null) {
-                        display.Description = this.foundAdjReason ? this.foundAdjReason.Comment : "";
-                        display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
+                if (isAdjusted) {
+                    display.Description = this.foundAdjReason?.Comment || "";
+
+                    if (awardAdjAmount > 0) {
+                        display.TotalAwardAmount = awardAdjAmount;
+                        display.Scholarships = DomesticScholarshipsList
+                            .filter(s => s.scholarshipAdjAmount > 0)
+                            .map(s => ({
+                                scholarshipName: s.scholarshipName,
+                                scholarshipAmount: s.scholarshipAdjAmount
+                            }));
                     }
+
+                    display.TotalAwardDisplay = awardAdjAmount > 0;
                 }
+
                 break;
             case "International":
-                if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Calculated" && this.meritScholarshipAwards.AwardInfo.awardAmount > 0) {
-                    display.Description = 'Congratulations! You have been awarded a scholarship!'
-                    display.Scholarships.push({
-                        scholarshipName: this.meritScholarshipAwards.InternationalScholarship.scholarshipPercent,
-                        scholarshipAmount: this.meritScholarshipAwards.AwardInfo.awardAmount
-                    });
-                    display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
+                if (isCalculated) {
+                    display.Description = "Congratulations! You have been awarded a scholarship!";
+                    display.TotalAwardAmount = awardAmount;
+                    display.TotalAwardDisplay = true;
+                    display.Scholarships = [{
+                        scholarshipName: InternationalScholarship.scholarshipPercent,
+                        scholarshipAmount: awardAmount
+                    }];
                 }
 
-                if (this.meritScholarshipAwards.AwardInfo.awardStatus === "Adjusted" && this.meritScholarshipAwards.AwardInfo.awardAdjReason) {
-                    if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount > 0) {
-                        display.Description = this.foundAdjReason ? this.foundAdjReason.Comment : "";
-                        display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAdjAmount;
-                        display.Scholarships.push({
-                            scholarshipName: this.meritScholarshipAwards.InternationalScholarship.scholarshipAdjPercent,
-                            scholarshipAmount: this.meritScholarshipAwards.AwardInfo.awardAdjAmount
-                        });
-                    } else if (this.meritScholarshipAwards.AwardInfo.awardAdjAmount === 0 || this.meritScholarshipAwards.AwardInfo.awardAdjAmount == null) {
-                        display.Description = this.foundAdjReason ? this.foundAdjReason.Comment : "";
-                        display.TotalAwardAmount = this.meritScholarshipAwards.AwardInfo.awardAmount;
+                if (isAdjusted) {
+                    display.Description = this.foundAdjReason?.Comment || "";
+
+                    if (awardAdjAmount > 0) {
+                        display.TotalAwardAmount = awardAdjAmount;
+                        display.Scholarships = [{
+                            scholarshipName: InternationalScholarship.scholarshipAdjPercent,
+                            scholarshipAmount: awardAdjAmount
+                        }];
                     }
+
+                    display.TotalAwardDisplay = awardAdjAmount > 0;
                 }
+
                 break;
         }
-        display.TotalAwardDisplay = this.meritScholarshipAwards.AwardInfo.awardAmount > 0 || this.meritScholarshipAwards.AwardInfo.awardAdjAmount > 0
+
         return display;
     }
 

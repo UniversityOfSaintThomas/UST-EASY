@@ -76,13 +76,13 @@ public without sharing class MeritScholarshipAwardsController {
                         Adj_Missouri_Pathway_Scholarship__c,
                         Nebraska_Pathways_Scholarship__c,
                         Adj_Nebraska_Pathways_Scholarship__c,
+                        Sauer_Cristo_Rey_Scholarship__c,
+                        Adj_Sauer_Cristo_Rey_Scholarship__c,
                         Transfer_PTK_Scholarship__c,
                         Adj_Transfer_PTK_Scholarship__c,
                         INTL_Student_Scholarship_Percent__c,
                         ADJ_INTL_Student_Scholarship_Percent__c,
-                        Related_Scholarship_Name__c,
-                        Sauer_Cristo_Rey_Scholarship__c,
-                        Adj_Sauer_Cristo_Rey_Scholarship__c
+                        Related_Scholarship_Name__c
                 FROM Award__c
                 WHERE Admissions_Application_Id__c = :appId
                 AND Related_Scholarship_Name__c LIKE :scholarshipNames
@@ -109,6 +109,7 @@ public without sharing class MeritScholarshipAwardsController {
             domesticScholarshipsList.add(createDomesticScholarships('Milwaukee Area Pathway Scholarship', a.Milwaukee_Area_Pathway_Scholarship__c, a.Adj_Milwaukee_Area_Pathway_Scholar__c));
             domesticScholarshipsList.add(createDomesticScholarships('Missouri Pathway Scholarship', a.Missouri_Pathway_Scholarship__c, a.Adj_Missouri_Pathway_Scholarship__c));
             domesticScholarshipsList.add(createDomesticScholarships('Nebraska Pathways Scholarship', a.Nebraska_Pathways_Scholarship__c, a.Adj_Nebraska_Pathways_Scholarship__c));
+            domesticScholarshipsList.add(createDomesticScholarships('Sauer Cristo Rey Scholarship', a.Sauer_Cristo_Rey_Scholarship__c, a.Adj_Sauer_Cristo_Rey_Scholarship__c));
             domesticScholarshipsList.add(createDomesticScholarships('Transfer PTK Scholarship', a.Transfer_PTK_Scholarship__c, a.Adj_Transfer_PTK_Scholarship__c));
 
             internationalScholarship.scholarshipPercent = a.INTL_Student_Scholarship_Percent__c != null ? a.INTL_Student_Scholarship_Percent__c : 0;

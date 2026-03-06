@@ -6,7 +6,6 @@
 public class INT_InteractionMappingService {
     private Map<String, Set<String>> skipMappingMap = new Map<String, Set<String>>();
     private Map<String, Set<String>> preserveValueMappingMap = new Map<String, Set<String>>();
-
     private Set<String> objectNames = new Set<String>();
     public Map<String, List<Interaction_Mapping__c>> intMappingMap = new Map<String, List<Interaction_Mapping__c>>();
 
@@ -39,7 +38,7 @@ public class INT_InteractionMappingService {
     public INT_InteractionMappingService() {
         for (Interaction_Mapping__c mapping : [
                 SELECT Skip_Mapping__c, Insert_Null__c, Target_Object_API_Name__c, Source_Field_API_Name__c,
-                        Target_Field_API_Name__c, Source_Object_API_Name__c, Preserve_Value_Mapping__c
+                        Target_Field_API_Name__c, Source_Object_API_Name__c, Preserve_Existing_Value_Mapping__c
                 FROM Interaction_Mapping__c
                 WHERE Active__c = TRUE
         ]) {
@@ -57,8 +56,8 @@ public class INT_InteractionMappingService {
             }
 
             // Populate preserve existing value sources map
-            if (!String.isEmpty(mapping.Preserve_Value_Mapping__c)) {
-                preserveValueMappingMap.put(mapping.Id, new Set<String>(mapping.Preserve_Value_Mapping__c.split(';')));
+            if (!String.isEmpty(mapping.Preserve_Existing_Value_Mapping__c)) {
+                preserveValueMappingMap.put(mapping.Id, new Set<String>(mapping.Preserve_Existing_Value_Mapping__c.split(';')));
             }
         }
     }

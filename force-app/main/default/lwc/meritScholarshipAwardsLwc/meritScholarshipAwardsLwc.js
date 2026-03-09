@@ -4,16 +4,6 @@
 
 import {LightningElement, api, track, wire} from 'lwc';
 import getMeritAwards from '@salesforce/apex/MeritScholarshipAwardsController.getMeritAwards';
-import {getFieldValue, getRecord} from "lightning/uiRecordApi";
-import INTENDED_TERM_OF_ENTRY from '@salesforce/schema/Application__c.Intended_Term_of_Entry__r.Name';
-import TERM_NAME from '@salesforce/schema/Application__c.Generic_Filter_4__c';
-import CITIZENSHIP from '@salesforce/schema/Application__c.Citizenship__c';
-
-const FIELDS = [
-    INTENDED_TERM_OF_ENTRY,
-    TERM_NAME,
-    CITIZENSHIP
-];
 
 export default class MeritScholarshipAwardsLwc extends LightningElement {
 
@@ -41,6 +31,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
             awardAdjReason: "",
             scholarshipControllerName: ""
         },
+        DomesticScholarshipsList: [],
         InternationalScholarship: {
             scholarshipPercent: "0",
             scholarshipAdjPercent: "0"
@@ -171,12 +162,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
     }
 
     get displayAward() {
-        let noDisplay = false;
-
-        if (this.foundAdjReason) {
-            noDisplay = this.foundAdjReason.Comment === "No Display"
-        }
-        return !noDisplay;
+        return this.foundAdjReason.Comment !== "No Display"
     }
 
     get awardToDisplay() {
@@ -190,8 +176,10 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         // Destructure once at the top
         const { AwardInfo, DomesticScholarshipsList, InternationalScholarship } = this.meritScholarshipAwards;
         const { awardStatus, awardAmount, awardAdjAmount, awardAdjReason } = AwardInfo;
+        const parsedAmount = parseFloat(String(awardAmount).replace(/,/g, '')) || 0;
+        const parsedAdjAmount = parseFloat(String(awardAdjAmount).replace(/,/g, '')) || 0;
 
-        const isCalculated = awardStatus === "Calculated" && awardAmount > 0;
+        const isCalculated = awardStatus === "Calculated" && parsedAmount > 0;
         const isAdjusted = awardStatus === "Adjusted" && awardAdjReason;
 
         switch (this.scholarshipType) {
@@ -199,7 +187,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
             case "Transfer":
                 if (isCalculated) {
                     display.Description = "Congratulations! You have been awarded a scholarship!";
-                    display.TotalAwardAmount = awardAmount;
+                    display.TotalAwardAmount = parsedAmount;
                     display.TotalAwardDisplay = true; // Already validated by isCalculated condition
                     display.Scholarships = DomesticScholarshipsList
                         .filter(s => s.scholarshipAmount > 0)
@@ -212,8 +200,8 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
                 if (isAdjusted) {
                     display.Description = this.foundAdjReason?.Comment || "";
 
-                    if (awardAdjAmount > 0) {
-                        display.TotalAwardAmount = awardAdjAmount;
+                    if (parsedAdjAmount > 0) {
+                        display.TotalAwardAmount = parsedAdjAmount;
                         display.Scholarships = DomesticScholarshipsList
                             .filter(s => s.scholarshipAdjAmount > 0)
                             .map(s => ({
@@ -222,33 +210,33 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
                             }));
                     }
 
-                    display.TotalAwardDisplay = awardAdjAmount > 0;
+                    display.TotalAwardDisplay = parsedAdjAmount > 0;
                 }
 
                 break;
             case "International":
                 if (isCalculated) {
                     display.Description = "Congratulations! You have been awarded a scholarship!";
-                    display.TotalAwardAmount = awardAmount;
+                    display.TotalAwardAmount = parsedAmount;
                     display.TotalAwardDisplay = true;
                     display.Scholarships = [{
                         scholarshipName: InternationalScholarship.scholarshipPercent,
-                        scholarshipAmount: awardAmount
+                        scholarshipAmount: parsedAmount
                     }];
                 }
 
                 if (isAdjusted) {
                     display.Description = this.foundAdjReason?.Comment || "";
 
-                    if (awardAdjAmount > 0) {
-                        display.TotalAwardAmount = awardAdjAmount;
+                    if (parsedAdjAmount > 0) {
+                        display.TotalAwardAmount = parsedAdjAmount;
                         display.Scholarships = [{
                             scholarshipName: InternationalScholarship.scholarshipAdjPercent,
-                            scholarshipAmount: awardAdjAmount
+                            scholarshipAmount: parsedAdjAmount
                         }];
                     }
 
-                    display.TotalAwardDisplay = awardAdjAmount > 0;
+                    display.TotalAwardDisplay = parsedAdjAmount > 0;
                 }
 
                 break;
@@ -273,25 +261,21 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
         return this.scholarshipType === 'Domestic' || this.scholarshipType === "Transfer";
     }
 
-    @wire(getRecord, {recordId: "$appRecordId", fields: FIELDS})
-    ApplicationRecord;
-
-    get termName() {
-        return getFieldValue(this.ApplicationRecord.data, TERM_NAME);
-    }
-
-    @wire(getMeritAwards, {appId: "$appRecordId", term: "$termName", domesticApplicant: "$domesticApplicant"})
+    @wire(getMeritAwards, {appId: "$appRecordId"/*, term: "$termName", domesticApplicant: "$domesticApplicant"*/})
     getMeritAwardsWire({error, data}) {
 
         if (data) {
             this.meritScholarshipAwards = JSON.parse(JSON.stringify(data));
-            console.log("Data: " + JSON.stringify(data));
-            console.log("meritScholarshipAwards: " + JSON.stringify(this.meritScholarshipAwards));
+            // console.log("Data: " + JSON.stringify(data));
+            // console.log("meritScholarshipAwards: " + JSON.stringify(this.meritScholarshipAwards));
 
-            this.foundAdjReason = this.adjustmentComments.find(adj => adj.Reason === this.meritScholarshipAwards.AwardInfo.awardAdjReason);
-            console.log("What is Adj Reason: " + JSON.stringify(this.foundAdjReason));
+            this.foundAdjReason = this.adjustmentComments.find(adj => adj.Reason === this.meritScholarshipAwards.AwardInfo.awardAdjReason) || {
+                Reason: "",
+                Comment: ""
+            };
+            // console.log("What is Adj Reason: " + JSON.stringify(this.foundAdjReason));
 
-            console.log("Scholarship Controller: " + this.meritScholarshipAwards.AwardInfo.scholarshipControllerName);
+            // console.log("Scholarship Controller: " + this.meritScholarshipAwards.AwardInfo.scholarshipControllerName);
             const scholarshipTypeFind = this.scholarshipControllerNames.find(type => {
                 const namePattern = new RegExp(`${type.Name}`, 'i');
                 return this.meritScholarshipAwards.AwardInfo.scholarshipControllerName.search(namePattern) >= 0;
@@ -300,7 +284,7 @@ export default class MeritScholarshipAwardsLwc extends LightningElement {
             if (scholarshipTypeFind) {
                 this.scholarshipType = scholarshipTypeFind.Type;
             }
-            console.log("Scholarship Type: " + this.scholarshipType);
+            // console.log("Scholarship Type: " + this.scholarshipType);
         }
 
         if (error) {

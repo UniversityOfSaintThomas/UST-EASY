@@ -78,9 +78,7 @@ export default class ApplicationDocumentsLwc extends LightningElement {
             bsnDeny: 0
         };
 
-        return documents
-            .map(file => this.categorizeDocument(file, counters))
-            .filter(doc => doc !== null);
+        return documents.map(file => this.categorizeDocument(file, counters)).filter(doc => doc !== null);
     }
 
     categorizeDocument(file, counters) {

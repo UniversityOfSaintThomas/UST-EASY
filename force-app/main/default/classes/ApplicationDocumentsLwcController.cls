@@ -12,6 +12,7 @@ public without sharing class ApplicationDocumentsLwcController {
                         Generic_Filter_4__c
                 FROM Application__c
                 WHERE Id = :recordId
+                WITH SECURITY_ENFORCED
                 LIMIT 1
         ];
     }

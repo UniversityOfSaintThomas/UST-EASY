@@ -1,6 +1,6 @@
 /**
  * Created by nguy0092 on 3/11/2026.
- * Use in ApplicationContentDocumentLinksInvocable
+ * Used for ApplicationContentDocumentLinksInvocable
  */
 
 public without sharing class ApplicationContentDocumentLinksBatch1 implements Database.Batchable<SObject>, Database.Stateful {
@@ -31,15 +31,27 @@ public without sharing class ApplicationContentDocumentLinksBatch1 implements Da
     public void execute(Database.BatchableContext bc, List<Application__c> scope) {
         // Build a map of Applications and a Set of document title display values
         for (Application__c app : scope) {
+            Set<String> titleKeywords = new Set<String>();
             if (String.isNotBlank(app.Application_Control__r.Documents_To_Display_Keywords__c)) {
-                applicationDocumentTitlesMap.put(app.Id, new Set<String>(app.Application_Control__r.Documents_To_Display_Keywords__c.split(';')));
+                List<String> docTitlesSplit = app.Application_Control__r.Documents_To_Display_Keywords__c.split(';');
+                for (String titles : docTitlesSplit) {
+                    if (String.isBlank(titles)) continue;
+                    List<String> keywordsSplit = titles.trim().split('\\|');
+                    String keyword = keywordsSplit[0].trim();
+                    if (String.isNotBlank(keyword)) {
+                        titleKeywords.add(keyword);
+                    }
+                }
+            }
+            if (!titleKeywords.isEmpty()) {
+                applicationDocumentTitlesMap.put(app.Id, titleKeywords);
             }
         }
     }
 
     public void finish(Database.BatchableContext bc) {
         System.debug('applicationDocumentTitlesMap size: ' + applicationDocumentTitlesMap.size());
-//        System.debug('applicationDocumentTitlesMap: ' + applicationDocumentTitlesMap);
+        System.debug('applicationDocumentTitlesMap: ' + applicationDocumentTitlesMap);
 
         if (!applicationDocumentTitlesMap.isEmpty()) {
             Database.executeBatch(new ApplicationContentDocumentLinksBatch2(applicationDocumentTitlesMap), 200);

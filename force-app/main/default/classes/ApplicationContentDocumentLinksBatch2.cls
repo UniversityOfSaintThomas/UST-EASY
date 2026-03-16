@@ -1,6 +1,6 @@
 /**
  * Created by nguy0092 on 3/11/2026.
- * Use in ApplicationContentDocumentLinksInvocable
+ * Used for ApplicationContentDocumentLinksInvocable
  */
 
 public without sharing class ApplicationContentDocumentLinksBatch2 implements Database.Batchable<SObject>, Database.Stateful {
@@ -15,7 +15,7 @@ public without sharing class ApplicationContentDocumentLinksBatch2 implements Da
     public Database.QueryLocator start(Database.BatchableContext bc) {
         Set<Id> appIds = applicationMap.keySet();
 
-        System.debug('appIds Size: ' + appIds);
+        System.debug('appIds Size: ' + appIds.size());
 
         Set<String> likeKeyWordsConditions = new Set<String>();
         for (Set<String> titleSet : applicationMap.values()) {
@@ -36,12 +36,7 @@ public without sharing class ApplicationContentDocumentLinksBatch2 implements Da
             return Database.getQueryLocator('SELECT Id FROM ContentDocumentLink WHERE Id = NULL');
         }
 
-//        String queryString = 'SELECT Id, ContentDocumentId, ContentDocument.Title, Visibility, LinkedEntityId ' +
-//                'FROM ContentDocumentLink ' +
-//                'WHERE LinkedEntityId IN :appIds' +
-//                ' AND Visibility = \'InternalUsers\'' +
-//                documentTitlesConditions;
-
+        //Current Salesforce issue: not all records are returned when using a bind variable list for LinkedEntityId. Instead use subquery to get LinkedEntityId.
         String queryString = 'SELECT Id, ContentDocumentId, ContentDocument.Title, Visibility, LinkedEntityId ' +
                 'FROM ContentDocumentLink ' +
                 'WHERE Visibility = \'InternalUsers\' ' +
@@ -79,13 +74,13 @@ public without sharing class ApplicationContentDocumentLinksBatch2 implements Da
             }
         }
 
-        try {
-//            Database.update(toUpdate);
-            updateTotal += toUpdate.size();
-            System.debug('No Exception toUpdate Size: ' + toUpdate.size());
-        } catch (Exception e) {
-            System.debug('ContentDocumentLinkUpdateBatch Error: ' + e.getMessage());
-            System.debug('Exception toUpdate Size: ' + toUpdate.size());
+        if (!toUpdate.isEmpty()) {
+            try {
+                Database.update(toUpdate);
+                updateTotal += toUpdate.size();
+            } catch (Exception e) {
+                System.debug('ContentDocumentLinkUpdateBatch Error: ' + e.getMessage());
+            }
         }
 
     }

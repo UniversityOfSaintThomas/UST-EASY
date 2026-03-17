@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Documents_To_Display_Keywords__c</fullName>
+    <externalId>false</externalId>
+    <label>Documents To Display Keywords</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>AdmissionLetter</fullName>
+                <default>false</default>
+                <label>AdmissionLetter</label>
+            </value>
+            <value>
+                <fullName>BSNDirectAdmit</fullName>
+                <default>false</default>
+                <label>BSNDirectAdmit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>6</visibleLines>
+</CustomField>

@@ -5,7 +5,7 @@
 
 public without sharing class ApplicationContentDocumentLinksInvocable {
 
-    @InvocableMethod(Label='ContentDocumentLink Application Documents Visibility Settings Update' Description='Finds ContentDocumentLinks by matching LinkedEntityId to Application Id and updates Visibility to AllUsers')
+    @InvocableMethod(Label='Admissions Application ContentDocumentLink Visibility Settings Update' Description='Finds ContentDocumentLinks by matching LinkedEntityId to Application Id and updates Visibility to AllUsers')
     public static void contentDocumentLinks() {
 
         List<AggregateResult> currentTerm = [
@@ -23,7 +23,7 @@ public without sharing class ApplicationContentDocumentLinksInvocable {
             Integer running = [
                     SELECT COUNT()
                     FROM AsyncApexJob
-                    WHERE ApexClass.Name IN ('ApplicationDocumentTitlesBatch', 'ContentDocumentLinkUpdateBatch')
+                    WHERE ApexClass.Name IN ('ApplicationContentDocumentLinksBatch1', 'ApplicationContentDocumentLinksBatch2')
                     AND Status IN ('Holding', 'Queued', 'Preparing', 'Processing')
             ];
 

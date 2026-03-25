@@ -21,7 +21,7 @@ public without sharing class ApplicationContentDocumentLinksBatch2 implements Da
         for (Set<String> titleSet : applicationMap.values()) {
             for (String title : titleSet) {
                 String trimmedTitle = title.trim();
-                trimmedTitle = trimmedTitle.replace('%', '').replace('_', '');
+                trimmedTitle = trimmedTitle.replace('%', '');
                 if (String.isNotBlank(trimmedTitle)) {
                     likeKeyWordsConditions.add('ContentDocument.Title LIKE \'%' + String.escapeSingleQuotes(trimmedTitle) + '%\'');
                 }

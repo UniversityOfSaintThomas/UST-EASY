@@ -51,7 +51,7 @@ public without sharing class ApplicationContentDocumentLinksBatch1 implements Da
 
     public void finish(Database.BatchableContext bc) {
         System.debug('applicationDocumentTitlesMap size: ' + applicationDocumentTitlesMap.size());
-        System.debug('applicationDocumentTitlesMap: ' + applicationDocumentTitlesMap);
+//        System.debug('applicationDocumentTitlesMap: ' + applicationDocumentTitlesMap);
 
         if (!applicationDocumentTitlesMap.isEmpty()) {
             Database.executeBatch(new ApplicationContentDocumentLinksBatch2(applicationDocumentTitlesMap), 200);

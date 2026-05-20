@@ -16,6 +16,7 @@ public with sharing class applicationHelper {
                         Internal_Requirement_Item__c, Editable_Application_Status__c, Holding_Record_Id__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
                         Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
                         Requirement__r.Do_Not_Mark_Requirement_as_Viewed__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c, Requirement__c, Uploaded_Document_Object__c,
+                        Uploaded_Document_Source__c, Uploaded_Document_Type__c,
                         File_Name_Prefix__c, (
                         SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c,
                                 Applicant_Type__c, Citizenship__c, Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName, Picklist_Values__c, Placeholder__c,

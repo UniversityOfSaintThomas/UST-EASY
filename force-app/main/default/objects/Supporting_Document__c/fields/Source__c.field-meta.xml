@@ -32,14 +32,14 @@
                 <label>Unofficial</label>
             </value>
             <value>
-                <fullName>Enrollment Rx</fullName>
-                <default>false</default>
-                <label>Enrollment Rx</label>
-            </value>
-            <value>
                 <fullName>University Advancement</fullName>
                 <default>false</default>
                 <label>University Advancement</label>
+            </value>
+            <value>
+                <fullName>GradCAS</fullName>
+                <default>false</default>
+                <label>GradCAS</label>
             </value>
             <value>
                 <fullName>Admissions Application</fullName>

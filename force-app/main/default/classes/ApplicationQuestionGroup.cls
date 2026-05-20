@@ -809,29 +809,15 @@ public class ApplicationQuestionGroup {
                     }
                     insert att;
 
-                    if (item.Uploaded_Document_Object__c != null && item.Uploaded_Document_Object__c == 'Supporting Documents') {
-                        Supporting_Document__c sd = new Supporting_Document__c();
+                    if (item.Uploaded_Document_Object__c != null && String.isNotBlank(item.Uploaded_Document_Object__c)) {
+
                         //Query supporting document for pre-existing requirement response
-                        List<Supporting_Document__c> existingSupportingDocuments = [
+                        List<Supporting_Document__c> documentOnRequirementResponse = [
                                 SELECT Id, Requirement_Response__c
                                 FROM Supporting_Document__c
                                 WHERE Requirement_Response__c = :response.Id
                                 LIMIT 1
                         ];
-                        if (existingSupportingDocuments.size() > 0) {
-                            sd.Id = existingSupportingDocuments[0].Id;
-                        }
-                        sd.Contact__c = con.Id;
-                        sd.Original_Uploaded_Document_File_Name__c = originalFileName;
-                        sd.Saved_Uploaded_Document_File_Name__c = att.Title;
-                        sd.Requirement_Response__c = response.Id;
-                        sd.Admissions_Application__c = app.Id;
-                        sd.Document_Type__c = 'Application';
-                        sd.Source__c = 'Admissions Application';
-                        sd.Document_Load_Date__c = Date.today();
-                        String admissionDocumentRecordType = Schema.getGlobalDescribe().get('Supporting_Document__c').getDescribe().getRecordTypeInfosByDeveloperName().get('Admissions_Document').getRecordTypeId();
-                        sd.RecordTypeId = admissionDocumentRecordType;
-                        upsert sd;
 
                         //Query content version for the newly created content version
                         ContentVersion contentVersion_2 = [
@@ -840,12 +826,50 @@ public class ApplicationQuestionGroup {
                                 WHERE Id = :att.Id
                                 LIMIT 1
                         ];
+
+                        if(item.Uploaded_Document_Object__c.contains('Supporting Document')) {
+                            Supporting_Document__c sd = new Supporting_Document__c();
+                            sd.Name = att.Title.abbreviate(80);
+                            if (documentOnRequirementResponse.size() > 0) {
+                                sd.Id = documentOnRequirementResponse[0].Id;
+                            }
+                            sd.Contact__c = con.Id;
+                            sd.Original_Uploaded_Document_File_Name__c = originalFileName;
+                            sd.Saved_Uploaded_Document_File_Name__c = att.Title;
+                            sd.Requirement_Response__c = response.Id;
+                            sd.Admissions_Application__c = app.Id;
+                            sd.Document_Type__c = 'Transcript - High School';
+                            if(String.isNotBlank(item.Uploaded_Document_Type__c)) {
+                                sd.Document_Type__c = item.Uploaded_Document_Type__c;
+                            }
+                            sd.Source__c = 'Admissions Application';
+                            if(String.isNotBlank(item.Uploaded_Document_Source__c)) {
+                                sd.Source__c = item.Uploaded_Document_Source__c;
+                            }
+
+                            sd.Document_Load_Date__c = Date.today();
+                            String admissionDocumentRecordType = Schema.getGlobalDescribe().get('Supporting_Document__c').getDescribe().getRecordTypeInfosByDeveloperName().get('Admissions_Document').getRecordTypeId();
+                            sd.RecordTypeId = admissionDocumentRecordType;
+                            upsert sd;
+
+                            //Create document link to new supporting document record
+                            ContentDocumentLink cdl = new ContentDocumentLink();
+                            cdl.ContentDocumentId = (Id) contentVersion_2.ContentDocumentId;
+                            cdl.LinkedEntityId = sd.Id;
+                            cdl.ShareType = 'V';
+                            insert cdl;
+                        }
+
+                        //Create a link to the application if the uploaded document is an admissions application
+                        if(item.Uploaded_Document_Object__c.contains('Admissions Application')) {
+                            ContentDocumentLink cdl = new ContentDocumentLink();
+                            cdl.ContentDocumentId = (Id) contentVersion_2.ContentDocumentId;
+                            cdl.LinkedEntityId = app.Id;
+                            cdl.ShareType = 'V';
+                            insert cdl;
+                        }
                         //Create a contentDocumentLink to supporting_documents__c
-                        ContentDocumentLink cdl = new ContentDocumentLink();
-                        cdl.ContentDocumentId = (Id) contentVersion_2.ContentDocumentId;
-                        cdl.LinkedEntityId = sd.Id;
-                        cdl.ShareType = 'V';
-                        insert cdl;
+
                     }
 
                     att.VersionData = null;

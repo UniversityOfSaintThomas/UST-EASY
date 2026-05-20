@@ -4499,6 +4499,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Requirement_Item__c.Uploaded_Document_Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Requirement_Item__c.Uploaded_Document_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Requirement_Item__c.Viewing_Requirement_Formula__c</field>
         <readable>true</readable>

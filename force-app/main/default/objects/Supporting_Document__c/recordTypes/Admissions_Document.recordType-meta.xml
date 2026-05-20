@@ -94,10 +94,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Enrollment Rx</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Official</fullName>
             <default>false</default>
         </values>

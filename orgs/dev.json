@@ -32,7 +32,8 @@
       "enableTranslationWorkbench": true
     },
     "communitiesSettings": {
-      "enableNetworksEnabled": true
+      "enableNetworksEnabled": true,
+      "enableOotbProfExtUserOpsEnable": true
     }
   }
 }

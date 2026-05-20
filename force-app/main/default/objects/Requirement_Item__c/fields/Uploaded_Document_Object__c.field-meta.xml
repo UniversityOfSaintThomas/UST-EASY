@@ -5,11 +5,15 @@
     <label>Uploaded Document Object</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
+    <type>MultiselectPicklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
+            <value>
+                <fullName>Admissions Application</fullName>
+                <default>false</default>
+                <label>Admissions Application</label>
+            </value>
             <value>
                 <fullName>Supporting Documents</fullName>
                 <default>false</default>
@@ -17,4 +21,5 @@
             </value>
         </valueSetDefinition>
     </valueSet>
+    <visibleLines>4</visibleLines>
 </CustomField>

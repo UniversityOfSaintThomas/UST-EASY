@@ -7,7 +7,7 @@
     <picklistValues>
         <picklist>Document_Type__c</picklist>
         <values>
-            <fullName>Profile</fullName>
+            <fullName>School Profile</fullName>
             <default>false</default>
         </values>
         <values>

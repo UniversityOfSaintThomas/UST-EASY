@@ -9,7 +9,7 @@
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Appeal</fullName>
                 <default>false</default>
@@ -26,9 +26,24 @@
                 <label>Code of Conduct Form</label>
             </value>
             <value>
+                <fullName>Course Plan</fullName>
+                <default>false</default>
+                <label>Course Plan</label>
+            </value>
+            <value>
                 <fullName>Deans Waiver</fullName>
                 <default>false</default>
                 <label>Deans Waiver</label>
+            </value>
+            <value>
+                <fullName>Degree Evaluation</fullName>
+                <default>false</default>
+                <label>Degree Evaluation</label>
+            </value>
+            <value>
+                <fullName>English Proficiency</fullName>
+                <default>false</default>
+                <label>English Proficiency</label>
             </value>
             <value>
                 <fullName>Letter of Recommendation</fullName>
@@ -66,6 +81,16 @@
                 <label>School Profile</label>
             </value>
             <value>
+                <fullName>Stewardship Report</fullName>
+                <default>false</default>
+                <label>Stewardship Report</label>
+            </value>
+            <value>
+                <fullName>Strategy/Prospect Notes</fullName>
+                <default>false</default>
+                <label>Strategy/Prospect Notes</label>
+            </value>
+            <value>
                 <fullName>Test Score</fullName>
                 <default>false</default>
                 <label>Test Score</label>
@@ -91,34 +116,14 @@
                 <label>Visa</label>
             </value>
             <value>
-                <fullName>Writing Sample</fullName>
-                <default>false</default>
-                <label>Writing Sample</label>
-            </value>
-            <value>
-                <fullName>English Proficiency</fullName>
-                <default>false</default>
-                <label>English Proficiency</label>
-            </value>
-            <value>
-                <fullName>Course Plan</fullName>
-                <default>false</default>
-                <label>Course Plan</label>
-            </value>
-            <value>
                 <fullName>Wealth Screening</fullName>
                 <default>false</default>
                 <label>Wealth Screening</label>
             </value>
             <value>
-                <fullName>Stewardship Report</fullName>
+                <fullName>Writing Sample</fullName>
                 <default>false</default>
-                <label>Stewardship Report</label>
-            </value>
-            <value>
-                <fullName>Profile</fullName>
-                <default>false</default>
-                <label>Profile</label>
+                <label>Writing Sample</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -23,11 +23,9 @@ public class ApplicationCreate {
     ********************************************************************************/
 
     public ApplicationCreate() {
-        System.debug('ApplicationCreate constructor called. AppInfo: ' + appInfo);
         if (appInfo == null) {
             appInfo = ApplicationUtilities.createShellAppInfo();
         }
-        System.debug('ApplicationCreate constructor called. AppInfo: ' + appInfo);
     }
 
     public PageReference ApplicationCreateInit() {
@@ -100,7 +98,7 @@ public class ApplicationCreate {
                             Related_List_Object_Master_Field__c, Related_List_Where_Clause__c, Holding_Record_Id__c, Internal_Requirement_Item__c, Editable_Application_Status__c,
                             Internal_Only__c, Requirement__r.Internal_Only__c, Internal_Only_Applicant_Instructions__c, Allow_Supporting_Documentation_Upload__c, Required_Supporting_Documentation__c,
                             Generic_Filter_1__c, Generic_Filter_2__c, Generic_Filter_3__c, Generic_Filter_4__c, Generic_Filter_5__c, Generic_Filter_6__c, Generic_Filter_7__c, Generic_Filter_8__c,
-                            Uploaded_Document_Object__c, File_Name_Prefix__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c, Requirement__c, (
+                            Uploaded_Document_Object__c, Uploaded_Document_Source__c, Uploaded_Document_Type__c,File_Name_Prefix__c, Internal_Only_Show_on_Checklist__c, Display_on_Checklist__c, Requirement__c, (
                             SELECT Id, Active__c, Required__c, Label__c, Intended_Program__c, Application_Status__c, Applicant_Type__c, Citizenship__c,
                                     Degree_Type__c, Delivery_Type__c, Residency__c, School_College__c, Student_Type__c, RecordType.DeveloperName,
                                     Picklist_Values__c, Placeholder__c, Length__c, Help_Text__c, Dependency_Logic__c, Dependency_Behavior__c, Related_Object_Field__c, Name_Field_API_Name__c,
@@ -140,8 +138,6 @@ public class ApplicationCreate {
             // Add term and program questions if not hidden
             if (!appInfo.hideTermProgram) {
 
-                System.debug('Application Control ID: ' + appControlId);
-
                 // Get map of intended programs with id as key, and only for a specific Application Control
                 List<Program__c> programs = [
                         SELECT Id, Name, Academic_Level__c, Program_Name_on_Application__c, Active__c, Applicant_Type__c, Citizenship__c, Degree_Type__c, Degree__c,
@@ -155,8 +151,6 @@ public class ApplicationCreate {
                         //AND Degree__c = :degreeType
                         ORDER BY Name ASC
                 ];
-
-                System.debug('Programs: ' + programs);
 
                 intendedPrograms = new Map<Id, Program__c>(programs);
 
@@ -206,7 +200,6 @@ public class ApplicationCreate {
                     termNames.add(aTerm.Name);
 
                 }
-                System.debug('termNames: ' + termNames);
 
                 // Create new term question and add to list
                 ApplicationQuestion termQuestion = new ApplicationQuestion(con, app, '', app, 'Intended_Term_of_Entry__c');
@@ -611,10 +604,10 @@ public class ApplicationCreate {
             interaction.College_of_Interest__c = currentApplication.Intended_Program__r.Program_College_of_Interest__c;
             interaction.Admit_Type__c = currentApplication.Intended_Program__r.Program_Applicant_Type__c;
             interaction.Term__c = currentApplication.Intended_Term_of_Entry__r.Term__c;
-            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c = :currentApplication.Intended_Program__c LIMIT 1];
-            if (!relatedPlan.isEmpty()) {
-                interaction.Recruitment_Interest__c = relatedPlan[0].Id;
-            }
+//            List<Plan__c> relatedPlan = [SELECT Id FROM Plan__c WHERE Program__c = :currentApplication.Intended_Program__c LIMIT 1];
+//            if (!relatedPlan.isEmpty()) {
+//                interaction.Recruitment_Interest__c = relatedPlan[0].Id;
+//            }
             interaction.Contact__c = currentApplication.Contact__c;
         }
 

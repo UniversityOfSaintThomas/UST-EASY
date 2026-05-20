@@ -203,6 +203,15 @@ tasks:
     options:
       recipe: datasets/snowfakery/fake_contacts.yml
 
+  check_namespace_box:
+    description: "Check the namespace box in the org"
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      apex: >
+        summit__Summit_Events_Settings__c eventSettings = summit__Summit_Events_Settings__c.getOrgDefaults();
+        eventSettings.summit__Managed_Package__c = true;
+        upsert eventSettings;
+
   update_admin_profile:
     options:
       record_types:
@@ -311,6 +320,10 @@ tasks:
 flows:
   config_dev:
     steps:
+      1:
+        task: sea:deploy_pre
+      1.3:
+        task: sea:role_to_userUser
       3:
         task: create_community
       4:
@@ -344,24 +357,28 @@ flows:
       18:
         task: turn_on_duplicate_rules
       19:
-        task: sea:deploy_permission_set
+        task: sea:create_community
       20:
-        task: sea:deploy_site_config
+        task: sea:create_community_network
       21:
-        task: sea:deploy_site_settings
+        task: sea:create_community_experience_cloud_bundle
       22:
-        task: sea:deploy_guest_permission_set
+        task: sea:deploy_site_config
       23:
-        task: sea:deploy_namespaced_guest_sharing_rules
+        task: sea:create_community_publish
       24:
-        task: sea:load_sample_data
+        task: sea:deploy_admin_permission_set
       25:
-        task: configure_network_setting
+        task: sea:deploy_site_settings
       26:
-        task: configure_community_settings
+        task: sea:deploy_guest_permission_set
       27:
-        task: configure_community
+        task: check_namespace_box
       28:
+        task: configure_network_setting
+      29:
+        task: configure_community_settings
+      31:
         task: load_scholarship_test_data
 
   release_unlocked_beta:

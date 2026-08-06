@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Documents_To_Display_Keywords__c</fullName>
-    <externalId>false</externalId>
+    <description>Selection of keywords that are contained in Admissions documents titles to update visibility. Keywords are before the delimiter |. After delimiter | are titles displayed to students in portal.</description>
+    <inlineHelpText>Select keywords that are contained in Admissions documents titles to update visibility. Keywords are before the delimiter |. After delimiter | are titles displayed to students in portal.</inlineHelpText>
     <label>Documents To Display Keywords</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
@@ -11,14 +12,39 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
-                <fullName>AdmissionLetter</fullName>
+                <fullName>BSN_AdmissionLetter|Nursing Admission Letter</fullName>
                 <default>false</default>
-                <label>AdmissionLetter</label>
+                <label>BSN_AdmissionLetter|Nursing Admission Letter</label>
             </value>
             <value>
-                <fullName>BSNDirectAdmit</fullName>
+                <fullName>BSNDirectAdmit_AdmissionLetter|Nursing Direct Admission Letter</fullName>
                 <default>false</default>
-                <label>BSNDirectAdmit</label>
+                <label>BSNDirectAdmit_AdmissionLetter|Nursing Direct Admission Letter</label>
+            </value>
+            <value>
+                <fullName>DFC_AdmissionLetter|Admission Letter</fullName>
+                <default>false</default>
+                <label>DFC_AdmissionLetter|Admission Letter</label>
+            </value>
+            <value>
+                <fullName>DFCSTEM_AdmissionLetter|DFC Pre-STEM Admission Letter</fullName>
+                <default>false</default>
+                <label>DFCSTEM_AdmissionLetter|DFC Pre-STEM Admission Letter</label>
+            </value>
+            <value>
+                <fullName>UGFR_AdmissionLetter|Admission Letter</fullName>
+                <default>false</default>
+                <label>UGFR_AdmissionLetter|Admission Letter</label>
+            </value>
+            <value>
+                <fullName>UGTR_AdmissionLetter|Admission Letter</fullName>
+                <default>false</default>
+                <label>UGTR_AdmissionLetter|Admission Letter</label>
+            </value>
+            <value>
+                <fullName>UGTRDFC_AdmissionLetter|Admission Letter</fullName>
+                <default>false</default>
+                <label>UGTRDFC_AdmissionLetter|Admission Letter</label>
             </value>
         </valueSetDefinition>
     </valueSet>

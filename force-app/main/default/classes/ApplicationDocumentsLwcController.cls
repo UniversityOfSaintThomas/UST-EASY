@@ -6,7 +6,7 @@ public without sharing class ApplicationDocumentsLwcController {
 
     public class ApplicationWrapper {
         @AuraEnabled public String recordId;
-        @AuraEnabled public String Generic_Filter_4;
+        @AuraEnabled public String termName;
         @AuraEnabled public Map<String, String> documentsToDisplayKeywords = new Map<String, String>();
     }
 
@@ -16,7 +16,8 @@ public without sharing class ApplicationDocumentsLwcController {
 
         List<Application__c> apps = [
                 SELECT Id,
-                        Generic_Filter_4__c,
+//                        Generic_Filter_4__c,
+                        Intended_Term_of_Entry__r.Name,
                         Application_Control__r.Documents_To_Display_Keywords__c
                 FROM Application__c
                 WHERE Id = :recordId
@@ -31,7 +32,7 @@ public without sharing class ApplicationDocumentsLwcController {
         Application__c app = apps[0];
 
         wrapper.recordId = app.Id;
-        wrapper.Generic_Filter_4 = app.Generic_Filter_4__c;
+        wrapper.termName = app.Intended_Term_of_Entry__r.Name; //app.Generic_Filter_4__c;
 
         if (app.Application_Control__r != null && String.isNotBlank(app.Application_Control__r.Documents_To_Display_Keywords__c)) {
             List<String> docTitlesSplit = app.Application_Control__r.Documents_To_Display_Keywords__c.split(';');

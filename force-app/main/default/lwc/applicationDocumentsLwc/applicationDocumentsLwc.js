@@ -34,12 +34,12 @@ export default class ApplicationDocumentsLwc extends LightningElement {
 
         if (!data) return;
 
-        if (!data.Generic_Filter_4) {
+        if (!data.termName) {
             console.warn("No term name found in data");
             return;
         }
 
-        this.termName = data.Generic_Filter_4;
+        this.termName = data.termName;
         this.documentsToDisplayKeywords = data.documentsToDisplayKeywords;
         await this.loadAndCategorizeDocuments();
     }

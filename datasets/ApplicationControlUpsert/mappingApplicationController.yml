@@ -1,0 +1,35 @@
+Insert Application_Control__c:
+  sf_object: Application_Control__c
+  action: upsert
+  update_key: Application_Control_External_ID__c
+  fields:
+    - Academic_Level__c
+    - Active__c
+    - Allow_Cancel_From__c
+    - Allow_Confirm_From__c
+    - Allow_Submit_From__c
+    - Allow_Withdraw_From__c
+    - Application_Control_External_ID__c
+    - Application_Start_Status__c
+    - Arrow_Color__c
+    - Button_Color__c
+    - Button_Text_Color__c
+    - Cancel_Status__c
+    - Confirm_Status__c
+#    - CreatedDate
+    - Default__c
+    - Degree_Levels__c
+    - Hide_Term_Program__c
+#    - LastModifiedDate
+    - Line_Color__c
+    - Link_Color__c
+    - Logo_Static_Resource_Path__c
+    - Logo_Static_Resource__c
+    - Name
+    - School_College__c
+    - Show_on_App_Finder__c
+    - Submit_Status__c
+    - Template__c
+    - Text_Color__c
+    - URL_Parameter__c
+    - Withdraw_Status__c

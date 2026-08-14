@@ -1,0 +1,39 @@
+Insert Requirement__c:
+  sf_object: Requirement__c
+  action: upsert
+  update_key: Requirement_Integration_External_Id__c
+  fields:
+    - Active__c
+    - Applicant_Type__c
+    - Application_Creation_Display_Order__c
+    - Application_Status__c
+    - Citizenship__c
+#    - CreatedDate
+    - Degree_Type__c
+    - Delivery_Type__c
+    - Display_Order__c
+    - Display_on_Admin_Review_Pages__c
+    - Display_on_Checklist__c
+    - Generic_Filter_1__c
+    - Generic_Filter_2__c
+    - Generic_Filter_3__c
+    - Generic_Filter_4__c
+    - Internal_Only_Show_on_Checklist__c
+    - Internal_Only__c
+    - Label__c
+#    - LastModifiedDate
+    - Name
+    - R_IUD__c
+    - Requirement_Integration_External_Id__c
+    - Residency__c
+    - School_College__c
+    - Show_on_Application_Creation__c
+    - Student_Type__c
+    - Viewing_Requirement__c
+    - Application_Control__c
+    - Intended_Program__c
+#  lookups:
+#    Application_Control__c:
+#      table: Application_Control__c
+#    Intended_Program__c:
+#      table: Program__c

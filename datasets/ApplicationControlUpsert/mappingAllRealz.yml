@@ -1,0 +1,224 @@
+Insert Application_Control__c:
+  sf_object: Application_Control__c
+  action: upsert
+  update_key: Application_Control_External_ID__c
+  fields:
+    - Academic_Level__c
+    - Active__c
+    - Allow_Cancel_From__c
+    - Allow_Confirm_From__c
+    - Allow_Submit_From__c
+    - Allow_Withdraw_From__c
+    - Application_Control_External_ID__c
+    - Application_Start_Status__c
+    - Arrow_Color__c
+    - Button_Color__c
+    - Button_Text_Color__c
+    - Cancel_Status__c
+    - Confirm_Status__c
+#    - CreatedDate
+    - Default__c
+    - Degree_Levels__c
+    - Hide_Term_Program__c
+#    - LastModifiedDate
+    - Line_Color__c
+    - Link_Color__c
+    - Logo_Static_Resource_Path__c
+    - Logo_Static_Resource__c
+    - Name
+    - School_College__c
+    - Show_on_App_Finder__c
+    - Submit_Status__c
+    - Template__c
+    - Text_Color__c
+    - URL_Parameter__c
+    - Withdraw_Status__c
+Insert Requirement__c:
+  sf_object: Requirement__c
+  action: upsert
+  update_key: Requirement_Integration_External_Id__c
+  fields:
+    - Active__c
+    - Applicant_Type__c
+    - Application_Creation_Display_Order__c
+    - Application_Status__c
+    - Citizenship__c
+#    - CreatedDate
+    - Degree_Type__c
+    - Delivery_Type__c
+    - Display_Order__c
+    - Do_Not_Mark_Requirement_as_Viewed__c
+    - Display_on_Admin_Review_Pages__c
+    - Display_on_Checklist__c
+    - Generic_Filter_1__c
+    - Generic_Filter_2__c
+    - Generic_Filter_3__c
+    - Generic_Filter_4__c
+    - Generic_Filter_5__c
+    - Generic_Filter_6__c
+    - Generic_Filter_7__c
+    - Generic_Filter_8__c
+    - Internal_Only_Show_on_Checklist__c
+    - Internal_Only__c
+    - Label__c
+#    - LastModifiedDate
+    - Name
+    - R_IUD__c
+    - Requirement_Integration_External_Id__c
+    - Residency__c
+    - School_College__c
+    - Show_on_Application_Creation__c
+    - Student_Type__c
+    - Viewing_Requirement__c
+  lookups:
+    Application_Control__c:
+      table: Application_Control__c
+    Intended_Program__c:
+      table: Program__c
+Insert Requirement_Item__c:
+  sf_object: Requirement_Item__c
+  action: upsert
+  update_key: Requirement_Item_Integration_Ext_Id__c
+  fields:
+    - Active__c
+    - Allow_Supporting_Documentation_Upload__c
+    - Allow_Text_Entry__c
+    - Applicant_Type__c
+    - Application_Status__c
+    - Citizenship__c
+    - Common_App_Unique_ReqItem_Nickname__c
+#    - CreatedDate
+    - Degree_Type__c
+    - Delivery_Type__c
+    - Display_Order__c
+    - Display_on_Admin_Review_Pages__c
+    - Display_on_Checklist__c
+    - Editable_Application_Status__c
+    - File_Name_Prefix__c
+    - File_Types__c
+    - Generic_Filter_1__c
+    - Generic_Filter_2__c
+    - Generic_Filter_3__c
+    - Generic_Filter_4__c
+    - Generic_Filter_5__c
+    - Generic_Filter_6__c
+    - Generic_Filter_7__c
+    - Generic_Filter_8__c
+    - Holding_Record_Id__c
+    - Instructions__c
+    - Internal_Only_Applicant_Instructions__c
+    - Internal_Only_Show_on_Checklist__c
+    - Internal_Only__c
+    - Label__c
+#    - LastModifiedDate
+    - Maximum_Number_of_Children__c
+    - Name
+    - Number_of_Recommendations_Required__c
+    - RI_UID__c
+    - R_UID__c
+    - RecordTypeId
+    - Related_List_Object_Master_Field__c
+    - Related_List_Object_Master__c
+    - Related_List_Object__c
+    - Related_List_Where_Clause__c
+    - Related_Object_Record_Type_ID__c
+    - Required_Number_of_Children__c
+    - Required_Supporting_Documentation__c
+    - Required__c
+    - Requirement_Item_Integration_Ext_Id__c
+    - Residency__c
+    - School_College__c
+    - Student_Type__c
+    - Uploaded_Document_Object__c
+    - Viewing_Requirement__c
+  lookups:
+#    Intended_Program__c:
+#      table: Program__c
+    Internal_Requirement_Item__c:
+      table: Requirement_Item__c
+      after: Insert Requirement_Item__c
+    Requirement__c:
+      table: Requirement__c
+Insert Question__c:
+  action: upsert
+  update_key: Question_Integration_External_Id__c
+  sf_object: Question__c
+  fields:
+    - Active__c
+    - Additional_Field_Validation__c
+    - Applicant_Type__c
+    - Application_Field__c
+    - Application_Status__c
+    - Assistive_Text__c
+    - Citizenship__c
+    - Common_App_Unique_Question_Nickname__c
+    - Contact_Field__c
+#    - CreatedDate
+    - Date_Stamp__c
+    - Degree_Type__c
+    - Delivery_Type__c
+    - Dependency_Behavior__c
+    - Dependency_Logic__c
+    - Display_Order__c
+    - Display_as_Picklist__c
+    - Display_on_Admin_Review_Pages__c
+    - Editable_Application_Status__c
+    - External_Email_Field__c
+    - Generic_Filter_1__c
+    - Generic_Filter_2__c
+    - Generic_Filter_3__c
+    - Generic_Filter_4__c
+    - Generic_Filter_5__c
+    - Generic_Filter_6__c
+    - Generic_Filter_7__c
+    - Generic_Filter_8__c
+    - Hardcoded_Value__c
+    - Help_Text__c
+    - Hide_from_Application__c
+    - Label__c
+#    - LastModifiedDate
+    - Length__c
+    - Lookup_Object__c
+    - Lookup_Where_Clause__c
+    - Name
+    - Name_Field_API_Name__c
+    - New_Reference_Field__c
+    - Payment_Custom_Amount__c
+    - Payment_Gateway__c
+    - Payment_Name__c
+    - Payment_Type__c
+#    - Picklist_Value_Sets__c
+    - Picklist_Values__c
+    - Placeholder__c
+    - Q_UID__c
+    - Question_Integration_External_Id__c
+    - RI_UID__c
+    - RecordTypeId
+    - Related_Object_Field__c
+    - Required__c
+    - Residency__c
+    - School_College__c
+    - Static_Text__c
+    - Student_Type__c
+    - URL_Parameter__c
+  lookups:
+#    Intended_Program__c:
+#      table: Program__c
+    Requirement_Item__c:
+      table: Requirement_Item__c
+Insert Question_Dependency__c:
+  sf_object: Question_Dependency__c
+  action: upsert
+  update_key: Question_Dependency_Integration_Ext_Id__c
+  fields:
+#    - CreatedDate
+#    - LastModifiedDate
+    - Question_Dependency_Integration_Ext_Id__c
+    - RecordTypeId
+    - ValueCheckbox__c
+    - Value__c
+  lookups:
+    Controlling_Question__c:
+      table: Question__c
+    Question__c:
+      table: Question__c

@@ -1,0 +1,28 @@
+<!--
+ - Created by nguy0092 on 3/28/2025.
+ -->
+
+<!-- Scholarship Recommender Resend Lwc -->
+<template>
+    <lightning-quick-action-panel header="Resend Recommendation Request">
+        <template lwc:if={availableRecommenders}>
+            No recommenders available.
+        </template>
+        <template lwc:else>
+            <lightning-checkbox-group class="slds-p-around_medium"
+                                      name="selectRecommender"
+                                      label="Select:"
+                                      options={options}
+                                      value={recommendersSelected}
+                                      onchange={recommendersChecked}></lightning-checkbox-group>
+        </template>
+        <div slot="footer">
+            <lightning-button variant="neutral" label="Cancel" onclick={cancelResend}></lightning-button>
+            <lightning-button class="slds-m-left_x-small"
+                              label="Resend"
+                              variant="brand"
+                              onclick={resendRequest}
+                              disabled={resendButtonDisable}></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>

@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Screenflow__c</fullName>
     <description>Select a screen flow to add to this widget.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select a screen flow to add to this widget.</inlineHelpText>
     <label>Screen Flow</label>
     <required>false</required>
@@ -13,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Test</fullName>
+                <fullName>SF_Nursing_Direct_Admit_Documents</fullName>
                 <default>false</default>
-                <label>Test</label>
+                <label>Nursing Direct Admit Documents</label>
             </value>
         </valueSetDefinition>
     </valueSet>

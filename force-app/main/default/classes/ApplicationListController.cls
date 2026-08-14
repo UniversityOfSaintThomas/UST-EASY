@@ -16,15 +16,26 @@ public with sharing class ApplicationListController {
 
     public List<Application__c> getAllApplications() {
         List<Application__c> allApplications = [
-                SELECT Id, Application_Control__r.Active__c, Application_Status__c, Intended_Term_of_Entry__r.Name, Intended_Program__r.Name,
-                        Intended_Program_College_of_Interest__c, Intended_Program_Applicant_Type__c, Intended_Program_Application_Control__c,
-                        Application_Control__r.URL_Parameter__c, Contact__c, Intended_Term_of_Entry__r.Term_10th_Day__c, Degree_Type__c, CreatedDate,
-                        Application_Control__r.School_College__c, Intended_Program_Name_on_Application__c, Applicant_Type__c, Intended_Program__r.Degree__c,
-                        Intended_Program__r.Degree_Type__c, Prior_Term_Application__c, Intended_Program__r.Academic_Level__c
+                SELECT Id, Application_Control__r.Active__c, Application_Control__r.Current_Student_Application__c, Application_Status__c,
+                        Intended_Term_of_Entry__r.Name, Intended_Program__r.Name, Intended_Program_College_of_Interest__c,
+                        Intended_Program_Applicant_Type__c, Intended_Program_Application_Control__c, Application_Control__r.URL_Parameter__c,
+                        Contact__c, Intended_Term_of_Entry__r.Term_10th_Day__c, Degree_Type__c, CreatedDate, Application_Control__r.School_College__c,
+                        Intended_Program_Name_on_Application__c, Applicant_Type__c, Intended_Program__r.Degree__c,
+                        Intended_Program__r.Degree_Type__c, Prior_Term_Application__c, Intended_Program__r.Academic_Level__c, Term_Start_Date__c
                 FROM Application__c
                 WHERE Contact__c = :appInfoParam.contactId
                 AND Application_Control__r.Active__c = TRUE
-                AND (Intended_Term_of_Entry__r.Term_10th_Day__c >= TODAY OR Intended_Term_of_Entry__r.Term_10th_Day__c = NULL)
+                AND
+                (
+                        (
+                                (Intended_Term_of_Entry__r.Term_10th_Day__c >= TODAY OR Intended_Term_of_Entry__r.Term_10th_Day__c = NULL)
+                                AND Application_Control__r.Current_Student_Application__c = FALSE
+
+                        ) OR
+                        (
+                                Term_Start_Date__c <= TODAY AND Application_Control__r.Current_Student_Application__c = TRUE
+                        )
+                )
                 AND Application_Status__c != 'Wrong App'
                 AND Application_Status__c != 'Withdrawn'
                 ORDER BY Term_Start_Date__c DESC, CreatedDate DESC

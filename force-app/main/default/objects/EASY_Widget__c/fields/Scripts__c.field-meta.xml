@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Scripts__c</fullName>
+    <deprecated>false</deprecated>
     <description>Scripts or code that will activate in the widget area. Advanced users only.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Scripts or code that will activate in the widget area. Advanced users only.</inlineHelpText>
     <label>Code</label>
     <length>8000</length>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Application</fullName>
+        <default>false</default>
+        <label>Application</label>
+    </customValue>
+    <customValue>
+        <fullName>Booking</fullName>
+        <default>false</default>
+        <label>Booking</label>
+    </customValue>
+    <customValue>
+        <fullName>Common App</fullName>
+        <default>false</default>
+        <label>Common App</label>
+    </customValue>
+    <customValue>
+        <fullName>ERx Data Migration - Application</fullName>
+        <default>false</default>
+        <label>ERx Data Migration - Application</label>
+    </customValue>
+    <customValue>
+        <fullName>ERx Data Migration - TouchPoint</fullName>
+        <default>false</default>
+        <label>ERx Data Migration - TouchPoint</label>
+    </customValue>
+    <customValue>
+        <fullName>ERX MVP</fullName>
+        <default>false</default>
+        <label>ERX MVP</label>
+    </customValue>
+    <customValue>
+        <fullName>Event Registration</fullName>
+        <default>false</default>
+        <label>Event Registration</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual Entry</fullName>
+        <default>false</default>
+        <label>Manual Entry</label>
+    </customValue>
+    <customValue>
+        <fullName>Purchase List</fullName>
+        <default>false</default>
+        <label>Purchase List</label>
+    </customValue>
+    <customValue>
+        <fullName>Qualtrics</fullName>
+        <default>false</default>
+        <label>Qualtrics</label>
+    </customValue>
+    <customValue>
+        <fullName>Student Information System</fullName>
+        <default>false</default>
+        <label>Student Information System</label>
+    </customValue>
+    <customValue>
+        <fullName>Test Score</fullName>
+        <default>false</default>
+        <label>Test Score</label>
+    </customValue>
+    <customValue>
+        <fullName>Webform</fullName>
+        <default>false</default>
+        <label>Webform</label>
+    </customValue>
+    <customValue>
+        <fullName>ERx Data Migration</fullName>
+        <default>false</default>
+        <label>ERx Data Migration</label>
+    </customValue>
+    <customValue>
+        <fullName>Lyris Migration</fullName>
+        <default>false</default>
+        <label>Lyris Migration</label>
+    </customValue>
+    <customValue>
+        <fullName>Cognos</fullName>
+        <default>false</default>
+        <label>Cognos</label>
+    </customValue>
+    <customValue>
+        <fullName>Common App Partial</fullName>
+        <default>false</default>
+        <label>Common App Partial</label>
+    </customValue>
+    <customValue>
+        <fullName>GradCAS</fullName>
+        <default>false</default>
+        <label>GradCAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Transfer Common App</fullName>
+        <default>false</default>
+        <label>Transfer Common App</label>
+    </customValue>
+    <customValue>
+        <fullName>Transfer Common App Partial</fullName>
+        <default>false</default>
+        <label>Transfer Common App Partial</label>
+    </customValue>
+    <description>Interaction Sources for Interaction Mapping filtering.</description>
+    <masterLabel>Interaction Sources Values</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

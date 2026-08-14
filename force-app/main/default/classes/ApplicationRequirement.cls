@@ -501,18 +501,6 @@ public class ApplicationRequirement {
             System.debug(ex.getMessage());
         }
 
-        String emergency = 'none';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-        emergency = 'today';
-
         try {
             update con;
         } catch (Exception ex) {
@@ -568,17 +556,6 @@ public class ApplicationRequirement {
         PageReference pr = Page.ApplicationPortal;
         try {
             update new Application__c(Id = appInfo.appId, Application_Status__c = appInfo.submitStatus);
-        } catch (Exception ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-            return null;
-        }
-        return pr;
-    }
-
-    public PageReference confirmEnrollment() {
-        PageReference pr = Page.ApplicationPortal;
-        try {
-            update new Application__c(Id = appInfo.appId, Application_Status__c = appInfo.confirmStatus);
         } catch (Exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
             return null;

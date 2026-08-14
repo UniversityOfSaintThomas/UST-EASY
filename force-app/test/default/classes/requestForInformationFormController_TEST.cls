@@ -121,7 +121,7 @@ public class requestForInformationFormController_TEST {
         System.assertEquals(0, new_lead.size());
     }
 
-/*    @IsTest
+    @IsTest
     public static void testGetRFIController() {
         RFI_Controller__c rfic = [SELECT Name FROM RFI_Controller__c];
         Test.startTest();
@@ -140,7 +140,7 @@ public class requestForInformationFormController_TEST {
         System.assertEquals('Script-thrown exception', capturedException.getMessage(), 'Specific error message is expected');
 
         Test.stopTest();
-    }*/
+    }
 
     @IsTest
     public static void testGetPrograms() {
@@ -252,4 +252,40 @@ public class requestForInformationFormController_TEST {
         System.assertEquals(program2.Id, program_id2);
         System.assertEquals(program3.Id, program_id3);
     }
+
+
+    @IsTest
+    public static void testGetSchoolNameByMajorProgram() {
+        //Get list of picklist items for school_college global value set
+        Schema.DescribeFieldResult fieldResult = Account.School_College_Name__c.getDescribe();
+        List<Schema.PicklistEntry> picklistValues = fieldResult.getPicklistValues();
+        List<String> schoolPicklistValues = new List<String>();
+        for (Schema.PicklistEntry picklistEntry : picklistValues) {
+            //System.debug(picklistEntry.getLabel() + ' - ' + picklistEntry.getValue());
+            schoolPicklistValues.add(picklistEntry.getValue());
+        }
+
+        // Arrange: create a Program__c record
+        Program__c program = new Program__c(
+                Name = 'Test Program',
+                Primary_School_College_for_Assignment__c = schoolPicklistValues[0]
+        );
+        insert program;
+
+        // Act: call the method
+        Test.startTest();
+        String result = requestForInformationFormController.getSchoolNameByMajorProgram(program.Id);
+        Test.stopTest();
+
+        // Assert: verify the result
+        System.assertEquals(schoolPicklistValues[0], result, 'Should return Primary_School_College_for_Assignment__c');
+    }
+
+    @IsTest
+    public static void testGetSchoolNameByMajorProgram_emptyId() {
+        // Act & Assert: should return empty string for blank Id
+        String result = requestForInformationFormController.getSchoolNameByMajorProgram('');
+        System.assertEquals('', result, 'Should return empty string for blank Id');
+    }
+
 }

@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Application_Control__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
+    <deprecated>false</deprecated>
     <description>The application you would like this widget to appear on.</description>
-    <externalId>false</externalId>
     <inlineHelpText>The application you would like this widget to appear on.</inlineHelpText>
     <label>Application Control</label>
     <referenceTo>Application_Control__c</referenceTo>

@@ -571,7 +571,9 @@ public class ApplicationQuestionGroup_TEST {
                         Required_Number_of_Children__c,
                         Editable_Application_Status__c,
                         File_Name_Prefix__c,
-                        Uploaded_Document_Object__c, (
+                        Uploaded_Document_Object__c,
+                        Uploaded_Document_Type__c,
+                        Uploaded_Document_Source__c, (
                         SELECT Id,
                                 RecordType.DeveloperName,
                                 RecordType.Name,

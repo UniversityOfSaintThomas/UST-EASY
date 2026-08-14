@@ -53,11 +53,12 @@
                             </div>
                             <div class="slds-tile__detail">
                                 <dl class="slds-list_horizontal slds-wrap">
-
+                                    <apex:outputPanel layout="none" rendered="{!!app.Application_Control__r.Current_Student_Application__c}">
                                     <dt class="slds-item_label slds-text-color_weak" title="Term">Term:</dt>
                                     <dd class="slds-item_detail " title="Term for which this application is applying">
                                         {!app.Intended_Term_of_Entry__r.Name}
                                     </dd>
+                                    </apex:outputPanel>
 
                                     <dt class="slds-item_label slds-text-color_weak" title="Degree">Degree:</dt>
                                     <dd class="slds-item_detail" title="Degree type for which this application is applying">
@@ -69,7 +70,7 @@
                                         </apex:outputPanel>
                                     </dd>
 
-
+                                    <apex:outputPanel layout="none" rendered="{!!app.Application_Control__r.Current_Student_Application__c}">
                                     <dt class="slds-item_label slds-text-color_weak" title="Program">Program:</dt>
                                     <dd class="slds-item_detail" title="Program for which this application is applying">
                                         {!app.Intended_Program_Application_Control__c}
@@ -80,6 +81,8 @@
                                             <br/> {!app.Intended_Program__r.Name}
                                         </apex:outputPanel>
                                     </dd>
+                                    </apex:outputPanel>
+
                                     <apex:outputPanel layout="none" rendered="{!!ISBLANK(app.Applicant_Type__c) && app.Applicant_Type__c = 'Common App'}">
                                         <dt class="slds-item_label slds-text-color_weak" title="Degree">Type:</dt>
                                         <dd class="slds-item_detail" title="Degree type for which this application is applying">

@@ -16,10 +16,19 @@ public with sharing class ReusableLookupController {
                 List<String> sanitizedOtherMultiPickListFields = new List<String>();
                 try {
                     String fieldsToQuery = 'SELECT Id, ';
-                    //Check object accessiblity
+                    //Check object accessibility
                     fieldsToQuery = fieldsToQuery + inputWrapper.fieldApiName;
                     SObjectType objectToQuery = Schema.getGlobalDescribe().get(inputWrapper.objectApiName);
+                    if (objectToQuery == null) {
+                        throw new AuraHandledException('Unknown or inaccessible object: ' + inputWrapper.objectApiName);
+                    }
                     Map<String, SObjectField> fieldsMap = objectToQuery.getDescribe().fields.getMap();
+
+                    // The primary/search field is user-supplied — validate it against the object's field
+                    // map (the map acts as the allow-list) before it is used in SELECT, WHERE, or the type switch.
+                    if (!isAccessibleField(fieldsMap, inputWrapper.fieldApiName)) {
+                        throw new AuraHandledException('Search field is not accessible: ' + inputWrapper.fieldApiName);
+                    }
                     try {
                         if (String.isNotBlank(inputWrapper.otherFieldApiName)) {
                             //Can be comma separated
@@ -51,11 +60,11 @@ public with sharing class ReusableLookupController {
                         System.debug(e.getMessage());
                     }
 
-                    if (inputWrapper.searchString.trim().length() > 3) {
+                    if (String.isNotBlank(inputWrapper.searchString) && inputWrapper.searchString.trim().length() > 3) {
                         String searchString = inputWrapper.searchString.trim().escapeHtml4();
                         String searchLikeString = '%' + searchString + '%';
-                        String recordTypeName = inputWrapper.recordTypeName.trim().escapeHtml4();
-                        String type = inputWrapper.type.trim().escapeHtml4();
+                        String recordTypeName = String.isNotBlank(inputWrapper.recordTypeName) ? inputWrapper.recordTypeName.trim().escapeHtml4() : null;
+                        String type = String.isNotBlank(inputWrapper.type) ? inputWrapper.type.trim().escapeHtml4() : null;
                         String query = fieldsToQuery + ' FROM ' + inputWrapper.objectApiName;
                         String filterCriteria = '';
 
@@ -100,19 +109,35 @@ public with sharing class ReusableLookupController {
                             query += ' AND Type = :type';
                         }
 
+                        // Parse and criteria. NOTE: this is a free-form predicate that cannot be
+                        // generically whitelisted, so it MUST originate from trusted admin configuration
+                        // (design attributes / metadata) and never from end-user input.
                         if (String.isNotBlank(inputWrapper.andCriteria)) {
-                            query += ' '+inputWrapper.andCriteria.trim();
+                            String andCriteria = inputWrapper.andCriteria.trim();
+                            andCriteria = andCriteria.startsWithIgnoreCase('AND ') ? andCriteria : 'AND ' + andCriteria;
+                            query += ' ' + andCriteria;
                         }
 
+                        query += ' WITH USER_MODE';
+
+                        // Parse order by criteria — validate the field against the object's field map
+                        // (the allow-list) before appending, to prevent SOQL injection via the sort clause.
                         if (String.isNotBlank(inputWrapper.orderByCriteria)) {
-                            query += ' '+inputWrapper.orderByCriteria.trim();
+                            String orderByInput = inputWrapper.orderByCriteria.trim();
+                            String orderByField = orderByInput.replaceAll('(?i)^ORDER BY\\s+', '').trim().split('\\s+')[0];
+                            if (isAccessibleField(fieldsMap, orderByField)) {
+                                query += orderByInput.startsWithIgnoreCase('ORDER BY ') ? ' ' + orderByInput : ' ORDER BY ' + orderByInput;
+                            }
                         }
 
                         query += ' LIMIT 50';
+
+                        System.debug('searchLikeString: ' + searchLikeString);
                         System.debug(query);
 
                         for (SObject s : Database.query(query)) {
                             ResultWrapper wrap = new ResultWrapper();
+                            System.debug('database return: ' + JSON.serializePretty(s));
                             wrap.mainField = (String) s.get(inputWrapper.fieldApiName);
                             List<String> fieldValues = new List<String>();
                             for (String otherField : sanitizedAllOtherFields) {
@@ -125,6 +150,7 @@ public with sharing class ReusableLookupController {
                             returnWrapperList.add(wrap);
                         }
                     }
+                    System.debug('returnWrapperList: ' + returnWrapperList);
                     return returnWrapperList;
 
                 } catch (Exception err) {
@@ -135,6 +161,23 @@ public with sharing class ReusableLookupController {
 
         }
         return returnWrapperList;
+    }
+
+    /**
+     * @description Null-safe, case-insensitive check that a field exists on the object and is
+     *              accessible to the running user. Used as the allow-list for every user-supplied
+     *              field name that is concatenated into the dynamic SOQL string.
+     *
+     * @param fieldsMap  Field map from Schema.SObjectType.fields.getMap()
+     * @param fieldName  The candidate field API name
+     * @return true when the field exists and is FLS-accessible
+     */
+    private static Boolean isAccessibleField(Map<String, SObjectField> fieldsMap, String fieldName) {
+        if (String.isBlank(fieldName)) {
+            return false;
+        }
+        SObjectField token = fieldsMap.get(fieldName.trim());
+        return token != null && token.getDescribe().isAccessible();
     }
 
     public class ResultWrapper {

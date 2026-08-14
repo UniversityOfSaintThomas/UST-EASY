@@ -2,7 +2,7 @@
  * Created by jjheaney on 3/14/2022.
  */
 
-public with sharing class ScholarshipSharedUtilities {
+public without sharing class ScholarshipSharedUtilities {
 
     public static Id getActiveUserId() {
         return UserInfo.getUserId();
@@ -15,6 +15,7 @@ public with sharing class ScholarshipSharedUtilities {
                     SELECT FirstName, LastName, Email
                     FROM Contact
                     WHERE Id = :contactId
+                    WITH SECURITY_ENFORCED
             ];
             if (resultIds.size() > 0) {
                 result = resultIds[0];
@@ -40,12 +41,32 @@ public with sharing class ScholarshipSharedUtilities {
     }
 
     public static PageReference setSid(PageReference pageRef, Boolean redir, String scholarshipId) {
-        if (!String.isEmpty(scholarshipId)) {
+        if (String.isNotEmpty(scholarshipId)) {
             createCookie(scholarshipId);
             pageRef.getParameters().put('sid', scholarshipId);
         }
         pageRef.setRedirect(redir);
         return pageRef;
+    }
+
+    public static List<String> PageMessage() {
+        List<String> severityMessage = new List<String>();
+        Map<String, String> params = ApexPages.currentPage().getParameters();
+        if (params.containsKey('pageMsg')) {
+            String message = params.get('pageMsg');
+            switch on message {
+                when '1w' {
+                    return severityMessage = new String[]{'WARNING', 'Application Started and Saved. No confirmation sent to applicant'};
+                }
+                when '2w' {
+                    return severityMessage = new String[]{'WARNING', 'Application Saved and Submitted. No confirmation sent to applicant.'};
+                }
+                when '3w' {
+                    return severityMessage = new String[]{'ERROR', 'Error saving scholarship.'};
+                }
+            }
+        }
+        return severityMessage;
     }
 
     public static Scholarship__c getScholarshipInfo() {
@@ -61,7 +82,9 @@ public with sharing class ScholarshipSharedUtilities {
                             Recommender2_Auto_Send__c, Recommender2_Description__c, Recommender2_Question__c, Recommender2__c, Recommender_Auto_Send__c,
                             Recommender_Description__c, Recommender_Question__c, Recommender__c, Scholarship_ID__c, Short_Description__c,
                             Review_Award_Process_Description__c, Self_Report_ACT_GPA_Criteria__c, Essay_1_Allow_Upload__c, Essay_2_Allow_Upload__c,
-                            Recommender_Option__c, Recommender2_Option__c
+                            Communicated_Close_Date__c, Org_Wide_Email_Id__c, Submit_Scholarship_Email_Template_Id__c, Send_Started_Scholarship_Email__c,
+                            Start_Scholarship_Email_Template_Id__c, Recommender_Option__c, Recommender2_Option__c, Recommender_Email_Template_Id__c,
+                            Recommender2_Email_Template_Id__c, RecordTypeId, Open_Time__c, Close_Time__c
                     FROM Scholarship__c
                     WHERE Scholarship_ID__c = :scholarshipId
             ];
@@ -85,7 +108,7 @@ public with sharing class ScholarshipSharedUtilities {
                             Recommender_Email__c, Recommender_Name__c, Scholarship_Complete__c, Scholarship__c, Signature__c, Scholarship_Status__c,
                             Essay_1_Uploaded_Orig_Filename__c, Essay_2_Uploaded_Orig_Filename__c, Scholarship_Date_Started__c, Scholarship_Date_Submitted__c,
                             Recommendation2_Request_Date__c, Recommendation_Request_Date__c, Contact__c, Recommendation_Link__c, Recommendation_Link_2__c,
-                            Contact__r.Name
+                            Contact__r.Name, Contact__r.Email
                     FROM Scholarship_Applicant__c
                     WHERE Contact__c = :contactId
                     AND Scholarship__c = :scholarshipId
@@ -188,9 +211,19 @@ public with sharing class ScholarshipSharedUtilities {
 
     public static Boolean isScholarshipOpen(Scholarship__c scholarship) {
         Boolean scholarshipOpen = false;
-        if (scholarship != null && scholarship.Open_Date__c <= adjustForCentralTime(Datetime.now()) && scholarship.Close_Date__c >= adjustForCentralTime(Datetime.now())) {
+        if (scholarship != null) {
+            Map<String, Datetime> openCloseDatetime = scholarshipOpenCloseDatetime(scholarship);
+
+            Datetime openDatetime = openCloseDatetime.get('Open');
+            Datetime closeDatetime = openCloseDatetime.get('Close');
+
+            if (openDatetime <= adjustForCentralTime(Datetime.now()) && closeDatetime >= adjustForCentralTime(Datetime.now())) {
             scholarshipOpen = true;
         }
+        }
+//        if (scholarship != null && scholarship.Open_Date__c <= adjustForCentralTime(Datetime.now()) && scholarship.Close_Date__c >= adjustForCentralTime(Datetime.now())) {
+//            scholarshipOpen = true;
+//        }
         return scholarshipOpen;
     }
 
@@ -223,6 +256,31 @@ public with sharing class ScholarshipSharedUtilities {
         return result;
     }
 
+    //Method to get Open and Close Datetime from individual Date and Time Scholarship fields
+    public static Map<String, Datetime> scholarshipOpenCloseDatetime(Scholarship__c scholarship) {
+        Map<String, Datetime> scholarshipOpenClose = new Map<String, Datetime>{
+                'Open' => null,
+                'Close' => null
+        };
+
+        Datetime openDateTime = scholarship.Open_Date__c;
+
+        if (scholarship.Open_Date__c != null && scholarship.Open_Time__c != null) {
+            openDateTime = Datetime.newInstanceGmt(scholarship.Open_Date__c, scholarship.Open_Time__c);
+        }
+
+        Datetime closeDateTime = scholarship.Close_Date__c;
+
+        if (scholarship.Close_Date__c != null && scholarship.Close_Time__c != null) {
+            closeDateTime = Datetime.newInstanceGmt(scholarship.Close_Date__c, scholarship.Close_Time__c);
+        }
+
+        scholarshipOpenClose.put('Open', openDateTime);
+        scholarshipOpenClose.put('Close', closeDateTime);
+
+        return scholarshipOpenClose;
+    }
+
     public static String createCookie(String scholarshipId) {
         Cookie scholarshipCookie = new Cookie('USTScholarship', scholarshipId, null, -1, true, 'Strict');
         ApexPages.currentPage().setCookies(new Cookie[]{
@@ -239,33 +297,59 @@ public with sharing class ScholarshipSharedUtilities {
         return '';
     }
 
-    //Create Task Activity for Emails Sent
-    public static Task createTaskActivity(Id whatId, Id contactId, String subject, String description, String name, String email, Boolean resendBool, Integer recommenderNum) {
-        String subjectText = '';
-        String resendStatus = '';
+    public without sharing class emailUtilities {
 
-        if (resendBool) {
-            resendStatus = '[RESENT] ';
+        public Messaging.SingleEmailMessage createEmail(String emailTemplateId, String emailFromId, String scholarshipApplicationId, String applicantContactId, String EmailToAddress) {
+            Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+            message = Messaging.renderStoredEmailTemplate(emailTemplateId, applicantContactId, scholarshipApplicationId);
+            message.setTreatTargetObjectAsRecipient(false);
+            message.setToAddresses(new String[]{EmailToAddress});
+            message.setUseSignature(false);
+            message.setOrgWideEmailAddressId(emailFromId);
+            message.optOutPolicy = 'FILTER';
+            message.setUseSignature(false);
+            message.setBccSender(false);
+
+            return message;
         }
 
-        if (recommenderNum == 0) {
-            subjectText = 'Email sent to Applicant';
-        } else {
-            subjectText = resendStatus + 'Email sent to Recommender ' + recommenderNum + ': ' + name + ' ' + email;
+        public void sendCreatedEmails(List<Messaging.SingleEmailMessage> emailsToSend) {
+            Messaging.sendEmail(emailsToSend);
         }
 
-        Task taskActivity = new Task();
-        taskActivity.WhatId = whatId;
-        taskActivity.WhoId = contactId;
-        taskActivity.Type = 'Email';
-        taskActivity.ActivityDate = Date.today();
-        taskActivity.Subject = subjectText;
-        taskActivity.Status = 'Completed';
-        taskActivity.Priority = 'Low';
-        taskActivity.Description = 'Subject: ' + subject + '\n\n';
-        taskActivity.Description += description.replaceAll('</p>', '\n');
-        taskActivity.Description = taskActivity.Description.replaceAll('<(.*?)>', '');
+        public String emailStatus(String scholarshipAppId, String toAddress) {
+            String emailOpenStatus = 'Unopened';
 
-        return taskActivity;
+            List<Task> taskList = [
+                    SELECT Id
+                    FROM Task
+                    WHERE WhatId = :scholarshipAppId
+            ];
+
+            Set<Id> taskIds = new Set<Id>();
+
+            for (Task t : taskList) {
+                taskIds.add(t.Id);
+        }
+
+            List<EmailMessage> emails = [
+                    SELECT Id, FromAddress, ToAddress, IsBounced, IsOpened, IsTracked
+                    FROM EmailMessage
+                    WHERE ActivityId IN :taskIds
+                    AND ToAddress = :toAddress
+                    ORDER BY CreatedDate DESC,
+                            LastModifiedDate DESC
+                    LIMIT 1
+            ];
+
+            if (emails.size() > 0) {
+                if (emails[0].IsOpened) {
+                    emailOpenStatus = 'Opened';
+                }
+        }
+
+            return emailOpenStatus;
+        }
+
     }
 }

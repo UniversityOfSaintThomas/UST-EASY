@@ -2,12 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Code_Included__c</fullName>
     <description>Field is populated if code is used.  The use case might be expanded in the future to allow more filtering.</description>
-    <externalId>false</externalId>
     <inlineHelpText>Field is populated if code is used.  The use case might be expanded in the future to allow more filtering.</inlineHelpText>
-    <label>Code Included</label>
+    <label>Widget Code Filters</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
+    <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
@@ -18,10 +17,27 @@
                 <label>General Code</label>
             </value>
             <value>
+                <fullName>External Links</fullName>
+                <default>false</default>
+                <label>External Links</label>
+            </value>
+            <value>
+                <fullName>Salesforce Links</fullName>
+                <default>false</default>
+                <label>Salesforce Links</label>
+            </value>
+            <value>
+                <fullName>Includes Button</fullName>
+                <default>false</default>
+                <label>Includes Button</label>
+            </value>
+            <value>
                 <fullName>Test</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Test</label>
             </value>
         </valueSetDefinition>
     </valueSet>
+    <visibleLines>3</visibleLines>
 </CustomField>

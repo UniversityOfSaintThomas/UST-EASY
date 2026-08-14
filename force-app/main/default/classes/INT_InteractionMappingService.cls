@@ -5,6 +5,7 @@
 ******************************************/
 public class INT_InteractionMappingService {
     private Map<String, Set<String>> skipMappingMap = new Map<String, Set<String>>();
+    private Map<String, Set<String>> preserveValueMappingMap = new Map<String, Set<String>>();
     private Set<String> objectNames = new Set<String>();
     public Map<String, List<Interaction_Mapping__c>> intMappingMap = new Map<String, List<Interaction_Mapping__c>>();
 
@@ -37,7 +38,7 @@ public class INT_InteractionMappingService {
     public INT_InteractionMappingService() {
         for (Interaction_Mapping__c mapping : [
                 SELECT Skip_Mapping__c, Insert_Null__c, Target_Object_API_Name__c, Source_Field_API_Name__c,
-                        Target_Field_API_Name__c, Source_Object_API_Name__c
+                        Target_Field_API_Name__c, Source_Object_API_Name__c, Preserve_Existing_Value_Mapping__c
                 FROM Interaction_Mapping__c
                 WHERE Active__c = TRUE
         ]) {
@@ -52,6 +53,11 @@ public class INT_InteractionMappingService {
             // Populate excluded sources map
             if (!String.isEmpty(mapping.Skip_Mapping__c)) {
                 skipMappingMap.put(mapping.Id, new Set<String>(mapping.Skip_Mapping__c.split(';')));
+            }
+
+            // Populate preserve existing value sources map
+            if (!String.isEmpty(mapping.Preserve_Existing_Value_Mapping__c)) {
+                preserveValueMappingMap.put(mapping.Id, new Set<String>(mapping.Preserve_Existing_Value_Mapping__c.split(';')));
             }
         }
     }
@@ -93,9 +99,19 @@ public class INT_InteractionMappingService {
                         && !objectCheckboxesMap.get(mapping.Target_Object_API_Name__c).contains(mapping.Target_Field_API_Name__c.toLowerCase()))
                         || String.valueOf(interaction.get(mapping.Source_Field_API_Name__c)) != 'false'))
                         ) {
+                    // Check if we should preserve existing values based on multi-picklist sources
+                    Boolean shouldPreserve = isSkipOrPreserveSourceField(mapping.Id, interaction.Interaction_Source__c, preserveValueMappingMap);
+
+                    // Check if we should preserve existing values
+                    if (shouldPreserve) {
+                        Object existingValue = theObject.get(mapping.Target_Field_API_Name__c);
+                        if (existingValue == null || existingValue == '') {
+                            theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Source_Field_API_Name__c));
+                        }
+                    } else {
                     theObject.put(mapping.Target_Field_API_Name__c, interaction.get(mapping.Source_Field_API_Name__c));
                 }
-
+                }
             }
         }
 

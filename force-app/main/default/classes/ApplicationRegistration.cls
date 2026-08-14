@@ -444,16 +444,16 @@ public class ApplicationRegistration {
                 interaction.Admit_Type__c = program.Program_Applicant_Type__c;
             }
 
-            List<Plan__c> relatedPlan = [
-                    SELECT Id
-                    FROM Plan__c
-                    WHERE Program__c = :interaction.Academic_Program__c
-                    LIMIT 1
-            ];
-
-            if (!relatedPlan.isEmpty()) {
-                interaction.Recruitment_Interest__c = relatedPlan[0].Id;
-            }
+//            List<Plan__c> relatedPlan = [
+//                    SELECT Id
+//                    FROM Plan__c
+//                    WHERE Program__c = :interaction.Academic_Program__c
+//                    LIMIT 1
+//            ];
+//
+//            if (!relatedPlan.isEmpty()) {
+//                interaction.Recruitment_Interest__c = relatedPlan[0].Id;
+//            }
         }
         if (interaction.Intended_Start_Term__c != null) {
             List<Academic_Term__c> academicTerm = [

@@ -5,7 +5,6 @@
         </apex:define>
         <apex:define name="body">
             <div class="slds-grid slds-wrap normalizeSLDS" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                <apex:pageMessages escape="false"/>
                 <nav class="slds-col slds-size_1-of-1">
                     <h1 class="slds-text-heading_large">
                         Scholarships
@@ -24,6 +23,9 @@
                         </apex:outputPanel>
                     </ul>
                 </nav>
+
+                <apex:pageMessages escape="false"/>
+
                 <div class="slds-col slds-p-vertical_x-small slds-size_1-of-1">
                     <h2 class="slds-text-heading_large">
                         <strong>{!scholarship.Name}</strong>
@@ -33,6 +35,24 @@
                     <p class="slds-text-body_regular">
                         Your application for the {!scholarship.Name} has been received and is being reviewed.
                     </p>
+                    <apex:outputPanel rendered="{!(!ISBLANK(scholarshipApplicant.Recommendation_Request_Date__c)) || (!ISBLANK(scholarshipApplicant.Recommendation2_Request_Date__c))}">
+                        <apex:variable var="s" value="{!IF((!ISBLANK(scholarshipApplicant.Recommendation_Request_Date__c)) && (!ISBLANK(scholarshipApplicant.Recommendation2_Request_Date__c)), 's', '')}"/>
+                        <b>Recommendation request{!s} sent to:</b><br/>
+                        <apex:outputPanel layout="block" rendered="{!!ISBLANK(scholarshipApplicant.Recommendation_Request_Date__c)}">
+                            {!scholarshipApplicant.Recommender_Name__c} ({!scholarshipApplicant.Recommender_Email__c})
+                            <apex:outputText value=" on {0,date,MM/dd/yyyy}">
+                                <apex:param value="{!scholarshipApplicant.Recommendation_Request_Date__c}"/>
+                            </apex:outputText>
+                            Status: {!recommender1EmailStatus}
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block" rendered="{!!ISBLANK(scholarshipApplicant.Recommendation2_Request_Date__c)}">
+                            {!scholarshipApplicant.Recommender2_Name__c} ({!scholarshipApplicant.Recommender2_Email__c})
+                            <apex:outputText value=" on {0,date,MM/dd/yyyy}">
+                                <apex:param value="{!scholarshipApplicant.Recommendation2_Request_Date__c}"/>
+                            </apex:outputText>
+                            Status: {!recommender2EmailStatus}
+                        </apex:outputPanel>
+                    </apex:outputPanel>
                     <h2 class="slds-text-heading_medium slds-p-vertical_small">
                         What happens next?
                     </h2>

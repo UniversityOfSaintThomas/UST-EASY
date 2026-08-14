@@ -21,7 +21,7 @@
                 </p>
             </apex:outputPanel>
 
-            <p class="slds-text-body_regular slds-p-vertical_x-small"><a class="slds-button slds-button_outline-brand" href="{!$Site.Prefix}/secur/logout.jsp">
+            <p class="slds-text-body_regular slds-p-vertical_x-small"><a class="slds-button slds-button_outline-brand" href="{!$Site.Prefix}/secur/logout.jsp?retUrl={!$Site.BaseSecureUrl}{!$Site.Prefix}/ApplicationLogin">
                     <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                         <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#logout")}"></use>
                     </svg>

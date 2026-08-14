@@ -437,7 +437,7 @@ private class INT_InteractionProcessor_TEST {
         insert newInteraction;
         Id interactionContact = [SELECT Contact__c FROM Interaction__c WHERE Id =: newInteraction.Id LIMIT 1].Contact__c;
         Opportunity opp = [SELECT Name, StageName FROM Opportunity WHERE Contact__c =: interactionContact LIMIT 1];
-        System.assertEquals('OppMatching||', opp.Name);
+        System.assertEquals('Oppmatching||', opp.Name);
         Account acc = new Account(Name = 'NewAcc');
         insert acc;
         hed__Term__c hed_term = new hed__Term__c(
@@ -448,7 +448,7 @@ private class INT_InteractionProcessor_TEST {
         Interaction__c newInteraction2 = new Interaction__c(First_Name__c = 'Test', Last_Name__c = 'OppMatching', Email__c = 'test@oppmatching.com', Term__c = hed_term.Id);
         insert newInteraction2;
         Opportunity sameOpp = [SELECT Name, StageName FROM Opportunity WHERE Id =: opp.Id];
-        System.assertEquals('OppMatching|Test 2022|', sameOpp.Name);
+        System.assertEquals('Oppmatching|Test 2022|', sameOpp.Name);
        // System.assertEquals('Inquiry', sameOpp.StageName);
     }
 }

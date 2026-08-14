@@ -98,6 +98,10 @@
                 <c:EASYWidgetScreenFlow appInfo="{!appInfo}" widget="{!widget}"/>
             </apex:outputPanel>
 
+            <apex:outputPanel layout="none" rendered="{!!ISBLANK(widget.Lightning_Web_Component__c)}">
+                <c:EasyLwc appInfo="{!appInfo}" widget="{!widget}" currentPage="{!currentPage}" widgetDisplay="true"/>
+            </apex:outputPanel>
+
         </div>
     </article>
 </apex:component>

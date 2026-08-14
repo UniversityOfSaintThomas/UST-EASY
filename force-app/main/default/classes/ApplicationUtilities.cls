@@ -65,6 +65,7 @@ public class ApplicationUtilities {
         appInfo.allowSubmit = false;
         appInfo.allowCancelFrom = '';
         appInfo.allowWithdrawFrom = '';
+        appInfo.at = appControl.URL_Parameter__c;
         if (String.isBlank(appControl.Template__c)) {
             Application_Setting__c AppSettings = Application_Setting__c.getOrgDefaults();
             appInfo.template = AppSettings.Default_Template__c;

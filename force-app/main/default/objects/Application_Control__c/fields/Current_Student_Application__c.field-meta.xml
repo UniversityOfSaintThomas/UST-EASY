@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_Student_Application__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates if it is a Current Student Application Control Type</description>
+    <inlineHelpText>Indicates if it is a Current Student Application Control Type</inlineHelpText>
+    <label>Current Student Application</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

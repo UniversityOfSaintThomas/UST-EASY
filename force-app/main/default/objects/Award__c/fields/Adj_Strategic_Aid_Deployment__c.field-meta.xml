@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Adj_Strategic_Aid_Deployment__c</fullName>
+    <defaultValue>0</defaultValue>
+    <description>Banner code of A2 to SOASUPL line 17 (funds will be applied to C85101) and adjustment reason code of SEAD (Strategic Enrollment Aid Deployment)</description>
+    <inlineHelpText>Manual adjustment amount for strategic aid</inlineHelpText>
+    <label>Adj Strategic Aid Deployment</label>
+    <precision>5</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

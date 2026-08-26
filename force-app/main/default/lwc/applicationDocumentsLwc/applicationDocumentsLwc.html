@@ -9,8 +9,7 @@
             <h3 class="slds-text-heading_small">{document.title}</h3>
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-p-around_none">
-                    <button class="slds-button slds-button_neutral slds-p-around_none slds-m-right_small"
-                            style="border: none;font-size: 1rem;"
+                    <button class="slds-button slds-button_neutral slds-p-around_none slds-m-right_small document-listing-button"
                             data-id={document.documentId}
                             data-clicktype="view"
                             onclick={documentHandler}>
@@ -18,8 +17,7 @@
                     </button>
                 </div>
                 <div class="slds-col slds-p-around_none">
-                    <button class="slds-button slds-button_neutral slds-p-around_none"
-                            style="border: none;font-size: 1rem;"
+                    <button class="slds-button slds-button_neutral slds-p-around_none document-listing-button"
                             data-id={document.documentId}
                             data-clicktype="download"
                             onclick={documentHandler}>
@@ -28,19 +26,5 @@
                 </div>
             </div>
         </div>
-<!--        <div key={document.documentId} class="slds-p-bottom_small">-->
-<!--            <p>{document.title}</p>-->
-<!--            <div class="slds-grid slds-wrap">-->
-<!--                <a href="#"-->
-<!--                   onclick={documentHandler}-->
-<!--                   data-id={document.documentId}-->
-<!--                   data-clicktype="view"-->
-<!--                   class="slds-p-right_x-small">View</a>-->
-<!--                <a href="#"-->
-<!--                   onclick={documentHandler}-->
-<!--                   data-id={document.documentId}-->
-<!--                   data-clicktype="download">Download</a>-->
-<!--            </div>-->
-<!--        </div>-->
     </template>
 </template>

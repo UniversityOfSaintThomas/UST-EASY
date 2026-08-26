@@ -72,7 +72,7 @@ export default class ApplicationDocumentsLwc extends LightningElement {
                 })
                 .filter(doc => doc !== null);
 
-            console.log("Categorized documents stringify:", JSON.stringify(this.documentFilesDisplay));
+            // console.log("Categorized documents stringify:", JSON.stringify(this.documentFilesDisplay));
         } catch (error) {
             console.error("Error loading documents:", error);
             this.handleError(error);
@@ -96,7 +96,7 @@ export default class ApplicationDocumentsLwc extends LightningElement {
     documentHandler(event) {
         event.preventDefault();
         const { id: documentId, clicktype: clickType } = event.currentTarget.dataset;
-        console.log("Event documentId: " + documentId);
+        // console.log("Event documentId: " + documentId);
         const documentFind = this.documentFiles.find(document => document.ContentDocumentId === documentId);
         // console.log("Event documentFind: " + JSON.stringify(documentFind));
 
@@ -131,11 +131,11 @@ export default class ApplicationDocumentsLwc extends LightningElement {
         }
 
         const mimeType = this.acceptedExtensionTypes.find(type => type.extension === documentFind.FileExtension)?.mimeType || "application/octet-stream";
-        console.log("type2: " + documentFind.FileExtension + " " + mimeType);
+        // console.log("type2: " + documentFind.FileExtension + " " + mimeType);
 
         const documentBlob = new Blob([bytes], {type: mimeType});
         const documentBlobUrl = URL.createObjectURL(documentBlob);
-        console.log("url: " + documentBlobUrl);
+        // console.log("url: " + documentBlobUrl);
         return documentBlobUrl;
     }
 

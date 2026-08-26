@@ -4,10 +4,10 @@
  */
 
 public without sharing class ApplicationContentDocumentLinksBatch1 implements Database.Batchable<SObject>, Database.Stateful {
-    private String academicYearCode;
+    private final String academicYearCode;
 
     // Stateful map: Application Id -> Set of Document Title Display values
-    private Map<Id, Set<String>> applicationDocumentTitlesMap = new Map<Id, Set<String>>();
+    private final Map<Id, Set<String>> applicationDocumentTitlesMap = new Map<Id, Set<String>>();
 
     public ApplicationContentDocumentLinksBatch1(String academicYearCode) {
         this.academicYearCode = academicYearCode;

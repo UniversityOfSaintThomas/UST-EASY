@@ -2,3 +2,8 @@
  * Created by nguy0092 on 10/6/2025.
  */
 
+.document-listing-button {
+    border: none;
+    font-size: 1rem !important;
+}
+

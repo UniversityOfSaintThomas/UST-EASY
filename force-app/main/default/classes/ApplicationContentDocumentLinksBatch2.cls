@@ -4,7 +4,7 @@
  */
 
 public without sharing class ApplicationContentDocumentLinksBatch2 implements Database.Batchable<SObject>, Database.Stateful {
-    private Map<Id, Set<String>> applicationMap;
+    private final Map<Id, Set<String>> applicationMap;
     Integer scopeTotal = 0;
     Integer updateTotal = 0;
 
@@ -17,34 +17,23 @@ public without sharing class ApplicationContentDocumentLinksBatch2 implements Da
 
         System.debug('appIds Size: ' + appIds.size());
 
-        Set<String> likeKeyWordsConditions = new Set<String>();
+        Boolean hasKeywords = false;
         for (Set<String> titleSet : applicationMap.values()) {
-            for (String title : titleSet) {
-                String trimmedTitle = title.trim();
-                trimmedTitle = trimmedTitle.replace('%', '');
-                if (String.isNotBlank(trimmedTitle)) {
-                    likeKeyWordsConditions.add('ContentDocument.Title LIKE \'%' + String.escapeSingleQuotes(trimmedTitle) + '%\'');
-                }
+            if (!titleSet.isEmpty()) {
+                hasKeywords = true;
+                break;
             }
         }
 
-        String documentTitlesConditions = '';
-        if (!likeKeyWordsConditions.isEmpty()) {
-            documentTitlesConditions = 'AND (' + String.join(new List<String>(likeKeyWordsConditions), ' OR ') + ')';
-            System.debug('documentTitlesConditions: ' + documentTitlesConditions);
-        } else {
-            return Database.getQueryLocator('SELECT Id FROM ContentDocumentLink WHERE Id = NULL');
+        if (!hasKeywords) {
+            Id noOpId = bc.getJobId(); // real Id, will never match a ContentDocumentLink's LinkedEntityId
+            return Database.getQueryLocator('SELECT Id FROM ContentDocumentLink WHERE LinkedEntityId = :noOpId');
         }
 
-        //Current Salesforce issue: not all records are returned when using a bind variable list for LinkedEntityId. Instead use subquery to get LinkedEntityId.
         String queryString = 'SELECT Id, ContentDocumentId, ContentDocument.Title, Visibility, LinkedEntityId ' +
                 'FROM ContentDocumentLink ' +
                 'WHERE Visibility = \'InternalUsers\' ' +
-                documentTitlesConditions +
-                ' AND LinkedEntityId IN (' +
-                'SELECT Id ' +
-                'FROM Application__c ' +
-                'WHERE Id IN :appIds)';
+                'AND LinkedEntityId IN :appIds';
 
         System.debug('queryString: ' + queryString);
 

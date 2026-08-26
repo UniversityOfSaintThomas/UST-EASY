@@ -61,8 +61,7 @@ public without sharing class ApplicationDocumentsLwcController {
                 FROM ContentDocumentLink
                 WHERE LinkedEntityId = :recordId
         ];
-
-        System.debug('linkDocumentFiles: ' + linkDocumentFiles);
+//        System.debug('linkDocumentFiles: ' + linkDocumentFiles);
 
         for (ContentDocumentLink documentFiles : linkDocumentFiles) {
             linkDocumentFileId.add(documentFiles.ContentDocumentId);
@@ -90,11 +89,9 @@ public without sharing class ApplicationDocumentsLwcController {
                             'AND FileExtension IN (\'pdf\', \'txt\') ' +
                             'AND IsLatest = TRUE ' +
                             'ORDER BY Title';
-
-            System.debug('dynamicQuery: ' + dynamicQuery);
-
+//            System.debug('dynamicQuery: ' + dynamicQuery);
             documentVersions = Database.query(dynamicQuery);
-            System.debug('documentVersions: ' + documentVersions);
+//            System.debug('documentVersions: ' + documentVersions);
         }
 
         for (ContentVersion version : documentVersions) {
@@ -111,9 +108,7 @@ public without sharing class ApplicationDocumentsLwcController {
 
             documentFilesList.add(versionMap);
         }
-
-        System.debug('documentFilesList: ' + documentFilesList);
-
+//        System.debug('documentFilesList: ' + documentFilesList);
         return documentFilesList;
     }
 

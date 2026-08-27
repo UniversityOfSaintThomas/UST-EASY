@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Lightning_Web_Component__c</fullName>
-    <externalId>false</externalId>
+    <description>Lighting Web Component (LWC) to display.</description>
+    <inlineHelpText>Lighting Web Component (LWC) to display.</inlineHelpText>
     <label>Lightning Web Component</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
@@ -11,14 +12,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>c:ScholarshipEligibleListView</fullName>
+                <fullName>c:scholarshipEligibleListView</fullName>
                 <default>false</default>
-                <label>Scholarship Eligible List</label>
+                <label>Scholarship Eligible List View</label>
+            </value>
+            <value>
+                <fullName>c:summitEventsListView</fullName>
+                <default>false</default>
+                <label>Summit Events List View</label>
+            </value>
+            <value>
+                <fullName>c:meritScholarshipAwardsLwc</fullName>
+                <default>false</default>
+                <label>UG Merit Scholarship Awards</label>
             </value>
             <value>
                 <fullName>c:applicationDocumentsLwc</fullName>
                 <default>false</default>
-                <label>Application Documents</label>
+                <label>UG Application Documents Display LWC</label>
             </value>
         </valueSetDefinition>
     </valueSet>

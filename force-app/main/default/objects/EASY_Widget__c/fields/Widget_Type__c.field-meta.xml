@@ -25,11 +25,6 @@
                 <label>Application Checklist Multiple</label>
             </value>
             <value>
-                <fullName>Application Documents LWC</fullName>
-                <default>false</default>
-                <label>Application Documents LWC</label>
-            </value>
-            <value>
                 <fullName>Application Finder</fullName>
                 <default>false</default>
                 <label>Application Finder</label>
@@ -55,9 +50,22 @@
                 <label>Progress Bar</label>
             </value>
             <value>
+                <fullName>Summit Events List</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Summit Events List - DO NOT USE</label>
+            </value>
+            <value>
                 <fullName>Summit Events List LWC</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Summit Events List LWC</label>
+            </value>
+            <value>
+                <fullName>UG Eligible Scholarships LWC</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>UG Eligible Scholarships LWC</label>
             </value>
             <value>
                 <fullName>User Info Login/Logout</fullName>

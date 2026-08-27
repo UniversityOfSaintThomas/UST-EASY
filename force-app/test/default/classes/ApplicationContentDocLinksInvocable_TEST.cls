@@ -5,7 +5,7 @@
 @IsTest
 private class ApplicationContentDocLinksInvocable_TEST {
 
-    @testSetup
+    @TestSetup
     static void testSetup() {
         Application_Control__c appControl = new Application_Control__c(
                 Application_Start_Status__c = Application_Control__c.Application_Start_Status__c.getDescribe().getPicklistValues()[0].getValue(),
@@ -80,7 +80,7 @@ private class ApplicationContentDocLinksInvocable_TEST {
         update links;
     }
 
-    @isTest
+    @IsTest
     static void testInvocable_HappyPath_UpdatesMatchingDocumentVisibility() {
         Application__c app = [SELECT Id FROM Application__c LIMIT 1];
 
@@ -103,7 +103,7 @@ private class ApplicationContentDocLinksInvocable_TEST {
                 'Non-matching document title should remain InternalUsers');
     }
 
-    @isTest
+    @IsTest
     static void testInvocable_NoCurrentAcademicTerm_DoesNothing() {
         // Remove terms so no current/future term is found
         delete [SELECT Id FROM Academic_Term__c];
@@ -120,7 +120,7 @@ private class ApplicationContentDocLinksInvocable_TEST {
         System.assertEquals(0, jobCount, 'No batch should be enqueued when there is no current academic year');
     }
 
-    @isTest
+    @IsTest
     static void testInvocable_SkipsWhenBatchAlreadyRunning() {
         Application__c app = [SELECT Id FROM Application__c LIMIT 1];
 
@@ -141,7 +141,7 @@ private class ApplicationContentDocLinksInvocable_TEST {
         System.assertEquals(1, updatedLinks.size(), 'Only the originally enqueued batch chain should have run');
     }
 
-    @isTest
+    @IsTest
     static void testBatch1_BuildsApplicationDocumentTitlesMapAndChainsBatch2() {
         Application__c app = [SELECT Id FROM Application__c LIMIT 1];
 
@@ -159,7 +159,7 @@ private class ApplicationContentDocLinksInvocable_TEST {
         System.assertEquals('AllUsers', cdl.Visibility, 'Batch1 should chain into Batch2 and update visibility');
     }
 
-    @isTest
+    @IsTest
     static void testBatch2_EmptyKeywordSet_NoOpQueryLocator() {
         Application__c app = [SELECT Id FROM Application__c LIMIT 1];
 
@@ -181,7 +181,7 @@ private class ApplicationContentDocLinksInvocable_TEST {
         System.assertEquals(0, updatedLinks.size(), 'No documents should be updated with an empty keyword set');
     }
 
-    @isTest
+    @IsTest
     static void testBatch2_DirectExecution_UpdatesMatchingLinksOnly() {
         Application__c app = [SELECT Id FROM Application__c LIMIT 1];
 

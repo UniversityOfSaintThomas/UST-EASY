@@ -35,7 +35,6 @@ public without sharing class ApplicationContentDocumentLinksInvocable {
         } else {
             System.debug('No Academic Year found. Process did not continue');
         }
-
     }
 
 }

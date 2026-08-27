@@ -27,17 +27,27 @@ public without sharing class ApplicationContentDocumentLinksBatch2 implements Da
 
         if (!hasKeywords) {
             Id noOpId = bc.getJobId(); // real Id, will never match a ContentDocumentLink's LinkedEntityId
-            return Database.getQueryLocator('SELECT Id FROM ContentDocumentLink WHERE LinkedEntityId = :noOpId');
+            return Database.getQueryLocator([
+                    SELECT Id
+                    FROM ContentDocumentLink
+                    WHERE LinkedEntityId = :noOpId
+            ]);
         }
 
-        String queryString = 'SELECT Id, ContentDocumentId, ContentDocument.Title, Visibility, LinkedEntityId ' +
-                'FROM ContentDocumentLink ' +
-                'WHERE Visibility = \'InternalUsers\' ' +
-                'AND LinkedEntityId IN :appIds';
-
-        System.debug('queryString: ' + queryString);
-
-        return Database.getQueryLocator(queryString);
+        /*Potentially not all records are returned when using a bind variable list (:appIds) for LinkedEntityId because of SOQL limits.
+        Using subquery to get and match LinkedEntityId seems to bypass these limits.*/
+        return Database.getQueryLocator([
+                SELECT Id, ContentDocumentId,
+                        ContentDocument.Title,
+                        Visibility,
+                        LinkedEntityId
+                FROM ContentDocumentLink
+                WHERE Visibility = 'InternalUsers'
+                AND LinkedEntityId IN (
+                        SELECT Id
+                        FROM Application__c
+                        WHERE Id IN :appIds)
+        ]);
     }
 
     public void execute(Database.BatchableContext bc, List<ContentDocumentLink> scope) {

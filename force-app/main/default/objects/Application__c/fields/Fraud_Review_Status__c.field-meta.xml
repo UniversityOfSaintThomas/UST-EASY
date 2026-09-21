@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fraud_Review_Status__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Manual fraud review status for this application. Set by staff during review; not set automatically. See docs/fraud-monitoring-recaptcha-ip-geo.md for the full fraud monitoring design.</inlineHelpText>
+    <label>Fraud Review Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Review Recommended</fullName>
+                <default>false</default>
+                <label>Review Recommended</label>
+            </value>
+            <value>
+                <fullName>Under Review</fullName>
+                <default>false</default>
+                <label>Under Review</label>
+            </value>
+            <value>
+                <fullName>Confirmed Fraudulent</fullName>
+                <default>false</default>
+                <label>Confirmed Fraudulent</label>
+            </value>
+            <value>
+                <fullName>Cleared/Legitimate</fullName>
+                <default>false</default>
+                <label>Cleared/Legitimate</label>
+            </value>
+            <value>
+                <fullName>Unable to Confirm</fullName>
+                <default>false</default>
+                <label>Unable to Confirm</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <url>http://ip-api.com</url>
+    <description>ip-api.com free-tier IP geolocation JSON endpoint, used by ApplicationGeolocation.cls for Registration/Submission events. HTTP only, no SSL on free tier. See docs/fraud-monitoring-recaptcha-ip-geo.md.</description>
+    <disableProtocolSecurity>true</disableProtocolSecurity>
+    <isActive>true</isActive>
+</RemoteSiteSetting>

@@ -1,0 +1,61 @@
+<template>
+    <lightning-card title="Fraud Monitoring" icon-name={cardIconName}>
+        <template lwc:if={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_medium">
+                <lightning-spinner alternative-text="Loading fraud monitoring data" size="small"></lightning-spinner>
+            </div>
+        </template>
+        <template lwc:elseif={hasError}>
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <p class="slds-text-color_error">Unable to load fraud monitoring data for this application.</p>
+            </div>
+        </template>
+        <template lwc:else>
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <p class="slds-text-body_small slds-text-color_weak slds-p-bottom_small">
+                    Monitoring signals only. These do not block or deny the application - please review before taking any action.
+                </p>
+
+                <template lwc:if={hasFraudReviewStatus}>
+                    <div class="slds-p-bottom_small">
+                        <lightning-badge label={fraudReviewStatus} variant={reviewStatusBadgeVariant}></lightning-badge>
+                    </div>
+                </template>
+
+                <div class="slds-grid slds-gutters slds-wrap slds-p-bottom_small">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-bottom_x-small">
+                        <lightning-badge label={sharedIpBadgeLabel} variant={sharedIpBadgeVariant}></lightning-badge>
+                        <p class="slds-text-body_small slds-text-color_weak slds-p-top_xx-small">{sharedIpCountLabel}</p>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-bottom_x-small">
+                        <lightning-badge label={locationMatchBadgeLabel} variant={locationMatchBadgeVariant}></lightning-badge>
+                        <template lwc:if={locationMatchWarning}>
+                            <p class="slds-text-body_small slds-text-color_weak slds-p-top_xx-small">{locationMatchDetails}</p>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <h3 class="slds-text-heading_small slds-p-bottom_x-small">Application Login History</h3>
+                <template lwc:if={applicationLoginsLoading}>
+                    <lightning-spinner alternative-text="Loading login history" size="small"></lightning-spinner>
+                </template>
+                <template lwc:elseif={applicationLoginsError}>
+                    <p class="slds-text-color_error">Unable to load Application Login history.</p>
+                </template>
+                <template lwc:elseif={hasApplicationLoginRows}>
+                    <lightning-datatable
+                        key-field="id"
+                        data={applicationLoginRows}
+                        columns={applicationLoginColumns}
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-body_small slds-text-color_weak">No login/registration/submission events recorded yet for this application.</p>
+                </template>
+            </div>
+        </template>
+    </lightning-card>
+</template>

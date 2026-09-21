@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Env_JSON__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>JSON blob of client-only environmental signals (timezone, screen resolution, browser language, platform) collected via JavaScript alongside the reCAPTCHA v3 token, since these signals are not available to Apex/Visualforce server-side. Blank for events where no client JS hook was present (e.g. some submission paths). See docs/fraud-monitoring-recaptcha-ip-geo.md.</inlineHelpText>
+    <label>Client Env JSON</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

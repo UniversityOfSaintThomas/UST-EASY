@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fraud_Alert_Recipient_Emails__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Comma-separated list of email addresses that receive the fraud alert email when the fraud alert Flow trips a warning (reCAPTCHA score below threshold, Shared IP Warning, or IP Location Match Warning) on an application submission. Admin-tunable without a deploy.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Comma-separated list of email addresses to notify when a fraud warning is triggered on a submission (e.g. admissions-fraud-review@stthomas.edu).</inlineHelpText>
+    <label>Fraud Alert Recipient Emails</label>
+    <length>255</length>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

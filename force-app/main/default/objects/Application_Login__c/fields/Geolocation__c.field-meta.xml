@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Geolocation__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>City, State/Province, Country derived from IP Address (e.g. "Minneapolis, Minnesota, United States"). Blank if lookup failed or was unavailable.</inlineHelpText>
+    <label>Geolocation</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

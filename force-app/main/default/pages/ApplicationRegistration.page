@@ -16,6 +16,60 @@
                     });
                 }
             </script>
+            <!-- reCAPTCHA v3: fraud monitoring only, never blocks registration/save. See docs/fraud-monitoring-recaptcha-ip-geo.md -->
+            <apex:outputPanel layout="none" rendered="{!recaptchaEnabled}">
+                <script src="{!recaptcha.apiUrl}?render={!recaptcha.publicKey}" type="text/javascript"></script>
+                <script>
+                    function collectClientEnv() {
+                        try {
+                            return JSON.stringify({
+                                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                                timezoneOffsetMinutes: new Date().getTimezoneOffset(),
+                                screenWidth: window.screen.width,
+                                screenHeight: window.screen.height,
+                                language: navigator.language,
+                                languages: navigator.languages ? navigator.languages.join(',') : '',
+                                platform: navigator.platform,
+                                userAgentJs: navigator.userAgent,
+                                webdriver: navigator.webdriver === true,
+                                hardwareConcurrency: navigator.hardwareConcurrency || null,
+                                deviceMemory: navigator.deviceMemory || null,
+                                connectionType: (navigator.connection && navigator.connection.effectiveType) || null
+                            });
+                        } catch (e) {
+                            return '';
+                        }
+                    }
+
+                    // Refreshes the reCAPTCHA token and client-env JSON hidden fields immediately
+                    // before every "Save and Continue" click. saveWithDocs (and therefore the
+                    // Apex submit() this triggers) is called on every carousel step, not just the
+                    // final one, but a token is cheap to fetch and Apex only acts on it during the
+                    // final account-creation step - see ApplicationRegistration.cls submit().
+                    // Never blocks the save if reCAPTCHA itself fails to load/execute.
+                    function refreshRecaptchaThen(callback) {
+                        let hiddenEnvField = document.querySelector("[id$=clientEnvJson]");
+                        if (hiddenEnvField) {
+                            hiddenEnvField.value = collectClientEnv();
+                        }
+                        if (typeof grecaptcha === 'undefined') {
+                            callback();
+                            return;
+                        }
+                        grecaptcha.ready(function () {
+                            grecaptcha.execute('{!recaptcha.publicKey}', {action: 'registration'}).then(function (token) {
+                                let hiddenTokenField = document.querySelector("[id$=recaptchaResponse]");
+                                if (hiddenTokenField) {
+                                    hiddenTokenField.value = token;
+                                }
+                                callback();
+                            }).catch(function () {
+                                callback();
+                            });
+                        });
+                    }
+                </script>
+            </apex:outputPanel>
         </apex:define>
         <apex:define name="metaPageTitle">{!pageTitle}</apex:define>
         <apex:define name="body">
@@ -36,6 +90,8 @@
                         <apex:actionFunction name="saveWithDocs" action="{!submit}" reRender="regMessages,formPageMessages" oncomplete="appHideLoadingSpinner();">
                             <apex:param name="p1" value="" assignTo="{!appCreate.additionalDataString}"/>
                         </apex:actionFunction>
+                        <apex:inputHidden value="{!recaptchaResponse}" id="recaptchaResponse"/>
+                        <apex:inputHidden value="{!clientEnvJson}" id="clientEnvJson"/>
                         <nav class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_x-small">
                             <a href="javascript:void(0)" class="slds-button slds-p-right_medium slds-button_brand" id="saveAndGoBack" onclick="navigateRequirementGroup('back');" style="display:none">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
@@ -58,7 +114,7 @@
                                 Next Questions
                             </a>
 
-                            <a href="javascript:void(0)" class="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onclick="navigateRequirementGroup('forwards')">
+                            <a href="javascript:void(0)" class="slds-button slds-p-left_medium slds-button_brand slds-button_brand" id="saveAndAdvance" onclick="if (typeof refreshRecaptchaThen === 'function') { refreshRecaptchaThen(function () { navigateRequirementGroup('forwards'); }); return false; } navigateRequirementGroup('forwards');">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
                                 </svg>

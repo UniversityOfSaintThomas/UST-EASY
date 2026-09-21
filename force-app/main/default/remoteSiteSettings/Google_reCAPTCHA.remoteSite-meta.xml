@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Google reCAPTCHA v3 siteverify endpoint (server-side score verification) and api.js library. Required for ApplicationReCaptcha.cls&apos;s Apex callout.</description>
+    <disableProtocolSecurity>false</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <url>https://www.google.com</url>
+</RemoteSiteSetting>

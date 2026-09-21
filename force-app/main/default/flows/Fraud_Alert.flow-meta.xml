@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <description>Fraud Alert Flow (ECRMSF-5511 / ECRMSF-5529, tasks 10/11). Fires on new Submission-type Application_Login__c rows. Evaluates the Shared IP 30-day count against an admin-tunable threshold (setting Shared_IP_Warning__c), then evaluates all three fraud signals together - Shared_IP_Warning__c, IP_Location_Match_Warning__c (set separately by the Location_Match_Warning Flow, which runs first since Flows on the same trigger fire in a defined order), and a below-threshold Scored reCAPTCHA score on this specific submission event. If any signal is tripped, sets Fraud_Review_Status__c to &quot;Review Recommended&quot; (only when currently blank, so staff already reviewing an application are never silently reset) and sends an email alert to the admin-configured recipient list. This Flow never blocks or denies the application - monitoring/staff-review only. See docs/fraud-monitoring-recaptcha-ip-geo.md for full design rationale.</description>
+    <environments>Default</environments>
+    <actionCalls>
+        <name>Send_Fraud_Alert_Email</name>
+        <label>Send Fraud Alert Email</label>
+        <locationX>176</locationX>
+        <locationY>936</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Review_Status_Currently_Blank</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Send_Technical_Failure_Email_PostLookup</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Get_Settings.Fraud_Alert_Recipient_Emails__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>Alert_Email_Subject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>Alert_Email_Body</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Technical_Failure_Email_PreLookup</name>
+        <label>Send Technical Failure Email (Pre-Lookup)</label>
+        <locationX>750</locationX>
+        <locationY>156</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Get_Settings_For_Fault_PreLookup.Fraud_Alert_Technical_Contact_Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>Fault_Email_Subject_PreLookup</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>Fault_Email_Body_PreLookup</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Technical_Failure_Email_PostLookup</name>
+        <label>Send Technical Failure Email (Post-Lookup)</label>
+        <locationX>750</locationX>
+        <locationY>936</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Get_Settings.Fraud_Alert_Technical_Contact_Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>Fault_Email_Subject_PostLookup</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>Fault_Email_Body_PostLookup</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <decisions>
+        <name>Meets_Shared_IP_Threshold</name>
+        <label>Meets Shared IP Threshold?</label>
+        <locationX>440</locationX>
+        <locationY>396</locationY>
+        <defaultConnector>
+            <targetReference>Any_Fraud_Signal_Tripped</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Below Threshold or Not Configured</defaultConnectorLabel>
+        <rules>
+            <name>Meets_Threshold</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Settings.Shared_IP_Count_Warning_Threshold__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Application.Shared_IP_User_Count_30Day__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Settings.Shared_IP_Count_Warning_Threshold__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Shared_IP_Warning_True</targetReference>
+            </connector>
+            <label>Meets Threshold</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Any_Fraud_Signal_Tripped</name>
+        <label>Any Fraud Signal Tripped?</label>
+        <locationX>176</locationX>
+        <locationY>696</locationY>
+        <defaultConnectorLabel>No Signals Tripped - End</defaultConnectorLabel>
+        <rules>
+            <name>Signal_Tripped</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Sharing_IP_Warning_Result</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Location_Match_Warning_Tripped</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ReCAPTCHA_Below_Threshold</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Review_Status_Currently_Blank</targetReference>
+            </connector>
+            <label>Signal Tripped</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Alert_Recipients</name>
+        <label>Has Alert Recipients Configured?</label>
+        <locationX>176</locationX>
+        <locationY>1056</locationY>
+        <defaultConnectorLabel>Not Configured - Skip Email</defaultConnectorLabel>
+        <rules>
+            <name>Has_Recipients</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Settings.Fraud_Alert_Recipient_Emails__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Fraud_Alert_Email</targetReference>
+            </connector>
+            <label>Has Recipients</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Review_Status_Currently_Blank</name>
+        <label>Review Status Currently Blank?</label>
+        <locationX>176</locationX>
+        <locationY>816</locationY>
+        <defaultConnector>
+            <targetReference>Has_Alert_Recipients</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Already Set - Leave As Is</defaultConnectorLabel>
+        <rules>
+            <name>Is_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Application.Fraud_Review_Status__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Fraud_Review_Status</targetReference>
+            </connector>
+            <label>Is Blank</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>ReCAPTCHA_Below_Threshold</name>
+        <dataType>Boolean</dataType>
+        <expression>TEXT({!$Record.ReCAPTCHA_Score_Status__c}) = &quot;Scored&quot; &amp;&amp; NOT(ISBLANK({!Get_Settings.reCAPTCHA_v3_Score__c})) &amp;&amp; {!$Record.ReCAPTCHA_Score__c} &lt; {!Get_Settings.reCAPTCHA_v3_Score__c}</expression>
+    </formulas>
+    <formulas>
+        <name>Applicant_Has_Mailing_Address</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!Get_Application.Contact__r.MailingCity})) &amp;&amp; NOT(ISBLANK({!Get_Application.Contact__r.MailingCountry}))</expression>
+    </formulas>
+    <formulas>
+        <name>Location_Appears_To_Match</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!$Record.Geolocation__c})) &amp;&amp;
+(
+(NOT(ISBLANK({!Get_Application.Contact__r.MailingCity})) &amp;&amp; CONTAINS(UPPER({!$Record.Geolocation__c}), UPPER({!Get_Application.Contact__r.MailingCity}))) ||
+(NOT(ISBLANK({!Get_Application.Contact__r.MailingState})) &amp;&amp; CONTAINS(UPPER({!$Record.Geolocation__c}), UPPER({!Get_Application.Contact__r.MailingState}))) ||
+(NOT(ISBLANK({!Get_Application.Contact__r.MailingCountry})) &amp;&amp; CONTAINS(UPPER({!$Record.Geolocation__c}), UPPER({!Get_Application.Contact__r.MailingCountry})))
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Location_Match_Warning_Tripped</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!$Record.Geolocation__c})) &amp;&amp; {!Applicant_Has_Mailing_Address} &amp;&amp; NOT({!Location_Appears_To_Match})</expression>
+    </formulas>
+    <formulas>
+        <name>Alert_Email_Subject</name>
+        <dataType>String</dataType>
+        <expression>&quot;Fraud Review Recommended: Application &quot; &amp; {!Get_Application.Name}</expression>
+    </formulas>
+    <formulas>
+        <name>Alert_Email_Body</name>
+        <dataType>String</dataType>
+        <expression>&quot;A submission event on Application &quot; &amp; {!Get_Application.Name} &amp; &quot; (Contact: &quot; &amp; {!Get_Application.Contact__r.FirstName} &amp; &quot; &quot; &amp; {!Get_Application.Contact__r.LastName} &amp; &quot;) tripped one or more fraud monitoring signals and is recommended for review.&quot; &amp; BR() &amp; BR() &amp;
+&quot;reCAPTCHA Score: &quot; &amp; TEXT({!$Record.ReCAPTCHA_Score__c}) &amp; &quot; (Status: &quot; &amp; TEXT({!$Record.ReCAPTCHA_Score_Status__c}) &amp; &quot;)&quot; &amp; BR() &amp;
+&quot;Shared IP Warning: &quot; &amp; IF({!Sharing_IP_Warning_Result}, &quot;Yes&quot;, &quot;No&quot;) &amp; &quot; (&quot; &amp; TEXT({!Get_Application.Shared_IP_User_Count_30Day__c}) &amp; &quot; distinct applicants sharing this IP in the last 30 days)&quot; &amp; BR() &amp;
+&quot;IP Location Match Warning: &quot; &amp; IF({!Location_Match_Warning_Tripped}, &quot;Yes&quot;, &quot;No&quot;) &amp; &quot; (Submission IP Location: &quot; &amp; {!$Record.Geolocation__c} &amp; &quot; | Mailing Address: &quot; &amp; {!Get_Application.Contact__r.MailingCity} &amp; &quot;, &quot; &amp; {!Get_Application.Contact__r.MailingState} &amp; &quot;, &quot; &amp; {!Get_Application.Contact__r.MailingCountry} &amp; &quot;)&quot; &amp; BR() &amp; BR() &amp;
+&quot;This is a monitoring signal only. It does not indicate confirmed fraud and does not block or deny the application. Please review the application record and related Application Login records before taking any action.&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>Fault_Email_Subject_PreLookup</name>
+        <dataType>String</dataType>
+        <expression>&quot;Fraud Alert Flow Error: Could not evaluate Application_Login__c record &quot; &amp; {!$Record.Id}</expression>
+    </formulas>
+    <formulas>
+        <name>Fault_Email_Body_PreLookup</name>
+        <dataType>String</dataType>
+        <expression>&quot;The Fraud Alert Flow encountered an error before it could load the related Application or Application Setting record, so no fraud signals were evaluated for this submission event.&quot; &amp; BR() &amp; BR() &amp;
+&quot;Application_Login__c record: &quot; &amp; {!$Record.Id} &amp; BR() &amp;
+&quot;Application__c (attempted): &quot; &amp; {!$Record.Application__c} &amp; BR() &amp; BR() &amp;
+&quot;Error detail: &quot; &amp; {!$Flow.FaultMessage} &amp; BR() &amp; BR() &amp;
+&quot;Please review this application manually - the automated fraud check did not run for this submission.&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>Fault_Email_Subject_PostLookup</name>
+        <dataType>String</dataType>
+        <expression>&quot;Fraud Alert Flow Error: Application &quot; &amp; {!Get_Application.Name}</expression>
+    </formulas>
+    <formulas>
+        <name>Fault_Email_Body_PostLookup</name>
+        <dataType>String</dataType>
+        <expression>&quot;The Fraud Alert Flow encountered an error while processing a submission event for Application &quot; &amp; {!Get_Application.Name} &amp; &quot; (Contact: &quot; &amp; {!Get_Application.Contact__r.FirstName} &amp; &quot; &quot; &amp; {!Get_Application.Contact__r.LastName} &amp; &quot;).&quot; &amp; BR() &amp; BR() &amp;
+&quot;Error detail: &quot; &amp; {!$Flow.FaultMessage} &amp; BR() &amp; BR() &amp;
+&quot;The fraud-signal evaluation for this submission may be incomplete. Please review this application manually.&quot;</expression>
+    </formulas>
+    <interviewLabel>Fraud Alert {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Fraud Alert</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Application</name>
+        <label>Get Application</label>
+        <locationX>440</locationX>
+        <locationY>156</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Settings</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Get_Settings_For_Fault_PreLookup</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Application__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Application__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Settings</name>
+        <label>Get Settings</label>
+        <locationX>440</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Meets_Shared_IP_Threshold</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Get_Settings_For_Fault_PreLookup</targetReference>
+        </faultConnector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Application_Setting__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Settings_For_Fault_PreLookup</name>
+        <label>Get Settings For Fault (Pre-Lookup)</label>
+        <locationX>750</locationX>
+        <locationY>36</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Send_Technical_Failure_Email_PreLookup</targetReference>
+        </connector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Application_Setting__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <assignments>
+        <name>Set_Shared_IP_Warning_True</name>
+        <label>Set Shared IP Warning True</label>
+        <locationX>308</locationX>
+        <locationY>516</locationY>
+        <assignmentItems>
+            <assignToReference>Sharing_IP_Warning_Result</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Shared_IP_Warning</targetReference>
+        </connector>
+    </assignments>
+    <recordUpdates>
+        <name>Update_Shared_IP_Warning</name>
+        <label>Update Shared IP Warning</label>
+        <locationX>308</locationX>
+        <locationY>576</locationY>
+        <connector>
+            <targetReference>Any_Fraud_Signal_Tripped</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Record_Fault_Detail_PostLookup</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Application.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Shared_IP_Warning__c</field>
+            <value>
+                <elementReference>Sharing_IP_Warning_Result</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Application__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Fraud_Review_Status</name>
+        <label>Update Fraud Review Status</label>
+        <locationX>176</locationX>
+        <locationY>936</locationY>
+        <connector>
+            <targetReference>Has_Alert_Recipients</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Record_Fault_Detail_PostLookup</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Application.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Fraud_Review_Status__c</field>
+            <value>
+                <stringValue>Review Recommended</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Application__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Record_Fault_Detail_PostLookup</name>
+        <label>Record Fault Detail (Post-Lookup)</label>
+        <locationX>750</locationX>
+        <locationY>816</locationY>
+        <connector>
+            <targetReference>Send_Technical_Failure_Email_PostLookup</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Application.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Fraud_Alert_Processing_Error__c</field>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Application__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>314</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Application</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Event_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Submission</stringValue>
+            </value>
+        </filters>
+        <object>Application_Login__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>Sharing_IP_Warning_Result</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+</Flow>

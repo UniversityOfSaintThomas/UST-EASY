@@ -21,6 +21,10 @@ public class ApplicationRegistration {
     public String externalApplicationType { get; set; }
     public String pageTitle { get; set; }
     public String ExternalQuestionLabel { get; set; }
+    public String recaptchaResponse { get; set; }
+    public String clientEnvJson { get; set; }
+    public Boolean recaptchaEnabled { get; set; }
+    public ApplicationReCaptcha.RecaptchaSettings recaptcha { get; set; }
 
     /*******************************************************************************
     * @description Initialize the page - Sets up all of the requirements and pulls Requirements with the flag (Show on Application Creation)
@@ -34,6 +38,10 @@ public class ApplicationRegistration {
         noApplication = false;
         externalApplication = false;
         pageTitle = 'New Application: ' + appInfo.academicLevel;
+
+        Application_Setting__c AppSettingsForRecaptcha = Application_Setting__c.getOrgDefaults();
+        recaptchaEnabled = String.isNotBlank(AppSettingsForRecaptcha.reCAPTCHA_Site_Key__c) && String.isNotBlank(AppSettingsForRecaptcha.reCAPTCHA_Library_Url__c);
+        recaptcha = new ApplicationReCaptcha.RecaptchaSettings(AppSettingsForRecaptcha.reCAPTCHA_Site_Key__c, AppSettingsForRecaptcha.reCAPTCHA_Library_Url__c);
         //Query all application controls with External Application Type that is not blank and get the URL parameter for each and put it in a list
         List<Application_Control__c> externalAppControls = [
                 SELECT Id, URL_Parameter__c, External_Application_Type__c, External_App_Found_Statement__c, External_App_Claim_Id_Question__c,
@@ -154,6 +162,99 @@ public class ApplicationRegistration {
             }
             createApp.setRedirect(true);
             return createApp;
+        }
+        return null;
+    }
+
+    /**
+     * @description Captures a reCAPTCHA score and environmental variables for a successful
+     * registration event, inserting a single Application_Login__c record scoped to the Contact
+     * and Application that were just created/claimed.
+     *
+     * MUST run as @future(callout=true), not synchronously in submit(). submit() performs
+     * multiple DML operations (insert interaction, update Account, Site.createExternalUser)
+     * before this point in the same transaction; Apex forbids making an HTTP callout in a
+     * transaction with uncommitted prior DML ("System.CalloutException: You have uncommitted
+     * work pending"). This was discovered via a real registration test that always produced
+     * ReCAPTCHA_Score_Status__c = Unavailable with that exact exception message in the new
+     * ReCAPTCHA_Error_Detail__c diagnostic field - see docs/fraud-monitoring-recaptcha-ip-geo.md.
+     * Deferring to @future runs this in a new transaction after the current one commits, which
+     * is the standard Salesforce pattern for "DML now, callout after."
+     *
+     * @future methods can only accept primitive types/collections as parameters (no sObjects or
+     * custom Apex types), which is why this takes raw Ids/Strings rather than the ApplicationForm
+     * controller's own properties directly.
+     *
+     * Unlike the login flow, there is no LoginHistory row yet at registration time (Site.login()
+     * has not been called yet), so geolocation uses the third-party ApplicationGeolocation
+     * utility rather than LoginHistory/LoginGeo.
+     *
+     * @param contactId The Id of the Contact just created/claimed by this registration.
+     * @param applicationId The Id of the Application__c just created/claimed by this registration.
+     * @param recaptchaResponseToken The client-side reCAPTCHA v3 token captured at submit time.
+     * @param ipAddress The resolved client IP address captured at submit time.
+     * @param userAgent The raw User-Agent header value captured at submit time.
+     * @param refererHeader The raw Referer header value captured at submit time.
+     * @param clientEnvJsonBlob The client-JS-collected environmental JSON blob captured at submit time.
+     */
+    @future(callout=true)
+    public static void logRegistrationAttemptAsync(Id contactId, Id applicationId, String recaptchaResponseToken, String ipAddress, String userAgent, String refererHeader, String clientEnvJsonBlob) {
+        if (contactId == null || applicationId == null) {
+            return;
+        }
+
+        ApplicationReCaptcha.ReCaptchaResult recaptchaResult = ApplicationReCaptcha.isReCAPTCHAValid(recaptchaResponseToken);
+        ApplicationEnvironmentCapture.ParsedUserAgent parsedUA = ApplicationEnvironmentCapture.parseUserAgent(userAgent);
+        String mergedClientEnvJson = ApplicationEnvironmentCapture.mergeServerSignals(clientEnvJsonBlob, refererHeader, userAgent);
+        String geolocation = ApplicationGeolocation.getGeolocation(ipAddress);
+
+        Application_Login__c logEntry = new Application_Login__c();
+        logEntry.Contact__c = contactId;
+        logEntry.Application__c = applicationId;
+        logEntry.Event_Type__c = 'Registration';
+        logEntry.ReCAPTCHA_Score__c = recaptchaResult.score;
+        logEntry.ReCAPTCHA_Score_Status__c = recaptchaResult.status;
+        logEntry.ReCAPTCHA_Error_Detail__c = truncate(recaptchaResult.errorDetail, 255);
+        logEntry.IP_Address__c = ipAddress;
+        logEntry.Geolocation__c = geolocation;
+        logEntry.Browser__c = parsedUA.browser;
+        logEntry.Operating_System__c = parsedUA.operatingSystem;
+        logEntry.Device_Type__c = parsedUA.deviceType;
+        logEntry.User_Agent_Raw__c = userAgent;
+        logEntry.Client_Env_JSON__c = mergedClientEnvJson;
+
+        try {
+            insert logEntry;
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.WARN, 'ApplicationRegistration: failed to insert Application_Login__c record. ' + ex.getMessage());
+        }
+    }
+
+    /**
+     * @description Truncates val to at most maxLen characters. Returns val unchanged if it fits
+     * or is blank. Used to defensively guard against DML failures when writing exception messages
+     * into fixed-length diagnostic text fields.
+     */
+    private static String truncate(String val, Integer maxLen) {
+        if (String.isBlank(val)) {
+            return val;
+        }
+        return val.length() > maxLen ? val.left(maxLen) : val;
+    }
+
+    /**
+     * @description Resolves the client IP from Salesforce's own detected source IP header first
+     * (more reliable, not attacker-controllable), falling back to X-Forwarded-For. Mirrors
+     * ApplicationLoginController.resolveIpAddress().
+     */
+    private static String resolveIpAddress() {
+        String sip = ApexPages.currentPage().getHeaders().get('X-Salesforce-SIP');
+        if (String.isNotBlank(sip)) {
+            return sip;
+        }
+        String forwardedFor = ApexPages.currentPage().getHeaders().get('X-Forwarded-For');
+        if (String.isNotBlank(forwardedFor)) {
+            return forwardedFor.split(',')[0].trim();
         }
         return null;
     }
@@ -326,6 +427,24 @@ public class ApplicationRegistration {
                 loginUser = new User(Id = uId, Username = u.Username);
                 loginPassword = pass;
                 loginUrl = checklistUrl;
+
+                // Fraud monitoring: capture reCAPTCHA score and environmental variables for this
+                // registration event, scoped only to the Contact/Application just created. Must
+                // never block or fail the registration itself. Deferred to @future(callout=true)
+                // because this transaction already has uncommitted DML (see
+                // logRegistrationAttemptAsync's doc comment) - callouts are not allowed here
+                // synchronously. Capture request-context values (headers) now, since
+                // ApexPages.currentPage() may not be reliably available inside the future context.
+                // See docs/fraud-monitoring-recaptcha-ip-geo.md for the full design.
+                try {
+                    String capturedIpAddress = resolveIpAddress();
+                    String capturedUserAgent = ApexPages.currentPage().getHeaders().get('User-Agent');
+                    String capturedReferer = ApexPages.currentPage().getHeaders().get('Referer');
+                    logRegistrationAttemptAsync(con.Id, appCreate.app.Id, recaptchaResponse, capturedIpAddress, capturedUserAgent, capturedReferer, clientEnvJson);
+                } catch (Exception fraudMonitoringEx) {
+                    System.debug(LoggingLevel.WARN, 'ApplicationRegistration: fraud monitoring capture failed, continuing registration. ' + fraudMonitoringEx.getTypeName() + ': ' + fraudMonitoringEx.getMessage());
+                }
+
                 return Site.login(loginUser.Username, loginPassword, loginUrl);
             }
 

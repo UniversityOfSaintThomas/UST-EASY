@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Shared_IP_Count_Warning_Threshold__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Admin-tunable threshold for Shared_IP_Warning__c on Application__c. When Shared_IP_User_Count_30Day__c meets or exceeds this value, the fraud alert Flow sets Shared_IP_Warning__c = true. Monitoring/review guidance only - never used to auto-block. Exact usage is determined by the fraud alert Flow, not hardcoded in Apex.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Admin-tunable threshold: Shared_IP_User_Count_30Day__c at or above this value triggers Shared_IP_Warning__c. Monitoring only - never auto-blocks.</inlineHelpText>
+    <label>Shared IP Count Warning Threshold</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+</CustomField>

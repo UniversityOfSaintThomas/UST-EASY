@@ -3,6 +3,52 @@
         <apex:define name="metaPageTitle">Returning Applicant Login</apex:define>
         <apex:define name="scriptsHead">
             <c:ApplicationHead />
+            <!-- reCAPTCHA v3: fraud monitoring only, never blocks login. See docs/fraud-monitoring-recaptcha-ip-geo.md -->
+            <apex:outputPanel layout="none" rendered="{!recaptchaEnabled}">
+                <script src="{!recaptcha.apiUrl}?render={!recaptcha.publicKey}" type="text/javascript"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        let collectClientEnv = function () {
+                            try {
+                                return JSON.stringify({
+                                    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                                    timezoneOffsetMinutes: new Date().getTimezoneOffset(),
+                                    screenWidth: window.screen.width,
+                                    screenHeight: window.screen.height,
+                                    language: navigator.language,
+                                    languages: navigator.languages ? navigator.languages.join(',') : '',
+                                    platform: navigator.platform,
+                                    userAgentJs: navigator.userAgent,
+                                    webdriver: navigator.webdriver === true,
+                                    hardwareConcurrency: navigator.hardwareConcurrency || null,
+                                    deviceMemory: navigator.deviceMemory || null,
+                                    connectionType: (navigator.connection && navigator.connection.effectiveType) || null
+                                });
+                            } catch (e) {
+                                return '';
+                            }
+                        };
+                        document.querySelector("[id$=login-submit]").addEventListener("click", function (e) {
+                            e.preventDefault();
+                            if (!checkForm()) {
+                                return;
+                            }
+                            document.querySelector("[id$=clientEnvJson]").value = collectClientEnv();
+                            grecaptcha.ready(function () {
+                                grecaptcha.execute('{!recaptcha.publicKey}', {action: 'login'}).then(function (token) {
+                                    document.querySelector("[id$=recaptchaResponse]").value = token;
+                                    document.querySelector("[id$=login-submit-real]").click();
+                                }).catch(function () {
+                                    // Free-tier quota exhausted or endpoint unreachable - never block login.
+                                    // Leave recaptchaResponse blank; ApplicationReCaptcha.isReCAPTCHAValid treats
+                                    // a blank token as Unavailable, not as a failed/suspicious check.
+                                    document.querySelector("[id$=login-submit-real]").click();
+                                });
+                            });
+                        });
+                    }, false);
+                </script>
+            </apex:outputPanel>
         </apex:define>
         <apex:define name="body">
             <apex:form id="loginForm" forceSSL="true" styleClass="form-signin">
@@ -62,7 +108,10 @@
                     </div>
 
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">
-                        <apex:commandButton action="{!login}" onClick="return checkForm();" value="Sign in" id="login-submit" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand"/>
+                        <apex:inputHidden value="{!recaptchaResponse}" id="recaptchaResponse"/>
+                        <apex:inputHidden value="{!clientEnvJson}" id="clientEnvJson"/>
+                        <apex:commandButton action="{!login}" value="Sign in" id="login-submit" styleClass="slds-button slds-p-left_medium slds-button_brand slds-button_brand"/>
+                        <apex:commandButton action="{!login}" value="Sign in" id="login-submit-real" style="display:none;" onClick="return checkForm();"/>
                     </div>
 
                     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-p-bottom_small slds-p-top_xx-small">

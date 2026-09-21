@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>reCAPTCHA_v3_Score__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Admin-tunable reCAPTCHA v3 score threshold used for monitoring/review guidance only - this system never auto-blocks based on score. Per ECRMSF-5511 reference guidance: 0.8-1.0 = low risk, 0.5-0.7 = monitor, below 0.5 = additional review recommended. This field holds a single reviewer-guidance threshold value; exact usage is determined by the fraud alert Flow, not hardcoded in Apex.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Admin-tunable reCAPTCHA v3 score threshold used for monitoring/review guidance only - never used to auto-block. See field description for Google's reference scoring guidance.</inlineHelpText>
+    <label>reCAPTCHA v3 Score Threshold</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+</CustomField>

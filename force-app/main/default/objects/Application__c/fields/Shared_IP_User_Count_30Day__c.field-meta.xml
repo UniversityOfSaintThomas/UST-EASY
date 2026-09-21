@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Shared_IP_User_Count_30Day__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Count of distinct Contacts who have submitted an application from the same IP address as this application's submission IP, within the trailing 30 days. Calculated by Apex (aggregate query only); the Shared IP Warning threshold is applied separately by a Flow.</inlineHelpText>
+    <label>Shared IP User Count (30 Day)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+</CustomField>

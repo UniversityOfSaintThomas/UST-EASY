@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fraud_Alert_Processing_Error__c</fullName>
+    <label>Fraud Alert Processing Error</label>
+    <type>LongTextArea</type>
+    <length>32768</length>
+    <visibleLines>5</visibleLines>
+    <description>System-populated diagnostic detail when the Fraud_Alert Flow encounters an internal error (a lookup or update failure) while evaluating this application. Not staff-authored - see Fraud_Review_Notes__c for staff notes. A non-blank value here means the automated fraud check may not have completed successfully for a recent submission and the application should be reviewed manually.</description>
+</CustomField>

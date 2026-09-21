@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <description>Admin-tunable Location Match Warning Flow (ECRMSF-5529). Fires on new Submission-type Application_Login__c rows. Compares the submission's IP-derived Geolocation__c against the applicant Contact&apos;s mailing address (city/state/country), and sets IP_Location_Match_Warning__c / IP_Location_Match_Details__c on the related Application__c if they don&apos;t appear to match. Deliberately skips the comparison entirely (no warning) when the Contact has no mailing address on file at all, or when Geolocation__c is blank (reCAPTCHA/geo lookup was Unavailable) - a missing-data case must never be treated as a mismatch. Thresholds/matching logic here are intentionally kept in Flow (not Apex) so admins can tune matching sensitivity without a deploy. See docs/fraud-monitoring-recaptcha-ip-geo.md for full design rationale.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Applicant_Has_Mailing_Address</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!Get_Application.Contact__r.MailingCity})) &amp;&amp; NOT(ISBLANK({!Get_Application.Contact__r.MailingCountry}))</expression>
+    </formulas>
+    <formulas>
+        <name>Geolocation_Mentions_Mailing_City</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!Get_Application.Contact__r.MailingCity})) &amp;&amp; CONTAINS(UPPER({!$Record.Geolocation__c}), UPPER({!Get_Application.Contact__r.MailingCity}))</expression>
+    </formulas>
+    <formulas>
+        <name>Geolocation_Mentions_Mailing_State</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!Get_Application.Contact__r.MailingState})) &amp;&amp; CONTAINS(UPPER({!$Record.Geolocation__c}), UPPER({!Get_Application.Contact__r.MailingState}))</expression>
+    </formulas>
+    <formulas>
+        <name>Geolocation_Mentions_Mailing_Country</name>
+        <dataType>Boolean</dataType>
+        <expression>NOT(ISBLANK({!Get_Application.Contact__r.MailingCountry})) &amp;&amp; CONTAINS(UPPER({!$Record.Geolocation__c}), UPPER({!Get_Application.Contact__r.MailingCountry}))</expression>
+    </formulas>
+    <formulas>
+        <name>Location_Appears_To_Match</name>
+        <dataType>Boolean</dataType>
+        <expression>{!Geolocation_Mentions_Mailing_City} || {!Geolocation_Mentions_Mailing_State} || {!Geolocation_Mentions_Mailing_Country}</expression>
+    </formulas>
+    <formulas>
+        <name>Mismatch_Details_Text</name>
+        <dataType>String</dataType>
+        <expression>&quot;Submission IP Location: &quot; &amp; {!$Record.Geolocation__c} &amp; &quot; | Mailing Address: &quot; &amp; {!Get_Application.Contact__r.MailingCity} &amp; &quot;, &quot; &amp; {!Get_Application.Contact__r.MailingState} &amp; &quot;, &quot; &amp; {!Get_Application.Contact__r.MailingCountry}</expression>
+    </formulas>
+    <interviewLabel>Location Match Warning {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Location Match Warning</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Application</name>
+        <label>Get Application</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Mailing_Address</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Application__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Application__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <decisions>
+        <name>Has_Mailing_Address</name>
+        <label>Has Mailing Address?</label>
+        <locationX>176</locationX>
+        <locationY>396</locationY>
+        <defaultConnectorLabel>No Mailing Address on File - Skip</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Has_Address</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Applicant_Has_Mailing_Address</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Does_Location_Match</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Does_Location_Match</name>
+        <label>Does Location Match?</label>
+        <locationX>50</locationX>
+        <locationY>516</locationY>
+        <defaultConnector>
+            <targetReference>Set_Location_Match_Warning</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Match - Set Warning</defaultConnectorLabel>
+        <rules>
+            <name>Matches</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Location_Appears_To_Match</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Matches</label>
+        </rules>
+    </decisions>
+    <recordUpdates>
+        <name>Set_Location_Match_Warning</name>
+        <label>Set Location Match Warning</label>
+        <locationX>50</locationX>
+        <locationY>636</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Application.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>IP_Location_Match_Warning__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IP_Location_Match_Details__c</field>
+            <value>
+                <elementReference>Mismatch_Details_Text</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Application__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Application</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Event_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Submission</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Geolocation__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Application_Login__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

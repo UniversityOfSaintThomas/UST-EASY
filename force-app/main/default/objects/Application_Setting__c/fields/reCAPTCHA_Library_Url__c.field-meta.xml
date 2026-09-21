@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>reCAPTCHA_Library_Url__c</fullName>
+    <deprecated>false</deprecated>
+    <description>URL of the Google reCAPTCHA v3 client-side JS library (e.g. https://www.google.com/recaptcha/api.js). Loaded on ApplicationRegistration.page and ApplicationLogin.page.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>URL of the Google reCAPTCHA v3 client-side JS library (e.g. https://www.google.com/recaptcha/api.js). Loaded on ApplicationRegistration.page and ApplicationLogin.page.</inlineHelpText>
+    <label>reCAPTCHA Library URL</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

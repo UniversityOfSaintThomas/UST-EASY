@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fraud_Alert_Technical_Contact_Email__c</fullName>
+    <label>Fraud Alert Technical Contact Email</label>
+    <type>Text</type>
+    <length>255</length>
+    <description>Fixed technical/admin contact address notified when the Fraud_Alert Flow itself encounters an internal error (a lookup or update failure), as opposed to Fraud_Alert_Recipient_Emails__c which is notified about actual fraud-signal matches. Comma-separated if multiple. Leave blank to skip technical-failure notifications (not recommended - failures will only be visible via Fraud_Alert_Processing_Error__c on the affected Application record).</description>
+</CustomField>

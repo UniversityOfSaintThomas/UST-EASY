@@ -2,9 +2,10 @@
  * Unit tests for ApplicationEnvironmentCapture.cls (ECRMSF-5511 / ECRMSF-5529). Covers
  * parseUserAgent's browser/OS/device-type classification across common User-Agent strings
  * (including the token-ordering gotchas - Edge/Opera/Samsung must not be misclassified as
- * Chrome/Safari, and tablets must not be misclassified as Mobile), and mergeServerSignals'
- * Referer/User-Agent-mismatch merge logic including its graceful handling of null/malformed
- * input.
+ * Chrome/Safari, and tablets must not be misclassified as Mobile), major browser version
+ * extraction (including Safari's special-cased "Version/" token and the no-version-parseable
+ * fallback), and mergeServerSignals' Referer/User-Agent-mismatch merge logic including its
+ * graceful handling of null/malformed input.
  */
 @isTest
 private class ApplicationEnvironmentCapture_TEST {
@@ -43,7 +44,7 @@ private class ApplicationEnvironmentCapture_TEST {
     static void chromeOnWindowsParsedCorrectly() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(CHROME_WINDOWS_UA);
 
-        Assert.areEqual('Chrome', result.browser, 'Chrome UA must be classified as Chrome.');
+        Assert.areEqual('Chrome 120', result.browser, 'Chrome UA must be classified as Chrome with its major version appended.');
         Assert.areEqual('Windows', result.operatingSystem, 'Windows UA must be classified as Windows.');
         Assert.areEqual('Desktop', result.deviceType, 'A desktop Windows UA must be classified as Desktop.');
     }
@@ -52,7 +53,7 @@ private class ApplicationEnvironmentCapture_TEST {
     static void safariOnMacOsParsedCorrectly() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(SAFARI_MAC_UA);
 
-        Assert.areEqual('Safari', result.browser, 'Safari UA must be classified as Safari.');
+        Assert.areEqual('Safari 17', result.browser, 'Safari UA must be classified as Safari with its major version appended, taken from the separate "Version/" token rather than the "Safari/605.1.15" WebKit build number.');
         Assert.areEqual('macOS', result.operatingSystem, 'Mac OS X UA must be classified as macOS.');
         Assert.areEqual('Desktop', result.deviceType, 'A desktop Mac UA must be classified as Desktop.');
     }
@@ -61,7 +62,7 @@ private class ApplicationEnvironmentCapture_TEST {
     static void firefoxOnLinuxParsedCorrectly() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(FIREFOX_LINUX_UA);
 
-        Assert.areEqual('Firefox', result.browser, 'Firefox UA must be classified as Firefox.');
+        Assert.areEqual('Firefox 120', result.browser, 'Firefox UA must be classified as Firefox with its major version appended.');
         Assert.areEqual('Linux', result.operatingSystem, 'Linux UA must be classified as Linux.');
         Assert.areEqual('Desktop', result.deviceType, 'A desktop Linux UA must be classified as Desktop.');
     }
@@ -70,27 +71,28 @@ private class ApplicationEnvironmentCapture_TEST {
     static void edgeUaNotMisclassifiedAsChrome() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(EDGE_WINDOWS_UA);
 
-        Assert.areEqual('Edge', result.browser, 'An Edge UA contains "chrome" and "safari" tokens too, but the more specific "edg/" token must take priority and classify it as Edge, not Chrome.');
+        Assert.areEqual('Edge 120', result.browser, 'An Edge UA contains "chrome" and "safari" tokens too, but the more specific "edg/" token must take priority and classify it as Edge with its own version, not Chrome\'s.');
     }
 
     @isTest
     static void operaUaNotMisclassifiedAsChrome() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(OPERA_UA);
 
-        Assert.areEqual('Opera', result.browser, 'An Opera UA contains "chrome" too, but the more specific "opr/" token must take priority and classify it as Opera, not Chrome.');
+        Assert.areEqual('Opera 106', result.browser, 'An Opera UA contains "chrome" too, but the more specific "opr/" token must take priority and classify it as Opera with its own version, not Chrome\'s.');
     }
 
     @isTest
     static void samsungBrowserUaNotMisclassifiedAsChrome() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(SAMSUNG_BROWSER_UA);
 
-        Assert.areEqual('Samsung Internet', result.browser, 'A Samsung Internet UA contains "chrome" too, but the more specific "samsungbrowser" token must take priority.');
+        Assert.areEqual('Samsung Internet 23', result.browser, 'A Samsung Internet UA contains "chrome" too, but the more specific "samsungbrowser" token must take priority and use its own version, not Chrome\'s.');
     }
 
     @isTest
     static void iphoneParsedAsMobileIos() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(IPHONE_UA);
 
+        Assert.areEqual('Safari 17', result.browser, 'An iPhone Safari UA must include the major version from its "Version/" token.');
         Assert.areEqual('iOS', result.operatingSystem, 'An iPhone UA must be classified as iOS.');
         Assert.areEqual('Mobile', result.deviceType, 'An iPhone UA must be classified as Mobile, not Tablet.');
     }
@@ -99,6 +101,7 @@ private class ApplicationEnvironmentCapture_TEST {
     static void ipadParsedAsTabletNotMobile() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(IPAD_UA);
 
+        Assert.areEqual('Safari 17', result.browser, 'An iPad Safari UA must include the major version from its "Version/" token.');
         Assert.areEqual('iOS', result.operatingSystem, 'An iPad UA must be classified as iOS.');
         Assert.areEqual('Tablet', result.deviceType, 'An iPad UA must be classified as Tablet, since tablet signals are checked before mobile signals.');
     }
@@ -107,6 +110,7 @@ private class ApplicationEnvironmentCapture_TEST {
     static void androidPhoneParsedAsMobile() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(ANDROID_PHONE_UA);
 
+        Assert.areEqual('Chrome 120', result.browser, 'An Android Chrome UA must include the major version from its "Chrome/" token.');
         Assert.areEqual('Android', result.operatingSystem, 'An Android UA must be classified as Android.');
         Assert.areEqual('Mobile', result.deviceType, 'An Android phone UA (containing "mobile") must be classified as Mobile.');
     }
@@ -115,6 +119,7 @@ private class ApplicationEnvironmentCapture_TEST {
     static void androidTabletNotMisclassifiedAsMobile() {
         ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(ANDROID_TABLET_UA);
 
+        Assert.areEqual('Chrome 120', result.browser, 'An Android tablet Chrome UA must include the major version from its "Chrome/" token.');
         Assert.areEqual('Android', result.operatingSystem, 'An Android tablet UA must be classified as Android.');
         Assert.areEqual('Tablet', result.deviceType, 'An Android UA WITHOUT the "mobile" token must be classified as Tablet, not Mobile - this is the key Android-tablet-vs-phone distinction.');
     }
@@ -126,6 +131,16 @@ private class ApplicationEnvironmentCapture_TEST {
         Assert.areEqual('Unknown', result.browser, 'An unrecognized UA must fall back to Unknown browser rather than guessing.');
         Assert.areEqual('Unknown', result.operatingSystem, 'An unrecognized UA must fall back to Unknown OS rather than guessing.');
         Assert.areEqual('Desktop', result.deviceType, 'An unrecognized UA defaults to Desktop device type, since no mobile/tablet signal was present.');
+    }
+
+    @isTest
+    static void browserTokenWithNoParseableVersionOmitsVersionEntirely() {
+        // A Chrome token with no trailing digits at all - version cannot be determined.
+        String uaWithNoVersion = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/ Safari/537.36';
+
+        ApplicationEnvironmentCapture.ParsedUserAgent result = ApplicationEnvironmentCapture.parseUserAgent(uaWithNoVersion);
+
+        Assert.areEqual('Chrome', result.browser, 'When no major version can be parsed after the browser token, the browser name must be returned alone with no trailing space or placeholder version - never "Chrome " or "Chrome Unknown".');
     }
 
     // ==================== mergeServerSignals ====================

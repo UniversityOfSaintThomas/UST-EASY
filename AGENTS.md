@@ -4,7 +4,7 @@ Project-specific guidance for AI agents working in this repository. For general 
 
 ## Project Basics
 
-- **Build tool:** CumulusCI (`cci`) + Salesforce CLI (`sf`) directly. Default build/test org this session: `test-2axphb8n9kcl@example.com` (alias `UST-EASY__dev`), a scratch org.
+- **Build tool:** CumulusCI (`cci`) + Salesforce CLI (`sf`) directly. Scratch orgs are short-lived and get replaced periodically - always confirm the current default org's username via `sf org display` or `sf org list` rather than trusting a previously-recorded username/alias in this file, since the underlying org can change while the alias `UST-EASY__dev` stays the same. (As of 2026-09-22: `test-alxo7nrsrvsi@example.com`, replacing an earlier org that was deleted mid-project.)
 - **Architecture:** Visualforce + Apex admissions portal (Site.com/Experience Cloud guest+community access), not LWC-first. Core objects: `Application__c`, `Application_Control__c` (per-application-type config), `Contact` (not `User`) as the primary applicant identity, `Interaction__c` (staging object used during registration before Contact/Application exist).
 - **Design docs live in `docs/`** — check for an existing design doc before starting new feature work; if one exists for the feature area, read it first and keep it updated as the source of truth if context is lost.
 

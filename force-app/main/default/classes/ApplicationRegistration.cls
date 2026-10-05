@@ -34,7 +34,7 @@ public class ApplicationRegistration {
         userType = UserInfo.getUserType();
         appInfo = ApplicationUtilities.createShellAppInfo();
         cookieKeyPresent = ApplicationUtilities.cookieKeyPresent();
-        appTypeUrlParameter = '';
+        appTypeUrlParameter = appInfo.at;
         noApplication = false;
         externalApplication = false;
         pageTitle = 'New Application: ' + appInfo.academicLevel;

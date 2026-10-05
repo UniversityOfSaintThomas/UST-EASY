@@ -60,8 +60,11 @@ public with sharing class ReusableLookupController {
                         System.debug(e.getMessage());
                     }
 
-                    if (String.isNotBlank(inputWrapper.searchString) && inputWrapper.searchString.trim().length() > 3) {
-                        String searchString = inputWrapper.searchString.trim().escapeHtml4();
+                    Boolean isInitialLoadById = String.isNotBlank(inputWrapper.selectedRecordId);
+                    if (isInitialLoadById || (String.isNotBlank(inputWrapper.searchString) && inputWrapper.searchString.trim().length() > 3)) {
+                        String searchString = String.isNotBlank(inputWrapper.searchString)
+                            ? inputWrapper.searchString.trim().escapeHtml4()
+                            : '';
                         String searchLikeString = '%' + searchString + '%';
                         String recordTypeName = String.isNotBlank(inputWrapper.recordTypeName) ? inputWrapper.recordTypeName.trim().escapeHtml4() : null;
                         String type = String.isNotBlank(inputWrapper.type) ? inputWrapper.type.trim().escapeHtml4() : null;
@@ -93,7 +96,9 @@ public with sharing class ReusableLookupController {
                         }
 
                         if (String.isNotBlank(inputWrapper.selectedRecordId)) {
-                            query += ' WHERE Id = : inputWrapper.selectedRecordId ';
+                            // Dynamic SOQL (Database.query) does not support the static ":var" bind
+                            // syntax, so the Id must be concatenated in (escaped to prevent injection).
+                            query += ' WHERE Id = \'' + String.escapeSingleQuotes(inputWrapper.selectedRecordId) + '\' ';
                         } else if (String.isNotBlank(inputWrapper.parentFieldApiName) && String.isNotBlank(inputWrapper.parentRecordId)) {
                             query += ' WHERE ' + inputWrapper.parentFieldApiName + ' = \'' + inputWrapper.parentRecordId + '\'';
                             query += ' AND (' + filterCriteria + ')';

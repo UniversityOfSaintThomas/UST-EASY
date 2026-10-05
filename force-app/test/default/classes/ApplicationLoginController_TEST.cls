@@ -8,6 +8,14 @@
         controller.username = 'test@salesforce.com';
         controller.password = '123456';
 
+        // login() reads System.currentPageReference().getParameters().get('startURL') and calls
+        // .containsIgnoreCase() directly on the result. Without a current page set, currentPageReference()
+        // returns null; even with a current page set, the 'startURL' parameter itself defaults to null if
+        // never populated. Either case causes a NullPointerException, so both must be set here.
+        PageReference testPage = Page.ApplicationLogin;
+        testPage.getParameters().put('startURL', '');
+        Test.setCurrentPage(testPage);
+
         System.assertEquals(controller.login(), null);
     }
 

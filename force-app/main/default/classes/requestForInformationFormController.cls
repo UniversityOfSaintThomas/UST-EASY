@@ -58,7 +58,6 @@ public without sharing class requestForInformationFormController {
             Database.SaveResult result = Database.insert(sobj, dml);
             if (result.isSuccess() == false) {
                 String context = 'Creation of lead failed on insert. \n Error: ' + result.getErrors();
-                System.debug('Error: ' + result.getErrors());
                 insertErrorRecord(rfiController, record, context);
             }
         } catch (Exception e) {

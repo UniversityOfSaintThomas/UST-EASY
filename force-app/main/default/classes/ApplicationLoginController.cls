@@ -11,6 +11,9 @@ global with sharing class ApplicationLoginController {
     global PageReference login() {
 
         String startUrl = System.currentPageReference().getParameters().get('startURL');
+        if(startUrl.containsIgnoreCase('ApplicationLogin')) {
+            startUrl = '';
+        }
 
         //String startUrl = 'apex/ApplicationPortal';
         PageReference loginResult = Site.login(username, password, startUrl);
@@ -46,10 +49,9 @@ global with sharing class ApplicationLoginController {
         String startUrl = System.currentPageReference().getParameters().get('startURL');
         PageReference pageRef = null;
         if (userType.equalsIgnoreCase('CSPLitePortal')) {
-            if (String.isNotBlank(startUrl)) {
+            pageRef = Page.ApplicationPortal;
+            if (String.isNotBlank(startUrl) && !startUrl.containsIgnoreCase('ApplicationLogin')) {
                 pageRef = new PageReference(Site.getPathPrefix() + '/' + EncodingUtil.urlEncode(startUrl, 'UTF-8'));
-            } else {
-                pageRef = Page.ApplicationPortal;
             }
             pageRef.setRedirect(true);
             return pageRef;

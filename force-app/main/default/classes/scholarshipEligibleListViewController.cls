@@ -61,6 +61,12 @@ public with sharing class scholarshipEligibleListViewController {
                         Programs__c,
                         Academic_Term_s__c,
                         Admission_Application_Status__c,
+                        Generic_Filter_2__c,
+                        Generic_Filter_3__c,
+                        Generic_Filter_5__c,
+                        Generic_Filter_6__c,
+                        Generic_Filter_7__c,
+                        Generic_Filter_8__c,
                         Open_Date__c,
                         Open_Time__c,
                         Close_Date__c,
@@ -77,19 +83,18 @@ public with sharing class scholarshipEligibleListViewController {
             for (Scholarship__c scholarship : openScholarships) {
                 if (ScholarshipSharedUtilities.isScholarshipOpen(scholarship)) {
                     List<Boolean> eligibleScholarshipCheck = new List<Boolean>();
-                    List<String> scholarshipApplicationControlList = scholarship.Application_Controls__c?.split(';');
-                    List<String> scholarshipCitizenshipList = scholarship.Citizenship_s__c?.split(';');
-                    List<String> scholarshipDegreeTypeList = scholarship.Degree_Type__c?.split(';');
-                    List<String> scholarshipProgramList = scholarship.Programs__c?.split(';');
-                    List<String> scholarshipAcademicTermList = scholarship.Academic_Term_s__c?.split(';');
-                    List<String> scholarshipAdmissionApplicationStatus = scholarship.Admission_Application_Status__c?.split(';');
-
-                    eligibleScholarshipCheck.add(criteriaCompare(scholarshipApplicationControlList, app.Application_Control__r.URL_Parameter__c));
-                    eligibleScholarshipCheck.add(criteriaCompare(scholarshipCitizenshipList, app.Citizenship__c));
-                    eligibleScholarshipCheck.add(criteriaCompare(scholarshipDegreeTypeList, app.Degree_Type__c));
-                    eligibleScholarshipCheck.add(criteriaCompare(scholarshipProgramList, app.Generic_Filter_1__c));
-                    eligibleScholarshipCheck.add(criteriaCompare(scholarshipAcademicTermList, app.Intended_Term_of_Entry__r.Name));
-                    eligibleScholarshipCheck.add(criteriaCompare(scholarshipAdmissionApplicationStatus, app.Application_Status__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Application_Controls__c, app.Application_Control__r.URL_Parameter__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Citizenship_s__c, app.Citizenship__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Degree_Type__c, app.Degree_Type__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Programs__c, app.Generic_Filter_1__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Academic_Term_s__c, app.Intended_Term_of_Entry__r.Name));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Admission_Application_Status__c, app.Application_Status__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Generic_Filter_2__c, app.Generic_Filter_2__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Generic_Filter_3__c, app.Generic_Filter_3__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Generic_Filter_5__c, app.Generic_Filter_5__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Generic_Filter_6__c, app.Generic_Filter_6__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Generic_Filter_7__c, app.Generic_Filter_7__c));
+                    eligibleScholarshipCheck.add(filterScholarships(scholarship.Generic_Filter_8__c, app.Generic_Filter_8__c));
 
                     if (!eligibleScholarshipCheck.contains(false)) {
                         scholarshipsEligibleSet.add(scholarship);
@@ -137,20 +142,26 @@ public with sharing class scholarshipEligibleListViewController {
         return scholarshipEligibleAppStatusList;
     }
 
-    public static Boolean criteriaCompare(List<String> scholarshipList, String appValue) {
-        Boolean matched = true;
-        if (scholarshipList?.size() > 0) {
-            if (String.isNotBlank(appValue)) {
-                if (scholarshipList.contains(appValue)) {
-                    matched = true;
-                } else {
-                    matched = false;
-                }
-            } else {
-                matched = false;
+    public static Boolean filterScholarships(String scholarshipFilter, String applicationValue) {
+        if(String.isBlank(scholarshipFilter)) {
+            return true;
+        }
+
+        if(String.isBlank(applicationValue)) {
+            return false;
+        }
+
+        Set<String> scholarshipFilterSet = new Set<String>();
+        for (String filter : scholarshipFilter.split(';')) {
+            scholarshipFilterSet.add(filter.trim());
+        }
+
+        for (String value : applicationValue.split(';')) {
+            if (scholarshipFilterSet.contains(value.trim())) {
+                return true;
             }
         }
-        return matched;
+        return false;
     }
 
     public class scholarshipEligibleAppStatus {

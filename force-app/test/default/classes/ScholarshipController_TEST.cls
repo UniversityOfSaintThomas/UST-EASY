@@ -48,6 +48,26 @@ public class ScholarshipController_TEST {
             );
             scholarships.add(scholarship);
         }
+
+        Scholarship__c scholarshipFilter = new Scholarship__c(
+                Name = 'Test Scholarship Filter', Close_Date__c = Date.today().addDays(3),
+                Open_Date__c = Date.today().addDays(-3), Recommender__c = true,
+                Recommender_Auto_Send__c = true, Recommender2__c = true,
+                Recommender2_Auto_Send__c = true, Completion_Statement__c = 'TEST',
+                Criteria_Statement__c = 'TEST', Description__c = 'TEST',
+                Essay_1_Text__c = 'TEST', Essay_2_Text__c = 'TEST',
+                Question_1_Text__c = 'TEST', Recommender2_Description__c = 'TEST',
+                Recommender2_Question__c = 'TEST', Recommender_Description__c = 'TEST',
+                Recommender_Question__c = 'TEST', Short_Description__c = 'TEST',
+                Review_Award_Process_Description__c = 'TEST', Self_Report_ACT_GPA_Criteria__c = true,
+                Send_Started_Scholarship_Email__c = true, Start_Scholarship_Email_Template_Id__c = testEmailTemplate.Id,
+                Recommender_Email_Template_Id__c = testEmailTemplate.Id, Recommender2_Email_Template_Id__c = testEmailTemplate.Id,
+                Org_Wide_Email_Id__c = orgWideEmail[0].Id, Recommender_Option__c = 'Recommender Required', Recommender2_Option__c = 'Recommender2 Optional',
+                Submit_Scholarship_Email_Template_Id__c = testEmailTemplate.Id, Submit_Scholarship_Email_Template_Folder__c = submitEmailTemplateFolder[0].value,
+                Admission_Application_Status__c = 'Started App', Generic_Filter_5__c = 'Certificate'
+        );
+        scholarships.add(scholarshipFilter);
+
         insert scholarships;
 
         Account testAccount = new Account(Name = 'Test Account ' + Math.random());
@@ -86,6 +106,7 @@ public class ScholarshipController_TEST {
         Scholarship_Applicant__c applicant = new Scholarship_Applicant__c(
                 Contact__c = student.Id,
                 Scholarship__c = scholarships[0].Id,
+                Scholarship_Status__c = 'Awarded',
                 Recommender_Name__c = 'Contact',
                 Recommender_Email__c = 'sf1@valleyhill.net',
                 Recommendation_Request_Date__c = Datetime.now(),
@@ -384,6 +405,12 @@ public class ScholarshipController_TEST {
         Test.startTest();
         List<scholarshipEligibleListViewController.scholarshipEligibleAppStatus> eligibleScholarships = scholarshipEligibleListViewController.eligibleScholarships(application.Contact__c, application.Id, 'applicationportal');
         Test.stopTest();
+
+        System.assert(!eligibleScholarships.isEmpty(), 'Expected at least one eligible scholarship');
+        for (scholarshipEligibleListViewController.scholarshipEligibleAppStatus status : eligibleScholarships) {
+            System.assertNotEquals(null, status.Id, 'Scholarship Id should be set');
+            System.assertNotEquals(null, status.Name, 'Scholarship Name should be set');
+        }
     }
 
 }

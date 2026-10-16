@@ -126,10 +126,11 @@ public class INT_InteractionProcessor {
 
     private Map<String, OpportunityStage> oppStageMap {
         get {
-            List<OpportunityStage> stages = [SELECT ApiName, DefaultProbability, ForecastCategoryName FROM OpportunityStage];
-            Map<String, OpportunityStage> oppStageMap = new Map<String, OpportunityStage>();
-            for (OpportunityStage stage : stages) {
-                oppStageMap.put(stage.ApiName, stage);
+            if (oppStageMap == null) {
+                oppStageMap = new Map<String, OpportunityStage>();
+                for (OpportunityStage stage : [SELECT ApiName, DefaultProbability, ForecastCategoryName FROM OpportunityStage]) {
+                    oppStageMap.put(stage.ApiName, stage);
+                }
             }
             return oppStageMap;
         }

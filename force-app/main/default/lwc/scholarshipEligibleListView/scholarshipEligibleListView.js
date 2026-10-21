@@ -43,6 +43,10 @@ export default class ScholarshipEligibleListView extends LightningElement {
         return allExpanded ? 'Hide all descriptions' : 'Show all descriptions';
     }
 
+    get showToggleAllButton() {
+        return this.widgetDisplay && this.scholarshipLists.length > 1;
+    }
+
     connectedCallback() {
         eligibleScholarships({contactId: this.contactId, appId: this.appId, currentPage: this.currentPage}).then((results) => {
             if (results && results.length > 0) {
@@ -51,7 +55,8 @@ export default class ScholarshipEligibleListView extends LightningElement {
                     rowNumber: index + 1,
                     showDetails: false,
                     buttonLabel: 'Show description',
-                    chevronClass: 'chevron'
+                    chevronClass: 'chevron',
+                    isStartedApp: !scholarship.AppStatus || scholarship.AppStatus === '(Started App)'
                 }));
                 this.showScholarshipList = true;
             } else {

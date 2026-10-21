@@ -14,31 +14,43 @@
         <div class="scholarship_list_container">
             <template for:each={scholarshipLists} for:item="scholarship">
                 <div key={scholarship.Id} class={widgetStyle}>
-                    <span class="row_number">{scholarship.rowNumber}.</span>
-                    <a href={scholarship.DirectUrl} target=_blank>{scholarship.Name}</a> <span class="slds-m-left_xx-small"><i>{scholarship.AppStatus}</i></span>
-                    <template lwc:if={widgetDisplay}>
-                        <div>
-                            <button type="button" class="button_styling" onclick={handleToggleDetails}
-                                    data-id={scholarship.Id}>
-                                <span class={scholarship.chevronClass}></span>
-                                <span>{scholarship.buttonLabel}</span>
-                            </button>
+                    <div class="scholarship_row">
+                        <span class="row_number">{scholarship.rowNumber}.</span>
+                        <div class="scholarship_row_content">
+                            <span>
+                                <template lwc:if={scholarship.isStartedApp}>
+                                    <a href={scholarship.DirectUrl} target=_blank title="Click to apply">{scholarship.Name}</a>
+                                </template>
+                                <template lwc:else>
+                                    {scholarship.Name}
+                                </template>
+                                <span class="slds-m-left_xx-small app_status"><i>{scholarship.AppStatus}</i></span>
+                            </span>
+                            <template lwc:if={widgetDisplay}>
+                                <div>
+                                    <button type="button" class="button_styling" onclick={handleToggleDetails}
+                                            data-id={scholarship.Id}>
+                                        <span class={scholarship.chevronClass}></span>
+                                        <span>{scholarship.buttonLabel}</span>
+                                    </button>
+                                </div>
+                                <template lwc:if={scholarship.showDetails}>
+                                    <div class="description_text">
+                                        {scholarship.ShortDescription}
+                                    </div>
+                                </template>
+                            </template>
+                            <template lwc:else>
+                                <div>
+                                    {scholarship.ShortDescription}
+                                </div>
+                            </template>
                         </div>
-                        <template lwc:if={scholarship.showDetails}>
-                            <div class="description_text">
-                                {scholarship.ShortDescription}
-                            </div>
-                        </template>
-                    </template>
-                    <template lwc:else>
-                        <div>
-                            {scholarship.ShortDescription}
-                        </div>
-                    </template>
+                    </div>
                 </div>
             </template>
         </div>
-        <template lwc:if={widgetDisplay}>
+        <template lwc:if={showToggleAllButton}>
             <div class="toggle_all_container">
                 <button type="button" class="button_styling" onclick={handleToggleAllDetails}>
                     <span>{toggleAllButtonLabel}</span>

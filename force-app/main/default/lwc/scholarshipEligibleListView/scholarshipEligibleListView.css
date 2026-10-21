@@ -2,6 +2,10 @@
  * Created by nguy0092 on 7/14/2025.
  */
 
+.app_status {
+    font-size: .80rem;
+}
+
 .button_styling{
     font-size: .75rem !important;
     padding: 0;
@@ -36,7 +40,6 @@
 }
 
 .description_text {
-    margin-left: 12px;
     font-size: .90rem;
 }
 
@@ -44,6 +47,17 @@
     margin-right: 4px;
     font-weight: 600;
     color: #514f4d;
+    flex-shrink: 0;
+}
+
+.scholarship_row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.scholarship_row_content {
+    flex: 1;
+    min-width: 0;
 }
 
 :host {
@@ -84,19 +98,19 @@
 }
 
 .toggle_all_container {
-    margin-top: 1rem;
+    margin-top: 0;
     padding-top: 0.5rem;
     border-top: 1px solid #dddbda;
     text-align: center;
 }
 
 .scholarship_total_count {
-    margin-top: 1rem;
+    margin-top: 0.25rem;
     padding-top: 0.5rem;
     border-top: 1px solid #dddbda;
     text-align: center;
     font-size: .80rem;
-    font-weight: bold;
+    font-weight: 600;
     color: #514f4d;
 }
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <isExposed>false</isExposed>
+    <description>Replaces the VF view-state-heavy Related Object section in ApplicationFormSection.component. Loads and manages related SObject records via @AuraEnabled Apex methods instead of VF view state.</description>
+</LightningComponentBundle>

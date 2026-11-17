@@ -1,0 +1,170 @@
+<template>
+    <!-- Loading state -->
+    <template lwc:if={isLoading}>
+        <div class="easy-du-loading slds-p-around_medium slds-text-align_center">
+            <span class="easy-du-spinner" role="status" aria-label="Loading…"></span>
+            <span class="slds-assistive-text">Loading…</span>
+        </div>
+    </template>
+
+    <!-- Error state -->
+    <template lwc:elseif={errorMessage}>
+        <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">
+            <span class="slds-assistive-text">Error</span>
+            <p>{errorMessage}</p>
+        </div>
+    </template>
+
+    <!-- Loaded state -->
+    <template lwc:else>
+
+        <!-- Rich-text entry (optional) -->
+        <template lwc:if={config.allowTextEntry}>
+            <div class="slds-form-element slds-m-bottom_small">
+                <label class="slds-form-element__label">Attachment</label>
+                <div class="slds-form-element__control">
+                    <template lwc:if={canEdit}>
+                        <lightning-input-rich-text
+                            value={config.textEntryValue}
+                            placeholder="Enter your response here…"
+                            onchange={handleRichTextChange}
+                        ></lightning-input-rich-text>
+                        <div class="easy-du-richtext-status">
+                            <span class="easy-du-word-count">{wordCount} words, {characterCount} characters</span>
+                            <template lwc:if={isSavingText}>
+                                <span class="easy-du-saving-indicator">Saving…</span>
+                            </template>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <div class="slds-rich-text-editor__output">
+                            <!-- eslint-disable-next-line @lwc/lwc/no-inner-html -->
+                            <template lwc:if={config.textEntryValue}>
+                                <p lwc:dom="manual" class="easy-du-text-readonly"></p>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <!-- File upload section (shown when editable, or when a file exists) -->
+        <template lwc:if={showFileSection}>
+            <article class="slds-card slds-m-top_medium">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <lightning-icon
+                                icon-name="standard:file"
+                                size="small"
+                                title="Upload file"
+                            ></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span class="slds-truncate">Upload File</span>
+                            </h2>
+                        </div>
+                    </header>
+                </div>
+
+                <div class="slds-card__body slds-card__body_inner">
+
+                    <!-- Existing saved file -->
+                    <template lwc:if={config.existingFileName}>
+                        <div class="slds-form-element slds-m-bottom_small">
+                            <div class="slds-form-element__control">
+                                <span class="slds-text-body_regular">
+                                    <strong>Saved File:&nbsp;</strong>
+                                    <a
+                                        href={downloadUrl}
+                                        target="_blank"
+                                        title="Download file"
+                                    >{config.existingFileName}</a>
+                                </span>
+                                    <template lwc:if={canEdit}>
+                                        <button
+                                            class="slds-button slds-button_icon slds-button_icon-error slds-m-left_small"
+                                            title="Delete Saved File"
+                                            onclick={handleDeleteFile}
+                                            disabled={isSaving}
+                                        >
+                                        <lightning-icon
+                                            icon-name="utility:delete"
+                                            size="x-small"
+                                        ></lightning-icon>
+                                        <span class="slds-assistive-text">Delete Saved File</span>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- File input (editable only) -->
+                    <template lwc:if={canEdit}>
+                        <template lwc:if={acceptedFileTypesDisplay}>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_x-small">
+                                Accepted file types: {acceptedFileTypesDisplay}
+                            </p>
+                        </template>
+                        <div class="slds-form-element__control slds-m-bottom_small">
+                            <div class="slds-file-selector slds-file-selector_files" style="width:100%;">
+                                <div class="slds-file-selector__dropzone slds-var-p-around_large" style="width:100%;">
+                                    <input
+                                        class="slds-file-selector__input slds-assistive-text"
+                                        type="file"
+                                        id="easy-du-input"
+                                        accept={acceptAttribute}
+                                        onchange={handleFileChange}
+                                        disabled={isSaving}
+                                    />
+                                    <label
+                                        class="slds-file-selector__body"
+                                        for="easy-du-input"
+                                    >
+                                        <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                            <lightning-icon
+                                                icon-name="utility:upload"
+                                                size="x-small"
+                                                class="slds-button__icon slds-button__icon_left"
+                                            ></lightning-icon>
+                                            Select File
+                                        </span>
+                                        <span class="slds-file-selector__text slds-medium-show">or Drop File</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- File type error -->
+                        <template lwc:if={fileTypeError}>
+                            <p class="slds-text-color_error slds-m-bottom_x-small">{fileTypeError}</p>
+                        </template>
+
+                        <!-- Required upload error -->
+                        <template lwc:if={requiredError}>
+                            <p class="slds-form-element__help slds-text-color_error">{requiredError}</p>
+                        </template>
+
+                        <!-- Upload progress -->
+                        <template lwc:if={isSaving}>
+                            <div class="slds-m-top_x-small slds-text-color_weak">
+                                <span class="easy-du-spinner easy-du-spinner_inline" aria-hidden="true"></span>
+                                Uploading…
+                            </div>
+                        </template>
+
+                        <!-- Selected file indicator -->
+                        <template lwc:if={selectedFileName}>
+                            <p class="slds-text-body_small slds-m-top_x-small">
+                                <strong>Selected:</strong> {selectedFileName}
+                            </p>
+                        </template>
+                    </template>
+
+                </div>
+            </article>
+        </template>
+
+    </template>
+</template>

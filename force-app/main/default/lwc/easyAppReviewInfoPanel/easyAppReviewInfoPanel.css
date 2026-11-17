@@ -18,19 +18,6 @@
 /*    overflow: auto;*/
 /*}*/
 
-.sectionSaveWarning{
-    font-size: .70rem;
-    font-style: italic;
-    color: red;
-}
-
-.fieldBorderWarning{
-    --slds-c-input-color-border: red;
-    --slds-c-checkbox-color-border: red;
-    --slds-c-checkbox-color-border-checked: red;
-    --slds-c-textarea-color-border: red;
-}
-
 .accordionSection {
     --slds-c-accordion-heading-font-size: .95rem;
 }
@@ -40,29 +27,9 @@
     margin-left: 3px;
 }
 
-.slotButtons {
-    font-size: .70rem;
-    height: 25px;
-    border: solid 1px;
-}
-
-/*.sectionButtonsGroup {*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*}*/
-
-.sectionButtons {
-    font-size: .70rem;
-    height: 23px;
-    border: solid 1px;
-    border-radius: 8px;
-}
-
-.sectionButtonsSelect {
-    font-size: .70rem;
-    height: 23px;
-    border: solid 1px;
-    background-color: rebeccapurple;
-    color: white;
-    border-radius: 8px;
+.panel-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 12rem;
 }

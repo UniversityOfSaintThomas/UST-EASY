@@ -1,0 +1,9 @@
+.review-link-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Ensure the lightning-icon inside the anchor aligns vertically */
+.review-link-container a lightning-icon {
+    vertical-align: middle;
+}

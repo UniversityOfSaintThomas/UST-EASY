@@ -8,26 +8,38 @@ export default class EasyAppReviewNav extends LightningElement {
 
     selectedNav;
 
-    _app = {};
-    menu = {};
-    requirement;
+    // Small {id, label}[] list built by the parent (easyAppReview) — this component only
+    // renders a vertical nav menu, so it doesn't need the full EASYAppWrapper graph.
+    _items = [];
 
     @api
-    get app() {
-        return this._app;
+    get items() {
+        return this._items;
     }
 
-    set app(value) {
-        this._app = value;
-        this.createMenu();
-    }
+    set items(value) {
+        const newItems = value || [];
+        const newIds = newItems.map(item => item.id);
+        const isSameItemSet = newIds.length === this._items.length
+            && newIds.every((id, index) => id === this._items[index].id);
 
-    createMenu() {
-        this.menu = this._app;
-        if(this.menu) {
-            if (!this.selectedNav) {
-                this.selectedNav = this.menu.requirements[0].requirement.Id;
+        this._items = newItems;
+
+        if (isSameItemSet) {
+            // Same requirement list (e.g. parent re-rendered for an unrelated reason) —
+            // keep whatever the user currently has selected instead of resetting it.
+            return;
             }
+
+        if (this._items.length > 0) {
+            // A genuinely new list loaded (e.g. a new application was selected) —
+            // reset to the first requirement and notify the parent.
+            this.selectedNav = this._items[0].id;
+            this.dispatchEvent(new CustomEvent('newrequirement', {
+                detail: this.selectedNav
+            }));
+        } else {
+            this.selectedNav = undefined;
         }
     }
 
@@ -40,8 +52,5 @@ export default class EasyAppReviewNav extends LightningElement {
         this.dispatchEvent(selectEvent);
     }
 
-    renderedCallback() {
-
-    }
 
 }

@@ -8,3 +8,23 @@
 .slds-form-element.slds-has-error .slds-form-element__help {
     display: block;
 }
+
+/* Error state styling for the combobox input */
+.slds-form-element.slds-has-error .slds-combobox__input {
+    border-color: #c23934;
+    box-shadow: 0 0 3px #c23934;
+    background-color: #fef1f1;
+}
+
+/* Focus styles for keyboard accessibility */
+.slds-combobox__input:focus,
+.slds-combobox__input.slds-has-focus {
+    outline: none;
+    border-color: #1b96ff;
+    box-shadow: 0 0 3px #0176d3;
+}
+
+/* Ensure the combobox div shows a pointer cursor to indicate it's clickable */
+.slds-combobox__input {
+    cursor: pointer;
+}

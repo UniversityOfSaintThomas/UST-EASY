@@ -61,6 +61,8 @@ import createLead from '@salesforce/apex/requestForInformationFormController.cre
 import getPresetValues from '@salesforce/apex/requestForInformationFormController.getPresetValues';
 import getSchoolCollegeAccount from '@salesforce/apex/requestForInformationFormController.getSchoolCollegeAccount';
 import getRecruitmentProgram from '@salesforce/apex/requestForInformationFormController.getRecruitmentProgram';
+import getSchoolNameByMajorProgram
+    from '@salesforce/apex/requestForInformationFormController.getSchoolNameByMajorProgram';
 import getProgramIds from '@salesforce/apex/requestForInformationFormController.getProgramIds';
 
 const RFI_CONTROLLER_FIELDS = [
@@ -159,7 +161,6 @@ export default class RequestForInformationForm extends LightningElement {
     academic_level;
     academic_level_api;
     school_college_title;
-    school_college;
     citizenship_type;
     lead_owner;
     lead_source;
@@ -192,6 +193,7 @@ export default class RequestForInformationForm extends LightningElement {
     @track text_message_requested = false;
     @track is_transfer = false;
     @track academic_undecided_selected = false;
+    @track school_college;
 
     //@track mobile_phone_value;
 
@@ -872,16 +874,6 @@ export default class RequestForInformationForm extends LightningElement {
 
             this.record_input.fields.Inquiry_Date__c = this.getTodaysDate();
             this.handleStreetAddress();
-
-            getSchoolCollegeAccount({school_college_name: this.school_college})
-                .then(school_college_account_id => {
-                    if (Boolean(school_college_account_id)) {
-                        this.record_input.fields.St_Thomas_College_School__c = school_college_account_id;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                })
             this.handleRecruitmentProgram();
         }
     }
@@ -898,7 +890,7 @@ export default class RequestForInformationForm extends LightningElement {
      ******************************************
      */
 
-    handleRecruitmentProgram() {
+    async handleRecruitmentProgram() {
         //if (this.is_undergraduate) {
         let count = 0;
         //Apply the single record if undecided in play
@@ -919,23 +911,45 @@ export default class RequestForInformationForm extends LightningElement {
             }
             count++;
         }
-        getRecruitmentProgram({
+
+        //If school_college is empty get one through Major_Program__c;
+        console.log('Major Program: ' + this.record_input.fields.Major_Program__c);
+        if (!this.school_college && this.record_input.fields.Major_Program__c) {
+            try {
+                this.school_college = await getSchoolNameByMajorProgram({major_id: this.record_input.fields.Major_Program__c});
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        console.log('School College: ' + this.school_college);
+
+        await getSchoolCollegeAccount({school_college_name: this.school_college})
+            .then(school_college_account_id => {
+                if (Boolean(school_college_account_id)) {
+                    this.record_input.fields.St_Thomas_College_School__c = school_college_account_id;
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+        try {
+            const program = await getRecruitmentProgram({
             academic_level: this.academic_level_api,
             citizenship_type: this.record_input.fields.Citizenship_Type__c,
             admit_type: this.record_input.fields.Admit_Type__c,
             major_id: this.record_input.fields.Major_Program__c,
             school_name: this.school_college
-        })
-            .then(program => {
+            });
                 if (Boolean(program)) {
                     this.record_input.fields.Recruitment_Program__c = String(program);
                 }
                 this.createLead();
-            })
-            .catch(error => {
+        } catch (error) {
                 console.log(error);
                 this.createLead();
-            });
+        }
     }
 
 // Create the lead record

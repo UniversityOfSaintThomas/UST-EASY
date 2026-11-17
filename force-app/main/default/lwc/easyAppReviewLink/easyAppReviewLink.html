@@ -1,0 +1,19 @@
+<!--
+  easyAppReviewLink — Renders a link/button that opens the Application_Review_LWC
+  app page pre-filtered to this Application record.
+-->
+<template>
+    <div class="review-link-container">
+        <a  href={reviewPageUrl}
+            onclick={handleClick}
+            class={buttonClass}
+            title={label}>
+            <lightning-icon
+                icon-name="utility:new_window"
+                size="x-small"
+                class="slds-m-right_x-small">
+            </lightning-icon>
+            {label}
+        </a>
+    </div>
+</template>

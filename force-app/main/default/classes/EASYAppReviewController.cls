@@ -1,24 +1,27 @@
 public with sharing class EASYAppReviewController {
 
-    // Static maps to store various data related to requirements, questions, and responses
-    private static Map<Id, Requirement__c> requirements { get; set; }
-    private static Map<Id, Requirement_Item__c> requirementItems { get; set; }
-    private static Map<String, RelatedObjectData> requirementItemIdRelatedObjectData { get; set; }
-    private static Map<String, RelatedObjectData> referenceQuestionFieldData { get; set; }
-    private static Map<Id, Requirement_Response__c> requirementResponses { get; set; }
-    private static Map<Id, Question__c> questions { get; set; }
-    private static Map<Id, Question_Response__c> questionResponses { get; set; }
-    private static Map<Id, Question_Response__c> questionResponsesByQuestionId { get; set; }
-    private static Map<Id, Question_Dependency__c> questionDependenciesByQuestionId { get; set; }
-    private static Map<Id, EASYAppRequirementItemWrapper> documentLinkByRequirementId { get; set; }
-    private static Map<Id, SObject> referenceAnswers { get; set; }
-    private static Map<String, List<SObject>> relatedObjectAnswersByRequirementId { get; set; }
-    private static Contact contactRecord { get; set; }
-    private static Application__c applicationRecord { get; set; }
-    private static Id contactId { get; set; }
+    // Instance state for a single getApplicationControl call. A fresh instance is created
+    // per call (see getApplicationControl below) so this class is safe to invoke more than
+    // once within the same transaction — these were previously static fields shared across
+    // the whole transaction, which made the class non-reentrant.
+    private Map<Id, Requirement__c> requirements;
+    private Map<Id, Requirement_Item__c> requirementItems;
+    private Map<String, RelatedObjectData> requirementItemIdRelatedObjectData;
+    private Map<String, RelatedObjectData> referenceQuestionFieldData;
+    private Map<Id, Requirement_Response__c> requirementResponses;
+    private Map<Id, Question__c> questions;
+    private Map<Id, Question_Response__c> questionResponses;
+    private Map<Id, Question_Response__c> questionResponsesByQuestionId;
+    private Map<Id, Question_Dependency__c> questionDependenciesByQuestionId;
+    private Map<Id, EASYAppRequirementItemWrapper> documentLinkByRequirementId;
+    private Map<Id, SObject> referenceAnswers;
+    private Map<String, List<SObject>> relatedObjectAnswersByRequirementId;
+    private Contact contactRecord;
+    private Application__c applicationRecord;
+    private Id contactId;
 
-    // Create a map to store the sObject fields for each object and share across classes
-    public static Map<String, Map<String, SObjectField>> sObjectFieldMap { get; set; }
+    // Cache of sObject field describes for this instance's call, keyed by object name.
+    private Map<String, Map<String, SObjectField>> sObjectFieldMap;
 
     // Wrapper class for related object data
     private class RelatedObjectData {
@@ -56,16 +59,21 @@ public with sharing class EASYAppReviewController {
     // Method to get applicant information
     @AuraEnabled(Cacheable=true)
     public static Application__c getApplicantInfo(String appId) {
-        return [
+        if (String.isBlank(appId)) {
+            return null;
+        }
+        List<Application__c> results = [
                 SELECT Id, Name, Contact__c, Contact__r.FirstName, Contact__r.LastName
                 FROM Application__c
                 WHERE Id = :appId
+                WITH USER_MODE
                 LIMIT 1
         ];
+        return results.isEmpty() ? null : results[0];
     }
 
     // Method to set SObject field map for field describes and cache them
-    public static Map<String, Map<String, SObjectField>> setSObjectFieldMap(String objectName) {
+    private Map<String, Map<String, SObjectField>> setSObjectFieldMap(String objectName) {
         if (sObjectFieldMap == null) {
             sObjectFieldMap = new Map<String, Map<String, SObjectField>>();
         }
@@ -78,31 +86,52 @@ public with sharing class EASYAppReviewController {
         return sObjectFieldMap;
     }
 
-    // Method to get application control information
+    // Method to get application control information. A new instance is created per call so
+    // the working state above never bleeds between invocations in the same transaction.
     @AuraEnabled(Cacheable=true)
     public static EASYAppWrapper getApplicationControl(String appId) {
+        return new EASYAppReviewController().buildApplicationControl(appId);
+    }
+
+    private EASYAppWrapper buildApplicationControl(String appId) {
 
         // Initialize application record and wrapper
         applicationRecord = new Application__c();
         EASYAppWrapper appWrapper = new EASYAppWrapper();
 
+        if (String.isBlank(appId)) {
+            return appWrapper;
+        }
+
         // Query application record
-        applicationRecord = [
+        List<Application__c> appList = [
                 SELECT Id, Contact__c, Application_Control__c
                 FROM Application__c
                 WHERE Id = :appId
+                WITH USER_MODE
         ];
+
+        if (appList.isEmpty()) {
+            return appWrapper;
+        }
+        applicationRecord = appList[0];
 
         if (applicationRecord != null) {
             Id appControlId = applicationRecord.Application_Control__c;
             contactId = applicationRecord.Contact__c;
 
-            Application_Control__c appControl = [
+            List<Application_Control__c> appControlList = [
                     SELECT Id, Name, Academic_Level__c, Active__c, Degree_Levels__c, School_College__c
                     FROM Application_Control__c
                     WHERE Id = :appControlId
                     AND Active__c = TRUE
             ];
+
+            if (appControlList.isEmpty()) {
+                return appWrapper;
+            }
+            Application_Control__c appControl = appControlList[0];
+
             appWrapper.appControl = appControl;
             appWrapper.requirements = new List<EASYAppRequirementWrapper>();
 
@@ -120,6 +149,7 @@ public with sharing class EASYAppReviewController {
                         AND Active__c = TRUE
                         AND Display_on_Admin_Review_Pages__c = TRUE
                         AND Show_on_Application_Creation__c = FALSE
+                        WITH USER_MODE
                         ORDER BY Display_Order__c NULLS LAST
                 ]);
 
@@ -138,6 +168,7 @@ public with sharing class EASYAppReviewController {
                         // AND Application_Control__c = :appControlId
                         AND Active__c = TRUE
                         AND Display_on_Admin_Review_Pages__c = TRUE
+                        WITH USER_MODE
                         ORDER BY Display_Order__c NULLS LAST
                 ]);
 
@@ -157,6 +188,7 @@ public with sharing class EASYAppReviewController {
                         WHERE Requirement_Item__c IN :requirementItems.keySet()
                         AND Display_on_Admin_Review_Pages__c = TRUE
                         AND Active__c = TRUE
+                        WITH USER_MODE
                         ORDER BY Display_Order__c NULLS LAST
                 ]);
 
@@ -167,6 +199,7 @@ public with sharing class EASYAppReviewController {
                         FROM Requirement_Response__c
                         WHERE Requirement_Item__c IN :requirementItems.keySet()
                         AND Application__c = :appId
+                        WITH USER_MODE
                 ]);
 
                 // Query question responses for the application
@@ -181,7 +214,7 @@ public with sharing class EASYAppReviewController {
                         FROM Question_Response__c
                         WHERE Requirement_Response__r.Requirement_Item__c IN :requirementItems.keySet()
                         AND Application__c = :appId
-                        WITH SECURITY_ENFORCED
+                        WITH USER_MODE
                         ORDER BY CreatedDate DESC NULLS LAST
                 ]
                 );
@@ -190,8 +223,20 @@ public with sharing class EASYAppReviewController {
                 requirementItemIdRelatedObjectData = new Map<String, RelatedObjectData>();
                 referenceQuestionFieldData = new Map<String, RelatedObjectData>();
                 Set<String> contactFieldsToQuery = new Set<String>();
-                Set<String> recommendationFieldsToQuery = new Set<String>();
                 Set<String> applicationFieldsToQuery = new Set<String>();
+
+                // Pre-cache object field maps and seed base application filter fields once,
+                // outside the question loop so we don't repeat describe calls per question.
+                setSObjectFieldMap('contact');
+                setSObjectFieldMap('application__c');
+                applicationFieldsToQuery.addAll(new Set<String>{
+                        'application_status__c', 'generic_filter_1__c', 'generic_filter_2__c',
+                        'generic_filter_3__c', 'generic_filter_4__c', 'generic_filter_5__c',
+                        'generic_filter_6__c', 'generic_filter_7__c', 'generic_filter_8__c',
+                        'intended_program__c', 'applicant_type__c', 'citizenship__c',
+                        'school_college__c', 'delivery_type__c', 'residency__c',
+                        'student_type__c', 'degree_type__c'
+                });
 
                 // Process questions to build reference and related object queries
                 for (Question__c q : questions.values()) {
@@ -226,6 +271,7 @@ public with sharing class EASYAppReviewController {
                                     refQueryField => q.Label__c
                             };
                             newROD.whereIds = new List<Id>();
+                            newROD.whereClause = '';
 
                             if (String.isNotBlank(q.Requirement_Item__r.Related_List_Where_Clause__c)) {
                                 newROD.whereClause += ' AND ' + q.Requirement_Item__r.Related_List_Where_Clause__c;
@@ -250,7 +296,7 @@ public with sharing class EASYAppReviewController {
                         //remove spaces from fields
                         setSObjectFieldMap(q.Related_Object__c);
                         //Check if field related query fields exists in object field map or remove it from the list
-                        for (Integer i = 0; i < relatedQueryFields.size(); i++) {
+                        for (Integer i = relatedQueryFields.size() - 1; i >= 0; i--) {
                             if (!sObjectFieldMap.get(q.Related_Object__c).containsKey(relatedQueryFields[i])) {
                                 relatedQueryFields.remove(i);
                             }
@@ -292,11 +338,6 @@ public with sharing class EASYAppReviewController {
                         }
                     }
 
-                    // Get field level descriptions and cache them for later use
-                    setSObjectFieldMap('contact');
-                    setSObjectFieldMap('application__c');
-                    setSObjectFieldMap('recommendation__c');
-
                     // Add contact and application fields to query sets
                     if (String.isNotBlank(q.Contact_Field__c)) {
                         Map<String, SObjectField> sObjectField = sObjectFieldMap.get('contact');
@@ -310,56 +351,48 @@ public with sharing class EASYAppReviewController {
                             applicationFieldsToQuery.add(q.Application_Field__c.toLowerCase());
                         }
                     }
-                    //Make sure application query has all filter fields. Use lowercase to match lowercased fields applied above
-                    applicationFieldsToQuery.add('application_status__c');
-                    applicationFieldsToQuery.add('generic_filter_1__c');
-                    applicationFieldsToQuery.add('generic_filter_2__c');
-                    applicationFieldsToQuery.add('generic_filter_3__c');
-                    applicationFieldsToQuery.add('generic_filter_4__c');
-                    applicationFieldsToQuery.add('generic_filter_5__c');
-                    applicationFieldsToQuery.add('generic_filter_6__c');
-                    applicationFieldsToQuery.add('generic_filter_7__c');
-                    applicationFieldsToQuery.add('generic_filter_8__c');
-                    applicationFieldsToQuery.add('intended_program__c');
-                    applicationFieldsToQuery.add('applicant_type__c');
-                    applicationFieldsToQuery.add('citizenship__c');
-                    applicationFieldsToQuery.add('school_college__c');
-                    applicationFieldsToQuery.add('delivery_type__c');
-                    applicationFieldsToQuery.add('residency__c');
-                    applicationFieldsToQuery.add('student_type__c');
-                    applicationFieldsToQuery.add('degree_type__c');
 
-                    // Add recommendation fields to query set
-                    if (String.isNotBlank(q.Related_Object_Field__c) && q.Related_Object__c != null) {
-                        if (q.Related_Object__c.equalsIgnoreCase('Recommendation__c')) {
-                            Map<String, SObjectField> sObjectField = sObjectFieldMap.get('recommendation__c');
-                            if (sObjectField.containsKey(q.Related_Object_Field__c)) {
-                                recommendationFieldsToQuery.add(q.Related_Object_Field__c.toLowerCase());
-                            }
-                        }
-                    }
                 }
 
                 // Get the relevant fields from application and contact based on those mapped in the questions
                 String contactFields = String.join(new List<String>(contactFieldsToQuery), ',');
                 String applicationFields = String.join(new List<String>(applicationFieldsToQuery), ',');
-                String recommendationFields = String.join(new List<String>(recommendationFieldsToQuery), ',');
                 contactRecord = new Contact();
                 applicationRecord = new Application__c();
-                List<Recommendation__c> recommendations = new List<Recommendation__c>();
 
                 if (String.isNotBlank(contactFields)) {
                     String query = 'SELECT Id, ' + contactFields + ' FROM Contact WHERE Id = :contactId';
-                    contactRecord = Database.query(query);
+                    contactRecord = Database.query(query, AccessLevel.USER_MODE);
                 }
                 if (String.isNotBlank(applicationFields)) {
                     String query = 'SELECT Id, ' + applicationFields + ' FROM Application__c WHERE Id = :appId';
-                    applicationRecord = Database.query(query);
+                    applicationRecord = Database.query(query, AccessLevel.USER_MODE);
                 }
 
-                if (String.isNotBlank(recommendationFields)) {
-                    String query = 'SELECT Id, ' + recommendationFields + ' FROM Recommendation__c WHERE Application__c = :appId';
-                    recommendations = Database.query(query);
+
+                // Enrich referenceQuestionFieldData with reference IDs that come directly
+                // from Contact/Application field mappings. This covers Reference-type questions
+                // that have no Question_Response__c yet so they still resolve their display name.
+                for (Question__c q : questions.values()) {
+                    if (!q.RecordType.DeveloperName.equalsIgnoreCase('Reference')) continue;
+                    if (String.isBlank(q.Lookup_Object__c)) continue;
+                    String refKey = q.Lookup_Object__c.toLowerCase();
+                    if (!referenceQuestionFieldData.containsKey(refKey)) continue;
+                    String refIdStr = null;
+                    if (String.isNotBlank(q.Contact_Field__c) && contactRecord.get(q.Contact_Field__c) != null) {
+                        refIdStr = String.valueOf(contactRecord.get(q.Contact_Field__c));
+                    }
+                    if (String.isNotBlank(q.Application_Field__c) && applicationRecord.get(q.Application_Field__c) != null) {
+                        refIdStr = String.valueOf(applicationRecord.get(q.Application_Field__c));
+                    }
+                    if (String.isNotBlank(refIdStr)) {
+                        try {
+                            Id.valueOf(refIdStr); // validate it's a real Id
+                            if (!referenceQuestionFieldData.get(refKey).whereIds.contains(refIdStr)) {
+                                referenceQuestionFieldData.get(refKey).whereIds.add(refIdStr);
+                            }
+                        } catch (Exception e) { /* not a valid Id — skip */ }
+                    }
                 }
 
                 // Process question responses to build reference object data
@@ -369,14 +402,12 @@ public with sharing class EASYAppReviewController {
                             if (String.isNotBlank(qr.Question__r.Lookup_Object__c)) {
                                 String refKey = qr.Question__r.Lookup_Object__c.toLowerCase();
                                 if (referenceQuestionFieldData.containsKey(refKey)) {
-                                    System.debug('qr.ValueText__c: ' + qr.ValueText__c + ', refKey: ' + refKey + ', qr.Question__r.Lookup_Object__c: ' + qr.Question__r.Lookup_Object__c + ', qr.Id: ' + qr.Id);
-
                                     if (String.isNotBlank(qr.ValueText__c)) {
                                         Id refId;
                                         try {
                                             refId = Id.valueOf(qr.ValueText__c);
                                         } catch (Exception e) {
-                                            System.debug('Error: ' + e.getMessage());
+                                            // Not a valid Id — skip
                                         }
                                         if (refId != null) {
                                             referenceQuestionFieldData.get(refKey).whereIds.add(qr.ValueText__c);
@@ -402,12 +433,9 @@ public with sharing class EASYAppReviewController {
                     setSObjectFieldMap(rod.objectName);
                     Map<String, SObjectField> sObjectField = sObjectFieldMap.get(rod.objectName);
 
-                    List<SObject> relatedObjectAnswerList = new List<SObject>();
-                    if (rod.objectName.equalsIgnoreCase('recommendation__c')) {
-                        relatedObjectAnswerList = recommendations;
-                    } else {
-                        relatedObjectAnswerList = Database.query(rod.query);
-                    }
+                    // Every Related_Object item runs its own query (including recommendations), so the item's
+                    // Related_List_Where_Clause__c decides which records it shows.
+                    List<SObject> relatedObjectAnswerList = Database.query(rod.query, AccessLevel.USER_MODE);
 
                     //loop over relatedObjectAnswerList and if the field
                     for (SObject refObjAnswer : relatedObjectAnswerList) {
@@ -452,7 +480,7 @@ public with sharing class EASYAppReviewController {
                         List<String> whereIds = rod.whereIds;
                         rod.query = 'SELECT Id, ' + String.join(new List<String>(rod.objectFields), ',') + ' FROM ' + rod.objectName + ' WHERE Id IN :whereIds';
                         //run query and get results in Map<id, SObject>
-                        for (SObject obj : Database.query(rod.query)) {
+                        for (SObject obj : Database.query(rod.query, AccessLevel.USER_MODE)) {
                             referenceAnswers.put(obj.Id, obj);
                         }
                     }
@@ -464,6 +492,7 @@ public with sharing class EASYAppReviewController {
                         SELECT Id, Name, Question__c, Controlling_Question__c, ValueCheckbox__c, Value__c, RecordType.Name
                         FROM Question_Dependency__c
                         WHERE Question__c IN :questions.keySet()
+                        WITH USER_MODE
                 ];
 
                 questionDependenciesByQuestionId = new Map<Id, Question_Dependency__c>();
@@ -486,6 +515,8 @@ public with sharing class EASYAppReviewController {
                 }
 
                 // Query for all the requirement response documents and map them to the requirement response id
+                // ContentDocumentLink requires a non-empty IN set — skip if no document responses found
+                if (!requirementsWithDocuments.isEmpty()) {
                 List<ContentDocumentLink> documentLinksList = [
                         SELECT Id, ContentDocumentId, LinkedEntityId, ContentDocument.Title
                         FROM ContentDocumentLink
@@ -503,19 +534,21 @@ public with sharing class EASYAppReviewController {
                         documentLinkByRequirementId.put(reqItemId, documentRelatedObjectData);
                     }
                 }
+                }
                 appWrapper.requirements = buildRequirements();
             }
         }
         return appWrapper;
     }
 
-    private static List<EASYAppRequirementWrapper> buildRequirements() {
+    private List<EASYAppRequirementWrapper> buildRequirements() {
         List<EASYAppRequirementWrapper> reqWrapperList = new List<EASYAppRequirementWrapper>();
         if (requirements.size() > 0) {
             for (Id reqKey : requirements.keySet()) {
                 if (ApplicationFilter.filter(applicationRecord, requirements.get(reqKey))) {
                     EASYAppRequirementWrapper reqWrapper = new EASYAppRequirementWrapper();
                     reqWrapper.requirement = requirements.get(reqKey);
+                    reqWrapper.title = headingFor(reqWrapper.requirement.Label__c, reqWrapper.requirement.Name);
                     reqWrapper.requirementItems = buildRequirementItems(reqKey);
                     //find out if there are any question responses for this requirement
                     for (EASYAppRequirementItemWrapper reqItem : reqWrapper.requirementItems) {
@@ -541,7 +574,7 @@ public with sharing class EASYAppReviewController {
         return reqWrapperList;
     }
 
-    private static List<EASYAppRequirementItemWrapper> buildRequirementItems(Id reqKey) {
+    private List<EASYAppRequirementItemWrapper> buildRequirementItems(Id reqKey) {
         List<EASYAppRequirementItemWrapper> requirementItemsList = new List<EASYAppRequirementItemWrapper>();
         Integer keyCount = 0;
         for (Requirement_Item__c ri : requirementItems.values()) {
@@ -549,6 +582,7 @@ public with sharing class EASYAppReviewController {
                 if (ApplicationFilter.filter(applicationRecord, ri)) {
                     EASYAppRequirementItemWrapper newRIWrap = new EASYAppRequirementItemWrapper();
                     newRIWrap.requirementItem = ri;
+                    newRIWrap.title = headingFor(ri.Label__c, ri.Name);
                     if (ri.RecordType.DeveloperName == 'Related_Object') {
                         newRIWrap.is_related_object = true;
                     }
@@ -605,13 +639,8 @@ public with sharing class EASYAppReviewController {
                                                     }
                                                 } else if (q.recordType.DeveloperName.equalsIgnoreCase('MultiPicklist')) {
                                                     String answerString = String.valueOf(obj.get(field));
-                                                    rodItem.answerMultiValue = answerString.split(';');
-                                                    if (answerString.contains(';')) {
-                                                        List<String> answerList = answerString.split(';');
-                                                        rodItem.answerValue = String.join(answerList, ', ');
-                                                    } else {
-                                                        rodItem.answerValue = String.valueOf(obj.get(field));
-                                                    }
+                                                    rodItem.answerMultiValue = splitChoices(answerString);
+                                                    rodItem.answerValue = String.join(splitChoices(answerString), ', ');
                                                 } else {
                                                     rodItem.answerValue = String.valueOf(obj.get(field));
                                                 }
@@ -622,8 +651,11 @@ public with sharing class EASYAppReviewController {
                                     }
                                 }
                             }
+                            // A record with no populated field for this item would render an empty box.
+                            if (!relatedObjectAnswer.isEmpty()) {
                             newRIWrap.relatedObjectAnswers.add(relatedObjectAnswer);
                         }
+                    }
                     }
 
                     requirementItemsList.add(newRIWrap);
@@ -633,88 +665,120 @@ public with sharing class EASYAppReviewController {
         return requirementItemsList;
     }
 
-    private static List<EASYAppQuestionResponseWrapper> buildQuestions(Id reqItemId) {
+    private List<EASYAppQuestionResponseWrapper> buildQuestions(Id reqItemId) {
         List<EASYAppQuestionResponseWrapper> questionsList = new List<EASYAppQuestionResponseWrapper>();
         for (Question__c q : questions.values()) {
-            if (q.Requirement_Item__c == reqItemId) {
-                //Evaluate if question dependencies are met
+            if (q.Requirement_Item__c != reqItemId) continue;
 
                 EASYAppQuestionResponseWrapper qrWrapper = new EASYAppQuestionResponseWrapper();
                 qrWrapper.answered = false;
                 qrWrapper.question = q;
-                String valueField = fieldRecTypeFieldName.get(q.RecordType.DeveloperName);
-                System.debug('valueField: ' + valueField);
+            qrWrapper.valueType = q.RecordType.DeveloperName.toLowerCase();
+            qrWrapper.dependencies_met = true;
+            qrWrapper.show_question = false;
 
+                String valueField = fieldRecTypeFieldName.get(q.RecordType.DeveloperName);
+
+            // ── 1. Attach the real question response when one exists ──────────
                 if (questionResponsesByQuestionId.containsKey(q.Id)) {
                     qrWrapper.questionResponse = questionResponsesByQuestionId.get(q.Id);
-                    //Check if the question has a Contact_Field__c or Application_Field__c and apply the value to the question response
+                if (qrWrapper.questionResponse.IsShown__c
+                        && qrWrapper.questionResponse.IsComplete__c
+                        && qrWrapper.questionResponse.IsPopulated__c) {
+                    qrWrapper.answered = true;
+                }
+            }
+
+            // ── 2. Apply live Contact / Application field value ───────────────
+            // Runs regardless of whether a real QR exists. When there is no QR
+            // a lightweight synthetic record is created just to carry the value.
+            // A non-null live value always marks the question as answered in the
+            // review context, regardless of QR completion flags.
                     if (String.isNotBlank(valueField) && !valueField.equalsIgnoreCase('Address')) {
-                        if (String.isNotBlank(q.Contact_Field__c) && contactRecord.get(q.Contact_Field__c) != null) {
-                            //Clear other values
+                Object liveValue = null;
+
+                if (String.isNotBlank(q.Contact_Field__c)
+                        && contactRecord.get(q.Contact_Field__c) != null) {
+                    liveValue = contactRecord.get(q.Contact_Field__c);
+                }
+                // Application field wins over Contact field when both are mapped
+                if (String.isNotBlank(q.Application_Field__c)
+                        && applicationRecord.get(q.Application_Field__c) != null) {
+                    liveValue = applicationRecord.get(q.Application_Field__c);
+                }
+
+                if (liveValue != null) {
+                    if (qrWrapper.questionResponse == null) {
+                        // No real QR — create a lightweight synthetic holder (display only)
+                        qrWrapper.questionResponse = new Question_Response__c();
+                        qrWrapper.questionResponse.Question__c = q.Id;
+                    }
+                    // Clear other value slots to prevent stale data bleed-through
                             for (String valField : fieldRecTypeFieldName.values()) {
                                 if (!valField.equalsIgnoreCase('Address')) {
                                     qrWrapper.questionResponse.put(valField, null);
                                 }
                             }
-                            qrWrapper.questionResponse.put(valueField, contactRecord.get(q.Contact_Field__c));
-                            if(q.RecordType.DeveloperName.equalsIgnoreCase('multiPicklist')){
-                                qrWrapper.answerMultiValue = contactRecord.get(q.Contact_Field__c).toString().split(';');
-                            }
-                        }
-                        if (String.isNotBlank(q.Application_Field__c) && applicationRecord.get(q.Application_Field__c) != null) {
-                            if(q.RecordType.DeveloperName.equalsIgnoreCase('multiPicklist')){
-                                qrWrapper.answerMultiValue = applicationRecord.get(q.Application_Field__c).toString().split(';');
-                            }
-                            qrWrapper.questionResponse.put(valueField, applicationRecord.get(q.Application_Field__c));
-                        }
-                    }
-
-                    if (qrWrapper.questionResponse.IsShown__c && qrWrapper.questionResponse.IsComplete__c && qrWrapper.questionResponse.IsPopulated__c) {
+                    qrWrapper.questionResponse.put(valueField, liveValue);
                         qrWrapper.answered = true;
                     }
-                    //qrWrapper.answered = true;
                 }
-                qrWrapper.valueType = q.RecordType.DeveloperName.toLowerCase();
-                qrWrapper.dependencies_met = true;
 
-                qrWrapper.show_question = false;
+            // ── 2b. Address questions mapped to a Contact / Application address ─
+            // The applicant may never have saved a response for these (the address lives on the Contact), so
+            // read the live address the question is mapped to, exactly as step 2 does for the other types.
+            if (q.RecordType.DeveloperName.equalsIgnoreCase('Address')) {
+                applyLiveAddress(q, qrWrapper);
+            }
+
+            // ── 3. Resolve display values for Reference and MultiPicklist ─────
+            if (qrWrapper.questionResponse != null) {
                 if (q.RecordType.DeveloperName.equalsIgnoreCase('Reference')) {
-                    if (String.isNotBlank(qrWrapper.questionResponse.ValueText__c)) {
-                        if (referenceAnswers.containsKey(qrWrapper.questionResponse.ValueText__c)) {
-                            qrWrapper.answerLabel = referenceAnswers.get(qrWrapper.questionResponse.ValueText__c).get(q.Name_Field_API_Name__c).toString();
-                            qrWrapper.answerLink = Url.getOrgDomainUrl().toExternalForm() + '/' + qrWrapper.questionResponse.ValueText__c;
+                    String refVal = qrWrapper.questionResponse.ValueText__c;
+                    if (String.isNotBlank(refVal) && referenceAnswers.containsKey(refVal)) {
+                        qrWrapper.answerLabel = referenceAnswers.get(refVal)
+                                .get(q.Name_Field_API_Name__c).toString();
+                        qrWrapper.answerLink = Url.getOrgDomainUrl().toExternalForm() + '/' + refVal;
                         }
                     }
-                }
+                // A multi-select answer is shown as one pill per choice. The choices are usually saved in
+                // ValueLongTextArea__c, but a response (or a mapped Contact/Application text field) can hold the
+                // semicolon-separated text in another text field, so use the first text field that has a value.
                 if (q.RecordType.DeveloperName.equalsIgnoreCase('MultiPicklist')) {
-                    System.debug('MultiPicklist: ' + qrWrapper.questionResponse.ValueText__c);
-                    if(String.isNotBlank(qrWrapper.questionResponse.ValueText__c)){
-                        qrWrapper.answerMultiValue = qrWrapper.questionResponse.ValueText__c.split(';');
+                    Question_Response__c multiResponse = qrWrapper.questionResponse;
+                    qrWrapper.answerMultiValue = splitChoices(firstNonBlank(
+                            new List<String>{
+                                    multiResponse.ValueLongTextArea__c, multiResponse.ValueText__c, multiResponse.ValueTextArea__c
+                            }
+                    ));
                     }
                 }
 
+            // The template shows an address when any part of it is filled in, not only the street.
+            if (qrWrapper.questionResponse != null) {
+                qrWrapper.hasAddress = hasAnyAddressPart(qrWrapper.questionResponse);
+            }
+
+            // ── 4. Evaluate question dependencies ─────────────────────────────
                 if (questionDependenciesByQuestionId.containsKey(q.Id)) {
                     Question_Dependency__c qd = questionDependenciesByQuestionId.get(q.Id);
-                    if (questionResponsesByQuestionId.get(qd.Controlling_Question__c) == null) {
+                Question_Response__c ctrlQR = questionResponsesByQuestionId.get(qd.Controlling_Question__c);
+                if (ctrlQR == null) {
                         qrWrapper.dependencies_met = false;
-                    } else if (qd.RecordType.Name == 'Picklist') {
-                        if (qd.Value__c != questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueText__c) {
+                } else if (qd.RecordType.Name == 'Picklist' || qd.RecordType.Name == 'Radio') {
+                    if (qd.Value__c != ctrlQR.ValueText__c) {
                             qrWrapper.dependencies_met = false;
                         }
                     } else if (qd.RecordType.Name == 'Checkbox') {
-                        if (Boolean.valueOf(qd.ValueCheckbox__c) != questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueCheckbox__c) {
+                    if (Boolean.valueOf(qd.ValueCheckbox__c) != ctrlQR.ValueCheckbox__c) {
                             qrWrapper.dependencies_met = false;
                         }
                     } else if (qd.RecordType.Name == 'MultiPicklist') {
-                        if (questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueText__c != null) {
-                            List<String> controllingValues = questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueText__c.split(';');
-                            if (!controllingValues.contains(qd.Value__c)) {
+                    if (String.isNotBlank(ctrlQR.ValueText__c)) {
+                        List<String> ctrlValues = ctrlQR.ValueText__c.split(';');
+                        if (!ctrlValues.contains(qd.Value__c)) {
                                 qrWrapper.dependencies_met = false;
                             }
-                        }
-                    } else if (qd.RecordType.Name == 'Radio') {
-                        if (qd.Value__c != questionResponsesByQuestionId.get(qd.Controlling_Question__c).ValueText__c) {
-                            qrWrapper.dependencies_met = false;
                         }
                     }
                 }
@@ -724,11 +788,93 @@ public with sharing class EASYAppReviewController {
                 }
                 questionsList.add(qrWrapper);
             }
-        }
         return questionsList;
     }
 
-    private static List<Requirement_Response__c> buildRequirementResponses(Id reqItemId) {
+    // Splits semicolon-separated choices into trimmed, non-empty values; null when there is nothing to show
+    // (an empty list would still look "present" to the template).
+    private List<String> splitChoices(String choices) {
+        if (String.isBlank(choices)) {
+            return null;
+        }
+        List<String> trimmed = new List<String>();
+        for (String choice : choices.split(';')) {
+            if (String.isNotBlank(choice)) {
+                trimmed.add(choice.trim());
+            }
+        }
+        return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    private String firstNonBlank(List<String> candidates) {
+        for (String candidate : candidates) {
+            if (String.isNotBlank(candidate)) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    // Same heading rule as the applicant-side pages: the Label, falling back to the Name when the Label is blank.
+    private String headingFor(String label, String name) {
+        return String.isNotBlank(label) ? label : name;
+    }
+
+    // Copies the address a question is mapped to (for example Contact.MailingAddress) onto its response.
+    private void applyLiveAddress(Question__c q, EASYAppQuestionResponseWrapper qrWrapper) {
+        Object liveValue = null;
+        if (String.isNotBlank(q.Contact_Field__c)) {
+            Object contactValue = readFieldOrNull(contactRecord, q.Contact_Field__c);
+            if (contactValue != null) {
+                liveValue = contactValue;
+            }
+        }
+        // Application field wins over Contact field when both are mapped
+        if (String.isNotBlank(q.Application_Field__c)) {
+            Object applicationValue = readFieldOrNull(applicationRecord, q.Application_Field__c);
+            if (applicationValue != null) {
+                liveValue = applicationValue;
+            }
+        }
+        if (!(liveValue instanceof Address)) {
+            return;
+        }
+        Address liveAddress = (Address) liveValue;
+        String stateText = String.isNotBlank(liveAddress.getState()) ? liveAddress.getState() : liveAddress.getStateCode();
+        String countryText = String.isNotBlank(liveAddress.getCountry()) ? liveAddress.getCountry() : liveAddress.getCountryCode();
+        if (String.isBlank(liveAddress.getStreet()) && String.isBlank(liveAddress.getCity())
+                && String.isBlank(stateText) && String.isBlank(liveAddress.getPostalCode()) && String.isBlank(countryText)) {
+            return;
+        }
+        if (qrWrapper.questionResponse == null) {
+            // No saved response: a lightweight holder for display only
+            qrWrapper.questionResponse = new Question_Response__c();
+            qrWrapper.questionResponse.Question__c = q.Id;
+        }
+        qrWrapper.questionResponse.Street__c = liveAddress.getStreet();
+        qrWrapper.questionResponse.City__c = liveAddress.getCity();
+        qrWrapper.questionResponse.State__c = stateText;
+        qrWrapper.questionResponse.PostalCode__c = liveAddress.getPostalCode();
+        qrWrapper.questionResponse.Country__c = countryText;
+        qrWrapper.answered = true;
+    }
+
+    // Reads a field by name; null when the record was not queried with that field.
+    private Object readFieldOrNull(SObject record, String fieldName) {
+        try {
+            return record.get(fieldName);
+        } catch (SObjectException fieldNotAvailable) {
+            return null;
+        }
+    }
+
+    private Boolean hasAnyAddressPart(Question_Response__c response) {
+        return String.isNotBlank(response.Street__c) || String.isNotBlank(response.City__c)
+                || String.isNotBlank(response.State__c) || String.isNotBlank(response.PostalCode__c)
+                || String.isNotBlank(response.Country__c);
+    }
+
+    private List<Requirement_Response__c> buildRequirementResponses(Id reqItemId) {
         List<Requirement_Response__c> requirementResponsesList = new List<Requirement_Response__c>();
         for (Requirement_Response__c r : requirementResponses.values()) {
             if (r.Requirement_Item__c == reqItemId) {

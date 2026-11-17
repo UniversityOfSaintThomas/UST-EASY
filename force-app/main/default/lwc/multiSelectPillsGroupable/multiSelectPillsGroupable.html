@@ -16,8 +16,17 @@
                 <div class={mainDivClass} aria-expanded="false" aria-haspopup="listbox" role="combobox">
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
                         <input type="text" class="slds-hide" id="multi-select-pill-groupable" aria-describedby="error-message-id" autocomplete="off" role="textbox" required={required}>
-                        <div onclick={handleClick} class="slds-input slds-combobox__input slds-p-around_xx-small"
-                             id="combobox-div-1" aria-controls="listbox-id-1">{hintText}
+                        <div onclick={handleClick}
+                             onkeydown={handleKeyDown}
+                             onfocus={handleFocus}
+                             onblur={handleBlur}
+                             tabindex="0"
+                             class="slds-input slds-combobox__input slds-p-around_xx-small"
+                             id="combobox-div-1"
+                             aria-controls="listbox-id-1"
+                             aria-label={label}
+                             role="combobox"
+                             aria-expanded={ariaExpanded}>{hintText}
                             <c-multi-select-pills-groupable-pill items={selectedPills} onitemremove={handlePillRemove}></c-multi-select-pills-groupable-pill>
                         </div>
                         <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
@@ -26,7 +35,7 @@
                     </div>
                     <div class={dropdownOuterStyle} role="listbox">
                         <ul class="slds-listbox slds-listbox_vertical" role="presentation">
-                            <template for:each={options_} for:item="option">
+                            <template for:each={displayOptions} for:item="option">
 
                                 <template if:true={option.is_group}>
                                     <li role="presentation" class="slds-listbox__item" key={option.label}>
@@ -42,6 +51,7 @@
                                             value={option.value}
                                             label={option.label}
                                             selected={option.selected}
+                                            focused={option.focused}
                                             onselected={handleSelectedClick}>
                                     </c-multi-select-pills-groupable-item>
                                 </template>

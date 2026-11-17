@@ -3,6 +3,32 @@
     opacity: .5;
 }
 
+/* Placeholder spinner shown in easy-ro-* containers while the Lightning Out
+   bootstrap (aura framework load + component creation) is still in progress,
+   before the easyRelatedObjectForm LWC has mounted and taken over its own
+   loading state. Removed by the $Lightning.createComponent callback. */
+.easy-ro-preload {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.easy-ro-preload-spinner {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 0.25rem solid rgba(0, 0, 0, 0.1);
+    border-top-color: #0070d2;
+    animation: easy-ro-preload-spin 0.75s linear infinite;
+}
+
+@keyframes easy-ro-preload-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .slds-scope .slds-spinner_brand::before, .slds-scope .slds-spinner_brand::after, .slds-scope .slds-spinner_brand *::before, .slds-scope .slds-spinner_brand *::after {
     background-color: #9E28B5 !important;
 }
@@ -16,6 +42,12 @@
 
 .slds-scope .slds-button_brand:hover, .slds-scope .slds-icon-standard-contact:hover {
     background-color: #a97cca;
+}
+
+.slds-scope .slds-input__icon .slds-button_icon.slds-button_icon-bare {
+    padding: 0 !important;
+    margin: -.45rem 0 !important;
+    vertical-align: top;
 }
 
 .slds-scope .slds-button_brand:focus, .slds-scope .slds-icon-standard-contact:hover {
@@ -57,13 +89,9 @@
     max-width: 100% !important;
 }
 
-.slds-scope ul.slds-listbox, .slds-scope ul.slds-card-tile {
+.slds-scope ul.slds-listbox, .slds-scope ul.slds-card-tile, .slds-scope ul.slds-button-group-list {
     margin: 0;
     list-style: none;
-}
-
-.slds-scope .slds-combobox_container {
-    margin-bottom: 2rem; /* Needs extra space because the autocomplete box unavoidably obscures the next line if selected. (Especially hard to avoid on a screenreader.) */
 }
 
 .slds-scope .slds-combobox .slds-combobox__form-element .refRemoveButton {
@@ -284,7 +312,9 @@ div.slds-progress {
 
 /* Carousel styles */
 .carousel-wrapper {
-    overflow: hidden;
+    /* Crossfade needs no clipping — keep visible so LWC picklist dropdowns
+       can overflow the panel instead of being cut off. */
+    overflow: visible;
     width: 100%;
     margin: auto;
 }
@@ -294,9 +324,9 @@ div.slds-progress {
 }
 
 .carousel {
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    transform-style: preserve-3d;
+    /* Containing block for the absolutely-stacked inactive panels so they
+       overlap the active panel rather than the viewport. */
+    position: relative;
 }
 
 .carousel__item {
@@ -304,35 +334,32 @@ div.slds-progress {
     position: absolute;
     overflow: visible;
     top: 0;
+    left: 0;
     width: 100%;
     margin: auto;
-    z-index: 100;
-    transition: transform .5s, opacity .5s, z-index .5s;
-    display: none;
+    pointer-events: none;
+    visibility: hidden;
+    /* Fade out, then flip to hidden only after the fade has finished. */
+    transition: opacity .4s ease, visibility 0s linear .4s;
 }
 
 .carousel__item.initial,
 .carousel__item.active {
     opacity: 1;
+    /* Active panel is in normal flow so the wrapper sizes to its height. */
     position: relative;
-    z-index: 900;
-    display: block;
-}
-
-.carousel__item.prev,
-.carousel__item.next {
-    z-index: 800;
-}
-
-.carousel__item.prev {
-    transform: translateX(-100%);
+    z-index: 1;
+    pointer-events: auto;
+    visibility: visible;
+    /* Become visible immediately, then fade in. */
+    transition: opacity .4s ease, visibility 0s;
 }
 
 .carousel__item.carousel__disable {
-    display: block;
-    opacity: 100;
+    opacity: 1;
     position: initial;
-    transform: initial;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .clearfix::after {

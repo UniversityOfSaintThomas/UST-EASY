@@ -1,0 +1,50 @@
+/* Inline spinner for upload progress */
+.easy-du-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(0, 0, 0, 0.15);
+    border-top-color: #0070d2;
+    animation: easy-du-spin 0.75s linear infinite;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+/* Full-block loading spinner container */
+.easy-du-loading {
+    min-height: 60px;
+}
+
+/* Smaller inline spinner used inside UI elements */
+.easy-du-spinner_inline {
+    width: 14px;
+    height: 14px;
+    border-width: 2px;
+}
+
+@keyframes easy-du-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Status row below the rich-text editor: word/character count + "Saving..." indicator.
+   Always rendered (word count never disappears) so the saving indicator appearing/
+   disappearing never changes this row's height and shifts the upload section below it. */
+.easy-du-richtext-status {
+    min-height: 1.2rem;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.easy-du-word-count {
+    font-size: 0.75rem;
+    color: #706e6b;
+}
+
+/* "Saving..." text indicator for the rich-text auto-save */
+.easy-du-saving-indicator {
+    font-size: 0.75rem;
+    color: #706e6b;
+    margin-left: 8px;
+}

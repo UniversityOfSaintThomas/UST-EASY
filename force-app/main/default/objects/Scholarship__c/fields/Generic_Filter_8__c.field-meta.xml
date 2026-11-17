@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generic_Filter_8__c</fullName>
+    <inlineHelpText>list of states for filtering scholarships on the application portal</inlineHelpText>
+    <label>Generic Filter 8</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Generic_Filter_8</valueSetName>
+    </valueSet>
+</CustomField>

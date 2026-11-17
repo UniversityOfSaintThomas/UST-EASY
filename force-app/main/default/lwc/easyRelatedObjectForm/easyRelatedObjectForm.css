@@ -1,0 +1,63 @@
+/* ============================================================
+   easyRelatedObjectForm — component-scoped styles
+   ============================================================ */
+
+/* Inline CSS-only spinner (avoids lightning-spinner covering whole viewport) */
+.easyRof-spinner {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 0.25rem solid rgba(0, 0, 0, 0.1);
+    border-top-color: #0070d2;
+    animation: easyRof-spin 0.75s linear infinite;
+}
+
+@keyframes easyRof-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Separates each record row from the next with a small gap */
+.easyRof-record-block {
+    margin-bottom: 0.5rem;
+}
+
+/* The new-record form gets a subtle top border and background to visually distinguish it */
+.easyRof-new-record-form {
+    background-color: #f4f6f9;
+    border-radius: 0.25rem;
+}
+
+/* Stacked view-mode field list — label above value, border contained within card */
+.easyRof-view-list {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.easyRof-view-row {
+    padding: 0.375rem 0;
+    border-bottom: 1px solid #e0e5ee;
+    overflow: hidden;
+}
+
+.easyRof-view-row:last-child {
+    border-bottom: none;
+}
+
+.easyRof-view-row dt {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.125rem;
+}
+
+.easyRof-view-row dd {
+    margin: 0;
+}
+
+/* Center the lightning-icon inside the New Record button */
+.slds-button lightning-icon {
+    vertical-align: middle;
+}

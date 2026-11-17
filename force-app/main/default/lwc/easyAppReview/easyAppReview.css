@@ -8,3 +8,72 @@ lightning-formatted-rich-text p {
 lightning-icon {
     background-color: #510C76;
 }
+
+/* Keep a gutter on the right so the item cards do not run flush to the edge of the tab. */
+.easyAppReview {
+    padding-right: var(--slds-g-spacing-4, 1rem);
+}
+
+/* Bump the base font size for the review content (SLDS default body is 0.8125rem).
+   SLDS text classes set explicit sizes, so they are overridden individually below. */
+.review-content {
+    font-size: 1rem;
+}
+
+.review-content .slds-text-body_regular {
+    font-size: 1rem;
+}
+
+.review-content .slds-text-heading_x-small {
+    font-size: 1rem;
+}
+
+/* One card per requirement item. The markup deliberately does not use the slds-card class: inside a page tab it
+   overrides the border and shadow below, so the cards disappeared. These rules give the edge and soft shadow
+   themselves (styling hooks with fallbacks). */
+.review-item-card {
+    background-color: var(--slds-g-color-surface-container-1, #ffffff);
+    border: 1px solid var(--slds-g-color-border-1, #c9c9c9);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* The card's own padding replaces the right gutter the answer boxes used on their own */
+.review-item-card .slds-m-right_small {
+    margin-right: 0;
+}
+
+/* "No applicant entered data" styled like a read-only input */
+.review-no-data {
+    background-color: #f3f3f3;
+    border-radius: 0.25rem;
+    color: #444444;
+}
+
+.review-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 12rem;
+}
+/* Multi-select answers: pills sit inline and wrap */
+.pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+/* Requirement heading. The left menu starts about 1rem below the top of its column (padding inside the vertical
+   navigation), so the heading gets the same offset to line up with the first menu item. Slightly smaller than the
+   SLDS "large" heading it replaced (2rem). */
+.review-heading {
+    margin-top: 1rem;
+    font-size: 1.625rem;
+    line-height: 1.25;
+}
+
+.review-heading h2 {
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+}

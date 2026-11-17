@@ -1,0 +1,230 @@
+<!--
+ - Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/16/2023.
+ -
+ - Application Review: where a reviewer enters notes, ratings and decisions. The read-only application facts
+ - live in easyAppReviewInfoPanel.
+ -->
+<template>
+    <lightning-card title="Application Review" icon-name="custom:custom14">
+
+        <!-- Loading state: shown from the application-selected message until the review record is ready -->
+        <template lwc:if={isLoading}>
+            <div class="panel-loading">
+                <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:elseif={appReviewId}>
+            <button class="slds-button slds-m-right_xx-small slds-p-horizontal_x-small slotButtons"
+                    slot="actions"
+                    onclick={closeAll}>Close All
+            </button>
+            <button class="slds-button slds-p-horizontal_x-small slotButtons"
+                    slot="actions"
+                    onclick={expandAll}>Expand All
+            </button>
+
+            <div class="slds-m-horizontal_small slds-m-vertical_large">
+                <template for:each={sectionButtons} for:item="button">
+                    <button key={button.name} class={button.className} name={button.name}
+                            onclick={sectionButtonsClick} aria-pressed={button.pressed}>{button.label}
+                    </button>
+                </template>
+            </div>
+            <div class="slds-m-top_large">
+                <lightning-progress-indicator current-step="step-1" type="base" variant="base">
+                    <template for:each={progressSteps} for:item="step">
+                        <lightning-progress-step label={step.label} value={step.value}
+                                                 key={step.label}></lightning-progress-step>
+                    </template>
+                </lightning-progress-indicator>
+            </div>
+            <div class="slds-m-top_medium appInfoContainer">
+                <lightning-record-edit-form object-api-name="Application_Review__c"
+                                            record-id={appReviewId}
+                                            onsuccess={updateSuccess}
+                                            onload={onloadHandler}>
+                    <lightning-accordion allow-multiple-sections-open
+                                         active-section-name={activeSections}
+                                         onsectiontoggle={handleSectionToggle}>
+                        <lightning-accordion-section name="COACHES" label="Coaches" class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not
+                                Saved
+                            </div>
+                            <lightning-layout class="slds-m-left_medium" multiple-rows>
+                                <lightning-layout-item size="12">
+                                    <lightning-input-field field-name={coachesList} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="TRANSCRIPT_REVIEW" label="Transcript Review"
+                                                     class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not
+                                Saved
+                            </div>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="12">
+                                    <lightning-output-field field-name={transcriptReivew}
+                                                            variant="label-hidden"></lightning-output-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="12">
+                                    <lightning-input-field field-name={transcriptNotes} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field
+                                            field-name={highestLevelMathCompleteTesting} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={gradeTrend} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={englishProgression} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={mathProgression} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={honorsCourses} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={apCourses} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={ibCourses} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={pseoCourses} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium" multiple-rows>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={cisPltw} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={ellCourses} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={developmentalCourses} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="ESSAY_REVIEW" label="Essay Review" class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not
+                                Saved
+                            </div>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="12">
+                                    <lightning-output-field field-name={essayReview}
+                                                            variant="label-hidden"></lightning-output-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium" multiple-rows>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={writingStyle} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={writingStory} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="12">
+                                    <lightning-input-field field-name={essayNotes} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="INVOLVEMENT" label="Involvement" class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not
+                                Saved
+                            </div>
+                            <lightning-layout class="slds-m-left_medium" multiple-rows>
+                                <lightning-layout-item size="12">
+                                    <lightning-input-field field-name={studentInvolvement} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="REVIEW_RECOMMENDATION" label="Review & Recommendation"
+                                                     class="accordionSection">
+                            <div class="slds-p-left_medium sectionSaveWarning" slot="actions" style="display: none">Not
+                                Saved
+                            </div>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={counselorRecommendation} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={initialCounselorReview} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="12">
+                                    <lightning-input-field field-name={counselorDecisionNotes} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={committeeDecision} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name={initialCommitteeReview} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="12">
+                                    <lightning-input-field field-name={committeeDecisionNotes} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="5">
+                                    <lightning-input-field field-name={startDate} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="5">
+                                    <lightning-input-field field-name={dueDate} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium slds-m-bottom_small" multiple-rows>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={completed} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="3">
+                                    <lightning-input-field field-name={terminated} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout class="slds-m-left_medium" multiple-rows>
+                                <lightning-layout-item size="8">
+                                    <lightning-input-field field-name={dateCompleted} onchange={handleFieldChange}></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+
+                    <div class="slds-m-left_x-large slds-m-top_medium slds-m-bottom_large">
+                        <lightning-button
+                                variant="brand"
+                                type="submit"
+                                name="update"
+                                label="Save"
+                                disabled={isDisabled}></lightning-button>
+                        <lightning-button
+                                class="slds-m-left_small"
+                                label="Cancel"
+                                onclick={cancelReset}
+                                disabled={isDisabled}
+                        ></lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </div>
+        </template>
+    </lightning-card>
+</template>

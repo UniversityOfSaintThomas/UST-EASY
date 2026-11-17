@@ -4,26 +4,41 @@
 
 <!-- App Review Application View -->
 <template>
-    <lightning-card title="Application" icon-name="custom:custom14">
+        <!-- Loading state: shown immediately when a new app is selected via LMS -->
+        <template lwc:if={isLoading}>
+            <div class="review-loading">
+                <lightning-spinner alternative-text="Loading application..." size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Error state: the wired getApplicationControl call failed -->
+        <template lwc:elseif={loadError}>
+            <div class="slds-p-around_medium slds-text-color_error">
+                Unable to load this application. Please try again or select a different applicant.
+            </div>
+        </template>
+
+        <!-- Data state -->
+        <template lwc:elseif={hasData}>
         <div class="slds-grid slds-wrap slds-gutters easyAppReview">
             <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
-                <c-easy-app-review-nav app={applicationControl.data} onnewrequirement={handleNewRequirement}></c-easy-app-review-nav>
+                <c-easy-app-review-nav items={navItems} onnewrequirement={handleNewRequirement}></c-easy-app-review-nav>
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-large-size_9-of-12">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_9-of-12 review-content">
                 <template lwc:if={requirements}>
-                    <div class="slds-text-heading_large slds-m-bottom_small">
-                        <h2>{requirements.requirement.Label__c}</h2>
+                    <div class="review-heading slds-m-bottom_small">
+                        <h2>{requirements.title}</h2>
                     </div>
                     <template for:each={requirements.requirementItems} for:item="reqItems">
-                        <div key={reqItems.requirementItem.Id}>
+                        <div key={reqItems.requirementItem.Id} class="slds-p-around_medium slds-m-bottom_medium review-item-card">
 
-                            <div class="slds-m-bottom_xxx-small slds-m-top_small">
-                                <h3 class="slds-text-heading_medium slds-m-bottom_x-small">{reqItems.requirementItem.Label__c}</h3>
+                            <div class="slds-m-bottom_xxx-small">
+                                <h3 class="slds-text-heading_medium slds-m-bottom_x-small">{reqItems.title}</h3>
                             </div>
 
-                            <template lwc:if={reqItems.Instruction__c}>
+                            <template lwc:if={reqItems.requirementItem.Instructions__c}>
                                 <div class="slds-m-bottom_medium slds-m-top_x-small">
-                                    <lightning-formatted-rich-text value={reqItems.Instruction__c}></lightning-formatted-rich-text>
+                                    <lightning-formatted-rich-text value={reqItems.requirementItem.Instructions__c}></lightning-formatted-rich-text>
                                 </div>
                             </template>
 
@@ -44,7 +59,7 @@
                                                         </template>
                                                         <template lwc:elseif={r.answerMultiValue}>
                                                             <template for:each={r.answerMultiValue} for:item="multi">
-                                                                <lightning-badge label={multi} icon-name="utility:check" key={r.key}></lightning-badge>
+                                                                <lightning-badge label={multi} icon-name="utility:check" key={multi}></lightning-badge>
                                                             </template>
                                                         </template>
                                                         <template lwc:else>
@@ -62,10 +77,16 @@
                             <template lwc:if={reqItems.answerLink}>
                                 <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
                                     <div class="slds-p-around_small">
-                                        <lightning-tile label={reqItems.answerLabel} type="media" href={reqItems.answerLink} target="_blank">
-                                            <lightning-icon slot="media" icon-name="standard:document" class="slds-float_left slds-m-right_x-small"></lightning-icon>
+                                        <!-- lightning-tile has no target attribute, so a plain link is used to open in a new tab -->
+                                        <div class="slds-media">
+                                            <div class="slds-media__figure">
+                                                <lightning-icon icon-name="standard:document" size="medium"></lightning-icon>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <p><a href={reqItems.answerLink} target="_blank" rel="noopener noreferrer">{reqItems.answerLabel}</a></p>
                                             <p title={reqItems.answerValue}>Original filename: {reqItems.answerValue}</p>
-                                        </lightning-tile>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </template>
@@ -100,6 +121,17 @@
                                                 <template lwc:if={q.answerLabel}>
                                                     <div class="slds-text-body_regular slds-m-bottom_small slds-p-left_x-large slds-box">
                                                         <lightning-formatted-url value={q.answerLink} tooltip={q.answerLabel} target="_blank" label={q.answerLabel}></lightning-formatted-url>
+                                                    </div>
+                                                </template>
+
+                                                <!-- Multi-select answers: one pill per choice, ahead of the plain-text branches -->
+                                                <template lwc:elseif={q.answerMultiValue}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <div class="slds-p-around_x-small pill-list">
+                                                            <template for:each={q.answerMultiValue} for:item="choice">
+                                                                <lightning-badge label={choice} icon-name="utility:check" key={choice}></lightning-badge>
+                                                            </template>
+                                                        </div>
                                                     </div>
                                                 </template>
 
@@ -179,7 +211,23 @@
                                                     </div>
                                                 </template>
 
-                                                <template lwc:elseif={q.questionResponse.Street__c}>
+                                                <template lwc:elseif={q.questionResponse.ValueURL__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-url value={q.questionResponse.ValueURL__c} target="_blank" label={q.questionResponse.ValueURL__c}></lightning-formatted-url>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.questionResponse.ValueTextArea__c}>
+                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
+                                                        <p class="slds-text-body_regular slds-p-around_x-small">
+                                                            <lightning-formatted-text value={q.questionResponse.ValueTextArea__c}></lightning-formatted-text>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
+                                                <template lwc:elseif={q.hasAddress}>
                                                     <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
                                                         <p class="slds-text-body_regular slds-p-around_x-small">
                                                             <lightning-formatted-address
@@ -196,17 +244,8 @@
                                                 <template lwc:elseif={q.questionResponse.ValueCheckbox__c}>
                                                     <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
                                                         <p class="slds-text-body_regular slds-p-around_x-small">
-                                                            <lightning-formatted-phone value={q.questionResponse.ValueCheckbox__c}></lightning-formatted-phone>
-                                                        </p>
-                                                    </div>
-                                                </template>
-
-                                                <template lwc:elseif={q.answerMultiValue}>
-                                                    <div class="slds-box_border slds-m-bottom_small slds-m-right_small">
-                                                        <p class="slds-text-body_regular slds-p-around_x-small">
-                                                            <template for:each={q.answerMultiValue} for:item="multi">
-                                                                <lightning-badge label={multi} icon-name="utility:check" key={q.questionResponse.Id}></lightning-badge>
-                                                            </template>
+                                                            <lightning-icon icon-name="utility:check" size="x-small" alternative-text="Yes"></lightning-icon>
+                                                            Yes
                                                         </p>
                                                     </div>
                                                 </template>
@@ -224,7 +263,9 @@
                             </template>
 
                             <template lwc:if={reqItems.no_answers}>
-                                <p class="slds-text-body_regular"><strong><em>This requirement has no applicant entered data.</em></strong></p>
+                                <div class="slds-box_border slds-m-bottom_small slds-m-right_small review-no-data">
+                                    <p class="slds-text-body_regular slds-p-around_x-small"><em>This requirement has no applicant entered data.</em></p>
+                                </div>
                             </template>
 
                         </div>
@@ -236,5 +277,5 @@
                 </pre>-->
             </div>
         </div>
-    </lightning-card>
+        </template><!-- end lwc:elseif={hasData} -->
 </template>

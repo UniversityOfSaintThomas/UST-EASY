@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <description>Link/button that opens the Application Review page for the current Application record.</description>
+    <isExposed>true</isExposed>
+    <masterLabel>EASY App Review Link</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Application__c</object>
+            </objects>
+            <property
+                name="label"
+                type="String"
+                label="Button Label"
+                description="Text shown on the button"
+                default="Open Application Review"/>
+            <property
+                name="variant"
+                type="String"
+                label="Button Variant"
+                description="SLDS button variant: brand, neutral, outline-brand, inverse"
+                default="brand"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

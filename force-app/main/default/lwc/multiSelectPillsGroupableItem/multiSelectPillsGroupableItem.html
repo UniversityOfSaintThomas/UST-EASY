@@ -4,7 +4,7 @@
 
 <!-- Multi Select Pills Groupable Item -->
 <template>
-    <li onclick={selectHandler} class="slds-listbox__item" role="presentation">
+    <li onclick={selectHandler} class="slds-listbox__item" role="presentation" data-focused={isFocused}>
         <div class={listItemStyle} role="option">
             <span class="slds-media__figure">
                 <lightning-icon icon-name="utility:check" size="x-small" alternative-text="selected" class="slds-icon-utility-check slds-current-color slds-listbox__icon-selected slds-icon_container"></lightning-icon>

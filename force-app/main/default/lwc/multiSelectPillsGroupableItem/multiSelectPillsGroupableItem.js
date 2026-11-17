@@ -9,10 +9,21 @@ export default class MultiSelectPillsGroupableItem extends LightningElement {
     @api value = '';
     @api label = '';
     @api selected = false;
+    @api focused = false;
 
     get listItemStyle() {
         let baseStyles = ' slds-media  slds-listbox__option_plain slds-media_small slds-listbox__option ';
-        return this.selected === true ? baseStyles + ' slds-is-selected ' : baseStyles;
+        if (this.selected === true) {
+            baseStyles += ' slds-is-selected ';
+        }
+        if (this.focused === true) {
+            baseStyles += ' slds-has-focus ';
+        }
+        return baseStyles;
+    }
+
+    get isFocused() {
+        return this.focused ? 'true' : null;
     }
 
     selectHandler(event) {

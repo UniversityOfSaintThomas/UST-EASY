@@ -1,0 +1,597 @@
+<template>
+    <!-- ======================================================
+         Loading state (CSS-only inline spinner — no lightning-spinner)
+         ====================================================== -->
+    <template lwc:if={isLoading}>
+        <div class="slds-align_absolute-center slds-p-around_medium">
+            <div class="easyRof-spinner" role="status">
+                <span class="slds-assistive-text">Loading…</span>
+            </div>
+        </div>
+    </template>
+
+    <!-- ======================================================
+         Global error
+         ====================================================== -->
+    <template lwc:if={hasError}>
+        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">Error</span>
+            <h2>{errorMessage}</h2>
+        </div>
+    </template>
+
+    <!-- ======================================================
+         Main card (rendered once config is loaded)
+         ====================================================== -->
+    <template lwc:if={isLoaded}>
+        <div class="slds-card">
+
+            <!-- Card header -->
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-record" title={config.relatedObjectApiName}>
+                            <lightning-icon icon-name="standard:record" size="small" alternative-text={config.relatedObjectApiName}></lightning-icon>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h1 class="slds-card__header-title slds-truncate">{cardTitle}</h1>
+                    </div>
+                </header>
+            </div>
+
+            <!-- Instructions -->
+            <template lwc:if={hasInstructions}>
+                <div class="slds-text-body_regular slds-p-horizontal_medium slds-p-top_small">
+                    <p>{config.instructions}</p>
+                </div>
+            </template>
+
+            <!-- Required count message -->
+            <template lwc:if={showRequiredCountMessage}>
+                <p class="slds-text-body_regular slds-m-left_medium">
+                    You are required to enter at least {config.requiredChildCount} record{requiredCountSuffix}.
+                </p>
+            </template>
+
+            <!-- Maximum count message -->
+            <template lwc:if={showMaxCountMessage}>
+                <p class="slds-text-body_regular slds-m-left_medium">
+                    You can enter a maximum of {config.maximumChildCount} records.
+                </p>
+            </template>
+
+            <!-- ================================================
+                 Existing records
+                 ================================================ -->
+            <div class="related-records">
+
+                <!-- Empty state -->
+                <template lwc:if={hasZeroRecords}>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <p tabindex="0">Create a record by clicking &ldquo;New Record&rdquo; below.</p>
+                    </div>
+                </template>
+
+                <!-- Records list -->
+                <template for:each={processedRecords} for:item="record">
+                    <div key={record.recordId} class="slds-card__body slds-card__body_inner easyRof-record-block slds-border_bottom">
+
+                        <!-- ---- EDIT MODE ---- -->
+                        <template lwc:if={record.isEditing}>
+                            <template lwc:if={record.editError}>
+                                <div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_small" role="alert">
+                                    <h2>{record.editError}</h2>
+                                </div>
+                            </template>
+
+                            <template for:each={record.editRows} for:item="question">
+                                <div key={question.questionId}
+                                     class="slds-form-element slds-p-bottom_x-small"
+                                     data-recordid={record.recordId}
+                                     data-fieldname={question.fieldApiName}>
+
+                                    <!-- Text -->
+                                    <template lwc:if={question.isText}>
+                                        <lightning-input
+                                            type="text"
+                                            label={question.label}
+                                            value={question.currentValue}
+                                            required={question.isRequired}
+                                            field-level-help={question.helpText}
+                                            data-recordid={record.recordId}
+                                            data-fieldname={question.fieldApiName}
+                                            onchange={handleFieldChange}>
+                                        </lightning-input>
+                                    </template>
+
+                                    <!-- Phone -->
+                                    <template lwc:if={question.isPhone}>
+                                        <lightning-input
+                                            type="tel"
+                                            label={question.label}
+                                            value={question.currentValue}
+                                            required={question.isRequired}
+                                            field-level-help={question.helpText}
+                                            data-recordid={record.recordId}
+                                            data-fieldname={question.fieldApiName}
+                                            onchange={handleFieldChange}>
+                                        </lightning-input>
+                                    </template>
+
+                                    <!-- TextArea -->
+                                    <template lwc:if={question.isTextArea}>
+                                        <lightning-textarea
+                                            label={question.label}
+                                            value={question.currentValue}
+                                            required={question.isRequired}
+                                            field-level-help={question.helpText}
+                                            data-recordid={record.recordId}
+                                            data-fieldname={question.fieldApiName}
+                                            onchange={handleFieldChange}>
+                                        </lightning-textarea>
+                                    </template>
+
+                                    <!-- Numeric (Number, Currency, Percent, Decimal) -->
+                                    <template lwc:if={question.isNumeric}>
+                                        <lightning-input
+                                            type="number"
+                                            label={question.label}
+                                            value={question.currentValue}
+                                            required={question.isRequired}
+                                            field-level-help={question.helpText}
+                                            data-recordid={record.recordId}
+                                            data-fieldname={question.fieldApiName}
+                                            onchange={handleFieldChange}>
+                                        </lightning-input>
+                                    </template>
+
+                                    <!-- Date -->
+                                    <template lwc:if={question.isDate}>
+                                        <lightning-input
+                                            type="date"
+                                            label={question.label}
+                                            value={question.currentValue}
+                                            required={question.isRequired}
+                                            field-level-help={question.helpText}
+                                            data-recordid={record.recordId}
+                                            data-fieldname={question.fieldApiName}
+                                            onchange={handleFieldChange}>
+                                        </lightning-input>
+                                    </template>
+
+                                    <!-- Checkbox / Boolean -->
+                                    <template lwc:if={question.isCheckbox}>
+                                        <lightning-input
+                                            type="checkbox"
+                                            label={question.label}
+                                            checked={question.currentValueChecked}
+                                            field-level-help={question.helpText}
+                                            data-recordid={record.recordId}
+                                            data-fieldname={question.fieldApiName}
+                                            onchange={handleCheckboxChange}>
+                                        </lightning-input>
+                                    </template>
+
+                                    <!-- Picklist -->
+                                    <template lwc:if={question.isPicklist}>
+                                        <lightning-combobox
+                                            label={question.label}
+                                            value={question.currentValue}
+                                            options={question.picklistOptions}
+                                            required={question.isRequired}
+                                            field-level-help={question.helpText}
+                                            data-recordid={record.recordId}
+                                            data-fieldname={question.fieldApiName}
+                                            onchange={handleFieldChange}>
+                                        </lightning-combobox>
+                                    </template>
+
+                                    <!-- MultiPicklist -->
+                                    <template lwc:if={question.isMultiPicklist}>
+                                        <lightning-dual-listbox
+                                            label={question.label}
+                                            source-label="Available"
+                                            selected-label="Selected"
+                                            options={question.picklistOptions}
+                                            value={question.currentMultiValue}
+                                            required={question.isRequired}
+                                            field-level-help={question.helpText}
+                                            data-recordid={record.recordId}
+                                            data-fieldname={question.fieldApiName}
+                                            onchange={handleMultiPicklistChange}>
+                                        </lightning-dual-listbox>
+                                    </template>
+
+                                    <!-- Reference (lookup) -->
+                                    <template lwc:if={question.isReference}>
+                                        <c-reusable-lookup
+                                            label={question.label}
+                                            object-api-name={question.lookupObjectType}
+                                            field-api-name={question.lookupSearchField}
+                                            other-field-api-name={question.lookupDisplayFields}
+                                            selected-record-id={question.currentValue}
+                                            required={question.isRequired}
+                                            help-text={question.helpText}
+                                            data-recordid={record.recordId}
+                                            data-fieldname={question.fieldApiName}
+                                            onvalueselected={handleLookupValueSelected}>
+                                        </c-reusable-lookup>
+                                    </template>
+
+                                    <!-- Address composite -->
+                                    <template lwc:if={question.isAddress}>
+                                        <fieldset class="slds-form-element">
+                                            <legend class="slds-form-element__label">{question.label}</legend>
+                                            <lightning-input
+                                                type="text"
+                                                label="Street"
+                                                value={question.streetValue}
+                                                data-recordid={record.recordId}
+                                                data-fieldname="Street__c"
+                                                onchange={handleFieldChange}>
+                                            </lightning-input>
+                                            <lightning-input
+                                                type="text"
+                                                label="City"
+                                                value={question.cityValue}
+                                                data-recordid={record.recordId}
+                                                data-fieldname="City__c"
+                                                onchange={handleFieldChange}>
+                                            </lightning-input>
+                                            <lightning-input
+                                                type="text"
+                                                label="State"
+                                                value={question.stateValue}
+                                                data-recordid={record.recordId}
+                                                data-fieldname="State__c"
+                                                onchange={handleFieldChange}>
+                                            </lightning-input>
+                                            <lightning-input
+                                                type="text"
+                                                label="Postal Code"
+                                                value={question.postalCodeValue}
+                                                data-recordid={record.recordId}
+                                                data-fieldname="PostalCode__c"
+                                                onchange={handleFieldChange}>
+                                            </lightning-input>
+                                            <lightning-input
+                                                type="text"
+                                                label="Country"
+                                                value={question.countryValue}
+                                                data-recordid={record.recordId}
+                                                data-fieldname="Country__c"
+                                                onchange={handleFieldChange}>
+                                            </lightning-input>
+                                        </fieldset>
+                                    </template>
+
+                                </div>
+                            </template>
+
+                            <!-- Edit actions -->
+                            <div class="slds-card__footer slds-border_top slds-align_absolute-center slds-m-top_small">
+                                <button class="slds-button slds-button_brand slds-m-right_small"
+                                        data-recordid={record.recordId}
+                                        onclick={handleSaveRecord}
+                                        disabled={record.isSaving}>
+                                    <template lwc:if={record.isSaving}>Saving…</template>
+                                    <template lwc:else>Save Record</template>
+                                </button>
+                                <button class="slds-button slds-button_neutral"
+                                        data-recordid={record.recordId}
+                                        onclick={handleCancelEdit}
+                                        disabled={record.isSaving}>
+                                    Cancel
+                                </button>
+                            </div>
+                        </template>
+
+                        <!-- ---- VIEW MODE ---- -->
+                        <template lwc:else>
+                            <dl class="easyRof-view-list">
+                                <template for:each={record.viewRows} for:item="row">
+                                    <div key={row.fieldApiName} class="easyRof-view-row">
+                                        <dt class="slds-text-color_weak">{row.label}</dt>
+                                        <dd>{row.displayValue}</dd>
+                                    </div>
+                                </template>
+                            </dl>
+
+                            <!-- View actions (edit + delete) — only when user created the record and editing is allowed -->
+                            <template lwc:if={record.showEditActions}>
+                                <div class="slds-card__footer slds-border_top slds-align_absolute-center slds-m-top_small">
+                                    <template lwc:if={record.isPendingDelete}>
+                                        <span class="slds-m-right_small">Delete this record?</span>
+                                        <button class="slds-button slds-button_destructive slds-m-right_x-small"
+                                                onclick={handleConfirmDelete}>
+                                            Yes, Delete
+                                        </button>
+                                        <button class="slds-button slds-button_neutral"
+                                                onclick={handleCancelDelete}>
+                                            Cancel
+                                        </button>
+                                    </template>
+                                    <template lwc:else>
+                                        <button class="slds-button slds-button_brand slds-m-right_small"
+                                                data-recordid={record.recordId}
+                                                onclick={handleEditRecord}>
+                                            Edit Record
+                                        </button>
+                                        <button class="slds-button slds-button_destructive"
+                                                data-recordid={record.recordId}
+                                                onclick={handleDeleteRecord}>
+                                            Delete Record
+                                        </button>
+                                    </template>
+                                </div>
+                            </template>
+
+                            <!-- Upload supporting documentation -->
+                            <template lwc:if={record.showUploadButton}>
+                                <div class="slds-m-top_small">
+                                    <!-- View existing document link -->
+                                    <template lwc:if={record.documentTitle}>
+                                        <p class="slds-m-bottom_x-small">
+                                            <strong>Uploaded document:</strong> {record.documentTitle}
+                                            <button class="slds-button slds-button_icon slds-button_icon-error slds-m-left_x-small"
+                                                    title="Delete document"
+                                                    data-recordid={record.recordId}
+                                                    onclick={handleDeleteDocument}>
+                                                <lightning-icon icon-name="utility:delete" size="x-small" alternative-text="Delete document"></lightning-icon>
+                                                <span class="slds-assistive-text">Delete document</span>
+                                            </button>
+                                        </p>
+                                    </template>
+
+                                    <template lwc:if={record.showUploadForm}>
+                                        <div class="slds-m-bottom_small">
+                                            <lightning-input
+                                                type="file"
+                                                label="Choose a file"
+                                                accept={acceptedFileTypes}
+                                                data-recordid={record.recordId}
+                                                onchange={handleFileSelected}>
+                                            </lightning-input>
+                                            <template lwc:if={record.uploadError}>
+                                                <p class="slds-text-color_error slds-m-top_x-small">{record.uploadError}</p>
+                                            </template>
+                                            <div class="slds-m-top_small">
+                                                <button class="slds-button slds-button_brand slds-m-right_small"
+                                                        data-recordid={record.recordId}
+                                                        onclick={handleUploadFile}
+                                                        disabled={record.isUploadLoading}>
+                                                    <template lwc:if={record.isUploadLoading}>Uploading…</template>
+                                                    <template lwc:else>Upload</template>
+                                                </button>
+                                                <button class="slds-button slds-button_neutral"
+                                                        data-recordid={record.recordId}
+                                                        onclick={handleCancelUpload}>
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template lwc:else>
+                                        <button class="slds-button slds-button_brand"
+                                                data-recordid={record.recordId}
+                                                onclick={handleShowUploadForm}>
+                                            Upload Supporting Documentation
+                                        </button>
+                                    </template>
+                                </div>
+                            </template>
+
+                        </template>
+                        <!-- end view/edit mode -->
+
+                    </div>
+                </template>
+                <!-- end for:each records -->
+
+            </div>
+            <!-- end .related-records -->
+
+            <!-- ================================================
+                 New Record form
+                 ================================================ -->
+            <template lwc:if={showNewRecordForm}>
+                <div class="slds-card__body slds-card__body_inner slds-border_top easyRof-new-record-form">
+                    <h2 class="slds-text-heading_small slds-m-bottom_medium slds-m-top_medium">New Record</h2>
+
+                    <template lwc:if={newRecordError}>
+                        <div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_small" role="alert">
+                            <h2>{newRecordError}</h2>
+                        </div>
+                    </template>
+
+                    <template for:each={newRecordRows} for:item="question">
+                        <div key={question.questionId}
+                             class="slds-form-element slds-p-bottom_x-small"
+                             data-fieldname={question.fieldApiName}>
+
+                            <!-- Text -->
+                            <template lwc:if={question.isText}>
+                                <lightning-input
+                                    type="text"
+                                    label={question.label}
+                                    value={question.currentValue}
+                                    required={question.isRequired}
+                                    field-level-help={question.helpText}
+                                    data-fieldname={question.fieldApiName}
+                                    onchange={handleNewFieldChange}>
+                                </lightning-input>
+                            </template>
+
+                            <!-- Phone -->
+                            <template lwc:if={question.isPhone}>
+                                <lightning-input
+                                    type="tel"
+                                    label={question.label}
+                                    value={question.currentValue}
+                                    required={question.isRequired}
+                                    field-level-help={question.helpText}
+                                    data-fieldname={question.fieldApiName}
+                                    onchange={handleNewFieldChange}>
+                                </lightning-input>
+                            </template>
+
+                            <!-- TextArea -->
+                            <template lwc:if={question.isTextArea}>
+                                <lightning-textarea
+                                    label={question.label}
+                                    value={question.currentValue}
+                                    required={question.isRequired}
+                                    field-level-help={question.helpText}
+                                    data-fieldname={question.fieldApiName}
+                                    onchange={handleNewFieldChange}>
+                                </lightning-textarea>
+                            </template>
+
+                            <!-- Numeric -->
+                            <template lwc:if={question.isNumeric}>
+                                <lightning-input
+                                    type="number"
+                                    label={question.label}
+                                    value={question.currentValue}
+                                    required={question.isRequired}
+                                    field-level-help={question.helpText}
+                                    data-fieldname={question.fieldApiName}
+                                    onchange={handleNewFieldChange}>
+                                </lightning-input>
+                            </template>
+
+                            <!-- Date -->
+                            <template lwc:if={question.isDate}>
+                                <lightning-input
+                                    type="date"
+                                    label={question.label}
+                                    value={question.currentValue}
+                                    required={question.isRequired}
+                                    field-level-help={question.helpText}
+                                    data-fieldname={question.fieldApiName}
+                                    onchange={handleNewFieldChange}>
+                                </lightning-input>
+                            </template>
+
+                            <!-- Checkbox -->
+                            <template lwc:if={question.isCheckbox}>
+                                <lightning-input
+                                    type="checkbox"
+                                    label={question.label}
+                                    checked={question.currentValueChecked}
+                                    field-level-help={question.helpText}
+                                    data-fieldname={question.fieldApiName}
+                                    onchange={handleNewCheckboxChange}>
+                                </lightning-input>
+                            </template>
+
+                            <!-- Picklist -->
+                            <template lwc:if={question.isPicklist}>
+                                <lightning-combobox
+                                    label={question.label}
+                                    value={question.currentValue}
+                                    options={question.picklistOptions}
+                                    required={question.isRequired}
+                                    field-level-help={question.helpText}
+                                    data-fieldname={question.fieldApiName}
+                                    onchange={handleNewFieldChange}>
+                                </lightning-combobox>
+                            </template>
+
+                            <!-- MultiPicklist -->
+                            <template lwc:if={question.isMultiPicklist}>
+                                <lightning-dual-listbox
+                                    label={question.label}
+                                    source-label="Available"
+                                    selected-label="Selected"
+                                    options={question.picklistOptions}
+                                    value={question.currentMultiValue}
+                                    required={question.isRequired}
+                                    field-level-help={question.helpText}
+                                    data-fieldname={question.fieldApiName}
+                                    onchange={handleNewMultiPicklistChange}>
+                                </lightning-dual-listbox>
+                            </template>
+
+                            <!-- Reference (lookup) -->
+                            <template lwc:if={question.isReference}>
+                                <c-reusable-lookup
+                                    label={question.label}
+                                    object-api-name={question.lookupObjectType}
+                                    field-api-name={question.lookupSearchField}
+                                    other-field-api-name={question.lookupDisplayFields}
+                                    selected-record-id={question.currentValue}
+                                    required={question.isRequired}
+                                    help-text={question.helpText}
+                                    data-fieldname={question.fieldApiName}
+                                    onvalueselected={handleNewLookupValueSelected}>
+                                </c-reusable-lookup>
+                            </template>
+
+                            <!-- Address composite -->
+                            <template lwc:if={question.isAddress}>
+                                <fieldset class="slds-form-element">
+                                    <legend class="slds-form-element__label">{question.label}</legend>
+                                    <lightning-input type="text" label="Street" value={question.streetValue}
+                                        data-fieldname="Street__c" onchange={handleNewFieldChange}>
+                                    </lightning-input>
+                                    <lightning-input type="text" label="City" value={question.cityValue}
+                                        data-fieldname="City__c" onchange={handleNewFieldChange}>
+                                    </lightning-input>
+                                    <lightning-input type="text" label="State" value={question.stateValue}
+                                        data-fieldname="State__c" onchange={handleNewFieldChange}>
+                                    </lightning-input>
+                                    <lightning-input type="text" label="Postal Code" value={question.postalCodeValue}
+                                        data-fieldname="PostalCode__c" onchange={handleNewFieldChange}>
+                                    </lightning-input>
+                                    <lightning-input type="text" label="Country" value={question.countryValue}
+                                        data-fieldname="Country__c" onchange={handleNewFieldChange}>
+                                    </lightning-input>
+                                </fieldset>
+                            </template>
+
+                        </div>
+                    </template>
+                    <!-- end new record questions for:each -->
+
+                    <!-- New Record form actions -->
+                    <div class="slds-m-top_small">
+                        <button class="slds-button slds-button_brand slds-m-right_small"
+                                onclick={handleSaveNewRecord}
+                                disabled={isNewRecordSaving}>
+                            <template lwc:if={isNewRecordSaving}>Saving…</template>
+                            <template lwc:else>Save Record</template>
+                        </button>
+                        <button class="slds-button slds-button_neutral"
+                                onclick={handleCancelNewRecord}
+                                disabled={isNewRecordSaving}>
+                            Cancel
+                        </button>
+                    </div>
+
+                </div>
+            </template>
+
+            <!-- ================================================
+                 New Record button (footer)
+                 ================================================ -->
+            <template lwc:if={showNewRecordButton}>
+                <div class="slds-card__footer slds-border_top slds-align_absolute-center">
+                    <button class="slds-button slds-button_brand"
+                            onclick={handleNewRecord}>
+                        <lightning-icon icon-name="utility:new" size="x-small" variant="inverse" class="slds-button__icon slds-button__icon_left" alternative-text="New"></lightning-icon>
+                        New Record
+                    </button>
+                </div>
+            </template>
+
+        </div>
+        <!-- end .slds-card -->
+
+    </template>
+
+    <!-- Hidden input for VF JavaScript record-count integration -->
+    <input type="hidden" class="lwc-related-record-count" value={recordCount} />
+
+</template>

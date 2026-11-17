@@ -22,24 +22,72 @@ export default class MultiSelectPillsGroupable extends LightningElement {
     @track isOpen = false;
     @track displayHelp = false;
     @track displayError = false;
+    @track focusedOptionIndex = -1; // Track focused option for keyboard navigation
 
     rendered = false;
 
-    @api
-    checkValidity() {
-        let isSelfValidated = false;
-        isSelfValidated = [
-            ...this.template.querySelectorAll("input")
-        ].reduce((validSoFar, inputField) => {
-            inputField.reportValidity();
-            let validCheck = validSoFar && inputField.checkValidity();
-            if (!validCheck) {
-                this.template.querySelector('.slds-form-element').classList.add('slds-has-error');
-                this.displayError = true;
+    @api checkValidity() {
+        // Check if required and no values selected
+        if (this.required && this.selectedPills.length === 0) {
+            return false;
+        }
+        return true;
+    }
+
+    @api reportValidity() {
+        const isValid = this.checkValidity();
+        const formElement = this.template.querySelector('.slds-form-element');
+
+        if (!isValid) {
+            // Show error state
+            if (formElement) {
+                formElement.classList.add('slds-has-error');
             }
-            return validSoFar && inputField.checkValidity();
-        }, true);
-        return isSelfValidated;
+                this.displayError = true;
+        } else {
+            // Clear error state
+            if (formElement) {
+                formElement.classList.remove('slds-has-error');
+            }
+            this.displayError = false;
+        }
+
+        return isValid;
+            }
+
+    /**
+     * Reset the multi-select component to its initial state
+     * Clears all selected values and pills
+     */
+    @api reset() {
+        // Clear the internal value
+        this.value_ = '';
+
+        // Deselect all options
+        if (this.options_ && Array.isArray(this.options_)) {
+            this.options_ = this.options_.map(option => ({
+                ...option,
+                selected: false,
+                selectedAt: undefined
+            }));
+        }
+
+        // Clear selected pills
+        this.selectedPills = [];
+
+        // Clear the hidden input value
+        const idInput = this.template.querySelector("input");
+        if (idInput) {
+            idInput.value = '';
+        }
+
+        // Clear any error state
+        this.displayError = false;
+        this.displayHelp = false;
+        const formElement = this.template.querySelector('.slds-form-element');
+        if (formElement) {
+            formElement.classList.remove('slds-has-error');
+        }
     }
 
     @api
@@ -53,8 +101,27 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         this.parseValue(this.value_);
     }
 
-    @api
-    get value() {
+    /**
+     * Get options with focused state for display
+     * Computes which option should be highlighted based on focusedOptionIndex
+     */
+    get displayOptions() {
+        if (!this.options_ || this.options_.length === 0) {
+            return [];
+        }
+
+        let selectableIndex = 0;
+        return this.options_.map(option => {
+            if (option.is_group) {
+                return { ...option, focused: false };
+            }
+            const isFocused = selectableIndex === this.focusedOptionIndex;
+            selectableIndex++;
+            return { ...option, focused: isFocused };
+        });
+    }
+
+    @api get value() {
         let selectedValues = this.selectedValues();
         return selectedValues.length > 0 ? selectedValues.join(";") : "";
     }
@@ -95,25 +162,19 @@ export default class MultiSelectPillsGroupable extends LightningElement {
 
     //private called by getter of 'value'
     selectedValues() {
-        let values = [];
-
-        //if no options set yet or invalid, just return value
+        // If no options set yet or invalid, just return value
         if (this.options_.length < 1) {
             return this.value_;
         }
 
-        this.options_.forEach(function (option) {
-            //check the option label for 'undecided' keyword in lower case apply to value if found
-            if (option.selected === true) {
-                if (option.label.toLowerCase().includes('undecided')) {
-                    values.push('undecided|' + option.value);
-                } else {
-                    values.push(option.value);
-                }
-            }
-
-        });
-        return values;
+        return this.options_
+            .filter(option => option.selected === true)
+            .sort((a, b) => a.selectedAt - b.selectedAt)
+            .map(option =>
+                option.label.toLowerCase().includes('undecided')
+                    ? 'undecided|' + option.value
+                    : option.value
+            );
     }
 
     get labelStyle() {
@@ -129,6 +190,10 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         return this.isOpen ? ' slds-is-open ' + style : style;
     }
 
+    get ariaExpanded() {
+        return this.isOpen ? 'true' : 'false';
+    }
+
     get hintText() {
         if (this.selectedPills.length === 0) {
             if (this.hint) {
@@ -142,10 +207,12 @@ export default class MultiSelectPillsGroupable extends LightningElement {
 
     openDropdown() {
         this.isOpen = true;
+        this.focusedOptionIndex = -1;
     }
 
     closeDropdown() {
         this.isOpen = false;
+        this.focusedOptionIndex = -1;
     }
 
     /* following pair of functions are a clever way of handling a click outside,
@@ -164,6 +231,161 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         event.stopPropagation();
         this.closeDropdown();
         window.removeEventListener('click', this.handleClose);
+    }
+
+    /**
+     * Handle keyboard events for accessibility
+     * Enter/Space: Toggle dropdown open/close or select focused option
+     * Escape: Close dropdown
+     * Arrow Down: Open dropdown or move to next option
+     * Arrow Up: Move to previous option
+     */
+    handleKeyDown(event) {
+        const key = event.key;
+
+        // Get selectable options (non-group items)
+        const selectableOptions = this.options_?.filter(opt => !opt.is_group) || [];
+
+        switch (key) {
+            case 'Enter':
+            case ' ':
+                event.preventDefault();
+                event.stopPropagation();
+                if (this.isOpen && this.focusedOptionIndex >= 0) {
+                    // Select the focused option
+                    const focusedOption = selectableOptions[this.focusedOptionIndex];
+                    if (focusedOption) {
+                        this._selectOption(focusedOption.value, focusedOption.selected);
+                    }
+                } else if (this.isOpen) {
+                    this.closeDropdown();
+                    window.removeEventListener('click', this.handleClose);
+                    this.focusedOptionIndex = -1;
+                } else {
+                    this.openDropdown();
+                    window.addEventListener('click', this.handleClose);
+                    this.focusedOptionIndex = 0;
+                    this._scrollToFocusedOption();
+                }
+                break;
+            case 'Escape':
+                event.preventDefault();
+                if (this.isOpen) {
+                    this.closeDropdown();
+                    window.removeEventListener('click', this.handleClose);
+                    this.focusedOptionIndex = -1;
+                }
+                break;
+            case 'ArrowDown':
+                event.preventDefault();
+                if (!this.isOpen) {
+                    this.openDropdown();
+                    window.addEventListener('click', this.handleClose);
+                    this.focusedOptionIndex = 0;
+                } else if (this.focusedOptionIndex < selectableOptions.length - 1) {
+                    this.focusedOptionIndex++;
+                }
+                this._scrollToFocusedOption();
+                break;
+            case 'ArrowUp':
+                event.preventDefault();
+                if (!this.isOpen) {
+                    this.openDropdown();
+                    window.addEventListener('click', this.handleClose);
+                    this.focusedOptionIndex = selectableOptions.length - 1;
+                } else if (this.focusedOptionIndex > 0) {
+                    this.focusedOptionIndex--;
+                }
+                this._scrollToFocusedOption();
+                break;
+            case 'Tab':
+                // Close dropdown on tab and allow normal tab behavior
+                if (this.isOpen) {
+                    this.closeDropdown();
+                    window.removeEventListener('click', this.handleClose);
+                    this.focusedOptionIndex = -1;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Select an option programmatically (used by keyboard navigation)
+     */
+    _selectOption(value, currentlySelected) {
+        let num_values = this.selectedValues().length;
+        let max_reached = false;
+        this.displayHelp = false;
+
+        if (this.max) {
+            if (num_values + 1 > this.max && !currentlySelected) {
+                max_reached = true;
+            }
+        }
+
+        this.options_.forEach(option => {
+            if (option.value === value) {
+                if (currentlySelected === true) {
+                    option.selected = false;
+                    option.selectedAt = undefined;
+                } else if (!max_reached) {
+                    option.selected = true;
+                    option.selectedAt = Date.now();
+                }
+            }
+        });
+
+        if (max_reached) {
+            this.displayHelp = true;
+        }
+
+        this.selectedPills = this.getPillArray();
+        this.dispatchChangeEvent();
+    }
+
+    /**
+     * Scroll the dropdown to keep the focused option visible
+     */
+    _scrollToFocusedOption() {
+        // Use setTimeout to allow DOM to update
+        setTimeout(() => {
+            const listbox = this.template.querySelector('.slds-listbox');
+            if (!listbox) return;
+
+            // Get all the item components
+            const items = this.template.querySelectorAll('c-multi-select-pills-groupable-item');
+            if (items && items.length > this.focusedOptionIndex && this.focusedOptionIndex >= 0) {
+                const focusedItem = items[this.focusedOptionIndex];
+                if (focusedItem) {
+                    // Scroll the item into view within the dropdown
+                    focusedItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }
+            }
+        }, 0);
+    }
+
+    /**
+     * Handle focus event for visual feedback
+     */
+    handleFocus() {
+        // Add focus styling if needed
+        const comboboxDiv = this.template.querySelector('#combobox-div-1');
+        if (comboboxDiv) {
+            comboboxDiv.classList.add('slds-has-focus');
+        }
+    }
+
+    /**
+     * Handle blur event
+     */
+    handleBlur() {
+        // Remove focus styling
+        const comboboxDiv = this.template.querySelector('#combobox-div-1');
+        if (comboboxDiv) {
+            comboboxDiv.classList.remove('slds-has-focus');
+        }
     }
 
     handlePillRemove(event) {
@@ -203,12 +425,15 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         value = listData.value;
         selected = listData.selected;
 
+        // In handleSelectedClick, set selectedAt when selecting
         this.options_.forEach(function (option) {
             if (option.value === value) {
                 if (selected === true) {
                     option.selected = false;
+                    option.selectedAt = undefined;
                 } else if (!max_reached) {
                     option.selected = true;
+                    option.selectedAt = Date.now(); // or use a counter
                 }
             }
         });
@@ -234,21 +459,28 @@ export default class MultiSelectPillsGroupable extends LightningElement {
         let valueString = values.length > 0 ? values.join(";") : "";
         let idInput = this.template.querySelector("input");
         idInput.value = valueString;
-        idInput.closest('.slds-form-element').classList.remove('slds-has-error');
+
+        // Clear error state when user makes a selection
+        const formElement = idInput.closest('.slds-form-element');
+        if (formElement) {
+            formElement.classList.remove('slds-has-error');
+        }
+        this.displayError = false;
+
         this.template.querySelector("input").value = valueString;
         const eventDetail = {value: valueString.split(';')};
         const changeEvent = new CustomEvent('change', {detail: eventDetail});
         this.dispatchEvent(changeEvent);
     }
 
+    // In getPillArray, sort by selectedAt
     getPillArray() {
-        let pills = [];
-        this.options_.forEach(function (element) {
-            let iterator = 0;
-            if (element.selected) {
-                pills.push({label: element.label, name: element.value, key: iterator++});
-            }
-        });
+        let pills = this.options_
+            .filter(element => element.selected)
+            .sort((a, b) => a.selectedAt - b.selectedAt)
+            .map((element, iterator) => ({
+                label: element.label, name: element.value, key: iterator
+            }));
         return pills;
     }
 

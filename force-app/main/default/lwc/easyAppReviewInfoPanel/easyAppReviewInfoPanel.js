@@ -1,28 +1,23 @@
 /**
  * Created by Thaddaeus Dahlberg, Software Engineer, University of St. Thomas on 10/16/2023.
+ *
+ * Application Information: the read-only facts about the selected application (student, application, academics,
+ * test scores). Reviewer input lives in easyAppReviewForm.
  */
 
-import {LightningElement, wire, track, api} from 'lwc';
-import {getSObjectValue} from '@salesforce/apex';
-import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import LightningAlert from "lightning/alert";
+import {LightningElement, wire} from 'lwc';
+import {MessageContext, subscribe, unsubscribe} from 'lightning/messageService';
+import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/EASY_App_Selected__c';
+import {CurrentPageReference, NavigationMixin} from 'lightning/navigation';
+import {adjustURLParams, ensureReviewRecord, setAppIdFromURL, showErrorToast} from 'c/easyAppReviewUtility';
 
 import getApplicantInfo from '@salesforce/apex/EASYAppReviewController.getApplicantInfo';
-import FIRST_NAME from '@salesforce/schema/Application__c.Contact__r.FirstName';
-import LAST_NAME from '@salesforce/schema/Application__c.Contact__r.LastName';
-
-import {MessageContext, publish, subscribe} from 'lightning/messageService';
-import APP_SELECTED_CHANNEL from '@salesforce/messageChannel/EASY_App_Selected__c';
-import {CurrentPageReference} from "lightning/navigation";
-import {adjustURLParams, setAppIdFromURL} from 'c/easyAppReviewUtility';
-
-import getAppInfoDetails from '@salesforce/apex/EASYAppInfoController.upsertAppReviewData';
+import getSummarySections from '@salesforce/apex/EASYAppInfoController.getSummarySections';
 
 import RECORDTYPEID from '@salesforce/schema/Application_Review__c.RecordTypeId';
 import CONTACT_NAME from '@salesforce/schema/Application_Review__c.Contact_Name__c';
 import FIRST_GENERATION from '@salesforce/schema/Application_Review__c.First_Generation__c';
 import MOBILE from '@salesforce/schema/Application_Review__c.Mobile__c';
-import COACHES_LIST from '@salesforce/schema/Application_Review__c.Coaches_List__c';
 import EMAIL from '@salesforce/schema/Application_Review__c.Email__c';
 import CITY_STATE from '@salesforce/schema/Application_Review__c.City_State__c';
 import TEST_SCORE_PREFERENCE from '@salesforce/schema/Application_Review__c.Test_Score_Preference__c';
@@ -47,63 +42,17 @@ import OVERALL_HIGHEST_ACT_SCIENCE_REASONING from '@salesforce/schema/Applicatio
 import OVERALL_HIGHEST_SAT_MATH from '@salesforce/schema/Application_Review__c.Overall_Highest_SAT_Math__c';
 import OVERALL_HIGHEST_SAT_READING from '@salesforce/schema/Application_Review__c.Overall_Highest_SAT_Reading__c';
 import OVERALL_HIGHEST_SAT_WRITING from '@salesforce/schema/Application_Review__c.Overall_Highest_SAT_Writing__c';
-import TRANSCRIPT_REIVEW from '@salesforce/schema/Application_Review__c.Transcript_Reivew__c';
-import TRANSCRIPT_NOTES from '@salesforce/schema/Application_Review__c.Transcript_Notes__c';
-import HIGHEST_LEVEL_MATH_COMPLETE_TESTING from '@salesforce/schema/Application_Review__c.Highest_Level_Math_Complete_Testing__c';
-import GRADE_TREND from '@salesforce/schema/Application_Review__c.Grade_Trend__c';
-import ENGLISH_PROGRESSION from '@salesforce/schema/Application_Review__c.English_Progression__c';
-import MATH_PROGRESSION from '@salesforce/schema/Application_Review__c.Math_Progression__c';
-import HONORS_COURSES from '@salesforce/schema/Application_Review__c.Honors_Courses__c';
-import AP_COURSES from '@salesforce/schema/Application_Review__c.AP_Courses__c';
-import IB_COURSES from '@salesforce/schema/Application_Review__c.IB_Courses__c';
-import PSEO_COURSES from '@salesforce/schema/Application_Review__c.PSEO_Courses__c';
-import CIS_PLTW from '@salesforce/schema/Application_Review__c.CIS_PLTW__c';
-import ELL_COURSES from '@salesforce/schema/Application_Review__c.ELL_Courses__c';
-import DEVELOPMENTAL_COURSES from '@salesforce/schema/Application_Review__c.Developmental_Courses__c';
-import ESSAY_REVIEW from '@salesforce/schema/Application_Review__c.Essay_Review__c';
-import ESSAY_NOTES from '@salesforce/schema/Application_Review__c.Essay_Notes__c';
-import WRITING_STYLE from '@salesforce/schema/Application_Review__c.Writing_Style__c';
-import WRITING_STORY from '@salesforce/schema/Application_Review__c.Writing_Story__c';
-import STUDENT_INVOLVEMENT from '@salesforce/schema/Application_Review__c.Student_Involvement__c';
-import COUNSELOR_RECOMMENDATION from '@salesforce/schema/Application_Review__c.Counselor_Recommendation__c';
-import INITIAL_COUNSELOR_REVIEW from '@salesforce/schema/Application_Review__c.Initial_Counselor_Review__c';
-import COUNSELOR_DECISION_NOTES from '@salesforce/schema/Application_Review__c.Counselor_Decision_Notes__c';
-import COMMITTEE_DECISION from '@salesforce/schema/Application_Review__c.Committee_Decision__c';
-import INITIAL_COMMITTEE_REVIEW from '@salesforce/schema/Application_Review__c.Initial_Committee_Review__c';
-import COMMITTEE_DECISION_NOTES from '@salesforce/schema/Application_Review__c.Committee_Decision_Notes__c';
-import COMPLETED from '@salesforce/schema/Application_Review__c.Completed__c';
-import TERMINATED from '@salesforce/schema/Application_Review__c.Terminated__c';
-import START_DATE from '@salesforce/schema/Application_Review__c.Start_Date__c';
-import DUE_DATE from '@salesforce/schema/Application_Review__c.Due_Date__c';
-import DATE_COMPLETED from '@salesforce/schema/Application_Review__c.Date_Completed__c';
 
-export default class EasyAppReviewInfoPanel extends LightningElement {
+// The sections this panel can show. Which of them appear is chosen per Application Control (Review Summary
+// Sections). Every section that is shown starts open; the reader can close any of them, and the panel keeps their choice.
+const SECTION_NAMES = ['STUDENT_INFORMATION', 'APPLICATION_DETAILS', 'ACADEMIC_INFORMATION', 'TEST_SCORES'];
 
-    progressSteps = [
-        {label: 'Counselor Review', value: 'step-1'},
-        {label: 'Committee Decision', value: 'step-2'},
-        {label: 'Complete', value: 'step-3'},
-    ];
+export default class EasyAppReviewInfoPanel extends NavigationMixin(LightningElement) {
 
-    @track allSections = ['STUDENT_INFORMATION',
-                                'APPLICATION_DETAILS',
-                                'ACADEMIC_INFORMATION',
-                                'TEST_SCORES',
-                                'TRANSCRIPT_REVIEW',
-                                'ESSAY_REVIEW',
-                                'INVOLVEMENT',
-                                'REVIEW_RECOMMENDATION'];
-
-    @track testsSections = ['ACT',
-                                    'SAT']
-
-    @track activeSections = [];
-
-    recordtypeid = RECORDTYPEID;
+    recordTypeId = RECORDTYPEID;
     contactName= CONTACT_NAME;
     firstGeneration= FIRST_GENERATION;
     mobile= MOBILE;
-    coachesList= COACHES_LIST;
     email= EMAIL;
     cityState= CITY_STATE;
     testScorePreference= TEST_SCORE_PREFERENCE;
@@ -124,64 +73,20 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     overallHighestActEnglish= OVERALL_HIGHEST_ACT_ENGLISH;
     overallHighestActMath= OVERALL_HIGHEST_ACT_MATH;
     overallHighestActReading= OVERALL_HIGHEST_ACT_READING;
-    overallHighestActScienceReasoning= OVERALL_HIGHEST_ACT_SCIENCE_REASONING
+    overallHighestActScienceReasoning = OVERALL_HIGHEST_ACT_SCIENCE_REASONING;
     overallHighestSatMath= OVERALL_HIGHEST_SAT_MATH;
     overallHighestSatReading= OVERALL_HIGHEST_SAT_READING;
     overallHighestSatWriting= OVERALL_HIGHEST_SAT_WRITING;
-    transcriptReivew= TRANSCRIPT_REIVEW;
-    transcriptNotes= TRANSCRIPT_NOTES;
-    highestLevelMathCompleteTesting= HIGHEST_LEVEL_MATH_COMPLETE_TESTING;
-    gradeTrend= GRADE_TREND;
-    englishProgression= ENGLISH_PROGRESSION;
-    mathProgression= MATH_PROGRESSION;
-    honorsCourses= HONORS_COURSES;
-    apCourses= AP_COURSES;
-    ibCourses= IB_COURSES;
-    pseoCourses= PSEO_COURSES;
-    cisPltw= CIS_PLTW;
-    ellCourses= ELL_COURSES;
-    developmentalCourses= DEVELOPMENTAL_COURSES;
-    essayReview= ESSAY_REVIEW;
-    essayNotes= ESSAY_NOTES;
-    writingStyle= WRITING_STYLE;
-    writingStory= WRITING_STORY;
-    studentInvolvement= STUDENT_INVOLVEMENT;
-    counselorRecommendation= COUNSELOR_RECOMMENDATION;
-    initialCounselorReview= INITIAL_COUNSELOR_REVIEW;
-    counselorDecisionNotes= COUNSELOR_DECISION_NOTES;
-    committeeDecision= COMMITTEE_DECISION;
-    initialCommitteeReview= INITIAL_COMMITTEE_REVIEW;
-    committeeDecisionNotes= COMMITTEE_DECISION_NOTES;
-    completed= COMPLETED;
-    terminated= TERMINATED;
-    startDate= START_DATE;
-    dueDate= DUE_DATE;
-    dateCompleted= DATE_COMPLETED;
 
     appId;
     appReviewId;
-    appReviewRecordId;
-    onLoadRecord;
-    onLoadFields;
-    isDisabled = true;
-    activeAllSections = false;
-    openSections = [];
+    isLoading = false;
+    activeSections = [...SECTION_NAMES];
+    visibleSections = [...SECTION_NAMES];
+    subscription;
 
-    connectedCallback() {
-        this.lmsSubscription();
-
-        getAppInfoDetails({appId: this.appId}).then((returnValue)=>{
-            this.appReviewId = returnValue.Id;
-            this.appReviewRecordId = returnValue.RecordTypeId;
-        })
-
-        this.activeSections = ['STUDENT_INFORMATION',
-                                'APPLICATION_DETAILS'];
-    }
-
-    renderedCallback() {
-        this.enableUpdate();
-    }
+    // Link to the applicant's Supporting Documents (a related list on the Contact), built for the org the user is in.
+    documentsUrl;
 
     @wire(MessageContext)
     messageContext;
@@ -189,187 +94,97 @@ export default class EasyAppReviewInfoPanel extends LightningElement {
     @wire(CurrentPageReference)
     currentPageReference;
 
-    @wire(getApplicantInfo, {appId: "$appId"})
-    applicantInfo;
-
-    get firstname() {
-        return this.applicantInfo.data
-            ? getSObjectValue(this.applicantInfo.data, FIRST_NAME) : '';
+    connectedCallback() {
+        this.lmsSubscription();
     }
 
-    get lastname() {
-        return this.applicantInfo.data
-            ? getSObjectValue(this.applicantInfo.data, LAST_NAME) : '';
+    disconnectedCallback() {
+        if (this.subscription) {
+            unsubscribe(this.subscription);
+            this.subscription = null;
+        }
     }
 
-    inputValueChange(event) {
-        const payload = {appId: event.detail.value};
-        publish(this.messageContext, APP_SELECTED_CHANNEL, payload);
+    @wire(getApplicantInfo, {appId: '$appId'})
+    wiredApplicantInfo(result) {
+        this.updateDocumentsUrl(result?.data?.Contact__c);
+    }
 
-        getAppInfoDetails({appId: this.appId}).then(returnValue => {
-
-            this.appReviewId = returnValue.Id;
-            this.appReviewRecordId = returnValue.RecordTypeId;
+    updateDocumentsUrl(contactId) {
+        if (!contactId) {
+            this.documentsUrl = null;
+            return;
+        }
+        this[NavigationMixin.GenerateUrl]({
+            type: 'standard__recordRelationshipPage',
+            attributes: {
+                recordId: contactId,
+                objectApiName: 'Contact',
+                relationshipApiName: 'Admissions_Documents__r',
+                actionName: 'view'
+            }
+        }).then(url => {
+            this.documentsUrl = url;
         });
     }
 
     lmsSubscription() {
-        subscribe(this.messageContext, APP_SELECTED_CHANNEL, (message) => {
-            this.appId = message.appId;
-            adjustURLParams('c__appId', this.appId);
+        this.subscription = subscribe(this.messageContext, APP_SELECTED_CHANNEL, (message) => {
+            const requestedAppId = message.appId;
+            this.appId = requestedAppId;
+            // Unmount the view form immediately so it remounts cleanly with the new record id instead of
+            // swapping record-id while it is mounted.
+            this.appReviewId = null;
+            this.isLoading = true;
+            adjustURLParams('c__appId', requestedAppId);
+            Promise.all([ensureReviewRecord(requestedAppId), this.loadVisibleSections(requestedAppId)]).then(([returnValue, sections]) => {
+                if (requestedAppId !== this.appId) {
+                    return; // a newer selection has replaced this one
+                }
+                this.visibleSections = sections;
+            this.appReviewId = returnValue.Id;
+                this.isLoading = false;
+            }).catch(error => {
+                if (requestedAppId === this.appId) {
+                    this.isLoading = false;
+                }
+                showErrorToast(this, 'Error loading application information', error);
+        });
         });
 
         setAppIdFromURL(this.messageContext, APP_SELECTED_CHANNEL, this.currentPageReference, this.appId);
     }
 
-    enableUpdate() {
-        let inputFields = this.template.querySelectorAll('lightning-input-field');
-
-        if (inputFields) {
-
-            if (inputFields.length > 0) {
-
-                inputFields.forEach(field => {
-
-                    field.addEventListener('change', (evt) => {
-
-                        if (field.value !== this.onLoadFields[field.fieldName].value) {
-
-                            let accordionSection;
-                            let sectionWarning;
-
-                            accordionSection = field.closest(".accordionSection");
-
-                            if (accordionSection) {
-                                sectionWarning = accordionSection.querySelector(".sectionSaveWarning");
-                            }
-
-                            if (sectionWarning) {
-                                sectionWarning.style.display = "block";
-                            }
-
-                            evt.target.classList.add("fieldBorderWarning");
-                            this.isDisabled = false;
-                            window.addEventListener("beforeunload", this.beforeUnloadHandler);
-                        } else {
-                            window.removeEventListener("beforeunload", this.beforeUnloadHandler);
-                        }
+    // The sections the Application Control turns on for this application. If the setting cannot be read, show
+    // everything rather than hiding information the reviewer needs.
+    loadVisibleSections(applicationId) {
+        return getSummarySections({appId: applicationId}).catch(error => {
+            showErrorToast(this, 'Could not read the summary settings, so every section is shown', error);
+            return [...SECTION_NAMES];
                     });
-                });
-            }
+    }
+
+    get showStudentInformation() {
+        return this.visibleSections.includes('STUDENT_INFORMATION');
+    }
+
+    get showApplicationDetails() {
+        return this.visibleSections.includes('APPLICATION_DETAILS');
+    }
+
+    get showAcademicInformation() {
+        return this.visibleSections.includes('ACADEMIC_INFORMATION');
+    }
+
+    get showTestScores() {
+        return this.visibleSections.includes('TEST_SCORES');
+    }
+
+    get hasNoSections() {
+        return !SECTION_NAMES.some(name => this.visibleSections.includes(name));
+    }
+
+    handleSectionToggle(event) {
+        this.activeSections = [...event.detail.openSections];
         }
     }
-
-    onloadHandler(evt){
-        this.onLoadRecord = evt.detail.records;
-        this.onLoadFields = this.onLoadRecord[this.appReviewId].fields;
-    }
-
-    beforeUnloadHandler = (evt) => {
-        evt.preventDefault();
-        evt.returnValue = true;
-    };
-
-    cancelReset(event) {
-        let inputFields = this.template.querySelectorAll('lightning-input-field');
-
-        if (inputFields) {
-            inputFields.forEach(field => {
-
-                field.reset();
-            });
-
-            this.clearSaveWarnings();
-            this.isDisabled = true;
-            window.removeEventListener("beforeunload", this.beforeUnloadHandler);
-        }
-    }
-
-    updateSuccess(){
-        const evt = new ShowToastEvent({
-            title: 'Application Review Update Success',
-            message: '',
-            variant: 'success',
-        });
-
-        this.dispatchEvent(evt);
-        this.clearSaveWarnings();
-        this.isDisabled = true;
-        window.removeEventListener("beforeunload", this.beforeUnloadHandler);
-    }
-
-    clearSaveWarnings() {
-        let sectionWarningText = this.template.querySelectorAll(".sectionSaveWarning");
-        let fieldWarningBorder = this.template.querySelectorAll(".fieldBorderWarning");
-
-        if (sectionWarningText) {
-            sectionWarningText.forEach(field => {
-
-                field.style.display = "none";
-            })
-        }
-
-        if (fieldWarningBorder) {
-            fieldWarningBorder.forEach(field => {
-
-                field.classList.remove("fieldBorderWarning")
-            })
-        }
-    }
-
-    handleSectionToggle(evt) {
-        this.openSections = evt.detail.openSections;
-
-        let sectionButton = this.template.querySelectorAll('.sectionButtonsSelect, .sectionButtons');
-
-        if (this.openSections) {
-
-            if (sectionButton) {
-                sectionButton.forEach(button => {
-
-                    if (this.openSections.includes(button.name)) {
-                        button.classList.remove("sectionButtons");
-                        button.classList.add("sectionButtonsSelect");
-                    } else {
-                        button.classList.remove("sectionButtonsSelect");
-                        button.classList.add("sectionButtons");
-                    }
-                });
-            }
-        } else {
-            sectionButton.forEach(button => {
-                button.classList.remove("sectionButtonsSelect");
-                button.classList.add("sectionButtons");
-            });
-        }
-    }
-
-    closeAll(evt){
-        this.activeSections = [];
-    }
-
-    expandAll(evt) {
-        this.activeSections = this.allSections;
-        this.activeAllSections = true;
-    }
-
-    sectionButtonsClick(evt) {
-        let section = evt.target.name;
-
-        if (!this.activeAllSections) {
-
-            let idx = this.openSections.indexOf(section);
-
-            if (idx === -1) {
-                this.openSections.push(section);
-                this.activeSections = this.openSections;
-            } else {
-                this.activeSections = this.openSections.toSpliced(idx, 1);
-            }
-        } else {
-            this.activeSections = [section];
-            this.activeAllSections = false;
-        }
-    }
-
-}

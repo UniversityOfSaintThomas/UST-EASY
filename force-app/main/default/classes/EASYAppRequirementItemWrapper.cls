@@ -5,6 +5,8 @@
 
 public class EASYAppRequirementItemWrapper {
     @AuraEnabled public Requirement_Item__c requirementItem { get; set; }
+    // Heading shown to the reviewer: the Label, or the Name when the Label is blank (same rule as the applicant pages).
+    @AuraEnabled public String title { get; set; }
     @AuraEnabled public List<Requirement_Response__c> requirementResponse {get;set;}
     @AuraEnabled public List<EASYAppQuestionResponseWrapper> questions { get; set; }
     @AuraEnabled public List<List<EASYAppQuestionResponseWrapper>> relatedObjectAnswers { get; set; }

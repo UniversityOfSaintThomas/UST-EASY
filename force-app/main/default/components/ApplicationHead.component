@@ -1,4 +1,10 @@
 <apex:component >
-    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/scripts.js')}"/>
+    <!-- easyCore.js MUST load first: it defines docReady(), which easyLwcBridge.js uses at parse time. -->
+    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyCore.js')}"/>
+    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyUiHelpers.js')}"/>
+    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyFileUpload.js')}"/>
+    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyFormValidation.js')}"/>
+    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyCarousel.js')}"/>
+    <apex:includescript value="{!URLFOR($Resource.EasyAppResources, '/js/easyLwcBridge.js')}"/>
     <link href="{!URLFOR($Resource.EasyAppResources, '/css/styles.css')}" rel="stylesheet" type="text/css"/>
 </apex:component>

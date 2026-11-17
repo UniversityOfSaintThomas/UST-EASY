@@ -37,15 +37,24 @@
             const modalBody = modal.querySelector('.slds-modal__content');
             const closeButtons = modal.querySelectorAll('.easyModalClose');
             const actionButton = modal.querySelector('.slds-modal-button-action');
+            const triggerElement = document.activeElement;
+
+            function closeModal() {
+                modal.style.display = 'none';
+                backdrop.style.display = 'none';
+                if (triggerElement && typeof triggerElement.focus === 'function') {
+                    triggerElement.focus();
+                }
+            }
 
             if (buttonName) {
+                actionButton.style.display = '';
                 actionButton.innerText = buttonName;
                 actionButton.addEventListener('click', function () {
                     if (typeof callback == 'function') {
                         callback();
                     }
-                    modal.style.display = 'none';
-                    backdrop.style.display = 'none';
+                    closeModal();
                 });
             } else {
                 actionButton.style.display = 'none';
@@ -57,21 +66,19 @@
                         closeBtn.innerText = cancelButtonName;
                     }
                 }
-                closeBtn.addEventListener('click', function () {
-                    modal.style.display = 'none';
-                    backdrop.style.display = 'none';
-                });
+                closeBtn.addEventListener('click', closeModal);
             });
 
             if (header) {
                 modalHead.innerText = header;
             } else {
-                modalHead.style.dispay = 'none';
+                modalHead.style.display = 'none';
             }
 
             modalBody.innerHTML = message;
             modal.style.display = 'block';
             backdrop.style.display = 'block';
+            modal.focus();
         }
     </script>
 </apex:component>

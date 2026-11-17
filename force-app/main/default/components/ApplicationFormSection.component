@@ -80,251 +80,116 @@
             </apex:actionRegion>
         </apex:outputPanel>
 
-        <!-- UPLOAD DOCUMENT - REQUIREMENT ITEM LEVEL -->
-        <apex:outputPanel rendered="{!group.documentUpload && !group.isInternal}" layout="none">
+        <!-- UPLOAD DOCUMENT - handled by easyDocumentUpload LWC -->
+        <apex:outputPanel rendered="{!group.documentUpload && !group.isInternal}" layout="block">
             <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
             <apex:variable value="{!CONTAINS(group.item.Required__c,appInfo.appStatus) && !ISBLANK(group.item.Required__c)}" var="isRequiredUpload"/>
-            <c:ApplicationFormSectionInputUpload responseObject="{!group.response['ValueTextEntry__c']}"
-                                                 isEditable="{!group.isEditable}"
-                                                 preventUpdates="{!preventUpdates}"
-                                                 allowTextEntry="{!group.item.Allow_Text_Entry__c}"
-                                                 itemId="{!group.item.Id}"
-                                                 odlAttachmentId="{!group.oldAttVersion.Id}"
-                                                 attachmentTitle="{!IF(!ISBLANK(group.response['Original_Uploaded_Document_File_Name__c']),group.response['Original_Uploaded_Document_File_Name__c'], group.att.Title)}"
-                                                 acceptedFileTypes="{!group.item.File_Types__c}"
-                                                 isRequiredUpload="{!isRequiredUpload}"
-                                                 oldAttContentDocumentId="{!group.oldAttVersion.ContentDocumentId}"
-                                                 responseObjectID="{!group.response['Id']}"
-            />
-        </apex:outputPanel>
-
-        <!-- CREATE REFERENCE/RELATED RECORD -->
-        <apex:outputPanel rendered="{!group.relatedObject && !group.isInternal}" layout="block" styleClass="slds-card" html-data-minrecords="{!group.item.Required_Number_of_Children__c}" html-data-maxrecords="{!group.item.Maximum_Number_of_Children__c}">
-            <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
-            <apex:outputPanel styleClass="slds-card__header slds-grid" layout="block">
-                <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                    <div class="slds-media__figure">
-                        <span class="slds-icon_container slds-icon-standard-account" title="account">
-                          <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/standard-sprite/svg/symbols.svg#account")}"></use>
-                          </svg>
-                          <span class="slds-assistive-text">{!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}</span>
-                        </span>
+            <div id="easy-du-{!JSENCODE(group.item.Id)}"
+                 class="easy-du-container slds-m-bottom_medium"
+                 data-required="{!IF(isRequiredUpload, 'true', 'false')}">
+                <!-- Placeholder shown while the Lightning Out bootstrap + component creation
+                     is in progress, before the LWC mounts and shows its own spinner. -->
+                <div class="easy-ro-preload" role="status">
+                    <div class="easy-ro-preload-spinner"></div>
+                    <span class="slds-assistive-text">Loading&hellip;</span>
                     </div>
-                    <div class="slds-media__body">
-                        <h1 class="slds-card__header-title slds-truncate" tabindex="0">
-                            {!IF(ISBLANK(group.item.Label__c), group.item.Name, group.item.Label__c)}
-                        </h1>
-
                     </div>
-                </header>
-            </apex:outputPanel>
-            <apex:outputPanel layout="none" rendered="{!group.item.Required_Number_of_Children__c != null && group.item.Required_Number_of_Children__c > 0}">
-                <p class="slds-text-body_regular slds-m-left_medium">You are required to enter at least {!group.item.Required_Number_of_Children__c} record{!If(group.item.Required_Number_of_Children__c > 1,'s','')}.</p>
-            </apex:outputPanel>
-            <apex:outputPanel layout="none" rendered="{!group.item.Maximum_Number_of_Children__c != null && group.item.Maximum_Number_of_Children__c > 0}">
-                <p class="slds-text-body_regular slds-m-left_medium">You can enter a maximum of {!group.item.Maximum_Number_of_Children__c} records.</p>
-            </apex:outputPanel>
-
-
-            <!-- CREATE REFERENCE RECORD -->
-            <apex:outputPanel id="theTable" layout="block" rendered="{!group.creatingNewRelatedRecord == false}" styleClass="related-records">
-
-                <apex:pageMessages />
-
-                <apex:outputPanel rendered="{!group.relatedObjects.size == 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
-                    <p tabindex="0">Create a record by clicking “New Record” below.</p>
+            <script>
+                (function() {
+                    if (typeof $Lightning === 'undefined') { return; }
+                    var containerId = 'easy-du-{!JSENCODE(group.item.Id)}';
+                    var componentProperties = {
+                        requirementItemId: '{!JSENCODE(group.item.Id)}',
+                        applicationId: '{!JSENCODE(appInfo.appId)}',
+                        applicationStatus: '{!JSENCODE(appInfo.appStatus)}',
+                        isEditable: {!IF(group.isEditable, 'true', 'false')},
+                        preventUpdates: {!IF(preventUpdates, 'true', 'false')}
+                    };
+                    function createEasyDocumentUploadLwc() {
+                        $Lightning.createComponent(
+                            'c:easyDocumentUpload',
+                            componentProperties,
+                            containerId,
+                            function() {
+                                var container = document.getElementById(containerId);
+                                var preload = container && container.querySelector('.easy-ro-preload');
+                                if (preload) { preload.remove(); }
+                            }
+                        );
+                    }
+                    if (window._easyLightningReady) {
+                        createEasyDocumentUploadLwc();
+                    } else {
+                        window._easyLightningPendingComponents = window._easyLightningPendingComponents || [];
+                        window._easyLightningPendingComponents.push(createEasyDocumentUploadLwc);
+                        if (!window._easyLightningInitialized) {
+                            window._easyLightningInitialized = true;
+                            $Lightning.use('c:easyAuraApp', function() {
+                                window._easyLightningReady = true;
+                                (window._easyLightningPendingComponents || []).forEach(function(pendingFn) { pendingFn(); });
+                                window._easyLightningPendingComponents = [];
+                            });
+                        }
+                    }
+                })();
+            </script>
                 </apex:outputPanel>
+        <!-- end UPLOAD DOCUMENT -->
 
-                <apex:outputPanel rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                    <apex:outputPanel rendered="{!CONTAINS(group.item.Required__c, group.app.Application_Status__c) && group.item.Required_Number_of_Children__c != null && group.item.Required_Number_of_Children__c > 0}" layout="block" styleClass="slds-card__body slds-card__body_inner">
-                        <p tabindex="0">At least {!group.item.Required_Number_of_Children__c} record{!IF(group.item.Required_Number_of_Children__c > 1, 's are', ' is')} required.</p>
-                    </apex:outputPanel>
-                </apex:outputPanel>
-
-                <apex:outputPanel rendered="{!group.relatedObjects.size > 0}" layout="none">
-
-                    <apex:repeat value="{!group.relatedObjects}" var="rr">
-                        <apex:outputPanel html-data-recid="{!rr.idx}" layout="block" styleClass="record-id related-record slds-card__body slds-card__body_inner">
-
-                            <apex:repeat value="{!group.questions}" var="question">
-                                <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
-                                <apex:outputPanel rendered="{!rr.showQuestions[question]}" layout="none">
-                                    <!--THIS DISPLAYS WHEN RECORD HAS BEEN ENTERED -->
-                                    <apex:outputPanel layout="none" rendered="{!!rr.isEditMode}">
-                                        <dl class="slds-list_horizontal slds-wrap slds-border_bottom slds-p-vertical_x-small">
-                                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])),'Holding_Name__c',question.question.Related_Object_Field__c)]}">
-                                                {!question.question.Label__c} {!if(CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c),'*','')}
-                                            </dt>
-
-                                            <dd class="slds-item_detail slds-truncate" title="Description for first label">
-
-                                                <!-- <apex:outputText value="{!rr.obj[IF(NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference,'Holding_Name__c',question.question.Related_Object_Field__c)]}" rendered="{!question.fieldType!='Address'}"/>-->
-
-                                                <apex:outputText value="{!rr.obj['Holding_Name__c']}" rendered="{!question.fieldType!='Address' && NOT(ISBLANK(rr.obj['Holding_Name__c'])) && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}"/>
-
-                                                <apex:outputPanel layout="none" rendered="{!ISBLANK(rr.obj['Holding_Name__c']) && question.fieldType!='Address' && lower(question.question.Related_Object_Field__c) == 'hed__account__c' && group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}">
-                                                    {!rr.obj['hed__Account__r']['Name']}
-                                                </apex:outputPanel>
-
-                                                <apex:outputPanel layout="none" rendered="{!question.fieldType!='Address' && !group.fieldResultMap[lower(question.question.Related_Object_Field__c)].isReference}">
-                                                    <apex:outputPanel layout="none" rendered="{!question.fieldType != 'Date'}">
-                                                        {!rr.obj[question.question.Related_Object_Field__c]}
-                                                    </apex:outputPanel>
-                                                    <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Date'}">
-                                                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
-                                                            <apex:param value="{!rr.obj[question.question.Related_Object_Field__c]}"/>
-                                                        </apex:outputText>
-                                                    </apex:outputPanel>
-                                                </apex:outputPanel>
-
-                                                <apex:outputPanel layout="none" rendered="{!question.fieldType == 'Address'}">
-                                                    {!rr.obj['Street__c']},
-                                                    {!rr.obj['City__c']}, {!rr.obj['State__c']} {!rr.obj['PostalCode__c']} {!rr.obj['Country__c']}
-                                                </apex:outputPanel>
-                                            </dd>
-                                        </dl>
-                                    </apex:outputPanel>
-
-                                    <apex:outputPanel id="editQuestion" rendered="{!rr.isEditMode}" layout="block" styleClass="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12">
-                                        <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="isRequired"/>
-                                        <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
-                                        <apex:variable value="{!IF(question.question.Id == null, 'label' + TEXT(itemNumber), question.question.id)}" var="qId"/>
-
-                                        <apex:outputPanel styleClass="slds-form-element field-{!question.fieldType} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}" layout="block">
-                                            <c:ApplicationFormSectionInput responseObject="{!rr.obj}"
-                                                                           multiPicklist="{!rr['multiPicklistValues'][question.question.Related_Object_Field__c].multiPicklistValues}"
-                                                                           questionWrapper="{!question}"
-                                                                           fieldAPI="{!question.question.Related_Object_Field__c}"
-                                                                           inputLabel="{!question.label}"
-                                                                           inputType="{!question.fieldType}"
-                                                                           isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
-                                                                           isRequired="{!isRequired}"
-                                                                           isEditable="{!question.isEditable}"
-                                                                           isExternalEmail="{!question.question.External_Email_Field__c}"
-                                                                           itemId="{!group.item.Id}"
-                                                                           inputOptions="{!question.options}"
-                                                                           isRadio="{!question.radio}"
-                                                                           rerenderGroup="{!if(question.hasDependentQuestions, 'rerenderTheTable', 'none')}"
-                                                                           itemNumber="{!itemNumber}"
-                                                                           relatedRecords="true"
-                                                                           appInfo="{!appInfo}"
-                                            />
-
-                                        </apex:outputPanel>
-                                    </apex:outputPanel>
-                                </apex:outputPanel>
-                            </apex:repeat>
-                        </apex:outputPanel>
-
-                        <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && !rr.isEditMode && !preventUpdates && group.isEditable}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableEditMode}" reRender="theTable" onClick="showFormSpinnerRelatedRecord()" onComplete="pageLoadReRendered(true);" styleClass="slds-button slds-button_brand slds-m-right-small">
-                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#edit_form")}"></use>
-                                </svg>
-                                Edit Record
-                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
-                            </apex:commandLink>
-                            <apex:commandLink action="{!group.enableDeleteMode}" reRender="theTable" onClick="showFormSpinnerRelatedRecord()" onComplete="pageLoadReRendered(true);" styleClass="slds-button slds-button_brand">
-                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#delete")}"></use>
-                                </svg>
-                                Delete Record
-                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
-                            </apex:commandLink>
-                        </apex:outputPanel>
-
-                        <apex:outputPanel rendered="{!rr.obj['User_Created__c'] && rr.isEditMode}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center">
-                            <apex:commandLink action="{!group.enableConfirmMode}" reRender="theTable" styleClass="slds-button slds-button_brand slds-m-right-small save-record-button" onComplete="addRecordValidation(this);pageLoadReRendered();">
-                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#save")}"></use>
-                                </svg>
-                                Save Record
-                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
-                            </apex:commandLink>
-                            <apex:commandLink action="{!group.enableViewMode}" reRender="theTable" onClick="showFormSpinner()" styleClass="slds-button slds-button_brand cancel-records-button" onComplete="pageLoadReRendered();">
-                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#close")}"></use>
-                                </svg>
-                                Cancel
-                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
-                            </apex:commandLink>
-                        </apex:outputPanel>
-
-                        <apex:outputPanel rendered="{!(ISPICKVAL($User.UserType,'Standard') || group.item.Allow_Supporting_Documentation_Upload__c) && rr.idx != null}">
-                            <apex:outputLink value="/{!rr.att.ContentDocumentId}" rendered="{!rr.att != null && ISPICKVAL($User.UserType,'Standard')}" target="_blank">
-                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#preview")}"></use>
-                                </svg>
-                                View Uploaded Document
-                            </apex:outputLink>
-                            <apex:outputText value="Previously Uploaded Document: {!rr.att.ContentDocument.Title}" rendered="{!rr.att != null && NOT(ISPICKVAL($User.UserType,'Standard'))}"/>
-                        </apex:outputPanel>
-
-                        <apex:outputPanel rendered="{!(ISPICKVAL($User.UserType,'Standard') || group.item.Allow_Supporting_Documentation_Upload__c) && rr.idx != null && !rr.isEditMode && group.isEditable && !preventUpdates}">
-                            <apex:commandLink action="{!group.RelatedUpload}" reRender="theTable" styleClass="slds-button slds-button_brand slds-m-around_small" oncomplete="if('{!group.selectedRelatedId}')window.open('{!$Page.RelatedDocumentUpload+'?Id='+group.selectedRelatedId+'&rId='+group.item.Id}','_blank');" onComplete="pageLoadReRendered();">
-                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#upload")}"></use>
-                                </svg>
-                                Upload Supporting Documentation
-                                <apex:param name="p1" value="{!rr.idx}" assignTo="{!group.selectedRelatedId}"/>
-                            </apex:commandLink>
-                        </apex:outputPanel>
-                    </apex:repeat>
-
-                </apex:outputPanel>
-
-                <apex:outputPanel rendered="{!!preventUpdates && group.isEditable && (group.item.Maximum_Number_of_Children__c == null || group.relatedObjects.size < group.item.Maximum_Number_of_Children__c)}" layout="block" styleClass="slds-card__footer slds-border_top slds-align_absolute-center new-record-button">
-                    <apex:commandLink styleClass="slds-button slds-button_brand" onClick="showFormSpinnerRelatedRecord();" action="{!group.newRow}" onComplete="pageLoadReRendered(true)" reRender="theTable">
-                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                            <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "assets/icons/utility-sprite/svg/symbols.svg#new")}"></use>
-                        </svg>
-                        New Record
-                    </apex:commandLink>
-                </apex:outputPanel>
-
+        <!-- RELATED OBJECT SECTION - handled by easyRelatedObjectForm LWC -->
+        <apex:outputPanel rendered="{!group.relatedObject && !group.isInternal}" layout="block">
+            <div id="easy-ro-{!JSENCODE(group.item.Id)}"
+                 class="easy-ro-container slds-m-bottom_medium"
+                 data-minrecords="{!IF(group.item.Required_Number_of_Children__c != null, TEXT(group.item.Required_Number_of_Children__c), '')}"
+                 data-maxrecords="{!IF(group.item.Maximum_Number_of_Children__c != null, TEXT(group.item.Maximum_Number_of_Children__c), '')}">
+                <!-- Placeholder shown while the Lightning Out bootstrap + component creation
+                     is in progress, before the LWC mounts and shows its own spinner. -->
+                <div class="easy-ro-preload" role="status">
+                    <div class="easy-ro-preload-spinner"></div>
+                    <span class="slds-assistive-text">Loading&hellip;</span>
+                </div>
+            </div>
+            <script>
+                (function() {
+                    if (typeof $Lightning === 'undefined') { return; }
+                    var containerId = 'easy-ro-{!JSENCODE(group.item.Id)}';
+                    var componentProperties = {
+                        requirementItemId: '{!JSENCODE(group.item.Id)}',
+                        applicationId: '{!JSENCODE(appInfo.appId)}',
+                        applicationStatus: '{!JSENCODE(appInfo.appStatus)}',
+                        isEditable: {!IF(group.isEditable, 'true', 'false')},
+                        preventUpdates: {!IF(preventUpdates, 'true', 'false')}
+                    };
+                    function createEasyRelatedObjectLwc() {
+                        $Lightning.createComponent(
+                            'c:easyRelatedObjectForm',
+                            componentProperties,
+                            containerId,
+                            function() {
+                                var container = document.getElementById(containerId);
+                                var preload = container && container.querySelector('.easy-ro-preload');
+                                if (preload) { preload.remove(); }
+                            }
+                        );
+                    }
+                    if (window._easyLightningReady) {
+                        createEasyRelatedObjectLwc();
+                    } else {
+                        window._easyLightningPendingComponents = window._easyLightningPendingComponents || [];
+                        window._easyLightningPendingComponents.push(createEasyRelatedObjectLwc);
+                        if (!window._easyLightningInitialized) {
+                            window._easyLightningInitialized = true;
+                            $Lightning.use('c:easyAuraApp', function() {
+                                window._easyLightningReady = true;
+                                (window._easyLightningPendingComponents || []).forEach(function(pendingFn) { pendingFn(); });
+                                window._easyLightningPendingComponents = [];
+                            });
+                        }
+                    }
+                })();
+            </script>
             </apex:outputPanel>
-
-
-            <!-- CREATE NEW RELATED RECORD -->
-            <apex:outputPanel id="newRelatedRecord" rendered="{!group.creatingNewRelatedRecord == true}" layout="block">
-
-                <apex:pageMessages />
-
-                <apex:repeat value="{!group.relatedReferenceQuestions}" var="question">
-                    <apex:variable value="{!itemNumber+1}" var="itemNumber"/>
-                    <apex:variable value="{!CONTAINS(question.question.Required__c,question.application.Application_Status__c) && !ISBLANK(question.question.Required__c)}" var="isRequired"/>
-                    <apex:outputPanel rendered="{!question.showQuestion}" styleClass="slds-p-vertical_xxx-small slds-col slds-size_1-of-1 slds-large-size_12-of-12" layout="block">
-                        <apex:outputPanel styleClass="{!IF(question.fieldType != 'Address', 'slds-form-element field-'+ question.fieldType,'')} {!IF(isRequired,'slds-is-required', '')}" html-data-placeholder="{!IF(NOT(question.placeholder == null), question.placeholder, '' )}" html-data-maxlength="{!if(question.length == null || question.length > 255, 255, question.length)}">
-
-                            <c:ApplicationFormSectionInput responseObject="{!group.newReferenceObject}"
-                                                           questionWrapper="{!question}"
-                                                           fieldAPI="{!question.question.Related_Object_Field__c}"
-                                                           inputLabel="{!question.label}"
-                                                           inputType="{!question.fieldType}"
-                                                           isReadOnly="{!question.isEditable && group.isEditable && !preventUpdates}"
-                                                           isRequired="{!isRequired}"
-                                                           isEditable="{!question.isEditable}"
-                                                           isExternalEmail="{!question.question.External_Email_Field__c}"
-                                                           itemId="{!group.item.Id}"
-                                                           inputOptions="{!question.options}"
-                                                           isRadio="{!question.radio}"
-                                                           rerenderGroup="{!if(question.hasDependentQuestions, 'rerenderTheTable', 'none')}"
-                                                           itemNumber="{!itemNumber}"
-                                                           appInfo="{!appInfo}"
-                            />
-
-                        </apex:outputPanel>
-                    </apex:outputPanel>
-                </apex:repeat>
-
-                <apex:commandLink styleClass="slds-button" action="{!group.addNewReferenceObject}" value="Create" reRender="theSection"/>
-                <apex:commandLink styleClass="slds-button" immediate="true" value="Cancel" reRender="theSection">
-                    <apex:param value="false" assignTo="{!group.creatingNewRelatedRecord}" name="p1"/>
-                </apex:commandLink>
-            </apex:outputPanel>
-
-        </apex:outputPanel>
+        <!-- end RELATED OBJECT SECTION -->
 
     </apex:outputPanel>
 
